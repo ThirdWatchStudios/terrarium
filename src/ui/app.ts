@@ -6,10 +6,12 @@ import { button, clear, el } from './dom';
 import { renderCharacterControls, renderCharacterList, renderCharacterPreview } from './characterPanel';
 import { renderPropControls, renderPropList, renderPropPreview } from './propPanel';
 import { renderStyleControls, renderStylePreview } from './stylePanel';
+import { renderTileControls, renderTileList, renderTilePreview } from './tilePanel';
 
 const TABS = [
   { id: 'characters', label: 'Characters' },
   { id: 'props', label: 'Props' },
+  { id: 'tiles', label: 'Walls & Floors' },
   { id: 'style', label: 'Style' },
 ] as const;
 
@@ -103,6 +105,10 @@ export function mountApp(root: HTMLElement): void {
       renderPropList(sidebar);
       renderPropPreview(preview);
       if (kind === 'structure') renderPropControls(controls);
+    } else if (tab === 'tiles') {
+      renderTileList(sidebar);
+      renderTilePreview(preview);
+      if (kind === 'structure') renderTileControls(controls);
     } else {
       clear(sidebar);
       renderStylePreview(preview);

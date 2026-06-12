@@ -24,9 +24,9 @@ const BODIES: PartDef[] = [
     slot: 'body',
     anchor: 'body',
     facings: {
-      south: { z: 10, shapes: [{ d: rr(-28, -29, 56, 58, 24), fill: '$outfitPrimary' }] },
-      north: { z: 10, shapes: [{ d: rr(-28, -29, 56, 58, 24), fill: '$outfitPrimary' }] },
-      east: { z: 10, shapes: [{ d: rr(-22, -29, 44, 58, 20), fill: '$outfitPrimary' }] },
+      south: { z: 10, shapes: [{ d: rr(-28, -29, 56, 58, 24), fill: '$outfitPrimary' }, { d: ellipse(0, 20, 18, 8), fill: '#00000012', silhouette: false }] },
+      north: { z: 10, shapes: [{ d: rr(-28, -29, 56, 58, 24), fill: '$outfitPrimary' }, { d: ellipse(0, 20, 18, 8), fill: '#00000012', silhouette: false }] },
+      east: { z: 10, shapes: [{ d: rr(-22, -29, 44, 58, 20), fill: '$outfitPrimary' }, { d: ellipse(0, 20, 12, 8), fill: '#00000012', silhouette: false }] },
     },
   },
   {
@@ -35,9 +35,9 @@ const BODIES: PartDef[] = [
     slot: 'body',
     anchor: 'body',
     facings: {
-      south: { z: 10, shapes: [{ d: rr(-23, -29, 46, 58, 21), fill: '$outfitPrimary' }] },
-      north: { z: 10, shapes: [{ d: rr(-23, -29, 46, 58, 21), fill: '$outfitPrimary' }] },
-      east: { z: 10, shapes: [{ d: rr(-18, -29, 36, 58, 17), fill: '$outfitPrimary' }] },
+      south: { z: 10, shapes: [{ d: rr(-23, -29, 46, 58, 21), fill: '$outfitPrimary' }, { d: ellipse(0, 20, 13, 8), fill: '#00000012', silhouette: false }] },
+      north: { z: 10, shapes: [{ d: rr(-23, -29, 46, 58, 21), fill: '$outfitPrimary' }, { d: ellipse(0, 20, 13, 8), fill: '#00000012', silhouette: false }] },
+      east: { z: 10, shapes: [{ d: rr(-18, -29, 36, 58, 17), fill: '$outfitPrimary' }, { d: ellipse(0, 20, 11, 8), fill: '#00000012', silhouette: false }] },
     },
   },
   {
@@ -46,9 +46,9 @@ const BODIES: PartDef[] = [
     slot: 'body',
     anchor: 'body',
     facings: {
-      south: { z: 10, shapes: [{ d: rr(-32, -29, 64, 58, 26), fill: '$outfitPrimary' }] },
-      north: { z: 10, shapes: [{ d: rr(-32, -29, 64, 58, 26), fill: '$outfitPrimary' }] },
-      east: { z: 10, shapes: [{ d: rr(-25, -29, 50, 58, 22), fill: '$outfitPrimary' }] },
+      south: { z: 10, shapes: [{ d: rr(-32, -29, 64, 58, 26), fill: '$outfitPrimary' }, { d: ellipse(0, 20, 20, 8), fill: '#00000012', silhouette: false }] },
+      north: { z: 10, shapes: [{ d: rr(-32, -29, 64, 58, 26), fill: '$outfitPrimary' }, { d: ellipse(0, 20, 20, 8), fill: '#00000012', silhouette: false }] },
+      east: { z: 10, shapes: [{ d: rr(-25, -29, 50, 58, 22), fill: '$outfitPrimary' }, { d: ellipse(0, 20, 15, 8), fill: '#00000012', silhouette: false }] },
     },
   },
 ];
@@ -96,12 +96,12 @@ const HAIR: PartDef[] = [
     slot: 'hair',
     anchor: 'headCenter',
     facings: {
-      south: { z: 50, shapes: [{ d: topCap(21, -4), fill: '$hair' }] },
+      south: { z: 50, shapes: [{ d: topCap(21, -8), fill: '$hair' }] },
       east: {
         z: 50,
         shapes: [
-          { d: topCap(21, -4), fill: '$hair' },
-          { d: rr(-21, -6, 8, 14, 4), fill: '$hair' }, // back of head
+          { d: topCap(21, -8), fill: '$hair' },
+          { d: rr(-21, -9, 8, 17, 4), fill: '$hair' }, // back of head
         ],
       },
       north: { z: 50, shapes: [{ d: topCap(21, 7), fill: '$hair' }] },
@@ -142,12 +142,12 @@ const HAIR: PartDef[] = [
     slot: 'hair',
     anchor: 'headCenter',
     facings: {
-      south: { z: 50, shapes: [{ d: topCap(21, -4), fill: '$hair' }, { d: circle(0, -26, 8), fill: '$hair' }] },
+      south: { z: 50, shapes: [{ d: topCap(21, -8), fill: '$hair' }, { d: circle(0, -26, 8), fill: '$hair' }] },
       east: {
         z: 50,
         shapes: [
-          { d: topCap(21, -4), fill: '$hair' },
-          { d: rr(-21, -6, 8, 12, 4), fill: '$hair' },
+          { d: topCap(21, -8), fill: '$hair' },
+          { d: rr(-21, -9, 8, 15, 4), fill: '$hair' },
           { d: circle(-15, -19, 8), fill: '$hair' },
         ],
       },
@@ -163,7 +163,7 @@ const HAIR: PartDef[] = [
       south: {
         z: 50,
         shapes: [
-          { d: topCap(21, -4), fill: '$hair' },
+          { d: topCap(21, -8), fill: '$hair' },
           { d: circle(-15, -9, 9), fill: '$hair' },
           { d: circle(-8, -16, 9), fill: '$hair' },
           { d: circle(0, -18, 9), fill: '$hair' },
@@ -174,7 +174,7 @@ const HAIR: PartDef[] = [
       east: {
         z: 50,
         shapes: [
-          { d: topCap(21, -4), fill: '$hair' },
+          { d: topCap(21, -8), fill: '$hair' },
           { d: circle(-12, -12, 9), fill: '$hair' },
           { d: circle(-2, -17, 9), fill: '$hair' },
           { d: circle(9, -14, 9), fill: '$hair' },
@@ -201,11 +201,11 @@ const HAIR: PartDef[] = [
       south: {
         z: 50,
         shapes: [
-          { d: ellipse(-19, 3, 5, 9), fill: '$hair' },
-          { d: ellipse(19, 3, 5, 9), fill: '$hair' },
+          { d: ellipse(-19.5, 5, 4.5, 7.5), fill: '$hair' },
+          { d: ellipse(19.5, 5, 4.5, 7.5), fill: '$hair' },
         ],
       },
-      east: { z: 50, shapes: [{ d: ellipse(-16, 3, 6, 9), fill: '$hair' }] },
+      east: { z: 50, shapes: [{ d: ellipse(-16, 5, 5.5, 7.5), fill: '$hair' }] },
       north: {
         z: 50,
         shapes: [
@@ -253,7 +253,7 @@ const OUTFITS: PartDef[] = [
       },
       east: {
         z: 20,
-        shapes: [{ d: `M 12 -28 L 18 -12 L 21 -28 Z`, fill: '$outfitSecondary', silhouette: false }],
+        shapes: [{ d: `M 9 -28 L 14 -13 L 17 -28 Z`, fill: '$outfitSecondary', silhouette: false }],
       },
     },
   },
@@ -276,7 +276,7 @@ const OUTFITS: PartDef[] = [
       },
       east: {
         z: 20,
-        shapes: [{ d: `M 11 -29 L 17 -17 L 20 -29 Z`, fill: '$outfitSecondary', silhouette: false }],
+        shapes: [{ d: `M 8 -29 L 13 -18 L 16 -29 Z`, fill: '$outfitSecondary', silhouette: false }],
       },
     },
   },
@@ -322,8 +322,8 @@ const OUTFITS: PartDef[] = [
       east: {
         z: 20,
         shapes: [
-          { d: `M 12 -28 L 17 -14 L 20 -28 Z`, fill: '$outfitSecondary', silhouette: false },
-          { d: `M 15 -22 L 18 -10 L 14 -8 Z`, fill: '$accent', silhouette: false },
+          { d: `M 9 -28 L 13 -15 L 16 -28 Z`, fill: '$outfitSecondary', silhouette: false },
+          { d: `M 11 -23 L 14 -11 L 10 -9 Z`, fill: '$accent', silhouette: false },
         ],
       },
     },
@@ -379,8 +379,8 @@ const ACCESSORIES: PartDef[] = [
       east: {
         z: 30,
         shapes: [
-          { d: `M 12 -27 L 14 -8`, stroke: '$accent', strokeWidth: 2.5, silhouette: false },
-          { d: rr(10, -8, 9, 11, 2), fill: '#F7F4EC', silhouette: false },
+          { d: `M 10 -27 L 12 -8`, stroke: '$accent', strokeWidth: 2.5, silhouette: false },
+          { d: rr(7, -8, 9, 11, 2), fill: '#F7F4EC', silhouette: false },
         ],
       },
     },

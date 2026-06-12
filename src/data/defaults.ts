@@ -1,4 +1,4 @@
-import type { CharacterRecipe, ProjectState, PropInstance, StyleSheet } from '../core/types';
+import type { CharacterRecipe, ProjectState, PropInstance, StyleSheet, TileInstance } from '../core/types';
 
 export const DEFAULT_STYLE: StyleSheet = {
   outline: {
@@ -148,7 +148,7 @@ export const DEFAULT_PROPS: PropInstance[] = [
     id: 'prop-conference-table',
     name: 'Conference table',
     templateId: 'conference-table',
-    params: { width: 110, chairs: 2 },
+    params: { width: 110, chairs: 6 },
     palette: { primary: '#6E4A2A', secondary: '#5F5E5A', accent: '#444441' },
   },
   {
@@ -169,7 +169,7 @@ export const DEFAULT_PROPS: PropInstance[] = [
     id: 'prop-office-chair',
     name: 'Office chair',
     templateId: 'office-chair',
-    params: { backHeight: 30 },
+    params: { size: 13 },
     palette: { primary: '#444441', secondary: '#888780', accent: '#2C2C2A' },
   },
   {
@@ -188,11 +188,68 @@ export const DEFAULT_PROPS: PropInstance[] = [
   },
 ];
 
+export const DEFAULT_WALLS: TileInstance[] = [
+  {
+    id: 'wall-office',
+    name: 'Office wall',
+    templateId: 'office-wall',
+    params: { thickness: 18 },
+    palette: { primary: '#B4B2A9', secondary: '#888780', accent: '#5F5E5A' },
+  },
+  {
+    id: 'wall-glass',
+    name: 'Glass partition',
+    templateId: 'glass-partition',
+    params: { thickness: 10 },
+    palette: { primary: '#5F5E5A', secondary: '#B5D4F4', accent: '#185FA5' },
+  },
+  {
+    id: 'wall-cubicle',
+    name: 'Cubicle partition',
+    templateId: 'cubicle-partition',
+    params: { thickness: 14 },
+    palette: { primary: '#8A9199', secondary: '#5F5E5A', accent: '#D85A30' },
+  },
+];
+
+export const DEFAULT_FLOORS: TileInstance[] = [
+  {
+    id: 'floor-carpet',
+    name: 'Office carpet',
+    templateId: 'carpet',
+    params: { speckle: 2, seed: 3 },
+    palette: { primary: '#667687', secondary: '#8B9AA8', accent: '#4E5B69' },
+  },
+  {
+    id: 'floor-carpet-tiles',
+    name: 'Lobby carpet tiles',
+    templateId: 'carpet-tiles',
+    params: { contrast: 2 },
+    palette: { primary: '#7A6C5D', secondary: '#8A8578', accent: '#5F5E5A' },
+  },
+  {
+    id: 'floor-wood',
+    name: 'Executive wood',
+    templateId: 'wood-floor',
+    params: { seed: 5 },
+    palette: { primary: '#A9714B', secondary: '#6E4A2A', accent: '#C68B59' },
+  },
+  {
+    id: 'floor-linoleum',
+    name: 'Break room linoleum',
+    templateId: 'linoleum',
+    params: { grid: 32 },
+    palette: { primary: '#E8E4D8', secondary: '#D3D1C7', accent: '#B4B2A9' },
+  },
+];
+
 export function defaultProject(): ProjectState {
   return {
     version: 1,
     style: structuredClone(DEFAULT_STYLE),
     characters: structuredClone(DEFAULT_CAST),
     props: structuredClone(DEFAULT_PROPS),
+    walls: structuredClone(DEFAULT_WALLS),
+    floors: structuredClone(DEFAULT_FLOORS),
   };
 }

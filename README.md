@@ -34,6 +34,29 @@ the top bar to move a project between machines or check it into git.
   cooler, printer, desk, coffee machine, office plant, break room fridge, conference
   table, reception desk, badge reader (with granted/denied light), office chair,
   whiteboard, and filing cabinet.
+
+  Props follow the RimWorld hybrid-projection convention, tagged per template:
+  - **Plan** (top-down): desk, conference table, office chair, reception desk.
+    Pivot at center, render on the furniture layer below characters, rotate freely
+    in-engine (one sprite = all four orientations).
+  - **Elevation** (front view): everything else. Pivot at the base (y = 0.09, same
+    ground line as characters), y-sort with characters, never rotate.
+  The rule for new templates: if characters stand behind/around/on it → plan;
+  tall with a small footprint and only approached from the front → elevation.
+  The projection ships in each prop's atlas JSON (`projection`, `pivot`,
+  `meta.sorting`, `meta.rotatable`).
+
+- **Walls & Floors** — autotiling walls and seamless floor tiles.
+  - Walls (office wall, glass partition, cubicle partition) are 16-piece
+    autotile sets indexed by a 4-bit neighbor mask (N=1, E=2, S=4, W=8): place
+    a wall in the grid, look up its neighbors, pick frame `mask_<n>` from the
+    tileset. Sheets are 4×4, mask = row*4+col; connected arms overdraw the tile
+    edge so outlines stay continuous across tiles. The preview shows a sample
+    room assembled from the set.
+  - Floors (carpet, carpet tiles, wood, linoleum) are single seamless tiles —
+    patterns wrap at the edges (speckles and plank seams repeat across the
+    boundary). Floors render flat with no outline pass and sit on the
+    bottom layer. The preview tiles 3×2 to prove seamlessness.
 - **Style** — the global style sheet: outline width/color/mode, head scale, body width,
   base sprite size, and the palette pools that feed the randomizer. Every control
   restyles all characters and props live.
@@ -49,6 +72,9 @@ characters/<name>/moods@{1,2,4}x.png        # 6 mood rows x 4 facing columns
 characters/<name>/moods-atlas@{1,2,4}x.json # frames keyed "<mood>_<facing>"
 characters/<name>/recipe.json
 props/<name>/sprite@{1,2,4}x.png
+walls/<name>/tileset@{1,2,4}x.png           # 4x4 sheet, frames keyed mask_0..mask_15
+walls/<name>/atlas@{1,2,4}x.json            # mask bits, frame rects, human names
+floors/<name>/tile@{1,2,4}x.png             # seamless, tileable: true in atlas
 project.json                                # full regenerable project state
 ```
 
@@ -78,6 +104,9 @@ in-game is slide/bob between waypoints plus facing swaps.
   conventions documented at the top of that file. Fills must use `$token` palette
   references — never hardcode style colors.
 - **New prop**: add a `PropTemplate` in `src/props/templates.ts`.
+- **New wall or floor**: add a `WallTemplate` / `FloorTemplate` in
+  `src/tiles/templates.ts`. Walls build per neighbor-mask; floors must wrap
+  at the tile edges (draw ±128 copies of anything near an edge).
 - **New or adjusted mood**: edit `MOOD_OVERLAYS` in `src/parts/moods.ts` (and the
   `Mood` union in `src/core/types.ts` if adding one). Overlays are brow/mouth strokes
   at the headCenter anchor, z 45 (over the head, under hair).

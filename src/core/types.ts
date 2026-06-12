@@ -80,11 +80,23 @@ export interface PropParamDef {
   default: number;
 }
 
+/**
+ * How a prop is projected, RimWorld-style. 'plan' = seen from above: pivot at
+ * center, renders on the furniture layer below characters, rotates freely in
+ * the engine. 'elevation' = seen from the front: pivot at the base, y-sorts
+ * with characters, never rotates.
+ */
+export type Projection = 'plan' | 'elevation';
+
 export interface PropTemplate {
   id: string;
   label: string;
+  projection: Projection;
   params: PropParamDef[];
-  /** Build shapes in canvas coords (128 design units, ground at y=116). */
+  /**
+   * Build shapes in canvas coords (128 design units). Elevation props rest on
+   * the ground line y=116; plan props center their footprint on the canvas.
+   */
   build(params: Record<string, number>, palette: PropPalette): ShapeSpec[];
 }
 
@@ -129,11 +141,49 @@ export interface StyleSheet {
   };
 }
 
+/**
+ * Wall neighbor bitmask: N=1, E=2, S=4, W=8. A wall tileset has 16 segments,
+ * one per mask, so walls auto-connect into straights, corners, tees, and
+ * crosses when placed on the grid.
+ */
+export const WALL_BITS = { N: 1, E: 2, S: 4, W: 8 } as const;
+
+export interface WallTemplate {
+  kind: 'wall';
+  id: string;
+  label: string;
+  params: PropParamDef[];
+  /** Build one autotile segment for a neighbor mask. Connected arms overdraw
+   *  the tile edge so outlines stay continuous across tiles. */
+  build(mask: number, params: Record<string, number>, palette: PropPalette): ShapeSpec[];
+}
+
+export interface FloorTemplate {
+  kind: 'floor';
+  id: string;
+  label: string;
+  params: PropParamDef[];
+  /** Build one floor tile. Must tile seamlessly: patterns wrap at the edges
+   *  and floors render flat (no outline pass). */
+  build(params: Record<string, number>, palette: PropPalette): ShapeSpec[];
+}
+
+/** A placed wall/floor style: template + params + palette, same shape as props. */
+export interface TileInstance {
+  id: string;
+  name: string;
+  templateId: string;
+  params: Record<string, number>;
+  palette: PropPalette;
+}
+
 export interface ProjectState {
   version: 1;
   style: StyleSheet;
   characters: CharacterRecipe[];
   props: PropInstance[];
+  walls: TileInstance[];
+  floors: TileInstance[];
 }
 
 /** Design-space canvas size. Parts are authored against this; never changes. */

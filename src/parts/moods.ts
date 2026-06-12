@@ -32,12 +32,12 @@ export const MOOD_OVERLAYS: Record<Mood, Partial<Record<Facing, ShapeSpec[]>>> =
   // Raised brows, small round mouth.
   curious: {
     south: [
-      brow('M -12 -9 Q -8 -12 -4 -9'),
-      brow('M 4 -9 Q 8 -12 12 -9'),
+      brow('M -12 -7 Q -8 -10 -4 -7'),
+      brow('M 4 -7 Q 8 -10 12 -7'),
       { d: 'M -2 11 a 2 2.4 0 1 0 4 0 a 2 2.4 0 1 0 -4 0 Z', fill: INK, silhouette: false },
     ],
     east: [
-      brow('M 6 -9 Q 10 -12 15 -9'),
+      brow('M 6 -7 Q 10 -10 15 -7'),
       { d: 'M 12 11 a 2 2.4 0 1 0 4 0 a 2 2.4 0 1 0 -4 0 Z', fill: INK, silhouette: false },
     ],
   },
@@ -45,30 +45,30 @@ export const MOOD_OVERLAYS: Record<Mood, Partial<Record<Facing, ShapeSpec[]>>> =
   // Worried: brows slanted up-and-out, short guarded mouth.
   defensive: {
     south: [
-      brow('M -12 -9 L -4 -6'),
-      brow('M 4 -6 L 12 -9'),
+      brow('M -12 -8 L -4 -5'),
+      brow('M 4 -5 L 12 -8'),
       mouth('M -3 11 L 3 11'),
     ],
-    east: [brow('M 6 -6 L 15 -9'), mouth('M 12 11 L 17 11')],
+    east: [brow('M 6 -5 L 15 -8'), mouth('M 12 11 L 17 11')],
   },
 
   // Angry: brows slanted down toward the nose, deep frown.
   hostile: {
     south: [
-      brow('M -12 -9 L -4 -5'),
-      brow('M 4 -5 L 12 -9'),
+      brow('M -12 -8 L -4 -4'),
+      brow('M 4 -4 L 12 -8'),
       mouth('M -5 13 Q 0 9 5 13'),
     ],
-    east: [brow('M 6 -9 L 15 -5'), mouth('M 10 13 Q 14 9 17 13')],
+    east: [brow('M 6 -8 L 15 -4'), mouth('M 10 13 Q 14 9 17 13')],
   },
 
   // One brow up, one pressed down, squiggle mouth.
   confused: {
     south: [
-      brow('M -12 -9 Q -8 -11 -4 -8'),
+      brow('M -12 -7 Q -8 -9 -4 -6'),
       brow('M 4 -5 L 12 -6'),
       mouth('M -4 11 Q -2 9 0 11 Q 2 13 4 11'),
     ],
-    east: [brow('M 6 -8 Q 10 -10 14 -7'), mouth('M 10 11 Q 12 9 14 11 Q 16 13 17 11')],
+    east: [brow('M 6 -6 Q 10 -8 14 -5'), mouth('M 10 11 Q 12 9 14 11 Q 16 13 17 11')],
   },
 };

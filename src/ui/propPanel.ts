@@ -1,6 +1,6 @@
 import type { PropPaletteToken } from '../core/types';
 import { composeProp } from '../core/compositor';
-import { downloadBlob, downloadJson, propPng } from '../core/exporter';
+import { downloadBlob, downloadJson, propAtlas, propPng } from '../core/exporter';
 import { PROP_TEMPLATES } from '../props/templates';
 import { store } from '../state';
 import { button, clear, colorInput, el, labeled, select, slider } from './dom';
@@ -92,6 +92,14 @@ export function renderPropControls(container: HTMLElement): void {
         onInput: (e: Event) => store.mutate(() => (prop.name = (e.target as HTMLInputElement).value), 'data'),
       }),
     ),
+    labeled(
+      'Projection',
+      el(
+        'span',
+        { className: `projection-badge ${template.projection}` },
+        template.projection === 'plan' ? 'Plan (top-down, rotatable)' : 'Elevation (front, y-sorted)',
+      ),
+    ),
   );
 
   for (const param of template.params) {
@@ -156,6 +164,12 @@ export function renderPropControls(container: HTMLElement): void {
         const blob = await propPng(prop, store.state.style, store.ui.exportScale);
         downloadBlob(`${prop.name.toLowerCase().replace(/\s+/g, '-')}@${store.ui.exportScale}x.png`, blob);
       }, 'primary'),
+      button('Atlas JSON', () =>
+        downloadJson(
+          `${prop.name.toLowerCase().replace(/\s+/g, '-')}-atlas@${store.ui.exportScale}x.json`,
+          propAtlas(prop, store.state.style, store.ui.exportScale),
+        ),
+      ),
       button('Prop JSON', () => downloadJson(`${prop.name.toLowerCase().replace(/\s+/g, '-')}.json`, prop)),
     ),
   );

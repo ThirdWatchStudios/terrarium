@@ -211,6 +211,72 @@ body {
   display: flex;
 }
 
+.list-heading {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  padding: 10px 12px 4px;
+}
+
+.preview-caption {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin: 0 0 8px;
+}
+
+.tile-room {
+  display: grid;
+  gap: 0;
+  width: max-content;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 20px;
+}
+
+.tile-cell {
+  display: block;
+  line-height: 0;
+}
+
+.tile-cell svg {
+  display: block;
+}
+
+.tile-sheet {
+  display: grid;
+  grid-template-columns: repeat(8, 56px);
+  gap: 6px;
+  width: max-content;
+}
+
+.tile-sheet-cell {
+  border-radius: 6px;
+  line-height: 0;
+}
+
+.tile-repeat {
+  display: grid;
+  grid-template-columns: repeat(3, 88px);
+  gap: 0;
+  width: max-content;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.projection-badge {
+  display: inline-block;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+}
+
+.projection-badge.plan {
+  border-color: var(--accent-dim);
+}
+
 .mood-bar {
   display: flex;
   gap: 6px;

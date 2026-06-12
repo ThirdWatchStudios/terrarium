@@ -1,5 +1,5 @@
 import type { PropTemplate, ShapeSpec } from '../core/types';
-import { rr, circle } from '../core/geometry';
+import { rr, circle, ellipse } from '../core/geometry';
 
 /**
  * Parametric prop templates. Conventions:
@@ -14,6 +14,7 @@ const CX = 64;
 const waterCooler: PropTemplate = {
   id: 'water-cooler',
   label: 'Water cooler',
+  projection: 'elevation',
   params: [{ key: 'height', label: 'Body height', min: 44, max: 68, step: 2, default: 56 }],
   build(params) {
     const bodyH = params.height;
@@ -30,7 +31,7 @@ const waterCooler: PropTemplate = {
       // drip tray
       { d: rr(CX - 11, bodyTop + 26, 22, 4, 2), fill: '#00000026', silhouette: false },
       // bottle waterline glint
-      { d: rr(CX - 10, bodyTop - 28, 6, 18, 3), fill: '#FFFFFF55', silhouette: false },
+      { d: rr(CX - 9, bodyTop - 27, 5, 14, 2.5), fill: '#FFFFFF40', silhouette: false },
     ];
     return shapes;
   },
@@ -39,6 +40,7 @@ const waterCooler: PropTemplate = {
 const printer: PropTemplate = {
   id: 'printer',
   label: 'Printer',
+  projection: 'elevation',
   params: [{ key: 'width', label: 'Width', min: 44, max: 72, step: 2, default: 56 }],
   build(params) {
     const w = params.width;
@@ -62,33 +64,36 @@ const printer: PropTemplate = {
 const desk: PropTemplate = {
   id: 'desk',
   label: 'Desk',
+  projection: 'plan',
   params: [
     { key: 'width', label: 'Width', min: 72, max: 120, step: 4, default: 100 },
     { key: 'monitor', label: 'Monitor', min: 0, max: 1, step: 1, default: 1 },
   ],
   build(params) {
-    const w = params.width;
+    const w = params.width ?? 100;
     const x = CX - w / 2;
-    const topY = 78;
-    const shapes: ShapeSpec[] = [];
-    if (params.monitor >= 1) {
+    const top = 34;
+    const depth = 60;
+    const shapes: ShapeSpec[] = [
+      // desktop seen from above
+      { d: rr(x, top, w, depth, 6), fill: '$primary' },
+      // soft grain band
+      { d: `M ${x + 10} ${top + depth / 2} L ${x + w - 10} ${top + depth / 2}`, stroke: '#00000010', strokeWidth: 10, silhouette: false },
+    ];
+    if ((params.monitor ?? 1) >= 1) {
       shapes.push(
-        { d: rr(CX - 19, topY - 40, 38, 27, 3), fill: '#2C2C2A' },
-        { d: rr(CX - 15, topY - 36, 30, 19, 1.5), fill: '$secondary', silhouette: false },
-        { d: rr(CX - 2.5, topY - 13, 5, 7, 1), fill: '#2C2C2A' },
-        { d: rr(CX - 9, topY - 6, 18, 3, 1.5), fill: '#2C2C2A' },
-        // keyboard
-        { d: rr(CX - 16, topY - 4, 32, 4, 1.5), fill: '$accent', silhouette: false },
+        // monitor from above: slim bar near the far edge + stand foot
+        { d: rr(CX - 22, top + 8, 44, 9, 2), fill: '#2C2C2A', silhouette: false },
+        { d: rr(CX - 4, top + 17, 8, 4, 1.5), fill: '#2C2C2A', silhouette: false },
+        // keyboard + mouse
+        { d: rr(CX - 18, top + 28, 36, 13, 2), fill: '$secondary', silhouette: false },
+        { d: ellipse(CX + 26, top + 34, 3.5, 5), fill: '$secondary', silhouette: false },
       );
     }
+    // coffee mug, seen from above
     shapes.push(
-      // slab
-      { d: rr(x, topY, w, 8, 3), fill: '$primary' },
-      // legs
-      { d: rr(x + 4, topY + 8, 7, GROUND - topY - 8, 2), fill: '$primary' },
-      { d: rr(x + w - 11, topY + 8, 7, GROUND - topY - 8, 2), fill: '$primary' },
-      // modesty panel
-      { d: rr(x + 14, topY + 8, w - 28, 20, 2), fill: '$primary', opacity: 0.55, silhouette: false },
+      { d: circle(x + w - 13, top + 14, 5), fill: '$accent', silhouette: false },
+      { d: circle(x + w - 13, top + 14, 2), fill: '#6E4A2A', silhouette: false },
     );
     return shapes;
   },
@@ -97,6 +102,7 @@ const desk: PropTemplate = {
 const coffeeMachine: PropTemplate = {
   id: 'coffee-machine',
   label: 'Coffee machine',
+  projection: 'elevation',
   params: [{ key: 'height', label: 'Height', min: 40, max: 56, step: 2, default: 48 }],
   build(params) {
     const h = params.height;
@@ -121,6 +127,7 @@ const coffeeMachine: PropTemplate = {
 const officePlant: PropTemplate = {
   id: 'office-plant',
   label: 'Office plant',
+  projection: 'elevation',
   params: [{ key: 'bushiness', label: 'Bushiness', min: 1, max: 3, step: 1, default: 2 }],
   build(params) {
     const shapes: ShapeSpec[] = [
@@ -147,6 +154,7 @@ const officePlant: PropTemplate = {
 const fridge: PropTemplate = {
   id: 'fridge',
   label: 'Break room fridge',
+  projection: 'elevation',
   params: [{ key: 'height', label: 'Height', min: 66, max: 90, step: 2, default: 78 }],
   build(params) {
     const h = params.height;
@@ -171,27 +179,37 @@ const fridge: PropTemplate = {
 const conferenceTable: PropTemplate = {
   id: 'conference-table',
   label: 'Conference table',
+  projection: 'plan',
   params: [
     { key: 'width', label: 'Width', min: 84, max: 120, step: 4, default: 110 },
-    { key: 'chairs', label: 'Chairs', min: 0, max: 4, step: 1, default: 2 },
+    { key: 'chairs', label: 'Chairs', min: 0, max: 8, step: 1, default: 6 },
   ],
   build(params) {
-    const w = params.width;
+    const w = params.width ?? 110;
     const x = CX - w / 2;
-    const topY = 82;
+    const top = 42;
+    const depth = 44;
     const shapes: ShapeSpec[] = [];
-    // chair backs peeking over the far side
-    const chairs = params.chairs;
-    for (let i = 0; i < chairs; i++) {
-      const cx = x + ((i + 1) * w) / (chairs + 1);
-      shapes.push({ d: rr(cx - 9, topY - 22, 18, 24, 6), fill: '$accent' });
-    }
+    // chairs tucked around the table, drawn first so the tabletop overlaps them
+    const chairs = params.chairs ?? 6;
+    const nTop = Math.ceil(chairs / 2);
+    const nBottom = chairs - nTop;
+    const chair = (cx: number, cy: number, away: 1 | -1) => {
+      shapes.push(
+        { d: circle(cx, cy, 9), fill: '$accent' },
+        {
+          d: `M ${cx - 9.5} ${cy + 3 * away} A 11 11 0 0 ${away > 0 ? 0 : 1} ${cx + 9.5} ${cy + 3 * away}`,
+          stroke: '$accent',
+          strokeWidth: 4,
+        },
+      );
+    };
+    for (let i = 0; i < nTop; i++) chair(x + ((i + 1) * w) / (nTop + 1), top - 6, -1);
+    for (let i = 0; i < nBottom; i++) chair(x + ((i + 1) * w) / (nBottom + 1), top + depth + 6, 1);
     shapes.push(
-      // slab
-      { d: rr(x, topY, w, 9, 4), fill: '$primary' },
-      // end panels
-      { d: rr(x + 6, topY + 9, 8, GROUND - topY - 9, 2), fill: '$secondary' },
-      { d: rr(x + w - 14, topY + 9, 8, GROUND - topY - 9, 2), fill: '$secondary' },
+      { d: rr(x, top, w, depth, 12), fill: '$primary' },
+      // tabletop inset
+      { d: rr(x + 8, top + 8, w - 16, depth - 16, 8), fill: '#00000010', silhouette: false },
     );
     return shapes;
   },
@@ -200,24 +218,23 @@ const conferenceTable: PropTemplate = {
 const receptionDesk: PropTemplate = {
   id: 'reception-desk',
   label: 'Reception desk',
+  projection: 'plan',
   params: [{ key: 'width', label: 'Width', min: 72, max: 104, step: 4, default: 88 }],
   build(params) {
-    const w = params.width;
+    const w = params.width ?? 88;
     const x = CX - w / 2;
-    const counterY = 64;
+    const top = 40;
     return [
-      // service bell
-      { d: `M ${CX + w / 2 - 18} ${counterY} A 4 4 0 0 1 ${CX + w / 2 - 10} ${counterY} Z`, fill: '$accent' },
-      // counter top, proud of the front panel
-      { d: rr(x - 5, counterY, w + 10, 8, 3), fill: '$secondary' },
-      // front panel
-      { d: rr(x, counterY + 8, w, GROUND - counterY - 8, 4), fill: '$primary' },
-      // shadow under the counter overhang
-      { d: `M ${x + 2} ${counterY + 10} L ${x + w - 2} ${counterY + 10}`, stroke: '#00000026', strokeWidth: 2.5, silhouette: false },
-      // company plaque
-      { d: rr(CX - 16, counterY + 22, 32, 12, 2), fill: '$secondary', silhouette: false },
-      // kick line
-      { d: `M ${x + 4} ${GROUND - 6} L ${x + w - 4} ${GROUND - 6}`, stroke: '#00000022', strokeWidth: 2, silhouette: false },
+      // L-shaped counter: front run + side return the receptionist sits behind
+      { d: rr(x, top, w, 24, 6), fill: '$primary' },
+      { d: rr(x, top, 24, 64, 6), fill: '$primary' },
+      // counter surface inset
+      { d: rr(x + 4, top + 4, w - 8, 16, 4), fill: '#00000010', silhouette: false },
+      // receptionist monitor on the return, seen from above
+      { d: rr(x + 6, top + 34, 12, 22, 2), fill: '#2C2C2A', silhouette: false },
+      // service bell on the front counter
+      { d: circle(x + w - 16, top + 12, 4.5), fill: '$accent', silhouette: false },
+      { d: circle(x + w - 16, top + 12, 1.6), fill: '#00000033', silhouette: false },
     ];
   },
 };
@@ -225,6 +242,7 @@ const receptionDesk: PropTemplate = {
 const badgeReader: PropTemplate = {
   id: 'badge-reader',
   label: 'Badge reader',
+  projection: 'elevation',
   params: [{ key: 'granted', label: 'Access granted', min: 0, max: 1, step: 1, default: 1 }],
   build(params) {
     const light = params.granted >= 1 ? '#97C459' : '#E24B4A';
@@ -250,25 +268,25 @@ const badgeReader: PropTemplate = {
 const officeChair: PropTemplate = {
   id: 'office-chair',
   label: 'Office chair',
-  params: [{ key: 'backHeight', label: 'Back height', min: 24, max: 40, step: 2, default: 30 }],
+  projection: 'plan',
+  params: [{ key: 'size', label: 'Seat size', min: 10, max: 16, step: 1, default: 13 }],
   build(params) {
-    const bh = params.backHeight;
-    const seatY = 88;
+    const r = params.size ?? 13;
+    const cy = 64;
     return [
-      // backrest
-      { d: rr(CX - 14, seatY - bh - 4, 28, bh, 8), fill: '$primary' },
-      // seat
-      { d: rr(CX - 18, seatY, 36, 10, 4), fill: '$primary' },
+      // backrest: thick arc on the south edge (rotate in-engine to face the desk)
+      {
+        d: `M ${CX - r - 2.5} ${cy + r * 0.4} A ${r + 3.5} ${r + 3.5} 0 0 0 ${CX + r + 2.5} ${cy + r * 0.4}`,
+        stroke: '$accent',
+        strokeWidth: 5,
+      },
       // armrests
-      { d: rr(CX - 24, seatY - 10, 5, 12, 2), fill: '$secondary' },
-      { d: rr(CX + 19, seatY - 10, 5, 12, 2), fill: '$secondary' },
-      // gas lift
-      { d: rr(CX - 2.5, seatY + 10, 5, 10, 1), fill: '$secondary' },
-      // star base + casters
-      { d: `M ${CX} ${seatY + 20} L ${CX - 18} ${GROUND - 4} M ${CX} ${seatY + 20} L ${CX + 18} ${GROUND - 4} M ${CX} ${seatY + 20} L ${CX} ${GROUND - 3}`, stroke: '$secondary', strokeWidth: 4 },
-      { d: circle(CX - 18, GROUND - 3, 3), fill: '$accent' },
-      { d: circle(CX, GROUND - 2, 3), fill: '$accent' },
-      { d: circle(CX + 18, GROUND - 3, 3), fill: '$accent' },
+      { d: rr(CX - r - 5, cy - 7, 4.5, 14, 2), fill: '$secondary' },
+      { d: rr(CX + r + 0.5, cy - 7, 4.5, 14, 2), fill: '$secondary' },
+      // seat
+      { d: circle(CX, cy, r), fill: '$primary' },
+      // cushion inset
+      { d: circle(CX, cy, r - 5), fill: '#00000014', silhouette: false },
     ];
   },
 };
@@ -276,6 +294,7 @@ const officeChair: PropTemplate = {
 const whiteboard: PropTemplate = {
   id: 'whiteboard',
   label: 'Whiteboard',
+  projection: 'elevation',
   params: [
     { key: 'width', label: 'Width', min: 52, max: 76, step: 4, default: 64 },
     { key: 'scribbles', label: 'Scribbles', min: 0, max: 3, step: 1, default: 2 },
@@ -311,6 +330,7 @@ const whiteboard: PropTemplate = {
 const filingCabinet: PropTemplate = {
   id: 'filing-cabinet',
   label: 'Filing cabinet',
+  projection: 'elevation',
   params: [{ key: 'drawers', label: 'Drawers', min: 2, max: 4, step: 1, default: 3 }],
   build(params) {
     const drawers = params.drawers;

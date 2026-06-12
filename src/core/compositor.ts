@@ -8,11 +8,13 @@ import type {
   ShapeSpec,
   StyleSheet,
 } from './types';
-import type { Mood } from './types';
+import type { Mood, TileInstance } from './types';
 import { CANVAS } from './types';
+import { ellipse } from './geometry';
 import { getPart } from '../parts/library';
 import { MOOD_OVERLAYS } from '../parts/moods';
 import { PROP_TEMPLATES } from '../props/templates';
+import { FLOOR_TEMPLATES, WALL_TEMPLATES } from '../tiles/templates';
 
 /**
  * Named attachment points in canvas coordinates, per facing. Moving an anchor
@@ -122,6 +124,23 @@ function placeParts(recipe: CharacterRecipe, facing: Facing, mood: Mood): Placed
       group: HEAD_ANCHORS.includes(part.anchor) ? 'head' : 'body',
     });
   }
+  // Soft neck shadow cast by the head onto the chest — automatic for every
+  // character, sized per facing, scales with bodyWidth via the body group.
+  placed.push({
+    variant: {
+      shapes: [
+        {
+          d: ellipse(0, -22, facing === 'east' ? 9 : 12, 4),
+          fill: '#00000018',
+          silhouette: false,
+        },
+      ],
+      z: 35,
+    },
+    anchor: ANCHORS[facing].body,
+    group: 'body',
+  });
+
   const moodShapes = MOOD_OVERLAYS[mood][facing];
   if (moodShapes && moodShapes.length > 0) {
     placed.push({
@@ -209,6 +228,103 @@ export function composeCharacter(
     inner = `<g transform="translate(${CANVAS} 0) scale(-1 1)">${inner}</g>`;
   }
   return svgWrap(inner, pixelSize ?? style.render.baseSize);
+}
+
+/** Render one wall autotile segment (neighbor mask N=1,E=2,S=4,W=8). */
+export function composeWallTile(
+  wall: TileInstance,
+  style: StyleSheet,
+  mask: number,
+  pixelSize?: number,
+): string {
+  const template = WALL_TEMPLATES.find((t) => t.id === wall.templateId);
+  if (!template) return svgWrap('', pixelSize ?? style.render.baseSize);
+  const shapes = template.build(mask, wall.params, wall.palette);
+  const resolve = makePropResolver(wall.palette);
+  const outline =
+    style.outline.width > 0
+      ? shapes
+          .filter(shapeIsSilhouette)
+          .map((s) => emitOutlineShape(s, style))
+          .join('')
+      : '';
+  const color = shapes.map((s) => emitColorShape(s, resolve)).join('');
+  return svgWrap(outline + color, pixelSize ?? style.render.baseSize);
+}
+
+/** Render a floor tile: flat pattern, no outline pass, seamlessly tileable. */
+export function composeFloorTile(floor: TileInstance, style: StyleSheet, pixelSize?: number): string {
+  const template = FLOOR_TEMPLATES.find((t) => t.id === floor.templateId);
+  if (!template) return svgWrap('', pixelSize ?? style.render.baseSize);
+  const shapes = template.build(floor.params, floor.palette);
+  const resolve = makePropResolver(floor.palette);
+  return svgWrap(shapes.map((s) => emitColorShape(s, resolve)).join(''), pixelSize ?? style.render.baseSize);
+}
+
+/**
+ * Render a whole demo room as ONE svg from a wall layout grid (1 = wall).
+ * Masks are computed from neighbors; a single unified outline pass runs under
+ * all cells, so runs read as continuous walls with no per-tile seams.
+ */
+export function composeWallRoom(
+  wall: TileInstance,
+  style: StyleSheet,
+  layout: number[][],
+  cellPixelSize: number,
+): string {
+  const template = WALL_TEMPLATES.find((t) => t.id === wall.templateId);
+  const rows = layout.length;
+  const cols = layout[0]?.length ?? 0;
+  const width = cellPixelSize * cols;
+  const height = cellPixelSize * rows;
+  const head =
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${cols * CANVAS} ${rows * CANVAS}" ` +
+    `width="${width}" height="${height}">`;
+  if (!template) return `${head}</svg>`;
+
+  const at = (r: number, c: number) => layout[r]?.[c] === 1;
+  const cells: Array<{ r: number; c: number; shapes: ShapeSpec[] }> = [];
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      if (!at(r, c)) continue;
+      const mask = (at(r - 1, c) ? 1 : 0) | (at(r, c + 1) ? 2 : 0) | (at(r + 1, c) ? 4 : 0) | (at(r, c - 1) ? 8 : 0);
+      cells.push({ r, c, shapes: template.build(mask, wall.params, wall.palette) });
+    }
+  }
+  const resolve = makePropResolver(wall.palette);
+  const place = (cell: { r: number; c: number }, inner: string) =>
+    inner ? `<g transform="translate(${cell.c * CANVAS} ${cell.r * CANVAS})">${inner}</g>` : '';
+  const outline =
+    style.outline.width > 0
+      ? cells.map((cell) => place(cell, cell.shapes.filter(shapeIsSilhouette).map((s) => emitOutlineShape(s, style)).join(''))).join('')
+      : '';
+  const color = cells.map((cell) => place(cell, cell.shapes.map((s) => emitColorShape(s, resolve)).join(''))).join('');
+  return `${head}${outline}${color}</svg>`;
+}
+
+/** Render a floor tile repeated cols x rows in ONE svg to prove seamlessness. */
+export function composeFloorRepeat(
+  floor: TileInstance,
+  _style: StyleSheet, // floors ignore outline style, kept for signature parity
+  cols: number,
+  rows: number,
+  cellPixelSize: number,
+): string {
+  const template = FLOOR_TEMPLATES.find((t) => t.id === floor.templateId);
+  const head =
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${cols * CANVAS} ${rows * CANVAS}" ` +
+    `width="${cellPixelSize * cols}" height="${cellPixelSize * rows}">`;
+  if (!template) return `${head}</svg>`;
+  const resolve = makePropResolver(floor.palette);
+  const inner = template.build(floor.params, floor.palette).map((s) => emitColorShape(s, resolve)).join('');
+  // solid backing in the base color kills antialiasing hairlines between copies
+  let body = `<rect width="${cols * CANVAS}" height="${rows * CANVAS}" fill="${resolve('$primary')}"/>`;
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      body += `<g transform="translate(${c * CANVAS} ${r * CANVAS})">${inner}</g>`;
+    }
+  }
+  return `${head}${body}</svg>`;
 }
 
 /** Render a prop instance to an SVG string. */
