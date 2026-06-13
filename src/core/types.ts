@@ -141,6 +141,12 @@ export interface StyleSheet {
   };
 }
 
+export interface StylePreset {
+  id: string;
+  name: string;
+  style: StyleSheet;
+}
+
 /**
  * Wall neighbor bitmask: N=1, E=2, S=4, W=8. A wall tileset has 16 segments,
  * one per mask, so walls auto-connect into straights, corners, tees, and
@@ -180,6 +186,7 @@ export interface TileInstance {
 export interface ProjectState {
   version: 1;
   style: StyleSheet;
+  stylePresets: StylePreset[];
   characters: CharacterRecipe[];
   props: PropInstance[];
   walls: TileInstance[];

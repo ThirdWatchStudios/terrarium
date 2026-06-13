@@ -40,7 +40,11 @@ Generate plausible office layouts and furnish them automatically.
   consume directly later.
 - Depends on 1.1 for rendering.
 
-### 1.3 Style presets
+### 1.3 Style presets — DONE
+Implemented with: built-in "Warm office", "Corporate cold", and
+"High-contrast readability" presets, project-persisted custom presets,
+one-click apply/update/delete controls, and a compare view that renders the
+current scene plus character strips side by side across styles.
 Named, saveable style sheets ("Warm office", "Corporate cold", "High-contrast
 readability") with one-click switching and a side-by-side compare view.
 Cheap to build, and it's the payoff of the style-never-baked-into-parts rule.

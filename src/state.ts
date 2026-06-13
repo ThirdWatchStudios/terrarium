@@ -1,7 +1,7 @@
 import type { Mood, ProjectState } from './core/types';
 import type { SceneBrush, SceneFacing } from './core/scene';
 import { createDefaultScene } from './core/scene';
-import { DEFAULT_FLOORS, DEFAULT_PROPS, DEFAULT_WALLS, defaultProject } from './data/defaults';
+import { DEFAULT_FLOORS, DEFAULT_PROPS, DEFAULT_STYLE_PRESETS, DEFAULT_WALLS, defaultProject } from './data/defaults';
 
 const STORAGE_KEY = 'sprite-character-creator-v1';
 
@@ -26,6 +26,9 @@ class Store {
     sceneCoworkers: 4,
     /** Blank = random seed on Generate; shows the seed actually used. */
     sceneSeed: '',
+    selectedStylePresetId: '',
+    styleCompare: false,
+    stylePresetName: '',
   };
   private listeners: Listener[] = [];
 
@@ -34,6 +37,7 @@ class Store {
     this.ui.selectedCharacterId = this.state.characters[0]?.id ?? '';
     this.ui.selectedPropId = this.state.props[0]?.id ?? '';
     this.ui.selectedTileId = this.state.walls[0]?.id ?? this.state.floors[0]?.id ?? '';
+    this.ui.selectedStylePresetId = this.state.stylePresets[0]?.id ?? '';
     this.state.scene ??= createDefaultScene(this.state);
   }
 
@@ -80,6 +84,7 @@ class Store {
     this.ui.selectedCharacterId = next.characters[0]?.id ?? '';
     this.ui.selectedPropId = next.props[0]?.id ?? '';
     this.ui.selectedTileId = next.walls[0]?.id ?? next.floors[0]?.id ?? '';
+    this.ui.selectedStylePresetId = next.stylePresets[0]?.id ?? '';
     next.scene ??= createDefaultScene(next);
     this.save();
     this.emit('structure');
@@ -89,6 +94,12 @@ class Store {
     project.props ??= structuredClone(DEFAULT_PROPS);
     project.walls ??= structuredClone(DEFAULT_WALLS);
     project.floors ??= structuredClone(DEFAULT_FLOORS);
+    project.stylePresets ??= structuredClone(DEFAULT_STYLE_PRESETS);
+    for (const preset of DEFAULT_STYLE_PRESETS) {
+      if (!project.stylePresets.some((item) => item.id === preset.id || item.name === preset.name)) {
+        project.stylePresets.push(structuredClone(preset));
+      }
+    }
     for (const prop of DEFAULT_PROPS) {
       if (!project.props.some((item) => item.id === prop.id || item.templateId === prop.templateId)) {
         project.props.push(structuredClone(prop));

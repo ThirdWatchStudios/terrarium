@@ -1,4 +1,4 @@
-import type { CharacterRecipe, ProjectState, PropInstance, StyleSheet, TileInstance } from '../core/types';
+import type { CharacterRecipe, ProjectState, PropInstance, StylePreset, StyleSheet, TileInstance } from '../core/types';
 
 export const DEFAULT_STYLE: StyleSheet = {
   outline: {
@@ -24,6 +24,64 @@ export const DEFAULT_STYLE: StyleSheet = {
     accent: ['#A32D2D', '#D85A30', '#185FA5', '#3B6D11', '#854F0B', '#2C2C2A'],
   },
 };
+
+export const DEFAULT_STYLE_PRESETS: StylePreset[] = [
+  {
+    id: 'preset-warm-office',
+    name: 'Warm office',
+    style: structuredClone(DEFAULT_STYLE),
+  },
+  {
+    id: 'preset-corporate-cold',
+    name: 'Corporate cold',
+    style: {
+      outline: {
+        width: 2,
+        color: '#27323A',
+        mode: 'silhouette',
+      },
+      proportions: {
+        headScale: 0.96,
+        bodyWidth: 0.94,
+      },
+      render: {
+        baseSize: 128,
+      },
+      palettePools: {
+        skin: ['#F1D6BE', '#D6A77F', '#BC855F', '#8E6046', '#68422F'],
+        hair: ['#17191D', '#353A42', '#5C6170', '#7F858F', '#C7CDD5'],
+        clothing: ['#20344A', '#2F4A63', '#476579', '#58616F', '#30363F', '#68727D'],
+        secondary: ['#EEF3F6', '#DCE7EF', '#CBD6E0', '#B7C4CF'],
+        accent: ['#1E6BA8', '#2E8BC8', '#4E6B7A', '#7A8FA0', '#DA7C4B'],
+      },
+    },
+  },
+  {
+    id: 'preset-high-contrast',
+    name: 'High-contrast readability',
+    style: {
+      outline: {
+        width: 4,
+        color: '#111111',
+        mode: 'per-part',
+      },
+      proportions: {
+        headScale: 1.12,
+        bodyWidth: 1.08,
+      },
+      render: {
+        baseSize: 128,
+      },
+      palettePools: {
+        skin: ['#FFE1BD', '#D99A65', '#A86A42', '#6B3F27'],
+        hair: ['#0B0B0B', '#3B2417', '#8B5A22', '#D8D8D8'],
+        clothing: ['#0F4C81', '#C7362E', '#107A53', '#6D3FB5', '#D88918', '#242424'],
+        secondary: ['#FFFFFF', '#F3F0E8', '#D6EAF8', '#FFE7B8'],
+        accent: ['#FFB000', '#E52B2B', '#0066CC', '#118A28', '#6A1B9A'],
+      },
+    },
+  },
+];
 
 /** The Experiment 001 cast from the design docs. */
 export const DEFAULT_CAST: CharacterRecipe[] = [
@@ -254,6 +312,7 @@ export function defaultProject(): ProjectState {
   return {
     version: 1,
     style: structuredClone(DEFAULT_STYLE),
+    stylePresets: structuredClone(DEFAULT_STYLE_PRESETS),
     characters: structuredClone(DEFAULT_CAST),
     props: structuredClone(DEFAULT_PROPS),
     walls: structuredClone(DEFAULT_WALLS),

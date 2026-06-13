@@ -1,5 +1,7 @@
+import type { ProjectState, StylePreset, StyleSheet } from '../core/types';
 import { composeCharacter, composeProp } from '../core/compositor';
-import { DEFAULT_STYLE } from '../data/defaults';
+import { composeSceneSvg } from '../core/scene';
+import { DEFAULT_STYLE, DEFAULT_STYLE_PRESETS } from '../data/defaults';
 import { store } from '../state';
 import { button, clear, colorInput, el, labeled, select, slider } from './dom';
 
@@ -8,9 +10,81 @@ import { button, clear, colorInput, el, labeled, select, slider } from './dom';
  * every character and prop live, proving the style is never baked in.
  */
 
+const BUILT_IN_PRESET_IDS = new Set(DEFAULT_STYLE_PRESETS.map((preset) => preset.id));
+
+function cloneStyle(style: StyleSheet): StyleSheet {
+  return structuredClone(style);
+}
+
+function projectWithStyle(style: StyleSheet): ProjectState {
+  return { ...store.state, style };
+}
+
+function selectedPreset(): StylePreset | undefined {
+  return store.state.stylePresets.find((preset) => preset.id === store.ui.selectedStylePresetId);
+}
+
+function stylePreviewStrip(style: StyleSheet): HTMLElement {
+  const strip = el('div', { className: 'style-compare-strip' });
+  for (const recipe of store.state.characters.slice(0, 4)) {
+    const cell = el('div', { className: 'style-compare-character checker' });
+    cell.innerHTML = composeCharacter(recipe, style, 'south', 54, store.ui.previewMood);
+    strip.append(cell);
+  }
+  return strip;
+}
+
+function presetSwatches(style: StyleSheet): HTMLElement {
+  const colors = [
+    style.outline.color,
+    ...style.palettePools.clothing.slice(0, 3),
+    ...style.palettePools.accent.slice(0, 2),
+  ];
+  return el(
+    'span',
+    { className: 'preset-swatches' },
+    ...colors.map((color) => el('span', { className: 'preset-swatch', style: `background:${color};` })),
+  );
+}
+
+function renderComparePreview(container: HTMLElement): void {
+  const styles: Array<{ id: string; name: string; style: StyleSheet; active: boolean }> = [
+    { id: 'current', name: 'Current style', style: store.state.style, active: true },
+    ...store.state.stylePresets.map((preset) => ({
+      id: preset.id,
+      name: preset.name,
+      style: preset.style,
+      active: preset.id === store.ui.selectedStylePresetId,
+    })),
+  ];
+  const currentScene = store.state.scene;
+  const grid = el('div', { className: 'style-compare-grid' });
+
+  for (const item of styles) {
+    const sceneFrame = el('div', { className: 'style-compare-scene' });
+    if (currentScene) sceneFrame.innerHTML = composeSceneSvg(currentScene, projectWithStyle(item.style), 26);
+    grid.append(
+      el(
+        'article',
+        { className: `style-compare-card ${item.active ? 'active' : ''}` },
+        el('div', { className: 'style-compare-title' }, item.name),
+        sceneFrame,
+        stylePreviewStrip(item.style),
+      ),
+    );
+  }
+
+  container.append(el('h3', {}, 'Style compare'), grid);
+}
+
 export function renderStylePreview(container: HTMLElement): void {
   clear(container);
   const { characters, props, style } = store.state;
+
+  if (store.ui.styleCompare) {
+    renderComparePreview(container);
+    return;
+  }
 
   const charGrid = el('div', { className: 'style-grid' });
   for (const recipe of characters) {
@@ -32,9 +106,111 @@ export function renderStylePreview(container: HTMLElement): void {
   );
 }
 
+function applyPreset(preset: StylePreset): void {
+  store.ui.selectedStylePresetId = preset.id;
+  store.mutate((state) => {
+    state.style = cloneStyle(preset.style);
+  }, 'structure');
+}
+
+function saveCurrentAsPreset(name: string): void {
+  const trimmed = name.trim();
+  const preset: StylePreset = {
+    id: `style-preset-${Date.now().toString(36)}`,
+    name: trimmed || `Style ${store.state.stylePresets.length + 1}`,
+    style: cloneStyle(store.state.style),
+  };
+  store.ui.selectedStylePresetId = preset.id;
+  store.ui.stylePresetName = '';
+  store.mutate((state) => {
+    state.stylePresets.push(preset);
+  }, 'structure');
+}
+
+function updateSelectedPreset(preset: StylePreset): void {
+  store.mutate((state) => {
+    const target = state.stylePresets.find((item) => item.id === preset.id);
+    if (target) target.style = cloneStyle(state.style);
+  }, 'structure');
+}
+
+function deleteSelectedPreset(preset: StylePreset): void {
+  if (BUILT_IN_PRESET_IDS.has(preset.id)) return;
+  store.mutate((state) => {
+    state.stylePresets = state.stylePresets.filter((item) => item.id !== preset.id);
+    store.ui.selectedStylePresetId = state.stylePresets[0]?.id ?? '';
+  }, 'structure');
+}
+
+function renderPresetControls(container: HTMLElement): void {
+  const activePreset = selectedPreset() ?? store.state.stylePresets[0];
+  if (activePreset && store.ui.selectedStylePresetId !== activePreset.id) {
+    store.ui.selectedStylePresetId = activePreset.id;
+  }
+
+  const presetCards = el('div', { className: 'preset-list' });
+  for (const preset of store.state.stylePresets) {
+    const isSelected = preset.id === store.ui.selectedStylePresetId;
+    presetCards.append(
+      el(
+        'div',
+        { className: `preset-card ${isSelected ? 'selected' : ''}` },
+        el(
+          'button',
+          {
+            className: 'preset-select',
+            onClick: () => {
+              store.ui.selectedStylePresetId = preset.id;
+              store.mutateUi(() => {});
+            },
+          },
+          el('span', { className: 'preset-name' }, preset.name),
+          presetSwatches(preset.style),
+        ),
+        button('Apply', () => applyPreset(preset), 'primary'),
+      ),
+    );
+  }
+
+  const nameInput = el('input', {
+    type: 'text',
+    placeholder: 'Preset name',
+    value: store.ui.stylePresetName,
+    onInput: (event: Event) => {
+      store.ui.stylePresetName = (event.target as HTMLInputElement).value;
+    },
+  });
+
+  container.append(
+    el('h3', {}, 'Style presets'),
+    presetCards,
+    labeled('Save current style', nameInput),
+    el(
+      'div',
+      { className: 'btn-row' },
+      button('Save current', () => saveCurrentAsPreset(store.ui.stylePresetName), 'primary'),
+      button('Update selected', () => {
+        const preset = selectedPreset();
+        if (preset) updateSelectedPreset(preset);
+      }),
+      button(store.ui.styleCompare ? 'Hide compare' : 'Compare presets', () =>
+        store.mutateUi((ui) => (ui.styleCompare = !ui.styleCompare)),
+      ),
+      button('Delete selected', () => {
+        const preset = selectedPreset();
+        if (!preset || BUILT_IN_PRESET_IDS.has(preset.id)) return;
+        if (!confirm(`Delete "${preset.name}"?`)) return;
+        deleteSelectedPreset(preset);
+      }, 'danger'),
+    ),
+  );
+}
+
 export function renderStyleControls(container: HTMLElement): void {
   clear(container);
   const style = store.state.style;
+
+  renderPresetControls(container);
 
   container.append(el('h3', {}, 'Outline'));
   container.append(
