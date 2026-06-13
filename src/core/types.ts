@@ -184,6 +184,8 @@ export interface ProjectState {
   props: PropInstance[];
   walls: TileInstance[];
   floors: TileInstance[];
+  /** The scene canvas — persisted so hand-edits survive reloads. */
+  scene?: import('./scene').SceneState;
 }
 
 /** Design-space canvas size. Parts are authored against this; never changes. */

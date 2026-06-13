@@ -1,7 +1,9 @@
 import JSZip from 'jszip';
 import type { CharacterRecipe, ProjectState, PropInstance, StyleSheet, TileInstance } from './types';
+import type { SceneState } from './scene';
 import { MOODS } from './types';
 import { composeCharacter, composeFloorTile, composeProp, composeWallTile } from './compositor';
+import { composeSceneSvg } from './scene';
 import { PROP_TEMPLATES } from '../props/templates';
 import { maskName } from '../tiles/templates';
 
@@ -225,6 +227,17 @@ export async function propPng(prop: PropInstance, style: StyleSheet, scale: numb
   canvas.width = size;
   canvas.height = size;
   canvas.getContext('2d')!.drawImage(img, 0, 0, size, size);
+  return canvasToBlob(canvas);
+}
+
+export async function scenePosterPng(scene: SceneState, project: ProjectState, scale: number): Promise<Blob> {
+  const cellSize = project.style.render.baseSize * scale;
+  const svg = composeSceneSvg(scene, project, cellSize);
+  const img = await svgToImage(svg);
+  const canvas = document.createElement('canvas');
+  canvas.width = scene.cols * cellSize;
+  canvas.height = scene.rows * cellSize;
+  canvas.getContext('2d')!.drawImage(img, 0, 0, canvas.width, canvas.height);
   return canvasToBlob(canvas);
 }
 

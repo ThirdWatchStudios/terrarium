@@ -1,6 +1,7 @@
 import type { FloorTemplate, ShapeSpec, WallTemplate } from '../core/types';
 import { WALL_BITS } from '../core/types';
 import { rr, circle } from '../core/geometry';
+import { mulberry32 } from '../core/random';
 
 /**
  * Wall + floor tile templates. Conventions:
@@ -14,18 +15,6 @@ import { rr, circle } from '../core/geometry';
 
 const C = 64;
 const OVERHANG = 16;
-
-/** Deterministic small RNG so floor patterns are stable per seed param. */
-function mulberry32(seed: number): () => number {
-  let a = seed >>> 0;
-  return () => {
-    a |= 0;
-    a = (a + 0x6d2b79f5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
 
 /** Axis-aligned arm rects for a neighbor mask, all `fill`-colored. */
 function wallArms(mask: number, thickness: number, fill: string): ShapeSpec[] {
@@ -57,9 +46,9 @@ const officeWall: WallTemplate = {
   kind: 'wall',
   id: 'office-wall',
   label: 'Office wall',
-  params: [{ key: 'thickness', label: 'Thickness', min: 12, max: 26, step: 2, default: 18 }],
+  params: [{ key: 'thickness', label: 'Thickness', min: 12, max: 36, step: 2, default: 28 }],
   build(mask, params) {
-    const t = params.thickness ?? 18;
+    const t = params.thickness ?? 28;
     return wallArms(mask, t, '$primary');
   },
 };

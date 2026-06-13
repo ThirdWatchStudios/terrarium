@@ -5,6 +5,7 @@ import { store } from '../state';
 import { button, clear, el } from './dom';
 import { renderCharacterControls, renderCharacterList, renderCharacterPreview } from './characterPanel';
 import { renderPropControls, renderPropList, renderPropPreview } from './propPanel';
+import { renderSceneControls, renderSceneList, renderScenePreview } from './scenePanel';
 import { renderStyleControls, renderStylePreview } from './stylePanel';
 import { renderTileControls, renderTileList, renderTilePreview } from './tilePanel';
 
@@ -12,6 +13,7 @@ const TABS = [
   { id: 'characters', label: 'Characters' },
   { id: 'props', label: 'Props' },
   { id: 'tiles', label: 'Walls & Floors' },
+  { id: 'scene', label: 'Scene' },
   { id: 'style', label: 'Style' },
 ] as const;
 
@@ -109,6 +111,10 @@ export function mountApp(root: HTMLElement): void {
       renderTileList(sidebar);
       renderTilePreview(preview);
       if (kind === 'structure') renderTileControls(controls);
+    } else if (tab === 'scene') {
+      renderSceneList(sidebar);
+      renderScenePreview(preview);
+      if (kind === 'structure') renderSceneControls(controls);
     } else {
       clear(sidebar);
       renderStylePreview(preview);

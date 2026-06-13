@@ -173,6 +173,13 @@ export const DEFAULT_PROPS: PropInstance[] = [
     palette: { primary: '#444441', secondary: '#888780', accent: '#2C2C2A' },
   },
   {
+    id: 'prop-cubicle-workstation',
+    name: 'Cubicle workstation',
+    templateId: 'cubicle-workstation',
+    params: { openness: 0, clutter: 1 },
+    palette: { primary: '#8A9199', secondary: '#5F5E5A', accent: '#D85A30' },
+  },
+  {
     id: 'prop-whiteboard',
     name: 'Whiteboard',
     templateId: 'whiteboard',
@@ -193,7 +200,7 @@ export const DEFAULT_WALLS: TileInstance[] = [
     id: 'wall-office',
     name: 'Office wall',
     templateId: 'office-wall',
-    params: { thickness: 18 },
+    params: { thickness: 28 },
     palette: { primary: '#B4B2A9', secondary: '#888780', accent: '#5F5E5A' },
   },
   {

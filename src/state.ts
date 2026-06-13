@@ -1,5 +1,7 @@
 import type { Mood, ProjectState } from './core/types';
-import { DEFAULT_FLOORS, DEFAULT_WALLS, defaultProject } from './data/defaults';
+import type { SceneBrush, SceneFacing } from './core/scene';
+import { createDefaultScene } from './core/scene';
+import { DEFAULT_FLOORS, DEFAULT_PROPS, DEFAULT_WALLS, defaultProject } from './data/defaults';
 
 const STORAGE_KEY = 'sprite-character-creator-v1';
 
@@ -11,13 +13,19 @@ class Store {
   state: ProjectState;
   /** UI selection, not persisted as part of the project. */
   ui = {
-    tab: 'characters' as 'characters' | 'props' | 'tiles' | 'style',
+    tab: 'characters' as 'characters' | 'props' | 'tiles' | 'scene' | 'style',
     selectedCharacterId: '',
     selectedPropId: '',
     selectedTileId: '',
     exportScale: 2,
     /** Preview-only mood; never stored in recipes. */
     previewMood: 'normal' as Mood,
+    sceneBrush: 'character' as SceneBrush,
+    sceneFacing: 'south' as SceneFacing,
+    sceneMood: 'suspicious' as Mood,
+    sceneCoworkers: 4,
+    /** Blank = random seed on Generate; shows the seed actually used. */
+    sceneSeed: '',
   };
   private listeners: Listener[] = [];
 
@@ -26,6 +34,7 @@ class Store {
     this.ui.selectedCharacterId = this.state.characters[0]?.id ?? '';
     this.ui.selectedPropId = this.state.props[0]?.id ?? '';
     this.ui.selectedTileId = this.state.walls[0]?.id ?? this.state.floors[0]?.id ?? '';
+    this.state.scene ??= createDefaultScene(this.state);
   }
 
   private load(): ProjectState {
@@ -35,8 +44,7 @@ class Store {
         const parsed = JSON.parse(raw) as ProjectState;
         if (parsed.version === 1) {
           // Projects saved before walls/floors existed get the default sets.
-          parsed.walls ??= structuredClone(DEFAULT_WALLS);
-          parsed.floors ??= structuredClone(DEFAULT_FLOORS);
+          this.backfillDefaults(parsed);
           return parsed;
         }
       }
@@ -67,14 +75,25 @@ class Store {
   }
 
   replaceProject(next: ProjectState): void {
-    next.walls ??= structuredClone(DEFAULT_WALLS);
-    next.floors ??= structuredClone(DEFAULT_FLOORS);
+    this.backfillDefaults(next);
     this.state = next;
     this.ui.selectedCharacterId = next.characters[0]?.id ?? '';
     this.ui.selectedPropId = next.props[0]?.id ?? '';
     this.ui.selectedTileId = next.walls[0]?.id ?? next.floors[0]?.id ?? '';
+    next.scene ??= createDefaultScene(next);
     this.save();
     this.emit('structure');
+  }
+
+  private backfillDefaults(project: ProjectState): void {
+    project.props ??= structuredClone(DEFAULT_PROPS);
+    project.walls ??= structuredClone(DEFAULT_WALLS);
+    project.floors ??= structuredClone(DEFAULT_FLOORS);
+    for (const prop of DEFAULT_PROPS) {
+      if (!project.props.some((item) => item.id === prop.id || item.templateId === prop.templateId)) {
+        project.props.push(structuredClone(prop));
+      }
+    }
   }
 
   private emit(kind: ChangeKind): void {

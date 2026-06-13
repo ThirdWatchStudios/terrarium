@@ -12,7 +12,7 @@ export at 1x/2x/4x, full-project zip.
 
 ## Phase 1 — See the game in the tool
 
-### 1.1 Scene preview tab
+### 1.1 Scene preview tab — DONE
 A fourth canvas that composes floors + walls + props + characters into one
 mock office screenshot, RimWorld-style hybrid projection rules applied
 (floor layer → plan props → y-sorted elevation props and characters).
@@ -23,7 +23,11 @@ mock office screenshot, RimWorld-style hybrid projection rules applied
 - **Why first:** every art decision so far has been judged one sprite at a
   time; the real test is sprites against each other in a room.
 
-### 1.2 Random office layout generator
+### 1.2 Random office layout generator — DONE
+Implemented with: 22×14 grid, shared-edge room templates (never double walls),
+comb-pattern cubicle farm (autotile partitions + desk/chair pods, coworkers
+spawn seated), seeded RNG (same template+seed = same office, recorded in the
+layout JSON), scene persisted in project state.
 Generate plausible office layouts and furnish them automatically.
 - Room-split (BSP or grid partition) into the game's named locations:
   reception, manager office, break room, conference room, cubicle farm,

@@ -291,6 +291,79 @@ const officeChair: PropTemplate = {
   },
 };
 
+const cubicleWorkstation: PropTemplate = {
+  id: 'cubicle-workstation',
+  label: 'Cubicle workstation',
+  projection: 'plan',
+  params: [
+    { key: 'openness', label: 'Opening side', min: 0, max: 3, step: 1, default: 0 },
+    { key: 'clutter', label: 'Desk clutter', min: 0, max: 2, step: 1, default: 1 },
+  ],
+  build(params) {
+    const panel = '$secondary';
+    const fabric = '$primary';
+    const accent = '$accent';
+    const openSide = params.openness ?? 0;
+    const shapes: ShapeSpec[] = [
+      // soft footprint shadow so pods read as furniture, not architecture
+      { d: rr(20, 20, 88, 88, 8), fill: '#00000010', silhouette: false },
+      // privacy-post caps
+      { d: rr(16, 16, 14, 14, 4), fill: accent },
+      { d: rr(98, 16, 14, 14, 4), fill: accent },
+      { d: rr(16, 98, 14, 14, 4), fill: accent },
+      { d: rr(98, 98, 14, 14, 4), fill: accent },
+      // work surface and equipment
+      { d: rr(32, 34, 64, 38, 5), fill: '$primary' },
+      { d: rr(42, 39, 28, 7, 2), fill: '#2C2C2A', silhouette: false },
+      { d: rr(54, 46, 5, 5, 1.5), fill: '#2C2C2A', silhouette: false },
+      { d: rr(39, 54, 34, 10, 2), fill: '#F7F4EC', silhouette: false },
+      { d: ellipse(82, 58, 4, 5), fill: '#F7F4EC', silhouette: false },
+      // chair tucked into the open side
+      { d: circle(64, 88, 12), fill: '$accent' },
+      {
+        d: 'M 52 91 A 14 14 0 0 0 76 91',
+        stroke: '$accent',
+        strokeWidth: 5,
+      },
+    ];
+
+    // Low fabric partitions around a one-person workstation.
+    if (openSide !== 2) {
+      shapes.push(
+        { d: rr(18, 18, 92, 10, 3), fill: panel },
+        { d: rr(24, 23, 80, 4, 1.5), fill: fabric, silhouette: false },
+      );
+    }
+    if (openSide !== 3) {
+      shapes.push(
+        { d: rr(18, 18, 10, 92, 3), fill: panel },
+        { d: rr(23, 24, 4, 80, 1.5), fill: fabric, silhouette: false },
+      );
+    }
+    if (openSide !== 1) {
+      shapes.push(
+        { d: rr(100, 18, 10, 92, 3), fill: panel },
+        { d: rr(101, 24, 4, 80, 1.5), fill: fabric, silhouette: false },
+      );
+    }
+
+    if ((params.clutter ?? 1) >= 1) {
+      shapes.push(
+        { d: rr(82, 38, 8, 11, 1.5), fill: '#F7F4EC', silhouette: false },
+        { d: circle(89, 65, 4.5), fill: accent, silhouette: false },
+      );
+    }
+    if ((params.clutter ?? 1) >= 2) {
+      shapes.push(
+        { d: rr(35, 65, 14, 4, 1.5), fill: '#D85A30', silhouette: false },
+        { d: rr(50, 65, 10, 4, 1.5), fill: '#97C459', silhouette: false },
+      );
+    }
+
+    return shapes;
+  },
+};
+
 const whiteboard: PropTemplate = {
   id: 'whiteboard',
   label: 'Whiteboard',
@@ -361,6 +434,7 @@ export const PROP_TEMPLATES: PropTemplate[] = [
   receptionDesk,
   badgeReader,
   officeChair,
+  cubicleWorkstation,
   whiteboard,
   filingCabinet,
 ];
