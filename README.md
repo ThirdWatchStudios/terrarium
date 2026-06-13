@@ -24,6 +24,12 @@ npm run build    # typecheck + production build
 Work is auto-saved to localStorage. Use **Export project JSON** / **Import project** in
 the top bar to move a project between machines or check it into git.
 
+## Web portal
+
+The GitHub Pages build publishes the current app from `main`:
+
+https://thirdwatchstudios.github.io/SpriteCharacterCreator/
+
 ## Tabs
 
 - **Characters** — pick body/head/hair/outfit/accessories, tweak the 5-token palette,
