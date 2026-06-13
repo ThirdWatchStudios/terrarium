@@ -44,14 +44,15 @@ https://thirdwatchstudios.github.io/SpriteCharacterCreator/
 
   Props follow the RimWorld hybrid-projection convention, tagged per template:
   - **Plan** (top-down): desks, tables, chairs, reception desk, cubicle
-    workstation, desk clutter, couches, and rugs. Pivot at center, render on the
-    furniture layer below characters, rotate freely in-engine (one sprite = all
-    four orientations).
+    workstation, desk clutter, couches, rugs, and wall-slot inserts. Pivot at
+    center, render on the furniture layer below characters, rotate freely
+    in-engine (one sprite = all four orientations).
   - **Elevation** (front view): everything else. Pivot at the base (y = 0.09, same
     ground line as characters), y-sort with characters, never rotate.
   - **Wall slot** placement: door, window, nameplate, HVAC vent, and badge reader
     mount into or over wall runs. The wall-slot flag is separate from projection,
-    so these still y-sort as elevation sprites.
+    so importers can keep these aligned to wall cells instead of free floor
+    placement.
   The rule for new templates: if characters stand behind/around/on it → plan;
   tall with a small footprint and only approached from the front → elevation.
   The projection and placement ship in each prop's atlas JSON (`projection`,

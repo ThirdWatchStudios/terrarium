@@ -110,7 +110,7 @@ export function createDefaultScene(project: ProjectState): SceneState {
   }
 
   const entities: SceneEntity[] = [];
-  const addProp = (id: string, x: number, y: number) => {
+  const addProp = (id: string, x: number, y: number, rotation: SceneRotation = 0) => {
     const refId = propId(project, id);
     if (refId) {
       entities.push({
@@ -121,7 +121,7 @@ export function createDefaultScene(project: ProjectState): SceneState {
         refId,
         facing: 'south',
         mood: 'normal',
-        rotation: 0,
+        rotation,
       });
     }
   };
@@ -135,9 +135,9 @@ export function createDefaultScene(project: ProjectState): SceneState {
   addProp('prop-desk-clutter', 5, 2);
   addProp('prop-office-chair', 5, 3);
   addProp('prop-printer', 3, 5);
-  addProp('prop-door', 7, 3);
+  addProp('prop-door', 7, 3, 90);
   addProp('prop-open-door', 4, 4);
-  addProp('prop-window', 7, 1);
+  addProp('prop-window', 7, 1, 90);
   addProp('prop-nameplate', 6, 1);
   addProp('prop-hvac-vent', 9, 0);
   addProp('prop-water-cooler', 8, 2);

@@ -280,6 +280,18 @@ function wallAt(scene: SceneState, x: number, y: number): boolean {
   return Boolean(scene.wallIds[y]?.[x]);
 }
 
+function wallSlotRotation(scene: SceneState, x: number, y: number): SceneRotation {
+  const horizontal = wallAt(scene, x - 1, y) || wallAt(scene, x + 1, y);
+  const vertical = wallAt(scene, x, y - 1) || wallAt(scene, x, y + 1);
+  return vertical && !horizontal ? 90 : 0;
+}
+
+function doorwayRotation(scene: SceneState, x: number, y: number): SceneRotation {
+  const horizontalRun = wallAt(scene, x - 1, y) || wallAt(scene, x + 1, y);
+  const verticalRun = wallAt(scene, x, y - 1) || wallAt(scene, x, y + 1);
+  return verticalRun && !horizontalRun ? 90 : 0;
+}
+
 function wallForRoom(room: RoomSpec, officeWall: string | null, glassWall: string | null): string | null {
   if (room.id === 'manager-office' || room.id === 'conference-room' || room.id === 'focus-room') {
     return glassWall ?? officeWall;
@@ -375,6 +387,7 @@ function decorateDoorways(
       'door',
       doorway.x,
       doorway.y,
+      doorwayRotation(scene, doorway.x, doorway.y),
     );
     if (!chance(rng, 0.68)) continue;
     const adjacentWalls = [
@@ -538,7 +551,7 @@ function addWallSlotProp(
   y: number,
 ): void {
   if (!wallAt(scene, x, y)) return;
-  addProp(scene, project, key, preferredId, templateId, x, y, 0);
+  addProp(scene, project, key, preferredId, templateId, x, y, wallSlotRotation(scene, x, y));
 }
 
 function addPropNear(

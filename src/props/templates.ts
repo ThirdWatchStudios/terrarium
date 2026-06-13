@@ -242,26 +242,24 @@ const receptionDesk: PropTemplate = {
 const badgeReader: PropTemplate = {
   id: 'badge-reader',
   label: 'Badge reader',
-  projection: 'elevation',
+  projection: 'plan',
   placement: 'wall-slot',
   params: [{ key: 'granted', label: 'Access granted', min: 0, max: 1, step: 1, default: 1 }],
   build(params) {
     const light = params.granted >= 1 ? '#97C459' : '#E24B4A';
-    const top = 46;
     return [
-      // wall slice it mounts on
-      { d: rr(CX - 15, top, 30, GROUND - top, 2), fill: '$secondary' },
-      // reader unit
-      { d: rr(CX - 9, 64, 18, 28, 3), fill: '$primary' },
+      // small panel inset on a wall slot, not a front-facing object
+      { d: rr(CX - 10, 53, 20, 22, 3), fill: '$primary' },
+      { d: rr(CX - 7, 57, 14, 14, 2), fill: '$secondary', silhouette: false },
       // status light
-      { d: circle(CX, 70, 2.6), fill: light, silhouette: false },
+      { d: circle(CX, 60, 2.4), fill: light, silhouette: false },
       // keypad
-      { d: circle(CX - 4, 78, 1.5), fill: '#00000055', silhouette: false },
-      { d: circle(CX + 4, 78, 1.5), fill: '#00000055', silhouette: false },
-      { d: circle(CX - 4, 84, 1.5), fill: '#00000055', silhouette: false },
-      { d: circle(CX + 4, 84, 1.5), fill: '#00000055', silhouette: false },
+      { d: circle(CX - 4, 65, 1.3), fill: '#00000055', silhouette: false },
+      { d: circle(CX + 4, 65, 1.3), fill: '#00000055', silhouette: false },
+      { d: circle(CX - 4, 69, 1.3), fill: '#00000055', silhouette: false },
+      { d: circle(CX + 4, 69, 1.3), fill: '#00000055', silhouette: false },
       // swipe slot
-      { d: `M ${CX - 6} 89 L ${CX + 6} 89`, stroke: '#00000055', strokeWidth: 2, silhouette: false },
+      { d: `M ${CX - 5} 72 L ${CX + 5} 72`, stroke: '#00000055', strokeWidth: 2, silhouette: false },
     ];
   },
 };
@@ -269,7 +267,7 @@ const badgeReader: PropTemplate = {
 const door: PropTemplate = {
   id: 'door',
   label: 'Door',
-  projection: 'elevation',
+  projection: 'plan',
   placement: 'wall-slot',
   params: [
     { key: 'width', label: 'Width', min: 42, max: 70, step: 2, default: 56 },
@@ -278,28 +276,26 @@ const door: PropTemplate = {
   build(params) {
     const w = params.width ?? 56;
     const x = CX - w / 2;
-    const top = 34;
+    const y = 51;
+    const h = 26;
     const isOpen = (params.open ?? 0) >= 1;
     const shapes: ShapeSpec[] = [
-      // wall-slot frame
-      { d: rr(x - 5, top - 4, w + 10, 9, 2), fill: '$secondary' },
-      { d: rr(x - 5, top, 8, GROUND - top, 2), fill: '$secondary' },
-      { d: rr(x + w - 3, top, 8, GROUND - top, 2), fill: '$secondary' },
-      { d: rr(x - 3, GROUND - 5, w + 6, 5, 1.5), fill: '#00000024', silhouette: false },
+      // wall-thickness threshold, matching the top-down wall band
+      { d: rr(x - 6, y - 3, w + 12, h + 6, 3), fill: '$secondary' },
+      { d: rr(x - 2, y + 3, w + 4, h - 6, 2), fill: '#00000018', silhouette: false },
     ];
     if (isOpen) {
       shapes.push(
-        // swung slab reads as an open office door while staying in one cell
-        { d: `M ${x + 4} ${top + 5} L ${x + w * 0.72} ${top + 13} L ${x + w * 0.72} ${GROUND - 4} L ${x + 4} ${GROUND - 10} Z`, fill: '$primary' },
-        { d: `M ${x + 11} ${top + 14} L ${x + w * 0.62} ${top + 19} L ${x + w * 0.62} ${GROUND - 18} L ${x + 11} ${GROUND - 23} Z`, fill: '#00000010', silhouette: false },
-        { d: circle(x + w * 0.57, 82, 2.3), fill: '$accent', silhouette: false },
+        // open slab swings in plan view; it should read like a movable wall segment
+        { d: `M ${x + 4} ${y + h - 4} L ${x + w * 0.62} ${y + h + 22} L ${x + w * 0.62 + 6} ${y + h + 15} L ${x + 9} ${y + h - 8} Z`, fill: '$primary' },
+        { d: `M ${x + 12} ${y + h - 3} L ${x + w * 0.52} ${y + h + 13}`, stroke: '#00000020', strokeWidth: 3, silhouette: false },
+        { d: circle(x + w * 0.55, y + h + 11, 2.2), fill: '$accent', silhouette: false },
       );
     } else {
       shapes.push(
-        { d: rr(x + 3, top + 5, w - 6, GROUND - top - 6, 2), fill: '$primary' },
-        { d: rr(x + 10, top + 13, w - 20, GROUND - top - 34, 1.5), fill: '#00000012', silhouette: false },
-        { d: circle(x + w - 13, 82, 2.6), fill: '$accent', silhouette: false },
-        { d: rr(x + 6, GROUND - 21, w - 12, 11, 1.5), fill: '#00000010', silhouette: false },
+        { d: rr(x, y, w, h, 2), fill: '$primary' },
+        { d: `M ${x + 8} ${y + h / 2} L ${x + w - 8} ${y + h / 2}`, stroke: '#00000020', strokeWidth: 3, silhouette: false },
+        { d: circle(x + w - 12, y + h / 2, 2.4), fill: '$accent', silhouette: false },
       );
     }
     return shapes;
@@ -309,7 +305,7 @@ const door: PropTemplate = {
 const window: PropTemplate = {
   id: 'window',
   label: 'Window',
-  projection: 'elevation',
+  projection: 'plan',
   placement: 'wall-slot',
   params: [
     { key: 'width', label: 'Width', min: 48, max: 88, step: 4, default: 72 },
@@ -318,18 +314,18 @@ const window: PropTemplate = {
   build(params) {
     const w = params.width ?? 72;
     const x = CX - w / 2;
-    const y = 42;
-    const h = 42;
+    const y = 52;
+    const h = 24;
     const shapes: ShapeSpec[] = [
-      { d: rr(x - 4, y - 4, w + 8, h + 8, 3), fill: '$primary' },
-      { d: rr(x, y, w, h, 1.5), fill: '$secondary', opacity: 0.92 },
-      { d: `M ${CX} ${y + 2} L ${CX} ${y + h - 2} M ${x + 2} ${y + h / 2} L ${x + w - 2} ${y + h / 2}`, stroke: '$primary', strokeWidth: 3, silhouette: false },
-      { d: rr(x + 8, y + 6, 8, h - 12, 3), fill: '#FFFFFF30', silhouette: false },
+      { d: rr(x - 5, y - 4, w + 10, h + 8, 3), fill: '$primary' },
+      { d: rr(x, y, w, h, 2), fill: '$secondary', opacity: 0.86 },
+      { d: `M ${CX} ${y + 3} L ${CX} ${y + h - 3} M ${x + 4} ${y + h / 2} L ${x + w - 4} ${y + h / 2}`, stroke: '$primary', strokeWidth: 2.5, silhouette: false },
+      { d: `M ${x + 8} ${y + 6} L ${x + 20} ${y + 6}`, stroke: '#FFFFFF80', strokeWidth: 2, silhouette: false },
     ];
     const blinds = params.blinds ?? 1;
     for (let i = 0; i < blinds; i++) {
-      const by = y + 9 + i * 9;
-      shapes.push({ d: `M ${x + 5} ${by} L ${x + w - 5} ${by}`, stroke: '$accent', strokeWidth: 2, opacity: 0.65, silhouette: false });
+      const by = y + 7 + i * 5;
+      shapes.push({ d: `M ${x + 7} ${by} L ${x + w - 7} ${by}`, stroke: '$accent', strokeWidth: 1.5, opacity: 0.55, silhouette: false });
     }
     return shapes;
   },
@@ -338,7 +334,7 @@ const window: PropTemplate = {
 const nameplate: PropTemplate = {
   id: 'nameplate',
   label: 'Nameplate',
-  projection: 'elevation',
+  projection: 'plan',
   placement: 'wall-slot',
   params: [
     { key: 'width', label: 'Width', min: 34, max: 64, step: 2, default: 48 },
@@ -347,14 +343,14 @@ const nameplate: PropTemplate = {
   build(params) {
     const w = params.width ?? 48;
     const x = CX - w / 2;
-    const y = 62;
+    const y = 55;
     const shapes: ShapeSpec[] = [
-      { d: rr(x - 3, y - 3, w + 6, 24, 3), fill: '$primary' },
-      { d: rr(x + 4, y + 4, w - 8, 4, 1), fill: '$secondary', silhouette: false },
+      { d: rr(x - 3, y - 3, w + 6, 18, 3), fill: '$primary' },
+      { d: rr(x + 4, y + 4, w - 8, 3, 1), fill: '$secondary', silhouette: false },
     ];
     const lines = params.lines ?? 2;
     for (let i = 0; i < lines; i++) {
-      shapes.push({ d: rr(x + 9, y + 11 + i * 6, w - 18 - i * 8, 2.5, 1), fill: '$accent', silhouette: false });
+      shapes.push({ d: rr(x + 9, y + 9 + i * 4, w - 18 - i * 8, 2, 1), fill: '$accent', silhouette: false });
     }
     return shapes;
   },
@@ -363,7 +359,7 @@ const nameplate: PropTemplate = {
 const hvacVent: PropTemplate = {
   id: 'hvac-vent',
   label: 'HVAC vent',
-  projection: 'elevation',
+  projection: 'plan',
   placement: 'wall-slot',
   params: [
     { key: 'width', label: 'Width', min: 36, max: 66, step: 2, default: 52 },
@@ -372,15 +368,15 @@ const hvacVent: PropTemplate = {
   build(params) {
     const w = params.width ?? 52;
     const x = CX - w / 2;
-    const y = 42;
+    const y = 55;
     const shapes: ShapeSpec[] = [
-      { d: rr(x, y, w, 24, 3), fill: '$primary' },
-      { d: rr(x + 4, y + 4, w - 8, 16, 2), fill: '$secondary', silhouette: false },
+      { d: rr(x, y, w, 18, 3), fill: '$primary' },
+      { d: rr(x + 4, y + 4, w - 8, 10, 2), fill: '$secondary', silhouette: false },
     ];
     const slats = params.slats ?? 5;
     for (let i = 0; i < slats; i++) {
       const sx = x + 9 + (i * (w - 18)) / Math.max(1, slats - 1);
-      shapes.push({ d: `M ${sx} ${y + 7} L ${sx - 3} ${y + 18}`, stroke: '$accent', strokeWidth: 2, silhouette: false });
+      shapes.push({ d: `M ${sx} ${y + 6} L ${sx - 2} ${y + 13}`, stroke: '$accent', strokeWidth: 1.7, silhouette: false });
     }
     return shapes;
   },
