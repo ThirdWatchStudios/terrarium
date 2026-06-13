@@ -259,6 +259,13 @@ function drawRoomWalls(
     wallLine(scene, room.x, room.y, room.x, room.y + room.rows - 1, wall);
     wallLine(scene, room.x + room.cols - 1, room.y, room.x + room.cols - 1, room.y + room.rows - 1, wall);
   }
+
+  // the building shell stays office wall — room wall types (glass) are
+  // interior only, so re-assert the outer border last
+  wallLine(scene, 0, 0, COLS - 1, 0, officeWall);
+  wallLine(scene, 0, ROWS - 1, COLS - 1, ROWS - 1, officeWall);
+  wallLine(scene, 0, 0, 0, ROWS - 1, officeWall);
+  wallLine(scene, COLS - 1, 0, COLS - 1, ROWS - 1, officeWall);
 }
 
 function clearDoorways(scene: SceneState, template: LayoutTemplate, rng: Rng): void {
@@ -518,34 +525,39 @@ function buildCubicleComb(scene: SceneState, project: ProjectState, room: RoomSp
   const height = box.y1 - box.y0 + 1;
   if (!cubicleWall || width < 4 || height < 3) return seats;
 
-  // one comb against the top; a mirrored second comb when the room is deep
-  const combs: Array<{ backY: number | null; deskY: number; chairY: number; flipped: boolean }> = [];
-  if (height >= 4) combs.push({ backY: box.y0, deskY: box.y0 + 1, chairY: box.y0 + 2, flipped: false });
-  else combs.push({ backY: null, deskY: box.y0, chairY: box.y0 + 1, flipped: false });
-  if (height >= 7) combs.push({ backY: box.y1, deskY: box.y1 - 1, chairY: box.y1 - 2, flipped: true });
+  // One comb against the top wall, a mirrored one against the bottom when the
+  // room is deep enough. Room walls ARE the pods' backs and outer sides —
+  // never draw partitions adjacent to a parallel room wall, or the autotiler
+  // fuses them into a ladder of sealed mini-cells. Pods repeat as
+  // desk col / entry col / spine, starting right at the side wall.
+  const combs: Array<{ deskY: number; chairY: number; flipped: boolean }> = [
+    { deskY: box.y0, chairY: box.y0 + 1, flipped: false },
+  ];
+  if (height >= 5) combs.push({ deskY: box.y1, chairY: box.y1 - 1, flipped: true });
 
-  const podCount = Math.floor((width - 1) / 3);
   for (const comb of combs) {
-    const spineRows = comb.backY === null ? [comb.deskY, comb.chairY] : [comb.backY, comb.deskY, comb.chairY];
-    const lastSpineX = box.x0 + podCount * 3;
-    for (let p = 0; p <= podCount; p++) {
-      const sx = box.x0 + p * 3;
-      if (sx > box.x1) break;
-      for (const y of spineRows) setWall(scene, sx, y, cubicleWall);
-    }
-    if (comb.backY !== null) {
-      for (let x = box.x0; x <= Math.min(lastSpineX, box.x1); x++) setWall(scene, x, comb.backY, cubicleWall);
-    }
+    const spineRows = [comb.deskY, comb.chairY];
+    // the room-wall row this comb backs onto; gaps in it are doorways
+    const backWallY = comb.flipped ? box.y1 + 1 : box.y0 - 1;
+    const doorAt = (x: number) => !wallAt(scene, x, backWallY);
 
-    for (let p = 0; p < podCount; p++) {
-      const deskX = box.x0 + p * 3 + 1;
-      const entryX = deskX + 1;
+    for (let p = 0; ; p++) {
+      const deskX = box.x0 + p * 3;
+      if (deskX > box.x1) break;
+      const entryX = deskX + 1 <= box.x1 ? deskX + 1 : undefined;
+      const spineX = deskX + 2;
+      // spine must stay clear of the right room wall (no fusing) and of doors
+      if (spineX <= box.x1 - 1 && !doorAt(spineX)) {
+        for (const y of spineRows) setWall(scene, spineX, y, cubicleWall);
+      }
+      // keep doorways in the back wall walkable: no furniture under a gap
+      if (doorAt(deskX) || (entryX !== undefined && doorAt(entryX))) continue;
       if (chance(rng, 0.12)) continue; // the vacant cubicle sells the office
       const rotation: SceneRotation = comb.flipped ? 180 : 0;
       addProp(scene, project, `cubicle-desk-${comb.deskY}-${p}`, 'prop-desk', 'desk', deskX, comb.deskY, rotation);
       addProp(scene, project, `cubicle-chair-${comb.chairY}-${p}`, 'prop-office-chair', 'office-chair', deskX, comb.chairY, rotation);
       seats.push({ x: deskX, y: comb.chairY, facing: comb.flipped ? 'south' : 'north' });
-      if (chance(rng, 0.25)) {
+      if (entryX !== undefined && chance(rng, 0.25)) {
         addProp(scene, project, `cubicle-files-${comb.deskY}-${p}`, 'prop-filing-cabinet', 'filing-cabinet', entryX, comb.deskY, 0);
       }
     }

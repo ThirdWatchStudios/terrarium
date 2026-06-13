@@ -252,13 +252,20 @@ export function composeWallTile(
   return svgWrap(outline + color, pixelSize ?? style.render.baseSize);
 }
 
+/**
+ * Raw floor shape markup (no svg wrapper). Callers must clip to the tile —
+ * floor patterns draw wrapped copies past the tile edges for seamlessness.
+ */
+export function floorTileMarkup(floor: TileInstance): string {
+  const template = FLOOR_TEMPLATES.find((t) => t.id === floor.templateId);
+  if (!template) return '';
+  const resolve = makePropResolver(floor.palette);
+  return template.build(floor.params, floor.palette).map((s) => emitColorShape(s, resolve)).join('');
+}
+
 /** Render a floor tile: flat pattern, no outline pass, seamlessly tileable. */
 export function composeFloorTile(floor: TileInstance, style: StyleSheet, pixelSize?: number): string {
-  const template = FLOOR_TEMPLATES.find((t) => t.id === floor.templateId);
-  if (!template) return svgWrap('', pixelSize ?? style.render.baseSize);
-  const shapes = template.build(floor.params, floor.palette);
-  const resolve = makePropResolver(floor.palette);
-  return svgWrap(shapes.map((s) => emitColorShape(s, resolve)).join(''), pixelSize ?? style.render.baseSize);
+  return svgWrap(floorTileMarkup(floor), pixelSize ?? style.render.baseSize);
 }
 
 /**

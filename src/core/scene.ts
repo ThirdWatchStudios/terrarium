@@ -1,6 +1,6 @@
 import type { CharacterRecipe, Facing, Mood, ProjectState, PropInstance, TileInstance } from './types';
 import { CANVAS } from './types';
-import { composeCharacter, composeFloorTile, composeProp, composeWallTile } from './compositor';
+import { composeCharacter, composeFloorTile, composeProp, composeWallTile, floorTileMarkup } from './compositor';
 import { PROP_TEMPLATES } from '../props/templates';
 
 export type SceneBrush = 'floor' | 'wall' | 'prop' | 'character';
@@ -243,10 +243,75 @@ export function composeSceneSvg(scene: SceneState, project: ProjectState, cellPi
   const height = scene.rows * CANVAS;
   let body = `<rect width="${width}" height="${height}" fill="#181614"/>`;
 
+  // Keep floors inside their wall bounds. Walls sit mid-tile, so every tile
+  // near a wall resolves its floor PER QUADRANT: each 64x64 corner of the
+  // tile shows the floor of the region it actually faces — the orthogonal
+  // neighbor when one side is open, the diagonal neighbor at corners and
+  // junctions, and nothing at all outside the building. Floor tiles are
+  // seamless, so a borrowed quadrant matches the neighbor's tiles exactly
+  // and every seam hides under a wall arm.
+  const HALF = CANVAS / 2;
+  const QUADS = [
+    { dx: -1, dy: -1, x: 0, y: 0 },
+    { dx: 1, dy: -1, x: HALF, y: 0 },
+    { dx: -1, dy: 1, x: 0, y: HALF },
+    { dx: 1, dy: 1, x: HALF, y: HALF },
+  ];
+  const markupCache = new Map<string, string>();
+  const floorMarkup = (id: string): string => {
+    if (!markupCache.has(id)) {
+      const f = project.floors.find((item) => item.id === id);
+      markupCache.set(id, f ? floorTileMarkup(f) : '');
+    }
+    return markupCache.get(id)!;
+  };
+  /** 'out' = off the grid, 'wall' = wall tile, otherwise the tile's floor id. */
+  const cellInfo = (cx: number, cy: number): string | null => {
+    if (cx < 0 || cy < 0 || cx >= scene.cols || cy >= scene.rows) return 'out';
+    if (scene.wallIds[cy][cx]) return 'wall';
+    return scene.floorIds[cy][cx];
+  };
+
   for (let y = 0; y < scene.rows; y++) {
     for (let x = 0; x < scene.cols; x++) {
-      const floor = project.floors.find((item) => item.id === scene.floorIds[y][x]);
-      if (floor) body += svgAt(composeFloorTile(floor, project.style, CANVAS), x, y);
+      const own = scene.floorIds[y][x];
+      const isWall = wallAt(scene, x, y);
+      const nearWall =
+        isWall || wallAt(scene, x - 1, y) || wallAt(scene, x + 1, y) || wallAt(scene, x, y - 1) || wallAt(scene, x, y + 1);
+      const floor = project.floors.find((item) => item.id === own);
+      if (!nearWall) {
+        if (floor) body += svgAt(composeFloorTile(floor, project.style, CANVAS), x, y);
+        continue;
+      }
+
+      const resolved = QUADS.map((q) => {
+        const a = cellInfo(x + q.dx, y);
+        const b = cellInfo(x, y + q.dy);
+        const d = cellInfo(x + q.dx, y + q.dy);
+        const dOpen = d !== 'wall' && d !== 'out';
+        // bordering the outside: walls clip the world, open tiles keep their own floor
+        if (a === 'out' || b === 'out') return isWall ? null : own;
+        const aOpen = a !== 'wall';
+        const bOpen = b !== 'wall';
+        if (aOpen && bOpen) return dOpen ? d : a; // wrap-around region (e.g. wide doorways)
+        if (aOpen) return a;
+        if (bOpen) return b;
+        return dOpen ? d : own; // fully cornered: diagonal room, else own
+      });
+
+      if (resolved.every((id) => id === own)) {
+        if (floor) body += svgAt(composeFloorTile(floor, project.style, CANVAS), x, y);
+        continue;
+      }
+      let cell = '';
+      QUADS.forEach((q, i) => {
+        const id = resolved[i];
+        if (!id) return;
+        cell +=
+          `<svg x="${q.x}" y="${q.y}" width="${HALF}" height="${HALF}" ` +
+          `viewBox="${q.x} ${q.y} ${HALF} ${HALF}">${floorMarkup(id)}</svg>`;
+      });
+      if (cell) body += svgAt(cell, x, y);
     }
   }
 

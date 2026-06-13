@@ -279,9 +279,7 @@ export function renderSceneControls(container: HTMLElement): void {
     },
   });
 
-  const generateBtn = button('Generate office', () => {
-    const parsed = Number.parseInt(store.ui.sceneSeed, 10);
-    const seed = Number.isFinite(parsed) ? parsed : undefined;
+  const generate = (seed: number | undefined) => {
     const generated = generateOfficeLayout(store.state, store.ui.sceneCoworkers, seed);
     store.ui.sceneSeed = String(generated.seed);
     store.mutate((state) => {
@@ -290,13 +288,22 @@ export function renderSceneControls(container: HTMLElement): void {
         .concat(generated.coworkers);
       state.scene = generated.scene;
     }, 'structure');
+  };
+
+  // replays the seed in the field (or rolls one when blank)
+  const generateBtn = button('Generate office', () => {
+    const parsed = Number.parseInt(store.ui.sceneSeed, 10);
+    generate(Number.isFinite(parsed) ? parsed : undefined);
   }, 'primary');
+
+  // always rolls a fresh seed — one click, new office
+  const randomBtn = button('🎲 New office', () => generate(undefined), 'primary');
 
   container.append(
     el('h3', {}, 'Random office'),
     labeled('Random coworkers', coworkerInput),
     labeled('Seed (same seed = same office)', seedInput),
-    el('div', { className: 'btn-row' }, generateBtn),
+    el('div', { className: 'btn-row' }, randomBtn, generateBtn),
     el('h3', {}, 'Scene'),
     labeled('Export scale', scaleSelect),
     el(
