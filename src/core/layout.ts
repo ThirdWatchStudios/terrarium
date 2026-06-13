@@ -651,15 +651,20 @@ function createGeneratedCoworkers(project: ProjectState, count: number, rng: Rng
 }
 
 function furnishReception(scene: SceneState, project: ProjectState, room: RoomSpec, rng: Rng): void {
+  const box = interior(room);
+  const area = (box.x1 - box.x0 + 1) * (box.y1 - box.y0 + 1);
   addPropNear(scene, project, room, 'reception-desk', 'prop-reception-desk', 'reception-desk', 0.38, 0.42, rng, pick(rng, ROTATIONS));
   const lounge = findOpenNear(scene, room, cellAt(room, 0.72, 0.72), rng);
   if (lounge) {
     addProp(scene, project, 'reception-rug', 'prop-rug', 'rug', lounge.x, lounge.y, pick(rng, [0, 90] as SceneRotation[]));
     addProp(scene, project, 'reception-couch', 'prop-couch', 'couch', lounge.x, lounge.y, pick(rng, ROTATIONS));
+    // a facing chair makes the lounge read as a seating area in larger lobbies
+    if (area >= 14) addPropNear(scene, project, room, 'reception-chair', 'prop-office-chair', 'office-chair', 0.5, 0.78, rng, 0);
   }
-  if (chance(rng, 0.8)) addPropNear(scene, project, room, 'reception-plant', 'prop-office-plant', 'office-plant', 0.85, 0.2, rng);
-  if (room.cols >= 6 && room.rows >= 6 && chance(rng, 0.35)) {
-    addPropNear(scene, project, room, 'reception-printer', 'prop-printer', 'printer', 0.8, 0.8, rng);
+  // a plant always grounds the open lobby floor
+  addPropNear(scene, project, room, 'reception-plant', 'prop-office-plant', 'office-plant', 0.85, 0.2, rng);
+  if (area >= 16 && chance(rng, 0.5)) {
+    addPropNear(scene, project, room, 'reception-printer', 'prop-printer', 'printer', 0.18, 0.78, rng);
   }
 }
 
@@ -678,7 +683,8 @@ function furnishManagerOffice(scene: SceneState, project: ProjectState, room: Ro
 
 function furnishBreakRoom(scene: SceneState, project: ProjectState, room: RoomSpec, rng: Rng): void {
   const box = interior(room);
-  const interiorArea = (box.x1 - box.x0 + 1) * (box.y1 - box.y0 + 1);
+  const w = box.x1 - box.x0 + 1;
+  const h = box.y1 - box.y0 + 1;
   const appliances = [
     ['fridge', 'prop-fridge', 'fridge'] as const,
     ['coffee-machine', 'prop-coffee-machine', 'coffee-machine'] as const,
@@ -690,10 +696,19 @@ function furnishBreakRoom(scene: SceneState, project: ProjectState, room: RoomSp
     const [key, preferredId, templateId] = appliances[i];
     addPropNear(scene, project, room, key, preferredId, templateId, slots[i], 0.05, rng);
   }
-  if (interiorArea >= 16 && chance(rng, 0.45)) {
-    addPropNear(scene, project, room, 'break-table', 'prop-desk', 'desk', 0.5, 0.78, rng, pick(rng, [0, 90] as SceneRotation[]));
+  // A lunch table with chairs anchors the open floor below the appliances, so
+  // the room reads as a break area rather than an empty hall. Always present
+  // once there is room for it; chairs flank it when the room is wide enough.
+  if (w >= 2 && h >= 3) {
+    const tx = clamp(Math.round((box.x0 + box.x1) / 2), box.x0 + 1, box.x1 - 1);
+    const ty = clamp(box.y0 + Math.round(h * 0.6), box.y0 + 1, box.y1);
+    addProp(scene, project, 'break-table', 'prop-desk', 'desk', tx, ty, 0);
+    if (w >= 4) {
+      addProp(scene, project, 'break-chair-l', 'prop-office-chair', 'office-chair', tx - 1, ty, 90);
+      addProp(scene, project, 'break-chair-r', 'prop-office-chair', 'office-chair', tx + 1, ty, 270);
+    }
   }
-  if (chance(rng, 0.5)) addPropNear(scene, project, room, 'break-vending', 'prop-vending-machine', 'vending-machine', 0.88, 0.45, rng);
+  if (chance(rng, 0.5)) addPropNear(scene, project, room, 'break-vending', 'prop-vending-machine', 'vending-machine', 0.9, 0.42, rng);
 }
 
 function furnishConferenceRoom(scene: SceneState, project: ProjectState, room: RoomSpec, rng: Rng): void {

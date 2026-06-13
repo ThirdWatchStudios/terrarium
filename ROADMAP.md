@@ -60,7 +60,7 @@ preview/export behavior; part definitions stay vector-smooth and unchanged.
 
 ## Phase 2 — Into Unity
 
-### 2.1 Unity import helper — DONE
+### 2.1 Unity import helper — DONE (verified 2026-06-13)
 Implemented in The-Water-Cooler with a Phase 2 editor menu importer:
 `Water Cooler/Phase 2/Import Sprite Toolkit Zip...`. The importer extracts a
 Sprite Character Creator export zip into a timestamped generated folder,
@@ -68,6 +68,17 @@ slices character/mood sheets and wall tilesets from atlas JSON, applies pivot
 and projection metadata, builds character/prop prefabs, creates floor/prop/
 character metadata assets, and uses a 16-mask wall sprite lookup instead of
 RuleTiles until the map path needs a Tilemap dependency.
+
+Cross-checked against `exporter.ts`: folder/file names, frame keys, the
+top-down→bottom-up Y-flip (`textureHeight - y - h`), computed textureHeight vs
+real PNG canvas, bottom-up pivots, and no west double-mirror all verified
+correct. **Fixed one real bug:** mood sheets at 4x are 2048×3072, past Unity's
+default 2048 `maxTextureSize`, which silently downscaled the texture while atlas
+rects stayed full-size → broken mood sprites by default. `ConfigureBaseTexture`
+now sets `maxTextureSize = 8192`. Still worth an in-editor smoke test (single-
+sprite prop/floor pivots; a real 4x import) since slicing can't be unit-tested
+headlessly; the Y-flip math and frame-name parsers also have no automated test
+yet (cheap future win: make them `internal` + EditMode tests).
 
 Editor script in The-Water-Cooler that ingests the export zip:
 - Slices sheets using the atlas JSONs (frames, pivots).
@@ -120,12 +131,51 @@ Spike proof:
 Port only the data model + sprite-layer assembly needed for generated
 coworkers: recipes, palette token resolution, anchors, z-order, proportions,
 facings, and mood overlays. This is an `NpcSpriteComposer`, not a vector
-renderer. Maps do not use this path; they use layout generation plus imported
-tile/prop sprite lookups. The outline pass should stay baked unless the layer
-atlas spike proves a shader outline is necessary. Target API:
-`NpcSpriteSet Compose(CharacterRecipe recipe, StyleSheet style)`.
+renderer. Maps do not use this path; they assemble from the runtime layout
+generator (2.4) plus imported tile/prop sprite lookups. The outline pass should
+stay baked unless the layer atlas spike proves a shader outline is necessary.
+Target API: `NpcSpriteSet Compose(CharacterRecipe recipe, StyleSheet style)`.
 
-### 2.4 Headless export CLI
+### 2.4 C# layout generator port (runtime offices)
+**Decision (locked):** offices are generated procedurally **at runtime in
+Unity**, not pre-authored. So `src/core/layout.ts` gets a real C# port — Unity
+produces a fresh, seeded office each playthrough rather than loading exported
+layout JSON. (The tool's layout JSON export stays as a debug/authoring and
+golden-test artifact, not the shipping path.)
+
+Port to a deterministic `OfficeLayoutGenerator`:
+- **Room templates** — the shared-edge `RoomSpec` rects per template (adjacent
+  rooms must overlap one tile on boundaries — porting note: this is what keeps
+  walls single, not double), plus the room archetype set (reception, manager,
+  break, conference, cubicle farm, hallway, waiting-nook, focus/copy/records
+  rooms, storage closet).
+- **Seeded RNG** — `mulberry32` threaded through every random choice; the
+  determinism contract is load-bearing: same `{templateId, seed}` ⇒ identical
+  office, so the game can store/replay a building from two numbers. Match the
+  JS RNG bit-for-bit OR accept that C# diverges and treat seeds as engine-local.
+- **Wall drawing** — perimeter + shared room walls, office-wall shell
+  re-asserted last (interior glass never on the exterior), single-tile doorways
+  cleared with one door prop each (no widening), badge-reader pairing.
+- **Cubicle comb** — partition spines never parallel-adjacent to a room wall
+  (fuses into a lattice); pods skip door-gap columns; seats returned so
+  coworkers spawn seated.
+- **Furnishing rules** — per-room prop placement scaled to room size (break
+  room/​reception always get a centre cluster so big rooms don't read empty),
+  non-destructive spawn (never deletes furniture; chairs are the only sit-able
+  prop).
+- **Output** — an in-memory scene (floor-id grid, wall-id grid, prop/character
+  placements with rotation/facing/mood) that the Unity map assembler turns into
+  instantiated sprites via the imported tile/prop atlases + the 2.3 NPC composer
+  for spawned coworkers.
+
+The renderer that consumes this output must also replicate two tool-side
+render-time rules (documented in scene.ts): **per-quadrant floor resolution**
+(floors stay inside wall bounds; borrow the neighbour/diagonal room's floor at
+walls and thresholds) and **walls extending an arm into door tiles** (close the
+gap beside a door without latticing cubicle openings). Depends on 2.1 (import)
+and 2.3 (NPC composer).
+
+### 2.5 Headless export CLI
 `npm run export -- project.json out/` — regenerate every asset without the
 browser (resvg-js or playwright for SVG→PNG). Lets the game's build pipeline
 treat art as a compiled artifact of `project.json`, which is the whole point
@@ -146,12 +196,22 @@ atlases plus layout JSON.
 - Window (wall-slot, like door), nameplate, HVAC vent, desk clutter
   (papers, phone), couch + rug (plan), vending machine (elevation).
 
-### 3.2 Part library growth — DONE
+### 3.2 Part library growth — DONE (outfits reworked 2026-06-13)
 Implemented with: three additional head shapes (long, angular, soft square),
-five hair variants (side part, pixie, ponytail, long straight, coils), three
-outfits (hoodie, suit jacket, dress), and five accessories/carried overlays
-(watch, earbuds, clipboard, coffee run, stack of papers) exposed through the
-existing character selectors and random coworker generator.
+five hair variants (side part, pixie, ponytail, long straight, coils), outfits,
+and five accessories/carried overlays (watch, earbuds, clipboard, coffee run,
+stack of papers) exposed through the existing character selectors and random
+coworker generator.
+
+Review found the first-pass outfits (hoodie, suit jacket, dress) broke the
+established outfit convention — they drew whole-garment shapes in
+`$outfitSecondary` instead of minimal collar/detail overlays on the
+`$outfitPrimary` body capsule, and the dress flared a sharp un-outlined skirt
+*outside* the body silhouette. All three were re-authored to the convention
+(detail accents inside the silhouette, body capsule = the garment), and two
+more were added for variety (turtleneck, sweater vest). Heads, hair, and
+accessories were spot-checked and are stylistically consistent — no rework.
+Outfit slot now has 10 options.
 More heads, hair, outfits (hoodie, suit jacket, dress), accessories (watch,
 earbuds, clipboard). Carried-item overlays for characters (coffee run, stack
 of papers) — same slot system, anchored at the hands.
@@ -178,7 +238,8 @@ old saves and the game's expectations can't drift apart.
 
 - **Frame animation** — the RimWorld slide-and-bob convention is a core scope
   decision, not a missing feature. Re-litigate only if playtests demand it.
-- **In-tool game logic** (pathfinding, sim hooks) — the layout generator emits
-  data; the game owns behavior.
+- **Game logic** (pathfinding, sim hooks, AI) — the layout generator (both the
+  TS original and the 2.4 C# port) only produces geometry and placements; the
+  game owns all behavior on top of that data.
 - **Isometric projection** — would invalidate the part library; the top-down
   hybrid is settled.

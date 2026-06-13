@@ -494,6 +494,9 @@ const OUTFITS: PartDef[] = [
     },
   },
   {
+    // Casual: hood draped at the neck, drawstrings, a kangaroo-pocket seam.
+    // Same minimal-overlay convention as the other tops — detail on the body
+    // capsule, all inside the silhouette.
     id: 'outfit-hoodie',
     label: 'Hoodie',
     slot: 'outfit',
@@ -502,28 +505,29 @@ const OUTFITS: PartDef[] = [
       south: {
         z: 20,
         shapes: [
-          { d: `M -18 -28 Q 0 -39 18 -28 L 10 -13 Q 0 -19 -10 -13 Z`, fill: '$outfitSecondary', silhouette: false },
-          { d: `M -4 -29 L -9 -7 M 4 -29 L 9 -7`, stroke: '#00000030', strokeWidth: 2, silhouette: false },
-          { d: rr(-11, 7, 22, 12, 5), fill: '$outfitSecondary', silhouette: false },
+          { d: `M -13 -29 Q 0 -19 13 -29 L 9 -23 Q 0 -15 -9 -23 Z`, fill: '$outfitSecondary', silhouette: false },
+          { d: `M -3 -18 L -4 -5 M 3 -18 L 4 -5`, stroke: '$accent', strokeWidth: 1.6, silhouette: false },
+          { d: circle(-4, -5, 1.4), fill: '$accent', silhouette: false },
+          { d: circle(4, -5, 1.4), fill: '$accent', silhouette: false },
+          { d: `M -10 7 Q 0 11 10 7`, stroke: '#00000026', strokeWidth: 2, silhouette: false },
         ],
       },
       north: {
         z: 20,
-        shapes: [
-          { d: `M -18 -28 Q 0 -40 18 -28 L 14 -8 Q 0 -18 -14 -8 Z`, fill: '$outfitSecondary', silhouette: false },
-          { d: rr(-9, 8, 18, 10, 4), fill: '#00000018', silhouette: false },
-        ],
+        shapes: [{ d: `M -13 -29 Q 0 -21 13 -29 L 13 -19 Q 0 -13 -13 -19 Z`, fill: '$outfitSecondary', silhouette: false }],
       },
       east: {
         z: 20,
         shapes: [
-          { d: `M 8 -29 Q 21 -27 18 -12 L 10 -15 Z`, fill: '$outfitSecondary', silhouette: false },
-          { d: `M 13 -25 L 15 -7`, stroke: '#00000030', strokeWidth: 2, silhouette: false },
+          { d: `M 8 -29 Q 16 -23 13 -14 L 9 -18 Z`, fill: '$outfitSecondary', silhouette: false },
+          { d: `M 12 -15 L 13 -5`, stroke: '$accent', strokeWidth: 1.6, silhouette: false },
         ],
       },
     },
   },
   {
+    // Formal: notched lapels + tie + buttons. Reads dressier than the blazer
+    // without overpainting the torso.
     id: 'outfit-suit-jacket',
     label: 'Suit jacket',
     slot: 'outfit',
@@ -532,31 +536,32 @@ const OUTFITS: PartDef[] = [
       south: {
         z: 20,
         shapes: [
-          { d: `M -18 -28 L -4 25 L 0 4 L 4 25 L 18 -28 L 8 -28 L 0 -12 L -8 -28 Z`, fill: '$outfitSecondary', silhouette: false },
-          { d: `M -4 -28 L 0 -15 L 4 -28 Z`, fill: '$skin', silhouette: false },
-          { d: `M -2 -16 L 2 -16 L 4 9 L 0 15 L -4 9 Z`, fill: '$accent', silhouette: false },
-          { d: circle(7, 5, 1.7), fill: '#0000003A', silhouette: false },
-          { d: circle(7, 14, 1.7), fill: '#0000003A', silhouette: false },
+          { d: `M -12 -29 L -2 -9 L -6 -2 L 0 -8 L 6 -2 L 2 -9 L 12 -29 Z`, fill: '$outfitSecondary', silhouette: false },
+          { d: `M -2.6 -9 L 2.6 -9 L 3.6 10 L 0 15 L -3.6 10 Z`, fill: '$accent', silhouette: false },
+          { d: circle(-6, 6, 1.6), fill: '#00000033', silhouette: false },
+          { d: circle(-6, 14, 1.6), fill: '#00000033', silhouette: false },
         ],
       },
       north: {
         z: 20,
         shapes: [
-          { d: `M 0 -26 L 0 26`, stroke: '#0000002E', strokeWidth: 2, silhouette: false },
           { d: rr(-12, -29, 24, 5, 2), fill: '$outfitSecondary', silhouette: false },
+          { d: `M 0 -24 L 0 24`, stroke: '#0000002A', strokeWidth: 2, silhouette: false },
         ],
       },
       east: {
         z: 20,
         shapes: [
-          { d: `M 8 -28 L 15 -12 L 18 -28 Z`, fill: '$outfitSecondary', silhouette: false },
-          { d: `M 11 -21 L 14 -8 L 11 -5 Z`, fill: '$accent', silhouette: false },
-          { d: circle(12, 7, 1.7), fill: '#0000003A', silhouette: false },
+          { d: `M 9 -29 L 13 -12 L 16 -29 Z`, fill: '$outfitSecondary', silhouette: false },
+          { d: `M 11 -12 L 13 -1 L 10 1 Z`, fill: '$accent', silhouette: false },
+          { d: circle(11, 8, 1.6), fill: '#00000033', silhouette: false },
         ],
       },
     },
   },
   {
+    // A-line dress: scoop neckline, waist seam, skirt panel seams that imply
+    // a flared skirt while staying inside the body outline.
     id: 'outfit-dress',
     label: 'Dress',
     slot: 'outfit',
@@ -565,22 +570,73 @@ const OUTFITS: PartDef[] = [
       south: {
         z: 20,
         shapes: [
-          { d: `M -9 -29 L 0 -16 L 9 -29 Z`, fill: '$skin', silhouette: false },
-          { d: `M -15 -16 L -28 29 L 28 29 L 15 -16 Z`, fill: '$outfitSecondary', silhouette: false },
-          { d: `M -17 8 L 17 8`, stroke: '#00000026', strokeWidth: 2, silhouette: false },
+          { d: `M -9 -29 Q 0 -15 9 -29 Z`, fill: '$outfitSecondary', silhouette: false },
+          { d: `M -13 2 L 13 2`, stroke: '$accent', strokeWidth: 2.5, silhouette: false },
+          { d: `M -7 5 L -12 26 M 7 5 L 12 26`, stroke: '#0000001E', strokeWidth: 1.6, silhouette: false },
+          { d: `M 0 4 L 0 27`, stroke: '#00000018', strokeWidth: 1.4, silhouette: false },
         ],
       },
       north: {
         z: 20,
         shapes: [
-          { d: `M -15 -16 L -27 29 L 27 29 L 15 -16 Z`, fill: '$outfitSecondary', silhouette: false },
+          { d: rr(-11, -29, 22, 4, 2), fill: '$outfitSecondary', silhouette: false },
+          { d: `M -13 2 L 13 2`, stroke: '$accent', strokeWidth: 2.5, silhouette: false },
+          { d: `M 0 4 L 0 27`, stroke: '#00000018', strokeWidth: 1.4, silhouette: false },
         ],
       },
       east: {
         z: 20,
         shapes: [
-          { d: `M 7 -28 L 13 -15 L 17 -28 Z`, fill: '$skin', silhouette: false },
-          { d: `M -10 -16 L -18 29 L 21 29 L 13 -16 Z`, fill: '$outfitSecondary', silhouette: false },
+          { d: `M 7 -29 Q 13 -16 17 -29 Z`, fill: '$outfitSecondary', silhouette: false },
+          { d: `M -11 2 L 13 2`, stroke: '$accent', strokeWidth: 2.5, silhouette: false },
+          { d: `M 2 5 L -2 26 M 11 5 L 13 26`, stroke: '#0000001E', strokeWidth: 1.6, silhouette: false },
+        ],
+      },
+    },
+  },
+  {
+    // High rolled collar covering the neck — distinct, minimal silhouette read.
+    id: 'outfit-turtleneck',
+    label: 'Turtleneck',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: {
+      south: {
+        z: 20,
+        shapes: [
+          { d: rr(-7, -29, 14, 9, 4), fill: '$outfitSecondary', silhouette: false },
+          { d: `M -7 -23 Q 0 -20 7 -23`, stroke: '#0000001E', strokeWidth: 1.4, silhouette: false },
+        ],
+      },
+      north: { z: 20, shapes: [{ d: rr(-7, -29, 14, 8, 4), fill: '$outfitSecondary', silhouette: false }] },
+      east: {
+        z: 20,
+        shapes: [{ d: rr(5, -29, 12, 9, 4), fill: '$outfitSecondary', silhouette: false }],
+      },
+    },
+  },
+  {
+    // Sweater vest over a collared shirt: V-neck panel + shirt V + buttons.
+    id: 'outfit-vest',
+    label: 'Sweater vest',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: {
+      south: {
+        z: 20,
+        shapes: [
+          { d: `M -12 -29 L 0 -7 L 12 -29 L 12 18 L -12 18 Z`, fill: '$outfitSecondary', silhouette: false },
+          { d: `M -6 -29 L 0 -11 L 6 -29 Z`, fill: '$accent', silhouette: false },
+          { d: circle(0, 1, 1.5), fill: '#00000030', silhouette: false },
+          { d: circle(0, 9, 1.5), fill: '#00000030', silhouette: false },
+        ],
+      },
+      north: { z: 20, shapes: [{ d: rr(-12, -29, 24, 47, 4), fill: '$outfitSecondary', silhouette: false }] },
+      east: {
+        z: 20,
+        shapes: [
+          { d: `M 7 -29 L 12 -12 L 17 -29 L 17 18 L 7 18 Z`, fill: '$outfitSecondary', silhouette: false },
+          { d: `M 9 -29 L 12 -16 L 15 -29 Z`, fill: '$accent', silhouette: false },
         ],
       },
     },
