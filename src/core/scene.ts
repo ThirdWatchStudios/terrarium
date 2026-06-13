@@ -276,10 +276,20 @@ export function composeSceneSvg(scene: SceneState, project: ProjectState, cellPi
     for (let x = 0; x < scene.cols; x++) {
       const own = scene.floorIds[y][x];
       const isWall = wallAt(scene, x, y);
-      const nearWall =
-        isWall || wallAt(scene, x - 1, y) || wallAt(scene, x + 1, y) || wallAt(scene, x, y - 1) || wallAt(scene, x, y + 1);
+      // Quadrant splitting applies ONLY where a wall line passes through the
+      // tile: wall tiles themselves, and thresholds — tiles inside a 1- or
+      // 2-tile door gap in a wall run. The gap must be genuinely bounded: a
+      // far wall (distance 2) only counts together with a NEAR wall on the
+      // opposite side, otherwise any tile in a 3-wide room with walls either
+      // side would qualify and open floor transitions checkerboard.
+      const gapInRun = (w1: boolean, w2: boolean, e1: boolean, e2: boolean) =>
+        (w1 && e1) || (w1 && e2) || (e1 && w2);
+      const isThreshold =
+        !isWall &&
+        (gapInRun(wallAt(scene, x - 1, y), wallAt(scene, x - 2, y), wallAt(scene, x + 1, y), wallAt(scene, x + 2, y)) ||
+          gapInRun(wallAt(scene, x, y - 1), wallAt(scene, x, y - 2), wallAt(scene, x, y + 1), wallAt(scene, x, y + 2)));
       const floor = project.floors.find((item) => item.id === own);
-      if (!nearWall) {
+      if (!isWall && !isThreshold) {
         if (floor) body += svgAt(composeFloorTile(floor, project.style, CANVAS), x, y);
         continue;
       }
