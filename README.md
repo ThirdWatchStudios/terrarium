@@ -83,6 +83,8 @@ characters/<name>/atlas@{1,2,4}x.json       # frame rects + pivot
 characters/<name>/moods@{1,2,4}x.png        # 6 mood rows x 4 facing columns
 characters/<name>/moods-atlas@{1,2,4}x.json # frames keyed "<mood>_<facing>"
 characters/<name>/recipe.json
+character-layers/<name>/layers@{1,2,4}x.png # re-tintable part layers (rows) x facings (cols)
+character-layers/<name>/manifest@{1,2,4}x.json # layer z/tint/mood + frame rects; baked outline layer
 props/<name>/sprite@{1,2,4}x.png
 props/<name>/atlas@{1,2,4}x.json            # projection + placement + pivot
 walls/<name>/tileset@{1,2,4}x.png           # 4x4 sheet, frames keyed mask_0..mask_15

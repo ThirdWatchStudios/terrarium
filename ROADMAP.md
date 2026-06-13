@@ -116,16 +116,47 @@ Keep Shapes available for map gizmos, placement previews, selection rings,
 route/debug lines, room bounds, or intentionally primitive procedural graphics.
 
 Spike proof:
-- Export a layer atlas for one character family: body/head/hair/outfit/mood
-  overlays as separate neutral or token-mask textures.
-- In Unity, compose two coworkers from the same atlas with different recipes,
-  palette tints, moods, facings, and sort orders.
-- Generate one small office from layout JSON using imported wall/floor/prop
-  atlas entries; use Shapes only for debug overlays such as room bounds or
-  navigation paths.
-- Accept the raster-atlas path if the result is visually close, avoids visible
-  seams, and generates a room plus 10 NPC variants without per-frame vector
-  draw work.
+- **Tool-side half — DONE (2026-06-13).** `characterLayerSheetPng` +
+  `characterLayerManifest` (exporter.ts), backed by `characterLayers` in
+  compositor.ts, export a character as outline-free, re-tintable part layers:
+  one row per (part × colour-source) + mood rows, one column per facing. Token
+  colours render as WHITE MASKS the engine multiplies by the recipe colour
+  (preserves AA); literal detail renders untinted; mood layers swap by the
+  active mood. Manifest carries z-order, tint token, mood, and Y-flip-ready
+  frame rects (reuses the 2.1 slicing path). Exposed via "Layer atlas PNG" /
+  "Layer manifest JSON" buttons on the character panel.
+  **Validated:** a Unity-style consumer (slice frames → multiply masks by
+  palette → stack by z → swap mood) reconstructs every cast member across all
+  4 moods/facings at mean diff **0.02/255** vs `composeCharacter` (outline-free)
+  — pixel-faithful. Two palettes + moods from one atlas yield distinct
+  coworkers. **Outline is a baked silhouette layer** (layer key `outline`,
+  z -1, untinted) — the engine draws it first, no shader needed; rebuild WITH
+  it matches `composeCharacter` (outline on) at mean **0.008/255**. The layer
+  atlas now also ships inside the export-all zip under
+  `character-layers/<slug>/` (`layers@Nx.png` + `manifest@Nx.json` + recipe),
+  so the existing zip-import flow can reach it.
+- **Unity-side half — CODE WRITTEN (2026-06-13), UNVERIFIED in-editor.** In
+  The-Water-Cooler:
+  - `Runtime/Phase2/SpriteToolkitLayerAtlas.cs` — `SpriteToolkitLayerAtlas` SO
+    (layers with z/tint/mood + per-facing sprites, default palette) and
+    `SpriteToolkitNpcComposer` (SelectLayers by mood + (z,order); Compose
+    stacks SpriteRenderers, `color = palette[tint]` — stock sprite shader does
+    the multiply, no shader; SortingGroup on the parent; outline layer drawn
+    first).
+  - `Editor/Phase2/SpriteToolkitZipImporter.cs` — `ImportCharacterLayers` reads
+    `character-layers/*/manifest@Nx.json`, slices `layers@Nx.png` via the
+    existing AtlasJson Y-flip path, builds the SO; prefers 2x (4x layer sheets
+    hit the texture-size ceiling). Wired into the catalog.
+  - `Tests/EditMode/SpriteToolkitNpcComposerTests.cs` — layer selection/order/
+    mood-filter + tint resolution (pure logic, runs headless).
+  - **Verify on the working machine:** (1) EditMode tests pass; (2) re-export
+    the zip, run the importer, confirm a `SpriteToolkitLayerAtlas` asset per
+    character with sliced layer sprites; (3) `Compose` two coworkers (different
+    palette + mood + facing) — confirm correct tint, no seams, outline reads;
+    (4) check `SortingGroup` resolves (else drop that line — composer works
+    without it); (5) confirm single-sprite pivots and the 2x slice look right.
+    Then generate one small office from layout JSON. New .cs files get .meta
+    files auto-generated on first Unity import.
 
 ### 2.3 C# compositor port
 Port only the data model + sprite-layer assembly needed for generated

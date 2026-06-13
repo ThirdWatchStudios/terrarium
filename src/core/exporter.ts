@@ -2,7 +2,15 @@ import JSZip from 'jszip';
 import type { CharacterRecipe, ProjectState, PropInstance, StyleSheet, TileInstance } from './types';
 import type { SceneState } from './scene';
 import { MOODS } from './types';
-import { composeCharacter, composeFloorTile, composeProp, composeWallTile } from './compositor';
+import {
+  PALETTE_TOKENS,
+  characterLayers,
+  composeCharacter,
+  composeFloorTile,
+  composeProp,
+  composeWallTile,
+  layerCellSvg,
+} from './compositor';
 import { sceneToLayoutJson } from './layout';
 import { composeSceneSvg } from './scene';
 import { PROP_TEMPLATES } from '../props/templates';
@@ -105,6 +113,81 @@ export function characterAtlas(recipe: CharacterRecipe, style: StyleSheet, scale
     meta: {
       generator: 'sprite-character-creator',
       westIsMirroredEast: true,
+    },
+  };
+}
+
+/**
+ * Layer atlas (Phase 2.2 spike). One row per re-tintable part layer, one column
+ * per facing (south, east, north, west). Token layers are white masks the engine
+ * multiplies by the recipe colour; literal layers are untinted; mood layers swap
+ * by the active mood. Outline-free — the engine strokes the merged silhouette.
+ * Pairs with characterLayerManifest, which carries z-order + tint token + mood.
+ */
+export async function characterLayerSheetPng(
+  recipe: CharacterRecipe,
+  style: StyleSheet,
+  scale: number,
+): Promise<Blob> {
+  const layers = characterLayers(recipe, style);
+  const size = style.render.baseSize * scale;
+  const canvas = document.createElement('canvas');
+  canvas.width = size * SHEET_FACINGS.length;
+  canvas.height = size * Math.max(1, layers.length);
+  const ctx = canvas.getContext('2d')!;
+  for (let row = 0; row < layers.length; row++) {
+    for (let col = 0; col < SHEET_FACINGS.length; col++) {
+      const markup = layers[row].markup[SHEET_FACINGS[col]];
+      if (!markup) continue;
+      const img = await svgToImage(layerCellSvg(markup, size));
+      ctx.drawImage(img, col * size, row * size, size, size);
+    }
+  }
+  return canvasToBlob(canvas);
+}
+
+export function characterLayerManifest(recipe: CharacterRecipe, style: StyleSheet, scale: number) {
+  const layers = characterLayers(recipe, style);
+  const size = style.render.baseSize * scale;
+  const frames: Record<string, { x: number; y: number; w: number; h: number }> = {};
+  layers.forEach((layer, row) => {
+    SHEET_FACINGS.forEach((facing, col) => {
+      if (layer.markup[facing]) frames[`${layer.key}__${facing}`] = { x: col * size, y: row * size, w: size, h: size };
+    });
+  });
+  return {
+    kind: 'character-layers' as const,
+    family: recipe.id,
+    name: recipe.name,
+    frameSize: size,
+    scale,
+    canvas: 128,
+    facings: [...SHEET_FACINGS],
+    tokens: [...PALETTE_TOKENS],
+    moods: [...MOODS],
+    palette: recipe.palette,
+    pivot: { x: 0.5, y: 0.09 },
+    // Composite order: stack ascending z (ties broken by order). Multiply each
+    // layer by palette[tint] (skip when tint is null). Show base layers (mood
+    // null) plus the one layer whose mood === the active mood.
+    layers: layers.map((layer) => ({
+      key: layer.key,
+      slot: layer.slot,
+      partId: layer.partId,
+      z: layer.z,
+      order: layer.order,
+      tint: layer.tint,
+      mood: layer.mood,
+    })),
+    frames,
+    meta: {
+      generator: 'sprite-character-creator',
+      westIsMirroredEast: true,
+      tintMode: 'multiply-white-mask',
+      outline:
+        style.outline.width > 0
+          ? 'baked-silhouette-layer (layer key "outline", z -1: draw first, untinted)'
+          : 'none',
     },
   };
 }
@@ -312,6 +395,18 @@ export async function exportAllZip(project: ProjectState): Promise<Blob> {
       dir.file(`atlas@${scale}x.json`, JSON.stringify(characterAtlas(recipe, style, scale), null, 2));
       dir.file(`moods@${scale}x.png`, await moodSheetPng(recipe, style, scale));
       dir.file(`moods-atlas@${scale}x.json`, JSON.stringify(moodAtlas(recipe, style, scale), null, 2));
+    }
+    dir.file('recipe.json', JSON.stringify(recipe, null, 2));
+  }
+
+  // Re-tintable layer atlases (Phase 2.2 / runtime NPC compositor input). Kept
+  // in a separate top-level folder so the layer importer iterates it distinctly
+  // from the baked character sheets above.
+  for (const recipe of project.characters) {
+    const dir = zip.folder(`character-layers/${slug(recipe.name)}`)!;
+    for (const scale of EXPORT_SCALES) {
+      dir.file(`layers@${scale}x.png`, await characterLayerSheetPng(recipe, style, scale));
+      dir.file(`manifest@${scale}x.json`, JSON.stringify(characterLayerManifest(recipe, style, scale), null, 2));
     }
     dir.file('recipe.json', JSON.stringify(recipe, null, 2));
   }

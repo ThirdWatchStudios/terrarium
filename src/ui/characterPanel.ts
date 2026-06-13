@@ -3,6 +3,8 @@ import { MOODS } from '../core/types';
 import { composeCharacter } from '../core/compositor';
 import {
   characterAtlas,
+  characterLayerManifest,
+  characterLayerSheetPng,
   characterSheetPng,
   downloadBlob,
   downloadJson,
@@ -240,6 +242,16 @@ export function renderCharacterControls(container: HTMLElement): void {
       ),
       button('Recipe JSON', () =>
         downloadJson(`${recipe.name.toLowerCase().replace(/\s+/g, '-')}-recipe.json`, recipe),
+      ),
+      button('Layer atlas PNG', async () => {
+        const blob = await characterLayerSheetPng(recipe, store.state.style, store.ui.exportScale);
+        downloadBlob(`${recipe.name.toLowerCase().replace(/\s+/g, '-')}-layers@${store.ui.exportScale}x.png`, blob);
+      }),
+      button('Layer manifest JSON', () =>
+        downloadJson(
+          `${recipe.name.toLowerCase().replace(/\s+/g, '-')}-layers@${store.ui.exportScale}x.json`,
+          characterLayerManifest(recipe, store.state.style, store.ui.exportScale),
+        ),
       ),
     ),
   );

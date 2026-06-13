@@ -2,6 +2,7 @@ import type {
   AnchorName,
   CharacterRecipe,
   Facing,
+  PaletteToken,
   PartVariant,
   PropInstance,
   PropPalette,
@@ -9,7 +10,7 @@ import type {
   StyleSheet,
 } from './types';
 import type { Mood, TileInstance } from './types';
-import { CANVAS } from './types';
+import { CANVAS, MOODS } from './types';
 import { circle, ellipse } from './geometry';
 import { getPart } from '../parts/library';
 import type { MoodEmote } from '../parts/moods';
@@ -259,6 +260,186 @@ export function composeCharacter(
     inner += emoteMarkup(emote, facing === 'west' ? CANVAS - a.x : a.x, a.y);
   }
   return svgWrap(inner, pixelSize ?? style.render.baseSize);
+}
+
+// ---------------------------------------------------------------------------
+// Layer atlas (Phase 2.2 spike) — export the character as separate, re-tintable
+// part layers instead of a flattened sheet, so a runtime engine can recombine
+// + tint + mood-swap NPCs. Each layer is one (part × colour-source): token
+// colours render as a WHITE MASK (the engine multiplies by the recipe colour,
+// which preserves anti-aliasing), literal detail renders in its real colour
+// (untinted). Layers are positioned exactly as composeCharacter (anchors +
+// proportions) but OUTLINE-FREE — the engine strokes the merged silhouette.
+// ---------------------------------------------------------------------------
+
+export const PALETTE_TOKENS: PaletteToken[] = [
+  'skin',
+  'hair',
+  'outfitPrimary',
+  'outfitSecondary',
+  'accent',
+];
+
+export interface CharacterLayer {
+  /** Stable key across facings, e.g. "head-oval__skin" or "mood-suspicious". */
+  key: string;
+  slot: string;
+  partId: string;
+  /** Paint order — lower paints first (matches composeCharacter z). */
+  z: number;
+  order: number;
+  /** Palette token to multiply this layer by, or null for untinted literal. */
+  tint: PaletteToken | null;
+  /** Base layer (null) or only shown for this mood. */
+  mood: Mood | null;
+  /** Positioned, outline-free inner SVG per facing ('' when the part is absent). */
+  markup: Record<Facing | 'west', string>;
+}
+
+function tokenOf(ref: string | undefined): PaletteToken | null {
+  return ref && ref.startsWith('$') ? (ref.slice(1) as PaletteToken) : null;
+}
+
+/** Emit a token shape as a white mask (engine multiplies by the token colour). */
+function emitMaskShape(s: ShapeSpec): string {
+  const attrs: string[] = [`d="${s.d}"`];
+  attrs.push(`fill="${s.fill ? (tokenOf(s.fill) ? '#FFFFFF' : s.fill) : 'none'}"`);
+  if (s.stroke) {
+    attrs.push(`stroke="${tokenOf(s.stroke) ? '#FFFFFF' : s.stroke}"`);
+    attrs.push(`stroke-width="${s.strokeWidth ?? 1.5}" stroke-linecap="round" stroke-linejoin="round"`);
+  }
+  if (s.opacity !== undefined) attrs.push(`opacity="${s.opacity}"`);
+  return `<path ${attrs.join(' ')}/>`;
+}
+
+const identityResolve: ResolveToken = (ref) => ref;
+
+interface IdPlaced {
+  partId: string;
+  slot: string;
+  anchor: { x: number; y: number };
+  group: 'body' | 'head';
+  variant: PartVariant;
+}
+
+/** Like placeParts but retains part identity and excludes mood/neck-shadow. */
+function placeForLayers(recipe: CharacterRecipe, facing: Facing): IdPlaced[] {
+  const order: Array<{ id: string; slot: string }> = [
+    { id: recipe.parts.body, slot: 'body' },
+    { id: recipe.parts.outfit, slot: 'outfit' },
+    ...recipe.parts.accessories.map((id) => ({ id, slot: 'accessory' })),
+    { id: recipe.parts.head, slot: 'head' },
+    { id: recipe.parts.hair, slot: 'hair' },
+  ];
+  const out: IdPlaced[] = [];
+  for (const { id, slot } of order) {
+    const part = getPart(id);
+    const variant = part?.facings[facing];
+    if (!part || !variant) continue;
+    out.push({
+      partId: id,
+      slot,
+      anchor: ANCHORS[facing][part.anchor],
+      group: HEAD_ANCHORS.includes(part.anchor) ? 'head' : 'body',
+      variant,
+    });
+  }
+  return out;
+}
+
+function positioned(group: 'body' | 'head', facing: Facing, style: StyleSheet, anchor: { x: number; y: number }, body: string): string {
+  return `<g transform="${groupTransform(group, facing, style)}"><g transform="translate(${anchor.x} ${anchor.y})">${body}</g></g>`;
+}
+
+/** Decompose a recipe into re-tintable, outline-free part layers. */
+export function characterLayers(recipe: CharacterRecipe, style: StyleSheet): CharacterLayer[] {
+  const facings: Facing[] = ['south', 'east', 'north'];
+  const byKey = new Map<string, CharacterLayer>();
+  let order = 0;
+  const ensure = (key: string, slot: string, partId: string, z: number, tint: PaletteToken | null, mood: Mood | null) => {
+    let layer = byKey.get(key);
+    if (!layer) {
+      layer = { key, slot, partId, z, order: order++, tint, mood, markup: { south: '', east: '', north: '', west: '' } };
+      byKey.set(key, layer);
+    }
+    return layer;
+  };
+
+  for (const facing of facings) {
+    const placed = placeForLayers(recipe, facing);
+    // neck shadow (literal), painted between body (z10) and outfit (z20)
+    placed.splice(1, 0, {
+      partId: 'neck-shadow',
+      slot: 'body',
+      anchor: ANCHORS[facing].body,
+      group: 'body',
+      variant: { shapes: [{ d: ellipse(0, -22, facing === 'east' ? 9 : 12, 4), fill: '#00000018', silhouette: false }], z: 35 },
+    });
+
+    for (const p of placed) {
+      // split the part's shapes into buckets by colour source, preserving order
+      const buckets = new Map<string, ShapeSpec[]>();
+      const bucketOrder: string[] = [];
+      for (const s of p.variant.shapes) {
+        const bk = tokenOf(s.fill) ?? tokenOf(s.stroke) ?? 'literal';
+        if (!buckets.has(bk)) {
+          buckets.set(bk, []);
+          bucketOrder.push(bk);
+        }
+        buckets.get(bk)!.push(s);
+      }
+      for (const bk of bucketOrder) {
+        const shapes = buckets.get(bk)!;
+        const tint = bk === 'literal' ? null : (bk as PaletteToken);
+        const layer = ensure(`${p.partId}__${bk}`, p.slot, p.partId, p.variant.z, tint, null);
+        const emit = tint ? emitMaskShape : (s: ShapeSpec) => emitColorShape(s, identityResolve);
+        layer.markup[facing] = positioned(p.group, facing, style, p.anchor, shapes.map(emit).join(''));
+      }
+    }
+  }
+
+  // mood overlays — literal ink, head group, only south/east have shapes
+  for (const mood of MOODS) {
+    for (const facing of facings) {
+      const shapes = MOOD_OVERLAYS[mood][facing];
+      if (!shapes || shapes.length === 0) continue;
+      const layer = ensure(`mood-${mood}`, 'mood', mood, MOOD_Z, null, mood);
+      layer.markup[facing] = positioned('head', facing, style, ANCHORS[facing].headCenter, shapes.map((s) => emitColorShape(s, identityResolve)).join(''));
+    }
+  }
+
+  // Baked silhouette outline (z below everything, untinted) — the engine draws
+  // this first so runtime NPCs get the tool's unified outline with no shader.
+  // Uses the exact silhouette-underlay path as composeCharacter; mood-shared
+  // (mood shapes are silhouette:false), so one outline layer covers every mood.
+  if (style.outline.width > 0) {
+    for (const facing of facings) {
+      const placed = placeParts(recipe, facing, 'normal');
+      const partOutline = (p: PlacedPart) => {
+        const shapes = p.variant.shapes.filter(shapeIsSilhouette);
+        if (shapes.length === 0) return '';
+        return `<g transform="translate(${p.anchor.x} ${p.anchor.y})">${shapes.map((s) => emitOutlineShape(s, style)).join('')}</g>`;
+      };
+      const wrap = (group: 'body' | 'head') => {
+        const inner = placed.filter((p) => p.group === group).map(partOutline).join('');
+        return inner ? `<g transform="${groupTransform(group, facing, style)}">${inner}</g>` : '';
+      };
+      const layer = ensure('outline', 'outline', 'outline', -1, null, null);
+      layer.markup[facing] = wrap('body') + wrap('head');
+    }
+  }
+
+  const layers = [...byKey.values()].sort((a, b) => a.z - b.z || a.order - b.order);
+  // west = mirrored east, same as composeCharacter
+  for (const layer of layers) {
+    if (layer.markup.east) layer.markup.west = `<g transform="translate(${CANVAS} 0) scale(-1 1)">${layer.markup.east}</g>`;
+  }
+  return layers;
+}
+
+/** Wrap a single layer's per-facing markup as a standalone SVG (for export). */
+export function layerCellSvg(markup: string, pixelSize: number): string {
+  return svgWrap(markup, pixelSize);
 }
 
 /** Render one wall autotile segment (neighbor mask N=1,E=2,S=4,W=8). */
