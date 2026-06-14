@@ -165,6 +165,31 @@ body {
   overflow: auto;
 }
 
+/* The swapped center is wide, so flow simple fields into responsive columns.
+   Only plain `.field`s share columns; headers, button rows, hints, row-cards,
+   tag editors, multi-input rows, and persona sections span the full width. */
+.layout.swap .controls,
+.layout.swap .section-body {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  align-content: start;
+  align-items: start;
+  gap: 12px 16px;
+}
+
+.layout.swap .controls > *:not(.field),
+.layout.swap .section-body > *:not(.field),
+.layout.swap .controls > .field:has(textarea),
+.layout.swap .controls > .field:has(.check-grid),
+.layout.swap .controls > .field:has(.palette-grid),
+.layout.swap .controls > .field:has(.tag-editor),
+.layout.swap .section-body > .field:has(textarea),
+.layout.swap .section-body > .field:has(.check-grid),
+.layout.swap .section-body > .field:has(.palette-grid),
+.layout.swap .section-body > .field:has(.tag-editor) {
+  grid-column: 1 / -1;
+}
+
 .sidebar {
   background: rgba(17, 20, 22, 0.92);
   border-right: 1px solid var(--border);
