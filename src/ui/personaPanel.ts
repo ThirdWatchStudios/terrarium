@@ -11,7 +11,9 @@ import { composeCharacter } from '../core/compositor';
 import { downloadJson } from '../core/exporter';
 import {
   ACTIVITY_SUGGESTIONS,
+  AGE_BANDS,
   AXIS_LABELS,
+  DEPARTMENTS,
   DERIVED_GAME_AXES,
   DRIVE_SUGGESTIONS,
   EXPECTED_BEHAVIOR_TENDENCIES,
@@ -25,6 +27,7 @@ import {
   OCEAN_AXES,
   ON_BLOCKED_LOCATION,
   PRIMARY_GAME_AXES,
+  PRONOUNS,
   REACTION_CATEGORIES,
   RELATIONSHIP_TAG_SUGGESTIONS,
   RELATIONSHIP_TYPES,
@@ -50,7 +53,7 @@ import {
   type Relationship,
 } from '../core/profile';
 import { button, clear, el, labeled, select, slider } from './dom';
-import { collapsibleSection as section, num, tagEditor, textField, uid } from './controls';
+import { collapsibleSection as section, enumField, num, tagEditor, textField, uid } from './controls';
 
 /** Mutate the selected profile in place (it's a live reference into the store). */
 function edit(fn: () => void, kind: ChangeKind = 'data'): void {
@@ -71,15 +74,15 @@ function identitySection(p: CharacterProfile): HTMLElement {
     'Identity',
     textField('Display name', id.displayName, (v) => edit(() => (id.displayName = v))),
     textField('Role / title', id.roleTitle, (v) => edit(() => (id.roleTitle = v))),
-    textField('Department', id.department, (v) => edit(() => (id.department = v))),
+    enumField('Department', id.department, DEPARTMENTS, (v) => edit(() => (id.department = v))),
     labeled(
       'Seniority',
       select(SENIORITY.map((s) => ({ value: s, label: s })), id.seniority, (v) =>
         edit(() => (id.seniority = v as typeof id.seniority)),
       ),
     ),
-    textField('Pronouns', id.pronouns, (v) => edit(() => (id.pronouns = v))),
-    textField('Age band', id.ageBand, (v) => edit(() => (id.ageBand = v))),
+    enumField('Pronouns', id.pronouns, PRONOUNS, (v) => edit(() => (id.pronouns = v))),
+    enumField('Age band', id.ageBand, AGE_BANDS, (v) => edit(() => (id.ageBand = v))),
     textField('Prototype role', id.prototypeRole, (v) => edit(() => (id.prototypeRole = v))),
     labeled(
       'Bio',

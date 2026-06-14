@@ -54,6 +54,27 @@ export function optNum(label: string, value: number | undefined, set: (v: number
   );
 }
 
+/**
+ * A labeled closed dropdown bound to a string field, populated from a curated
+ * option list. Always offers a blank choice (to clear), and if the current value
+ * isn't in the list it's still shown (tagged "(custom)") so switching a field to
+ * an enum never drops a previously-saved or one-off value.
+ */
+export function enumField(
+  label: string,
+  value: string,
+  options: readonly string[],
+  onChange: (v: string) => void,
+  emptyLabel = '—',
+): HTMLElement {
+  const choices: Array<{ value: string; label: string }> = [
+    { value: '', label: emptyLabel },
+    ...options.map((o) => ({ value: o, label: o })),
+  ];
+  if (value && !options.includes(value)) choices.push({ value, label: `${value} (custom)` });
+  return labeled(label, select(choices, value, onChange));
+}
+
 // --- tag editor -------------------------------------------------------------
 
 /** Removable chips plus an add box backed by a suggestion datalist. */

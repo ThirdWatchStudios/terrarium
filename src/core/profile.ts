@@ -341,6 +341,34 @@ export const ACTIVITY_SUGGESTIONS = ['work', 'break', 'meeting', 'talking', 'idl
 export const SENIORITY = ['intern', 'junior', 'senior', 'lead', 'manager'] as const;
 export type Seniority = (typeof SENIORITY)[number];
 
+/**
+ * Curated option lists for the otherwise free-text identity fields. These are
+ * deliberately *not* union types on Identity — the fields stay `string` so older
+ * saves (and any one-off custom value) survive; the UI renders them as closed
+ * dropdowns that still preserve whatever is already set. Extend a list here to
+ * add a new choice. Departments include the office's generator departments
+ * (Accounting/IT/HR/Management — see core/employee.ts) for consistency.
+ */
+export const DEPARTMENTS = [
+  'Accounting',
+  'Finance',
+  'Sales',
+  'Marketing',
+  'IT',
+  'Engineering',
+  'HR',
+  'Operations',
+  'Facilities',
+  'Customer Support',
+  'Legal',
+  'Management',
+  'Executive',
+] as const;
+
+export const AGE_BANDS = ['20s', '30s', '40s', '50s', '60s+'] as const;
+
+export const PRONOUNS = ['she/her', 'he/him', 'they/them', 'she/they', 'he/they', 'any', 'prefer not to say'] as const;
+
 export interface Identity {
   displayName: string;
   pronouns: string;

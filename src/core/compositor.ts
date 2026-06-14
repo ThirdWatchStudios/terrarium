@@ -214,20 +214,37 @@ function renderPlaced(
 /** Style-neutral ink ringing the badge bubble — matches the face overlays. */
 const BADGE_INK = '#2C2C2A';
 
+/** Bubble radius and outer stroke half-width in badge-local units (pre-scale). */
+const BADGE_RADIUS = 8;
+const BADGE_STROKE_HALF = 0.75;
+/**
+ * Uniform scale on the whole emote badge. The badge is the readability-at-scale
+ * element (it carries the mood in tiny scene/poster sprites), so it's drawn well
+ * larger than the source artwork. Bump this to make moods more legible.
+ */
+const BADGE_SCALE = 1.6;
+/** Keep the scaled bubble's top edge this far below the canvas top (no clipping). */
+const BADGE_TOP_MARGIN = 2;
+
 /**
  * The overhead emote badge: a thought-bubble holding the mood glyph. Drawn in
  * canvas coords, undistorted by the body/head group transforms, so it reads
- * crisply at any zoom. Glyph fills/strokes are literal colors, so the resolver
- * is the identity.
+ * crisply at any zoom, and scaled up (BADGE_SCALE) for legibility everywhere.
+ * Glyph fills/strokes are literal colors, so the resolver is the identity.
  */
 function emoteMarkup(emote: MoodEmote, ax: number, ay: number): string {
   const identity: ResolveToken = (ref) => ref;
+  // Center the bubble at the anchor, but push it down just enough that the
+  // scaled top edge clears the canvas top. The badge grows mostly downward
+  // (toward the head), which is the empty band above the face.
+  const minCenter = BADGE_TOP_MARGIN + (BADGE_RADIUS + BADGE_STROKE_HALF) * BADGE_SCALE;
+  const cy = Math.max(ay, minCenter);
   const tail =
     `<path d="${circle(0.5, 8.6, 1.7)}" fill="${emote.color}" stroke="${BADGE_INK}" stroke-width="1.2"/>` +
     `<path d="${circle(-0.8, 11.8, 1)}" fill="${emote.color}" stroke="${BADGE_INK}" stroke-width="1"/>`;
-  const bubble = `<path d="${circle(0, 0, 8)}" fill="${emote.color}" stroke="${BADGE_INK}" stroke-width="1.5" stroke-linejoin="round"/>`;
+  const bubble = `<path d="${circle(0, 0, BADGE_RADIUS)}" fill="${emote.color}" stroke="${BADGE_INK}" stroke-width="1.5" stroke-linejoin="round"/>`;
   const glyph = emote.glyph.map((s) => emitColorShape(s, identity)).join('');
-  return `<g transform="translate(${ax} ${ay})">${tail}${bubble}${glyph}</g>`;
+  return `<g transform="translate(${ax} ${cy}) scale(${BADGE_SCALE})">${tail}${bubble}${glyph}</g>`;
 }
 
 function svgWrap(inner: string, pixelSize: number): string {
