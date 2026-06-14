@@ -1007,3 +1007,68 @@ textarea {
   color: #c0603a;
   font-weight: 600;
 }
+
+/* ---------- scenario dry-run preview ---------- */
+
+.dry-agent {
+  gap: 4px;
+}
+
+.dry-agent-head {
+  font-size: 14px;
+}
+
+.dry-key {
+  color: var(--accent);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-right: 6px;
+}
+
+.dry-metrics,
+.dry-rel {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.dry-override {
+  color: #c98a3a;
+  font-size: 11px;
+}
+
+/* ---------- scenario office map ---------- */
+
+.scenario-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scenario-cell.is-anchor {
+  outline: 1px dashed rgba(255, 255, 255, 0.28);
+  outline-offset: -3px;
+}
+
+.scenario-cell.is-anchor:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.scenario-cell.placing {
+  background: rgba(216, 90, 48, 0.3);
+}
+
+.scenario-marker {
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1.2;
+  background: var(--accent);
+  color: #14110d;
+  border-radius: 3px;
+  padding: 0 3px;
+  pointer-events: none;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

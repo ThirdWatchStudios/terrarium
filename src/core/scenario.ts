@@ -145,6 +145,12 @@ export interface Scenario {
   scenarioId: string;
   title: string;
   summary: string;
+  /**
+   * The office layout seed this scenario's locations were bound against. Recorded
+   * so the bound office is reproducible (regenerate the same office from this
+   * seed). The office itself is still the shared project scene for now.
+   */
+  officeSeed?: number;
   cast: ScenarioCastMember[];
   locations: ScenarioLocation[];
   truthFacts: TruthFact[];

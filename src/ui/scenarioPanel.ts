@@ -7,8 +7,11 @@
 import type { ChangeKind } from '../state';
 import { store } from '../state';
 import { downloadJson } from '../core/exporter';
-import { computeOfficeAnchors } from '../core/layout';
+import { GENERATED_COWORKER_PREFIX, computeOfficeAnchors, generateOfficeLayout, type OfficeAnchor } from '../core/layout';
+import { composeSceneSvg } from '../core/scene';
 import { STANCES } from '../core/profile';
+import { resolveScenarioRun, type ResolvedAgent } from '../core/scenarioRun';
+import { setScenePreviewSvg } from './renderPreview';
 import {
   ACCESS_STATES,
   OBJECTIVE_CATEGORIES,
@@ -29,6 +32,12 @@ import {
 import { button, clear, el, labeled, select, slider } from './dom';
 
 const uid = (prefix: string): string => `${prefix}-${Math.random().toString(36).slice(2, 6)}`;
+
+// Which variant the dry-run preview resolves against (transient; resets on reload).
+let previewVariantId: string | null = null;
+let previewContainer: HTMLElement | null = null;
+// The location being placed by clicking the office map (transient).
+let placingLocationId: string | null = null;
 
 function edit(fn: () => void, kind: ChangeKind = 'data'): void {
   store.mutate(fn, kind);
@@ -58,6 +67,12 @@ function anchorIds(roomsOnly = false): string[] {
 function validationCtx(): { agentIds: string[]; anchorIds?: string[] } {
   const ids = anchorIds();
   return { agentIds: store.state.characters.map((c) => c.id), anchorIds: ids.length ? ids : undefined };
+}
+
+/** Cast members with no authored persona — a coherence warning (not a hard error). */
+function castWithoutPersona(s: Scenario): string[] {
+  const personas = new Set((store.state.profiles ?? []).map((p) => p.agentId));
+  return s.cast.map((c) => c.agentId).filter((id) => !personas.has(id));
 }
 
 /** Options including the current value even when it is absent from the source. */
@@ -136,6 +151,41 @@ function metaSection(s: Scenario): HTMLElement {
     textField('Scenario id', s.scenarioId, (v) => edit(() => (s.scenarioId = v), 'structure')),
     textField('Title', s.title, (v) => edit(() => (s.title = v))),
     textArea('Summary', s.summary, (v) => edit(() => (s.summary = v))),
+  );
+}
+
+function officeSection(s: Scenario): HTMLElement {
+  const generate = (seed: number | undefined) => {
+    const gen = generateOfficeLayout(store.state, store.ui.sceneCoworkers, seed);
+    store.mutate((st) => {
+      st.characters = st.characters.filter((r) => !r.id.startsWith(GENERATED_COWORKER_PREFIX)).concat(gen.coworkers);
+      st.scene = gen.scene;
+      s.officeSeed = gen.seed; // s is the live selected scenario reference
+    }, 'structure');
+  };
+  const seedInput = el('input', {
+    type: 'number',
+    value: s.officeSeed === undefined ? '' : String(s.officeSeed),
+    placeholder: 'seed',
+    onInput: (e: Event) =>
+      edit(() => {
+        const raw = (e.target as HTMLInputElement).value;
+        s.officeSeed = raw === '' ? undefined : Number(raw);
+      }),
+  });
+  return section(
+    'Office',
+    el('p', { className: 'hint' }, 'The shared project office this scenario binds to. Pin a seed so the bound layout is reproducible.'),
+    labeled(
+      'Seed',
+      el(
+        'span',
+        { className: 'effect-row' },
+        seedInput,
+        button('Generate', () => generate(s.officeSeed), 'primary'),
+        button('🎲 New', () => generate(undefined)),
+      ),
+    ),
   );
 }
 
@@ -353,23 +403,194 @@ export function renderScenarioList(container: HTMLElement): void {
   );
 }
 
+/** A labelled stat line like `trust 33 · susp 100`. */
+function metricLine(label: string, parts: string[]): HTMLElement {
+  return el('div', { className: 'dry-metrics' }, el('span', { className: 'dry-key' }, label), parts.join(' · '));
+}
+
+function relationshipLine(r: ResolvedAgent['relationships'][number]): HTMLElement {
+  const parts = [`trust ${r.trust}`, `susp ${r.suspicion}`, `aff ${r.affinity}`, `infl ${r.influence}`, `resp ${r.respect}`, `fam ${r.familiarity}`];
+  const tag = r.tags.length ? ` [${r.tags.join(', ')}]` : '';
+  return el(
+    'div',
+    { className: 'dry-rel' },
+    el('span', { className: 'dry-key' }, `→ ${r.targetAgentId}${tag}`),
+    parts.join(' · '),
+    r.fromOverride ? el('span', { className: 'dry-override' }, ' ⟵ scenario') : null,
+  );
+}
+
+function dryAgentCard(a: ResolvedAgent): HTMLElement {
+  const beliefs = a.beliefs.map((b) => `${b.topic}: ${b.stance}@${b.confidence}`);
+  return el(
+    'div',
+    { className: 'row-card dry-agent' },
+    el(
+      'div',
+      { className: 'dry-agent-head' },
+      el('strong', {}, a.displayName),
+      el('span', { className: 'hint' }, ` ${a.prototypeRole || '—'}`),
+      a.hasPersona ? null : el('span', { className: 'scenario-invalid' }, ' (no persona)'),
+    ),
+    el('div', { className: 'hint' }, `spawn: ${a.spawnLocationId || '—'}${a.spawnBinding ? ` → ${a.spawnBinding.anchorId || a.spawnBinding.roomId}` : ' (unbound)'}`),
+    a.drivePrimary || a.driveSecondary ? metricLine('drive', [a.drivePrimary || '—', a.driveSecondary].filter(Boolean)) : null,
+    a.topNeeds.length ? metricLine('needs', a.topNeeds) : null,
+    a.traitTags.length ? el('div', { className: 'tag-chips' }, ...a.traitTags.map((t) => el('span', { className: 'tag-chip' }, t))) : null,
+    beliefs.length ? metricLine('beliefs', beliefs) : null,
+    a.knowledge.length ? metricLine('knows', a.knowledge) : null,
+    ...(a.relationships.length ? [el('div', { className: 'dry-key' }, 'relationships'), ...a.relationships.map(relationshipLine)] : []),
+  );
+}
+
+function renderDryRun(container: HTMLElement, s: Scenario): void {
+  const variantOptions = s.variants.map((v) => ({ value: v.variantId, label: v.variantId }));
+  const activeVariant = previewVariantId && s.variants.some((v) => v.variantId === previewVariantId) ? previewVariantId : s.defaultVariantId;
+  const run = resolveScenarioRun(s, {
+    profiles: store.state.profiles ?? [],
+    characters: store.state.characters.map((c) => ({ id: c.id, name: c.name })),
+    variantId: activeVariant,
+    agentIds: store.state.characters.map((c) => c.id),
+    anchorIds: anchorIds().length ? anchorIds() : undefined,
+  });
+
+  const header = el('h3', {}, 'Dry run — starting state');
+  const variantRow = variantOptions.length
+    ? labeled(
+        'Variant',
+        select(variantOptions, activeVariant, (v) => {
+          previewVariantId = v;
+          if (previewContainer) renderScenarioPreview(previewContainer);
+        }),
+      )
+    : el('p', { className: 'hint' }, 'No variants defined.');
+  const conditions = Object.entries(run.variantConditions);
+  const conditionsLine = el('div', { className: 'hint' }, conditions.length ? conditions.map(([k, v]) => `${k}=${v}`).join(' · ') : 'no conditions');
+
+  const world = el(
+    'div',
+    { className: 'row-card' },
+    el('div', { className: 'dry-key' }, 'World'),
+    ...run.truthFacts.map((t) => el('div', { className: 'hint' }, `truth: ${t.statement} (${t.objectiveValue})`)),
+    ...run.informationItems.map((i) => el('div', { className: 'hint' }, `info: ${i.claim} [${i.originType}/${i.truthAlignment}] ← ${i.initialHolderAgentIds.join(', ') || 'unheld'}`)),
+  );
+
+  container.append(
+    header,
+    variantRow,
+    conditionsLine,
+    ...run.agents.map(dryAgentCard),
+    world,
+    el('div', { className: 'row-card' }, el('div', { className: 'dry-key' }, 'Objective'), el('div', { className: 'hint' }, `${run.objective.label || '—'} · KPI: ${run.objective.kpi || '—'}`)),
+  );
+}
+
+function anchorForLocation(s: Scenario, locationId: string, anchors: OfficeAnchor[]): OfficeAnchor | undefined {
+  const loc = s.locations.find((l) => l.locationId === locationId);
+  if (!loc) return undefined;
+  const want = loc.bindTo.anchorId || loc.bindTo.roomId;
+  return anchors.find((a) => a.anchorId === want);
+}
+
+/** The office with each cast member's spawn marked; click an anchor to (re)bind the chosen location. */
+function renderOfficeMap(container: HTMLElement, s: Scenario): void {
+  const scene = store.state.scene;
+  if (!scene || !scene.rooms?.length) {
+    container.append(el('h3', {}, 'Office map'), el('p', { className: 'hint' }, 'No office yet — pin a seed and Generate in the Office section to place the cast spatially.'));
+    return;
+  }
+  const anchors = computeOfficeAnchors(scene, store.state);
+  const anchorByCell = new Map(anchors.map((a) => [`${a.x},${a.y}`, a]));
+  const spawnByCell = new Map<string, string[]>();
+  for (const member of s.cast) {
+    const anchor = anchorForLocation(s, member.spawnLocationId, anchors);
+    if (!anchor) continue;
+    const key = `${anchor.x},${anchor.y}`;
+    const list = spawnByCell.get(key) ?? [];
+    list.push(member.agentId);
+    spawnByCell.set(key, list);
+  }
+
+  placingLocationId =
+    placingLocationId && s.locations.some((l) => l.locationId === placingLocationId)
+      ? placingLocationId
+      : s.locations[0]?.locationId ?? null;
+  const placingCell = placingLocationId ? anchorForLocation(s, placingLocationId, anchors) : undefined;
+  const placingKey = placingCell ? `${placingCell.x},${placingCell.y}` : null;
+
+  const frame = el('div', { className: 'scene-frame', style: `aspect-ratio: ${scene.cols} / ${scene.rows};` });
+  const art = el('div', { className: 'scene-art' });
+  setScenePreviewSvg(art, composeSceneSvg(scene, store.state, 48), store.state.style, scene.cols * 48, scene.rows * 48, true);
+  const overlay = el('div', {
+    className: 'scene-grid',
+    style: `grid-template-columns: repeat(${scene.cols}, 1fr); grid-template-rows: repeat(${scene.rows}, 1fr);`,
+  });
+  for (let y = 0; y < scene.rows; y++) {
+    for (let x = 0; x < scene.cols; x++) {
+      const key = `${x},${y}`;
+      const anchor = anchorByCell.get(key);
+      const spawns = spawnByCell.get(key);
+      const classes = ['scene-cell', 'scenario-cell'];
+      if (anchor) classes.push('is-anchor');
+      if (key === placingKey) classes.push('placing');
+      const cell = el('button', {
+        className: classes.join(' '),
+        title: anchor ? anchor.anchorId : `${x}, ${y}`,
+        onClick: () => {
+          if (!placingLocationId || !anchor) return;
+          store.mutate(() => {
+            const loc = s.locations.find((l) => l.locationId === placingLocationId);
+            if (loc) loc.bindTo = { roomId: anchor.roomId, anchorId: anchor.kind === 'desk' ? anchor.anchorId : '' };
+          }, 'structure');
+        },
+      });
+      if (spawns) cell.append(el('span', { className: 'scenario-marker' }, spawns.join(',')));
+      overlay.append(cell);
+    }
+  }
+  frame.append(art, overlay);
+
+  container.append(
+    el(
+      'div',
+      { className: 'office-map' },
+      el('h3', {}, 'Office map'),
+      s.locations.length
+        ? labeled(
+            'Place location',
+            select(s.locations.map((l) => ({ value: l.locationId, label: l.locationId })), placingLocationId ?? '', (v) => {
+              placingLocationId = v;
+              if (previewContainer) renderScenarioPreview(previewContainer);
+            }),
+          )
+        : null,
+      el('p', { className: 'hint' }, placingLocationId ? `Click an office anchor to bind "${placingLocationId}" there.` : 'Add a location to place it.'),
+      frame,
+    ),
+  );
+}
+
 export function renderScenarioPreview(container: HTMLElement): void {
   clear(container);
+  previewContainer = container;
   const s = store.selectedScenario;
   if (!s) {
     container.append(el('p', { className: 'hint' }, 'Select or create a scenario.'));
     return;
   }
   const issues = validateScenario(s, validationCtx());
-  const summary = el('div', { className: 'persona-summary' });
-  summary.append(
+  const personaless = castWithoutPersona(s);
+  const summary = el(
+    'div',
+    { className: 'persona-summary' },
     el('div', {}, el('strong', {}, s.title || s.scenarioId)),
     el('div', {}, s.summary || '—'),
     el('div', {}, `${s.cast.length} cast · ${s.locations.length} locations · ${s.truthFacts.length} truths · ${s.informationItems.length} info · ${s.variants.length} variants`),
-    el('div', {}, `Objective: ${s.objective.label || s.objective.objectiveId || '—'}`),
     el('div', { className: issues.length ? 'scenario-invalid' : 'scenario-valid' }, issues.length ? `⚠ ${issues.length} validation issue(s)` : '✓ valid'),
+    personaless.length ? el('div', { className: 'scenario-invalid' }, `⚠ no persona: ${personaless.join(', ')}`) : null,
   );
   container.append(summary);
+  renderOfficeMap(container, s);
+  renderDryRun(container, s);
 }
 
 export function renderScenarioControls(container: HTMLElement): void {
@@ -379,6 +600,7 @@ export function renderScenarioControls(container: HTMLElement): void {
 
   container.append(
     metaSection(s),
+    officeSection(s),
     castSection(s),
     locationsSection(s),
     truthSection(s),
@@ -390,8 +612,13 @@ export function renderScenarioControls(container: HTMLElement): void {
       { className: 'btn-row' },
       button('Validate', () => {
         const issues = validateScenario(s, validationCtx());
-        const note = anchorIds().length ? '' : '\n\n(No office anchors in the current Scene — location bindings were not checked. Generate an office in the Scene tab to verify them.)';
-        alert((issues.length ? `Issues:\n\n${issues.join('\n')}` : 'No issues — scenario is valid.') + note);
+        const personaless = castWithoutPersona(s);
+        const notes = [
+          anchorIds().length ? '' : '(No office anchors in the current Scene — location bindings were not checked. Generate an office in the Scene tab to verify them.)',
+          personaless.length ? `Cast without a persona (will run on defaults): ${personaless.join(', ')}` : '',
+        ].filter(Boolean).join('\n\n');
+        const head = issues.length ? `Issues:\n\n${issues.join('\n')}` : 'No issues — scenario is valid.';
+        alert(head + (notes ? `\n\n${notes}` : ''));
       }),
       button('Scenario JSON', () => downloadJson(`${s.scenarioId}.json`, serializeScenario(s))),
       button('Delete scenario', () => {

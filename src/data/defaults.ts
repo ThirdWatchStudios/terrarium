@@ -462,9 +462,6 @@ function buildDefaultProfiles(): CharacterProfile[] {
       },
     ],
   };
-  janice.startingBeliefs = [
-    { topic: 'janice_promotion', claim: 'I earned the promotion legitimately.', stance: 'accepts', confidence: 90 },
-  ];
   janice.relationships = [
     rel('manager', { trust: 80, affinity: 50, influence: 40, respect: 75, familiarity: 60 }),
     rel('carl', { trust: 40, suspicion: 40, affinity: 0, respect: 45, familiarity: 70 }),
@@ -499,11 +496,11 @@ function buildDefaultProfiles(): CharacterProfile[] {
       },
     ],
   };
-  carl.startingBeliefs = [
-    { topic: 'janice_promotion', claim: 'The promotion was probably rigged.', stance: 'suspects', confidence: 33 },
-  ];
+  // Durable baseline rivalry toward Janice; the promotion-driven suspicion spike
+  // (suspicion 100 / affinity -50) is a scenario relationshipOverride in
+  // promotion_rumor_001, applied on top of this at load.
   carl.relationships = [
-    rel('janice', { trust: 33, suspicion: 100, affinity: -50, influence: 33, respect: 30, familiarity: 70, tags: ['rival'] }),
+    rel('janice', { trust: 40, suspicion: 30, affinity: -20, influence: 33, respect: 35, familiarity: 70, tags: ['rival'] }),
     rel('manager', { trust: 33, suspicion: 66, affinity: 0, influence: 0, respect: 40, familiarity: 55 }),
   ];
   carl.formativeEvents = [
@@ -550,9 +547,6 @@ function buildDefaultProfiles(): CharacterProfile[] {
       },
     ],
   };
-  linda.startingBeliefs = [
-    { topic: 'janice_promotion', claim: 'Janice was promoted.', stance: 'unknown', confidence: 0 },
-  ];
   linda.relationships = [
     rel('carl', { trust: 100, suspicion: 0, affinity: 50, influence: 66, respect: 60, familiarity: 80, tags: ['friend'] }),
     rel('janice', { trust: 66, suspicion: 0, affinity: 0, influence: 0, respect: 55, familiarity: 50 }),
@@ -585,9 +579,6 @@ function buildDefaultProfiles(): CharacterProfile[] {
       },
     ],
   };
-  manager.startingBeliefs = [
-    { topic: 'janice_promotion', claim: 'Janice earned the promotion legitimately.', stance: 'accepts', confidence: 100 },
-  ];
   manager.relationships = [
     rel('janice', { trust: 100, affinity: 50, influence: 66, respect: 80, familiarity: 60 }),
     rel('carl', { trust: 50, suspicion: 33, affinity: 0, respect: 45, familiarity: 60 }),

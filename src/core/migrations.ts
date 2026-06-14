@@ -59,8 +59,20 @@ export function migrateProject(raw: unknown): ProjectState | null {
   // for saves that predate it (matched by scenarioId; user scenarios untouched).
   backfillV4(project as ProjectState);
 
+  // v4 → v5: beliefs/knowledge moved from personas to scenarios; strip the
+  // legacy persona fields so saved profiles match the current shape.
+  migrateV5(project as ProjectState);
+
   project.version = CURRENT_SCHEMA_VERSION;
   return project as ProjectState;
+}
+
+/** v5 step: drop persona-resident startingBeliefs/startingKnowledge (now scenario-owned). */
+function migrateV5(project: ProjectState): void {
+  for (const profile of project.profiles ?? []) {
+    delete (profile as { startingBeliefs?: unknown }).startingBeliefs;
+    delete (profile as { startingKnowledge?: unknown }).startingKnowledge;
+  }
 }
 
 /** v4 step: ensure `scenarios` exists and seed the default scenario(s). */

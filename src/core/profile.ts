@@ -234,15 +234,11 @@ export interface Relationship {
 
 // --- beliefs & knowledge ----------------------------------------------------
 
+// Stance is shared with the scenario model (scenario.ts), which owns starting
+// beliefs now — the persona no longer carries beliefs/knowledge (see
+// scenario_model.md "persona ↔ scenario boundary").
 export const STANCES = ['unknown', 'accepts', 'doubts', 'suspects', 'rejects'] as const;
 export type Stance = (typeof STANCES)[number];
-
-export interface StartingBelief {
-  topic: string;
-  claim: string;
-  stance: Stance;
-  confidence: number;
-}
 
 // --- formative events (the authored memory layer) ---------------------------
 
@@ -380,8 +376,6 @@ export interface CharacterProfile {
   preferences: Preference[];
   skills: Skill[];
   relationships: Relationship[];
-  startingBeliefs: StartingBelief[];
-  startingKnowledge: string[];
   formativeEvents: FormativeEvent[];
   reactionTendencies: Record<ReactionCategory, Derived>;
   routine: RoutineBlock[];
@@ -515,8 +509,6 @@ export function createDefaultProfile(recipe: CharacterRecipe): CharacterProfile 
     preferences: [],
     skills: [],
     relationships: [],
-    startingBeliefs: [],
-    startingKnowledge: [],
     formativeEvents: [],
     reactionTendencies: blankReactions(),
     routine: [],
@@ -589,11 +581,6 @@ export function validateProfile(p: CharacterProfile, ctx: ValidationContext): st
     bip(`relationship ${r.targetAgentId}.affinity`, r.affinity);
   }
 
-  for (const b of p.startingBeliefs) {
-    unit(`belief "${b.topic}".confidence`, b.confidence);
-    if (!STANCES.includes(b.stance)) issues.push(`belief "${b.topic}" has invalid stance "${b.stance}".`);
-  }
-
   for (const c of REACTION_CATEGORIES) unit(`reactionTendencies.${c}`, p.reactionTendencies[c]?.value);
   unit('temperament.volatility', p.temperament.volatility?.value);
 
@@ -621,7 +608,6 @@ export function clampProfile(p: CharacterProfile): CharacterProfile {
     for (const a of RELATIONSHIP_AXES) r[a] = clampUnit(r[a]);
     r.affinity = clampBipolar(r.affinity);
   }
-  for (const b of p.startingBeliefs) b.confidence = clampUnit(b.confidence);
   for (const c of REACTION_CATEGORIES) p.reactionTendencies[c].value = clampUnit(p.reactionTendencies[c].value);
   p.temperament.volatility.value = clampUnit(p.temperament.volatility.value);
   return p;
@@ -728,13 +714,9 @@ export function applyFormativeEffects(p: CharacterProfile, events: FormativeEven
           break;
         }
         case 'belief': {
-          const b = p.startingBeliefs.find((x) => x.topic === eff.targetRef);
-          if (!b) {
-            skipped.push(`${ev.title}: no starting belief on topic "${eff.targetRef}" to adjust.`);
-            continue;
-          }
-          b.confidence = opNumber(b.confidence, eff.op, numeric, 0, 100);
-          applied.push(`${ev.title}: ${eff.op} belief "${eff.targetRef}".confidence → ${numeric}`);
+          // Beliefs are scenario-owned now; a persona formative event can't seed
+          // one. Author the belief as a scenario beliefSeed instead.
+          skipped.push(`${ev.title}: beliefs are scenario-owned — add a scenario beliefSeed for topic "${eff.targetRef}".`);
           break;
         }
         case 'trait_tag': {
@@ -791,8 +773,6 @@ export function serializeProfile(input: CharacterProfile): unknown {
     preferences: p.preferences,
     skills: p.skills,
     relationships: p.relationships,
-    startingBeliefs: p.startingBeliefs,
-    startingKnowledge: p.startingKnowledge,
     formativeEvents: p.formativeEvents,
     reactionTendencies: Object.fromEntries(
       REACTION_CATEGORIES.map((c) => [c, p.reactionTendencies[c].value]),

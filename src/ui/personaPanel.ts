@@ -29,7 +29,6 @@ import {
   RELATIONSHIP_TAG_SUGGESTIONS,
   SENIORITY,
   SKILL_TRACKS,
-  STANCES,
   SUBJECT_CATALOG,
   applyDerived,
   applyFormativeEffects,
@@ -362,29 +361,6 @@ function relationshipsSection(p: CharacterProfile): HTMLElement {
   );
 }
 
-function beliefsSection(p: CharacterProfile): HTMLElement {
-  const rows = p.startingBeliefs.map((b) =>
-    el(
-      'div',
-      { className: 'row-card' },
-      textField('Topic', b.topic, (v) => edit(() => (b.topic = v))),
-      textField('Claim', b.claim, (v) => edit(() => (b.claim = v))),
-      labeled('Stance', select(STANCES.map((s) => ({ value: s, label: s })), b.stance, (v) => edit(() => (b.stance = v as typeof b.stance)))),
-      num('Confidence', b.confidence, (v) => edit(() => (b.confidence = v))),
-      button('Remove', () => edit(() => (p.startingBeliefs = p.startingBeliefs.filter((x) => x !== b)), 'structure'), 'danger'),
-    ),
-  );
-  return section(
-    'Starting beliefs',
-    ...rows,
-    button('+ Belief', () =>
-      edit(() => p.startingBeliefs.push({ topic: '', claim: '', stance: 'unknown', confidence: 0 }), 'structure'),
-    ),
-    el('h4', {}, 'Starting knowledge (information ids)'),
-    tagEditor(p.startingKnowledge, (next) => edit(() => (p.startingKnowledge = next), 'structure'), []),
-  );
-}
-
 function reactionsSection(p: CharacterProfile): HTMLElement {
   const rows = REACTION_CATEGORIES.map((c: ReactionCategory) => {
     const d = p.reactionTendencies[c];
@@ -652,7 +628,6 @@ export function renderPersonaControls(container: HTMLElement): void {
     preferencesSection(profile),
     skillsSection(profile),
     relationshipsSection(profile),
-    beliefsSection(profile),
     reactionsSection(profile),
     routineSection(profile),
     temperamentSection(profile),

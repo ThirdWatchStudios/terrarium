@@ -10,6 +10,7 @@ import { DEFAULT_CAST, DEFAULT_SCENARIOS, defaultProject } from '../src/data/def
 import { migrateProject, CURRENT_SCHEMA_VERSION } from '../src/core/migrations';
 import { computeOfficeAnchors, generateOfficeLayout } from '../src/core/layout';
 import { exportAll, type ExportSink } from '../src/core/exporter';
+import { resolveScenarioRun } from '../src/core/scenarioRun';
 
 const agentIds = DEFAULT_CAST.map((c) => c.id);
 const promo = DEFAULT_SCENARIOS.find((s) => s.scenarioId === 'promotion_rumor_001')!;
@@ -30,13 +31,11 @@ describe('scenario model', () => {
     expect(ov.affinity).toBe(-50);
   });
 
-  it("the persona no longer carries the scenario belief (it moved to the scenario)", () => {
-    const carlProfile = defaultProject().profiles!.find((p) => p.agentId === 'carl')!;
-    // The persona still has its (now-default) startingBeliefs during the transition,
-    // but the scenario is the authoritative home for the run's belief seed.
+  it('the scenario is the sole home for the run belief (persona carries none)', () => {
+    const carlProfile = defaultProject().profiles!.find((p) => p.agentId === 'carl')! as Record<string, unknown>;
     const inScenario = promo.cast.some((c) => c.beliefSeeds.some((b) => b.topic === 'janice_promotion'));
     expect(inScenario).toBe(true);
-    expect(Array.isArray(carlProfile.startingBeliefs)).toBe(true);
+    expect('startingBeliefs' in carlProfile).toBe(false);
   });
 
   it('every cast spawn location is a declared, office-bound location', () => {
@@ -127,6 +126,45 @@ describe('scenario ↔ office anchor binding', () => {
     });
     const issues = validateScenario(s, { agentIds: DEFAULT_CAST.map((c) => c.id), anchorIds: ['cubicle-farm'] });
     expect(issues.some((i) => i.includes('desk:nobody'))).toBe(true);
+  });
+});
+
+describe('scenario run resolver (studio↔sim parity)', () => {
+  const project = defaultProject();
+  const resolve = (variantId?: string) =>
+    resolveScenarioRun(promo, {
+      profiles: project.profiles!,
+      characters: DEFAULT_CAST.map((c) => ({ id: c.id, name: c.name })),
+      agentIds: agentIds,
+      variantId,
+    });
+
+  it('layers scenario overrides on the persona baseline (baseline kept where not overridden)', () => {
+    const carl = resolve().agents.find((a) => a.agentId === 'carl')!;
+    const toJanice = carl.relationships.find((r) => r.targetAgentId === 'janice')!;
+    expect(toJanice.suspicion).toBe(100); // scenario override wins
+    expect(toJanice.affinity).toBe(-50); // scenario override wins
+    expect(toJanice.trust).toBe(40); // baseline preserved (override did not set trust)
+    expect(toJanice.fromOverride).toBe(true);
+  });
+
+  it('resolves beliefs from the scenario and knowledge from seeds + initial holders', () => {
+    const carl = resolve().agents.find((a) => a.agentId === 'carl')!;
+    expect(carl.beliefs.some((b) => b.topic === 'janice_promotion' && b.stance === 'suspects')).toBe(true);
+    // rigged_promotion_claim is not a knowledgeSeed but Carl is its initial holder
+    expect(carl.knowledge).toContain('rigged_promotion_claim');
+    expect(carl.knowledge).toContain('official_promotion_notice');
+    expect(carl.hasPersona).toBe(true);
+  });
+
+  it('applies the selected variant conditions', () => {
+    const run = resolve('private_notification_break_room_locked');
+    expect(run.variantConditions.promotion_information_entry).toBe('private_notification');
+    expect(run.variantConditions.break_room_access).toBe('locked');
+  });
+
+  it('is clean for promotion_rumor_001 (no validation issues without anchor check)', () => {
+    expect(resolve().issues).toEqual([]);
   });
 });
 

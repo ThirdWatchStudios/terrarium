@@ -25,11 +25,10 @@ describe('character profiles', () => {
     expect(DEFAULT_PROFILES.map((p) => p.agentId).sort()).toEqual([...agentIds].sort());
   });
 
-  it('preserves the prototype suspicion seed for Carl (confidence 1 → 33)', () => {
-    const carl = DEFAULT_PROFILES.find((p) => p.agentId === 'carl')!;
-    const seed = carl.startingBeliefs.find((b) => b.topic === 'janice_promotion')!;
-    expect(seed.stance).toBe('suspects');
-    expect(seed.confidence).toBe(33);
+  it('personas no longer carry beliefs/knowledge (moved to scenarios)', () => {
+    const carl = DEFAULT_PROFILES.find((p) => p.agentId === 'carl')! as Record<string, unknown>;
+    expect('startingBeliefs' in carl).toBe(false);
+    expect('startingKnowledge' in carl).toBe(false);
   });
 
   it('createDefaultProfile yields a valid neutral profile linked to its recipe', () => {
@@ -201,5 +200,15 @@ describe('profiles migration (v2 → v3)', () => {
     expect(janice.identity.bio).toBe('KEEP ME');
     // The other cast members still get seeded.
     expect(migrated.profiles!.length).toBe(agentIds.length);
+  });
+
+  it('v5 strips legacy persona beliefs/knowledge', () => {
+    const proj = defaultProject() as any;
+    proj.version = 4;
+    proj.profiles[0].startingBeliefs = [{ topic: 'x', claim: 'y', stance: 'accepts', confidence: 50 }];
+    proj.profiles[0].startingKnowledge = ['info'];
+    const migrated = migrateProject(proj)! as any;
+    expect('startingBeliefs' in migrated.profiles[0]).toBe(false);
+    expect('startingKnowledge' in migrated.profiles[0]).toBe(false);
   });
 });

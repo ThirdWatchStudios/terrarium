@@ -220,8 +220,10 @@ export interface ProjectState {
  * change. v2 reconciled the manager recipe id to the game's AgentId.
  * v3 added the optional `profiles` collection (full-game character personas).
  * v4 added the optional `scenarios` collection (authored run definitions).
+ * v5 moved starting beliefs/knowledge out of personas into scenarios (the
+ * persona↔scenario boundary); the step strips the legacy persona fields.
  */
-export const CURRENT_SCHEMA_VERSION = 4;
+export const CURRENT_SCHEMA_VERSION = 5;
 
 /** Design-space canvas size. Parts are authored against this; never changes. */
 export const CANVAS = 128;
