@@ -151,6 +151,20 @@ body {
   grid-template-columns: 0 1fr 320px;
 }
 
+/* Swapped tabs: move the center and right columns so the detailed controls
+   fill the wide center and the visual preview moves into the right panel.
+   Wide previews (tile sheets, style scenes) scroll within the narrower panel. */
+.layout.swap .controls {
+  order: 2;
+  border-left: none;
+}
+
+.layout.swap .preview {
+  order: 3;
+  border-left: 1px solid var(--border);
+  overflow: auto;
+}
+
 .sidebar {
   background: rgba(17, 20, 22, 0.92);
   border-right: 1px solid var(--border);
@@ -406,6 +420,8 @@ body {
 
 .facing-row {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 16px;
 }
 
