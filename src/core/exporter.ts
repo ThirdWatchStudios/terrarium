@@ -16,7 +16,7 @@ import { composeSceneSvg } from './scene';
 import type { EmployeeDefinition } from './employee';
 import { employeeRecipe } from './employee';
 import { serializeProfile } from './profile';
-import { serializeScenario } from './scenario';
+import { buildScenarioPackage } from './scenarioRun';
 import { PROP_TEMPLATES } from '../props/templates';
 import { maskName } from '../tiles/templates';
 
@@ -642,10 +642,15 @@ export async function exportAll(
   if (project.scene) {
     await write('office-layout.json', JSON.stringify(sceneToLayoutJson(project.scene, project), null, 2));
   }
-  // Authored run definitions (sim-consumer form). One file per scenario under
-  // scenarios/, keyed by scenarioId — the sim loads these to assemble a run.
+  // Authored run definitions as split packages under scenarios/<id>/ — Unity can
+  // load a package directly (scenario.json + employees/relationships/beliefs/
+  // knowledge/interaction-anchors + office-layout). See buildScenarioPackage.
   for (const scenario of project.scenarios ?? []) {
-    await write(`scenarios/${slug(scenario.scenarioId)}.json`, JSON.stringify(serializeScenario(scenario), null, 2));
+    const dir = `scenarios/${slug(scenario.scenarioId)}`;
+    const pkg = buildScenarioPackage(scenario, project);
+    for (const [file, data] of Object.entries(pkg)) {
+      await write(`${dir}/${file}`, JSON.stringify(data, null, 2));
+    }
   }
 }
 

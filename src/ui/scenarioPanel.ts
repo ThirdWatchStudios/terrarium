@@ -7,10 +7,11 @@
 import type { ChangeKind } from '../state';
 import { store } from '../state';
 import { downloadJson } from '../core/exporter';
-import { GENERATED_COWORKER_PREFIX, computeOfficeAnchors, generateOfficeLayout, type OfficeAnchor } from '../core/layout';
+import { GENERATED_COWORKER_PREFIX, computeInteractionAnchors, computeOfficeAnchors, generateOfficeLayout, type OfficeAnchor } from '../core/layout';
 import { composeSceneSvg } from '../core/scene';
 import { STANCES } from '../core/profile';
 import { resolveScenarioRun, type ResolvedAgent, type ResolvedRun } from '../core/scenarioRun';
+import { SCENARIO_TEMPLATES } from '../data/scenarioTemplates';
 import { setScenePreviewSvg } from './renderPreview';
 import {
   ACCESS_STATES,
@@ -38,6 +39,8 @@ let previewVariantId: string | null = null;
 let previewContainer: HTMLElement | null = null;
 // The location being placed by clicking the office map (transient).
 let placingLocationId: string | null = null;
+// Belief topic the social graph clusters by (transient).
+let graphTopic: string | null = null;
 // Collapsed editor sections, by title (transient; persists across re-renders).
 const collapsedSections = new Set<string>();
 
@@ -414,16 +417,29 @@ export function renderScenarioList(container: HTMLElement): void {
       ),
     );
   }
+  const addScenario = (s: ReturnType<typeof createDefaultScenario>) => {
+    const taken = new Set((store.state.scenarios ?? []).map((x) => x.scenarioId));
+    if (taken.has(s.scenarioId)) s.scenarioId = `${s.scenarioId}-${uid('').slice(1)}`;
+    store.mutate((st) => (st.scenarios ??= []).push(s), 'data');
+    store.mutateUi((ui) => (ui.selectedScenarioId = s.scenarioId));
+  };
   container.append(
     list,
     el(
       'div',
       { className: 'list-actions' },
-      button('+ New scenario', () => {
-        const s = createDefaultScenario(uid('scenario'), 'New scenario');
-        store.mutate((st) => (st.scenarios ??= []).push(s), 'data');
-        store.mutateUi((ui) => (ui.selectedScenarioId = s.scenarioId));
-      }, 'primary'),
+      button('+ New scenario', () => addScenario(createDefaultScenario(uid('scenario'), 'New scenario')), 'primary'),
+      labeled(
+        'From template',
+        select(
+          [{ value: '', label: '+ template…' }, ...SCENARIO_TEMPLATES.map((t) => ({ value: t.id, label: t.name }))],
+          '',
+          (id) => {
+            const t = SCENARIO_TEMPLATES.find((x) => x.id === id);
+            if (t) addScenario(t.build());
+          },
+        ),
+      ),
     ),
   );
 }
@@ -507,16 +523,25 @@ function dryAgentCard(a: ResolvedAgent): HTMLElement {
   );
 }
 
-function renderDryRun(container: HTMLElement, s: Scenario): void {
-  const variantOptions = s.variants.map((v) => ({ value: v.variantId, label: v.variantId }));
-  const activeVariant = previewVariantId && s.variants.some((v) => v.variantId === previewVariantId) ? previewVariantId : s.defaultVariantId;
-  const run = resolveScenarioRun(s, {
+function activeVariantId(s: Scenario): string {
+  return previewVariantId && s.variants.some((v) => v.variantId === previewVariantId) ? previewVariantId : s.defaultVariantId;
+}
+
+/** Resolve the run for the currently-previewed variant (shared by dry-run/graph/overview). */
+function activeRun(s: Scenario): ResolvedRun {
+  return resolveScenarioRun(s, {
     profiles: store.state.profiles ?? [],
     characters: store.state.characters.map((c) => ({ id: c.id, name: c.name })),
-    variantId: activeVariant,
+    variantId: activeVariantId(s),
     agentIds: store.state.characters.map((c) => c.id),
     anchorIds: anchorIds().length ? anchorIds() : undefined,
   });
+}
+
+function renderDryRun(container: HTMLElement, s: Scenario): void {
+  const variantOptions = s.variants.map((v) => ({ value: v.variantId, label: v.variantId }));
+  const activeVariant = activeVariantId(s);
+  const run = activeRun(s);
 
   const header = el('h3', {}, 'Dry run — starting state');
   const variantRow = variantOptions.length
@@ -637,6 +662,106 @@ function renderOfficeMap(container: HTMLElement, s: Scenario): void {
   );
 }
 
+function stanceColor(stance: string): string {
+  return { accepts: '#3b8a4e', unknown: '#6f6f6f', doubts: '#c98a3a', suspects: '#c98a3a', rejects: '#c0603a' }[stance] ?? '#6f6f6f';
+}
+
+/** Node-link relationship graph; nodes optionally clustered by belief stance on a topic. */
+function renderSocialGraph(container: HTMLElement, run: ResolvedRun): void {
+  const ids = run.agents.map((a) => a.agentId);
+  if (ids.length < 2) return;
+  const topics = [...new Set(run.agents.flatMap((a) => a.beliefs.map((b) => b.topic)))];
+  const clusterTopic = graphTopic && topics.includes(graphTopic) ? graphTopic : '';
+
+  const W = 280;
+  const H = 280;
+  const cx = W / 2;
+  const cy = H / 2;
+  const R = 100;
+  const nr = 17;
+  const pos = new Map(
+    ids.map((id, i) => {
+      const ang = -Math.PI / 2 + (i / ids.length) * 2 * Math.PI;
+      return [id, { x: cx + R * Math.cos(ang), y: cy + R * Math.sin(ang) }];
+    }),
+  );
+  let edges = '';
+  for (const a of run.agents) {
+    for (const r of a.relationships) {
+      const from = pos.get(a.agentId);
+      const to = pos.get(r.targetAgentId);
+      if (!from || !to) continue;
+      const mag = 0.3 + (Math.abs(r.affinity) / 100) * 0.6;
+      const col = r.affinity >= 0 ? `rgba(60,160,90,${mag})` : `rgba(196,80,60,${mag})`;
+      edges += `<line x1="${from.x.toFixed(1)}" y1="${from.y.toFixed(1)}" x2="${to.x.toFixed(1)}" y2="${to.y.toFixed(1)}" stroke="${col}" stroke-width="${r.fromOverride ? 2.5 : 1.5}" marker-end="url(#arr)" />`;
+    }
+  }
+  let nodes = '';
+  for (const a of run.agents) {
+    const p = pos.get(a.agentId)!;
+    const belief = clusterTopic ? a.beliefs.find((b) => b.topic === clusterTopic) : undefined;
+    const fill = belief ? stanceColor(belief.stance) : '#39424a';
+    nodes += `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${nr}" fill="${fill}" stroke="#15110d" stroke-width="1.5"/><text x="${p.x.toFixed(1)}" y="${(p.y + 3).toFixed(1)}" text-anchor="middle" font-size="8" fill="#fff">${a.agentId.slice(0, 7)}</text>`;
+  }
+  const svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><defs><marker id="arr" markerWidth="7" markerHeight="7" refX="15" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#8a8a8a"/></marker></defs>${edges}${nodes}</svg>`;
+  const art = el('div', { className: 'social-graph' });
+  art.innerHTML = svg;
+  container.append(
+    el(
+      'div',
+      { className: 'row-card' },
+      el('div', { className: 'dry-key' }, 'Social graph — edges = affinity, nodes = belief stance'),
+      topics.length
+        ? labeled(
+            'Cluster by belief',
+            select([{ value: '', label: '(none)' }, ...topics.map((t) => ({ value: t, label: t }))], clusterTopic, (v) => {
+              graphTopic = v;
+              if (previewContainer) renderScenarioPreview(previewContainer);
+            }),
+          )
+        : null,
+      art,
+    ),
+  );
+}
+
+/** A quick sanity dashboard of scenario structure. */
+function renderOverview(container: HTMLElement, s: Scenario, run: ResolvedRun): void {
+  const identities = new Map((store.state.profiles ?? []).map((p) => [p.agentId, p.identity]));
+  const deptCounts: Record<string, number> = {};
+  for (const a of run.agents) {
+    const d = identities.get(a.agentId)?.department || '—';
+    deptCounts[d] = (deptCounts[d] ?? 0) + 1;
+  }
+  const n = run.agents.length;
+  const edges = run.agents.reduce((sum, a) => sum + a.relationships.length, 0);
+  const density = n > 1 ? `${Math.round((edges / (n * (n - 1))) * 100)}%` : '—';
+  const beliefTopics = new Set(run.agents.flatMap((a) => a.beliefs.map((b) => b.topic)));
+  const beliefCount = run.agents.reduce((sum, a) => sum + a.beliefs.length, 0);
+  const roomCounts: Record<string, number> = {};
+  for (const l of s.locations) {
+    const r = l.bindTo.roomId || '—';
+    roomCounts[r] = (roomCounts[r] ?? 0) + 1;
+  }
+  const interactions = store.state.scene ? computeInteractionAnchors(store.state.scene, store.state).length : 0;
+  const line = (t: string) => el('div', { className: 'hint' }, t);
+  const fmt = (rec: Record<string, number>) => Object.entries(rec).map(([k, v]) => `${k} (${v})`).join(', ') || '—';
+  container.append(
+    el(
+      'div',
+      { className: 'row-card' },
+      el('div', { className: 'dry-key' }, 'Scenario overview'),
+      line(`Employees: ${n}`),
+      line(`Departments: ${fmt(deptCounts)}`),
+      line(`Relationships: ${edges} (density ${density})`),
+      line(`Beliefs: ${beliefCount} across ${beliefTopics.size} topic(s)`),
+      line(`Truths: ${run.truthFacts.length} · Info items: ${run.informationItems.length}`),
+      line(`Interaction anchors: ${interactions}`),
+      line(`Locations by room: ${fmt(roomCounts)}`),
+    ),
+  );
+}
+
 export function renderScenarioPreview(container: HTMLElement): void {
   clear(container);
   previewContainer = container;
@@ -669,6 +794,9 @@ export function renderScenarioPreview(container: HTMLElement): void {
   }
   renderOfficeMap(container, s);
   renderDryRun(container, s);
+  const run = activeRun(s);
+  renderSocialGraph(container, run);
+  renderOverview(container, s, run);
 }
 
 export function renderScenarioControls(container: HTMLElement): void {

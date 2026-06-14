@@ -1164,3 +1164,16 @@ textarea {
   outline: 1px solid #c98a3a;
   outline-offset: -1px;
 }
+
+/* ---------- social graph ---------- */
+
+.social-graph {
+  width: 100%;
+  max-width: 300px;
+  margin: 6px auto 0;
+}
+
+.social-graph svg {
+  width: 100%;
+  height: auto;
+}

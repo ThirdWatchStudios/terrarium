@@ -53,6 +53,53 @@ export interface OfficeAnchor {
   kind: OfficeAnchorKind;
 }
 
+/**
+ * Prop templates that are simulation *interaction* anchors (meaningful places the
+ * sim can reason about), mapped to a stable interactionType. Scenery props (plants,
+ * rugs, clutter, chairs, windows…) are deliberately omitted.
+ */
+export const INTERACTION_PROP_TYPES: Record<string, string> = {
+  'water-cooler': 'water_cooler',
+  'coffee-machine': 'coffee_machine',
+  printer: 'printer',
+  'conference-table': 'conference_table',
+  'reception-desk': 'reception_desk',
+  fridge: 'break_room_fridge',
+  door: 'door',
+  'mail-station': 'mail_station',
+  'supply-cabinet': 'supply_cabinet',
+  'vending-machine': 'vending_machine',
+  whiteboard: 'whiteboard',
+};
+
+/** A meaningful interactive location derived from a placed prop. */
+export interface InteractionAnchor {
+  id: string;
+  interactionType: string;
+  roomId: string;
+  x: number;
+  y: number;
+}
+
+/** Derive interaction anchors from placed interaction props in a scene. */
+export function computeInteractionAnchors(scene: SceneState, project: ProjectState): InteractionAnchor[] {
+  const anchors: InteractionAnchor[] = [];
+  for (const entity of scene.entities) {
+    if (entity.kind !== 'prop') continue;
+    const templateId = project.props.find((p) => p.id === entity.refId)?.templateId;
+    const interactionType = templateId ? INTERACTION_PROP_TYPES[templateId] : undefined;
+    if (!interactionType) continue;
+    anchors.push({
+      id: entity.id,
+      interactionType,
+      roomId: scene.roomIds?.[entity.y]?.[entity.x] ?? '',
+      x: entity.x,
+      y: entity.y,
+    });
+  }
+  return anchors;
+}
+
 export interface SceneLayoutJson {
   version: 1;
   source: SceneState['source'];
@@ -89,6 +136,8 @@ export interface SceneLayoutJson {
   }>;
   /** Named binding targets a scenario's locations resolve to (rooms + per-agent desks). */
   anchors: OfficeAnchor[];
+  /** Meaningful interactive locations derived from placed props (printer, water cooler, …). */
+  interactionAnchors: InteractionAnchor[];
 }
 
 const COLS = 22;
@@ -1074,5 +1123,6 @@ export function sceneToLayoutJson(scene: SceneState, project: ProjectState): Sce
         };
       }),
     anchors: computeOfficeAnchors(scene, project),
+    interactionAnchors: computeInteractionAnchors(scene, project),
   };
 }

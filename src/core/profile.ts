@@ -220,6 +220,10 @@ export const RELATIONSHIP_TAG_SUGGESTIONS = [
   'confidant',
 ];
 
+/** A coarse relationship category, on top of the numeric axes + free tags. */
+export const RELATIONSHIP_TYPES = ['coworker', 'friend', 'manager', 'direct-report', 'mentor', 'rival'] as const;
+export type RelationshipType = (typeof RELATIONSHIP_TYPES)[number];
+
 export interface Relationship {
   targetAgentId: string;
   trust: number;
@@ -229,6 +233,8 @@ export interface Relationship {
   influence: number;
   respect: number;
   familiarity: number;
+  /** Coarse durable category; the numeric axes carry the nuance. */
+  relationshipType?: RelationshipType;
   tags: string[];
 }
 

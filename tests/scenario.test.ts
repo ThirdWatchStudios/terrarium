@@ -169,14 +169,18 @@ describe('scenario run resolver (studio↔sim parity)', () => {
 });
 
 describe('scenario export', () => {
-  it('exportAll writes one scenarios/<id>.json per authored scenario', async () => {
+  it('exportAll writes a split scenario package per authored scenario', async () => {
     const project = defaultProject();
+    project.scene = generateOfficeLayout(project, 6, 1).scene; // office so anchors/interaction files emit
     const paths: string[] = [];
     const sink: ExportSink = { file: (p) => void paths.push(p) };
-    // Stub rasterizer — we only care that the scenario JSON is emitted, not pixels.
+    // Stub rasterizer — we only care that the package JSON is emitted, not pixels.
     const rasterizer = { rasterizeSheet: async () => new Uint8Array([0]) };
     await exportAll(project, { sink, rasterizer });
-    expect(paths).toContain('scenarios/promotion-rumor-001.json');
+    const dir = 'scenarios/promotion-rumor-001';
+    for (const file of ['scenario.json', 'employees.json', 'relationships.json', 'beliefs.json', 'knowledge.json', 'interaction-anchors.json', 'office-layout.json']) {
+      expect(paths).toContain(`${dir}/${file}`);
+    }
   });
 });
 

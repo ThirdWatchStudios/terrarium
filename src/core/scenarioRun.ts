@@ -11,7 +11,9 @@
 import type { CharacterProfile, Relationship } from './profile';
 import { NEEDS, NEED_LABELS } from './profile';
 import type { InformationItem, Scenario, ScenarioBelief, ScenarioObjective, TruthFact } from './scenario';
-import { OVERRIDE_AXES, validateScenario } from './scenario';
+import { OVERRIDE_AXES, serializeScenario, validateScenario } from './scenario';
+import type { ProjectState } from './types';
+import { computeInteractionAnchors, sceneToLayoutJson } from './layout';
 
 /** A baseline relationship with the scenario override (if any) folded in. */
 export interface ResolvedRelationship extends Relationship {
@@ -134,4 +136,75 @@ export function resolveScenarioRun(scenario: Scenario, opts: ResolveOptions): Re
     objective: scenario.objective,
     issues: validateScenario(scenario, { agentIds: opts.agentIds, anchorIds: opts.anchorIds }),
   };
+}
+
+// --- scenario package (split-file export) -----------------------------------
+
+/**
+ * Decompose a scenario into the split-file package Unity loads directly:
+ * scenario.json (composed), employees / relationships / beliefs / knowledge /
+ * interaction-anchors, plus the office layout. Built from the resolved run so the
+ * package reflects persona baseline + scenario seeds together.
+ */
+export function buildScenarioPackage(scenario: Scenario, project: ProjectState): Record<string, unknown> {
+  const run = resolveScenarioRun(scenario, {
+    profiles: project.profiles ?? [],
+    characters: project.characters.map((c) => ({ id: c.id, name: c.name })),
+    agentIds: project.characters.map((c) => c.id),
+  });
+  const identityOf = new Map((project.profiles ?? []).map((p) => [p.agentId, p.identity]));
+
+  const employees = run.agents.map((a) => {
+    const id = identityOf.get(a.agentId);
+    return {
+      agentId: a.agentId,
+      displayName: a.displayName,
+      department: id?.department ?? '',
+      role: id?.roleTitle ?? a.prototypeRole,
+      title: id?.roleTitle ?? '',
+      seniority: id?.seniority ?? '',
+      ageBracket: id?.ageBand ?? '',
+      personalityTags: a.traitTags,
+      spawnLocationId: scenario.cast.find((c) => c.agentId === a.agentId)?.spawnLocationId ?? '',
+    };
+  });
+
+  const relationships = run.agents.flatMap((a) =>
+    a.relationships.map((r) => ({
+      sourceAgentId: a.agentId,
+      targetAgentId: r.targetAgentId,
+      trust: r.trust,
+      suspicion: r.suspicion,
+      affinity: r.affinity,
+      influence: r.influence,
+      respect: r.respect,
+      familiarity: r.familiarity,
+      relationshipType: r.relationshipType ?? null,
+      tags: r.tags,
+      fromOverride: r.fromOverride,
+    })),
+  );
+
+  const beliefs = scenario.cast.flatMap((c) =>
+    c.beliefSeeds.map((b) => ({ agentId: c.agentId, topic: b.topic, claim: b.claim, stance: b.stance, confidence: b.confidence })),
+  );
+
+  const knowledge = {
+    truthFacts: scenario.truthFacts,
+    informationItems: scenario.informationItems,
+    agentKnowledge: run.agents.map((a) => ({ agentId: a.agentId, knows: a.knowledge })),
+  };
+
+  const pkg: Record<string, unknown> = {
+    'scenario.json': serializeScenario(scenario),
+    'employees.json': employees,
+    'relationships.json': relationships,
+    'beliefs.json': beliefs,
+    'knowledge.json': knowledge,
+  };
+  if (project.scene) {
+    pkg['office-layout.json'] = sceneToLayoutJson(project.scene, project);
+    pkg['interaction-anchors.json'] = computeInteractionAnchors(project.scene, project);
+  }
+  return pkg;
 }
