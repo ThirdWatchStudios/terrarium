@@ -95,6 +95,12 @@ export interface PropTemplate {
   projection: Projection;
   /** Floor props occupy walkable cells; wall-slot props mount into or over wall runs. */
   placement?: PropPlacement;
+  /**
+   * Optional contact-shadow footprint in canvas coords (128 units). When set and
+   * style.render.contactShadow > 0, composeProp draws a soft dark ellipse here,
+   * beneath the prop. Omit for wall-slot props and anything that shouldn't cast.
+   */
+  footprint?: { cx: number; cy: number; rx: number; ry: number };
   params: PropParamDef[];
   /**
    * Build shapes in canvas coords (128 design units). Elevation props rest on
@@ -136,6 +142,18 @@ export interface StyleSheet {
     baseSize: number;
     /** 1 = smooth SVG rasterization; higher values render smaller then nearest-neighbor scale up. */
     pixelScale: number;
+    /**
+     * Opacity (0–1) of the soft contact shadow drawn under characters and under
+     * props that declare a footprint. 0 disables it. Applied at composite time,
+     * so it restyles every sprite live like everything else here.
+     */
+    contactShadow: number;
+    /**
+     * Strength (0–1) of the ambient mood wash painted over a whole scene, tinted
+     * by the scene's dominant character mood. 0 disables it. Scene-only — single
+     * sprites never carry it.
+     */
+    ambientTint: number;
   };
   palettePools: {
     skin: string[];
@@ -235,7 +253,7 @@ export interface ProjectState {
  * v6 added the reusable `drives` catalog; personas now reference drive ids.
  * v7 added the reusable `traits` catalog; persona traitTags are trait ids.
  */
-export const CURRENT_SCHEMA_VERSION = 7;
+export const CURRENT_SCHEMA_VERSION = 8;
 
 /** Design-space canvas size. Parts are authored against this; never changes. */
 export const CANVAS = 128;

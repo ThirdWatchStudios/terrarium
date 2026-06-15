@@ -76,6 +76,24 @@ describe('migrateProject', () => {
     expect(migrated.traits.some((t) => t.id === 'a_made_up_trait')).toBe(true); // absorbed
   });
 
+  it('seeds the new render fields on the style and every preset (v8)', () => {
+    const legacy = defaultProject();
+    legacy.version = 7;
+    // A pre-v8 save: the render block lacks the shadow/tint fields.
+    delete (legacy.style.render as { contactShadow?: number }).contactShadow;
+    delete (legacy.style.render as { ambientTint?: number }).ambientTint;
+    for (const preset of legacy.stylePresets) {
+      delete (preset.style.render as { contactShadow?: number }).contactShadow;
+      delete (preset.style.render as { ambientTint?: number }).ambientTint;
+    }
+    const migrated = migrateProject(legacy)!;
+    expect(migrated.version).toBe(CURRENT_SCHEMA_VERSION);
+    expect(migrated.style.render.contactShadow).toBe(DEFAULT_STYLE.render.contactShadow);
+    expect(migrated.style.render.ambientTint).toBe(DEFAULT_STYLE.render.ambientTint);
+    expect(migrated.stylePresets.every((p) => typeof p.style.render.contactShadow === 'number')).toBe(true);
+    expect(migrated.stylePresets.every((p) => typeof p.style.render.ambientTint === 'number')).toBe(true);
+  });
+
   it('refuses a project from a newer schema version', () => {
     const future = { ...defaultProject(), version: CURRENT_SCHEMA_VERSION + 1 };
     expect(migrateProject(future)).toBeNull();

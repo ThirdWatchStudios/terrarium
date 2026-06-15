@@ -17,6 +17,8 @@ export const DEFAULT_STYLE: StyleSheet = {
   render: {
     baseSize: 128,
     pixelScale: 1,
+    contactShadow: 0.12,
+    ambientTint: 0.07,
   },
   palettePools: {
     skin: ['#F4D3B0', '#E8B88A', '#D9A06B', '#C68B59', '#A9714B', '#8D5A3B', '#6B4226'],
@@ -52,6 +54,8 @@ export const DEFAULT_STYLE_PRESETS: StylePreset[] = [
       render: {
         baseSize: 128,
         pixelScale: 1,
+        contactShadow: 0.1,
+        ambientTint: 0.05,
       },
       palettePools: {
         skin: ['#F1D6BE', '#D6A77F', '#BC855F', '#8E6046', '#68422F'],
@@ -78,6 +82,8 @@ export const DEFAULT_STYLE_PRESETS: StylePreset[] = [
       render: {
         baseSize: 128,
         pixelScale: 1,
+        contactShadow: 0.16,
+        ambientTint: 0.09,
       },
       palettePools: {
         skin: ['#FFE1BD', '#D99A65', '#A86A42', '#6B3F27'],
@@ -335,6 +341,62 @@ export const DEFAULT_PROPS: PropInstance[] = [
     params: { height: 60, columns: 4 },
     palette: { primary: '#7A6C5D', secondary: '#E8E4D8', accent: '#A32D2D' },
   },
+  {
+    id: 'prop-trash-bin',
+    name: 'Trash bin',
+    templateId: 'trash-bin',
+    params: { height: 36 },
+    palette: { primary: '#5F6B5A', secondary: '#3F4A3C', accent: '#D8D3C8' },
+  },
+  {
+    id: 'prop-water-station',
+    name: 'Water station',
+    templateId: 'water-station',
+    params: { height: 54 },
+    palette: { primary: '#9FD0F2', secondary: '#5F5E5A', accent: '#378ADD' },
+  },
+  {
+    id: 'prop-coat-rack',
+    name: 'Coat rack',
+    templateId: 'coat-rack',
+    params: { hooks: 4 },
+    palette: { primary: '#5F5E5A', secondary: '#2C2C2A', accent: '#854F0B' },
+  },
+  {
+    id: 'prop-bulletin-board',
+    name: 'Bulletin board',
+    templateId: 'bulletin-board',
+    params: { width: 64, notes: 4 },
+    palette: { primary: '#7A6C5D', secondary: '#C9A36B', accent: '#D85A30' },
+  },
+  {
+    id: 'prop-wall-calendar',
+    name: 'Wall calendar',
+    templateId: 'wall-calendar',
+    params: { rows: 5 },
+    palette: { primary: '#3D5A80', secondary: '#F7F4EC', accent: '#D85A30' },
+  },
+  {
+    id: 'prop-water-fountain',
+    name: 'Water fountain',
+    templateId: 'water-fountain',
+    params: { basins: 1 },
+    palette: { primary: '#A9B3B8', secondary: '#CAD4D7', accent: '#185FA5' },
+  },
+  {
+    id: 'prop-kitchenette-counter',
+    name: 'Kitchenette counter',
+    templateId: 'kitchenette-counter',
+    params: { length: 108, sink: 1 },
+    palette: { primary: '#D3D1C7', secondary: '#B4B2A9', accent: '#5F5E5A' },
+  },
+  {
+    id: 'prop-lounge-seating',
+    name: 'Lounge seating',
+    templateId: 'lounge-seating',
+    params: { seats: 3 },
+    palette: { primary: '#534AB7', secondary: '#3A3490', accent: '#EF9F27' },
+  },
 ];
 
 export const DEFAULT_WALLS: TileInstance[] = [
@@ -358,6 +420,20 @@ export const DEFAULT_WALLS: TileInstance[] = [
     templateId: 'cubicle-partition',
     params: { thickness: 14 },
     palette: { primary: '#8A9199', secondary: '#5F5E5A', accent: '#D85A30' },
+  },
+  {
+    id: 'wall-brick',
+    name: 'Brick wall',
+    templateId: 'brick-wall',
+    params: { thickness: 24 },
+    palette: { primary: '#9C5A45', secondary: '#D8C9B8', accent: '#7A4334' },
+  },
+  {
+    id: 'wall-panel',
+    name: 'Panel wall',
+    templateId: 'panel-wall',
+    params: { thickness: 20 },
+    palette: { primary: '#6E6A63', secondary: '#9AA0A6', accent: '#185FA5' },
   },
 ];
 
@@ -403,6 +479,20 @@ export const DEFAULT_FLOORS: TileInstance[] = [
     templateId: 'quiet-carpet',
     params: { weave: 2, seed: 6 },
     palette: { primary: '#496C68', secondary: '#6F908B', accent: '#314D55' },
+  },
+  {
+    id: 'floor-terrazzo',
+    name: 'Terrazzo',
+    templateId: 'terrazzo',
+    params: { density: 2, seed: 4 },
+    palette: { primary: '#E2DED3', secondary: '#9AA7A0', accent: '#C2885E' },
+  },
+  {
+    id: 'floor-rubber-mat',
+    name: 'Rubber mat',
+    templateId: 'rubber-mat',
+    params: { studs: 8 },
+    palette: { primary: '#3C4651', secondary: '#56626E', accent: '#2A323A' },
   },
 ];
 

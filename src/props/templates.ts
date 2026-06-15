@@ -16,6 +16,7 @@ const waterCooler: PropTemplate = {
   id: 'water-cooler',
   label: 'Water cooler',
   projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 21, ry: 4 },
   params: [{ key: 'height', label: 'Body height', min: 44, max: 68, step: 2, default: 56 }],
   build(params) {
     const bodyH = params.height;
@@ -42,6 +43,7 @@ const printer: PropTemplate = {
   id: 'printer',
   label: 'Printer',
   projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 26, ry: 4 },
   params: [{ key: 'width', label: 'Width', min: 44, max: 72, step: 2, default: 56 }],
   build(params) {
     const w = params.width;
@@ -104,6 +106,7 @@ const coffeeMachine: PropTemplate = {
   id: 'coffee-machine',
   label: 'Coffee machine',
   projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 18, ry: 3.5 },
   params: [{ key: 'height', label: 'Height', min: 40, max: 56, step: 2, default: 48 }],
   build(params) {
     const h = params.height;
@@ -129,6 +132,7 @@ const officePlant: PropTemplate = {
   id: 'office-plant',
   label: 'Office plant',
   projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 15, ry: 3.5 },
   params: [{ key: 'bushiness', label: 'Bushiness', min: 1, max: 3, step: 1, default: 2 }],
   build(params) {
     const shapes: ShapeSpec[] = [
@@ -156,6 +160,7 @@ const fridge: PropTemplate = {
   id: 'fridge',
   label: 'Break room fridge',
   projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 21, ry: 4.5 },
   params: [{ key: 'height', label: 'Height', min: 66, max: 90, step: 2, default: 78 }],
   build(params) {
     const h = params.height;
@@ -500,6 +505,7 @@ const vendingMachine: PropTemplate = {
   id: 'vending-machine',
   label: 'Vending machine',
   projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 25, ry: 4.5 },
   params: [
     { key: 'height', label: 'Height', min: 70, max: 94, step: 2, default: 84 },
     { key: 'stocked', label: 'Stocked rows', min: 1, max: 3, step: 1, default: 3 },
@@ -629,6 +635,7 @@ const whiteboard: PropTemplate = {
   id: 'whiteboard',
   label: 'Whiteboard',
   projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 28, ry: 4 },
   params: [
     { key: 'width', label: 'Width', min: 52, max: 76, step: 4, default: 64 },
     { key: 'scribbles', label: 'Scribbles', min: 0, max: 3, step: 1, default: 2 },
@@ -665,6 +672,7 @@ const filingCabinet: PropTemplate = {
   id: 'filing-cabinet',
   label: 'Filing cabinet',
   projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 19, ry: 4 },
   params: [{ key: 'drawers', label: 'Drawers', min: 2, max: 4, step: 1, default: 3 }],
   build(params) {
     const drawers = params.drawers;
@@ -688,6 +696,7 @@ const supplyCabinet: PropTemplate = {
   id: 'supply-cabinet',
   label: 'Supply cabinet',
   projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 22, ry: 4.5 },
   params: [{ key: 'height', label: 'Height', min: 60, max: 84, step: 2, default: 72 }],
   build(params) {
     const h = params.height;
@@ -721,6 +730,7 @@ const mailStation: PropTemplate = {
   id: 'mail-station',
   label: 'Mail station',
   projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 24, ry: 4.5 },
   params: [
     { key: 'height', label: 'Height', min: 48, max: 72, step: 2, default: 60 },
     { key: 'columns', label: 'Slot columns', min: 3, max: 5, step: 1, default: 4 },
@@ -763,6 +773,259 @@ const mailStation: PropTemplate = {
   },
 };
 
+const trashBin: PropTemplate = {
+  id: 'trash-bin',
+  label: 'Trash bin',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 14, ry: 3.5 },
+  params: [{ key: 'height', label: 'Height', min: 28, max: 46, step: 2, default: 36 }],
+  build(params) {
+    const h = params.height ?? 36;
+    const top = GROUND - h;
+    const topW = 24;
+    const botW = 19;
+    return [
+      // tapered body
+      { d: `M ${CX - topW / 2} ${top} L ${CX + topW / 2} ${top} L ${CX + botW / 2} ${GROUND} L ${CX - botW / 2} ${GROUND} Z`, fill: '$primary' },
+      // rim / lid
+      { d: rr(CX - topW / 2 - 2, top - 4, topW + 4, 6, 2), fill: '$secondary' },
+      // opening shadow
+      { d: ellipse(CX, top - 1, topW / 2 - 2, 2.5), fill: '#00000033', silhouette: false },
+      // ribs
+      { d: `M ${CX - 5} ${top + 5} L ${CX - 6} ${GROUND - 3}`, stroke: '#00000018', strokeWidth: 1.5, silhouette: false },
+      { d: `M ${CX + 5} ${top + 5} L ${CX + 6} ${GROUND - 3}`, stroke: '#00000018', strokeWidth: 1.5, silhouette: false },
+      // a wad of paper poking out
+      { d: rr(CX - 4, top - 7, 8, 5, 1.5), fill: '#F7F4EC', silhouette: false },
+    ];
+  },
+};
+
+const waterStation: PropTemplate = {
+  id: 'water-station',
+  label: 'Water station',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 18, ry: 4 },
+  params: [{ key: 'height', label: 'Height', min: 46, max: 64, step: 2, default: 54 }],
+  build(params) {
+    const h = params.height ?? 54;
+    const top = GROUND - h;
+    return [
+      // inverted jug
+      { d: rr(CX - 12, top, 24, 28, 6), fill: '$primary', opacity: 0.9 },
+      { d: rr(CX - 10, top + 12, 20, 14, 4), fill: '#9FD0F2', silhouette: false },
+      { d: rr(CX - 6, top - 5, 12, 6, 2), fill: '$secondary' },
+      // stand / cabinet
+      { d: rr(CX - 14, top + 28, 28, h - 28, 4), fill: '$secondary' },
+      // spout + drip tray
+      { d: rr(CX - 3, top + 31, 6, 7, 2), fill: '$accent', silhouette: false },
+      { d: rr(CX - 8, GROUND - 8, 16, 4, 2), fill: '#00000026', silhouette: false },
+      // cup sleeve on the side
+      { d: rr(CX + 15, top + 30, 6, 18, 2), fill: '$primary' },
+      { d: rr(CX + 15.5, top + 30, 5, 4, 1), fill: '#F7F4EC', silhouette: false },
+    ];
+  },
+};
+
+const coatRack: PropTemplate = {
+  id: 'coat-rack',
+  label: 'Coat rack',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 12, ry: 3.5 },
+  params: [{ key: 'hooks', label: 'Hooks', min: 2, max: 5, step: 1, default: 4 }],
+  build(params) {
+    const hooks = params.hooks ?? 4;
+    const top = GROUND - 80;
+    const shapes: ShapeSpec[] = [
+      // base
+      { d: ellipse(CX, GROUND - 2, 12, 4), fill: '$secondary' },
+      // post
+      { d: rr(CX - 3, top, 6, GROUND - top - 2, 3), fill: '$primary' },
+      // crown knob
+      { d: circle(CX, top, 4), fill: '$accent' },
+    ];
+    for (let i = 0; i < hooks; i++) {
+      const hy = top + 8 + i * 7;
+      const side = i % 2 === 0 ? 1 : -1;
+      shapes.push({ d: `M ${CX} ${hy} q ${side * 7} 0 ${side * 7} 5`, stroke: '$primary', strokeWidth: 3, silhouette: false });
+    }
+    // a coat draped on the top hook
+    shapes.push({
+      d: `M ${CX + 7} ${top + 13} Q ${CX + 16} ${top + 26} ${CX + 11} ${top + 42} L ${CX + 4} ${top + 42} Q ${CX + 2} ${top + 24} ${CX + 5} ${top + 14} Z`,
+      fill: '$accent',
+    });
+    return shapes;
+  },
+};
+
+const bulletinBoard: PropTemplate = {
+  id: 'bulletin-board',
+  label: 'Bulletin board',
+  projection: 'elevation',
+  params: [
+    { key: 'width', label: 'Width', min: 48, max: 80, step: 4, default: 64 },
+    { key: 'notes', label: 'Notices', min: 0, max: 6, step: 1, default: 4 },
+  ],
+  build(params) {
+    const w = params.width ?? 64;
+    const x = CX - w / 2;
+    const boardY = 48;
+    const boardH = 44;
+    const shapes: ShapeSpec[] = [
+      { d: rr(x - 3, boardY - 3, w + 6, boardH + 6, 3), fill: '$primary' },
+      { d: rr(x, boardY, w, boardH, 1.5), fill: '$secondary', silhouette: false },
+    ];
+    const notes = params.notes ?? 4;
+    const cols = 3;
+    const noteColors = ['#F7F4EC', '$accent', '#FBE38E', '#BFD8F2'];
+    const nw = 13;
+    const nh = 13;
+    const gx = x + 6;
+    const gy = boardY + 6;
+    const sx = (w - 12 - nw) / Math.max(1, cols - 1);
+    for (let i = 0; i < notes; i++) {
+      const c = i % cols;
+      const r = Math.floor(i / cols);
+      const px = gx + c * sx;
+      const py = gy + r * (nh + 5);
+      shapes.push(
+        { d: rr(px, py, nw, nh, 1), fill: noteColors[i % noteColors.length], silhouette: false },
+        { d: circle(px + nw / 2, py + 2, 1.3), fill: '#00000040', silhouette: false },
+      );
+    }
+    return shapes;
+  },
+};
+
+const wallCalendar: PropTemplate = {
+  id: 'wall-calendar',
+  label: 'Wall calendar',
+  projection: 'plan',
+  placement: 'wall-slot',
+  params: [{ key: 'rows', label: 'Week rows', min: 4, max: 6, step: 1, default: 5 }],
+  build(params) {
+    const rows = params.rows ?? 5;
+    const w = 40;
+    const h = 44;
+    const x = CX - w / 2;
+    const y = 48;
+    const shapes: ShapeSpec[] = [
+      { d: rr(x - 2, y - 2, w + 4, h + 4, 3), fill: '$primary' },
+      { d: rr(x, y, w, 9, 2), fill: '$accent', silhouette: false },
+      { d: rr(x, y + 10, w, h - 10, 1), fill: '$secondary', silhouette: false },
+    ];
+    const cols = 7;
+    const gx = x + 2;
+    const gy = y + 12;
+    const gw = w - 4;
+    const gh = h - 14;
+    const cw = gw / cols;
+    const ch = gh / rows;
+    for (let c = 1; c < cols; c++) shapes.push({ d: `M ${gx + c * cw} ${gy} L ${gx + c * cw} ${gy + gh}`, stroke: '#00000018', strokeWidth: 0.8, silhouette: false });
+    for (let r = 1; r < rows; r++) shapes.push({ d: `M ${gx} ${gy + r * ch} L ${gx + gw} ${gy + r * ch}`, stroke: '#00000018', strokeWidth: 0.8, silhouette: false });
+    shapes.push({ d: circle(gx + cw * 3.5, gy + ch * 1.5, 2.4), stroke: '$accent', strokeWidth: 1.4, silhouette: false });
+    return shapes;
+  },
+};
+
+const waterFountain: PropTemplate = {
+  id: 'water-fountain',
+  label: 'Water fountain',
+  projection: 'plan',
+  placement: 'wall-slot',
+  params: [{ key: 'basins', label: 'Basins', min: 1, max: 2, step: 1, default: 1 }],
+  build(params) {
+    const n = params.basins ?? 1;
+    const y = 54;
+    const shapes: ShapeSpec[] = [];
+    const unit = (cx: number) => {
+      shapes.push(
+        { d: rr(cx - 11, y, 22, 8, 2), fill: '$primary' },
+        { d: rr(cx - 9, y + 7, 18, 12, 4), fill: '$secondary' },
+        { d: ellipse(cx, y + 13, 6, 3), fill: '#9FD0F2', silhouette: false },
+        { d: circle(cx, y + 9, 1.6), fill: '$accent', silhouette: false },
+        { d: rr(cx + 5, y + 8, 3, 2, 1), fill: '$accent', silhouette: false },
+        { d: circle(cx, y + 14, 0.9), fill: '#00000044', silhouette: false },
+      );
+    };
+    if (n <= 1) unit(CX);
+    else {
+      unit(CX - 12);
+      unit(CX + 12);
+    }
+    return shapes;
+  },
+};
+
+const kitchenetteCounter: PropTemplate = {
+  id: 'kitchenette-counter',
+  label: 'Kitchenette counter',
+  projection: 'plan',
+  params: [
+    { key: 'length', label: 'Length', min: 80, max: 124, step: 4, default: 108 },
+    { key: 'sink', label: 'Sink', min: 0, max: 1, step: 1, default: 1 },
+  ],
+  build(params) {
+    const w = params.length ?? 108;
+    const x = CX - w / 2;
+    const top = 40;
+    const depth = 40;
+    const shapes: ShapeSpec[] = [
+      { d: rr(x, top, w, depth, 4), fill: '$primary' },
+      { d: rr(x + 3, top + 3, w - 6, 6, 2), fill: '#00000012', silhouette: false },
+    ];
+    if ((params.sink ?? 1) >= 1) {
+      shapes.push(
+        { d: rr(x + 8, top + 11, 22, 22, 3), fill: '$secondary', silhouette: false },
+        { d: rr(x + 11, top + 14, 16, 16, 2), fill: '#8FB7C9', silhouette: false },
+        { d: circle(x + 19, top + 22, 1.6), fill: '#00000044', silhouette: false },
+        { d: rr(x + 17, top + 5, 4, 8, 1.5), fill: '$accent', silhouette: false },
+      );
+    }
+    const bx = x + w - 40;
+    const by = top + 9;
+    for (let i = 0; i < 4; i++) {
+      const c = i % 2;
+      const r = Math.floor(i / 2);
+      const ox = bx + c * 18 + 6;
+      const oy = by + r * 18 + 6;
+      shapes.push(
+        { d: circle(ox, oy, 6), stroke: '$secondary', strokeWidth: 2, silhouette: false },
+        { d: circle(ox, oy, 2.2), fill: '#00000033', silhouette: false },
+      );
+    }
+    return shapes;
+  },
+};
+
+const loungeSeating: PropTemplate = {
+  id: 'lounge-seating',
+  label: 'Lounge seating',
+  projection: 'plan',
+  params: [{ key: 'seats', label: 'Seats', min: 2, max: 4, step: 1, default: 3 }],
+  build(params) {
+    const seats = params.seats ?? 3;
+    const ring = 30;
+    const shapes: ShapeSpec[] = [];
+    const armchair = (cx: number, cy: number, outAngle: number) => {
+      shapes.push(
+        { d: rr(cx - 9, cy - 9, 18, 18, 5), fill: '$primary' },
+        { d: rr(cx - 6, cy - 6, 12, 12, 3), fill: '$accent', opacity: 0.5, silhouette: false },
+        // backrest lip on the side facing away from the table
+        { d: circle(cx + Math.cos(outAngle) * 8, cy + Math.sin(outAngle) * 8, 3.4), fill: '$secondary', silhouette: false },
+      );
+    };
+    for (let i = 0; i < seats; i++) {
+      const a = -Math.PI / 2 + (i * 2 * Math.PI) / seats;
+      armchair(CX + Math.cos(a) * ring, CX + Math.sin(a) * ring, a);
+    }
+    shapes.push(
+      { d: circle(CX, CX, 13), fill: '$secondary' },
+      { d: circle(CX, CX, 9), fill: '#00000012', silhouette: false },
+    );
+    return shapes;
+  },
+};
+
 export const PROP_TEMPLATES: PropTemplate[] = [
   waterCooler,
   printer,
@@ -787,4 +1050,12 @@ export const PROP_TEMPLATES: PropTemplate[] = [
   filingCabinet,
   supplyCabinet,
   mailStation,
+  trashBin,
+  waterStation,
+  coatRack,
+  bulletinBoard,
+  wallCalendar,
+  waterFountain,
+  kitchenetteCounter,
+  loungeSeating,
 ];

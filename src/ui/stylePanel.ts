@@ -281,6 +281,21 @@ export function renderStyleControls(container: HTMLElement): void {
         store.mutate((s) => (s.style.render.pixelScale = normalizePixelScale(v)), 'data'),
       ),
     ),
+    labeled(
+      'Contact shadow',
+      slider(style.render.contactShadow ?? 0, 0, 0.4, 0.02, (v) =>
+        store.mutate((s) => (s.style.render.contactShadow = v), 'data'),
+      ),
+    ),
+    labeled(
+      'Ambient mood tint',
+      slider(style.render.ambientTint ?? 0, 0, 0.25, 0.01, (v) =>
+        store.mutate((s) => (s.style.render.ambientTint = v), 'data'),
+      ),
+    ),
+  );
+  container.append(
+    el('p', { className: 'hint' }, 'Contact shadow grounds sprites; ambient tint washes a scene in its dominant mood.'),
   );
 
   container.append(el('h3', {}, 'Palette pools'));

@@ -1,6 +1,6 @@
 import type { FloorTemplate, ShapeSpec, WallTemplate } from '../core/types';
 import { WALL_BITS } from '../core/types';
-import { rr, circle } from '../core/geometry';
+import { rr, circle, ellipse } from '../core/geometry';
 import { mulberry32 } from '../core/random';
 
 /**
@@ -101,7 +101,56 @@ const cubiclePartition: WallTemplate = {
   },
 };
 
-export const WALL_TEMPLATES: WallTemplate[] = [officeWall, glassPartition, cubiclePartition];
+const brickWall: WallTemplate = {
+  kind: 'wall',
+  id: 'brick-wall',
+  label: 'Brick wall',
+  params: [{ key: 'thickness', label: 'Thickness', min: 16, max: 32, step: 2, default: 24 }],
+  build(mask, params) {
+    const t = params.thickness ?? 24;
+    const shapes = wallArms(mask, t, '$primary');
+    const h = t / 2;
+    // mortar: a course line down the centre of each arm + offset header ticks.
+    // Lines overdraw past the tile edge and clip to the viewBox, staying seamless.
+    if (mask & WALL_BITS.W || mask & WALL_BITS.E) {
+      shapes.push({ d: `M ${-OVERHANG} ${C} L ${C + OVERHANG} ${C}`, stroke: '$secondary', strokeWidth: 1, silhouette: false });
+    }
+    if (mask & WALL_BITS.N || mask & WALL_BITS.S) {
+      shapes.push({ d: `M ${C} ${-OVERHANG} L ${C} ${C + OVERHANG}`, stroke: '$secondary', strokeWidth: 1, silhouette: false });
+    }
+    if (mask & WALL_BITS.W) for (let bx = -OVERHANG + 6; bx < C - h; bx += 12) shapes.push({ d: `M ${bx} ${C - h} L ${bx} ${C + h}`, stroke: '$secondary', strokeWidth: 1, silhouette: false });
+    if (mask & WALL_BITS.E) for (let bx = C + h + 6; bx < C + OVERHANG + C; bx += 12) shapes.push({ d: `M ${bx} ${C - h} L ${bx} ${C + h}`, stroke: '$secondary', strokeWidth: 1, silhouette: false });
+    if (mask & WALL_BITS.N) for (let by = -OVERHANG + 6; by < C - h; by += 12) shapes.push({ d: `M ${C - h} ${by} L ${C + h} ${by}`, stroke: '$secondary', strokeWidth: 1, silhouette: false });
+    if (mask & WALL_BITS.S) for (let by = C + h + 6; by < C + OVERHANG + C; by += 12) shapes.push({ d: `M ${C - h} ${by} L ${C + h} ${by}`, stroke: '$secondary', strokeWidth: 1, silhouette: false });
+    return shapes;
+  },
+};
+
+const panelWall: WallTemplate = {
+  kind: 'wall',
+  id: 'panel-wall',
+  label: 'Panel wall',
+  params: [{ key: 'thickness', label: 'Thickness', min: 16, max: 26, step: 2, default: 20 }],
+  build(mask, params) {
+    const t = params.thickness ?? 20;
+    const shapes = wallArms(mask, t, '$primary');
+    const h = t / 2 - 3;
+    const panel = (x: number, y: number, w: number, hgt: number) => shapes.push({ d: rr(x, y, w, hgt, 1), fill: '$secondary', silhouette: false });
+    if (mask & WALL_BITS.N) panel(C - h, 0, h * 2, C);
+    if (mask & WALL_BITS.S) panel(C - h, C, h * 2, 64);
+    if (mask & WALL_BITS.W) panel(0, C - h, C, h * 2);
+    if (mask & WALL_BITS.E) panel(C, C - h, 64, h * 2);
+    // accent rail down the centre of each arm
+    if (mask & WALL_BITS.N) shapes.push({ d: `M ${C} 0 L ${C} ${C}`, stroke: '$accent', strokeWidth: 1.5, silhouette: false });
+    if (mask & WALL_BITS.S) shapes.push({ d: `M ${C} ${C} L ${C} 128`, stroke: '$accent', strokeWidth: 1.5, silhouette: false });
+    if (mask & WALL_BITS.W) shapes.push({ d: `M 0 ${C} L ${C} ${C}`, stroke: '$accent', strokeWidth: 1.5, silhouette: false });
+    if (mask & WALL_BITS.E) shapes.push({ d: `M ${C} ${C} L 128 ${C}`, stroke: '$accent', strokeWidth: 1.5, silhouette: false });
+    shapes.push(...endCaps(mask, t, '$secondary'));
+    return shapes;
+  },
+};
+
+export const WALL_TEMPLATES: WallTemplate[] = [officeWall, glassPartition, cubiclePartition, brickWall, panelWall];
 
 // ---------------------------------------------------------------------------
 // Floors
@@ -277,6 +326,62 @@ const quietCarpet: FloorTemplate = {
   },
 };
 
+const terrazzo: FloorTemplate = {
+  kind: 'floor',
+  id: 'terrazzo',
+  label: 'Terrazzo',
+  params: [
+    { key: 'density', label: 'Aggregate', min: 1, max: 3, step: 1, default: 2 },
+    { key: 'seed', label: 'Pattern seed', min: 1, max: 9, step: 1, default: 4 },
+  ],
+  build(params) {
+    const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
+    const rng = mulberry32((params.seed ?? 4) * 49157);
+    const count = (params.density ?? 2) * 26;
+    const palette = ['$secondary', '$accent'];
+    for (let i = 0; i < count; i++) {
+      // resolve every per-chip property BEFORE the wrap loops so each wrapped
+      // copy is identical — otherwise edge chips wouldn't match across tiles.
+      const x = rng() * 128;
+      const y = rng() * 128;
+      const r = 1.5 + rng() * 2.5;
+      const ry = r * (0.6 + rng() * 0.5);
+      const fill = palette[rng() > 0.5 ? 0 : 1];
+      const op = 0.3 + rng() * 0.3;
+      for (const dx of [0, -128, 128]) {
+        for (const dy of [0, -128, 128]) {
+          if (x + dx > -6 && x + dx < 134 && y + dy > -6 && y + dy < 134) {
+            shapes.push(flat(ellipse(x + dx, y + dy, r, ry), fill, op));
+          }
+        }
+      }
+    }
+    return shapes;
+  },
+};
+
+const rubberMat: FloorTemplate = {
+  kind: 'floor',
+  id: 'rubber-mat',
+  label: 'Rubber mat',
+  params: [{ key: 'studs', label: 'Studs', min: 6, max: 12, step: 1, default: 8 }],
+  build(params) {
+    const n = params.studs ?? 8;
+    const sp = 128 / n; // exact divisor → studs wrap seamlessly across tile edges
+    const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
+    for (let j = 0; j < n; j++) {
+      for (let i = 0; i < n; i++) {
+        const x = (i + 0.5) * sp;
+        const y = (j + 0.5) * sp;
+        shapes.push(flat(circle(x, y, 2.2), '$secondary', 0.5));
+        shapes.push(flat(circle(x, y, 1), '$accent', 0.4));
+      }
+    }
+    shapes.push(flat(rr(0, 0, 128, 10, 0), '#FFFFFF08'));
+    return shapes;
+  },
+};
+
 export const FLOOR_TEMPLATES: FloorTemplate[] = [
   carpet,
   carpetTiles,
@@ -284,6 +389,8 @@ export const FLOOR_TEMPLATES: FloorTemplate[] = [
   linoleum,
   utilityVinyl,
   quietCarpet,
+  terrazzo,
+  rubberMat,
 ];
 
 /** Human-readable name for a wall mask, used in atlas JSON. */

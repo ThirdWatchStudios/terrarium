@@ -247,6 +247,17 @@ function emoteMarkup(emote: MoodEmote, ax: number, ay: number): string {
   return `<g transform="translate(${ax} ${cy}) scale(${BADGE_SCALE})">${tail}${bubble}${glyph}</g>`;
 }
 
+/**
+ * A soft contact shadow ellipse in literal black at the style's contactShadow
+ * opacity. silhouette-free by construction (it's emitted raw, outside the
+ * outline pass), so it never fattens the figure. Returns '' when disabled.
+ */
+function contactShadow(cx: number, cy: number, rx: number, ry: number, style: StyleSheet): string {
+  const o = style.render.contactShadow ?? 0;
+  if (o <= 0) return '';
+  return `<path d="${ellipse(cx, cy, rx, ry)}" fill="#000000" opacity="${o}"/>`;
+}
+
 function svgWrap(inner: string, pixelSize: number): string {
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${CANVAS} ${CANVAS}" ` +
@@ -276,7 +287,10 @@ export function composeCharacter(
     const a = ANCHORS[actual].aboveHead;
     inner += emoteMarkup(emote, facing === 'west' ? CANVAS - a.x : a.x, a.y);
   }
-  return svgWrap(inner, pixelSize ?? style.render.baseSize);
+  // Contact shadow at the feet, painted first so it sits under the figure. It's
+  // centered on the canvas, so the west mirror leaves it untouched.
+  const shadow = contactShadow(CANVAS / 2, 113, 16, 4.5, style);
+  return svgWrap(shadow + inner, pixelSize ?? style.render.baseSize);
 }
 
 // ---------------------------------------------------------------------------
@@ -577,5 +591,7 @@ export function composeProp(prop: PropInstance, style: StyleSheet, pixelSize?: n
           .join('')
       : '';
   const color = shapes.map((s) => emitColorShape(s, resolve)).join('');
-  return svgWrap(outline + color, pixelSize ?? style.render.baseSize);
+  const fp = template.footprint;
+  const shadow = fp ? contactShadow(fp.cx, fp.cy, fp.rx, fp.ry, style) : '';
+  return svgWrap(shadow + outline + color, pixelSize ?? style.render.baseSize);
 }

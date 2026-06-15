@@ -1,6 +1,6 @@
 import type { ProjectState } from './types';
 import { CURRENT_SCHEMA_VERSION } from './types';
-import { DEFAULT_DRIVES, DEFAULT_FLOORS, DEFAULT_PROFILES, DEFAULT_PROPS, DEFAULT_SCENARIOS, DEFAULT_STYLE_PRESETS, DEFAULT_TRAITS, DEFAULT_WALLS } from '../data/defaults';
+import { DEFAULT_DRIVES, DEFAULT_FLOORS, DEFAULT_PROFILES, DEFAULT_PROPS, DEFAULT_SCENARIOS, DEFAULT_STYLE, DEFAULT_STYLE_PRESETS, DEFAULT_TRAITS, DEFAULT_WALLS } from '../data/defaults';
 
 // Re-export so callers can keep importing the version from the migration module.
 export { CURRENT_SCHEMA_VERSION } from './types';
@@ -72,8 +72,24 @@ export function migrateProject(raw: unknown): ProjectState | null {
   // seed defaults and absorb any trait ids personas already carry.
   backfillV7(project as ProjectState);
 
+  // v7 → v8: the render style gained contactShadow + ambientTint. Backfill them
+  // on the live style and every preset so old saves get the new (off-by-default
+  // would surprise; we seed the DEFAULT_STYLE values) controls.
+  backfillV8(project as ProjectState);
+
   project.version = CURRENT_SCHEMA_VERSION;
   return project as ProjectState;
+}
+
+/** v8 step: seed the new render fields (contactShadow, ambientTint) everywhere a style lives. */
+function backfillV8(project: ProjectState): void {
+  seedRenderFields(project.style);
+  for (const preset of project.stylePresets ?? []) seedRenderFields(preset.style);
+}
+
+function seedRenderFields(style: ProjectState['style']): void {
+  style.render.contactShadow ??= DEFAULT_STYLE.render.contactShadow;
+  style.render.ambientTint ??= DEFAULT_STYLE.render.ambientTint;
 }
 
 /** v7 step: ensure the `traits` catalog exists, seed defaults, absorb referenced ids. */
@@ -191,6 +207,11 @@ function backfillV1(project: ProjectState): void {
   for (const prop of DEFAULT_PROPS) {
     if (!project.props.some((item) => item.id === prop.id)) {
       project.props.push(structuredClone(prop));
+    }
+  }
+  for (const wall of DEFAULT_WALLS) {
+    if (!project.walls.some((item) => item.id === wall.id || item.templateId === wall.templateId)) {
+      project.walls.push(structuredClone(wall));
     }
   }
   for (const floor of DEFAULT_FLOORS) {

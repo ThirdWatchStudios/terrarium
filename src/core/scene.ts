@@ -2,6 +2,7 @@ import type { CharacterRecipe, Facing, Mood, ProjectState, PropInstance, TileIns
 import { CANVAS } from './types';
 import { composeCharacter, composeFloorTile, composeProp, composeWallTile, floorTileMarkup } from './compositor';
 import { PROP_TEMPLATES } from '../props/templates';
+import { MOOD_EMOTES } from '../parts/moods';
 
 export type SceneBrush = 'floor' | 'wall' | 'prop' | 'character';
 export type SceneFacing = Facing | 'west';
@@ -389,8 +390,39 @@ export function composeSceneSvg(scene: SceneState, project: ProjectState, cellPi
     }
   }
 
+  body += ambientTint(scene, project, width, height);
+
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" ` +
     `width="${scene.cols * cellPixelSize}" height="${scene.rows * cellPixelSize}">${body}</svg>`
   );
+}
+
+/**
+ * A whole-scene wash tinted by the dominant character mood, painted over
+ * everything (characters included) at style.render.ambientTint opacity. Uses the
+ * mood emote colors so the tint reads the same hue as the badges. 'normal' has
+ * no emote color and never tints, so a calm room stays untinted; ties fall to
+ * the first mood encountered in MOODS order.
+ */
+function ambientTint(scene: SceneState, project: ProjectState, width: number, height: number): string {
+  const strength = project.style.render.ambientTint ?? 0;
+  if (strength <= 0) return '';
+  const counts = new Map<Mood, number>();
+  for (const entity of scene.entities) {
+    if (entity.kind !== 'character') continue;
+    if (!MOOD_EMOTES[entity.mood]) continue; // skip 'normal' (no tint hue)
+    counts.set(entity.mood, (counts.get(entity.mood) ?? 0) + 1);
+  }
+  let best: Mood | null = null;
+  let bestCount = 0;
+  for (const [mood, count] of counts) {
+    if (count > bestCount) {
+      best = mood;
+      bestCount = count;
+    }
+  }
+  if (!best) return '';
+  const color = MOOD_EMOTES[best]!.color;
+  return `<rect width="${width}" height="${height}" fill="${color}" opacity="${strength}"/>`;
 }
