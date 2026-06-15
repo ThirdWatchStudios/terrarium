@@ -908,14 +908,6 @@ select:focus {
 /* Scenario preview wrapper around the office map — full width so the frame
    inside expands like it does on the Office tab (otherwise it shrinks to its
    own content width and the map renders tiny). */
-.office-map {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
 .scene-frame {
   position: relative;
   width: min(100%, 960px);
@@ -951,6 +943,9 @@ select:focus {
   min-height: 0;
   padding: 0;
   cursor: crosshair;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .scene-cell:hover {
@@ -1229,6 +1224,50 @@ textarea {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* Interaction-point label badge on the unified map (distinct hue from spawn markers). */
+.interaction-marker {
+  font-size: 9px;
+  line-height: 1.2;
+  background: #4f8a86;
+  color: #04201d;
+  border-radius: 3px;
+  padding: 0 3px;
+  pointer-events: none;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.scene-mode-hint {
+  margin: 0 0 4px;
+  text-align: center;
+}
+
+/* Assignment / interaction-point summary rows in the unified map's right panel. */
+.assign-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.assign-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.assign-where {
+  color: var(--text-dim);
+  font-size: 12px;
+  text-align: right;
 }
 
 /* ---------- collapsible sections ---------- */

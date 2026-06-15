@@ -7,12 +7,10 @@
 import type { ChangeKind } from '../state';
 import { store } from '../state';
 import { downloadJson } from '../core/exporter';
-import { GENERATED_COWORKER_PREFIX, computeInteractionAnchors, computeOfficeAnchors, generateOfficeLayout, type OfficeAnchor } from '../core/layout';
-import { composeSceneSvg } from '../core/scene';
+import { GENERATED_COWORKER_PREFIX, computeInteractionAnchors, computeOfficeAnchors, generateOfficeLayout } from '../core/layout';
 import { STANCES } from '../core/profile';
 import { resolveScenarioRun, type ResolvedAgent, type ResolvedRun } from '../core/scenarioRun';
 import { SCENARIO_TEMPLATES } from '../data/scenarioTemplates';
-import { setScenePreviewSvg } from './renderPreview';
 import {
   ACCESS_STATES,
   OBJECTIVE_CATEGORIES,
@@ -36,14 +34,12 @@ import { collapsibleSection as section, listItem, num, optNum, tagEditor, textAr
 // Which variant the dry-run preview resolves against (transient; resets on reload).
 let previewVariantId: string | null = null;
 let previewContainer: HTMLElement | null = null;
-// The location being placed by clicking the office map (transient).
-let placingLocationId: string | null = null;
 // Belief topic the social graph clusters by (transient).
 let graphTopic: string | null = null;
 // Which editor section group / inspector view is shown (transient; resets on reload).
 let editorContainer: HTMLElement | null = null;
 let editorGroup = 'setup';
-let inspectorView = 'map';
+let inspectorView = 'dryrun';
 
 function edit(fn: () => void, kind: ChangeKind = 'data'): void {
   store.mutate(fn, kind);
@@ -497,91 +493,6 @@ function renderDryRun(container: HTMLElement, s: Scenario): void {
   );
 }
 
-function anchorForLocation(s: Scenario, locationId: string, anchors: OfficeAnchor[]): OfficeAnchor | undefined {
-  const loc = s.locations.find((l) => l.locationId === locationId);
-  if (!loc) return undefined;
-  const want = loc.bindTo.anchorId || loc.bindTo.roomId;
-  return anchors.find((a) => a.anchorId === want);
-}
-
-/** The office with each cast member's spawn marked; click an anchor to (re)bind the chosen location. */
-function renderOfficeMap(container: HTMLElement, s: Scenario): void {
-  const scene = store.state.scene;
-  if (!scene || !scene.rooms?.length) {
-    container.append(el('h3', {}, 'Office map'), el('p', { className: 'hint' }, 'No office yet — pin a seed and Generate in the Office section to place the cast spatially.'));
-    return;
-  }
-  const anchors = computeOfficeAnchors(scene, store.state);
-  const anchorByCell = new Map(anchors.map((a) => [`${a.x},${a.y}`, a]));
-  const spawnByCell = new Map<string, string[]>();
-  for (const member of s.cast) {
-    const anchor = anchorForLocation(s, member.spawnLocationId, anchors);
-    if (!anchor) continue;
-    const key = `${anchor.x},${anchor.y}`;
-    const list = spawnByCell.get(key) ?? [];
-    list.push(member.agentId);
-    spawnByCell.set(key, list);
-  }
-
-  placingLocationId =
-    placingLocationId && s.locations.some((l) => l.locationId === placingLocationId)
-      ? placingLocationId
-      : s.locations[0]?.locationId ?? null;
-  const placingCell = placingLocationId ? anchorForLocation(s, placingLocationId, anchors) : undefined;
-  const placingKey = placingCell ? `${placingCell.x},${placingCell.y}` : null;
-
-  const frame = el('div', { className: 'scene-frame', style: `aspect-ratio: ${scene.cols} / ${scene.rows};` });
-  const art = el('div', { className: 'scene-art' });
-  setScenePreviewSvg(art, composeSceneSvg(scene, store.state, 48), store.state.style, scene.cols * 48, scene.rows * 48, true);
-  const overlay = el('div', {
-    className: 'scene-grid',
-    style: `grid-template-columns: repeat(${scene.cols}, 1fr); grid-template-rows: repeat(${scene.rows}, 1fr);`,
-  });
-  for (let y = 0; y < scene.rows; y++) {
-    for (let x = 0; x < scene.cols; x++) {
-      const key = `${x},${y}`;
-      const anchor = anchorByCell.get(key);
-      const spawns = spawnByCell.get(key);
-      const classes = ['scene-cell', 'scenario-cell'];
-      if (anchor) classes.push('is-anchor');
-      if (key === placingKey) classes.push('placing');
-      const cell = el('button', {
-        className: classes.join(' '),
-        title: anchor ? anchor.anchorId : `${x}, ${y}`,
-        onClick: () => {
-          if (!placingLocationId || !anchor) return;
-          store.mutate(() => {
-            const loc = s.locations.find((l) => l.locationId === placingLocationId);
-            if (loc) loc.bindTo = { roomId: anchor.roomId, anchorId: anchor.kind === 'desk' ? anchor.anchorId : '' };
-          }, 'structure');
-        },
-      });
-      if (spawns) cell.append(el('span', { className: 'scenario-marker' }, spawns.join(',')));
-      overlay.append(cell);
-    }
-  }
-  frame.append(art, overlay);
-
-  container.append(
-    el(
-      'div',
-      { className: 'office-map' },
-      el('h3', {}, 'Office map'),
-      s.locations.length
-        ? labeled(
-            'Place location',
-            select(s.locations.map((l) => ({ value: l.locationId, label: l.locationId })), placingLocationId ?? '', (v) => {
-              placingLocationId = v;
-              if (previewContainer) renderScenarioPreview(previewContainer);
-            }),
-          )
-        : null,
-      el('p', { className: 'hint' }, placingLocationId ? `Click an office anchor to bind "${placingLocationId}" there.` : 'Add a location to place it.'),
-      frame,
-    ),
-  );
-}
-
 function stanceColor(stance: string): string {
   return { accepts: '#3b8a4e', unknown: '#6f6f6f', doubts: '#c98a3a', suspects: '#c98a3a', rejects: '#c0603a' }[stance] ?? '#6f6f6f';
 }
@@ -713,8 +624,8 @@ export function renderScenarioPreview(container: HTMLElement): void {
     );
   }
 
-  // One analysis view at a time — the stack used to render all four at once.
-  if (!INSPECTOR_VIEWS.some((v) => v.id === inspectorView)) inspectorView = 'map';
+  // One analysis view at a time. The office map now lives in the unified Office tab.
+  if (!INSPECTOR_VIEWS.some((v) => v.id === inspectorView)) inspectorView = 'dryrun';
   container.append(
     viewTabs(inspectorView, INSPECTOR_VIEWS, (id) => {
       inspectorView = id;
@@ -722,16 +633,14 @@ export function renderScenarioPreview(container: HTMLElement): void {
     }),
   );
   const run = activeRun(s);
-  if (inspectorView === 'map') renderOfficeMap(container, s);
-  else if (inspectorView === 'dryrun') renderDryRun(container, s);
-  else if (inspectorView === 'graph') {
+  if (inspectorView === 'graph') {
     if (run.agents.length > 1) renderSocialGraph(container, run);
     else container.append(el('p', { className: 'hint' }, 'Add at least two cast members to see the social graph.'));
-  } else renderOverview(container, s, run);
+  } else if (inspectorView === 'stats') renderOverview(container, s, run);
+  else renderDryRun(container, s);
 }
 
 const INSPECTOR_VIEWS: ReadonlyArray<{ id: string; label: string }> = [
-  { id: 'map', label: 'Map' },
   { id: 'dryrun', label: 'Dry run' },
   { id: 'graph', label: 'Graph' },
   { id: 'stats', label: 'Stats' },

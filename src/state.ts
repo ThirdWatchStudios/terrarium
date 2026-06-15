@@ -32,6 +32,10 @@ class Store {
     sceneBrush: 'character' as SceneBrush,
     sceneFacing: 'south' as SceneFacing,
     sceneMood: 'suspicious' as Mood,
+    /** Unified office map mode: paint layout, assign seats/locations, or interaction points. */
+    mapMode: 'layout' as 'layout' | 'assign' | 'interactions',
+    /** In assign mode, the cast member or location being placed by clicking an anchor. */
+    assignTarget: null as { kind: 'cast' | 'location'; id: string } | null,
     sceneCoworkers: 4,
     /** Blank = random seed on Generate; shows the seed actually used. */
     sceneSeed: '',

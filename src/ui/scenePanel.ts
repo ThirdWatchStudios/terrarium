@@ -2,7 +2,15 @@ import type { Mood, TileInstance } from '../core/types';
 import type { SceneBrush, SceneState } from '../core/scene';
 import { FACINGS, MOODS } from '../core/types';
 import { composeCharacter, composeFloorTile, composeProp, composeWallTile } from '../core/compositor';
-import { GENERATED_COWORKER_PREFIX, generateOfficeLayout, sceneToLayoutJson } from '../core/layout';
+import {
+  GENERATED_COWORKER_PREFIX,
+  INTERACTION_PROP_TYPES,
+  computeInteractionAnchors,
+  computeOfficeAnchors,
+  generateOfficeLayout,
+  sceneToLayoutJson,
+  type OfficeAnchor,
+} from '../core/layout';
 import {
   clearSceneBrush,
   composeSceneSvg,
@@ -16,7 +24,7 @@ import { downloadBlob, downloadJson, scenePosterPng } from '../core/exporter';
 import { PROP_TEMPLATES } from '../props/templates';
 import { store } from '../state';
 import { button, clear, el, labeled, select } from './dom';
-import { exportScaleSelect, listItem, viewTabs } from './controls';
+import { exportScaleSelect, listItem, uid, viewTabs } from './controls';
 import { setPreviewSvg, setScenePreviewSvg } from './renderPreview';
 
 const BRUSHES: Array<{ id: SceneBrush; label: string }> = [
@@ -108,8 +116,22 @@ function renderAssetItems(list: HTMLElement, brush: SceneBrush): void {
   }
 }
 
+type MapMode = 'layout' | 'assign' | 'interactions';
+const MAP_MODES: ReadonlyArray<{ id: MapMode; label: string }> = [
+  { id: 'layout', label: 'Layout' },
+  { id: 'assign', label: 'Assign' },
+  { id: 'interactions', label: 'Interactions' },
+];
+
 export function renderSceneList(container: HTMLElement): void {
   clear(container);
+  const mode = store.ui.mapMode;
+  if (mode === 'assign') renderAssignSidebar(container);
+  else if (mode === 'interactions') renderInteractionsSidebar(container);
+  else renderLayoutSidebar(container);
+}
+
+function renderLayoutSidebar(container: HTMLElement): void {
   const brushGrid = el('div', { className: 'scene-brush-grid' });
   for (const brush of BRUSHES) brushGrid.append(brushButton(brush.id, brush.label));
 
@@ -117,6 +139,69 @@ export function renderSceneList(container: HTMLElement): void {
   list.append(el('div', { className: 'list-heading' }, `${store.ui.sceneBrush}s`));
   renderAssetItems(list, store.ui.sceneBrush);
   container.append(el('div', { className: 'list-actions' }, brushGrid), list);
+}
+
+function renderAssignSidebar(container: HTMLElement): void {
+  const s = store.selectedScenario;
+  if (!s) {
+    container.append(el('p', { className: 'hint' }, 'Select or create a scenario in the Scenario tab to seat cast and bind locations.'));
+    return;
+  }
+  const target = store.ui.assignTarget;
+
+  container.append(el('div', { className: 'list-heading' }, 'Seat cast'));
+  const castList = el('div', { className: 'entity-list' });
+  if (!s.cast.length) castList.append(el('p', { className: 'hint' }, 'No cast members yet.'));
+  for (const member of s.cast) {
+    const recipe = store.state.characters.find((c) => c.id === member.agentId);
+    castList.append(
+      listItem({
+        selected: target?.kind === 'cast' && target.id === member.agentId,
+        name: recipe?.name ?? member.agentId,
+        onClick: () => store.mutateUi((ui) => (ui.assignTarget = { kind: 'cast', id: member.agentId })),
+      }),
+    );
+  }
+  container.append(castList);
+
+  container.append(el('div', { className: 'list-heading' }, 'Bind location'));
+  const locList = el('div', { className: 'entity-list' });
+  if (!s.locations.length) locList.append(el('p', { className: 'hint' }, 'No locations yet — add them in the Scenario tab.'));
+  for (const loc of s.locations) {
+    locList.append(
+      listItem({
+        selected: target?.kind === 'location' && target.id === loc.locationId,
+        name: loc.displayName || loc.locationId,
+        onClick: () => store.mutateUi((ui) => (ui.assignTarget = { kind: 'location', id: loc.locationId })),
+      }),
+    );
+  }
+  container.append(locList);
+}
+
+function renderInteractionsSidebar(container: HTMLElement): void {
+  container.append(el('div', { className: 'list-heading' }, 'Interaction props'));
+  const list = el('div', { className: 'entity-list' });
+  const interactionProps = store.state.props.filter((p) => INTERACTION_PROP_TYPES[p.templateId]);
+  if (!interactionProps.length) {
+    container.append(el('p', { className: 'hint' }, 'No interaction props in the project. Create one in the Props tab.'));
+    return;
+  }
+  for (const prop of interactionProps) {
+    list.append(
+      listItem({
+        selected: prop.id === store.ui.selectedPropId && store.ui.sceneBrush === 'prop',
+        name: prop.name,
+        thumb: thumbForBrush('prop', prop.id),
+        onClick: () =>
+          store.mutateUi((ui) => {
+            ui.sceneBrush = 'prop';
+            ui.selectedPropId = prop.id;
+          }),
+      }),
+    );
+  }
+  container.append(list);
 }
 
 function placeAt(x: number, y: number): void {
@@ -139,6 +224,14 @@ function clearAt(x: number, y: number): void {
 
 export function renderScenePreview(container: HTMLElement): void {
   clear(container);
+  const mode = store.ui.mapMode;
+  container.append(
+    viewTabs(mode, MAP_MODES, (id) => store.mutateUi((ui) => (ui.mapMode = id as MapMode))),
+  );
+  if (mode === 'assign') container.append(el('p', { className: 'hint scene-mode-hint' }, assignHint()));
+  else if (mode === 'interactions')
+    container.append(el('p', { className: 'hint scene-mode-hint' }, 'Pick an interaction prop on the left, then click the map to place it. Right-click removes a prop.'));
+
   const current = scene();
   const frame = el('div', { className: 'scene-frame', style: `aspect-ratio: ${current.cols} / ${current.rows};` });
   const art = el('div', { className: `scene-art ${store.state.style.render.pixelScale > 1 ? 'pixelated-preview' : ''}` });
@@ -151,28 +244,127 @@ export function renderScenePreview(container: HTMLElement): void {
     true,
   );
 
+  frame.append(art, buildMapOverlay(current, mode));
+  container.append(frame);
+}
+
+function assignHint(): string {
+  const t = store.ui.assignTarget;
+  if (!store.selectedScenario) return 'No scenario selected.';
+  if (!t) return 'Pick a cast member or location on the left, then click a desk or room anchor.';
+  const s = store.selectedScenario;
+  const name =
+    t.kind === 'cast'
+      ? store.state.characters.find((c) => c.id === t.id)?.name ?? t.id
+      : s?.locations.find((l) => l.locationId === t.id)?.displayName || t.id;
+  return `Click a desk or room anchor to ${t.kind === 'cast' ? 'seat' : 'bind'} "${name}".`;
+}
+
+/** The clickable grid overlaid on the scene SVG; its behaviour depends on the map mode. */
+function buildMapOverlay(current: SceneState, mode: MapMode): HTMLElement {
   const overlay = el('div', {
     className: 'scene-grid',
     style: `grid-template-columns: repeat(${current.cols}, 1fr); grid-template-rows: repeat(${current.rows}, 1fr);`,
   });
+
+  const s = store.selectedScenario;
+  const anchors = mode === 'assign' ? computeOfficeAnchors(current, store.state) : [];
+  const anchorByCell = new Map(anchors.map((a) => [`${a.x},${a.y}`, a]));
+  const spawnByCell = new Map<string, string[]>();
+  if (mode === 'assign' && s) {
+    for (const member of s.cast) {
+      const loc = s.locations.find((l) => l.locationId === member.spawnLocationId);
+      if (!loc) continue;
+      const anchor = anchors.find((a) => a.anchorId === (loc.bindTo.anchorId || loc.bindTo.roomId));
+      if (!anchor) continue;
+      const key = `${anchor.x},${anchor.y}`;
+      const list = spawnByCell.get(key) ?? [];
+      list.push(member.agentId);
+      spawnByCell.set(key, list);
+    }
+  }
+  // Interaction markers are shown in every mode except assign, so they stay visible while painting.
+  const interByCell =
+    mode === 'assign'
+      ? new Map<string, string>()
+      : new Map(computeInteractionAnchors(current, store.state).map((i) => [`${i.x},${i.y}`, i.interactionType]));
+
   for (let y = 0; y < current.rows; y++) {
     for (let x = 0; x < current.cols; x++) {
+      const key = `${x},${y}`;
+      const classes = ['scene-cell'];
+      const children: Node[] = [];
+      let onClick: () => void;
+
+      if (mode === 'assign') {
+        classes.push('scenario-cell');
+        const anchor = anchorByCell.get(key);
+        if (anchor) classes.push('is-anchor');
+        onClick = () => {
+          if (anchor) assignAtAnchor(anchor);
+        };
+        const spawns = spawnByCell.get(key);
+        if (spawns) children.push(el('span', { className: 'scenario-marker' }, spawns.join(',')));
+      } else {
+        onClick = () => placeAt(x, y);
+        const interaction = interByCell.get(key);
+        if (interaction) children.push(el('span', { className: 'interaction-marker' }, interaction.replace(/_/g, ' ')));
+      }
+
       overlay.append(
-        el('button', {
-          className: 'scene-cell',
-          title: `${x}, ${y}`,
-          onClick: () => placeAt(x, y),
-          onContextmenu: (event: Event) => {
-            event.preventDefault();
-            clearAt(x, y);
+        el(
+          'button',
+          {
+            className: classes.join(' '),
+            title: key,
+            onClick,
+            onContextmenu: (event: Event) => {
+              event.preventDefault();
+              if (mode !== 'assign') clearAt(x, y);
+            },
           },
-        }),
+          ...children,
+        ),
       );
     }
   }
+  return overlay;
+}
 
-  frame.append(art, overlay);
-  container.append(frame);
+/** Seat the active cast member, or bind the active location, to the clicked anchor. */
+function assignAtAnchor(anchor: OfficeAnchor): void {
+  const s = store.selectedScenario;
+  const target = store.ui.assignTarget;
+  if (!s || !target) return;
+  const bindAnchorId = anchor.kind === 'desk' ? anchor.anchorId : '';
+
+  if (target.kind === 'location') {
+    store.mutate(() => {
+      const loc = s.locations.find((l) => l.locationId === target.id);
+      if (loc) loc.bindTo = { roomId: anchor.roomId, anchorId: bindAnchorId };
+    }, 'structure');
+    return;
+  }
+
+  // Seat a cast member: reuse a location already bound to this anchor, or create one.
+  store.mutate(() => {
+    const member = s.cast.find((c) => c.agentId === target.id);
+    if (!member) return;
+    let loc = s.locations.find((l) => l.bindTo.roomId === anchor.roomId && l.bindTo.anchorId === bindAnchorId);
+    if (!loc) {
+      const base = anchor.kind === 'desk' ? `${target.id}-desk` : anchor.roomId || 'spawn';
+      loc = {
+        locationId: uid(base),
+        displayName: '',
+        tags: [],
+        accessState: 'open',
+        fallbackLocationId: '',
+        bindTo: { roomId: anchor.roomId, anchorId: bindAnchorId },
+      };
+      s.locations.push(loc);
+    }
+    member.spawnLocationId = loc.locationId;
+  }, 'structure');
 }
 
 function placedCharacterRows(current: SceneState): HTMLElement {
@@ -220,8 +412,14 @@ let sceneControlsTab = 'paint';
 export function renderSceneControls(container: HTMLElement): void {
   clear(container);
   sceneControlsContainer = container;
-  const current = scene();
+  const mode = store.ui.mapMode;
+  if (mode === 'assign') renderAssignControls(container);
+  else if (mode === 'interactions') renderInteractionsControls(container);
+  else renderLayoutControls(container);
+}
 
+function renderLayoutControls(container: HTMLElement): void {
+  const current = scene();
   if (!SCENE_TABS.some((t) => t.id === sceneControlsTab)) sceneControlsTab = 'paint';
   container.append(
     viewTabs(sceneControlsTab, SCENE_TABS, (id) => {
@@ -233,6 +431,63 @@ export function renderSceneControls(container: HTMLElement): void {
   if (sceneControlsTab === 'paint') renderScenePaint(container, current);
   else if (sceneControlsTab === 'generate') renderSceneGenerate(container);
   else renderSceneExport(container, current);
+}
+
+function renderAssignControls(container: HTMLElement): void {
+  const s = store.selectedScenario;
+  if (!s) {
+    container.append(el('p', { className: 'hint' }, 'No scenario selected.'));
+    return;
+  }
+
+  container.append(el('h3', {}, 'Cast seating'));
+  if (!s.cast.length) container.append(el('p', { className: 'hint' }, 'No cast members.'));
+  for (const member of s.cast) {
+    const recipe = store.state.characters.find((c) => c.id === member.agentId);
+    const loc = s.locations.find((l) => l.locationId === member.spawnLocationId);
+    const where = loc ? loc.bindTo.anchorId || loc.bindTo.roomId || '—' : 'unassigned';
+    container.append(
+      el(
+        'div',
+        { className: 'assign-row' },
+        el('span', { className: 'assign-name' }, recipe?.name ?? member.agentId),
+        el('span', { className: 'assign-where' }, where),
+      ),
+    );
+  }
+
+  container.append(el('h3', {}, 'Location bindings'));
+  if (!s.locations.length) container.append(el('p', { className: 'hint' }, 'No locations.'));
+  for (const loc of s.locations) {
+    container.append(
+      el(
+        'div',
+        { className: 'assign-row' },
+        el('span', { className: 'assign-name' }, loc.displayName || loc.locationId),
+        el('span', { className: 'assign-where' }, loc.bindTo.anchorId || loc.bindTo.roomId || '(unbound)'),
+        button('×', () => store.mutate(() => (loc.bindTo = { roomId: '', anchorId: '' }), 'structure'), 'tag-remove'),
+      ),
+    );
+  }
+}
+
+function renderInteractionsControls(container: HTMLElement): void {
+  const interactions = computeInteractionAnchors(scene(), store.state);
+  container.append(el('h3', {}, `Interaction points (${interactions.length})`));
+  if (!interactions.length) {
+    container.append(el('p', { className: 'hint' }, 'Place an interaction prop (water cooler, printer, …) on the map to create one.'));
+    return;
+  }
+  for (const i of interactions) {
+    container.append(
+      el(
+        'div',
+        { className: 'assign-row' },
+        el('span', { className: 'assign-name' }, i.interactionType.replace(/_/g, ' ')),
+        el('span', { className: 'assign-where' }, `${i.roomId || '—'} · ${i.x},${i.y}`),
+      ),
+    );
+  }
 }
 
 function renderScenePaint(container: HTMLElement, current: SceneState): void {
