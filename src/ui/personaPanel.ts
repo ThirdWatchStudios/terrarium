@@ -38,7 +38,6 @@ import {
   createDefaultProfile,
   serializeProfile,
   suggestedTraitTags,
-  TRAIT_TAG_VOCABULARY,
   validateProfile,
   type CharacterProfile,
   type DerivedGameAxis,
@@ -143,9 +142,10 @@ function personalitySection(p: CharacterProfile): HTMLElement {
     tagEditor(
       per.traitTags,
       (next) => edit(() => (per.traitTags = next), 'structure'),
-      // Spine suggestions first (most relevant), then the full curated vocabulary; deduped.
-      [...new Set([...suggestions, ...TRAIT_TAG_VOCABULARY])].filter((t) => !per.traitTags.includes(t)),
+      // Spine suggestions first (most relevant), then the full catalog; deduped.
+      [...new Set([...suggestions, ...store.state.traits.map((t) => t.id)])].filter((t) => !per.traitTags.includes(t)),
     ),
+    el('p', { className: 'hint' }, 'Traits come from the shared catalog — add or tune them in the Traits tab.'),
     suggestions.length
       ? el('p', { className: 'hint' }, `Suggested from the spine: ${suggestions.join(', ')}`)
       : null,

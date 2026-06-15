@@ -64,6 +64,18 @@ describe('migrateProject', () => {
     expect(migrated.drives.some((d) => d.id === 'invent_something_weird')).toBe(true); // absorbed, not lost
   });
 
+  it('seeds the trait catalog and absorbs persona-referenced trait ids (v7)', () => {
+    const legacy = defaultProject();
+    legacy.version = 6;
+    delete (legacy as { traits?: unknown }).traits; // pre-v7 save had no catalog
+    legacy.profiles![0].personality.traitTags = ['gossip', 'a_made_up_trait'];
+    const migrated = migrateProject(legacy)!;
+    expect(migrated.version).toBe(CURRENT_SCHEMA_VERSION);
+    expect(migrated.traits.length).toBeGreaterThan(0);
+    expect(migrated.traits.some((t) => t.id === 'gossip')).toBe(true); // seeded
+    expect(migrated.traits.some((t) => t.id === 'a_made_up_trait')).toBe(true); // absorbed
+  });
+
   it('refuses a project from a newer schema version', () => {
     const future = { ...defaultProject(), version: CURRENT_SCHEMA_VERSION + 1 };
     expect(migrateProject(future)).toBeNull();

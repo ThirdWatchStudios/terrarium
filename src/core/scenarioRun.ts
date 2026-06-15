@@ -201,9 +201,10 @@ export function buildScenarioPackage(scenario: Scenario, project: ProjectState):
     'relationships.json': relationships,
     'beliefs.json': beliefs,
     'knowledge.json': knowledge,
-    // The drive catalog personas reference by id — shipped with the package so a
-    // scenario bundle is self-contained for the sim to resolve drives.
+    // The drive + trait catalogs personas reference by id — shipped with the
+    // package so a scenario bundle is self-contained for the sim to resolve them.
     'drives.json': project.drives,
+    'traits.json': project.traits,
   };
   if (project.scene) {
     pkg['office-layout.json'] = sceneToLayoutJson(project.scene, project);

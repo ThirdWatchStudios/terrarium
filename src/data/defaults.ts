@@ -1,6 +1,6 @@
 import type { CharacterRecipe, ProjectState, PropInstance, StylePreset, StyleSheet, TileInstance } from '../core/types';
 import { CURRENT_SCHEMA_VERSION } from '../core/types';
-import type { CharacterProfile, DriveDefinition, Relationship } from '../core/profile';
+import type { CharacterProfile, DriveDefinition, Relationship, TraitDefinition } from '../core/profile';
 import { applyDerived, createDefaultProfile } from '../core/profile';
 import type { Scenario } from '../core/scenario';
 
@@ -746,6 +746,113 @@ export const DEFAULT_DRIVES: DriveDefinition[] = [
   drive('protect_team', 'growth', ['belonging', 'security'], 'Protect the team', 'Shield the group from blame and overload.'),
 ];
 
+/**
+ * The shared, reusable trait catalog. Traits are personality shorthand personas
+ * reference by id (`personality.traitTags`). `biasesReactions` is the sim-facing
+ * coupling — signed −2..+2 nudges to reaction propensities the sim applies on top
+ * of the spine-derived tendencies. Only behavioural traits carry biases; the rest
+ * are categorized descriptors (extend or tune freely).
+ */
+const trait = (
+  id: string,
+  category: TraitDefinition['category'],
+  biasesReactions: TraitDefinition['biasesReactions'],
+  label: string,
+  description: string,
+): TraitDefinition => ({ id, label, description, category, biasesReactions });
+
+export const DEFAULT_TRAITS: TraitDefinition[] = [
+  // Work ethic & drive
+  trait('workaholic', 'work_ethic', {}, 'Workaholic', 'Lives at the office; always working.'),
+  trait('hard_working', 'work_ethic', {}, 'Hard-working', 'Reliably puts in the effort.'),
+  trait('ambitious', 'work_ethic', { escalate: 1 }, 'Ambitious', 'Hungry to get ahead.'),
+  trait('climber', 'work_ethic', { escalate: 1 }, 'Climber', 'Openly angling up the ladder.'),
+  trait('overachiever', 'work_ethic', { verify: 1 }, 'Overachiever', 'Goes well beyond what is asked.'),
+  trait('perfectionist', 'work_ethic', { verify: 2 }, 'Perfectionist', 'Sweats every detail; hard to satisfy.'),
+  trait('deadline_driven', 'work_ethic', {}, 'Deadline-driven', 'Sprints as the clock runs down.'),
+  trait('slacker', 'work_ethic', { ignore: 2, withdraw: 1 }, 'Slacker', 'Coasts on minimum effort.'),
+  trait('procrastinator', 'work_ethic', { ignore: 1 }, 'Procrastinator', 'Puts things off to the last minute.'),
+  trait('coaster', 'work_ethic', { ignore: 1 }, 'Coaster', 'Does just enough to get by.'),
+  // Social style
+  trait('social', 'social', { gossip: 1, reassure: 1 }, 'Social', 'Energized by people; chats freely.'),
+  trait('socially_connected', 'social', { gossip: 1 }, 'Socially connected', 'Knows everyone; well-networked.'),
+  trait('networker', 'social', { gossip: 1 }, 'Networker', 'Works the room for contacts.'),
+  trait('team_player', 'social', { reassure: 1 }, 'Team player', 'Pulls for the group over self.'),
+  trait('office_mom', 'social', { reassure: 2 }, 'Office mom', 'Looks after everyone; the caretaker.'),
+  trait('people_pleaser', 'social', { reassure: 2, confront: -1 }, 'People-pleaser', 'Avoids saying no; seeks approval.'),
+  trait('charmer', 'social', { reassure: 1 }, 'Charmer', 'Smooth and likeable.'),
+  trait('class_clown', 'social', { reassure: 1, confront: -1 }, 'Class clown', 'Defuses with jokes.'),
+  trait('peacemaker', 'social', { reassure: 2, escalate: -1 }, 'Peacemaker', 'Smooths over conflict.'),
+  trait('lone_wolf', 'social', { withdraw: 2, gossip: -1 }, 'Lone wolf', 'Keeps to themselves; works solo.'),
+  trait('wallflower', 'social', { withdraw: 2, confront: -1 }, 'Wallflower', 'Quiet; fades into the background.'),
+  trait('private', 'social', { withdraw: 1, gossip: -1 }, 'Private', 'Guards their personal life.'),
+  // Information & politics
+  trait('gossip', 'politics', { gossip: 2 }, 'Gossip', 'Trades in who-said-what.'),
+  trait('oversharer', 'politics', { gossip: 1 }, 'Oversharer', 'Says more than they should.'),
+  trait('spin_doctor', 'politics', { gossip: 1, verify: -1 }, 'Spin doctor', 'Bends the story to suit them.'),
+  trait('brown_noser', 'politics', { reassure: 1, confront: -1 }, 'Brown-noser', 'Flatters those above them.'),
+  trait('opportunist', 'politics', {}, 'Opportunist', 'Plays whatever angle helps them.'),
+  trait('whistleblower', 'politics', { confront: 1, escalate: 1 }, 'Whistleblower', 'Calls out wrongdoing.'),
+  trait('straight_shooter', 'politics', { confront: 1, verify: 1 }, 'Straight shooter', 'Says it plainly; no games.'),
+  trait('blunt', 'politics', { confront: 2 }, 'Blunt', 'Tactless and direct.'),
+  trait('diplomat', 'politics', { reassure: 2, confront: -1 }, 'Diplomat', 'Tactful; reads the room.'),
+  trait('contrarian', 'politics', { confront: 1 }, 'Contrarian', 'Argues the other side on reflex.'),
+  trait('instigator', 'politics', { escalate: 2, gossip: 1 }, 'Instigator', 'Stirs the pot.'),
+  trait('drama_magnet', 'politics', { escalate: 1, gossip: 1 }, 'Drama magnet', 'Trouble seems to find them.'),
+  // Temperament
+  trait('worrier', 'temperament', { withdraw: 1, verify: 1 }, 'Worrier', 'Anxious; sees the downside.'),
+  trait('high_strung', 'temperament', { escalate: 1, withdraw: 1 }, 'High-strung', 'Tense and easily rattled.'),
+  trait('hot_headed', 'temperament', { confront: 2, escalate: 2 }, 'Hot-headed', 'Quick to anger.'),
+  trait('even_keeled', 'temperament', { escalate: -1, reassure: 1 }, 'Even-keeled', 'Steady under pressure.'),
+  trait('thick_skinned', 'temperament', { ignore: 1, escalate: -1 }, 'Thick-skinned', 'Brushes off criticism.'),
+  trait('sensitive', 'temperament', { withdraw: 1 }, 'Sensitive', 'Takes things to heart.'),
+  trait('grudge_holder', 'temperament', { escalate: 1, reassure: -1 }, 'Grudge-holder', 'Slow to let things go.'),
+  trait('forgiving', 'temperament', { reassure: 2, escalate: -1 }, 'Forgiving', 'Quick to move past slights.'),
+  trait('optimist', 'temperament', { reassure: 1 }, 'Optimist', 'Expects things to work out.'),
+  trait('pessimist', 'temperament', { withdraw: 1 }, 'Pessimist', 'Braces for the worst.'),
+  trait('cynical', 'temperament', { verify: 1, reassure: -1 }, 'Cynical', 'Assumes the worst of motives.'),
+  trait('easygoing', 'temperament', { ignore: 1, confront: -1 }, 'Easygoing', 'Relaxed; goes with the flow.'),
+  trait('trusting', 'temperament', { reassure: 1, verify: -1 }, 'Trusting', 'Takes people at their word.'),
+  trait('suspicious', 'temperament', { verify: 2, reassure: -1 }, 'Suspicious', 'Wary of others’ intentions.'),
+  // Integrity & rules
+  trait('rule_follower', 'integrity', { verify: 1 }, 'Rule-follower', 'Plays it by the book.'),
+  trait('rule_bender', 'integrity', {}, 'Rule-bender', 'Treats rules as suggestions.'),
+  trait('loyalist', 'integrity', {}, 'Loyalist', 'Stands by their people.'),
+  trait('idealist', 'integrity', {}, 'Idealist', 'Holds to principle over expedience.'),
+  // Openness & thinking
+  trait('curious', 'openness', { verify: 1 }, 'Curious', 'Wants to know how things work.'),
+  trait('creative', 'openness', {}, 'Creative', 'Generates novel ideas.'),
+  trait('experimental', 'openness', {}, 'Experimental', 'Likes to try new approaches.'),
+  trait('set_in_their_ways', 'openness', {}, 'Set in their ways', 'Resists change.'),
+  trait('traditional', 'openness', {}, 'Traditional', 'Prefers the established way.'),
+  trait('detail_oriented', 'openness', { verify: 2 }, 'Detail-oriented', 'Catches the small stuff.'),
+  trait('big_picture', 'openness', {}, 'Big-picture', 'Thinks in strategy, not specifics.'),
+  trait('pragmatic', 'openness', {}, 'Pragmatic', 'Whatever works in practice.'),
+  trait('practical', 'openness', {}, 'Practical', 'Grounded and no-nonsense.'),
+  // Competence & role
+  trait('mentor', 'competence', { reassure: 1, verify: 1 }, 'Mentor', 'Develops and guides others.'),
+  trait('micromanager', 'competence', { verify: 2, confront: 1 }, 'Micromanager', 'Hovers over every detail.'),
+  trait('delegator', 'competence', {}, 'Delegator', 'Hands off and trusts the team.'),
+  trait('fixer', 'competence', {}, 'Fixer', 'The one who makes problems go away.'),
+  trait('know_it_all', 'competence', { confront: 1, verify: 1 }, 'Know-it-all', 'Always has the answer.'),
+  trait('quick_learner', 'competence', {}, 'Quick learner', 'Picks things up fast.'),
+  trait('tech_savvy', 'competence', {}, 'Tech-savvy', 'Comfortable with the tools.'),
+  trait('organized', 'competence', { verify: 1 }, 'Organized', 'Everything in its place.'),
+  trait('scatterbrained', 'competence', { ignore: 1, verify: -1 }, 'Scatterbrained', 'Forgetful and disorganized.'),
+  trait('reliable', 'competence', { verify: 1 }, 'Reliable', 'Does what they say they will.'),
+  trait('flaky', 'competence', { ignore: 1 }, 'Flaky', 'Hard to count on.'),
+  // Status & misc
+  trait('competitive', 'status', { escalate: 1, confront: 1 }, 'Competitive', 'Has to win.'),
+  trait('recognition_seeking', 'status', {}, 'Recognition-seeking', 'Wants the credit and spotlight.'),
+  trait('status_conscious', 'status', {}, 'Status-conscious', 'Keenly aware of pecking order.'),
+  trait('frugal', 'status', {}, 'Frugal', 'Careful with money and resources.'),
+  trait('generous', 'status', { reassure: 1 }, 'Generous', 'Free with help and credit.'),
+  trait('punctual', 'status', {}, 'Punctual', 'Always on time.'),
+  trait('always_late', 'status', {}, 'Always late', 'Never quite on schedule.'),
+  trait('busy', 'status', {}, 'Busy', 'Perpetually slammed.'),
+  trait('prickly', 'status', { confront: 1, reassure: -1 }, 'Prickly', 'Easily irritated; sharp edges.'),
+];
+
 export function defaultProject(): ProjectState {
   return {
     version: CURRENT_SCHEMA_VERSION,
@@ -758,5 +865,6 @@ export function defaultProject(): ProjectState {
     profiles: structuredClone(DEFAULT_PROFILES),
     scenarios: structuredClone(DEFAULT_SCENARIOS),
     drives: structuredClone(DEFAULT_DRIVES),
+    traits: structuredClone(DEFAULT_TRAITS),
   };
 }

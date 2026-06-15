@@ -481,39 +481,27 @@ export function applyDerived(p: CharacterProfile): CharacterProfile {
 }
 
 /**
- * A curated palette of office-flavoured trait tags offered as autocomplete in
- * the Persona editor. Tags are free-form (you can still type anything); this is
- * just a richer vocabulary so authors aren't starting from a blank field.
- * Grouped by theme for readability; order also drives the dropdown order.
+ * A trait is a reusable, structured personality tag defined once in the project
+ * catalog and referenced by persona (id strings in `personality.traitTags`).
+ * `biasesReactions` is the contract hook the sim acts on — signed nudges to the
+ * reaction propensities, on a coarse −2..+2 scale (the sim scales to its own
+ * units and combines with the spine-derived tendencies in deriveReactionTendencies).
+ * Only non-zero categories are stored. Behavior selection stays in the sim.
  */
-export const TRAIT_TAG_VOCABULARY: readonly string[] = [
-  // Work ethic & drive
-  'workaholic', 'hard_working', 'ambitious', 'climber', 'overachiever', 'perfectionist',
-  'deadline_driven', 'slacker', 'procrastinator', 'coaster',
-  // Social style
-  'social', 'socially_connected', 'networker', 'team_player', 'office_mom', 'people_pleaser',
-  'charmer', 'class_clown', 'peacemaker', 'lone_wolf', 'wallflower', 'private',
-  // Information & politics
-  'gossip', 'oversharer', 'spin_doctor', 'brown_noser', 'opportunist', 'whistleblower',
-  'straight_shooter', 'blunt', 'diplomat', 'contrarian', 'instigator', 'drama_magnet',
-  // Temperament
-  'worrier', 'high_strung', 'hot_headed', 'even_keeled', 'thick_skinned', 'sensitive',
-  'grudge_holder', 'forgiving', 'optimist', 'pessimist', 'cynical', 'easygoing',
-  'trusting', 'suspicious',
-  // Integrity & rules
-  'rule_follower', 'rule_bender', 'loyalist', 'idealist',
-  // Openness & thinking
-  'curious', 'creative', 'experimental', 'set_in_their_ways', 'traditional',
-  'detail_oriented', 'big_picture', 'pragmatic', 'practical',
-  // Competence & role
-  'mentor', 'micromanager', 'delegator', 'fixer', 'know_it_all', 'quick_learner',
-  'tech_savvy', 'organized', 'scatterbrained', 'reliable', 'flaky',
-  // Status & misc
-  'competitive', 'recognition_seeking', 'status_conscious', 'frugal', 'generous',
-  'punctual', 'always_late', 'busy', 'prickly',
-];
+export const TRAIT_CATEGORIES = [
+  'work_ethic', 'social', 'politics', 'temperament', 'integrity', 'openness', 'competence', 'status',
+] as const;
+export type TraitCategory = (typeof TRAIT_CATEGORIES)[number];
 
-/** Trait tags suggested from the spine (UI offers these; never auto-applied). */
+export interface TraitDefinition {
+  id: string;
+  label: string;
+  description: string;
+  category: TraitCategory;
+  biasesReactions: Partial<Record<ReactionCategory, number>>;
+}
+
+/** Trait ids suggested from the spine (UI offers these; never auto-applied). */
 export function suggestedTraitTags(p: CharacterProfile): string[] {
   const { ocean, axes, derivedAxes } = p.personality;
   const tags: string[] = [];

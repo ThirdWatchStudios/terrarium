@@ -214,6 +214,11 @@ export interface ProjectState {
    * See core/profile.ts (DriveDefinition) and CONTRACT.md.
    */
   drives: import('./profile').DriveDefinition[];
+  /**
+   * The reusable trait catalog — structured personality tags personas reference
+   * by id (personality.traitTags). See core/profile.ts (TraitDefinition).
+   */
+  traits: import('./profile').TraitDefinition[];
   /** The scene canvas — persisted so hand-edits survive reloads. */
   scene?: import('./scene').SceneState;
 }
@@ -228,8 +233,9 @@ export interface ProjectState {
  * v5 moved starting beliefs/knowledge out of personas into scenarios (the
  * persona↔scenario boundary); the step strips the legacy persona fields.
  * v6 added the reusable `drives` catalog; personas now reference drive ids.
+ * v7 added the reusable `traits` catalog; persona traitTags are trait ids.
  */
-export const CURRENT_SCHEMA_VERSION = 6;
+export const CURRENT_SCHEMA_VERSION = 7;
 
 /** Design-space canvas size. Parts are authored against this; never changes. */
 export const CANVAS = 128;

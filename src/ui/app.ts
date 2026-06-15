@@ -6,6 +6,7 @@ import { button, clear, el } from './dom';
 import { renderCharacterControls, renderCharacterList, renderCharacterPreview } from './characterPanel';
 import { renderPersonaControls, renderPersonaPreview } from './personaPanel';
 import { renderDriveControls, renderDriveList, renderDrivePreview } from './drivePanel';
+import { renderTraitControls, renderTraitList, renderTraitPreview } from './traitPanel';
 import { renderScenarioControls, renderScenarioList, renderScenarioPreview } from './scenarioPanel';
 import { renderEmployeeControls, renderEmployeeList, renderEmployeePreview } from './employeePanel';
 import { renderPropControls, renderPropList, renderPropPreview } from './propPanel';
@@ -33,6 +34,7 @@ const NAV: NavGroup[] = [
       { id: 'characters', label: 'Appearance' },
       { id: 'persona', label: 'Persona' },
       { id: 'drives', label: 'Drives' },
+      { id: 'traits', label: 'Traits' },
       { id: 'employees', label: 'Generate' },
     ],
   },
@@ -65,7 +67,7 @@ function groupForLeaf(leaf: Leaf): NavGroup {
  * editor joins them (analysis becomes a tabbed inspector); the Office tab keeps
  * its paint canvas in the center instead.
  */
-const SWAP_TABS = new Set<Leaf>(['characters', 'persona', 'drives', 'employees', 'props', 'tiles', 'style', 'scenario']);
+const SWAP_TABS = new Set<Leaf>(['characters', 'persona', 'drives', 'traits', 'employees', 'props', 'tiles', 'style', 'scenario']);
 
 export function mountApp(root: HTMLElement): void {
   const tabBar = el('nav', { className: 'tabs' });
@@ -204,6 +206,10 @@ export function mountApp(root: HTMLElement): void {
       renderDriveList(sidebar);
       renderDrivePreview(preview);
       if (kind === 'structure') renderDriveControls(controls);
+    } else if (tab === 'traits') {
+      renderTraitList(sidebar);
+      renderTraitPreview(preview);
+      if (kind === 'structure') renderTraitControls(controls);
     } else if (tab === 'props') {
       renderPropList(sidebar);
       renderPropPreview(preview);

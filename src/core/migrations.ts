@@ -1,6 +1,6 @@
 import type { ProjectState } from './types';
 import { CURRENT_SCHEMA_VERSION } from './types';
-import { DEFAULT_DRIVES, DEFAULT_FLOORS, DEFAULT_PROFILES, DEFAULT_PROPS, DEFAULT_SCENARIOS, DEFAULT_STYLE_PRESETS, DEFAULT_WALLS } from '../data/defaults';
+import { DEFAULT_DRIVES, DEFAULT_FLOORS, DEFAULT_PROFILES, DEFAULT_PROPS, DEFAULT_SCENARIOS, DEFAULT_STYLE_PRESETS, DEFAULT_TRAITS, DEFAULT_WALLS } from '../data/defaults';
 
 // Re-export so callers can keep importing the version from the migration module.
 export { CURRENT_SCHEMA_VERSION } from './types';
@@ -68,8 +68,34 @@ export function migrateProject(raw: unknown): ProjectState | null {
   // authored drive is lost when the field becomes an id reference.
   backfillV6(project as ProjectState);
 
+  // v6 → v7: trait tags became a reusable, structured catalog. Same treatment —
+  // seed defaults and absorb any trait ids personas already carry.
+  backfillV7(project as ProjectState);
+
   project.version = CURRENT_SCHEMA_VERSION;
   return project as ProjectState;
+}
+
+/** v7 step: ensure the `traits` catalog exists, seed defaults, absorb referenced ids. */
+function backfillV7(project: ProjectState): void {
+  project.traits ??= [];
+  const present = new Set(project.traits.map((t) => t.id));
+  for (const def of DEFAULT_TRAITS) {
+    if (!present.has(def.id)) {
+      project.traits.push(structuredClone(def));
+      present.add(def.id);
+    }
+  }
+  // Any trait id a persona carries but the catalog lacks (a custom tag typed
+  // before traits were structured) is added as a minimal entry, never dropped.
+  for (const profile of project.profiles ?? []) {
+    for (const id of profile.personality.traitTags) {
+      if (id && !present.has(id)) {
+        project.traits.push({ id, label: id, description: '', category: 'status', biasesReactions: {} });
+        present.add(id);
+      }
+    }
+  }
 }
 
 /** v6 step: ensure the `drives` catalog exists, seed defaults, absorb referenced ids. */

@@ -23,6 +23,7 @@ pin down what data we must capture here so the sim has what it needs.
 | Derived personality fields (temper, grudge-holding, reaction tendencies, volatility) | **Tool** | Computed here — see §4. The sim consumes the numbers; it does not re-derive them. |
 | Needs, preferences, skills, baseline relationships, routine, formative events | **Tool** | Authored / exported. Mostly inert metadata here (not computed on). |
 | Drive catalog (structured, reusable; `amplifiesNeeds`) | **Tool** | Project-level catalog (§3.5); personas reference by id. The need coupling is tool-authored data the sim acts on. |
+| Trait catalog (structured, reusable; `biasesReactions`) | **Tool** | Project-level catalog (§3.6); persona `traitTags` are ids into it. Reaction nudges are tool-authored data the sim applies on top of the spine-derived tendencies. |
 | Scenario situation (truth, information, experiment, objective, seeds) | **Tool** | Authored + exported. |
 | **Behavior** — how any of the above turns into decisions, need depletion, relationship drift, belief spread, KPI scoring | **Sim** | Not implemented in this repo. See §5. |
 | The meaning of a free-text id (a `drive`, a `trait_tag`, a `locationId`, a routine `activity`) | **Sim** | The tool deliberately does not enforce these vocabularies — it ships strings; the sim decides what they do (and should log/fallback on ids it doesn't implement). |
@@ -46,6 +47,7 @@ Coordinate convention: scene grids are row-major `[y][x]`; anchors/spawns carry 
 | `beliefs.json` | `buildScenarioPackage` | scenario | Per-agent starting beliefs (from cast `beliefSeeds`). |
 | `knowledge.json` | `buildScenarioPackage` | scenario | Truth facts, information items, per-agent `knows`. |
 | `drives.json` | `project.drives` (verbatim) | project | Reusable drive catalog personas reference by id (§3.5). Also embedded in each scenario package. |
+| `traits.json` | `project.traits` (verbatim) | project | Reusable trait catalog persona `traitTags` reference by id (§3.6). Also embedded in each scenario package. |
 | `office-layout.json` | `sceneToLayoutJson` | scene | Rooms, floors, walls, props, spawns, anchors, interaction anchors (§3.4). |
 | `interaction-anchors.json` | `computeInteractionAnchors` | scene | Interaction points derived from placed props. |
 
@@ -82,7 +84,7 @@ All numeric ranges are `0–100` unless noted. `affinity` is bipolar `-100..100`
       "temper": 0,          // DERIVED — folded in at export (§4)
       "grudgeHolding": 0    // DERIVED — folded in at export (§4)
     },
-    "traitTags": ["ambitious", "..."]          // free-text vocabulary
+    "traitTags": ["ambitious", "..."]          // ids into the trait catalog (§3.6)
   },
   "needs": {                                    // 6 fixed need ids
     "recognition": { "baseline": 0, "sensitivity": 0 },
@@ -150,6 +152,18 @@ The shared set of motivations personas reference by id. `profile.drives.primary/
 ```
 A persona drive id not present here is a valid one-off — the sim should fallback + log (§7). Shipped both at the bundle root and inside each `scenarios/<id>/` package so a scenario bundle is self-contained.
 
+### 3.6 `traits.json` (reusable trait catalog) — project-level
+The shared set of personality tags persona `traitTags` reference by id. `biasesReactions` are signed nudges to the reaction propensities on a coarse **−2..+2** scale (only non-zero categories stored); the sim scales to its own units and applies them on top of the spine-derived reaction tendencies (§4).
+```jsonc
+[
+  { "id": "hot_headed", "label": "Hot-headed",
+    "description": "Quick to anger.",
+    "category": "work_ethic|social|politics|temperament|integrity|openness|competence|status",
+    "biasesReactions": { "confront": 2, "escalate": 2 } }   // subset of the 7 reaction categories
+]
+```
+As with drives, a persona may carry a trait id absent from the catalog — fallback + log (§7). Shipped at the bundle root and in each scenario package.
+
 ---
 
 ## 4. Formulas computed **in the tool** (authoritative)
@@ -192,7 +206,7 @@ Drives are now a **structured, reusable catalog** (`drives.json`, §3.5) that pe
 `needs[id] = { baseline, sensitivity }`. Sketch: satisfaction starts at `baseline`, depletes over time scaled by `sensitivity`, and the most-deprived need (optionally weighted by active drives, §5.1) sets current motivation. The tool already surfaces "top needs" by `sensitivity` for preview only.
 
 ### 5.3 Reaction selection
-On an event, the sim picks among the 7 `reactionTendencies` (already numeric, §4) — likely a weighted/softmax draw, modulated by `temperament.volatility`, current mood, and the triggering relationship. Tool provides the tendencies; sim provides the selection rule.
+On an event, the sim picks among the 7 `reactionTendencies` (already numeric, §4) — likely a weighted/softmax draw, modulated by `temperament.volatility`, current mood, and the triggering relationship. **Trait biases (§3.6) apply here:** for each trait the persona carries, add its `biasesReactions` nudges (scaled) to the corresponding tendencies before selecting. Tool provides the base tendencies + trait nudges; sim provides the combine + selection rule.
 
 ### 5.4 Relationship dynamics
 `relationships[]` (resolved baseline + overrides) are the **starting** edges. The sim evolves them over the run (trust/suspicion/affinity/influence/respect/familiarity drift from interactions, gated by `grudgeHolding` for how long slights persist). Tool ships start state + `grudgeHolding`; sim owns the drift model.
