@@ -946,6 +946,7 @@ select:focus {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .scene-cell:hover {
@@ -1239,6 +1240,14 @@ textarea {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  /* Interaction props are elevation sprites that stand with their feet near the
+     tile floor, so their visual mass sits in the lower-center of the tile. Pin
+     the chip there (rather than the flex-centered tile midpoint) so it overlays
+     the item instead of floating above it. Proportional, so it holds at any zoom. */
+  position: absolute;
+  left: 50%;
+  top: 62%;
+  transform: translate(-50%, -50%);
 }
 
 .scene-mode-hint {

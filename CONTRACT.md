@@ -243,11 +243,11 @@ On an event, the sim picks among the 7 `reactionTendencies` (already numeric, §
 
 Things the sim will likely need that the tool does **not** capture yet — decide before building the sim side:
 
-1. ~~Drive semantics location~~ — **Resolved:** drives are a tool-authored structured catalog with a `amplifiesNeeds` coupling (§3.5/§5.1). Open sub-question: does the sim also want per-drive reaction biases, or is need coupling enough?
-2. **KPI/objective evaluators** — is `kpi` a known enum the sim implements, or fully free-form? Do we want a `kpi` vocabulary + "unknown KPI" warning in the tool?
+1. ~~Drive semantics location~~ — **Resolved:** drives are a tool-authored structured catalog with a `amplifiesNeeds` coupling (§3.5/§5.1). Sub-question ~~per-drive reaction biases~~ — **Resolved (sim, 2026-06-15):** no per-drive reaction biases are authored; reaction shaping comes from trait + relationship-type `biasesReactions` only (need coupling is enough). See `persona_consumption_model.md`.
+2. ~~KPI/objective evaluators~~ — **Resolved (2026-06-15):** `kpi` stays **free-form**. The sim keeps a registry of implemented evaluators (fallback+log on unknown, same discipline as drives/traits); the tool surfaces an authoring-time **"unknown KPI" warning** when a `kpi` id has no sim evaluator (non-breaking, like drive/trait autocomplete). No closed enum, no lockstep release. See `persona_consumption_model.md` Layer 7.
 3. **Location/activity vocabularies** — `routine[].locationId/activity` and scenario `locationId`s are free-text; the sim owns the real set. Do we want the tool to validate routine `locationId`s against the scenario's declared locations?
-4. **Time model** — routine uses `"HH:MM"` strings; the sim needs a day-length / tick mapping (tool doesn't model time).
-5. **Need ↔ drive coupling** — if the sim wants explicit "this drive amplifies these needs," that mapping currently lives nowhere; decide whether it's tool data or sim code.
+4. ~~Time model~~ — **Resolved (sim, 2026-06-15):** the sim owns time via the Epic 20 compressed office-day clock; routine `"HH:MM"` maps onto it and needs deplete per step. The tool still does not model time — and does not need to. See `persona_consumption_model.md` Layer 1.
+5. ~~Need ↔ drive coupling~~ — **Resolved:** it is tool data — `drives.json[].amplifiesNeeds` (§3.5). The activity→need *replenishment* map (a different mapping) is **sim-coded**, not exported (decided 2026-06-15).
 
 ---
 
