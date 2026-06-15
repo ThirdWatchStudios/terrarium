@@ -57,7 +57,7 @@ trees match — output is deterministic (identical bytes across runs).
 
 The GitHub Pages build publishes the current app from `main`:
 
-https://thirdwatchstudios.github.io/SpriteCharacterCreator/
+https://thirdwatchstudios.github.io/terrarium/
 
 ## Tabs
 
