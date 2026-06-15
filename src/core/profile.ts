@@ -118,17 +118,23 @@ export type ExpectedBehaviorTendency = (typeof EXPECTED_BEHAVIOR_TENDENCIES)[num
 export const OBJECTIVE_STATUSES = ['active', 'paused', 'achieved', 'abandoned'] as const;
 export type ObjectiveStatus = (typeof OBJECTIVE_STATUSES)[number];
 
-/** Suggested drive ids from the design docs (free text; not enforced). */
-export const DRIVE_SUGGESTIONS = [
-  'prove_readiness',
-  'protect_status',
-  'maintain_social_access',
-  'preserve_leadership_confidence',
-  'avoid_reputational_damage',
-  'challenge_unfair_advancement',
-  'reduce_uncertainty',
-  'contain_variance',
-];
+/**
+ * A drive is a reusable, structured motivation defined once in the project
+ * catalog and referenced by persona id. `amplifiesNeeds` is the contract hook the
+ * sim acts on — which of the six needs this drive pushes harder. Behavior
+ * selection still lives in the sim; the tool owns the catalog + the need coupling.
+ */
+export const DRIVE_CATEGORIES = ['status', 'security', 'power', 'social', 'growth'] as const;
+export type DriveCategory = (typeof DRIVE_CATEGORIES)[number];
+
+export interface DriveDefinition {
+  id: string;
+  label: string;
+  description: string;
+  category: DriveCategory;
+  /** Which needs this drive intensifies; the sim weights motivation by these. */
+  amplifiesNeeds: NeedId[];
+}
 
 export interface PersonalObjective {
   id: string;
@@ -474,18 +480,60 @@ export function applyDerived(p: CharacterProfile): CharacterProfile {
   return p;
 }
 
+/**
+ * A curated palette of office-flavoured trait tags offered as autocomplete in
+ * the Persona editor. Tags are free-form (you can still type anything); this is
+ * just a richer vocabulary so authors aren't starting from a blank field.
+ * Grouped by theme for readability; order also drives the dropdown order.
+ */
+export const TRAIT_TAG_VOCABULARY: readonly string[] = [
+  // Work ethic & drive
+  'workaholic', 'hard_working', 'ambitious', 'climber', 'overachiever', 'perfectionist',
+  'deadline_driven', 'slacker', 'procrastinator', 'coaster',
+  // Social style
+  'social', 'socially_connected', 'networker', 'team_player', 'office_mom', 'people_pleaser',
+  'charmer', 'class_clown', 'peacemaker', 'lone_wolf', 'wallflower', 'private',
+  // Information & politics
+  'gossip', 'oversharer', 'spin_doctor', 'brown_noser', 'opportunist', 'whistleblower',
+  'straight_shooter', 'blunt', 'diplomat', 'contrarian', 'instigator', 'drama_magnet',
+  // Temperament
+  'worrier', 'high_strung', 'hot_headed', 'even_keeled', 'thick_skinned', 'sensitive',
+  'grudge_holder', 'forgiving', 'optimist', 'pessimist', 'cynical', 'easygoing',
+  'trusting', 'suspicious',
+  // Integrity & rules
+  'rule_follower', 'rule_bender', 'loyalist', 'idealist',
+  // Openness & thinking
+  'curious', 'creative', 'experimental', 'set_in_their_ways', 'traditional',
+  'detail_oriented', 'big_picture', 'pragmatic', 'practical',
+  // Competence & role
+  'mentor', 'micromanager', 'delegator', 'fixer', 'know_it_all', 'quick_learner',
+  'tech_savvy', 'organized', 'scatterbrained', 'reliable', 'flaky',
+  // Status & misc
+  'competitive', 'recognition_seeking', 'status_conscious', 'frugal', 'generous',
+  'punctual', 'always_late', 'busy', 'prickly',
+];
+
 /** Trait tags suggested from the spine (UI offers these; never auto-applied). */
 export function suggestedTraitTags(p: CharacterProfile): string[] {
-  const { ocean, axes } = p.personality;
+  const { ocean, axes, derivedAxes } = p.personality;
   const tags: string[] = [];
   if (ocean.conscientiousness >= 70 && axes.ambition >= 70) tags.push('workaholic');
+  if (ocean.conscientiousness <= 30) tags.push('scatterbrained');
   if (axes.discretion <= 35) tags.push('gossip');
   if (axes.ambition >= 75) tags.push('climber');
   if (ocean.agreeableness <= 30) tags.push('prickly');
   if (ocean.agreeableness >= 75 && ocean.extraversion >= 60) tags.push('office_mom');
+  if (ocean.extraversion >= 75) tags.push('social');
+  if (ocean.extraversion <= 30) tags.push('wallflower');
   if (ocean.neuroticism >= 70) tags.push('worrier');
-  if (axes.integrity <= 35) tags.push('spin_doctor');
   if (ocean.openness <= 30) tags.push('set_in_their_ways');
+  if (ocean.openness >= 75) tags.push('curious');
+  if (axes.integrity <= 35) tags.push('spin_doctor');
+  if (axes.integrity >= 75) tags.push('straight_shooter');
+  if (axes.loyalty >= 75) tags.push('loyalist');
+  if (axes.loyalty <= 30) tags.push('opportunist');
+  if (derivedAxes.temper.value >= 70) tags.push('hot_headed');
+  if (derivedAxes.grudgeHolding.value >= 70) tags.push('grudge_holder');
   return tags.filter((t) => !p.personality.traitTags.includes(t));
 }
 

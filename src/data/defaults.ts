@@ -1,6 +1,6 @@
 import type { CharacterRecipe, ProjectState, PropInstance, StylePreset, StyleSheet, TileInstance } from '../core/types';
 import { CURRENT_SCHEMA_VERSION } from '../core/types';
-import type { CharacterProfile, Relationship } from '../core/profile';
+import type { CharacterProfile, DriveDefinition, Relationship } from '../core/profile';
 import { applyDerived, createDefaultProfile } from '../core/profile';
 import type { Scenario } from '../core/scenario';
 
@@ -693,6 +693,59 @@ const PROMOTION_RUMOR_001: Scenario = {
 
 export const DEFAULT_SCENARIOS: Scenario[] = [PROMOTION_RUMOR_001];
 
+/**
+ * The shared, reusable drive catalog. Drives are common across an office cast, so
+ * they live at the project level; personas reference them by id. `amplifiesNeeds`
+ * is the sim-facing coupling (which needs the drive pushes). Free to extend.
+ */
+const drive = (
+  id: string,
+  category: DriveDefinition['category'],
+  amplifiesNeeds: DriveDefinition['amplifiesNeeds'],
+  label: string,
+  description: string,
+): DriveDefinition => ({ id, label, description, category, amplifiesNeeds });
+
+export const DEFAULT_DRIVES: DriveDefinition[] = [
+  // Status & advancement
+  drive('advance_career', 'status', ['recognition', 'competence'], 'Advance career', 'Climb the ladder; take on higher-profile work.'),
+  drive('seek_promotion', 'status', ['recognition', 'competence'], 'Seek promotion', 'Angle for the next title and pay bump.'),
+  drive('prove_readiness', 'status', ['competence', 'recognition'], 'Prove readiness', 'Demonstrate they can handle more responsibility.'),
+  drive('prove_competence', 'status', ['competence'], 'Prove competence', 'Show they are good at the job.'),
+  drive('gain_recognition', 'status', ['recognition'], 'Gain recognition', 'Be seen and credited for contributions.'),
+  drive('protect_status', 'status', ['recognition', 'security'], 'Protect status', 'Defend standing and seniority from threats.'),
+  drive('earn_respect', 'status', ['recognition', 'belonging'], 'Earn respect', 'Be taken seriously by peers and leadership.'),
+  drive('outperform_rivals', 'status', ['competence', 'recognition'], 'Outperform rivals', 'Beat specific colleagues at the work.'),
+  drive('impress_leadership', 'status', ['recognition'], 'Impress leadership', 'Win favor with managers and executives.'),
+  drive('preserve_leadership_confidence', 'status', ['recognition', 'security'], 'Preserve leadership confidence', 'Keep leadership trusting their judgment.'),
+  // Security & risk
+  drive('job_security', 'security', ['security'], 'Job security', 'Stay safely employed; avoid the chopping block.'),
+  drive('avoid_blame', 'security', ['security'], 'Avoid blame', 'Stay clear of fault when things go wrong.'),
+  drive('avoid_reputational_damage', 'security', ['security', 'recognition'], 'Avoid reputational damage', 'Protect their name from a black mark.'),
+  drive('avoid_conflict', 'security', ['belonging', 'rest'], 'Avoid conflict', 'Steer clear of confrontation and friction.'),
+  drive('reduce_uncertainty', 'security', ['security'], 'Reduce uncertainty', 'Pin down ambiguity; know where they stand.'),
+  drive('contain_variance', 'security', ['security', 'autonomy'], 'Contain variance', 'Keep outcomes predictable and under control.'),
+  drive('minimize_effort', 'security', ['rest', 'autonomy'], 'Minimize effort', 'Get by with the least work required.'),
+  // Power & autonomy
+  drive('gain_influence', 'power', ['autonomy', 'recognition'], 'Gain influence', 'Build sway over decisions and people.'),
+  drive('maintain_control', 'power', ['autonomy', 'security'], 'Maintain control', 'Keep a grip on their domain and outcomes.'),
+  drive('maximize_autonomy', 'power', ['autonomy'], 'Maximize autonomy', 'Work on their own terms, free of oversight.'),
+  // Social & belonging
+  drive('maintain_social_access', 'social', ['belonging'], 'Maintain social access', 'Stay in the loop and connected.'),
+  drive('build_alliances', 'social', ['belonging', 'autonomy'], 'Build alliances', 'Cultivate allies and mutual favors.'),
+  drive('be_liked', 'social', ['belonging', 'recognition'], 'Be liked', 'Be popular and well-regarded socially.'),
+  drive('belong', 'social', ['belonging'], 'Belong', 'Feel part of the group; fit in.'),
+  drive('preserve_harmony', 'social', ['belonging', 'rest'], 'Preserve harmony', 'Keep the peace across the team.'),
+  drive('settle_score', 'social', ['recognition'], 'Settle a score', 'Get even with someone who wronged them.'),
+  // Values & growth
+  drive('uphold_fairness', 'growth', ['belonging', 'autonomy'], 'Uphold fairness', 'Insist things be done right and even-handedly.'),
+  drive('challenge_unfair_advancement', 'growth', ['recognition', 'autonomy'], 'Challenge unfair advancement', 'Contest a promotion or call they see as unjust.'),
+  drive('expose_wrongdoing', 'growth', ['autonomy', 'recognition'], 'Expose wrongdoing', 'Bring misconduct to light.'),
+  drive('mentor_others', 'growth', ['belonging', 'competence'], 'Mentor others', 'Develop and look after junior colleagues.'),
+  drive('master_craft', 'growth', ['competence'], 'Master the craft', 'Get genuinely excellent at the work itself.'),
+  drive('protect_team', 'growth', ['belonging', 'security'], 'Protect the team', 'Shield the group from blame and overload.'),
+];
+
 export function defaultProject(): ProjectState {
   return {
     version: CURRENT_SCHEMA_VERSION,
@@ -704,5 +757,6 @@ export function defaultProject(): ProjectState {
     floors: structuredClone(DEFAULT_FLOORS),
     profiles: structuredClone(DEFAULT_PROFILES),
     scenarios: structuredClone(DEFAULT_SCENARIOS),
+    drives: structuredClone(DEFAULT_DRIVES),
   };
 }

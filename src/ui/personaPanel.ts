@@ -15,7 +15,6 @@ import {
   AXIS_LABELS,
   DEPARTMENTS,
   DERIVED_GAME_AXES,
-  DRIVE_SUGGESTIONS,
   EXPECTED_BEHAVIOR_TENDENCIES,
   FORMATIVE_OPS,
   FORMATIVE_TARGET_KINDS,
@@ -39,6 +38,7 @@ import {
   createDefaultProfile,
   serializeProfile,
   suggestedTraitTags,
+  TRAIT_TAG_VOCABULARY,
   validateProfile,
   type CharacterProfile,
   type DerivedGameAxis,
@@ -140,10 +140,12 @@ function personalitySection(p: CharacterProfile): HTMLElement {
     el('h4', {}, 'Derived axes'),
     ...derivedRows,
     el('h4', {}, 'Trait tags'),
-    tagEditor(per.traitTags, (next) => edit(() => (per.traitTags = next), 'structure'), [
-      ...per.traitTags,
-      ...suggestions,
-    ]),
+    tagEditor(
+      per.traitTags,
+      (next) => edit(() => (per.traitTags = next), 'structure'),
+      // Spine suggestions first (most relevant), then the full curated vocabulary; deduped.
+      [...new Set([...suggestions, ...TRAIT_TAG_VOCABULARY])].filter((t) => !per.traitTags.includes(t)),
+    ),
     suggestions.length
       ? el('p', { className: 'hint' }, `Suggested from the spine: ${suggestions.join(', ')}`)
       : null,
@@ -160,26 +162,26 @@ function needsSection(p: CharacterProfile): HTMLElement {
 }
 
 function drivesSection(p: CharacterProfile): HTMLElement {
-  const driveList = uid('drives');
-  const driveInput = (label: string, value: string, set: (v: string) => void) =>
-    labeled(
-      label,
-      el(
-        'span',
-        {},
-        el('input', {
-          type: 'text',
-          value,
-          list: driveList,
-          onInput: (e: Event) => edit(() => set((e.target as HTMLInputElement).value)),
-        }),
-      ),
-    );
+  // Options drawn from the shared drive catalog; a value not in the catalog is
+  // preserved and tagged "(custom)" so links to removed/renamed drives survive.
+  const driveOptions = (current: string): Array<{ value: string; label: string }> => {
+    const opts = [
+      { value: '', label: '—' },
+      ...store.state.drives.map((d) => ({ value: d.id, label: d.label || d.id })),
+    ];
+    if (current && !store.state.drives.some((d) => d.id === current)) {
+      opts.push({ value: current, label: `${current} (custom)` });
+    }
+    return opts;
+  };
+  const driveSelect = (label: string, value: string, set: (v: string) => void) =>
+    labeled(label, select(driveOptions(value), value, (v) => edit(() => set(v))));
 
   const objRows = p.drives.objectives.map((o) =>
     el(
       'div',
       { className: 'row-card' },
+      driveSelect('Source drive', o.sourceDrive, (v) => (o.sourceDrive = v)),
       textField('Concern', o.targetOrConcern, (v) => edit(() => (o.targetOrConcern = v))),
       labeled(
         'Tendency',
@@ -204,9 +206,9 @@ function drivesSection(p: CharacterProfile): HTMLElement {
 
   return section(
     'Drives',
-    driveInput('Primary drive', p.drives.primary, (v) => (p.drives.primary = v)),
-    driveInput('Secondary drive', p.drives.secondary, (v) => (p.drives.secondary = v)),
-    el('datalist', { id: driveList }, ...DRIVE_SUGGESTIONS.map((d) => el('option', { value: d }))),
+    driveSelect('Primary drive', p.drives.primary, (v) => (p.drives.primary = v)),
+    driveSelect('Secondary drive', p.drives.secondary, (v) => (p.drives.secondary = v)),
+    el('p', { className: 'hint' }, 'Drives come from the shared catalog — add or edit them in the Drives tab.'),
     el('h4', {}, 'Personal objectives'),
     ...objRows,
     button('+ Objective', () =>

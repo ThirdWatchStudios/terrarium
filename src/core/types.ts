@@ -209,6 +209,11 @@ export interface ProjectState {
    * and game-design-docs/the-water-cooler/docs/design/scenario_model.md.
    */
   scenarios?: import('./scenario').Scenario[];
+  /**
+   * The reusable drive catalog — structured motivations personas reference by id.
+   * See core/profile.ts (DriveDefinition) and CONTRACT.md.
+   */
+  drives: import('./profile').DriveDefinition[];
   /** The scene canvas — persisted so hand-edits survive reloads. */
   scene?: import('./scene').SceneState;
 }
@@ -222,8 +227,9 @@ export interface ProjectState {
  * v4 added the optional `scenarios` collection (authored run definitions).
  * v5 moved starting beliefs/knowledge out of personas into scenarios (the
  * persona↔scenario boundary); the step strips the legacy persona fields.
+ * v6 added the reusable `drives` catalog; personas now reference drive ids.
  */
-export const CURRENT_SCHEMA_VERSION = 5;
+export const CURRENT_SCHEMA_VERSION = 6;
 
 /** Design-space canvas size. Parts are authored against this; never changes. */
 export const CANVAS = 128;

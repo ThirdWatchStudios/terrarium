@@ -1,6 +1,6 @@
 import type { ProjectState } from './types';
 import { CURRENT_SCHEMA_VERSION } from './types';
-import { DEFAULT_FLOORS, DEFAULT_PROFILES, DEFAULT_PROPS, DEFAULT_SCENARIOS, DEFAULT_STYLE_PRESETS, DEFAULT_WALLS } from '../data/defaults';
+import { DEFAULT_DRIVES, DEFAULT_FLOORS, DEFAULT_PROFILES, DEFAULT_PROPS, DEFAULT_SCENARIOS, DEFAULT_STYLE_PRESETS, DEFAULT_WALLS } from '../data/defaults';
 
 // Re-export so callers can keep importing the version from the migration module.
 export { CURRENT_SCHEMA_VERSION } from './types';
@@ -63,8 +63,36 @@ export function migrateProject(raw: unknown): ProjectState | null {
   // legacy persona fields so saved profiles match the current shape.
   migrateV5(project as ProjectState);
 
+  // v5 → v6: drives became a reusable, structured project catalog. Seed it and
+  // absorb any free-text drive ids existing personas already reference, so no
+  // authored drive is lost when the field becomes an id reference.
+  backfillV6(project as ProjectState);
+
   project.version = CURRENT_SCHEMA_VERSION;
   return project as ProjectState;
+}
+
+/** v6 step: ensure the `drives` catalog exists, seed defaults, absorb referenced ids. */
+function backfillV6(project: ProjectState): void {
+  project.drives ??= [];
+  const present = new Set(project.drives.map((d) => d.id));
+  for (const def of DEFAULT_DRIVES) {
+    if (!present.has(def.id)) {
+      project.drives.push(structuredClone(def));
+      present.add(def.id);
+    }
+  }
+  // Any drive id a persona still references but the catalog lacks (a custom one
+  // typed before drives were structured) is added as a minimal entry, never dropped.
+  for (const profile of project.profiles ?? []) {
+    const ids = [profile.drives.primary, profile.drives.secondary, ...profile.drives.objectives.map((o) => o.sourceDrive)];
+    for (const id of ids) {
+      if (id && !present.has(id)) {
+        project.drives.push({ id, label: id, description: '', category: 'status', amplifiesNeeds: [] });
+        present.add(id);
+      }
+    }
+  }
 }
 
 /** v5 step: drop persona-resident startingBeliefs/startingKnowledge (now scenario-owned). */

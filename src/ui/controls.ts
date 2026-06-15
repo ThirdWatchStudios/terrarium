@@ -33,10 +33,14 @@ export function textField(label: string, value: string, onInput: (v: string) => 
 }
 
 export function textArea(label: string, value: string, onInput: (v: string) => void): HTMLElement {
-  return labeled(
-    label,
-    el('textarea', { rows: 2, value, onInput: (e: Event) => onInput((e.target as HTMLTextAreaElement).value) }),
-  );
+  // A textarea's text is its `.value` property, not a `value` attribute — set it
+  // directly so pre-filled content (a bio, a description) actually shows.
+  const ta = el('textarea', {
+    rows: 2,
+    onInput: (e: Event) => onInput((e.target as HTMLTextAreaElement).value),
+  }) as HTMLTextAreaElement;
+  ta.value = value;
+  return labeled(label, ta);
 }
 
 /** Optional integer field — empty clears it (for partial/optional values). */

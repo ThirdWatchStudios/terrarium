@@ -639,6 +639,8 @@ export async function exportAll(
 
   onProgress?.(total, total, 'writing');
   await write('project.json', JSON.stringify(project, null, 2));
+  // The reusable drive catalog personas reference by id (see CONTRACT.md).
+  await write('drives.json', JSON.stringify(project.drives, null, 2));
   if (project.scene) {
     await write('office-layout.json', JSON.stringify(sceneToLayoutJson(project.scene, project), null, 2));
   }

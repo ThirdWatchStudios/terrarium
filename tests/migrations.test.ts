@@ -51,6 +51,19 @@ describe('migrateProject', () => {
     expect(migrated.version).toBe(CURRENT_SCHEMA_VERSION);
   });
 
+  it('seeds the drive catalog and absorbs persona-referenced drive ids (v6)', () => {
+    const legacy = defaultProject();
+    legacy.version = 5;
+    delete (legacy as { drives?: unknown }).drives; // pre-v6 save had no catalog
+    // A persona referencing a custom drive id not in the default catalog.
+    legacy.profiles![0].drives.primary = 'invent_something_weird';
+    const migrated = migrateProject(legacy)!;
+    expect(migrated.version).toBe(CURRENT_SCHEMA_VERSION);
+    expect(migrated.drives.length).toBeGreaterThan(0);
+    expect(migrated.drives.some((d) => d.id === 'advance_career')).toBe(true); // seeded
+    expect(migrated.drives.some((d) => d.id === 'invent_something_weird')).toBe(true); // absorbed, not lost
+  });
+
   it('refuses a project from a newer schema version', () => {
     const future = { ...defaultProject(), version: CURRENT_SCHEMA_VERSION + 1 };
     expect(migrateProject(future)).toBeNull();

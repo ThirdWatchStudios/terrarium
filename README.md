@@ -125,6 +125,10 @@ https://thirdwatchstudios.github.io/SpriteCharacterCreator/
 
 ## Export format
 
+For the full field-by-field payload shapes, the tool/sim ownership boundary, the
+in-tool derivation formulas, and what the sim is expected to compute, see
+[CONTRACT.md](CONTRACT.md).
+
 **Export all (zip)** produces:
 
 ```
@@ -141,12 +145,14 @@ props/<name>/atlas@{1,2,4}x.json            # projection + placement + pivot
 walls/<name>/tileset@{1,2,4}x.png           # 4x4 sheet, frames keyed mask_0..mask_15
 walls/<name>/atlas@{1,2,4}x.json            # mask bits, frame rects, human names
 floors/<name>/tile@{1,2,4}x.png             # seamless, tileable: true in atlas
+drives.json                                 # reusable drive catalog (id, label, category, amplifiesNeeds); personas reference by id
 office-layout.json                          # current scene grid, props, spawns, named anchors (rooms + per-agent desks)
 scenarios/<id>/scenario.json                # composed run definition (cast refs + locations + truth/info + variants + objective)
 scenarios/<id>/employees.json               # split package: per-agent metadata
 scenarios/<id>/relationships.json           # split package: resolved relationships (persona baseline + scenario overrides)
 scenarios/<id>/beliefs.json                 # split package: starting belief seeds
 scenarios/<id>/knowledge.json               # split package: truth facts + information items + per-agent knowledge
+scenarios/<id>/drives.json                  # split package: the drive catalog personas reference
 scenarios/<id>/interaction-anchors.json     # split package: typed interaction props (printer, water cooler, …)
 scenarios/<id>/office-layout.json           # split package: the office this scenario binds to
 project.json                                # full regenerable project state
