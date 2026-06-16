@@ -6,7 +6,7 @@ import {
   validateScenarioTemplate,
   type ScenarioTemplate,
 } from '../src/core/scenarioTemplate';
-import { THE_OFFICE_ROMANCE } from '../src/data/roleTemplates';
+import { THE_CONTESTED_PROMOTION, THE_OFFICE_ROMANCE } from '../src/data/roleTemplates';
 import { DEFAULT_CAST, DEFAULT_PROFILES } from '../src/data/defaults';
 import { defaultProject } from '../src/data/defaults';
 import { createDefaultProfile, type Relationship } from '../src/core/profile';
@@ -281,6 +281,52 @@ describe('absent / negative roles', () => {
     const issues = validateScenarioTemplate(bad);
     expect(issues.some((i) => i.includes('binds a desk to absent role'))).toBe(true);
     expect(issues.some((i) => i.includes('roleSpawn targets absent role'))).toBe(true);
+  });
+});
+
+describe('The Contested Promotion (templatized promotion_rumor_001)', () => {
+  it('the template is valid', () => {
+    expect(validateScenarioTemplate(THE_CONTESTED_PROMOTION)).toEqual([]);
+  });
+
+  it('casts onto the default four exactly as the bound scenario binds them', () => {
+    const result = castTemplate(THE_CONTESTED_PROMOTION, DEFAULT_PROFILES);
+    expect(result.ok).toBe(true);
+    const role = (id: string) => result.report.assignments.find((a) => a.roleId === id)!.agentId;
+    expect(role('advanced')).toBe('janice');
+    expect(role('passed_over')).toBe('carl');
+    expect(role('amplifier')).toBe('linda');
+    expect(role('authority')).toBe('manager');
+  });
+
+  it('emits a valid scenario equivalent to the prototype', () => {
+    const agentIds = DEFAULT_PROFILES.map((p) => p.agentId);
+    const { scenario } = castTemplate(THE_CONTESTED_PROMOTION, DEFAULT_PROFILES);
+    const s = scenario!;
+    expect(validateScenario(s, { agentIds })).toEqual([]);
+    expect(s.cast.length).toBe(4);
+    // the promotion-driven suspicion spike is a relationship override, rewritten to agent ids.
+    const carl = s.cast.find((c) => c.agentId === 'carl')!;
+    const ov = carl.relationshipOverrides.find((r) => r.targetAgentId === 'janice')!;
+    expect(ov.suspicion).toBe(100);
+    expect(ov.affinity).toBe(-50);
+    // the rumor + the three experiment variants survive the cast.
+    expect(s.informationItems.map((i) => i.informationId)).toContain('rigged_promotion_claim');
+    expect(s.variants.length).toBe(3);
+    expect(s.defaultVariantId).toBe('public_announcement');
+    // truth fact's role refs resolved to agents.
+    expect(s.truthFacts[0].sourceAgentId).toBe('manager');
+    expect(s.truthFacts[0].subjectAgentIds.sort()).toEqual(['janice', 'manager']);
+  });
+
+  it('binds the recipient/skeptic/amplifier desks against a generated office', () => {
+    const project = defaultProject();
+    const office = generateOfficeLayout(project, 6, 1);
+    const anchorIds = computeOfficeAnchors(office.scene, project).map((a) => a.anchorId);
+    const { scenario } = castTemplate(THE_CONTESTED_PROMOTION, DEFAULT_PROFILES, { anchorIds });
+    expect(validateScenario(scenario!, { agentIds: DEFAULT_PROFILES.map((p) => p.agentId), anchorIds })).toEqual([]);
+    const recipientDesk = scenario!.locations.find((l) => l.locationId === 'advanced_desk')!;
+    expect(recipientDesk.bindTo.anchorId).toBe('desk:janice');
   });
 });
 

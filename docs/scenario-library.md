@@ -29,7 +29,7 @@ fleshed out when each is authored.
 - **The Work-Spouse Jealousy** — `spouseA`/`spouseB`(req, work-spouse type), `interloper`(req) → possessiveness, insecurity · *thirdParty on a non-romantic bond.*
 
 ## Family `rumor` *(info/belief — the proven prototype path)*
-- **The Contested Promotion** ▶ — `advanced`(req, high ambition), `passed_over`(req, rival→advanced, ambition+grudgeHolding), `amplifier`(opt, gossip/low discretion), `authority`(req) → resentment, paranoia, vindication · *templatizes the bound `promotion_rumor_001`; the bridge case.*
+- **The Contested Promotion** **BUILT** (`the_contested_promotion`) — `advanced`(req, ambition≥70 + integrity≥60), `passed_over`(req, ambition≥70 + grudgeHolding≥55 + affinity≤0→advanced), `amplifier`(opt, discretion≤35), `authority`(req, discretion≥75 + integrity≥70) → resentment, paranoia, vindication · *templatizes the bound `promotion_rumor_001`; casts onto the default four as janice/carl/linda/manager.*
 - **The Secret** ▶ — `subject`(req, high recognition/security need), `keeper`(req, high familiarity→subject), `tempted_leaker`(opt, gossip, low affinity→subject) → dread, shame, exposure, relief.
 - **The Layoff Scare** — `vulnerable`(req, high security need, low influence), `opportunist`(opt, settle_score/advance, low integrity), `authority`(req) → fear, paranoia, self-preservation.
 - **The Open Secret** ★ — `subject`(req, the last to know), `knowers`(aggregate: everyone else holds it) → dread, humiliation, pity, complicity · *inverts propagation.*
@@ -121,7 +121,7 @@ fleshed out when each is authored.
 # Recommended build-first wave (▶)
 
 All ready now; spans families, both primary engines, and showcases the new model features:
-1. **The Contested Promotion** (`rumor`) — templatize the bound scenario; the decoupling worked example.
+1. ~~**The Contested Promotion** (`rumor`)~~ — **BUILT** (`the_contested_promotion`); the decoupling worked example.
 2. **The Love Triangle** (`attraction`) — the `thirdParty` jealousy coupling.
 3. **The Outsider** (`belonging`) — the new `aggregate` precondition.
 4. **The Scapegoat** (`blame`) — the new `absent` role.
