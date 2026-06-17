@@ -397,6 +397,13 @@ export const DEFAULT_PROPS: PropInstance[] = [
     params: { seats: 3 },
     palette: { primary: '#534AB7', secondary: '#3A3490', accent: '#EF9F27' },
   },
+  {
+    id: 'prop-break-table',
+    name: 'Break room table',
+    templateId: 'break-table',
+    params: { diameter: 52, stools: 4 },
+    palette: { primary: '#9C6B43', secondary: '#C9B79C', accent: '#D85A30' },
+  },
 ];
 
 export const DEFAULT_WALLS: TileInstance[] = [

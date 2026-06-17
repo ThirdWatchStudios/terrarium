@@ -1026,6 +1026,42 @@ const loungeSeating: PropTemplate = {
   },
 };
 
+const breakTable: PropTemplate = {
+  id: 'break-table',
+  label: 'Break room table',
+  projection: 'plan',
+  params: [
+    { key: 'diameter', label: 'Diameter', min: 40, max: 64, step: 4, default: 52 },
+    { key: 'stools', label: 'Stools', min: 2, max: 4, step: 1, default: 4 },
+  ],
+  build(params) {
+    const d = params.diameter ?? 52;
+    const r = d / 2;
+    const stools = params.stools ?? 4;
+    const ring = r + 12;
+    const shapes: ShapeSpec[] = [];
+    // round stools first so the tabletop overlaps them — the round top + tucked
+    // stools read as a café/lunch table, never as a work desk
+    for (let i = 0; i < stools; i++) {
+      const a = -Math.PI / 2 + (i * 2 * Math.PI) / stools;
+      const sx = CX + Math.cos(a) * ring;
+      const sy = CX + Math.sin(a) * ring;
+      shapes.push(
+        { d: circle(sx, sy, 8), fill: '$secondary' },
+        { d: circle(sx, sy, 4), fill: '#00000018', silhouette: false },
+      );
+    }
+    shapes.push(
+      // round tabletop
+      { d: circle(CX, CX, r), fill: '$primary' },
+      { d: circle(CX, CX, r - 5), fill: '#00000010', silhouette: false },
+      // a napkin/condiment caddy at the centre so it never reads as a monitor desk
+      { d: rr(CX - 5, CX - 6, 10, 12, 2), fill: '$accent', silhouette: false },
+    );
+    return shapes;
+  },
+};
+
 export const PROP_TEMPLATES: PropTemplate[] = [
   waterCooler,
   printer,
@@ -1058,4 +1094,5 @@ export const PROP_TEMPLATES: PropTemplate[] = [
   waterFountain,
   kitchenetteCounter,
   loungeSeating,
+  breakTable,
 ];

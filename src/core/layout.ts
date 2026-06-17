@@ -522,6 +522,49 @@ function isBlocked(scene: SceneState, x: number, y: number): boolean {
   return wallAt(scene, x, y) || entityAt(scene, x, y);
 }
 
+// Cells kept walkable so furniture (and idle coworkers) never plug a doorway.
+// Reset and recomputed per generation; the generator is the sole writer and runs
+// synchronously, so module-level transient state stays deterministic.
+let doorwayClearance = new Set<string>();
+
+function reserved(x: number, y: number): boolean {
+  return doorwayClearance.has(`${x},${y}`);
+}
+
+/**
+ * The doorway throat: each doorway gap plus its non-wall orthogonal neighbours
+ * (the floor tile you step onto on either side). Reserving these keeps a clear
+ * passage so no floor prop or stationary coworker lands in the doorway.
+ */
+function computeDoorwayClearance(scene: SceneState, doorways: Array<{ x: number; y: number }>): Set<string> {
+  const set = new Set<string>();
+  for (const door of doorways) {
+    for (const [dx, dy] of [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1]] as const) {
+      const x = door.x + dx;
+      const y = door.y + dy;
+      if (x < 0 || y < 0 || x >= scene.cols || y >= scene.rows) continue;
+      if (wallAt(scene, x, y)) continue; // walls already block; only floor throats matter
+      set.add(`${x},${y}`);
+    }
+  }
+  return set;
+}
+
+/**
+ * Find a clear column along row `y` nearest `preferX`, skipping walls, occupied
+ * cells, and reserved doorway throats. Used to nudge wall-anchored desks/tables
+ * off a doorway instead of dropping them entirely.
+ */
+function clearAlongRow(scene: SceneState, box: { x0: number; x1: number }, y: number, preferX: number): number {
+  for (let r = 0; r <= box.x1 - box.x0; r++) {
+    for (const x of r === 0 ? [preferX] : [preferX - r, preferX + r]) {
+      if (x < box.x0 || x > box.x1) continue;
+      if (!wallAt(scene, x, y) && !reserved(x, y) && !isBlocked(scene, x, y)) return x;
+    }
+  }
+  return preferX;
+}
+
 function interior(room: RoomSpec): { x0: number; x1: number; y0: number; y1: number } {
   return {
     x0: room.x + 1,
@@ -552,7 +595,7 @@ function findOpenNear(
     for (let dx = -radius; dx <= radius; dx++) {
       const x = clamp(origin.x + dx, box.x0, box.x1);
       const y = clamp(origin.y + dy, box.y0, box.y1);
-      if (!candidates.some((cell) => cell.x === x && cell.y === y) && !isBlocked(scene, x, y)) {
+      if (!candidates.some((cell) => cell.x === x && cell.y === y) && !isBlocked(scene, x, y) && !reserved(x, y)) {
         candidates.push({ x, y });
       }
     }
@@ -583,9 +626,13 @@ function addProp(
     return occupantTemplateId !== 'desk-clutter' && occupantTemplateId !== 'rug';
   });
   if (propPlacement(prop) === 'wall-slot') {
+    // a wall fixture must mount on a wall — never let it float on open floor.
+    // doors are the exception: they sit in the cleared wall gap (a floor cell).
+    if (templateId !== 'door' && !wallAt(scene, x, y)) return;
     if (occupants.some((entity) => entity.kind === 'prop' && project.props.find((p) => p.id === entity.refId)?.templateId === templateId)) return;
   } else {
     if (wallAt(scene, x, y)) return;
+    if (reserved(x, y)) return; // keep doorway throats walkable
     if (!shareable && blockingOccupants.length > 0) return;
     if (occupants.some((entity) => entity.kind === 'character')) return;
     if (shareable && occupants.some((entity) => entity.kind === 'prop' && project.props.find((p) => p.id === entity.refId)?.templateId === templateId)) return;
@@ -631,6 +678,33 @@ function addPropNear(
   if (cell) addProp(scene, project, key, preferredId, templateId, cell.x, cell.y, rotation);
 }
 
+/**
+ * Place an elevation prop flush against a horizontal room wall: the top interior
+ * row first (back wall), falling back to the bottom row, scanning outward from
+ * the preferred column for a clear, unreserved cell. Keeps against-wall fixtures
+ * (supply cabinet, mail station) from drifting into the middle of a corridor.
+ */
+function addAgainstWall(
+  scene: SceneState,
+  project: ProjectState,
+  room: RoomSpec,
+  key: string,
+  preferredId: string,
+  templateId: string,
+  rx: number,
+  rotation: SceneRotation = 0,
+): void {
+  const box = interior(room);
+  const preferX = clamp(Math.round(box.x0 + (box.x1 - box.x0) * rx), box.x0, box.x1);
+  for (const y of [box.y0, box.y1]) {
+    const x = clearAlongRow(scene, box, y, preferX);
+    if (!wallAt(scene, x, y) && !reserved(x, y) && !isBlocked(scene, x, y)) {
+      addProp(scene, project, key, preferredId, templateId, x, y, rotation);
+      return;
+    }
+  }
+}
+
 /** Place a character. Seats (office chairs) are allowed; other props block. */
 function addCharacter(
   scene: SceneState,
@@ -661,7 +735,7 @@ function openCells(scene: SceneState): Array<{ x: number; y: number }> {
   const cells: Array<{ x: number; y: number }> = [];
   for (let y = 1; y < scene.rows - 1; y++) {
     for (let x = 1; x < scene.cols - 1; x++) {
-      if (!isBlocked(scene, x, y)) cells.push({ x, y });
+      if (!isBlocked(scene, x, y) && !reserved(x, y)) cells.push({ x, y });
     }
   }
   return cells;
@@ -738,7 +812,7 @@ function furnishManagerOffice(scene: SceneState, project: ProjectState, room: Ro
   const box = interior(room);
   // desk against the top wall, monitor facing into the room; the chair sits
   // south of the desk, so its backrest stays south (rotation 0), occupant faces north
-  const deskX = clamp(Math.round((box.x0 + box.x1) / 2), box.x0, box.x1);
+  const deskX = clearAlongRow(scene, box, box.y0, clamp(Math.round((box.x0 + box.x1) / 2), box.x0, box.x1));
   addProp(scene, project, 'manager-desk', 'prop-desk', 'desk', deskX, box.y0, 180);
   addProp(scene, project, 'manager-desk-clutter', 'prop-desk-clutter', 'desk-clutter', deskX, box.y0, 180);
   addProp(scene, project, 'manager-chair', 'prop-office-chair', 'office-chair', deskX, box.y0 + 1, 0);
@@ -762,17 +836,13 @@ function furnishBreakRoom(scene: SceneState, project: ProjectState, room: RoomSp
     const [key, preferredId, templateId] = appliances[i];
     addPropNear(scene, project, room, key, preferredId, templateId, slots[i], 0.05, rng);
   }
-  // A lunch table with chairs anchors the open floor below the appliances, so
-  // the room reads as a break area rather than an empty hall. Always present
-  // once there is room for it; chairs flank it when the room is wide enough.
+  // A round lunch table anchors the open floor below the appliances, so the room
+  // reads as a break area rather than an empty hall. Its own stools are part of
+  // the sprite, so no separate chairs. Nudged off any doorway throat.
   if (w >= 2 && h >= 3) {
-    const tx = clamp(Math.round((box.x0 + box.x1) / 2), box.x0 + 1, box.x1 - 1);
     const ty = clamp(box.y0 + Math.round(h * 0.6), box.y0 + 1, box.y1);
-    addProp(scene, project, 'break-table', 'prop-desk', 'desk', tx, ty, 0);
-    if (w >= 4) {
-      addProp(scene, project, 'break-chair-l', 'prop-office-chair', 'office-chair', tx - 1, ty, 90);
-      addProp(scene, project, 'break-chair-r', 'prop-office-chair', 'office-chair', tx + 1, ty, 270);
-    }
+    const tx = clearAlongRow(scene, box, ty, clamp(Math.round((box.x0 + box.x1) / 2), box.x0 + 1, box.x1 - 1));
+    addProp(scene, project, 'break-table', 'prop-break-table', 'break-table', tx, ty, 0);
   }
   if (chance(rng, 0.5)) addPropNear(scene, project, room, 'break-vending', 'prop-vending-machine', 'vending-machine', 0.9, 0.42, rng);
 }
@@ -799,13 +869,13 @@ function furnishCopyRoom(scene: SceneState, project: ProjectState, room: RoomSpe
 function furnishRecordsRoom(scene: SceneState, project: ProjectState, room: RoomSpec, rng: Rng): void {
   addPropNear(scene, project, room, 'records-files-a', 'prop-filing-cabinet', 'filing-cabinet', 0.25, 0.25, rng);
   addPropNear(scene, project, room, 'records-files-b', 'prop-filing-cabinet', 'filing-cabinet', 0.75, 0.25, rng);
-  if (chance(rng, 0.55)) addPropNear(scene, project, room, 'records-badge-reader', 'prop-badge-reader', 'badge-reader', 0.5, 0.85, rng);
+  if (chance(rng, 0.55)) addRoomWallFixture(scene, project, room, rng, 'records-badge-reader', 'prop-badge-reader', 'badge-reader');
 }
 
 function furnishFocusRoom(scene: SceneState, project: ProjectState, room: RoomSpec, rng: Rng): SeatCell | undefined {
   const box = interior(room);
-  const deskX = clamp(Math.round((box.x0 + box.x1) / 2), box.x0, box.x1);
   const deskY = box.y0;
+  const deskX = clearAlongRow(scene, box, deskY, clamp(Math.round((box.x0 + box.x1) / 2), box.x0, box.x1));
   addProp(scene, project, 'focus-desk', 'prop-desk', 'desk', deskX, deskY, 180);
   addProp(scene, project, 'focus-desk-clutter', 'prop-desk-clutter', 'desk-clutter', deskX, deskY, 180);
   addProp(scene, project, 'focus-chair', 'prop-office-chair', 'office-chair', deskX, Math.min(deskY + 1, box.y1), 0);
@@ -879,6 +949,9 @@ function buildCubicleComb(scene: SceneState, project: ProjectState, room: RoomSp
       }
       // keep doorways in the back wall walkable: no furniture under a gap
       if (doorAt(deskX) || (entryX !== undefined && doorAt(entryX))) continue;
+      // and skip the whole pod if the desk/chair would block a doorway throat
+      // (a side/front entrance), so no coworker gets seated in a doorway
+      if (reserved(deskX, comb.deskY) || reserved(deskX, comb.chairY)) continue;
       if (chance(rng, 0.12)) continue; // the vacant cubicle sells the office
       const rotation: SceneRotation = comb.flipped ? 180 : 0;
       addProp(scene, project, `cubicle-desk-${comb.deskY}-${p}`, 'prop-desk', 'desk', deskX, comb.deskY, rotation);
@@ -904,12 +977,14 @@ function buildCubicleComb(scene: SceneState, project: ProjectState, room: RoomSp
 }
 
 function furnishHallway(scene: SceneState, project: ProjectState, room: RoomSpec, rng: Rng): void {
-  addPropNear(scene, project, room, 'hall-badge-reader', 'prop-badge-reader', 'badge-reader', 0.8, 0.5, rng);
+  // badge readers mount on a wall — never free-standing in the corridor
+  addRoomWallFixture(scene, project, room, rng, 'hall-badge-reader', 'prop-badge-reader', 'badge-reader');
   // Supply cabinet + mail station are the visible counterparts of the sim's
   // hallway interaction anchors (anchor:hallway:supply_cabinet / :mail_station),
   // so place them unconditionally — the anchors must always resolve to a prop.
-  addPropNear(scene, project, room, 'hall-supply-cabinet', 'prop-supply-cabinet', 'supply-cabinet', 0.3, 0.1, rng);
-  addPropNear(scene, project, room, 'hall-mail-station', 'prop-mail-station', 'mail-station', 0.55, 0.1, rng);
+  // Snap them flush against a wall so they don't float mid-corridor.
+  addAgainstWall(scene, project, room, 'hall-supply-cabinet', 'prop-supply-cabinet', 'supply-cabinet', 0.3);
+  addAgainstWall(scene, project, room, 'hall-mail-station', 'prop-mail-station', 'mail-station', 0.6);
   if (chance(rng, 0.5)) addPropNear(scene, project, room, 'hall-plant', 'prop-office-plant', 'office-plant', 0.1, 0.5, rng);
 }
 
@@ -956,6 +1031,9 @@ export function generateOfficeLayout(
 
   drawRoomWalls(scene, rooms, officeWall, glassWall);
   const doorways = clearDoorways(scene, template);
+  // reserve the doorway throats before anything is furnished, so no desk or
+  // idle coworker ends up plugging a doorway
+  doorwayClearance = computeDoorwayClearance(scene, doorways);
   decorateDoorways(scene, project, doorways, rng);
   decorateRoomWalls(scene, project, rooms, rng);
 
