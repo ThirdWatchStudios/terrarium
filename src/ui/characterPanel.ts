@@ -2,6 +2,7 @@ import type { PaletteToken } from '../core/types';
 import { MOODS } from '../core/types';
 import { ACTIVITIES } from '../parts/activities';
 import { composeCharacter } from '../core/compositor';
+import { composeConversation } from '../core/conversation';
 import {
   characterAtlas,
   characterLayerManifest,
@@ -17,7 +18,7 @@ import { partsForSlot } from '../parts/library';
 import { store } from '../state';
 import { button, clear, el, labeled, select } from './dom';
 import { exportScaleSelect, listItem, paletteGrid, uid } from './controls';
-import { setPreviewSvg } from './renderPreview';
+import { setPreviewSvg, setScenePreviewSvg } from './renderPreview';
 
 const PALETTE_LABELS: Record<PaletteToken, string> = {
   skin: 'Skin',
@@ -124,6 +125,20 @@ export function renderCharacterPreview(container: HTMLElement): void {
     row.append(cell);
   }
   container.append(hero, moodBar, activityBar, badgeToggle, row);
+
+  // Conversation preview: pair the selected character with another so the
+  // linked-bubble connector (the paired half of the interaction system) can be
+  // seen. The sim owns pairing at runtime; this just demonstrates the look.
+  const partner = store.state.characters.find((c) => c.id !== recipe.id);
+  if (partner) {
+    const convWrap = el('div', { className: `conversation-preview checker${pixelated}` });
+    const cw = 320;
+    setScenePreviewSvg(convWrap, composeConversation(recipe, partner, store.state), style, cw, cw * (162 / 256));
+    container.append(
+      el('p', { className: 'hint' }, `Conversation — ${recipe.name} ↔ ${partner.name}`),
+      convWrap,
+    );
+  }
 }
 
 export function renderCharacterControls(container: HTMLElement): void {

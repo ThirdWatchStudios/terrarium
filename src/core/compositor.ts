@@ -317,6 +317,17 @@ export function composeCharacter(
 }
 
 /**
+ * The overhead badge anchor (aboveHead) for a facing, in canvas coords, with x
+ * mirrored for west. Exposed so the conversation renderer can attach its linking
+ * arc to the same point the badges sit at.
+ */
+export function overheadAnchor(facing: Facing | 'west'): { x: number; y: number } {
+  const actual: Facing = facing === 'west' ? 'east' : facing;
+  const a = ANCHORS[actual].aboveHead;
+  return { x: facing === 'west' ? CANVAS - a.x : a.x, y: a.y };
+}
+
+/**
  * Render one activity badge on its own, centered in the canvas (pivot 0.5,0.5).
  * This is the shared-atlas cell: a single character-independent overhead emote
  * the sim blits above any agent. Returns an empty canvas for the blank state.

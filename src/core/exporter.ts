@@ -13,6 +13,7 @@ import {
   layerCellSvg,
 } from './compositor';
 import { ACTIVITIES, ACTIVITY_BADGES } from '../parts/activities';
+import { conversationStyleJson } from './conversation';
 import { sceneToLayoutJson } from './layout';
 import { composeSceneSvg } from './scene';
 import type { EmployeeDefinition } from './employee';
@@ -697,6 +698,9 @@ export async function exportAll(
     await write(`activity-badges-atlas@${scale}x.json`, JSON.stringify(activityBadgesAtlas(style, scale), null, 2));
     tick('activity badges');
   }
+  // Conversation style — the sim draws the connector between paired talking
+  // agents from this (tool owns the look, sim owns pairing + placement).
+  await write('conversation-style.json', JSON.stringify(conversationStyleJson(), null, 2));
 
   onProgress?.(total, total, 'writing');
   await write('project.json', JSON.stringify(project, null, 2));
