@@ -328,14 +328,25 @@ export function overheadAnchor(facing: Facing | 'west'): { x: number; y: number 
 }
 
 /**
- * Render one activity badge on its own, centered in the canvas (pivot 0.5,0.5).
- * This is the shared-atlas cell: a single character-independent overhead emote
- * the sim blits above any agent. Returns an empty canvas for the blank state.
+ * Render one overhead emote on its own, centered in the canvas (pivot 0.5,0.5).
+ * This is the shared-atlas cell: a single character-independent badge the sim
+ * blits above any agent at the aboveHead anchor. Both activity badges and mood
+ * emotes are character-independent `{color, glyph}` bubbles, so they share this.
+ * Returns an empty canvas for a null (no-badge) state.
  */
-export function composeActivityBadge(activity: Activity, pixelSize: number = CANVAS): string {
-  const badge = ACTIVITY_BADGES[activity];
+export function composeOverheadEmote(badge: BadgeSpec | null, pixelSize: number = CANVAS): string {
   const inner = badge ? emoteMarkup(badge, CANVAS / 2, CANVAS / 2) : '';
   return svgWrap(inner, pixelSize);
+}
+
+/** Shared-atlas cell for one activity badge. */
+export function composeActivityBadge(activity: Activity, pixelSize: number = CANVAS): string {
+  return composeOverheadEmote(ACTIVITY_BADGES[activity], pixelSize);
+}
+
+/** Shared-atlas cell for one mood's overhead emote (the bubble, not the face overlay). */
+export function composeMoodEmote(mood: Mood, pixelSize: number = CANVAS): string {
+  return composeOverheadEmote(MOOD_EMOTES[mood], pixelSize);
 }
 
 // ---------------------------------------------------------------------------

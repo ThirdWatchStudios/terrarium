@@ -8,12 +8,14 @@ import {
   composeActivityBadge,
   composeCharacter,
   composeFloorTile,
+  composeMoodEmote,
   composeProp,
   composeWallTile,
   layerCellSvg,
   overheadAnchor,
 } from './compositor';
 import { ACTIVITIES, ACTIVITY_BADGES } from '../parts/activities';
+import { MOOD_EMOTES } from '../parts/moods';
 import { conversationStyleJson } from './conversation';
 import { sceneToLayoutJson } from './layout';
 import { composeSceneSvg } from './scene';
@@ -167,7 +169,10 @@ function moodSheetDesc(recipe: CharacterRecipe, style: StyleSheet, scale: number
   MOODS.forEach((mood, row) => {
     SHEET_FACINGS.forEach((facing, col) => {
       cells.push({
-        svg: composeCharacter(recipe, style, facing, size, mood),
+        // The overhead mood emote is NOT baked here — it ships in the shared
+        // mood-emotes atlas, placed by the sim at aboveHead (same as activity
+        // badges). The sheet carries the per-character face overlay only.
+        svg: composeCharacter(recipe, style, facing, size, mood, { badge: false }),
         dx: col * size,
         dy: row * size,
         dw: size,
@@ -242,6 +247,57 @@ export function activityBadgesAtlas(style: StyleSheet, scale: number) {
       shared: true,
       facingIndependent: true,
       note: 'Selected at runtime by the agent\'s routine activity; unknown ids draw nothing.',
+    },
+  };
+}
+
+/**
+ * Mood emotes: the overhead-bubble half of a mood, as a shared strip — one cell
+ * per mood that has an emote (`normal` has none). Character-independent, exactly
+ * like activity badges; the sim blits the cell above an agent's head at the same
+ * aboveHead anchor. The per-character *face overlay* half stays in the mood sheet.
+ */
+const EMOTED_MOODS = MOODS.filter((m) => MOOD_EMOTES[m]);
+
+function moodEmotesDesc(style: StyleSheet, scale: number): SheetDesc {
+  const size = style.render.baseSize * scale;
+  return {
+    width: size * EMOTED_MOODS.length,
+    height: size,
+    pixelScale: renderScale(style),
+    cells: EMOTED_MOODS.map((mood, i) => ({
+      svg: composeMoodEmote(mood, size),
+      dx: i * size,
+      dy: 0,
+      dw: size,
+      dh: size,
+    })),
+  };
+}
+
+export async function moodEmotesPng(style: StyleSheet, scale: number): Promise<Blob> {
+  return asBlob(defaultRasterizer().rasterizeSheet(moodEmotesDesc(style, scale)));
+}
+
+export function moodEmotesAtlas(style: StyleSheet, scale: number) {
+  const size = style.render.baseSize * scale;
+  const frames: Record<string, { x: number; y: number; w: number; h: number }> = {};
+  EMOTED_MOODS.forEach((mood, i) => {
+    frames[mood] = { x: i * size, y: 0, w: size, h: size };
+  });
+  return {
+    kind: 'mood-emotes' as const,
+    frameSize: size,
+    scale,
+    moods: [...EMOTED_MOODS],
+    frames,
+    pivot: { x: 0.5, y: 0.5 },
+    attach: { anchor: 'aboveHead', normalizedSouth: normalizedAboveHead().south },
+    meta: {
+      generator: 'sprite-character-creator',
+      shared: true,
+      facingIndependent: true,
+      note: 'Overhead mood bubble; no longer baked in the mood sheet. Place above the head, stacks with the activity badge.',
     },
   };
 }
@@ -426,6 +482,10 @@ export function moodAtlas(recipe: CharacterRecipe, style: StyleSheet, scale: num
       generator: 'sprite-character-creator',
       westIsMirroredEast: true,
       northHasNoFace: true,
+      // The overhead mood bubble is no longer baked into these frames; it ships
+      // in the shared mood-emotes atlas, placed by the consumer at aboveHead.
+      emoteBaked: false,
+      overheadEmote: 'mood-emotes-atlas',
     },
   };
 }
@@ -640,7 +700,7 @@ export async function exportAll(
     project.props.length * scales +
     (project.walls?.length ?? 0) * scales +
     (project.floors?.length ?? 0) * scales +
-    scales; // one shared activity-badge atlas per scale
+    scales * 2; // one shared activity-badge + one shared mood-emote atlas per scale
   let done = 0;
   const tick = (label: string) => {
     done += 1;
@@ -720,6 +780,9 @@ export async function exportAll(
     await write(`activity-badges@${scale}x.png`, await png(activityBadgesDesc(style, scale)));
     await write(`activity-badges-atlas@${scale}x.json`, JSON.stringify(activityBadgesAtlas(style, scale), null, 2));
     tick('activity badges');
+    await write(`mood-emotes@${scale}x.png`, await png(moodEmotesDesc(style, scale)));
+    await write(`mood-emotes-atlas@${scale}x.json`, JSON.stringify(moodEmotesAtlas(style, scale), null, 2));
+    tick('mood emotes');
   }
   // Conversation style — the sim draws the connector between paired talking
   // agents from this (tool owns the look, sim owns pairing + placement).

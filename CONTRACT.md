@@ -43,7 +43,7 @@ Coordinate convention: scene grids are row-major `[y][x]`; anchors/spawns carry 
 |---|---|---|---|
 | `<name>-recipe.json` | recipe (verbatim) | character | Visual recipe (§3.1). |
 | `<name>-atlas@Nx.json` + sheet/layer PNGs | `characterAtlas` / `characterLayerManifest` | character | Sprite frames + anchors for the renderer. |
-| `moods@Nx.png` + `moods-atlas@Nx.json` | `moodAtlas` | character | 6 moods × 4 facings; per-character face overlays + overhead emote. Sim selects by behavioral state (§3.9). |
+| `moods@Nx.png` + `moods-atlas@Nx.json` | `moodAtlas` | character | 6 moods × 4 facings; per-character **face overlays** only (the overhead emote is no longer baked here — see mood-emotes). Sim selects by behavioral state (§3.9). |
 | `<agentId>-profile.json` | `serializeProfile` | character | Persona (§3.2). `meta.schema = character_model.md`. |
 | `scenario.json` | `serializeScenario` | scenario | Scenario verbatim + `meta.schema = scenario_model.md` (§3.3). |
 | `employees.json` | `buildScenarioPackage` | scenario | Flattened roster (id, dept, role, tags, spawn). |
@@ -53,6 +53,7 @@ Coordinate convention: scene grids are row-major `[y][x]`; anchors/spawns carry 
 | `drives.json` | `project.drives` (verbatim) | project | Reusable drive catalog personas reference by id (§3.5). Also embedded in each scenario package. |
 | `traits.json` | `project.traits` (verbatim) | project | Reusable trait catalog persona `traitTags` reference by id (§3.6). Also embedded in each scenario package. |
 | `relationshipTypes.json` | `project.relationshipTypes` (verbatim) | project | Reusable relationship-type catalog edges' `relationshipType` reference by id (§3.7). Also embedded in each scenario package. |
+| `mood-emotes@Nx.png` + `mood-emotes-atlas@Nx.json` | `moodEmotesAtlas` | project | One **shared** strip of overhead mood bubbles (character-independent) — the emote half of a mood, split out of the sheet. Sim blits one above an agent keyed off mood (§3.9). |
 | `activity-badges@Nx.png` + `activity-badges-atlas@Nx.json` | `activityBadgesAtlas` | project | One **shared** strip of overhead status badges (character-independent). Sim blits one above an agent keyed off the routine `activity` string (§3.9). |
 | `conversation-style.json` | `conversationStyleJson` | project | Style for the linked-bubble conversation visual; sim draws it between two paired talking agents (§3.9). |
 | `office-layout.json` | `sceneToLayoutJson` | scene | Rooms, floors, walls, props, spawns, anchors, interaction anchors (§3.4). |
@@ -251,11 +252,26 @@ parallel pieces, all following the same split: **the tool ships the vocabulary +
 art; the sim selects which to show and where to place it.** None are stored in a
 recipe. They stack — an agent can be *working* **and** *suspicious* at once.
 
-**Moods** (`moods-atlas@Nx.json`, per character) — 6 emotional states × 4 facings.
-Each frame is keyed `"<mood>_<facing>"` (e.g. `suspicious_south`); north has no
-face but its frame is still emitted so indexing stays uniform. The sim chooses a
-mood from behavioral state and shows that frame. `normal` carries no overhead
-badge so idle crowds stay clean.
+**Moods** are split into two halves with different ownership shapes:
+- **Face overlay** (`moods-atlas@Nx.json`, per character) — eyebrows/mouth painted
+  on the head; depends on the face, so it's per-character. 6 states × 4 facings,
+  keyed `"<mood>_<facing>"`; north has no face but its frame is still emitted so
+  indexing stays uniform. The sim selects a mood from behavioral state and shows
+  that frame.
+- **Overhead emote** (`mood-emotes-atlas@Nx.json`, one **shared** project-level
+  strip) — the bubble above the head. Character-independent, so it ships once and
+  is placed by the sim at `aboveHead` — **structurally identical to an activity
+  badge** (`normal` has no emote, so idle crowds stay clean). One frame per emoted
+  mood, keyed by mood id.
+
+> **Breaking change (full refactor):** the overhead mood emote used to be baked
+> into every `moods@Nx.png` frame; it now lives only in `mood-emotes-atlas`
+> (`moods-atlas.meta.emoteBaked: false` flags this). A consumer that composites
+> from the layer atlas never had the emote at all (it was only ever in the baked
+> sheet) — so splitting it out both *fixes* that gap and unifies overhead emote +
+> activity badge into one shared-sprite mechanism. The sim importer must now
+> composite the shared mood-emote atlas above the head instead of relying on the
+> sheet.
 
 **Activity badges** (`activity-badges-atlas@Nx.json`, one **shared** project-level
 strip) — a character-independent overhead emote per activity. The "working" badge
