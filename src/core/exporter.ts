@@ -1,7 +1,7 @@
 import JSZip from 'jszip';
 import type { CharacterRecipe, ProjectState, PropInstance, StyleSheet, TileInstance } from './types';
 import type { SceneState } from './scene';
-import { MOODS } from './types';
+import { CANVAS, MOODS } from './types';
 import {
   PALETTE_TOKENS,
   characterLayers,
@@ -11,6 +11,7 @@ import {
   composeProp,
   composeWallTile,
   layerCellSvg,
+  overheadAnchor,
 } from './compositor';
 import { ACTIVITIES, ACTIVITY_BADGES } from '../parts/activities';
 import { conversationStyleJson } from './conversation';
@@ -233,6 +234,9 @@ export function activityBadgesAtlas(style: StyleSheet, scale: number) {
     frames,
     // The badge bubble is centered in its cell — anchor it above an agent's head.
     pivot: { x: 0.5, y: 0.5 },
+    // Where to hang the badge on the agent: the per-facing aboveHead anchor in
+    // each character atlas (.anchors.aboveHead). South value inlined for convenience.
+    attach: { anchor: 'aboveHead', normalizedSouth: normalizedAboveHead().south },
     meta: {
       generator: 'sprite-character-creator',
       shared: true,
@@ -301,11 +305,30 @@ export function characterAtlas(recipe: CharacterRecipe, style: StyleSheet, scale
     frames,
     /** Normalized pivot — feet sit near the bottom of the design canvas. */
     pivot: { x: 0.5, y: 0.09 },
+    /**
+     * Normalized attach points (same bottom-left origin as pivot). `aboveHead`
+     * is where the sim hangs a *separate* overhead sprite — the shared activity
+     * badge (§3.9) or a conversation-link endpoint. Moods bake their emote into
+     * the sheet and don't need this; the badge/link are external and do. Uniform
+     * across characters today, but shipped per-character so it stays correct if
+     * proportions ever diverge.
+     */
+    anchors: { aboveHead: normalizedAboveHead() },
     meta: {
       generator: 'sprite-character-creator',
       westIsMirroredEast: true,
     },
   };
+}
+
+/** aboveHead anchor per facing, normalized bottom-left origin (Unity pivot convention). */
+function normalizedAboveHead(): Record<string, { x: number; y: number }> {
+  const out: Record<string, { x: number; y: number }> = {};
+  for (const facing of SHEET_FACINGS) {
+    const a = overheadAnchor(facing);
+    out[facing] = { x: a.x / CANVAS, y: (CANVAS - a.y) / CANVAS };
+  }
+  return out;
 }
 
 /**

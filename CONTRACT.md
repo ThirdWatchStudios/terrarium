@@ -270,8 +270,13 @@ looks identical over anyone, so it ships once, not per character.
   "meta": { "shared": true, "facingIndependent": true }
 }
 ```
-Runtime convention: the sim reads each agent's current routine `activity` string,
-looks up the matching frame, and blits it above the agent's head. The activity
+Runtime convention: the sim reads each agent's current activity, looks up the
+matching frame, and blits it above the agent's head. **Placement:** because the
+badge is a *separate* sprite (unlike a mood emote, which is baked into the
+character sheet), the sim needs to know where the head is — the character
+`atlas@Nx.json` now ships `anchors.aboveHead` (per facing, normalized, same
+bottom-left origin as `pivot`); the activity atlas echoes the south value in
+`attach`. The activity
 string stays **free-text, sim-owned** (§1) — the badged set is the *recommended*
 vocabulary, not a closed enum; an `activity` with no frame simply draws no badge
 (fallback+log, §7). The blank state (`none`) has no frame by design.
