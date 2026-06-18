@@ -19,6 +19,7 @@ pin down what data we must capture here so the sim has what it needs.
 | Concern | Owner | Notes |
 |---|---|---|
 | Visual recipe, sprite atlas, layout art | **Tool** | Authored + rendered + exported. |
+| Status & interaction visuals (moods, activity badges, conversation style) | **Tool** | Tool owns the *vocabulary + art*; the sim *selects + places* at runtime — moods by behavioral state, activity badges by routine `activity`, the conversation connector by its own agent pairing (§3.9). None are baked into recipes. |
 | Personality spine (OCEAN, game axes) | **Tool** | Authored. |
 | Derived personality fields (temper, grudge-holding, reaction tendencies, volatility) | **Tool** | Computed here — see §4. The sim consumes the numbers; it does not re-derive them. |
 | Needs, preferences, skills, baseline relationships, routine, formative events | **Tool** | Authored / exported. Mostly inert metadata here (not computed on). |
@@ -42,6 +43,7 @@ Coordinate convention: scene grids are row-major `[y][x]`; anchors/spawns carry 
 |---|---|---|---|
 | `<name>-recipe.json` | recipe (verbatim) | character | Visual recipe (§3.1). |
 | `<name>-atlas@Nx.json` + sheet/layer PNGs | `characterAtlas` / `characterLayerManifest` | character | Sprite frames + anchors for the renderer. |
+| `moods@Nx.png` + `moods-atlas@Nx.json` | `moodAtlas` | character | 6 moods × 4 facings; per-character face overlays + overhead emote. Sim selects by behavioral state (§3.9). |
 | `<agentId>-profile.json` | `serializeProfile` | character | Persona (§3.2). `meta.schema = character_model.md`. |
 | `scenario.json` | `serializeScenario` | scenario | Scenario verbatim + `meta.schema = scenario_model.md` (§3.3). |
 | `employees.json` | `buildScenarioPackage` | scenario | Flattened roster (id, dept, role, tags, spawn). |
@@ -51,6 +53,8 @@ Coordinate convention: scene grids are row-major `[y][x]`; anchors/spawns carry 
 | `drives.json` | `project.drives` (verbatim) | project | Reusable drive catalog personas reference by id (§3.5). Also embedded in each scenario package. |
 | `traits.json` | `project.traits` (verbatim) | project | Reusable trait catalog persona `traitTags` reference by id (§3.6). Also embedded in each scenario package. |
 | `relationshipTypes.json` | `project.relationshipTypes` (verbatim) | project | Reusable relationship-type catalog edges' `relationshipType` reference by id (§3.7). Also embedded in each scenario package. |
+| `activity-badges@Nx.png` + `activity-badges-atlas@Nx.json` | `activityBadgesAtlas` | project | One **shared** strip of overhead status badges (character-independent). Sim blits one above an agent keyed off the routine `activity` string (§3.9). |
+| `conversation-style.json` | `conversationStyleJson` | project | Style for the linked-bubble conversation visual; sim draws it between two paired talking agents (§3.9). |
 | `office-layout.json` | `sceneToLayoutJson` | scene | Rooms, floors, walls, props, spawns, anchors, interaction anchors (§3.4). |
 | `interaction-anchors.json` | `computeInteractionAnchors` | scene | Interaction points derived from placed props. |
 
@@ -240,6 +244,57 @@ grouping). Both are tool-side authoring concerns; the emitted bound `scenario.js
 unaffected (an absent role simply contributes no cast member, only the references it's
 named in).
 
+### 3.9 Visual interaction system — moods, activity badges, conversation style
+
+The runtime layer that shows *what an agent is doing where it stopped*. Three
+parallel pieces, all following the same split: **the tool ships the vocabulary +
+art; the sim selects which to show and where to place it.** None are stored in a
+recipe. They stack — an agent can be *working* **and** *suspicious* at once.
+
+**Moods** (`moods-atlas@Nx.json`, per character) — 6 emotional states × 4 facings.
+Each frame is keyed `"<mood>_<facing>"` (e.g. `suspicious_south`); north has no
+face but its frame is still emitted so indexing stays uniform. The sim chooses a
+mood from behavioral state and shows that frame. `normal` carries no overhead
+badge so idle crowds stay clean.
+
+**Activity badges** (`activity-badges-atlas@Nx.json`, one **shared** project-level
+strip) — a character-independent overhead emote per activity. The "working" badge
+looks identical over anyone, so it ships once, not per character.
+```jsonc
+{
+  "kind": "activity-badges",
+  "frameSize": 256, "scale": 2,
+  "activities": ["work","talking","meeting","break","lunch","idle","walk","monitoring"],
+  "frames": { "work": { "x": 0, "y": 0, "w": 256, "h": 256 }, "...": {} },
+  "pivot": { "x": 0.5, "y": 0.5 },               // badge bubble center
+  "meta": { "shared": true, "facingIndependent": true }
+}
+```
+Runtime convention: the sim reads each agent's current routine `activity` string,
+looks up the matching frame, and blits it above the agent's head. The activity
+string stays **free-text, sim-owned** (§1) — the badged set is the *recommended*
+vocabulary, not a closed enum; an `activity` with no frame simply draws no badge
+(fallback+log, §7). The blank state (`none`) has no frame by design.
+
+**Conversation style** (`conversation-style.json`, one project-level file) — the
+look of a 1:1 conversation. The connector is drawn between two **live** world
+positions, so the tool can't author the instance, only the style.
+```jsonc
+{
+  "kind": "conversation-style",
+  "style": "linked-bubbles",
+  "badge": "talking",                            // activity badge shown on each conversant
+  "anchor": "aboveHead",                         // per-agent attach point for badge + link
+  "link": { "kind": "dotted-arc", "color": "#46C07A", "width": 2.4, "dash": "0.5 5", "bow": 24 }
+}
+```
+Runtime convention: the sim **owns the pairing** (it already pairs agents for
+water-cooler gossip). For each pair it shows `badge` on both agents and draws
+`link` between their `anchor` points (the arc bows up `bow` canvas units over the
+two badges). Group chats (N>2) generalize the same connector across all members.
+The tool provides style + the reused `talking` badge; the sim provides pairing +
+placement.
+
 ---
 
 ## 4. Formulas computed **in the tool** (authoritative)
@@ -309,7 +364,7 @@ Things the sim will likely need that the tool does **not** capture yet — decid
 
 1. ~~Drive semantics location~~ — **Resolved:** drives are a tool-authored structured catalog with a `amplifiesNeeds` coupling (§3.5/§5.1). Sub-question ~~per-drive reaction biases~~ — **Resolved (sim, 2026-06-15):** no per-drive reaction biases are authored; reaction shaping comes from trait + relationship-type `biasesReactions` only (need coupling is enough). See `persona_consumption_model.md`.
 2. ~~KPI/objective evaluators~~ — **Resolved (2026-06-15):** `kpi` stays **free-form**. The sim keeps a registry of implemented evaluators (fallback+log on unknown, same discipline as drives/traits); the tool surfaces an authoring-time **"unknown KPI" warning** when a `kpi` id has no sim evaluator (non-breaking, like drive/trait autocomplete). No closed enum, no lockstep release. See `persona_consumption_model.md` Layer 7.
-3. **Location/activity vocabularies** — `routine[].locationId/activity` and scenario `locationId`s are free-text; the sim owns the real set. Do we want the tool to validate routine `locationId`s against the scenario's declared locations?
+3. **Location/activity vocabularies** — `routine[].locationId/activity` and scenario `locationId`s are free-text; the sim owns the real set. `activity` now also drives the overhead **activity badge** (§3.9): the badged set (`work/talking/meeting/break/lunch/idle/walk/monitoring`) is the recommended vocabulary, fed from the same list as routine autocomplete so the two can't drift, but still free-text with fallback (an unbadged activity just draws no badge). Open: do we want the tool to validate routine `locationId`s against the scenario's declared locations?
 4. ~~Time model~~ — **Resolved (sim, 2026-06-15):** the sim owns time via the Epic 20 compressed office-day clock; routine `"HH:MM"` maps onto it and needs deplete per step. The tool still does not model time — and does not need to. See `persona_consumption_model.md` Layer 1.
 5. ~~Need ↔ drive coupling~~ — **Resolved:** it is tool data — `drives.json[].amplifiesNeeds` (§3.5). The activity→need *replenishment* map (a different mapping) is **sim-coded**, not exported (decided 2026-06-15).
 
@@ -317,7 +372,7 @@ Things the sim will likely need that the tool does **not** capture yet — decid
 
 ## 7. Compatibility rules
 
-- **Adding** a suggestion to a free-text vocabulary (drive, trait tag, KPI, location) is **non-breaking** — it only affects authoring autocomplete, never validation or export shape.
+- **Adding** a suggestion to a free-text vocabulary (drive, trait tag, KPI, location, activity) is **non-breaking** — it only affects authoring autocomplete, never validation or export shape. **Adding an activity badge** is likewise non-breaking: a new shared-atlas cell the sim shows for that `activity` or ignores (§3.9).
 - **Version gating:** `profile.json` and `scenario.json` carry `meta.schemaVersion` (currently **9**, the project schema version). The sim version-gates on these — `scenario.json` gates a whole scenario package (the bundled `drives.json`/`traits.json` are resolved within that already-versioned context); `profile.json` gates the per-character visual-import path. Bare-array catalogs are intentionally unversioned — they never travel without a versioned `scenario.json` or `project.json`.
 - **Renaming/removing a field** in §3 **is** breaking — bump `CURRENT_SCHEMA_VERSION` (which flows into `meta.schemaVersion`), add a migration step, and update the sim loader.
 - The sim should **fallback + log**, never hard-fail, on an unrecognized free-text id (drive, KPI, activity). That tolerance is what lets the tool ship a richer vocabulary without lockstep sim releases.
