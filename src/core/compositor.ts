@@ -13,8 +13,9 @@ import type { Mood, TileInstance } from './types';
 import { CANVAS, MOODS } from './types';
 import { circle, ellipse } from './geometry';
 import { getPart } from '../parts/library';
-import type { MoodEmote } from '../parts/moods';
 import { MOOD_EMOTES, MOOD_OVERLAYS } from '../parts/moods';
+import type { Activity } from '../parts/activities';
+import { ACTIVITY_BADGES } from '../parts/activities';
 import { PROP_TEMPLATES } from '../props/templates';
 import { FLOOR_TEMPLATES, WALL_TEMPLATES } from '../tiles/templates';
 
@@ -227,12 +228,21 @@ const BADGE_SCALE = 1.6;
 const BADGE_TOP_MARGIN = 2;
 
 /**
- * The overhead emote badge: a thought-bubble holding the mood glyph. Drawn in
- * canvas coords, undistorted by the body/head group transforms, so it reads
- * crisply at any zoom, and scaled up (BADGE_SCALE) for legibility everywhere.
- * Glyph fills/strokes are literal colors, so the resolver is the identity.
+ * A color + glyph pair drawn on the overhead bubble. Both mood emotes and
+ * activity badges share this shape, so the same renderer draws either.
  */
-function emoteMarkup(emote: MoodEmote, ax: number, ay: number): string {
+interface BadgeSpec {
+  color: string;
+  glyph: ShapeSpec[];
+}
+
+/**
+ * The overhead emote badge: a thought-bubble holding the glyph. Drawn in canvas
+ * coords, undistorted by the body/head group transforms, so it reads crisply at
+ * any zoom, and scaled up (BADGE_SCALE) for legibility everywhere. Glyph
+ * fills/strokes are literal colors, so the resolver is the identity.
+ */
+function emoteMarkup(emote: BadgeSpec, ax: number, ay: number): string {
   const identity: ResolveToken = (ref) => ref;
   // Center the bubble at the anchor, but push it down just enough that the
   // scaled top edge clears the canvas top. The badge grows mostly downward
@@ -272,7 +282,7 @@ export function composeCharacter(
   facing: Facing | 'west',
   pixelSize?: number,
   mood: Mood = 'normal',
-  opts: { badge?: boolean } = {},
+  opts: { badge?: boolean; activity?: Activity } = {},
 ): string {
   const actual: Facing = facing === 'west' ? 'east' : facing;
   const placed = placeParts(recipe, actual, mood);
@@ -280,17 +290,41 @@ export function composeCharacter(
   if (facing === 'west') {
     inner = `<g transform="translate(${CANVAS} 0) scale(-1 1)">${inner}</g>`;
   }
-  // The badge sits outside the mirror so its glyph stays upright; mirror only
-  // its anchor x so it tracks the head. Facing-independent, drawn above all.
-  const emote = MOOD_EMOTES[mood];
-  if ((opts.badge ?? true) && emote) {
+  // Overhead badges sit outside the mirror so their glyphs stay upright; only
+  // the anchor x is mirrored so they track the head. Facing-independent, drawn
+  // above all. An agent can be working *and* suspicious at once, so a mood emote
+  // and an activity badge can both show — when they do, split them left/right of
+  // the head so they don't overlap (the sim owns final placement at runtime;
+  // this is the tool's preview convention).
+  if (opts.badge ?? true) {
     const a = ANCHORS[actual].aboveHead;
-    inner += emoteMarkup(emote, facing === 'west' ? CANVAS - a.x : a.x, a.y);
+    const ax = facing === 'west' ? CANVAS - a.x : a.x;
+    const emote = MOOD_EMOTES[mood];
+    const activity = opts.activity && opts.activity !== 'none' ? ACTIVITY_BADGES[opts.activity] : null;
+    if (emote && activity) {
+      inner += emoteMarkup(activity, ax - 15, a.y);
+      inner += emoteMarkup(emote, ax + 15, a.y);
+    } else if (emote) {
+      inner += emoteMarkup(emote, ax, a.y);
+    } else if (activity) {
+      inner += emoteMarkup(activity, ax, a.y);
+    }
   }
   // Contact shadow at the feet, painted first so it sits under the figure. It's
   // centered on the canvas, so the west mirror leaves it untouched.
   const shadow = contactShadow(CANVAS / 2, 113, 16, 4.5, style);
   return svgWrap(shadow + inner, pixelSize ?? style.render.baseSize);
+}
+
+/**
+ * Render one activity badge on its own, centered in the canvas (pivot 0.5,0.5).
+ * This is the shared-atlas cell: a single character-independent overhead emote
+ * the sim blits above any agent. Returns an empty canvas for the blank state.
+ */
+export function composeActivityBadge(activity: Activity, pixelSize: number = CANVAS): string {
+  const badge = ACTIVITY_BADGES[activity];
+  const inner = badge ? emoteMarkup(badge, CANVAS / 2, CANVAS / 2) : '';
+  return svgWrap(inner, pixelSize);
 }
 
 // ---------------------------------------------------------------------------

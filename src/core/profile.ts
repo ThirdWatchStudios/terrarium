@@ -23,6 +23,7 @@
 import type { CharacterRecipe } from './types';
 import type { Mood } from './types';
 import { CURRENT_SCHEMA_VERSION } from './types';
+import { ACTIVITIES } from '../parts/activities';
 
 // --- scale helpers ----------------------------------------------------------
 
@@ -379,8 +380,12 @@ export const LOCATION_SUGGESTIONS = [
   'reception',
 ];
 
-/** Suggested routine activities (free text). */
-export const ACTIVITY_SUGGESTIONS = ['work', 'break', 'meeting', 'talking', 'idle', 'lunch'];
+/**
+ * Suggested routine activities (still free text — the sim owns meaning). Derived
+ * from the activity-badge vocabulary so an authored routine and the overhead
+ * badge it gets in the sim can't drift apart. 'none' is the blank/no-badge state.
+ */
+export const ACTIVITY_SUGGESTIONS = ACTIVITIES.filter((a) => a !== 'none');
 
 // --- identity & temperament -------------------------------------------------
 

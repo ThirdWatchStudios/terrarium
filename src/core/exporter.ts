@@ -5,12 +5,14 @@ import { MOODS } from './types';
 import {
   PALETTE_TOKENS,
   characterLayers,
+  composeActivityBadge,
   composeCharacter,
   composeFloorTile,
   composeProp,
   composeWallTile,
   layerCellSvg,
 } from './compositor';
+import { ACTIVITIES, ACTIVITY_BADGES } from '../parts/activities';
 import { sceneToLayoutJson } from './layout';
 import { composeSceneSvg } from './scene';
 import type { EmployeeDefinition } from './employee';
@@ -187,6 +189,56 @@ function layerSheetDesc(recipe: CharacterRecipe, style: StyleSheet, scale: numbe
   });
   // Layer sheets never pixelate (re-tintable masks must stay crisp/exact).
   return { width: size * SHEET_FACINGS.length, height: size * Math.max(1, layers.length), pixelScale: 1, cells };
+}
+
+/**
+ * Activity badges: a single shared strip, one cell per activity that has a
+ * badge (the blank 'none' state is omitted). Character-independent — the sim
+ * blits the matching cell above any agent keyed off its routine `activity`.
+ */
+const BADGED_ACTIVITIES = ACTIVITIES.filter((a) => ACTIVITY_BADGES[a]);
+
+function activityBadgesDesc(style: StyleSheet, scale: number): SheetDesc {
+  const size = style.render.baseSize * scale;
+  return {
+    width: size * BADGED_ACTIVITIES.length,
+    height: size,
+    pixelScale: renderScale(style),
+    cells: BADGED_ACTIVITIES.map((activity, i) => ({
+      svg: composeActivityBadge(activity, size),
+      dx: i * size,
+      dy: 0,
+      dw: size,
+      dh: size,
+    })),
+  };
+}
+
+export async function activityBadgesPng(style: StyleSheet, scale: number): Promise<Blob> {
+  return asBlob(defaultRasterizer().rasterizeSheet(activityBadgesDesc(style, scale)));
+}
+
+export function activityBadgesAtlas(style: StyleSheet, scale: number) {
+  const size = style.render.baseSize * scale;
+  const frames: Record<string, { x: number; y: number; w: number; h: number }> = {};
+  BADGED_ACTIVITIES.forEach((activity, i) => {
+    frames[activity] = { x: i * size, y: 0, w: size, h: size };
+  });
+  return {
+    kind: 'activity-badges' as const,
+    frameSize: size,
+    scale,
+    activities: [...BADGED_ACTIVITIES],
+    frames,
+    // The badge bubble is centered in its cell — anchor it above an agent's head.
+    pivot: { x: 0.5, y: 0.5 },
+    meta: {
+      generator: 'sprite-character-creator',
+      shared: true,
+      facingIndependent: true,
+      note: 'Selected at runtime by the agent\'s routine activity; unknown ids draw nothing.',
+    },
+  };
 }
 
 function wallTilesetDesc(wall: TileInstance, style: StyleSheet, scale: number): SheetDesc {
@@ -563,7 +615,8 @@ export async function exportAll(
     project.characters.length * scales * 3 +
     project.props.length * scales +
     (project.walls?.length ?? 0) * scales +
-    (project.floors?.length ?? 0) * scales;
+    (project.floors?.length ?? 0) * scales +
+    scales; // one shared activity-badge atlas per scale
   let done = 0;
   const tick = (label: string) => {
     done += 1;
@@ -635,6 +688,14 @@ export async function exportAll(
       tick(floor.name);
     }
     await write(`${dir}/floor.json`, JSON.stringify(floor, null, 2));
+  }
+
+  // Shared activity-badge atlas (one per scale, character-independent). The sim
+  // blits a cell above any agent keyed off its routine `activity` string.
+  for (const scale of EXPORT_SCALES) {
+    await write(`activity-badges@${scale}x.png`, await png(activityBadgesDesc(style, scale)));
+    await write(`activity-badges-atlas@${scale}x.json`, JSON.stringify(activityBadgesAtlas(style, scale), null, 2));
+    tick('activity badges');
   }
 
   onProgress?.(total, total, 'writing');

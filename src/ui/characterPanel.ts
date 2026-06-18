@@ -1,5 +1,6 @@
 import type { PaletteToken } from '../core/types';
 import { MOODS } from '../core/types';
+import { ACTIVITIES } from '../parts/activities';
 import { composeCharacter } from '../core/compositor';
 import {
   characterAtlas,
@@ -68,11 +69,12 @@ export function renderCharacterPreview(container: HTMLElement): void {
   }
   const style = store.state.style;
   const mood = store.ui.previewMood;
+  const activity = store.ui.previewActivity;
   const badge = store.ui.showMoodBadge;
   const pixelated = style.render.pixelScale > 1 ? ' pixelated-preview' : '';
 
   const hero = el('div', { className: `preview-hero checker${pixelated}` });
-  setPreviewSvg(hero, composeCharacter(recipe, style, 'south', 224, mood, { badge }), style, 224);
+  setPreviewSvg(hero, composeCharacter(recipe, style, 'south', 224, mood, { badge, activity }), style, 224);
 
   const moodBar = el('div', { className: 'mood-bar' });
   for (const m of MOODS) {
@@ -84,6 +86,20 @@ export function renderCharacterPreview(container: HTMLElement): void {
           onClick: () => store.mutateUi((ui) => (ui.previewMood = m)),
         },
         m,
+      ),
+    );
+  }
+
+  const activityBar = el('div', { className: 'mood-bar' });
+  for (const a of ACTIVITIES) {
+    activityBar.append(
+      el(
+        'button',
+        {
+          className: `mood-chip ${a === activity ? 'active' : ''}`,
+          onClick: () => store.mutateUi((ui) => (ui.previewActivity = a)),
+        },
+        a,
       ),
     );
   }
@@ -103,11 +119,11 @@ export function renderCharacterPreview(container: HTMLElement): void {
   for (const facing of ['south', 'east', 'north', 'west'] as const) {
     const cell = el('div', { className: 'facing-cell' });
     const img = el('div', { className: `facing-img checker${pixelated}` });
-    setPreviewSvg(img, composeCharacter(recipe, style, facing, 96, mood, { badge }), style, 96);
+    setPreviewSvg(img, composeCharacter(recipe, style, facing, 96, mood, { badge, activity }), style, 96);
     cell.append(img, el('span', { className: 'facing-label' }, facing));
     row.append(cell);
   }
-  container.append(hero, moodBar, badgeToggle, row);
+  container.append(hero, moodBar, activityBar, badgeToggle, row);
 }
 
 export function renderCharacterControls(container: HTMLElement): void {

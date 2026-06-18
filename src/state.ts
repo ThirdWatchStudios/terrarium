@@ -1,4 +1,5 @@
 import type { Mood, ProjectState } from './core/types';
+import type { Activity } from './parts/activities';
 import type { SceneBrush, SceneFacing } from './core/scene';
 import type { EmployeeDefinition, Population } from './core/employee';
 import { createDefaultScene } from './core/scene';
@@ -30,6 +31,8 @@ class Store {
     exportScale: 2,
     /** Preview-only mood; never stored in recipes. */
     previewMood: 'normal' as Mood,
+    /** Preview-only activity badge; never stored in recipes (shared atlas, sim-selected). */
+    previewActivity: 'none' as Activity,
     /** Show the overhead mood badge in live previews (exports always include it). */
     showMoodBadge: true,
     sceneBrush: 'character' as SceneBrush,
