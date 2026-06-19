@@ -21,6 +21,7 @@ import {
   validateDepartmentCatalog,
   type DepartmentDefinition,
 } from '../core/department';
+import { buildOrgStructure, deriveReportingLines } from '../core/orgStructure';
 
 function catalog(): DepartmentDefinition[] {
   return store.state.departments;
@@ -159,6 +160,14 @@ export function renderDepartmentPreview(container: HTMLElement): void {
   const issues = validateDepartmentCatalog(catalog());
   const unmapped = reportUnmappedDepartments(personaDepartmentNames(), catalog());
 
+  // Derived org structure — the head of this department + any reporting issues.
+  const org = buildOrgStructure(store.state);
+  const profiles = store.state.profiles ?? [];
+  const nameOf = (agentId: string): string =>
+    profiles.find((p) => p.agentId === agentId)?.identity.displayName || agentId;
+  const headId = org.contents.heads[d.id];
+  const reportingIssues = deriveReportingLines(profiles, new Set(profiles.map((p) => p.agentId))).issues;
+
   container.append(
     el(
       'div',
@@ -166,6 +175,8 @@ export function renderDepartmentPreview(container: HTMLElement): void {
       el('div', {}, el('strong', {}, d.label || d.id), ` · ${d.category}`),
       el('div', { className: 'hint' }, `id: ${d.id}`),
     ),
+    el('h3', {}, 'Head'),
+    el('p', { className: 'hint' }, headId ? nameOf(headId) : '—'),
     el('h3', {}, 'Members'),
     el('p', { className: 'hint' }, members.length ? members.join(', ') : '—'),
   );
@@ -180,6 +191,9 @@ export function renderDepartmentPreview(container: HTMLElement): void {
         : el('p', { className: 'hint' }, '✓ catalog valid (unique stable ids)'),
       unmapped.length
         ? el('p', { className: 'hint warn' }, `Unmapped persona departments (add a catalog entry to map them): ${unmapped.join(', ')}`)
+        : null,
+      reportingIssues.length
+        ? el('p', { className: 'hint warn' }, `⚠ Reporting: ${reportingIssues.join(' ')}`)
         : null,
     ),
   );

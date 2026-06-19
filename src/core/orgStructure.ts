@@ -1,21 +1,37 @@
 /**
- * The org-structure export artifact (Epic 2, F2.2) — `org-structure.json`, the
- * loadable shape the sim renders as a known-structure, fogged-contents org chart.
+ * The org-structure export artifact (Epic 2, F2.2 + F2.3) — `org-structure.json`,
+ * the loadable shape the sim renders as a known-structure, fogged-contents org
+ * chart.
  *
  * The load-bearing idea (S2.2.2) is a clean **structure / contents split**:
  *   - `structure` — what the player always sees: which departments exist, their
  *     labels + categories. The sim can load this alone to draw the chart.
  *   - `contents` — what the sim fogs until a wing is reached: who is inside each
- *     department (members by agentId). Reporting lines / ties join here in F2.3.
+ *     department (members), the reporting lines, and the department heads.
  *
- * It is **derived**, not stored — the company cascade (Epic 0 F0.3) populates the
- * same department catalog + personas this reads, so a generated company yields a
- * valid org structure with no extra authoring. Membership is resolved from each
- * persona's `department` via the F2.1 catalog mapping (personas still hold free
- * text until the F3.1 id-rewrite; unresolved ones land in `unassigned`).
+ * **Reporting lines are DERIVED, not authored (F2.3 decision).** The source of
+ * truth is the existing `manager` / `direct-report` relationship edges (§3.7) —
+ * no parallel authoring surface. `manager` means *the holder reports to the
+ * target*; `direct-report` means *the target reports to the holder*. The
+ * department **head** is the topmost member (one with no manager inside the
+ * department), seniority-tiebroken — so every populated department resolves a
+ * head even before any reporting edge is authored (the company cascade or the
+ * author can add edges to sharpen it).
+ *
+ * The artifact is derived, not stored — the company cascade (Epic 0 F0.3)
+ * populates the same catalog + personas this reads. Membership resolves each
+ * persona's free-text `department` via the F2.1 catalog mapping (the id-rewrite
+ * is F3.1); unresolved personas land in `unassigned`.
  */
 import type { ProjectState } from './types';
-import { mapDepartmentNameToId } from './department';
+import { SENIORITY, type CharacterProfile } from './profile';
+import { mapDepartmentNameToId, type DepartmentDefinition } from './department';
+
+/** A derived reporting edge: `reportAgentId` reports to `managerAgentId`. */
+export interface ReportingLine {
+  managerAgentId: string;
+  reportAgentId: string;
+}
 
 /** The visible chart structure — safe to load without the member roster. */
 export interface OrgStructureVisible {
@@ -28,20 +44,97 @@ export interface OrgStructureContents {
   members: Record<string, string[]>;
   /** Personas whose `department` resolves to no catalog id (or is blank). */
   unassigned: string[];
+  /** Derived manager→report edges (from the manager/direct-report relationship types). */
+  reportingLines: ReportingLine[];
+  /** The head agentId per department id (null when the department has no members). */
+  heads: Record<string, string | null>;
 }
 
 export interface OrgStructureJson {
   structure: OrgStructureVisible;
   contents: OrgStructureContents;
-  meta: { generator: string; schema: string; departmentCount: number; memberCount: number };
+  meta: { generator: string; schema: string; departmentCount: number; memberCount: number; reportingLineCount: number };
+}
+
+/** Seniority rank (intern < junior < senior < lead < manager); unknown → 0. */
+function seniorityRank(s: string | undefined): number {
+  const i = (SENIORITY as readonly string[]).indexOf(s ?? '');
+  return i < 0 ? 0 : i;
+}
+
+/**
+ * Derive reporting lines from the `manager` / `direct-report` relationship edges
+ * (the F2.3 source of truth). Deterministic (profile order; first claim wins per
+ * report). Flags a report with a conflicting or unresolvable manager (S2.3.2).
+ */
+export function deriveReportingLines(
+  profiles: CharacterProfile[],
+  knownAgentIds: Set<string>,
+): { lines: ReportingLine[]; issues: string[] } {
+  const managerOf = new Map<string, string>(); // report → manager (first claim wins)
+  const issues: string[] = [];
+
+  const claim = (report: string, manager: string, via: string): void => {
+    if (report === manager) {
+      issues.push(`"${report}" reports to itself (via ${via}).`);
+      return;
+    }
+    const existing = managerOf.get(report);
+    if (existing === undefined) managerOf.set(report, manager);
+    else if (existing !== manager) issues.push(`"${report}" has conflicting managers "${existing}" and "${manager}" (via ${via}).`);
+  };
+
+  for (const p of profiles) {
+    for (const r of p.relationships) {
+      if (r.relationshipType === 'manager') claim(p.agentId, r.targetAgentId, 'manager edge');
+      else if (r.relationshipType === 'direct-report') claim(r.targetAgentId, p.agentId, 'direct-report edge');
+    }
+  }
+
+  const lines: ReportingLine[] = [];
+  for (const [reportAgentId, managerAgentId] of managerOf) {
+    if (!knownAgentIds.has(managerAgentId)) issues.push(`"${reportAgentId}" reports to unknown manager "${managerAgentId}".`);
+    lines.push({ managerAgentId, reportAgentId });
+  }
+  return { lines, issues };
+}
+
+/**
+ * The head of each department: the topmost member — one with no manager *inside*
+ * the same department (reports up/out, or has no manager at all) — seniority-
+ * tiebroken, then member order. Falls back to all members on an all-in-department
+ * cycle. Null only for an empty department.
+ */
+export function deriveDepartmentHeads(
+  departments: DepartmentDefinition[],
+  members: Record<string, string[]>,
+  lines: ReportingLine[],
+  seniorityOf: Map<string, string>,
+): Record<string, string | null> {
+  const managerOf = new Map(lines.map((l) => [l.reportAgentId, l.managerAgentId]));
+  const heads: Record<string, string | null> = {};
+  for (const d of departments) {
+    const mem = members[d.id] ?? [];
+    const memSet = new Set(mem);
+    const candidates = mem.filter((a) => {
+      const m = managerOf.get(a);
+      return m === undefined || !memSet.has(m);
+    });
+    const pool = candidates.length ? candidates : mem;
+    let head: string | null = null;
+    for (const a of pool) {
+      if (head === null || seniorityRank(seniorityOf.get(a)) > seniorityRank(seniorityOf.get(head))) head = a;
+    }
+    heads[d.id] = head;
+  }
+  return heads;
 }
 
 /**
  * Build the org-structure artifact from the project's department catalog +
- * personas. Pure and deterministic (catalog order for departments, profile order
- * for members). Every catalog department appears in both `structure.departments`
- * and `contents.members` (with a possibly-empty roster), so the sim's chart and
- * its fog map are always complete.
+ * personas. Pure and deterministic. Every catalog department appears in both
+ * `structure.departments` and `contents.members` (possibly empty), so the chart
+ * and the fog map are always complete.
  */
 export function buildOrgStructure(project: Pick<ProjectState, 'departments' | 'profiles'>): OrgStructureJson {
   const departments = project.departments ?? [];
@@ -62,16 +155,22 @@ export function buildOrgStructure(project: Pick<ProjectState, 'departments' | 'p
     }
   }
 
+  const knownAgentIds = new Set(profiles.map((p) => p.agentId));
+  const { lines } = deriveReportingLines(profiles, knownAgentIds);
+  const seniorityOf = new Map(profiles.map((p) => [p.agentId, p.identity.seniority]));
+  const heads = deriveDepartmentHeads(departments, members, lines, seniorityOf);
+
   return {
     structure: {
       departments: departments.map((d) => ({ id: d.id, label: d.label, category: d.category })),
     },
-    contents: { members, unassigned },
+    contents: { members, unassigned, reportingLines: lines, heads },
     meta: {
       generator: 'sprite-character-creator',
       schema: '00-company-root-and-cascade.md',
       departmentCount: departments.length,
       memberCount,
+      reportingLineCount: lines.length,
     },
   };
 }

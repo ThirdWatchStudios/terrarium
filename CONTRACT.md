@@ -327,7 +327,9 @@ The single org model — structured department units the office-scale work refer
 ```
 
 ### 3.11 `org-structure.json` (org chart) — project-level, **derived**
-The loadable org chart, derived from §3.10 + the personas (`buildOrgStructure`). The load-bearing shape is a **structure / contents split** for the sim's fog-of-war: `structure` is what the player always sees (which departments exist), `contents` is what the sim fogs until a wing is reached (who is inside). The sim can load `structure` alone to draw the chart. Every catalog department appears in both `structure.departments` and `contents.members` (possibly empty). Members are resolved by mapping each persona's `department` onto a catalog id; unresolved personas land in `unassigned` (F2.5 validation flags them). Reporting lines join `contents` in F2.3. Deterministic; not stored in the project (recomputed on export). Shipped at the bundle root and in each scenario package.
+The loadable org chart, derived from §3.10 + the personas (`buildOrgStructure`). The load-bearing shape is a **structure / contents split** for the sim's fog-of-war: `structure` is what the player always sees (which departments exist), `contents` is what the sim fogs until a wing is reached (who is inside, the reporting lines, the heads). The sim can load `structure` alone to draw the chart. Every catalog department appears in both `structure.departments` and `contents.members` (possibly empty). Members resolve by mapping each persona's `department` onto a catalog id; unresolved personas land in `unassigned` (F2.5 validation flags them).
+
+**Reporting lines are DERIVED from the `manager` / `direct-report` relationship edges (§3.7), not authored separately (F2.3 decision)** — one source of truth. `manager` edge = the holder reports to the target; `direct-report` edge = the target reports to the holder. Each `contents.reportingLines[]` is a `{ managerAgentId, reportAgentId }`. The **head** per department is the topmost member (no manager *inside* the department), seniority-tiebroken — so every populated department resolves a head even with no reporting edge yet; an empty department's head is `null`. A report with a conflicting or unresolvable manager is flagged at authoring time (not emitted). Deterministic; not stored in the project (recomputed on export). Shipped at the bundle root and in each scenario package.
 ```jsonc
 {
   "structure": {                                            // visible — safe to load without the roster
@@ -335,10 +337,12 @@ The loadable org chart, derived from §3.10 + the personas (`buildOrgStructure`)
   },
   "contents": {                                             // fogged — revealed wing-by-wing
     "members": { "operations": ["janice", "carl", "linda"], "management": ["manager"] },  // agentIds by dept id
+    "reportingLines": [ { "managerAgentId": "manager", "reportAgentId": "janice" } ],      // derived from §3.7 edges
+    "heads": { "operations": "janice", "management": "manager", "legal": null },           // topmost member per dept
     "unassigned": []                                        // personas whose department resolves to no catalog id
   },
   "meta": { "generator": "sprite-character-creator", "schema": "00-company-root-and-cascade.md",
-            "departmentCount": 13, "memberCount": 4 }
+            "departmentCount": 13, "memberCount": 4, "reportingLineCount": 1 }
 }
 ```
 

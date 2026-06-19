@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { buildOrgStructure } from '../src/core/orgStructure';
+import { buildOrgStructure, deriveReportingLines } from '../src/core/orgStructure';
 import { buildScenarioPackage } from '../src/core/scenarioRun';
 import { DEFAULT_SCENARIOS, defaultProject } from '../src/data/defaults';
 
@@ -41,6 +41,51 @@ describe('org-structure artifact (Epic 2 / F2.2)', () => {
     expect(JSON.stringify(buildOrgStructure(defaultProject()))).toBe(
       JSON.stringify(buildOrgStructure(defaultProject())),
     );
+  });
+});
+
+describe('reporting lines derived from manager/direct-report edges (F2.3)', () => {
+  it('derives manager→report lines from typed edges into the artifact', () => {
+    const p = defaultProject();
+    const mgr = p.profiles!.find((x) => x.agentId === 'manager')!;
+    // The manager's existing untyped edges to janice/carl become direct-reports.
+    for (const r of mgr.relationships) if (r.targetAgentId === 'janice' || r.targetAgentId === 'carl') r.relationshipType = 'direct-report';
+    const ids = new Set(p.profiles!.map((x) => x.agentId));
+
+    const { lines, issues } = deriveReportingLines(p.profiles!, ids);
+    expect(issues).toEqual([]);
+    expect(lines).toContainEqual({ managerAgentId: 'manager', reportAgentId: 'janice' });
+    expect(lines).toContainEqual({ managerAgentId: 'manager', reportAgentId: 'carl' });
+    expect(buildOrgStructure(p).meta.reportingLineCount).toBe(2);
+  });
+
+  it('flags a report whose manager does not resolve', () => {
+    const p = defaultProject();
+    const carl = p.profiles!.find((x) => x.agentId === 'carl')!;
+    carl.relationships.push({ ...carl.relationships[0], targetAgentId: 'ghost', relationshipType: 'manager' });
+    const { issues } = deriveReportingLines(p.profiles!, new Set(p.profiles!.map((x) => x.agentId)));
+    expect(issues.some((i) => i.includes('unknown manager') && i.includes('ghost'))).toBe(true);
+  });
+
+  it('flags conflicting managers for the same report', () => {
+    const p = defaultProject();
+    const janice = p.profiles!.find((x) => x.agentId === 'janice')!;
+    for (const r of janice.relationships) if (r.targetAgentId === 'manager') r.relationshipType = 'manager'; // janice → manager
+    const carl = p.profiles!.find((x) => x.agentId === 'carl')!;
+    carl.relationships.push({ ...carl.relationships[0], targetAgentId: 'janice', relationshipType: 'direct-report' }); // carl also claims janice
+    const { issues } = deriveReportingLines(p.profiles!, new Set(p.profiles!.map((x) => x.agentId)));
+    expect(issues.some((i) => i.includes('conflicting managers'))).toBe(true);
+  });
+
+  it('resolves a head per populated department (seniority fallback when no edges)', () => {
+    const org = buildOrgStructure(defaultProject());
+    // No typed manager/direct-report edges in the default cast → no reporting lines…
+    expect(org.contents.reportingLines).toEqual([]);
+    // …but every populated department still resolves a head (seniority-tiebroken).
+    expect(org.contents.heads.management).toBe('manager');
+    expect(org.contents.heads.operations).toBe('janice'); // senior, first in member order
+    // Empty departments resolve to null.
+    expect(org.contents.heads.legal).toBeNull();
   });
 
   it('ships in the scenario package bundle', () => {
