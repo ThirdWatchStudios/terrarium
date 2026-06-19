@@ -70,6 +70,14 @@ Each becomes an epic during decomposition. Mapping to the sim-side epics it serv
 | [02](02-org-structure-and-org-chart.md) | Org structure & org-chart artifact | E38 | Medium |
 | [03](03-structured-departments-and-population.md) | Structured departments & population generation | E39 (+ E41 mutable field) | Medium |
 | [04](04-scenario-template-export-and-preconditions.md) | Scenario-template export & dept-aware preconditions | E40 (+ shared E30/E34) | Medium |
+| [05](05-company-level-generation.md) | Company-level generation (the new-game seed) | full-game seed (consumes E38–E40) | **Heaviest** |
+
+Work area [05](05-company-level-generation.md) is the **generative root** added on top: a
+first-class, generated **company** — as rich as the personas inside it — whose culture, economy,
+and history cascade down into the departments, people, relationships, and scenarios below. It is
+an **independent sibling** to 01–04 that **consumes their artifacts and must not fork them**
+(structure → E2, personas/relationships → E3, scenarios → E4, layout → E1). It is the "new game"
+seed: one company seed → an entire coherent, distinct org.
 
 The lighter sim-side asks fold into their natural homes: E41's *transfer* needs only a
 **mutable structured department** (doc 03) + **spare desk/anchor capacity** (doc 01); E38's
