@@ -72,6 +72,42 @@ const RECIPROCAL: Record<string, string> = {
 const INTRA_SOCIAL: Record<string, number> = { coworker: 5, friend: 3, ally: 2, confidant: 1.5, 'close-friend': 1, rival: 1.5, romance: 0.5 };
 const INTER_SOCIAL: Record<string, number> = { coworker: 4, ally: 2, rival: 1.5, friend: 1, confidant: 0.6 };
 
+/**
+ * Company-climate hints — the `E3_relationships` cascade seam (Epic 0). When
+ * supplied, the graph's *shape* reflects the company: higher factionalism skews
+ * inter-department ties toward rivalry/suspicion and away from cross-wing
+ * alliances. This is mechanism only — the cascade (F0.6) reads the numbers off
+ * the `Company` model (`climate.factionalism`) and passes them in; this module
+ * never imports the company model.
+ */
+export interface GraphClimate {
+  /** 0–100 factionalism aggregate. 50 is neutral (no skew); 100 maximally factional. */
+  factionalism?: number;
+}
+
+/**
+ * A concrete relationship edge to plant *before* the procedural pass — the
+ * history-seeding hook (F3.3) that F0.6 fills from formative company events
+ * (e.g. a layoff round → `rival`/resentment edges between the affected agents).
+ *
+ * Seeded edges win: a later procedural tie to the same target is skipped, so the
+ * authored history is never overwritten by random wiring. The reciprocal type is
+ * written on the other side too unless `reciprocal:false`. `relationshipType`
+ * should be an id from the project catalog (§3.7) so the graph stays catalog-only.
+ */
+export interface SeededEdge {
+  sourceAgentId: string;
+  targetAgentId: string;
+  /** A relationship-type id from the project catalog. */
+  relationshipType: string;
+  /** Also write a reciprocal edge (default true). Pass a type id to override which type. */
+  reciprocal?: boolean | string;
+  /** Force the secret flag; defaults to the type's `secretByDefault`. */
+  secret?: boolean;
+  /** Extra tags merged onto the edge — e.g. provenance like `history:layoff-2023`. */
+  tags?: string[];
+}
+
 export interface RelationshipGraphOptions {
   seed?: number | string;
   /** Probability of a tie between two same-department members (default 0.5). */
@@ -85,6 +121,13 @@ export interface RelationshipGraphOptions {
   interWeights?: Record<string, number>;
   /** The relationship-type catalog — used for `secretByDefault`. Optional. */
   relationshipTypes?: RelationshipTypeDefinition[];
+  /** Company-climate bias (the `E3_relationships` seam; F0.6 populates it). */
+  climate?: GraphClimate;
+  /**
+   * Concrete edges to plant before the procedural pass (the history-seeding
+   * hook). Planted in array order; seeded edges win over later procedural ties.
+   */
+  seedEdges?: SeededEdge[];
 }
 
 const sample = (rng: Rng, [lo, hi]: Range): number => lo + rng() * (hi - lo);
@@ -92,6 +135,24 @@ const seniorityRank = (s: string | undefined): number => {
   const i = (SENIORITY as readonly string[]).indexOf(s ?? '');
   return i < 0 ? 0 : i;
 };
+
+/**
+ * Skew social-tie weights by factionalism (50 neutral). Above 50 the org pulls
+ * apart: rivalry is amplified and warm ties (ally/friend/confidant) are damped,
+ * so a factional company grows more cross-wing rivalry and fewer alliances; below
+ * 50 it does the reverse. Returns a fresh weight map; missing keys are left out.
+ */
+function factionalismSkew(weights: Record<string, number>, factionalism: number): Record<string, number> {
+  const k = (clampUnit(factionalism) - 50) / 50; // -1..1
+  if (k === 0) return weights;
+  const out: Record<string, number> = { ...weights };
+  const scale = (key: string, m: number): void => {
+    if (out[key] != null) out[key] = Math.max(0, out[key] * m);
+  };
+  scale('rival', 1 + k); // more rivalry/suspicion as factionalism climbs
+  for (const warm of ['ally', 'friend', 'confidant', 'close-friend']) scale(warm, 1 - 0.6 * k);
+  return out;
+}
 
 function weightedPick(rng: Rng, weights: Record<string, number>): string {
   const entries = Object.entries(weights).filter(([, w]) => w > 0);
@@ -137,7 +198,12 @@ export function generateRelationshipGraph(
   const interDensity = opts.interDensity ?? 0.08;
   const reportProb = opts.reportProbability ?? 0.7;
   const intraWeights = opts.intraWeights ?? INTRA_SOCIAL;
-  const interWeights = opts.interWeights ?? INTER_SOCIAL;
+  const baseInterWeights = opts.interWeights ?? INTER_SOCIAL;
+  // Climate seam: factionalism reshapes the cross-wing type mix (more rivalry, fewer alliances).
+  const interWeights =
+    opts.climate?.factionalism != null
+      ? factionalismSkew(baseInterWeights, opts.climate.factionalism)
+      : baseInterWeights;
   const secretByType = new Map((opts.relationshipTypes ?? []).map((t) => [t.id, !!t.secretByDefault]));
   const isSecret = (type: string): boolean => secretByType.get(type) ?? type === 'romance';
 
@@ -166,6 +232,32 @@ export function generateRelationshipGraph(
     addEdge(a.agentId, b.agentId, type, rng);
     addEdge(b.agentId, a.agentId, RECIPROCAL[type] ?? type, rng);
   };
+
+  // History-seeding hook (F0.6 fills this): plant authored edges first so they
+  // win over the procedural pass. One directed edge per side, deterministic per
+  // (source, target, type), with the type's secret/tags plus any provenance tags.
+  const plantSeedDirected = (
+    sourceId: string,
+    targetId: string,
+    type: string,
+    secret: boolean,
+    extraTags: string[] | undefined,
+  ): void => {
+    const seen = taken.get(sourceId);
+    if (!seen || !byId.has(targetId) || seen.has(targetId) || sourceId === targetId) return;
+    const rng = mulberry32(seedToInt(`${base}|seed|${sourceId}~${targetId}|${type}`));
+    const edge = makeEdge(rng, targetId, type, secret);
+    if (extraTags?.length) edge.tags.push(...extraTags);
+    byId.get(sourceId)!.relationships.push(edge);
+    seen.add(targetId);
+  };
+  for (const e of opts.seedEdges ?? []) {
+    plantSeedDirected(e.sourceAgentId, e.targetAgentId, e.relationshipType, e.secret ?? isSecret(e.relationshipType), e.tags);
+    if (e.reciprocal !== false) {
+      const recip = typeof e.reciprocal === 'string' ? e.reciprocal : RECIPROCAL[e.relationshipType] ?? e.relationshipType;
+      plantSeedDirected(e.targetAgentId, e.sourceAgentId, recip, e.secret ?? isSecret(recip), e.tags);
+    }
+  }
 
   // Group by department (blank = its own bucket so unassigned still wire internally).
   const byDept = new Map<string, CharacterProfile[]>();
