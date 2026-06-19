@@ -3,6 +3,7 @@ import { CURRENT_SCHEMA_VERSION } from '../core/types';
 import type { CharacterProfile, DriveDefinition, Relationship, RelationshipTypeDefinition, TraitDefinition } from '../core/profile';
 import { applyDerived, createDefaultProfile } from '../core/profile';
 import type { Scenario } from '../core/scenario';
+import type { DepartmentDefinition } from '../core/department';
 
 export const DEFAULT_STYLE: StyleSheet = {
   outline: {
@@ -1011,6 +1012,29 @@ export const DEFAULT_RELATIONSHIP_TYPES: RelationshipTypeDefinition[] = [
   relType('nemesis', 'adversarial', { confront: 2, escalate: 1, reassure: -1 }, 'Nemesis', 'Active antagonist; opposes them on reflex.'),
 ];
 
+/**
+ * The seed department catalog (Epic 2 F2.1 / S2.1.2) — the existing office
+ * department-name set (profile.ts DEPARTMENTS + the Office Population Generator
+ * profiles) promoted to structured entries with stable kebab-case ids, so authors
+ * don't re-author them. Free-text `department` values map onto these via
+ * mapDepartmentNameToId (label/id match). Category is the coarse functional group.
+ */
+export const DEFAULT_DEPARTMENTS: DepartmentDefinition[] = [
+  { id: 'executive', label: 'Executive', category: 'leadership' },
+  { id: 'management', label: 'Management', category: 'leadership' },
+  { id: 'accounting', label: 'Accounting', category: 'finance' },
+  { id: 'finance', label: 'Finance', category: 'finance' },
+  { id: 'sales', label: 'Sales', category: 'commercial' },
+  { id: 'marketing', label: 'Marketing', category: 'commercial' },
+  { id: 'customer-support', label: 'Customer Support', category: 'commercial' },
+  { id: 'it', label: 'IT', category: 'technical' },
+  { id: 'engineering', label: 'Engineering', category: 'technical' },
+  { id: 'operations', label: 'Operations', category: 'operations' },
+  { id: 'facilities', label: 'Facilities', category: 'operations' },
+  { id: 'hr', label: 'HR', category: 'administrative' },
+  { id: 'legal', label: 'Legal', category: 'administrative' },
+];
+
 export function defaultProject(): ProjectState {
   return {
     version: CURRENT_SCHEMA_VERSION,
@@ -1025,5 +1049,6 @@ export function defaultProject(): ProjectState {
     drives: structuredClone(DEFAULT_DRIVES),
     traits: structuredClone(DEFAULT_TRAITS),
     relationshipTypes: structuredClone(DEFAULT_RELATIONSHIP_TYPES),
+    departments: structuredClone(DEFAULT_DEPARTMENTS),
   };
 }

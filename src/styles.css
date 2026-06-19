@@ -1383,3 +1383,162 @@ textarea {
   width: 100%;
   height: auto;
 }
+
+/* ---------- Company tab (Epic 0 / F0.9) ---------- */
+
+/* Archetype pick-list rows stack their label + description. */
+.entity-item:has(.entity-sub) {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+}
+.entity-item:has(.entity-sub) .entity-name {
+  white-space: normal;
+  font-weight: 600;
+}
+.entity-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+.company-inspector {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 4px 2px 24px;
+  overflow-y: auto;
+}
+
+.company-identity h3 {
+  margin: 0 0 2px;
+  font-size: 18px;
+}
+
+.company-block {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel-2);
+  padding: 10px 12px;
+}
+.company-block h4 {
+  margin: 0 0 8px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+}
+
+.company-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 3px 0;
+  font-size: 12px;
+}
+.company-bar-label {
+  flex: 0 0 116px;
+  color: var(--text-dim);
+}
+.company-bar-track {
+  flex: 1;
+  height: 7px;
+  border-radius: 4px;
+  background: var(--panel-3);
+  overflow: hidden;
+}
+.company-bar-fill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+.company-bar-row.climate .company-bar-fill {
+  background: var(--danger);
+}
+.company-bar-value {
+  flex: 0 0 auto;
+  min-width: 96px;
+  text-align: right;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.company-kv {
+  display: flex;
+  gap: 10px;
+  margin: 4px 0;
+  font-size: 12.5px;
+}
+.company-kv-key {
+  flex: 0 0 120px;
+  color: var(--text-dim);
+}
+.company-kv-val {
+  flex: 1;
+  color: var(--text);
+}
+
+.company-list {
+  margin: 4px 0 0;
+  padding-left: 18px;
+  font-size: 12.5px;
+}
+.company-list li {
+  margin: 2px 0;
+}
+
+.company-event {
+  border-top: 1px solid var(--border);
+  padding: 8px 0;
+}
+.company-event:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+.company-event-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.company-event-title {
+  font-weight: 600;
+  font-size: 13px;
+}
+.company-event-mag {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.company-event-desc {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.company-event-depts {
+  margin: 3px 0 0;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.company-tag {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 1px 6px;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  color: var(--text-dim);
+}
+.company-tag.vis-public {
+  border-color: var(--accent-dim);
+  color: var(--accent);
+}
+.company-tag.vis-buried {
+  border-color: var(--danger-dim);
+  color: var(--danger);
+}
+
+.hint.warn {
+  color: var(--danger);
+}

@@ -244,6 +244,13 @@ export interface ProjectState {
    * core/profile.ts (RelationshipTypeDefinition) and CONTRACT.md §3.7.
    */
   relationshipTypes: import('./profile').RelationshipTypeDefinition[];
+  /**
+   * The department catalog — structured, project-level org units (id/label/category)
+   * the office-scale work references by stable id, the way drives/traits do. The
+   * single department/org model (Epic 2 F2.1); the cascade fills it, layout groups
+   * by it. See core/department.ts.
+   */
+  departments: import('./department').DepartmentDefinition[];
   /** The scene canvas — persisted so hand-edits survive reloads. */
   scene?: import('./scene').SceneState;
 }
@@ -263,8 +270,10 @@ export interface ProjectState {
  * v9 added the reusable `relationshipTypes` catalog (bond types carrying reaction
  * biases + a third-party jealousy coupling); relationship edges reference its ids
  * and gain an optional `secret` flag.
+ * v10 added the project-level `departments` catalog (Epic 2 F2.1 — structured org
+ * units with stable ids); seeded from the existing department-name set.
  */
-export const CURRENT_SCHEMA_VERSION = 9;
+export const CURRENT_SCHEMA_VERSION = 10;
 
 /** Design-space canvas size. Parts are authored against this; never changes. */
 export const CANVAS = 128;

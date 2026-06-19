@@ -18,7 +18,7 @@ class Store {
   state: ProjectState;
   /** UI selection, not persisted as part of the project. */
   ui = {
-    tab: 'characters' as 'characters' | 'persona' | 'drives' | 'traits' | 'relationships' | 'props' | 'tiles' | 'scene' | 'scenario' | 'employees' | 'style',
+    tab: 'characters' as 'characters' | 'persona' | 'drives' | 'traits' | 'relationships' | 'props' | 'tiles' | 'scene' | 'scenario' | 'employees' | 'company' | 'departments' | 'style',
     /** Remembers the last sub-tab visited within each top-level nav group. */
     lastSubByGroup: {} as Record<string, string>,
     selectedCharacterId: '',
@@ -28,6 +28,7 @@ class Store {
     selectedDriveId: '',
     selectedTraitId: '',
     selectedRelationshipTypeId: '',
+    selectedDepartmentId: '',
     exportScale: 2,
     /** Preview-only mood; never stored in recipes. */
     previewMood: 'normal' as Mood,
@@ -55,6 +56,15 @@ class Store {
     employee: undefined as EmployeeDefinition | undefined,
     population: undefined as Population | undefined,
     populationCount: 25,
+    /** Company tab (Epic 0 / F0.9 — transient, not persisted in the project). */
+    companyArchetypeId: '',
+    /** Blank = random seed on Generate; shows the seed actually used. */
+    companySeed: '',
+    /** Dial: size-band override ('' = use the archetype's pool). */
+    companyDialSize: '',
+    /** Dial: absolute nudge to sampled financial health (-40..40). */
+    companyDialHealth: 0,
+    company: undefined as import('./core/company').Company | undefined,
   };
   private listeners: Listener[] = [];
 

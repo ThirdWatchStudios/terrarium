@@ -1,6 +1,7 @@
 import type { ProjectState } from './types';
 import { CURRENT_SCHEMA_VERSION } from './types';
-import { DEFAULT_DRIVES, DEFAULT_FLOORS, DEFAULT_PROFILES, DEFAULT_PROPS, DEFAULT_RELATIONSHIP_TYPES, DEFAULT_SCENARIOS, DEFAULT_STYLE, DEFAULT_STYLE_PRESETS, DEFAULT_TRAITS, DEFAULT_WALLS } from '../data/defaults';
+import { DEFAULT_DEPARTMENTS, DEFAULT_DRIVES, DEFAULT_FLOORS, DEFAULT_PROFILES, DEFAULT_PROPS, DEFAULT_RELATIONSHIP_TYPES, DEFAULT_SCENARIOS, DEFAULT_STYLE, DEFAULT_STYLE_PRESETS, DEFAULT_TRAITS, DEFAULT_WALLS } from '../data/defaults';
+import { mapDepartmentNameToId, slugifyDepartment } from './department';
 
 // Re-export so callers can keep importing the version from the migration module.
 export { CURRENT_SCHEMA_VERSION } from './types';
@@ -82,8 +83,38 @@ export function migrateProject(raw: unknown): ProjectState | null {
   // reference, so no authored bond type is lost when it becomes an id reference.
   backfillV9(project as ProjectState);
 
+  // v9 → v10: the project-level `departments` catalog. Seed defaults and absorb
+  // any free-text department names personas already carry that don't resolve to a
+  // catalog entry, so every department in use has a stable id (the F2.1 catalog;
+  // rewriting the persona `department` field to the id is F3.1).
+  backfillV10(project as ProjectState);
+
   project.version = CURRENT_SCHEMA_VERSION;
   return project as ProjectState;
+}
+
+/** v10 step: ensure the `departments` catalog exists, seed defaults, absorb free-text names. */
+function backfillV10(project: ProjectState): void {
+  project.departments ??= [];
+  const present = new Set(project.departments.map((d) => d.id));
+  for (const def of DEFAULT_DEPARTMENTS) {
+    if (!present.has(def.id)) {
+      project.departments.push(structuredClone(def));
+      present.add(def.id);
+    }
+  }
+  // A free-text department a persona uses that maps to no catalog entry gets a
+  // minimal one (id = slugified name), so nothing is silently unmapped.
+  for (const profile of project.profiles ?? []) {
+    const name = profile.identity?.department;
+    if (name && mapDepartmentNameToId(name, project.departments) === null) {
+      const id = slugifyDepartment(name) || `dept-${present.size + 1}`;
+      if (!present.has(id)) {
+        project.departments.push({ id, label: name, category: 'operations' });
+        present.add(id);
+      }
+    }
+  }
 }
 
 /** v9 step: ensure the `relationshipTypes` catalog exists, seed defaults, absorb referenced ids. */

@@ -10,6 +10,8 @@ import { renderTraitControls, renderTraitList, renderTraitPreview } from './trai
 import { renderRelationshipTypeControls, renderRelationshipTypeList, renderRelationshipTypePreview } from './relationshipTypePanel';
 import { renderScenarioControls, renderScenarioList, renderScenarioPreview } from './scenarioPanel';
 import { renderEmployeeControls, renderEmployeeList, renderEmployeePreview } from './employeePanel';
+import { renderCompanyControls, renderCompanyList, renderCompanyPreview } from './companyPanel';
+import { renderDepartmentControls, renderDepartmentList, renderDepartmentPreview } from './departmentPanel';
 import { renderPropControls, renderPropList, renderPropPreview } from './propPanel';
 import { renderSceneControls, renderSceneList, renderScenePreview } from './scenePanel';
 import { renderStyleControls, renderStylePreview } from './stylePanel';
@@ -57,6 +59,14 @@ const NAV: NavGroup[] = [
       { id: 'scene', label: 'Office' },
     ],
   },
+  {
+    id: 'company',
+    label: 'Company',
+    subs: [
+      { id: 'company', label: 'Generate' },
+      { id: 'departments', label: 'Departments' },
+    ],
+  },
 ];
 
 function groupForLeaf(leaf: Leaf): NavGroup {
@@ -69,7 +79,7 @@ function groupForLeaf(leaf: Leaf): NavGroup {
  * editor joins them (analysis becomes a tabbed inspector); the Office tab keeps
  * its paint canvas in the center instead.
  */
-const SWAP_TABS = new Set<Leaf>(['characters', 'persona', 'drives', 'traits', 'relationships', 'employees', 'props', 'tiles', 'style', 'scenario']);
+const SWAP_TABS = new Set<Leaf>(['characters', 'persona', 'drives', 'traits', 'relationships', 'employees', 'props', 'tiles', 'style', 'scenario', 'departments']);
 
 export function mountApp(root: HTMLElement): void {
   const tabBar = el('nav', { className: 'tabs' });
@@ -236,6 +246,14 @@ export function mountApp(root: HTMLElement): void {
       renderEmployeeList(sidebar);
       renderEmployeePreview(preview);
       if (kind === 'structure') renderEmployeeControls(controls);
+    } else if (tab === 'company') {
+      renderCompanyList(sidebar);
+      renderCompanyPreview(preview);
+      if (kind === 'structure') renderCompanyControls(controls);
+    } else if (tab === 'departments') {
+      renderDepartmentList(sidebar);
+      renderDepartmentPreview(preview);
+      if (kind === 'structure') renderDepartmentControls(controls);
     } else {
       clear(sidebar);
       renderStylePreview(preview);

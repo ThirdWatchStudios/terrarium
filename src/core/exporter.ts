@@ -793,6 +793,9 @@ export async function exportAll(
   // The reusable drive + trait catalogs personas reference by id (see CONTRACT.md).
   await write('drives.json', JSON.stringify(project.drives, null, 2));
   await write('traits.json', JSON.stringify(project.traits, null, 2));
+  // The department catalog — the single org model the office-scale work references
+  // by stable id (Epic 2 F2.1).
+  await write('departments.json', JSON.stringify(project.departments, null, 2));
   if (project.scene) {
     await write('office-layout.json', JSON.stringify(sceneToLayoutJson(project.scene, project), null, 2));
   }
