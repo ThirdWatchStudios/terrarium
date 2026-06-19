@@ -2,6 +2,17 @@
 
 **Status: DRAFT for decomposition.** Serves sim epic **E38** (org chart & departmental reach).
 
+## Role in the company cascade (Epic 0 tier)
+
+This work area is the **structure tier** of the company cascade
+(`README.md`, `00-company-root-and-cascade.md`). Epic 0 **derives** the department set + org chart
+from company size/age/hierarchy and **writes them into the artifacts defined here** — this is the
+one department/org model the cascade fills. **Seams Epic 0 needs this tier to expose:** (1) the
+department catalog carries **subculture fields** so Epic 0's per-department subculture cascade has
+somewhere to write; (2) the org-structure / org-chart artifact is **derivable** (populated from
+company character, not only hand-authored); (3) department **capability/medium tags** can be
+cascade outputs.
+
 ## Purpose
 
 The office-scale direction's core surface is an **org chart whose structure is visible while

@@ -4,6 +4,15 @@
 **E39** (department population); also supplies the **spare desk capacity** E41 (transfer)
 needs. **Heaviest lift** in the office-scale set.
 
+## Role in the company cascade (Epic 0 tier)
+
+This work area is the **layout tier** of the company cascade (`README.md`,
+`00-company-root-and-cascade.md`) — the **physical projection** of generated structure. Wings
+group by the **department ids Epic 0's structure derivation produced** (via Epic 2's catalog); the
+layout consumes those ids, it does not invent departments. **Seam Epic 0 drives:** wings keyed by
+cascade-produced department ids, and **spare desk / anchor capacity** sized for the cascade-spawned
+population plus later E41 transfers.
+
 ## Purpose
 
 Today the layout generator produces a single flat office with every non-manager seated in

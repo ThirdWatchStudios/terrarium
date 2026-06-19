@@ -34,6 +34,15 @@ Can the studio author and export the organization's structure cleanly enough tha
 show the chart while keeping the people inside fogged?
 ```
 
+## Cascade seam (Epic 0 tier)
+
+Epic 2 is the **structure tier** of the company cascade (Epic 0 — `00-company-root-and-cascade.md`),
+and the **single department/org model** the cascade fills. Two seam requirements: (1) the
+department entity/catalog (F2.1) carries **subculture fields** Epic 0's per-department subculture
+cascade writes; (2) the org-structure export (F2.2) is **derivable** — Epic 0 populates it from
+company character, not only hand-authoring — and the capability tags (F2.4) can be cascade outputs.
+Nothing outside this epic defines departments.
+
 ## Feature Definitions
 
 ### F2.1 - Department Entity And Catalog

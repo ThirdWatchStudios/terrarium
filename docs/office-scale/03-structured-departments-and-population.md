@@ -3,6 +3,16 @@
 **Status: DRAFT for decomposition.** Serves sim epic **E39** (department population & cast
 growth); also supplies the **mutable structured department** E41 (transfer) needs.
 
+## Role in the company cascade (Epic 0 tier)
+
+This work area is the **population tier** of the company cascade
+(`README.md`, `00-company-root-and-cascade.md`) — the people and relationships Epic 0 fills.
+**Seams Epic 0 needs this tier to expose:** (1) persona generation accepts a **culture-weighting
+hook** so company + department culture bias archetype/template selection ("bias not lock"); (2)
+relationship-graph generation accepts a **history-seeding hook** so Epic 0's formative company
+events seed concrete typed edges (a layoff round → resentment edges). The structured/mutable
+`department` field references Epic 2's catalog — the same single department/org model.
+
 ## Purpose
 
 The office-scale direction grows the cast as a **persistent core + departmental periphery**, so

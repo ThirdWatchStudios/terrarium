@@ -33,6 +33,15 @@ Can the studio generate a multi-department org of distinct people with a coheren
 graph, on a structured/mutable department field, that satisfies the scenario-template library?
 ```
 
+## Cascade seam (Epic 0 tier)
+
+Epic 3 is the **population tier** of the company cascade (Epic 0 — `00-company-root-and-cascade.md`).
+Two seam requirements: (1) department-aware persona generation (F3.2) accepts a **culture-weighting
+hook** so company + department culture bias template selection ("bias not lock"); (2)
+relationship-graph generation (F3.3) accepts a **history-seeding hook** so Epic 0's formative
+company events seed concrete typed edges. The structured `department` field (F3.1) references Epic
+2's catalog — the same single department/org model.
+
 ## Feature Definitions
 
 ### F3.1 - Structured And Mutable Department Field

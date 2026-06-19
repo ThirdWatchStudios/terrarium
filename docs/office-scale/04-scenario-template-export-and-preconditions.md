@@ -3,6 +3,15 @@
 **Status: DRAFT for decomposition.** Serves sim epic **E40** (cross-department casting) and is
 the shared prerequisite for the sim's **Scenario Loading / casting** epics (E30 generalize + E34).
 
+## Role in the company cascade (Epic 0 tier)
+
+This work area is the **scenario tier** of the company cascade
+(`README.md`, `00-company-root-and-cascade.md`). **Seam Epic 0 needs this tier to expose:**
+scenario eligibility/salience accept a **history-seeding hook** so Epic 0 can pre-load the opening
+scenarios that the company's history caused (a recent contested promotion → that template runs
+hot). The department- and distance-aware preconditions also let the cascade's generated org
+satisfy a cross-department template library at scale (ties to F0.7 / F0.10).
+
 ## Purpose
 
 Cross-department scenarios are the payoff of office scale: "these two would pair beautifully" is a

@@ -33,6 +33,14 @@ Can a scenario template express and the sim consume a cross-department pairing, 
 precondition vocabulary kept one synchronized contract across tool and sim?
 ```
 
+## Cascade seam (Epic 0 tier)
+
+Epic 4 is the **scenario tier** of the company cascade (Epic 0 — `00-company-root-and-cascade.md`).
+Seam requirement: scenario eligibility/salience accept a **history-seeding hook** so Epic 0 can
+pre-load the opening scenarios the company's history caused (a recent contested promotion → that
+template runs hot). The department/distance preconditions (F4.2/F4.3) let the cascade's generated
+org satisfy a cross-department template library at scale (ties to F0.7 / F0.10).
+
 ## Feature Definitions
 
 ### F4.1 - Scenario-Template Export Artifact

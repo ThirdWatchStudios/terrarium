@@ -35,6 +35,14 @@ adjacency — that the sim can reveal wing by wing and measure distance across, 
 the single-office templates?
 ```
 
+## Cascade seam (Epic 0 tier)
+
+Epic 1 is the **layout tier** of the company cascade (Epic 0 — `00-company-root-and-cascade.md`).
+Its wings group by the **department ids Epic 0 produced** (via Epic 2's catalog): F1.1 wing
+grouping keys off cascade-produced ids, not invented ones, and F1.2's spare/dynamic desk capacity
+is sized for the cascade-spawned population plus later E41 transfers. The layout is the physical
+projection of generated structure — it consumes department ids, it does not define departments.
+
 ## Feature Definitions
 
 ### F1.1 - Department Wing Grouping
