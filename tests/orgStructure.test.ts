@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { buildOrgStructure, deriveReportingLines } from '../src/core/orgStructure';
+import { buildOrgStructure, deriveReportingLines, validateOrgStructure } from '../src/core/orgStructure';
 import { buildScenarioPackage } from '../src/core/scenarioRun';
 import { DEFAULT_SCENARIOS, defaultProject } from '../src/data/defaults';
 
@@ -75,6 +75,47 @@ describe('reporting lines derived from manager/direct-report edges (F2.3)', () =
     carl.relationships.push({ ...carl.relationships[0], targetAgentId: 'janice', relationshipType: 'direct-report' }); // carl also claims janice
     const { issues } = deriveReportingLines(p.profiles!, new Set(p.profiles!.map((x) => x.agentId)));
     expect(issues.some((i) => i.includes('conflicting managers'))).toBe(true);
+  });
+});
+
+describe('org-structure validation (Epic 2 / F2.5)', () => {
+  it('the shipped default organization passes (no errors)', () => {
+    const v = validateOrgStructure(defaultProject());
+    expect(v.errors).toEqual([]);
+    // The many empty seed departments surface as warnings, not errors.
+    expect(v.warnings.length).toBeGreaterThan(0);
+  });
+
+  it('blocks a persona whose department does not resolve', () => {
+    const p = defaultProject();
+    p.profiles![0].identity.department = 'Skunkworks';
+    const v = validateOrgStructure(p);
+    expect(v.errors.some((e) => e.includes('unresolved department') && e.includes('Skunkworks'))).toBe(true);
+  });
+
+  it('blocks a conflicting reporting line', () => {
+    const p = defaultProject();
+    const janice = p.profiles!.find((x) => x.agentId === 'janice')!;
+    for (const r of janice.relationships) if (r.targetAgentId === 'manager') r.relationshipType = 'manager';
+    const carl = p.profiles!.find((x) => x.agentId === 'carl')!;
+    carl.relationships.push({ ...carl.relationships[0], targetAgentId: 'janice', relationshipType: 'direct-report' });
+    expect(validateOrgStructure(p).errors.some((e) => e.includes('conflicting managers'))).toBe(true);
+  });
+
+  it('blocks a reporting cycle', () => {
+    const p = defaultProject();
+    // janice → carl (manager), carl → janice (manager): a 2-cycle.
+    const janice = p.profiles!.find((x) => x.agentId === 'janice')!;
+    janice.relationships.push({ ...janice.relationships[0], targetAgentId: 'carl', relationshipType: 'manager' });
+    const carl = p.profiles!.find((x) => x.agentId === 'carl')!;
+    carl.relationships.push({ ...carl.relationships[0], targetAgentId: 'janice', relationshipType: 'manager' });
+    expect(validateOrgStructure(p).errors.some((e) => e.includes('cycle'))).toBe(true);
+  });
+
+  it('blocks a duplicate catalog id', () => {
+    const p = defaultProject();
+    p.departments.push({ id: 'sales', label: 'Field Sales', category: 'commercial' });
+    expect(validateOrgStructure(p).errors.some((e) => e.includes('Duplicate'))).toBe(true);
   });
 
   it('resolves a head per populated department (seniority fallback when no edges)', () => {

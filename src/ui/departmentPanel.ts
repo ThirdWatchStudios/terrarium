@@ -18,10 +18,9 @@ import {
   mapDepartmentNameToId,
   reportUnmappedDepartments,
   slugifyDepartment,
-  validateDepartmentCatalog,
   type DepartmentDefinition,
 } from '../core/department';
-import { buildOrgStructure, deriveReportingLines } from '../core/orgStructure';
+import { buildOrgStructure, validateOrgStructure } from '../core/orgStructure';
 
 function catalog(): DepartmentDefinition[] {
   return store.state.departments;
@@ -157,16 +156,17 @@ export function renderDepartmentPreview(container: HTMLElement): void {
     return;
   }
   const members = membersOf(d.id);
-  const issues = validateDepartmentCatalog(catalog());
   const unmapped = reportUnmappedDepartments(personaDepartmentNames(), catalog());
 
-  // Derived org structure — the head of this department + any reporting issues.
+  // Derived org structure — the head of this department.
   const org = buildOrgStructure(store.state);
   const profiles = store.state.profiles ?? [];
   const nameOf = (agentId: string): string =>
     profiles.find((p) => p.agentId === agentId)?.identity.displayName || agentId;
   const headId = org.contents.heads[d.id];
-  const reportingIssues = deriveReportingLines(profiles, new Set(profiles.map((p) => p.agentId))).issues;
+
+  // Org-wide validation (F2.5) — errors block export.
+  const { errors, warnings } = validateOrgStructure(store.state);
 
   container.append(
     el(
@@ -185,15 +185,13 @@ export function renderDepartmentPreview(container: HTMLElement): void {
     el(
       'div',
       {},
-      el('h3', {}, `Catalog · ${catalog().length} departments`),
-      issues.length
-        ? el('p', { className: 'hint warn' }, `⚠ ${issues.join(' ')}`)
-        : el('p', { className: 'hint' }, '✓ catalog valid (unique stable ids)'),
+      el('h3', {}, `Org structure · ${catalog().length} departments`),
+      errors.length
+        ? el('div', {}, ...errors.map((e) => el('p', { className: 'hint warn' }, `⚠ ${e}`)))
+        : el('p', { className: 'hint' }, '✓ org structure valid (export-ready)'),
+      warnings.length ? el('p', { className: 'hint' }, `${warnings.length} empty department(s).`) : null,
       unmapped.length
         ? el('p', { className: 'hint warn' }, `Unmapped persona departments (add a catalog entry to map them): ${unmapped.join(', ')}`)
-        : null,
-      reportingIssues.length
-        ? el('p', { className: 'hint warn' }, `⚠ Reporting: ${reportingIssues.join(' ')}`)
         : null,
     ),
   );

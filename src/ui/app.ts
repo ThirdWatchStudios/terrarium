@@ -12,6 +12,7 @@ import { renderScenarioControls, renderScenarioList, renderScenarioPreview } fro
 import { renderEmployeeControls, renderEmployeeList, renderEmployeePreview } from './employeePanel';
 import { renderCompanyControls, renderCompanyList, renderCompanyPreview } from './companyPanel';
 import { renderDepartmentControls, renderDepartmentList, renderDepartmentPreview } from './departmentPanel';
+import { validateOrgStructure } from '../core/orgStructure';
 import { renderPropControls, renderPropList, renderPropPreview } from './propPanel';
 import { renderSceneControls, renderSceneList, renderScenePreview } from './scenePanel';
 import { renderStyleControls, renderStylePreview } from './stylePanel';
@@ -89,6 +90,12 @@ export function mountApp(root: HTMLElement): void {
   const controls = el('section', { className: 'controls' });
 
   const exportAllBtn = button('Export all (zip)', async () => {
+    // Block on a broken org structure so the sim never loads an inconsistent chart (F2.5).
+    const org = validateOrgStructure(store.state);
+    if (org.errors.length) {
+      alert(`Export blocked — the org structure is inconsistent:\n\n• ${org.errors.join('\n• ')}\n\nFix these in the Company › Departments tab.`);
+      return;
+    }
     exportAllBtn.disabled = true;
     exportAllBtn.classList.add('busy');
     const setBusy = (text: string) => {

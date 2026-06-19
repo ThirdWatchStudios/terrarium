@@ -25,7 +25,7 @@
  */
 import type { ProjectState } from './types';
 import { SENIORITY, type CharacterProfile } from './profile';
-import { mapDepartmentNameToId, type DepartmentDefinition } from './department';
+import { mapDepartmentNameToId, validateDepartmentCatalog, type DepartmentDefinition } from './department';
 
 /** A derived reporting edge: `reportAgentId` reports to `managerAgentId`. */
 export interface ReportingLine {
@@ -173,4 +173,77 @@ export function buildOrgStructure(project: Pick<ProjectState, 'departments' | 'p
       reportingLineCount: lines.length,
     },
   };
+}
+
+// --- validation (F2.5) ------------------------------------------------------
+
+/** `errors` block export (a broken chart); `warnings` inform but don't block. */
+export interface OrgValidation {
+  errors: string[];
+  warnings: string[];
+}
+
+/**
+ * Validate the derived org structure so the sim never loads an inconsistent
+ * chart (Epic 2, F2.5). Errors: a persona whose department doesn't resolve, a
+ * duplicate/blank catalog id, a conflicting/unresolvable/cyclic reporting line,
+ * a populated department with no head. Warnings: empty departments. Composes the
+ * F2.1–F2.3 derivations; the in-app Export-all blocks on `errors`.
+ */
+export function validateOrgStructure(
+  project: Pick<ProjectState, 'departments' | 'profiles' | 'characters'>,
+): OrgValidation {
+  const departments = project.departments ?? [];
+  const profiles = project.profiles ?? [];
+  const errors: string[] = [];
+  const warnings: string[] = [];
+
+  // Catalog integrity (unique, non-blank stable ids).
+  errors.push(...validateDepartmentCatalog(departments));
+
+  const org = buildOrgStructure({ departments, profiles });
+  const nameOf = (agentId: string): string =>
+    profiles.find((p) => p.agentId === agentId)?.identity.displayName || agentId;
+
+  // Every persona's department resolves to a catalog id.
+  for (const a of org.contents.unassigned) {
+    const dept = profiles.find((p) => p.agentId === a)?.identity.department;
+    errors.push(`"${nameOf(a)}" has an unresolved department${dept ? ` ("${dept}")` : ' (blank)'}.`);
+  }
+
+  // Reporting integrity — conflicts / self / unresolvable manager (the derive issues),
+  // plus dangling report targets and cycles.
+  const knownAgentIds = new Set<string>([
+    ...(project.characters ?? []).map((c) => c.id),
+    ...profiles.map((p) => p.agentId),
+  ]);
+  const { lines, issues } = deriveReportingLines(profiles, knownAgentIds);
+  errors.push(...issues);
+  for (const l of lines) {
+    if (!knownAgentIds.has(l.reportAgentId)) errors.push(`Reporting line names unknown report "${l.reportAgentId}".`);
+  }
+  const managerOf = new Map(lines.map((l) => [l.reportAgentId, l.managerAgentId]));
+  const inCycle = new Set<string>();
+  for (const start of managerOf.keys()) {
+    if (inCycle.has(start)) continue;
+    const path: string[] = [];
+    const seen = new Set<string>();
+    let cur: string | undefined = start;
+    while (cur !== undefined && !seen.has(cur)) {
+      seen.add(cur);
+      path.push(cur);
+      cur = managerOf.get(cur);
+    }
+    if (cur !== undefined && seen.has(cur)) for (const n of path.slice(path.indexOf(cur))) inCycle.add(n);
+  }
+  if (inCycle.size) errors.push(`Reporting cycle detected among: ${[...inCycle].sort().join(', ')}.`);
+
+  // Every populated department resolves a head; empty departments warn.
+  for (const d of departments) {
+    const mem = org.contents.members[d.id] ?? [];
+    if (mem.length === 0) warnings.push(`Department "${d.label || d.id}" has no members.`);
+    else if (!org.contents.heads[d.id]) errors.push(`Department "${d.label || d.id}" has members but no resolvable head.`);
+  }
+
+  return { errors, warnings };
 }
