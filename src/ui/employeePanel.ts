@@ -9,7 +9,8 @@ import {
   randomSeed,
 } from '../core/employee';
 import { downloadBlob, downloadJson, employeePackageZip } from '../core/exporter';
-import { createDefaultProfile } from '../core/profile';
+import { cohortVariety, generateEmployeePersona } from '../core/populationPersona';
+import { generateRelationshipGraph, graphStats } from '../core/relationshipGraph';
 import { store } from '../state';
 import { button, clear, el, labeled, select } from './dom';
 import { exportScaleSelect } from './controls';
@@ -51,24 +52,35 @@ function recipeFromEmployee(emp: EmployeeDefinition) {
   return recipe;
 }
 
-/** Promote a generated employee into the project's cast (optionally with a starter persona). */
+/** Promote a generated employee into the project's cast (optionally with a full, department-flavored persona, F3.2). */
 function addEmployeeToCast(emp: EmployeeDefinition, withPersona: boolean): void {
   store.mutate((s) => {
     const recipe = recipeFromEmployee(emp);
     s.characters.push(recipe);
-    if (withPersona) (s.profiles ??= []).push(createDefaultProfile(recipe));
+    if (withPersona) (s.profiles ??= []).push(generateEmployeePersona(emp, recipe));
     store.ui.selectedCharacterId = recipe.id;
   }, 'structure');
 }
 
-/** Promote a whole generated population into the cast. */
-function addPopulationToCast(emps: EmployeeDefinition[]): void {
+/**
+ * Promote a whole generated population into the cast. With `withPersonas`, each
+ * gets a department-flavored persona (F3.2) and the cohort is pre-wired with a
+ * relationship graph (F3.3) so the added wing already knows itself.
+ */
+function addPopulationToCast(emps: EmployeeDefinition[], withPersonas = false, seed = 'cohort'): void {
   store.mutate((s) => {
+    const pairs: Array<{ emp: EmployeeDefinition; recipe: ReturnType<typeof recipeFromEmployee> }> = [];
     let lastId = store.ui.selectedCharacterId;
     for (const emp of emps) {
-      const recipe = recipeFromEmployee(emp);
+      const recipe = recipeFromEmployee(emp); // unique id vs the live cast (pushed incrementally)
       s.characters.push(recipe);
+      pairs.push({ emp, recipe });
       lastId = recipe.id;
+    }
+    if (withPersonas) {
+      const personas = pairs.map(({ emp, recipe }) => generateEmployeePersona(emp, recipe));
+      generateRelationshipGraph(personas, { seed, relationshipTypes: s.relationshipTypes });
+      (s.profiles ??= []).push(...personas);
     }
     store.ui.selectedCharacterId = lastId;
   }, 'structure');
@@ -244,9 +256,18 @@ export function renderEmployeeControls(container: HTMLElement): void {
 
   const pop = store.ui.population;
   if (pop) {
+    // Department-flavored persona spread (F3.2) + pre-wired relationship graph (F3.3).
+    const cohort = pop.employees.map((emp) => generateEmployeePersona(emp));
+    const variety = cohortVariety(cohort);
+    generateRelationshipGraph(cohort, { seed: pop.baseSeed, relationshipTypes: store.state.relationshipTypes });
+    const gs = graphStats(cohort);
     container.append(
       el('p', { className: 'preview-caption' },
         `Unique employees: ${pop.unique} / ${pop.employees.length}   ·   Near duplicates: ${pop.nearDuplicates}${pop.exhausted ? '   ·   ⚠ pool exhausted' : ''}`),
+      el('p', { className: 'preview-caption' },
+        `Persona variety: ${Math.round(variety.varietyRatio * 100)}%   ·   ${variety.distinctArchetypes} archetypes   ·   ${variety.distinctPrimaryDrives} drives`),
+      el('p', { className: 'preview-caption' },
+        `Relationships: ${gs.edges} edges   ·   ${gs.intra} intra   ·   ${gs.inter} inter   ·   ${gs.connected}/${pop.employees.length} connected`),
       el(
         'div',
         { className: 'btn-row' },
@@ -254,6 +275,10 @@ export function renderEmployeeControls(container: HTMLElement): void {
           if (!confirm(`Add all ${pop.employees.length} generated employees to the project cast?`)) return;
           addPopulationToCast(pop.employees);
         }, 'primary'),
+        button(`Add all + personas`, () => {
+          if (!confirm(`Add all ${pop.employees.length} employees with department-flavored personas and a pre-wired relationship graph?`)) return;
+          addPopulationToCast(pop.employees, true, pop.baseSeed);
+        }),
       ),
       el(
         'div',

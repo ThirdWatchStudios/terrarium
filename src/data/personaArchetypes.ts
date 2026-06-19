@@ -221,3 +221,28 @@ export const PERSONA_ARCHETYPES: PersonaTemplate[] = [
   THE_HOTHEAD,
   THE_LOYALIST,
 ];
+
+/**
+ * Department-flavored archetype pools (Epic 3 F3.2 / S3.2.2 decision) — each
+ * **department catalog id** maps to a weighted pool of persona-archetype ids, so a
+ * generated cohort skews by function: an IT team reads skeptical/heads-down, an HR
+ * team caring/social, Sales charming/competitive. "Bias not lock": the whole pool
+ * can still appear, just at different odds. A department absent here (or a blank
+ * department) falls back to the generic spread over all archetypes — so coverage
+ * never breaks. Keyed to the F2.1 seed-catalog ids (src/data/defaults.ts).
+ */
+export const DEPARTMENT_ARCHETYPES: Record<string, Record<string, number>> = {
+  executive: { operator: 3, climber: 2.5, veteran: 2, loyalist: 1 },
+  management: { climber: 3, operator: 2.5, veteran: 2, loyalist: 1.5, charmer: 1.5 },
+  accounting: { workhorse: 3, veteran: 2, cynic: 2, loyalist: 2, climber: 1 },
+  finance: { workhorse: 2.5, veteran: 2, operator: 2, cynic: 1.5, climber: 1.5 },
+  sales: { charmer: 3, climber: 2.5, operator: 2, gossip: 1.5, hothead: 1 },
+  marketing: { charmer: 2.5, idealist: 2, gossip: 2, climber: 1.5 },
+  'customer-support': { charmer: 2.5, office_mom: 2, idealist: 1.5, gossip: 1.5, cynic: 1 },
+  it: { cynic: 3, wallflower: 2, workhorse: 2, slacker: 1.5, idealist: 1.5, hothead: 1 },
+  engineering: { cynic: 2.5, workhorse: 2.5, wallflower: 2, idealist: 1.5, slacker: 1 },
+  operations: { workhorse: 2.5, veteran: 2, loyalist: 2, office_mom: 1.5 },
+  facilities: { veteran: 2.5, workhorse: 2, loyalist: 2, slacker: 1, wallflower: 1 },
+  hr: { office_mom: 3, charmer: 2, idealist: 2, gossip: 1.5, loyalist: 1.5 },
+  legal: { cynic: 2.5, veteran: 2, operator: 2, workhorse: 1.5 },
+};
