@@ -181,6 +181,9 @@ describe('scenario export', () => {
     for (const file of ['scenario.json', 'employees.json', 'relationships.json', 'relationshipTypes.json', 'beliefs.json', 'knowledge.json', 'interaction-anchors.json', 'office-layout.json']) {
       expect(paths).toContain(`${dir}/${file}`);
     }
+    // Project-level org artifacts at the bundle root (Epic 2 F2.1/F2.2).
+    expect(paths).toContain('departments.json');
+    expect(paths).toContain('org-structure.json');
   });
 
   it('ships the relationship-type catalog and the typed/secret edges in the package', () => {

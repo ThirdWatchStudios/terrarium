@@ -14,6 +14,7 @@ import type { InformationItem, Scenario, ScenarioBelief, ScenarioObjective, Trut
 import { OVERRIDE_AXES, serializeScenario, validateScenario } from './scenario';
 import type { ProjectState } from './types';
 import { computeInteractionAnchors, sceneToLayoutJson } from './layout';
+import { buildOrgStructure } from './orgStructure';
 
 /** A baseline relationship with the scenario override (if any) folded in. */
 export interface ResolvedRelationship extends Relationship {
@@ -208,6 +209,9 @@ export function buildScenarioPackage(scenario: Scenario, project: ProjectState):
     'drives.json': project.drives,
     'traits.json': project.traits,
     'relationshipTypes.json': project.relationshipTypes,
+    // The org chart — departments + members with the visible/fogged split (F2.2).
+    'departments.json': project.departments,
+    'org-structure.json': buildOrgStructure(project),
   };
   if (project.scene) {
     pkg['office-layout.json'] = sceneToLayoutJson(project.scene, project);

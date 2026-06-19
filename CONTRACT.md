@@ -53,6 +53,8 @@ Coordinate convention: scene grids are row-major `[y][x]`; anchors/spawns carry 
 | `drives.json` | `project.drives` (verbatim) | project | Reusable drive catalog personas reference by id (§3.5). Also embedded in each scenario package. |
 | `traits.json` | `project.traits` (verbatim) | project | Reusable trait catalog persona `traitTags` reference by id (§3.6). Also embedded in each scenario package. |
 | `relationshipTypes.json` | `project.relationshipTypes` (verbatim) | project | Reusable relationship-type catalog edges' `relationshipType` reference by id (§3.7). Also embedded in each scenario package. |
+| `departments.json` | `project.departments` (verbatim) | project | Reusable department catalog — the single org model referenced by stable id (§3.10). Also embedded in each scenario package. |
+| `org-structure.json` | `buildOrgStructure` | project | Org chart: departments + members with a visible-structure / fogged-contents split (§3.11). Also embedded in each scenario package. |
 | `mood-emotes@Nx.png` + `mood-emotes-atlas@Nx.json` | `moodEmotesAtlas` | project | One **shared** strip of overhead mood bubbles (character-independent) — the emote half of a mood, split out of the sheet. Sim blits one above an agent keyed off mood (§3.9). |
 | `activity-badges@Nx.png` + `activity-badges-atlas@Nx.json` | `activityBadgesAtlas` | project | One **shared** strip of overhead status badges (character-independent). Sim blits one above an agent keyed off the routine `activity` string (§3.9). |
 | `conversation-style.json` | `conversationStyleJson` | project | Style for the linked-bubble conversation visual; sim draws it between two paired talking agents (§3.9). |
@@ -316,6 +318,30 @@ two badges). Group chats (N>2) generalize the same connector across all members.
 The tool provides style + the reused `talking` badge; the sim provides pairing +
 placement.
 
+### 3.10 `departments.json` (reusable department catalog) — project-level
+The single org model — structured department units the office-scale work references by **stable id** (the way drives/traits/relationship-types are catalogs). Category is free-text with a fallback vocabulary (`leadership|finance|commercial|technical|operations|administrative`). The company cascade (Epic 0 F0.3) fills this catalog; layout groups wings by its ids. Personas/employees carry `department` as free text today; the id-reference rewrite is a future migration (Epic 3 F3.1), so a free-text value maps onto a catalog id by exact-id, case-insensitive label, or slug. Shipped at the bundle root and in each scenario package.
+```jsonc
+[
+  { "id": "engineering", "label": "Engineering", "category": "technical" }
+]
+```
+
+### 3.11 `org-structure.json` (org chart) — project-level, **derived**
+The loadable org chart, derived from §3.10 + the personas (`buildOrgStructure`). The load-bearing shape is a **structure / contents split** for the sim's fog-of-war: `structure` is what the player always sees (which departments exist), `contents` is what the sim fogs until a wing is reached (who is inside). The sim can load `structure` alone to draw the chart. Every catalog department appears in both `structure.departments` and `contents.members` (possibly empty). Members are resolved by mapping each persona's `department` onto a catalog id; unresolved personas land in `unassigned` (F2.5 validation flags them). Reporting lines join `contents` in F2.3. Deterministic; not stored in the project (recomputed on export). Shipped at the bundle root and in each scenario package.
+```jsonc
+{
+  "structure": {                                            // visible — safe to load without the roster
+    "departments": [ { "id": "operations", "label": "Operations", "category": "operations" } ]
+  },
+  "contents": {                                             // fogged — revealed wing-by-wing
+    "members": { "operations": ["janice", "carl", "linda"], "management": ["manager"] },  // agentIds by dept id
+    "unassigned": []                                        // personas whose department resolves to no catalog id
+  },
+  "meta": { "generator": "sprite-character-creator", "schema": "00-company-root-and-cascade.md",
+            "departmentCount": 13, "memberCount": 4 }
+}
+```
+
 ---
 
 ## 4. Formulas computed **in the tool** (authoritative)
@@ -394,6 +420,6 @@ Things the sim will likely need that the tool does **not** capture yet — decid
 ## 7. Compatibility rules
 
 - **Adding** a suggestion to a free-text vocabulary (drive, trait tag, KPI, location, activity) is **non-breaking** — it only affects authoring autocomplete, never validation or export shape. **Adding an activity badge** is likewise non-breaking: a new shared-atlas cell the sim shows for that `activity` or ignores (§3.9).
-- **Version gating:** `profile.json` and `scenario.json` carry `meta.schemaVersion` (currently **9**, the project schema version). The sim version-gates on these — `scenario.json` gates a whole scenario package (the bundled `drives.json`/`traits.json` are resolved within that already-versioned context); `profile.json` gates the per-character visual-import path. Bare-array catalogs are intentionally unversioned — they never travel without a versioned `scenario.json` or `project.json`.
+- **Version gating:** `profile.json` and `scenario.json` carry `meta.schemaVersion` (currently **10**, the project schema version — v10 added the `departments.json` catalog §3.10 + the derived `org-structure.json` §3.11). The sim version-gates on these — `scenario.json` gates a whole scenario package (the bundled `drives.json`/`traits.json`/`departments.json`/`org-structure.json` are resolved within that already-versioned context); `profile.json` gates the per-character visual-import path. Bare-array catalogs (and the derived `org-structure.json`) are intentionally unversioned — they never travel without a versioned `scenario.json` or `project.json`.
 - **Renaming/removing a field** in §3 **is** breaking — bump `CURRENT_SCHEMA_VERSION` (which flows into `meta.schemaVersion`), add a migration step, and update the sim loader.
 - The sim should **fallback + log**, never hard-fail, on an unrecognized free-text id (drive, KPI, activity). That tolerance is what lets the tool ship a richer vocabulary without lockstep sim releases.

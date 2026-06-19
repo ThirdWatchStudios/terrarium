@@ -23,6 +23,7 @@ import type { EmployeeDefinition } from './employee';
 import { employeeRecipe } from './employee';
 import { serializeProfile } from './profile';
 import { buildScenarioPackage } from './scenarioRun';
+import { buildOrgStructure } from './orgStructure';
 import { PROP_TEMPLATES } from '../props/templates';
 import { maskName } from '../tiles/templates';
 
@@ -796,6 +797,9 @@ export async function exportAll(
   // The department catalog — the single org model the office-scale work references
   // by stable id (Epic 2 F2.1).
   await write('departments.json', JSON.stringify(project.departments, null, 2));
+  // The org-structure artifact — departments + members with a visible-structure /
+  // fogged-contents split the sim renders as the org chart (Epic 2 F2.2).
+  await write('org-structure.json', JSON.stringify(buildOrgStructure(project), null, 2));
   if (project.scene) {
     await write('office-layout.json', JSON.stringify(sceneToLayoutJson(project.scene, project), null, 2));
   }
