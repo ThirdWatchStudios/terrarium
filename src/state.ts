@@ -46,6 +46,11 @@ class Store {
     sceneCoworkers: 4,
     /** Blank = random seed on Generate; shows the seed actually used. */
     sceneSeed: '',
+    /**
+     * Departments to pack as wings when generating (F1.4). Empty = single office.
+     * Order is honored left-to-right. Transient (not persisted in the project).
+     */
+    sceneWingDepartmentIds: [] as string[],
     selectedStylePresetId: '',
     styleCompare: false,
     stylePresetName: '',

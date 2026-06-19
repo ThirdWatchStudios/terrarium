@@ -22,6 +22,14 @@ export interface SceneRoom {
    * templates (F1.4) set it; `computeWings` groups by it.
    */
   departmentId?: string;
+  /**
+   * The room's archetype (reception, cubicle-farm, …) (Epic 1 F1.4). In a single
+   * office `id === kind`; in a composed multi-wing office room `id`s are made
+   * unique per wing (`cubicle-farm@sales`) while `kind` keeps the archetype the
+   * generator dispatches furnishing/floors/walls on. Optional — absent on
+   * hand-authored scenes (treated as `id`).
+   */
+  kind?: string;
 }
 
 export interface SceneEntity {

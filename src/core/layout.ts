@@ -20,14 +20,32 @@ type RoomId =
   | 'waiting-nook'
   | 'storage-closet';
 
-interface RoomSpec extends SceneRoom {
+/** A room as authored in a template — its `id` IS its archetype. */
+interface TemplateRoom {
   id: RoomId;
+  label: string;
+  x: number;
+  y: number;
+  cols: number;
+  rows: number;
+}
+
+/**
+ * A materialized room placed into a scene. `id` is the unique, addressable room
+ * id; `kind` is the archetype the generator dispatches furnishing/floors/walls on.
+ * In a single office `id === kind`; a composed multi-wing office (F1.4) makes ids
+ * unique per wing (`cubicle-farm@sales`) while every wing's bullpen keeps
+ * `kind: 'cubicle-farm'`.
+ */
+interface RoomSpec extends SceneRoom {
+  id: string;
+  kind: RoomId;
 }
 
 interface LayoutTemplate {
   id: string;
   label: string;
-  rooms: RoomSpec[];
+  rooms: TemplateRoom[];
   doors: Array<[number, number]>;
 }
 
@@ -380,8 +398,8 @@ function propPlacement(prop: PropInstance | undefined): PropPlacement {
   return PROP_TEMPLATES.find((template) => template.id === prop?.templateId)?.placement ?? 'floor';
 }
 
-function roomGrid(rooms: RoomSpec[]): Array<Array<string | null>> {
-  const cells = grid<string | null>(COLS, ROWS, null);
+function roomGrid(rooms: RoomSpec[], cols: number, rows: number): Array<Array<string | null>> {
+  const cells = grid<string | null>(cols, rows, null);
   for (const room of rooms) {
     for (let y = room.y; y < room.y + room.rows; y++) {
       for (let x = room.x; x < room.x + room.cols; x++) cells[y][x] = room.id;
@@ -390,7 +408,7 @@ function roomGrid(rooms: RoomSpec[]): Array<Array<string | null>> {
   return cells;
 }
 
-function fillFloor(scene: SceneState, roomId: RoomId, floorId: string | null): void {
+function fillFloor(scene: SceneState, roomId: string, floorId: string | null): void {
   if (!floorId) return;
   for (let y = 0; y < scene.rows; y++) {
     for (let x = 0; x < scene.cols; x++) {
@@ -438,7 +456,7 @@ function doorwayRotation(scene: SceneState, x: number, y: number): SceneRotation
 }
 
 function wallForRoom(room: RoomSpec, officeWall: string | null, glassWall: string | null): string | null {
-  if (room.id === 'manager-office' || room.id === 'conference-room' || room.id === 'focus-room') {
+  if (room.kind === 'manager-office' || room.kind === 'conference-room' || room.kind === 'focus-room') {
     return glassWall ?? officeWall;
   }
   return officeWall;
@@ -469,10 +487,12 @@ function drawRoomWalls(
   officeWall: string | null,
   glassWall: string | null,
 ): void {
-  wallLine(scene, 0, 0, COLS - 1, 0, officeWall);
-  wallLine(scene, 0, ROWS - 1, COLS - 1, ROWS - 1, officeWall);
-  wallLine(scene, 0, 0, 0, ROWS - 1, officeWall);
-  wallLine(scene, COLS - 1, 0, COLS - 1, ROWS - 1, officeWall);
+  const maxX = scene.cols - 1;
+  const maxY = scene.rows - 1;
+  wallLine(scene, 0, 0, maxX, 0, officeWall);
+  wallLine(scene, 0, maxY, maxX, maxY, officeWall);
+  wallLine(scene, 0, 0, 0, maxY, officeWall);
+  wallLine(scene, maxX, 0, maxX, maxY, officeWall);
 
   for (const room of rooms) {
     const wall = wallForRoom(room, officeWall, glassWall);
@@ -484,18 +504,18 @@ function drawRoomWalls(
 
   // the building shell stays office wall — room wall types (glass) are
   // interior only, so re-assert the outer border last
-  wallLine(scene, 0, 0, COLS - 1, 0, officeWall);
-  wallLine(scene, 0, ROWS - 1, COLS - 1, ROWS - 1, officeWall);
-  wallLine(scene, 0, 0, 0, ROWS - 1, officeWall);
-  wallLine(scene, COLS - 1, 0, COLS - 1, ROWS - 1, officeWall);
+  wallLine(scene, 0, 0, maxX, 0, officeWall);
+  wallLine(scene, 0, maxY, maxX, maxY, officeWall);
+  wallLine(scene, 0, 0, 0, maxY, officeWall);
+  wallLine(scene, maxX, 0, maxX, maxY, officeWall);
 }
 
-function clearDoorways(scene: SceneState, template: LayoutTemplate): Array<{ x: number; y: number }> {
+function clearDoorways(scene: SceneState, doors: Array<[number, number]>): Array<{ x: number; y: number }> {
   const doorways: Array<{ x: number; y: number }> = [];
   // Single-tile doorways only: every gap gets exactly one door prop, which is
   // what walls connect to. Widening would clear a second tile with no door,
   // reopening a floor gap beside it.
-  for (const [x, y] of template.doors) {
+  for (const [x, y] of doors) {
     clearWall(scene, x, y);
     doorways.push({ x, y });
   }
@@ -581,13 +601,13 @@ function addRoomWallFixture(
 
 function decorateRoomWalls(scene: SceneState, project: ProjectState, rooms: RoomSpec[], rng: Rng): void {
   for (const room of rooms) {
-    if ((room.id === 'manager-office' || room.id === 'conference-room' || room.id === 'focus-room') && chance(rng, 0.85)) {
+    if ((room.kind === 'manager-office' || room.kind === 'conference-room' || room.kind === 'focus-room') && chance(rng, 0.85)) {
       addRoomWallFixture(scene, project, room, rng, `${room.id}-window`, 'prop-window', 'window');
     }
-    if ((room.id === 'manager-office' || room.id === 'focus-room' || room.id === 'records-room') && chance(rng, 0.75)) {
+    if ((room.kind === 'manager-office' || room.kind === 'focus-room' || room.kind === 'records-room') && chance(rng, 0.75)) {
       addRoomWallFixture(scene, project, room, rng, `${room.id}-nameplate`, 'prop-nameplate', 'nameplate');
     }
-    if ((room.id === 'break-room' || room.id === 'copy-room' || room.id === 'hallway' || room.id === 'storage-closet') && chance(rng, 0.62)) {
+    if ((room.kind === 'break-room' || room.kind === 'copy-room' || room.kind === 'hallway' || room.kind === 'storage-closet') && chance(rng, 0.62)) {
       addRoomWallFixture(scene, project, room, rng, `${room.id}-hvac`, 'prop-hvac-vent', 'hvac-vent');
     }
   }
@@ -1067,16 +1087,104 @@ function furnishHallway(scene: SceneState, project: ProjectState, room: RoomSpec
   if (chance(rng, 0.5)) addPropNear(scene, project, room, 'hall-plant', 'prop-office-plant', 'office-plant', 0.1, 0.5, rng);
 }
 
+/** Width of the common core block (reception below the hallway band). */
+const CORE_WIDTH = 8;
+/** Width of each department wing block. ≥7 keeps the bullpen interior ≥4 wide so
+ * `buildCubicleComb` yields desks; narrower would starve the wing of seats. */
+const WING_WIDTH = 9;
+
+/** The geometry of a generated office: its rooms, doorway cells, and footprint. */
+interface ComposedLayout {
+  rooms: RoomSpec[];
+  doors: Array<[number, number]>;
+  cols: number;
+  rows: number;
+  templateId: string;
+}
+
+/**
+ * Pack one department wing per requested department into a single grid that grows
+ * in width with department count (F1.4). Layout: a full-width **hallway band**
+ * across the top that every block opens onto, a **reception** core below it, and
+ * one full-height **cubicle-farm** wing per department to the right — each sharing
+ * a single vertical wall edge with its neighbor (inclusive overlap-by-1, so the
+ * shared column is one wall, never two) and connected to the band by a single-tile
+ * doorway. Pure function of the department list (no rng) — same list ⇒ same office.
+ */
+function composeWingLayout(project: ProjectState, wingDepartmentIds: string[]): ComposedLayout {
+  const rows = ROWS;
+  const n = wingDepartmentIds.length;
+  const coreX1 = CORE_WIDTH - 1;
+  const cols = CORE_WIDTH + n * (WING_WIDTH - 1);
+  const labelOf = (id: string): string => project.departments?.find((d) => d.id === id)?.label ?? id;
+
+  const rooms: RoomSpec[] = [
+    // One connected corridor spanning the full width — reception + every wing
+    // open up into it, so the whole office is reachable through the band. ≥3 rows
+    // so the band has a walkable interior row between its top and bottom walls.
+    { id: 'hallway', kind: 'hallway', label: 'Hallway', x: 0, y: 0, cols, rows: 3 },
+    { id: 'reception', kind: 'reception', label: 'Reception', x: 0, y: 2, cols: CORE_WIDTH, rows: rows - 2 },
+  ];
+  // Doorways sit on row 2 — the shared wall between the band's floor and each
+  // block below it. Single-tile; badge-reader pairing applies as for any doorway.
+  const doors: Array<[number, number]> = [[3, 2]];
+
+  for (let k = 0; k < n; k++) {
+    const dep = wingDepartmentIds[k];
+    const x0 = coreX1 + k * (WING_WIDTH - 1);
+    rooms.push({
+      id: `cubicle-farm@${dep}`,
+      kind: 'cubicle-farm',
+      label: `${labelOf(dep)} bullpen`,
+      x: x0,
+      y: 2,
+      cols: WING_WIDTH,
+      rows: rows - 2,
+      departmentId: dep,
+    });
+    doors.push([x0 + Math.floor(WING_WIDTH / 2), 2]);
+  }
+
+  return { rooms, doors, cols, rows, templateId: 'composed-wings' };
+}
+
+export interface GenerateOfficeOptions {
+  /**
+   * Department ids to pack as wings (F1.4). Order is honored verbatim (left to
+   * right) for determinism. Empty/omitted ⇒ the single-office templates, byte
+   * for byte as before.
+   */
+  wingDepartmentIds?: string[];
+}
+
 export function generateOfficeLayout(
   project: ProjectState,
   coworkerCount: number,
   seed?: number,
+  options?: GenerateOfficeOptions,
 ): GeneratedOfficeLayout {
   const actualSeed = seed ?? Math.floor(Math.random() * 0x7fffffff);
   const rng = mulberry32(actualSeed);
 
-  const template = pick(rng, LAYOUT_TEMPLATES);
-  const rooms = template.rooms.map((room) => ({ ...room }));
+  // Branch on the options, NOT on rng, so the single-office path's rng stream
+  // (template pick first) is untouched and its output stays byte-identical.
+  const wingDepartmentIds = (options?.wingDepartmentIds ?? []).filter(Boolean);
+  let rooms: RoomSpec[];
+  let doors: Array<[number, number]>;
+  let cols: number;
+  let rows: number;
+  let templateId: string;
+  if (wingDepartmentIds.length) {
+    ({ rooms, doors, cols, rows, templateId } = composeWingLayout(project, wingDepartmentIds));
+  } else {
+    const template = pick(rng, LAYOUT_TEMPLATES);
+    rooms = template.rooms.map((room) => ({ ...room, kind: room.id }));
+    doors = template.doors;
+    cols = COLS;
+    rows = ROWS;
+    templateId = template.id;
+  }
+
   const officeWall = byPreferredId(project.walls, 'wall-office')?.id ?? null;
   const glassWall = byPreferredId(project.walls, 'wall-glass')?.id ?? officeWall;
   const carpet = byPreferredId(project.floors, 'floor-carpet')?.id ?? null;
@@ -1087,29 +1195,29 @@ export function generateOfficeLayout(
   const quiet = byPreferredId(project.floors, 'floor-quiet-carpet')?.id ?? carpet;
 
   const scene: SceneState = {
-    cols: COLS,
-    rows: ROWS,
-    floorIds: grid(COLS, ROWS, carpet),
-    wallIds: grid<string | null>(COLS, ROWS, null),
+    cols,
+    rows,
+    floorIds: grid(cols, rows, carpet),
+    wallIds: grid<string | null>(cols, rows, null),
     entities: [],
     rooms,
-    roomIds: roomGrid(rooms),
+    roomIds: roomGrid(rooms, cols, rows),
     source: 'generated',
-    generated: { templateId: template.id, seed: actualSeed },
+    generated: { templateId, seed: actualSeed },
   };
 
   const floorSet = { carpet, lobby, wood, linoleum, utility, quiet };
-  for (const room of rooms.filter((item) => item.id !== 'hallway')) {
-    fillFloor(scene, room.id, floorForRoom(room.id, floorSet));
+  for (const room of rooms.filter((item) => item.kind !== 'hallway')) {
+    fillFloor(scene, room.id, floorForRoom(room.kind, floorSet));
   }
   // hallway fills LAST so shared boundary tiles show hallway carpet — reads as
   // a consistent corridor border instead of random floor strips under walls
-  for (const room of rooms.filter((item) => item.id === 'hallway')) {
-    fillFloor(scene, room.id, floorForRoom(room.id, floorSet));
+  for (const room of rooms.filter((item) => item.kind === 'hallway')) {
+    fillFloor(scene, room.id, floorForRoom(room.kind, floorSet));
   }
 
   drawRoomWalls(scene, rooms, officeWall, glassWall);
-  const doorways = clearDoorways(scene, template);
+  const doorways = clearDoorways(scene, doors);
   // reserve the doorway throats before anything is furnished, so no desk or
   // idle coworker ends up plugging a doorway
   doorwayClearance = computeDoorwayClearance(scene, doorways);
@@ -1119,19 +1227,19 @@ export function generateOfficeLayout(
   let managerSeat: SeatCell | undefined;
   const seats: SeatCell[] = [];
   for (const room of rooms) {
-    if (room.id === 'reception') furnishReception(scene, project, room, rng);
-    else if (room.id === 'manager-office') managerSeat = furnishManagerOffice(scene, project, room, rng);
-    else if (room.id === 'break-room') furnishBreakRoom(scene, project, room, rng);
-    else if (room.id === 'conference-room') furnishConferenceRoom(scene, project, room, rng);
-    else if (room.id === 'cubicle-farm') seats.push(...buildCubicleComb(scene, project, room, rng));
-    else if (room.id === 'hallway') furnishHallway(scene, project, room, rng);
-    else if (room.id === 'copy-room') furnishCopyRoom(scene, project, room, rng);
-    else if (room.id === 'records-room') furnishRecordsRoom(scene, project, room, rng);
-    else if (room.id === 'focus-room') {
+    if (room.kind === 'reception') furnishReception(scene, project, room, rng);
+    else if (room.kind === 'manager-office') managerSeat = furnishManagerOffice(scene, project, room, rng);
+    else if (room.kind === 'break-room') furnishBreakRoom(scene, project, room, rng);
+    else if (room.kind === 'conference-room') furnishConferenceRoom(scene, project, room, rng);
+    else if (room.kind === 'cubicle-farm') seats.push(...buildCubicleComb(scene, project, room, rng));
+    else if (room.kind === 'hallway') furnishHallway(scene, project, room, rng);
+    else if (room.kind === 'copy-room') furnishCopyRoom(scene, project, room, rng);
+    else if (room.kind === 'records-room') furnishRecordsRoom(scene, project, room, rng);
+    else if (room.kind === 'focus-room') {
       const seat = furnishFocusRoom(scene, project, room, rng);
       if (seat) seats.push(seat);
-    } else if (room.id === 'waiting-nook') furnishWaitingNook(scene, project, room, rng);
-    else if (room.id === 'storage-closet') furnishStorageCloset(scene, project, room, rng);
+    } else if (room.kind === 'waiting-nook') furnishWaitingNook(scene, project, room, rng);
+    else if (room.kind === 'storage-closet') furnishStorageCloset(scene, project, room, rng);
   }
 
   const baseCast = project.characters.filter((recipe) => !recipe.id.startsWith(GENERATED_COWORKER_PREFIX));
@@ -1164,7 +1272,7 @@ export function generateOfficeLayout(
     if (cell) addCharacter(scene, project, coworker, cell.x, cell.y, pick(rng, AMBIENT_MOODS), pick(rng, FACINGS));
   }
 
-  return { scene, coworkers, seed: actualSeed, templateId: template.id };
+  return { scene, coworkers, seed: actualSeed, templateId };
 }
 
 /** A seatable cell in a wing — a desk prop cell, then open floor as fallback. */
@@ -1186,10 +1294,14 @@ const SPARE_DESKS_PER_WING = 2;
  * seating room.
  */
 function wingSeatCells(scene: SceneState, project: ProjectState, wing: LayoutWing): DeskCell[] {
+  // A room's archetype drives seating; in a composed office `kind` differs from
+  // the (unique) `id`, so match on `kind` but collect the unique `id`s that
+  // `scene.roomIds` cells actually carry. Hand-authored rooms fall back to `id`.
+  const kindOf = (r: SceneRoom): string => r.kind ?? r.id;
   const roomsInWing = (scene.rooms ?? []).filter((r) => wing.roomIds.includes(r.id));
-  const seating = roomsInWing.filter((r) => SEATING_ROOM_IDS.has(r.id));
-  const useIds = new Set((seating.length ? seating : roomsInWing).map((r) => r.id));
-  useIds.delete('manager-office');
+  const seating = roomsInWing.filter((r) => SEATING_ROOM_IDS.has(kindOf(r)));
+  const base = (seating.length ? seating : roomsInWing).filter((r) => kindOf(r) !== 'manager-office');
+  const useIds = new Set(base.map((r) => r.id));
 
   const roomAt = (x: number, y: number): string => scene.roomIds?.[y]?.[x] ?? '';
   const cells: DeskCell[] = [];

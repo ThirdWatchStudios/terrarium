@@ -576,7 +576,9 @@ function renderSceneGenerate(container: HTMLElement): void {
   });
 
   const generate = (seed: number | undefined) => {
-    const generated = generateOfficeLayout(store.state, store.ui.sceneCoworkers, seed);
+    const generated = generateOfficeLayout(store.state, store.ui.sceneCoworkers, seed, {
+      wingDepartmentIds: store.ui.sceneWingDepartmentIds,
+    });
     store.ui.sceneSeed = String(generated.seed);
     store.mutate((state) => {
       state.characters = state.characters
@@ -595,11 +597,35 @@ function renderSceneGenerate(container: HTMLElement): void {
   // always rolls a fresh seed — one click, new office
   const randomBtn = button('🎲 New office', () => generate(undefined), 'primary');
 
+  // Department wings (F1.4): each checked department becomes its own wing, and the
+  // footprint grows to fit them. None checked = the classic single office.
+  const wingBox = el('div', { className: 'check-grid' });
+  for (const dept of store.state.departments) {
+    wingBox.append(
+      el(
+        'label',
+        { className: 'check-item' },
+        el('input', {
+          type: 'checkbox',
+          ...(store.ui.sceneWingDepartmentIds.includes(dept.id) ? { checked: true } : {}),
+          onChange: () => {
+            store.ui.sceneWingDepartmentIds = store.ui.sceneWingDepartmentIds.includes(dept.id)
+              ? store.ui.sceneWingDepartmentIds.filter((id) => id !== dept.id)
+              : [...store.ui.sceneWingDepartmentIds, dept.id];
+          },
+        }),
+        dept.label,
+      ),
+    );
+  }
+
   container.append(
     el('h3', {}, 'Random office'),
     el('p', { className: 'hint' }, 'Roll a fresh office and coworker cast, or replay a pinned seed.'),
     labeled('Random coworkers', coworkerInput),
     labeled('Seed (same seed = same office)', seedInput),
+    labeled('Department wings (optional)', wingBox),
+    el('p', { className: 'hint' }, 'Check departments to pack a multi-wing office that grows with the count; leave all unchecked for a single office.'),
     el('div', { className: 'btn-row' }, randomBtn, generateBtn),
   );
 }
