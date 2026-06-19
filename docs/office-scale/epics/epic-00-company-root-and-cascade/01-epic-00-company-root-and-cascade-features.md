@@ -26,18 +26,18 @@ harvest gate.
 
 ## Feature Sequence
 
-| Order | Code | Feature | Pass | Depends On | Purpose |
+| Order | Code | Feature | Depends On | Purpose | Pass |
 |---:|---|---|---|---|---|
-| 1 | F0.1 | Company Model & Reference Company | 1 | none | The rich, serializable company entity + derived climate aggregates + one hand-authored reference company. |
-| 2 | F0.2 | Company Archetype Library | 1 | F0.1 | Seeded archetype generators — the new-game presets that sample a coherent company. |
-| 3 | F0.3 | Structure Derivation | 2 | F0.2, E2 | Derive departments + org-chart shape from company character, emitted into Epic 2's artifacts. |
-| 4 | F0.4 | Department Subculture Cascade | 2 | F0.3 | Each generated department gets a subculture biased by company culture + a deviation budget. |
-| 5 | F0.5 | Culture-Weighted Persona Generation | 2 | F0.4, E3 | Feed company + department culture into Epic 3's persona generation so people diverge by company character. |
-| 6 | F0.6 | History-Seeded Relationship & Climate Wiring | 2 | F0.5, E3 | Wire Epic 3's relationship graph from social climate + factionalism + formative-event edges. |
-| 7 | F0.7 | History-Seeded Scenario Eligibility | 2 | F0.6, E4 | Company history pre-loads/biases eligible Epic 4 scenario templates. |
-| 8 | F0.8 | Company Package Export | 2 | F0.1, F0.3, F0.5, F0.6, F0.7 | `company.json` root + reframe the bundle as a company package; contract + schema bump. |
-| 9 | F0.9 | Company Authoring & Preview UI | 1→2 | F0.1, F0.2 | A "Company" tab: pick archetype/seed/dials, generate, inspect the cascade, override any field. |
-| 10 | F0.10 | Seed Coverage & Drama Validation | 2 | F0.6, F0.7 | Validate a generated company is playable, drama-rich, structurally sound, and actually diverged. |
+| 1 | F0.1 | Company Model & Reference Company | none | The rich, serializable company entity + derived climate aggregates + one hand-authored reference company. | 1 |
+| 2 | F0.2 | Company Archetype Library | F0.1 | Seeded archetype generators — the new-game presets that sample a coherent company. | 1 |
+| 3 | F0.3 | Structure Derivation | F0.2, E2 | Derive departments + org-chart shape from company character, emitted into Epic 2's artifacts. | 2 |
+| 4 | F0.4 | Department Subculture Cascade | F0.3 | Each generated department gets a subculture biased by company culture + a deviation budget. | 2 |
+| 5 | F0.5 | Culture-Weighted Persona Generation | F0.4, E3 | Feed company + department culture into Epic 3's persona generation so people diverge by company character. | 2 |
+| 6 | F0.6 | History-Seeded Relationship & Climate Wiring | F0.5, E3 | Wire Epic 3's relationship graph from social climate + factionalism + formative-event edges. | 2 |
+| 7 | F0.7 | History-Seeded Scenario Eligibility | F0.6, E4 | Company history pre-loads/biases eligible Epic 4 scenario templates. | 2 |
+| 8 | F0.8 | Company Package Export | F0.1, F0.3, F0.5, F0.6, F0.7 | `company.json` root + reframe the bundle as a company package; contract + schema bump. | 2 |
+| 9 | F0.9 | Company Authoring & Preview UI | F0.1, F0.2 | A "Company" tab: pick archetype/seed/dials, generate, inspect the cascade, override any field. | 1→2 |
+| 10 | F0.10 | Seed Coverage & Drama Validation | F0.6, F0.7 | Validate a generated company is playable, drama-rich, structurally sound, and actually diverged. | 2 |
 
 Epic 0 goal:
 
