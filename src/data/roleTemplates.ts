@@ -280,4 +280,138 @@ export const THE_CONTESTED_PROMOTION: ScenarioTemplate = {
   },
 };
 
-export const ROLE_TEMPLATES: ScenarioTemplate[] = [THE_OFFICE_ROMANCE, THE_CONTESTED_PROMOTION];
+/**
+ * The Turf War — the **cross-department reference template** (Epic 4 F4.5), the
+ * cross-wing analog of `THE_OFFICE_ROMANCE`: where the romance pairs two coworkers
+ * who sit close, this pairs two ambitious operators in **different departments**
+ * fighting over the same reallocated resource. It is the worked proof of the F4.2
+ * department vocabulary — the two rivals are bound by a `crossDepartment` /
+ * `'different'` precondition (the cross-wing pairing), so it can only cast across a
+ * departmental boundary.
+ *
+ * Roles, not names: `rivalA`/`rivalB` = ambitious champions of two different
+ * departments; `instigator` = an optional leaky coworker who fans the feud across
+ * the aisle. Cast onto the default four it resolves the rivals to an operations
+ * member + the manager (the only cross-department pair) and may leave the instigator
+ * to a low-discretion coworker; cast onto a generated multi-department org it picks
+ * two ambitious people from two wings.
+ *
+ * Family `'rivalry'` → a reorg / merger / acquisition in the company's history makes
+ * it run **hot** (F0.7 `HISTORY_FAMILY_MAP`), so a generated seed with that past
+ * opens on a real cross-wing conflict.
+ *
+ * NOTE: the **organizational-distance** term (a distance precondition / distance-
+ * scaled cost across wings) is Epic 4 F4.3 — not yet in the vocabulary. When it
+ * lands, this template gains a distance term so a farther-apart pairing reads as a
+ * costlier, higher-stakes turf war. Today it exercises the department predicates only.
+ */
+export const THE_TURF_WAR: ScenarioTemplate = {
+  templateId: 'the_turf_war',
+  family: 'rivalry',
+  title: 'The Turf War',
+  summary:
+    'Two ambitious operators in different departments fight over a reallocated resource — does the rivalry stay contained, or harden into open interdepartmental warfare?',
+  triggering: 'provoke',
+  emotionalPayload: {
+    targetEmotions: ['resentment', 'contempt', 'vindication'],
+    description:
+      'A cross-wing turf dispute: the slighted department stews (resentment), each side writes off the other (contempt), and whoever holds the resource feels proven right (vindication).',
+  },
+  roles: [
+    {
+      roleId: 'rivalA',
+      label: 'Aggrieved Champion',
+      description: "The ambitious face of the department that lost ground; carries the grievance into the other's wing.",
+      required: true,
+      preconditions: [
+        { kind: 'axis', axis: 'ambition', op: 'gte', value: 50 },
+        // the cross-wing pairing: rivalA and rivalB must sit in different departments.
+        { kind: 'crossDepartment', toRole: 'rivalB', relation: 'different' },
+      ],
+    },
+    {
+      roleId: 'rivalB',
+      label: 'Holding Champion',
+      description: 'The ambitious operator from the department that gained the resource and means to keep it.',
+      required: true,
+      preconditions: [
+        { kind: 'axis', axis: 'ambition', op: 'gte', value: 50 },
+        { kind: 'crossDepartment', toRole: 'rivalA', relation: 'different' },
+      ],
+    },
+    {
+      roleId: 'instigator',
+      label: 'Cross-Aisle Instigator',
+      description: 'A leaky coworker (low discretion) who carries the feud between the two wings.',
+      required: false,
+      preconditions: [{ kind: 'axis', axis: 'discretion', op: 'lte', value: 35 }],
+    },
+  ],
+  roleSeeds: [
+    {
+      roleId: 'rivalA',
+      beliefSeeds: [{ topic: 'the_reallocation', claim: 'They poached our budget — and the credit with it.', stance: 'accepts', confidence: 80 }],
+      knowledgeSeeds: ['turf_grievance'],
+      // the dispute surfacing as suspicion + cooled affinity toward the other wing.
+      relationshipOverrides: [{ toRole: 'rivalB', suspicion: 80, affinity: -60 }],
+    },
+    {
+      roleId: 'rivalB',
+      beliefSeeds: [{ topic: 'the_reallocation', claim: 'We earned that resource fair and square.', stance: 'accepts', confidence: 85 }],
+      knowledgeSeeds: ['reallocation_memo'],
+      relationshipOverrides: [{ toRole: 'rivalA', suspicion: 60, affinity: -40 }],
+    },
+    {
+      roleId: 'instigator',
+      beliefSeeds: [{ topic: 'the_reallocation', claim: 'Those two departments are at war.', stance: 'suspects', confidence: 45 }],
+      knowledgeSeeds: [],
+      relationshipOverrides: [],
+    },
+  ],
+  locations: [
+    { locationId: 'rivalA_desk', displayName: "Aggrieved Champion's Desk", tags: ['work_area'], accessState: 'open', fallbackLocationId: 'hallway', bindRoomId: 'cubicle-farm', bindDeskOfRole: 'rivalA' },
+    { locationId: 'rivalB_desk', displayName: "Holding Champion's Desk", tags: ['work_area'], accessState: 'open', fallbackLocationId: 'hallway', bindRoomId: 'cubicle-farm', bindDeskOfRole: 'rivalB' },
+    { locationId: 'contested_ground', displayName: 'Break Room (Neutral Ground)', tags: ['break_area'], accessState: 'open', fallbackLocationId: 'hallway', bindRoomId: 'break-room' },
+    { locationId: 'hallway', displayName: 'Hallway', tags: ['transit'], accessState: 'open', fallbackLocationId: '', bindRoomId: 'hallway' },
+  ],
+  roleSpawns: [
+    { roleId: 'rivalA', locationId: 'rivalA_desk' },
+    { roleId: 'rivalB', locationId: 'rivalB_desk' },
+    { roleId: 'instigator', locationId: 'contested_ground' },
+  ],
+  truthFacts: [
+    {
+      truthId: 'budget_reallocated',
+      topic: 'the_reallocation',
+      statement: "Leadership moved the contested resource from rivalA's department to rivalB's.",
+      subjectRoles: ['rivalA', 'rivalB'],
+      objectiveValue: true,
+      sourceRole: 'rivalB',
+    },
+  ],
+  informationItems: [
+    { informationId: 'reallocation_memo', topic: 'the_reallocation', claim: 'The reallocation was made official.', originType: 'official', truthId: 'budget_reallocated', truthAlignment: 'true', sourceRole: 'rivalB', initialHolderRoles: ['rivalB'] },
+    { informationId: 'turf_grievance', topic: 'the_reallocation', claim: 'The other department rigged the reallocation.', originType: 'rumor', truthId: 'budget_reallocated', truthAlignment: 'misleading', sourceRole: 'rivalA', initialHolderRoles: ['rivalA'] },
+  ],
+  interventionTypes: [
+    { type: 'resolution', values: ['mediated', 'escalated'] },
+    { type: 'visibility', values: ['private', 'public'] },
+  ],
+  variants: [
+    { variantId: 'mediated_private', selections: { resolution: 'mediated', visibility: 'private' } },
+    { variantId: 'escalated_public', selections: { resolution: 'escalated', visibility: 'public' } },
+    { variantId: 'escalated_private', selections: { resolution: 'escalated', visibility: 'private' } },
+  ],
+  defaultVariantId: 'escalated_public',
+  objective: {
+    objectiveId: 'contain_interdepartmental_rivalry',
+    label: 'Test whether a cross-department resource dispute stays contained or hardens into factional warfare.',
+    category: 'stability',
+    desiredPressure: 'interdepartmental_tension',
+    intendedObservableBehavior: 'The rivalry stays a two-person grievance OR the instigator spreads it into a department-vs-department faction.',
+    kpi: 'rivalry_escalation_or_containment_assessment',
+    expectedEvidence: ['affinity changes', 'rivalry events', 'faction formation'],
+  },
+};
+
+export const ROLE_TEMPLATES: ScenarioTemplate[] = [THE_OFFICE_ROMANCE, THE_CONTESTED_PROMOTION, THE_TURF_WAR];

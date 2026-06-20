@@ -12,8 +12,11 @@ fleshed out when each is authored.
 - **Precondition vocab** (reuse existing catalogs only): `trait`, `axis` (OCEAN +
   ambition/integrity/loyalty/discretion + temper/grudgeHolding), `need`, `drive`,
   `relationship` (pairwise-to-a-role), `aggregate` (a rel axis reduced across the whole
-  cast). Proximity == `familiarity`. Roles: `present` (default) or `absent` (resolved +
-  referenced, kept off-scene, reported as "the one to remove").
+  cast), `department` (member of / not-member of a department catalog id — F4.2),
+  `crossDepartment` (two slots in the **same**/**different** department — the cross-wing
+  pairing, F4.2). Proximity == `familiarity`; **organizational distance** is F4.3 (open).
+  Roles: `present` (default) or `absent` (resolved + referenced, kept off-scene, reported
+  as "the one to remove").
 
 **Legend** — **BUILT** · ▶ recommended build-first · ★ fills a payload gap ·
 ⚑ needs model/sim work *(dep)* · roles tagged `(req)`/`(opt)`/`(absent)`. Format:
@@ -44,6 +47,7 @@ fleshed out when each is authored.
 - **The Snub** — `snubbed`(req, high belonging+recognition need), `snubber`(req, high influence), `witnesses`(aggregate) → hurt, exclusion, indignation.
 
 ## Family `rivalry` *(competition & power)*
+- **The Turf War** **BUILT** (`the_turf_war`) — `rivalA`/`rivalB`(req, ambition≥50 + **crossDepartment different** — the two champions must sit in different wings), `instigator`(opt, discretion≤35, carries the feud across the aisle) → resentment, contempt, vindication · *the cross-department reference template (F4.5) — proves the `department`/`crossDepartment` vocabulary; casts the rivals across a departmental boundary on the default cast (operations↔management) and on a generated multi-department org. Gains an organizational-distance term once F4.3 lands.*
 - **The Feud (Cold War)** — `combatantA`/`combatantB`(req, mutual rival/nemesis, low affinity, high suspicion+temper), `bystander`(opt, ally to one) → hostility, dread, split loyalty, schadenfreude.
 - **The Betrayal** ▶ — `victim`(req, high trust→betrayer), `betrayer`(req, ally/confidant→victim but high ambition, low loyalty, opportunist), `beneficiary`(req, rival→victim) → betrayal, shock, grief, vindication.
 - **The Power Vacuum** — `authority`(absent, opt, high discretion/leadership), `contenderA`/`contenderB`(req, high ambition+influence, drive gain_influence), `followers`(opt) → ambition, anxiety, opportunism · *uses the `absent` role.*
@@ -186,7 +190,11 @@ Still thinnest on **awe/admiration** and **gratitude** — likely weak harvests;
 ---
 
 ## Changelog
-- **Rev 4 (this pass):** consolidated the full chat brainstorm into the doc; added families
+- **Rev 5 (Epic 4):** added the `department`/`crossDepartment` precondition vocabulary (F4.2)
+  and **The Turf War** (`the_turf_war`) — the cross-department reference template (F4.5) under
+  `rivalry`, the first BUILT entry to cross a departmental boundary. Organizational-distance
+  preconditions (F4.3) flagged as the next vocabulary addition.
+- **Rev 4:** consolidated the full chat brainstorm into the doc; added families
   `integrity`, `status`, `deception`, `coalition`, `productivity`, `territory`, `lifecycle`
   (~53 new candidates, ~70 total/14 families); switched to a compact catalog format; added the
   Chains section and gaps #5–#7; refreshed payload coverage.
