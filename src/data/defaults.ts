@@ -4,6 +4,13 @@ import type { CharacterProfile, DriveDefinition, Relationship, RelationshipTypeD
 import { applyDerived, createDefaultProfile } from '../core/profile';
 import type { Scenario } from '../core/scenario';
 import { defaultCapabilitiesForCategory, type DepartmentDefinition } from '../core/department';
+import { MERIDIAN_DYNAMICS } from './companies';
+import { generateOfficeLayout } from '../core/layout';
+import type { SceneState } from '../core/scene';
+import { deriveDepartments } from '../core/companyStructure';
+import { generatePopulation, employeeRecipe, getProfile } from '../core/employee';
+import { generateEmployeePersona } from '../core/populationPersona';
+import { generateRelationshipGraph } from '../core/relationshipGraph';
 
 export const DEFAULT_STYLE: StyleSheet = {
   outline: {
@@ -1041,7 +1048,8 @@ export const DEFAULT_DEPARTMENTS: DepartmentDefinition[] = SEED_DEPARTMENTS.map(
   capabilities: defaultCapabilitiesForCategory(d.category),
 }));
 
-export function defaultProject(): ProjectState {
+/** Everything in the default project except the baseline office scene. */
+function baseDefaultProject(): ProjectState {
   return {
     version: CURRENT_SCHEMA_VERSION,
     style: structuredClone(DEFAULT_STYLE),
@@ -1056,5 +1064,94 @@ export function defaultProject(): ProjectState {
     traits: structuredClone(DEFAULT_TRAITS),
     relationshipTypes: structuredClone(DEFAULT_RELATIONSHIP_TYPES),
     departments: structuredClone(DEFAULT_DEPARTMENTS),
+    // The default project is a complete company package: MERIDIAN_DYNAMICS (the
+    // reference declining-incumbent, exercising every Company field) is the org
+    // the hero cast works at, so a plain export emits company.json and the full
+    // bundle is testable in the sim without running the cascade. The 4-person
+    // hero cast stays the sim-bound fixture (see tests/contract.test.ts); the
+    // generated multi-department baseline lives behind `export company:<seed>`.
+    company: structuredClone(MERIDIAN_DYNAMICS),
   };
+}
+
+/** Deterministic seed for the baseline office, matching the headless `default` export. */
+const DEFAULT_OFFICE_SEED = 1;
+
+/**
+ * The baseline office, generated once at module load so a Reset-all restores the
+ * same wing-tagged hero office the export ships (Epic 1 wings: the bullpen is the
+ * operations wing, the manager office is the management wing, everything else is
+ * common). Hero cast only (no throwaway coworkers) — populate via the Office tab.
+ * Cloned per `defaultProject()` call so callers can mutate freely.
+ */
+const DEFAULT_SCENE: SceneState = generateOfficeLayout(baseDefaultProject(), 0, DEFAULT_OFFICE_SEED).scene;
+
+export function defaultProject(): ProjectState {
+  return { ...baseDefaultProject(), scene: structuredClone(DEFAULT_SCENE) };
+}
+
+// --- The golden baseline: a complete, multi-department, populated company -------
+// The hero cast (operations + management) anchored inside a generated supporting
+// company so a plain Reset / first-load / `export default` yields the full bundle
+// the sim consumes — multi-wing populated office + personas + relationships +
+// company + scenario(-template) — without anyone running the cascade by hand.
+
+const GOLDEN_SEED = 1;
+/** How many department wings the golden office shows (kept usable, not all 13). */
+const GOLDEN_WING_COUNT = 5;
+/** Generated coworkers per non-operations wing (operations is the hero cast). */
+const GOLDEN_PER_DEPT = 2;
+
+/** The department wings the golden office populates: derived from MERIDIAN, capped,
+ *  operations guaranteed (the hero cast), management excluded (it's the manager office). */
+function goldenWingDepartments(base: ProjectState): string[] {
+  const derived = deriveDepartments(MERIDIAN_DYNAMICS, base.departments, String(GOLDEN_SEED))
+    .map((d) => d.id)
+    .filter((id) => id !== 'management');
+  const ordered = ['operations', ...derived.filter((id) => id !== 'operations')];
+  return [...new Set(ordered)].slice(0, GOLDEN_WING_COUNT);
+}
+
+function buildDefaultGoldenProject(): ProjectState {
+  const base = baseDefaultProject();
+  const wingDepartmentIds = goldenWingDepartments(base);
+  const characters = [...base.characters];
+  const profiles = [...(base.profiles ?? [])];
+
+  // Generate a supporting population for every wing except operations (the hero
+  // cast fills that). Each coworker gets a full persona (F3.2). Ids are stable and
+  // un-prefixed so they count as seated population, not throwaway filler.
+  for (const dept of wingDepartmentIds) {
+    if (dept === 'operations') continue;
+    const visualProfile = getProfile(dept).id;
+    const pop = generatePopulation(GOLDEN_PER_DEPT, visualProfile, base.style, `golden:${dept}`);
+    pop.employees.forEach((emp, i) => {
+      emp.metadata.department = dept;
+      const recipe = { ...employeeRecipe(emp), id: `golden-${dept}-${i + 1}` };
+      characters.push(recipe);
+      profiles.push(generateEmployeePersona(emp, recipe));
+    });
+  }
+
+  // Wire relationships across the whole cohort (appends — the hero cast's authored
+  // edges are preserved); gives the generated population intra/inter-dept ties.
+  generateRelationshipGraph(profiles, { seed: 'golden', relationshipTypes: base.relationshipTypes });
+
+  const project: ProjectState = { ...base, characters, profiles };
+  // Compose the populated multi-department office (explicit wing set so operations
+  // is a wing even though the hero — not generated coworkers — populate it).
+  project.scene = generateOfficeLayout(project, 0, GOLDEN_SEED, { wingDepartmentIds, denseSeating: true }).scene;
+  return project;
+}
+
+/** Built once at module load; structuredClone'd per call so callers can mutate. */
+const DEFAULT_GOLDEN_PROJECT = buildDefaultGoldenProject();
+
+/**
+ * The complete golden baseline used by Reset-all, first-load, and `export default`:
+ * the hero cast inside a generated multi-department company with a populated,
+ * wing-tagged office. `defaultProject()` stays the minimal hero-only base.
+ */
+export function defaultGoldenProject(): ProjectState {
+  return structuredClone(DEFAULT_GOLDEN_PROJECT);
 }

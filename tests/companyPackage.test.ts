@@ -73,7 +73,9 @@ describe('F0.8 — company package bundle (S0.8.2)', () => {
   });
 
   it('a project without a company emits no company.json (existing exports unaffected)', async () => {
-    const files = await exportJsonFiles(defaultProject());
+    // defaultProject() now ships MERIDIAN_DYNAMICS, so strip it to model a
+    // sprite-only (no-company) project — that path must still emit no company.json.
+    const files = await exportJsonFiles({ ...defaultProject(), company: undefined });
     expect(files.has('company.json')).toBe(false);
     expect(files.has('project.json')).toBe(true);
   });

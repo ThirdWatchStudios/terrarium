@@ -67,8 +67,8 @@ describe('department-tagged spawn (Epic 3 / F3.4)', () => {
     expect(wings.find((w) => w.departmentId === 'accounting')).toBeDefined();
     expect(wings.find((w) => w.departmentId === 'it')).toBeDefined();
     expect(wings.find((w) => w.id === 'wing-common')).toBeDefined();
-    // 2 department wings → CORE_WIDTH(8) + 2*8
-    expect(scene.cols).toBe(8 + 2 * 8);
+    // 2 department wings + the 3 shared common bays → CORE_WIDTH(8) + (2+3)*8
+    expect(scene.cols).toBe(8 + (2 + 3) * 8);
     expect(scene.rows).toBe(14);
   });
 
@@ -108,13 +108,15 @@ describe('department-tagged spawn (Epic 3 / F3.4)', () => {
     expect(JSON.stringify(a)).toBe(JSON.stringify(b));
   });
 
-  it('is backward compatible — no population means a single office with throwaway coworkers', () => {
+  it('is backward compatible — no promoted population uses the template path (not composed wings)', () => {
     const project = defaultProject(); // base cast only, no promoted population
     const result = generateOfficeLayout(project, 6, 7);
     expect(result.occupancy).toEqual([]);
     expect(result.coworkers.length).toBeGreaterThan(0); // throwaway filler still generated
+    // The static template path (not the composed-wings packer) is used; the hero
+    // cast tags it into operations/management wings + a shared common wing.
+    expect(result.scene.generated?.templateId).not.toBe('composed-wings');
     const wings = computeWings(result.scene, project);
-    expect(wings).toHaveLength(1);
-    expect(wings[0].id).toBe('wing-main');
+    expect(wings.some((w) => w.id === 'wing-common')).toBe(true);
   });
 });

@@ -17,7 +17,8 @@ export interface GoldenLayoutConfig {
 }
 
 export const GOLDEN_LAYOUT_CONFIGS: GoldenLayoutConfig[] = [
-  // Single-office regression lock (no wings → one implicit wing-main).
+  // Hero-office regression lock: the template path tags rooms onto the hero cast's
+  // departments → operations + management department wings + a common wing.
   { name: 'single', seed: 7 },
   // Two and three department wings — footprint scaling + connectivity.
   { name: 'wings-2', seed: 7, wingDepartmentIds: ['sales', 'engineering'] },

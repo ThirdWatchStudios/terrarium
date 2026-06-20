@@ -22,13 +22,23 @@ function isConnected(wingIds: string[], edges: WingConnectivityEdge[]): boolean 
 }
 
 describe('wing connectivity graph (Epic 1 / F1.3)', () => {
-  it('a single-office layout has one wing and no edges', () => {
+  it('a department-less layout has one wing and no edges', () => {
     const project = defaultProject();
+    for (const p of project.profiles ?? []) p.identity.department = ''; // no tags → one wing
     const { scene } = generateOfficeLayout(project, 6, 7);
     const wings = computeWings(scene, project);
     const edges = computeWingConnectivity(scene, project);
     expect(wings).toHaveLength(1);
     expect(edges).toEqual([]);
+    expect(isConnected(wings.map((w) => w.id), edges)).toBe(true);
+  });
+
+  it('the hero office connects its department wings through the common wing', () => {
+    const project = defaultProject();
+    const { scene } = generateOfficeLayout(project, 6, 7);
+    const wings = computeWings(scene, project);
+    const edges = computeWingConnectivity(scene, project);
+    expect(wings.length).toBeGreaterThan(1); // operations + management + common
     expect(isConnected(wings.map((w) => w.id), edges)).toBe(true);
   });
 

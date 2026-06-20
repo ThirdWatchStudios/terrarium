@@ -1,6 +1,6 @@
 import { downloadBlob, downloadJson, exportAllZip } from '../core/exporter';
 import { migrateProject } from '../core/migrations';
-import { defaultProject } from '../data/defaults';
+import { defaultGoldenProject } from '../data/defaults';
 import { store } from '../state';
 import { button, clear, el } from './dom';
 import { renderCharacterControls, renderCharacterList, renderCharacterPreview } from './characterPanel';
@@ -161,7 +161,7 @@ export function mountApp(root: HTMLElement): void {
       button('Export project JSON', () => downloadJson('water-cooler-project.json', store.state)),
       button('Reset all', () => {
         if (!confirm('Reset everything to the default cast, props, and style?')) return;
-        store.replaceProject(defaultProject());
+        store.replaceProject(defaultGoldenProject());
       }, 'danger'),
       exportAllBtn,
       importInput,

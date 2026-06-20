@@ -1193,23 +1193,44 @@ interface ComposedLayout {
 }
 
 /**
+ * The shared rooms every composed office carries so it stays sim-complete — the
+ * sim binds locations to these ids and the scripted scenario references them. They
+ * are untagged, so they fall into the `wing-common` catch-all (no extra wing/edge
+ * counts); the `manager-office` is where the manager seats. `management` is never a
+ * department bullpen — the manager lives in the manager office (see composeWingLayout).
+ */
+const COMPOSED_COMMON_BAYS: Array<{ id: RoomId; kind: RoomId; label: string }> = [
+  { id: 'manager-office', kind: 'manager-office', label: 'Manager office' },
+  { id: 'break-room', kind: 'break-room', label: 'Break room' },
+  { id: 'conference-room', kind: 'conference-room', label: 'Conference room' },
+];
+
+/**
  * Pack one department wing per requested department into a single grid that grows
  * in width with department count (F1.4). Layout: a full-width **hallway band**
- * across the top that every block opens onto, a **reception** core below it, and
- * one full-height **cubicle-farm** wing per department to the right — each sharing
- * a single vertical wall edge with its neighbor (inclusive overlap-by-1, so the
- * shared column is one wall, never two) and connected to the band by a single-tile
- * doorway. Pure function of the department list (no rng) — same list ⇒ same office.
+ * across the top that every block opens onto, a **reception** core below it, one
+ * full-height **cubicle-farm** wing per department, then the shared common bays
+ * (manager office + break + conference) so the office is **sim-complete** — each
+ * block shares a single vertical wall edge with its neighbor (inclusive
+ * overlap-by-1, so the shared column is one wall, never two) and connects to the
+ * band by a single-tile doorway. `management` maps to the manager-office bay, not
+ * a bullpen. Pure function of the department list (no rng) — same list ⇒ same office.
  */
 function composeWingLayout(project: ProjectState, wingDepartmentIds: string[]): ComposedLayout {
   const rows = ROWS;
-  const n = wingDepartmentIds.length;
   const coreX1 = CORE_WIDTH - 1;
-  const cols = CORE_WIDTH + n * (WING_WIDTH - 1);
   const labelOf = (id: string): string => project.departments?.find((d) => d.id === id)?.label ?? id;
 
+  // Department bullpens for every requested dept except management (which is the
+  // manager office), followed by the always-present shared common bays.
+  const deptBays = wingDepartmentIds
+    .filter((dep) => dep !== 'management')
+    .map((dep) => ({ id: `cubicle-farm@${dep}` as RoomId, kind: 'cubicle-farm' as RoomId, label: `${labelOf(dep)} bullpen`, departmentId: dep }));
+  const bays = [...deptBays, ...COMPOSED_COMMON_BAYS];
+  const cols = CORE_WIDTH + bays.length * (WING_WIDTH - 1);
+
   const rooms: RoomSpec[] = [
-    // One connected corridor spanning the full width — reception + every wing
+    // One connected corridor spanning the full width — reception + every block
     // open up into it, so the whole office is reachable through the band. ≥3 rows
     // so the band has a walkable interior row between its top and bottom walls.
     { id: 'hallway', kind: 'hallway', label: 'Hallway', x: 0, y: 0, cols, rows: 3 },
@@ -1219,21 +1240,11 @@ function composeWingLayout(project: ProjectState, wingDepartmentIds: string[]): 
   // block below it. Single-tile; badge-reader pairing applies as for any doorway.
   const doors: Array<[number, number]> = [[3, 2]];
 
-  for (let k = 0; k < n; k++) {
-    const dep = wingDepartmentIds[k];
+  bays.forEach((bay, k) => {
     const x0 = coreX1 + k * (WING_WIDTH - 1);
-    rooms.push({
-      id: `cubicle-farm@${dep}`,
-      kind: 'cubicle-farm',
-      label: `${labelOf(dep)} bullpen`,
-      x: x0,
-      y: 2,
-      cols: WING_WIDTH,
-      rows: rows - 2,
-      departmentId: dep,
-    });
+    rooms.push({ ...bay, x: x0, y: 2, cols: WING_WIDTH, rows: rows - 2 });
     doors.push([x0 + Math.floor(WING_WIDTH / 2), 2]);
-  }
+  });
 
   return { rooms, doors, cols, rows, templateId: 'composed-wings' };
 }
@@ -1245,6 +1256,35 @@ export interface GenerateOfficeOptions {
    * for byte as before.
    */
   wingDepartmentIds?: string[];
+  /**
+   * Fill every desk instead of holding `SPARE_DESKS_PER_WING` empty per wing — used
+   * by the golden baseline so the hero cast and supporting population all seat even
+   * in tight wings. Default false (reserve spares for later transfers, E41).
+   */
+  denseSeating?: boolean;
+}
+
+/**
+ * Room→department tagger for the hero (non-generated) office template path (F1.1).
+ * The seated base cast's shared department flavors the seating rooms (bullpen /
+ * focus); the manager's department flavors the manager office; every other room
+ * stays common. Returns null whenever the tag can't be derived (no department, or
+ * the base cast spans several departments), so a department-less cast collapses to
+ * the single implicit wing exactly as before.
+ */
+function heroRoomDepartments(project: ProjectState, deptOf: Map<string, string>): (kind: string) => string | undefined {
+  const base = project.characters.filter((r) => !r.id.startsWith(GENERATED_COWORKER_PREFIX));
+  const managerDept = deptOf.get('manager') || '';
+  const bullpenDepts = new Set(
+    base.filter((r) => r.id !== 'manager').map((r) => deptOf.get(r.id) || '').filter(Boolean),
+  );
+  const bullpenDept = bullpenDepts.size === 1 ? [...bullpenDepts][0] : '';
+  return (kind: string): string | undefined => {
+    if (kind === 'manager-office') return managerDept || undefined;
+    // Only the bullpen joins the department wing; the focus room stays common.
+    if (kind === 'cubicle-farm') return bullpenDept || undefined;
+    return undefined;
+  };
 }
 
 export function generateOfficeLayout(
@@ -1277,7 +1317,13 @@ export function generateOfficeLayout(
     ({ rooms, doors, cols, rows, templateId } = composeWingLayout(project, wingDepartmentIds));
   } else {
     const template = pick(rng, LAYOUT_TEMPLATES);
-    rooms = template.rooms.map((room) => ({ ...room, kind: room.id }));
+    // Tag the hero office's rooms onto the cast's departments (F1.1) so a plain
+    // office — no added population — still reads as real wings: the bullpen is the
+    // seated base cast's shared department, the manager office is the manager's,
+    // everything else is common. A department-less cast yields null tags → the
+    // single implicit wing, byte-for-byte as before.
+    const tagFor = heroRoomDepartments(project, populationDeptOf);
+    rooms = template.rooms.map((room) => ({ ...room, kind: room.id, departmentId: tagFor(room.id) }));
     doors = template.doors;
     cols = COLS;
     rows = ROWS;
@@ -1345,17 +1391,28 @@ export function generateOfficeLayout(
   // Population mode seats the existing promoted cast (already in project.characters),
   // so no throwaway coworkers are fabricated; otherwise keep the quick-office filler.
   const coworkers = populationMode ? [] : createGeneratedCoworkers(project, coworkerCount, rng, actualSeed);
-  spawnCharacter(scene, project, baseCast.find((r) => r.id === 'janice') ?? baseCast[0], 'hallway', 'suspicious', pick(rng, FACINGS), rng);
-  spawnCharacter(scene, project, baseCast.find((r) => r.id === 'carl') ?? baseCast[1], chance(rng, 0.5) ? 'break-room' : 'cubicle-farm', 'curious', pick(rng, FACINGS), rng);
-  spawnCharacter(scene, project, baseCast.find((r) => r.id === 'linda') ?? baseCast[2], chance(rng, 0.5) ? 'conference-room' : 'cubicle-farm', 'defensive', pick(rng, FACINGS), rng);
   const manager = baseCast.find((r) => r.id === 'manager') ?? baseCast[3];
-  if (managerSeat) addCharacter(scene, project, manager, managerSeat.x, managerSeat.y, 'hostile', managerSeat.facing);
-  else spawnCharacter(scene, project, manager, 'manager-office', 'hostile', pick(rng, FACINGS), rng);
+  const heroNonManager = [
+    baseCast.find((r) => r.id === 'janice') ?? baseCast[0],
+    baseCast.find((r) => r.id === 'carl') ?? baseCast[1],
+    baseCast.find((r) => r.id === 'linda') ?? baseCast[2],
+  ].filter((r): r is CharacterRecipe => Boolean(r));
 
   if (populationMode) {
-    // Seat each generated agent into its department's wing (F3.4).
-    seatGeneratedPopulation(scene, project, population, populationDeptOf, seats, rng);
+    // The manager takes the manager office (the management wing); the hero
+    // non-manager cast seat into their own department wing alongside the generated
+    // population (F3.4) — in a composed office 'cubicle-farm' is suffixed per
+    // department, so the wing seater (not template room ids) places them.
+    if (managerSeat) addCharacter(scene, project, manager, managerSeat.x, managerSeat.y, 'hostile', managerSeat.facing);
+    else spawnCharacter(scene, project, manager, 'manager-office', 'hostile', pick(rng, FACINGS), rng);
+    seatGeneratedPopulation(scene, project, [...heroNonManager, ...population], populationDeptOf, seats, rng, !options?.denseSeating);
   } else {
+    // Template path — unchanged rng order (janice, carl, linda, manager, filler).
+    spawnCharacter(scene, project, heroNonManager[0], 'hallway', 'suspicious', pick(rng, FACINGS), rng);
+    spawnCharacter(scene, project, heroNonManager[1], chance(rng, 0.5) ? 'break-room' : 'cubicle-farm', 'curious', pick(rng, FACINGS), rng);
+    spawnCharacter(scene, project, heroNonManager[2], chance(rng, 0.5) ? 'conference-room' : 'cubicle-farm', 'defensive', pick(rng, FACINGS), rng);
+    if (managerSeat) addCharacter(scene, project, manager, managerSeat.x, managerSeat.y, 'hostile', managerSeat.facing);
+    else spawnCharacter(scene, project, manager, 'manager-office', 'hostile', pick(rng, FACINGS), rng);
     const coworkerRooms: RoomId[] = [
       'cubicle-farm',
       'hallway',
@@ -1570,6 +1627,7 @@ function seatGeneratedPopulation(
   deptOf: Map<string, string>,
   seats: SeatCell[],
   rng: Rng,
+  reserveSpares = true,
 ): void {
   const wings = computeWings(scene, project);
   if (!wings.length) return;
@@ -1594,7 +1652,7 @@ function seatGeneratedPopulation(
     const wingId = wingIdForDept(wings, deptOf.get(agent.id) ?? '');
     if (!wingId) continue;
     const wingSeats = seatsByWing.get(wingId) ?? [];
-    const capacity = Math.max(0, wingSeats.length - SPARE_DESKS_PER_WING);
+    const capacity = reserveSpares ? Math.max(0, wingSeats.length - SPARE_DESKS_PER_WING) : wingSeats.length;
     let i = cursor.get(wingId) ?? 0;
     while (i < capacity && takenByCharacter(wingSeats[i].x, wingSeats[i].y)) i++;
     cursor.set(wingId, i + 1);

@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { LAYOUT_TEMPLATES } from '../src/core/layout';
+import { LAYOUT_TEMPLATES, generateOfficeLayout } from '../src/core/layout';
 import { MOODS } from '../src/core/types';
-import { DEFAULT_CAST, DEFAULT_PROPS } from '../src/data/defaults';
+import { DEFAULT_CAST, DEFAULT_PROPS, defaultProject } from '../src/data/defaults';
 import { PROP_TEMPLATES } from '../src/props/templates';
 
 /**
@@ -41,6 +41,18 @@ describe('tool ↔ game integration contracts', () => {
         expect(roomIds, `template "${template.id}" is missing sim-bound room "${required}"`).toContain(required);
       }
     }
+  });
+
+  it('a composed multi-department office stays sim-complete (carries the shared bound rooms)', () => {
+    // The composed path suffixes the bullpen per department (cubicle-farm@<dept>),
+    // so the sim binds the desk anchor; the rest of the bound rooms must be present
+    // verbatim or the sim's location map / scripted scenario silently falls back.
+    const { scene } = generateOfficeLayout(defaultProject(), 6, 1, { wingDepartmentIds: ['sales', 'engineering'] });
+    const roomIds = (scene.rooms ?? []).map((r) => r.id);
+    for (const required of ['manager-office', 'break-room', 'conference-room', 'hallway']) {
+      expect(roomIds, `composed office is missing sim-bound room "${required}"`).toContain(required);
+    }
+    expect(roomIds.some((id) => id.startsWith('cubicle-farm')), 'composed office has no cubicle-farm bullpen').toBe(true);
   });
 
   it('default cast ids equal the sim agent ids exactly', () => {

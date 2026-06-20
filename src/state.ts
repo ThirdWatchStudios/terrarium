@@ -4,7 +4,7 @@ import type { SceneBrush, SceneFacing } from './core/scene';
 import type { EmployeeDefinition, Population } from './core/employee';
 import { createDefaultScene } from './core/scene';
 import { migrateProject } from './core/migrations';
-import { defaultProject } from './data/defaults';
+import { defaultGoldenProject } from './data/defaults';
 
 export { normalizePixelScale } from './core/migrations';
 
@@ -102,7 +102,7 @@ class Store {
     } catch {
       // fall through to defaults
     }
-    return defaultProject();
+    return defaultGoldenProject();
   }
 
   save(): void {

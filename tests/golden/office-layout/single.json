@@ -33,7 +33,8 @@
       "y": 0,
       "cols": 8,
       "rows": 6,
-      "kind": "cubicle-farm"
+      "kind": "cubicle-farm",
+      "departmentId": "operations"
     },
     {
       "id": "manager-office",
@@ -42,7 +43,8 @@
       "y": 0,
       "cols": 6,
       "rows": 6,
-      "kind": "manager-office"
+      "kind": "manager-office",
+      "departmentId": "management"
     },
     {
       "id": "hallway",
@@ -2508,7 +2510,7 @@
       "x": 3,
       "y": 3,
       "kind": "room",
-      "wingId": "wing-main",
+      "wingId": "wing-common",
       "departmentId": null
     },
     {
@@ -2517,7 +2519,7 @@
       "x": 7,
       "y": 3,
       "kind": "room",
-      "wingId": "wing-main",
+      "wingId": "wing-common",
       "departmentId": null
     },
     {
@@ -2526,8 +2528,8 @@
       "x": 13,
       "y": 3,
       "kind": "room",
-      "wingId": "wing-main",
-      "departmentId": null
+      "wingId": "wing-operations",
+      "departmentId": "operations"
     },
     {
       "anchorId": "manager-office",
@@ -2535,8 +2537,8 @@
       "x": 19,
       "y": 3,
       "kind": "room",
-      "wingId": "wing-main",
-      "departmentId": null
+      "wingId": "wing-management",
+      "departmentId": "management"
     },
     {
       "anchorId": "hallway",
@@ -2544,7 +2546,7 @@
       "x": 11,
       "y": 7,
       "kind": "room",
-      "wingId": "wing-main",
+      "wingId": "wing-common",
       "departmentId": null
     },
     {
@@ -2553,7 +2555,7 @@
       "x": 2,
       "y": 11,
       "kind": "room",
-      "wingId": "wing-main",
+      "wingId": "wing-common",
       "departmentId": null
     },
     {
@@ -2562,7 +2564,7 @@
       "x": 7,
       "y": 11,
       "kind": "room",
-      "wingId": "wing-main",
+      "wingId": "wing-common",
       "departmentId": null
     },
     {
@@ -2571,52 +2573,70 @@
       "x": 15,
       "y": 11,
       "kind": "room",
-      "wingId": "wing-main",
+      "wingId": "wing-common",
       "departmentId": null
     },
     {
       "anchorId": "desk:janice",
-      "roomId": "focus-room",
-      "x": 7,
-      "y": 1,
-      "kind": "desk",
-      "wingId": "wing-main",
-      "departmentId": null
-    },
-    {
-      "anchorId": "desk:carl",
       "roomId": "cubicle-farm",
       "x": 10,
       "y": 1,
       "kind": "desk",
-      "wingId": "wing-main",
-      "departmentId": null
+      "wingId": "wing-operations",
+      "departmentId": "operations"
     },
     {
-      "anchorId": "desk:linda",
+      "anchorId": "desk:carl",
       "roomId": "cubicle-farm",
       "x": 13,
       "y": 1,
       "kind": "desk",
-      "wingId": "wing-main",
+      "wingId": "wing-operations",
+      "departmentId": "operations"
+    },
+    {
+      "anchorId": "desk:linda",
+      "roomId": "cubicle-farm",
+      "x": 11,
+      "y": 1,
+      "kind": "desk",
+      "wingId": "wing-operations",
+      "departmentId": "operations"
+    },
+    {
+      "anchorId": "spare-desk:wing-operations:1",
+      "roomId": "cubicle-farm",
+      "x": 14,
+      "y": 1,
+      "kind": "spare-desk",
+      "wingId": "wing-operations",
+      "departmentId": "operations"
+    },
+    {
+      "anchorId": "spare-desk:wing-operations:2",
+      "roomId": "cubicle-farm",
+      "x": 15,
+      "y": 1,
+      "kind": "spare-desk",
+      "wingId": "wing-operations",
+      "departmentId": "operations"
+    },
+    {
+      "anchorId": "spare-desk:wing-common:1",
+      "roomId": "focus-room",
+      "x": 7,
+      "y": 1,
+      "kind": "spare-desk",
+      "wingId": "wing-common",
       "departmentId": null
     },
     {
-      "anchorId": "spare-desk:wing-main:1",
+      "anchorId": "spare-desk:wing-common:2",
       "roomId": "focus-room",
       "x": 6,
       "y": 1,
       "kind": "spare-desk",
-      "wingId": "wing-main",
-      "departmentId": null
-    },
-    {
-      "anchorId": "spare-desk:wing-main:2",
-      "roomId": "focus-room",
-      "x": 8,
-      "y": 1,
-      "kind": "spare-desk",
-      "wingId": "wing-main",
+      "wingId": "wing-common",
       "departmentId": null
     }
   ],
@@ -2757,14 +2777,40 @@
   ],
   "wings": [
     {
-      "id": "wing-main",
+      "id": "wing-operations",
+      "departmentId": "operations",
+      "label": "Operations",
+      "roomIds": [
+        "cubicle-farm"
+      ],
+      "bounds": {
+        "x": 9,
+        "y": 0,
+        "cols": 8,
+        "rows": 6
+      }
+    },
+    {
+      "id": "wing-management",
+      "departmentId": "management",
+      "label": "Management",
+      "roomIds": [
+        "manager-office"
+      ],
+      "bounds": {
+        "x": 16,
+        "y": 0,
+        "cols": 6,
+        "rows": 6
+      }
+    },
+    {
+      "id": "wing-common",
       "departmentId": null,
-      "label": "Main office",
+      "label": "Common areas",
       "roomIds": [
         "reception",
         "focus-room",
-        "cubicle-farm",
-        "manager-office",
         "hallway",
         "copy-room",
         "break-room",
@@ -2778,5 +2824,20 @@
       }
     }
   ],
-  "connectivity": []
+  "connectivity": [
+    {
+      "wings": [
+        "wing-common",
+        "wing-management"
+      ],
+      "doorways": 1
+    },
+    {
+      "wings": [
+        "wing-common",
+        "wing-operations"
+      ],
+      "doorways": 1
+    }
+  ]
 }

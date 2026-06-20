@@ -7,7 +7,10 @@ import { defaultProject } from '../src/data/defaults';
 // F1.4 footprint constants, mirrored from layout.ts (CORE_WIDTH / WING_WIDTH).
 const CORE_WIDTH = 8;
 const WING_WIDTH = 9;
-const expectedCols = (n: number): number => CORE_WIDTH + n * (WING_WIDTH - 1);
+// Every composed office also carries the shared sim-bound common bays (manager
+// office + break + conference), so the footprint is n department wings + these.
+const COMMON_BAYS = 3;
+const expectedCols = (n: number): number => CORE_WIDTH + (n + COMMON_BAYS) * (WING_WIDTH - 1);
 
 const wallAt = (scene: SceneState, x: number, y: number): boolean => Boolean(scene.wallIds[y]?.[x]);
 
@@ -142,8 +145,8 @@ describe('footprint scaling (Epic 1 / F1.4)', () => {
     const project = defaultProject();
     const { scene } = generateOfficeLayout(project, 6, 7, { wingDepartmentIds: ['sales', 'engineering', 'it'] });
     const json = sceneToLayoutJson(scene, project);
-    // one doorway for reception + one per wing
-    expect(doorCells(json).length).toBe(1 + 3);
+    // one doorway for reception + one per bay (3 department wings + the common bays)
+    expect(doorCells(json).length).toBe(1 + 3 + COMMON_BAYS);
     assertDoorwaysSingleTile(scene, json);
     assertReachable(scene);
   });
@@ -176,16 +179,16 @@ describe('footprint scaling (Epic 1 / F1.4)', () => {
     expect(JSON.stringify(c)).not.toBe(JSON.stringify(a));
   });
 
-  it('is backward compatible — no wings means the single-office path, byte for byte', () => {
+  it('is backward compatible — an empty/omitted wing list still takes the template path, byte for byte', () => {
     const project = defaultProject();
     const base = JSON.stringify(sceneToLayoutJson(generateOfficeLayout(project, 6, 7).scene, project));
     const emptyOpts = JSON.stringify(sceneToLayoutJson(generateOfficeLayout(project, 6, 7, {}).scene, project));
     const emptyList = JSON.stringify(sceneToLayoutJson(generateOfficeLayout(project, 6, 7, { wingDepartmentIds: [] }).scene, project));
     expect(emptyOpts).toBe(base);
     expect(emptyList).toBe(base);
-    // and it remains a single implicit wing
-    const wings = computeWings(generateOfficeLayout(project, 6, 7).scene, project);
-    expect(wings).toHaveLength(1);
-    expect(wings[0].id).toBe('wing-main');
+    // and it stays the (non-composed) template path — now tagged into hero wings.
+    const scene = generateOfficeLayout(project, 6, 7).scene;
+    expect(scene.generated?.templateId).not.toBe('composed-wings');
+    expect(computeWings(scene, project).length).toBeGreaterThan(1);
   });
 });

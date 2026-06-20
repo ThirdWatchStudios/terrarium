@@ -35,19 +35,19 @@ describe('golden office layouts (Epic 1 / F1.5)', () => {
     }
   });
 
-  it('multi-wing configs carry wings and a connected graph; single does not', () => {
+  it('every config carries department wings and a connected graph', () => {
     const project = defaultProject();
     for (const config of GOLDEN_LAYOUT_CONFIGS) {
       const { scene } = generateOfficeLayout(project, 6, config.seed, { wingDepartmentIds: config.wingDepartmentIds });
       const json = sceneToLayoutJson(scene, project);
-      const wingCount = config.wingDepartmentIds?.length ?? 0;
-      if (wingCount > 0) {
-        // one wing per department + the common wing, and an edge per department wing
-        expect(json.wings.length).toBe(wingCount + 1);
-        expect(json.connectivity.length).toBe(wingCount);
+      if (config.wingDepartmentIds?.length) {
+        // composed path: one wing per department + the common wing, an edge each.
+        expect(json.wings.length).toBe(config.wingDepartmentIds.length + 1);
+        expect(json.connectivity.length).toBe(config.wingDepartmentIds.length);
       } else {
-        expect(json.wings.length).toBe(1);
-        expect(json.connectivity).toEqual([]);
+        // hero template path: operations + management department wings + common.
+        expect(json.wings.length).toBeGreaterThan(1);
+        expect(json.connectivity.length).toBeGreaterThanOrEqual(json.wings.length - 1);
       }
     }
   });

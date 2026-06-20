@@ -3,15 +3,34 @@ import { computeWings, generateOfficeLayout, sceneToLayoutJson } from '../src/co
 import { defaultProject } from '../src/data/defaults';
 
 describe('department wing grouping (Epic 1 / F1.1)', () => {
-  it('a single-office template exports one implicit wing covering every room', () => {
+  it('the hero office tags its rooms onto the cast departments (operations + management + common)', () => {
     const project = defaultProject();
+    const { scene } = generateOfficeLayout(project, 6, 7);
+    const wings = computeWings(scene, project);
+    // The hero cast is operations (janice/carl/linda) + management (manager), so a
+    // plain template office reads as those two department wings plus a common wing.
+    const depts = wings.map((w) => w.departmentId);
+    expect(wings).toHaveLength(3);
+    expect(depts).toContain('operations');
+    expect(depts).toContain('management');
+    expect(depts).toContain(null);
+    expect(wings.find((w) => w.departmentId === 'operations')!.roomIds).toContain('cubicle-farm');
+    expect(wings.find((w) => w.departmentId === 'management')!.roomIds).toContain('manager-office');
+    expect(wings.find((w) => w.departmentId === null)!.id).toBe('wing-common');
+    // Every room is still accounted for across the wings.
+    const all = wings.flatMap((w) => w.roomIds).sort();
+    expect(all).toEqual((scene.rooms ?? []).map((r) => r.id).sort());
+  });
+
+  it('a department-less cast still collapses to one implicit wing', () => {
+    const project = defaultProject();
+    // Strip the cast departments → no room tags → the single-office default.
+    for (const p of project.profiles ?? []) p.identity.department = '';
     const { scene } = generateOfficeLayout(project, 6, 7);
     const wings = computeWings(scene, project);
     expect(wings).toHaveLength(1);
     expect(wings[0].id).toBe('wing-main');
     expect(wings[0].departmentId).toBeNull();
-    // Every room is accounted for in the implicit wing.
-    expect(wings[0].roomIds.sort()).toEqual((scene.rooms ?? []).map((r) => r.id).sort());
   });
 
   it('groups rooms by departmentId and resolves labels from the catalog', () => {

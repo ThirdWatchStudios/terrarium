@@ -10,9 +10,9 @@ describe('per-department desk anchors (Epic 1 / F1.2)', () => {
     for (const id of ['janice', 'carl', 'linda']) {
       const a = anchors.find((x) => x.anchorId === `desk:${id}`)!;
       expect(a, `desk:${id}`).toBeDefined();
-      expect(a.wingId).toBeTruthy();
-      // The default cast is 'operations' with no tagged wing → the common/main wing.
-      expect(a.departmentId).toBeNull();
+      // The default cast is 'operations' → seated in the operations wing.
+      expect(a.wingId).toBe('wing-operations');
+      expect(a.departmentId).toBe('operations');
     }
     expect(anchors.some((a) => a.anchorId === 'desk:manager')).toBe(false);
   });

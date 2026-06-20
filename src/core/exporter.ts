@@ -802,6 +802,9 @@ export async function exportAll(
   // The reusable drive + trait catalogs personas reference by id (see CONTRACT.md).
   await write('drives.json', JSON.stringify(project.drives, null, 2));
   await write('traits.json', JSON.stringify(project.traits, null, 2));
+  // The reusable relationship-type catalog edges reference by id (CONTRACT §3.7) —
+  // a bundle-root sibling of drives/traits (also embedded in each scenario package).
+  await write('relationshipTypes.json', JSON.stringify(project.relationshipTypes, null, 2));
   // The department catalog — the single org model the office-scale work references
   // by stable id (Epic 2 F2.1).
   await write('departments.json', JSON.stringify(project.departments, null, 2));

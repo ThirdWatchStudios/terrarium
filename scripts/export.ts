@@ -18,8 +18,7 @@ import { dirname, join, resolve } from 'node:path';
 
 import { exportAll, type ExportSink } from '../src/core/exporter';
 import { createResvgRasterizer } from '../src/core/rasterizer-node';
-import { generateOfficeLayout } from '../src/core/layout';
-import { defaultProject, DEFAULT_DEPARTMENTS, DEFAULT_RELATIONSHIP_TYPES } from '../src/data/defaults';
+import { defaultProject, defaultGoldenProject, DEFAULT_DEPARTMENTS, DEFAULT_RELATIONSHIP_TYPES } from '../src/data/defaults';
 import { generateCompany } from '../src/core/companyTemplate';
 import { COMPANY_ARCHETYPES } from '../src/data/companyArchetypes';
 import { cascadeCompany, cascadeToProject } from '../src/core/companyCascade';
@@ -56,13 +55,10 @@ function generateCompanyProject(spec: string): ProjectState {
 function loadProject(arg: string): ProjectState {
   if (arg.startsWith('company:')) return generateCompanyProject(arg);
   if (arg === 'default') {
-    // Built-in project + a deterministic office so the scene-dependent outputs
-    // (office-layout.json, generated coworkers) are exercised end to end.
-    const project = defaultProject();
-    const office = generateOfficeLayout(project, 6, 1);
-    project.characters = [...project.characters, ...office.coworkers];
-    project.scene = office.scene;
-    return project;
+    // The complete golden baseline: hero cast inside a generated multi-department
+    // company with a populated, wing-tagged office — the same thing Reset-all and
+    // first-load produce, so the export matches what the studio ships.
+    return defaultGoldenProject();
   }
   let raw: string;
   try {
