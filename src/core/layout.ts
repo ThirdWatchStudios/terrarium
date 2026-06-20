@@ -1102,6 +1102,29 @@ interface SeatCell {
  * autotile cubicle walls + the regular desk/chair props, so pods stay readable
  * at any zoom. Returns the seat cells so coworkers can be spawned sitting.
  */
+/**
+ * Give a bullpen its own amenities (F-amenities) — a water cooler + printer (+ a
+ * plant) on free aisle cells so each department has interaction points of its own
+ * instead of trekking to the core. Deterministic: spreads picks across the room's
+ * open cells in (y,x) order; no-ops when the room is full. rng-free so it doesn't
+ * perturb the seating stream.
+ */
+function furnishWingAmenities(scene: SceneState, project: ProjectState, room: RoomSpec): void {
+  const open = openCells(scene)
+    .filter((c) => scene.roomIds?.[c.y]?.[c.x] === room.id)
+    .sort((a, b) => a.y - b.y || a.x - b.x);
+  if (!open.length) return;
+  const amenities: Array<[string, string]> = [
+    ['prop-water-cooler', 'water-cooler'],
+    ['prop-printer', 'printer'],
+    ['prop-office-plant', 'office-plant'],
+  ];
+  amenities.forEach(([preferredId, templateId], i) => {
+    const cell = open[Math.min(open.length - 1, Math.floor(((i + 0.5) / amenities.length) * open.length))];
+    if (cell) addProp(scene, project, `wing-${templateId}-${room.id}`, preferredId, templateId, cell.x, cell.y);
+  });
+}
+
 function buildCubicleComb(scene: SceneState, project: ProjectState, room: RoomSpec, rng: Rng): SeatCell[] {
   const seats: SeatCell[] = [];
   const cubicleWall =
@@ -1352,8 +1375,15 @@ export function generateOfficeLayout(
   };
 
   const floorSet = { carpet, lobby, wood, linoleum, utility, quiet };
+  // A department's theme floor (F-themes) overrides the room-kind default, so each
+  // wing reads as its own place; unresolved/absent themes fall back to the default.
+  const deptById = new Map((project.departments ?? []).map((d) => [d.id, d]));
+  const themeFloor = (dep: string | null | undefined): string | null => {
+    const id = dep ? deptById.get(dep)?.theme?.floor : undefined;
+    return id ? byPreferredId(project.floors, id)?.id ?? null : null;
+  };
   for (const room of rooms.filter((item) => item.kind !== 'hallway')) {
-    fillFloor(scene, room.id, floorForRoom(room.kind, floorSet));
+    fillFloor(scene, room.id, themeFloor(room.departmentId) ?? floorForRoom(room.kind, floorSet));
   }
   // hallway fills LAST so shared boundary tiles show hallway carpet — reads as
   // a consistent corridor border instead of random floor strips under walls
@@ -1376,7 +1406,10 @@ export function generateOfficeLayout(
     else if (room.kind === 'manager-office') managerSeat = furnishManagerOffice(scene, project, room, rng);
     else if (room.kind === 'break-room') furnishBreakRoom(scene, project, room, rng);
     else if (room.kind === 'conference-room') furnishConferenceRoom(scene, project, room, rng);
-    else if (room.kind === 'cubicle-farm') seats.push(...buildCubicleComb(scene, project, room, rng));
+    else if (room.kind === 'cubicle-farm') {
+      seats.push(...buildCubicleComb(scene, project, room, rng));
+      furnishWingAmenities(scene, project, room);
+    }
     else if (room.kind === 'hallway') furnishHallway(scene, project, room, rng);
     else if (room.kind === 'copy-room') furnishCopyRoom(scene, project, room, rng);
     else if (room.kind === 'records-room') furnishRecordsRoom(scene, project, room, rng);

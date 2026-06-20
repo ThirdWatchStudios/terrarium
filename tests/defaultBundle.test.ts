@@ -110,6 +110,16 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     for (const simRoom of ['manager-office', 'break-room', 'conference-room', 'hallway']) {
       expect(roomKinds.has(simRoom), `golden office missing sim-bound room "${simRoom}"`).toBe(true);
     }
+    // Themes — departments ship a visual theme (distinct floors keep wings distinct).
+    expect(departments.some((d: { theme?: { floor?: string } }) => d.theme?.floor), 'no department ships a theme floor').toBe(true);
+    // Amenities — each bullpen has its own interaction points (water cooler in ≥2 wings).
+    const coolerWings = new Set(
+      layout.interactionAnchors
+        .filter((a: { interactionType: string }) => a.interactionType === 'water_cooler')
+        .map((a: { roomId: string }) => a.roomId)
+        .filter((r: string) => r.startsWith('cubicle-farm')),
+    );
+    expect(coolerWings.size, 'department wings have no per-wing amenities').toBeGreaterThan(1);
   });
 
   it('ships a generated supporting population (multiple departments, personas, relationships)', async () => {

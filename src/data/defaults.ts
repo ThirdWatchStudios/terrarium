@@ -3,7 +3,7 @@ import { CURRENT_SCHEMA_VERSION } from '../core/types';
 import type { CharacterProfile, DriveDefinition, Relationship, RelationshipTypeDefinition, TraitDefinition } from '../core/profile';
 import { applyDerived, createDefaultProfile } from '../core/profile';
 import type { Scenario } from '../core/scenario';
-import { defaultCapabilitiesForCategory, type DepartmentDefinition } from '../core/department';
+import { defaultCapabilitiesForCategory, defaultThemeForCategory, type DepartmentDefinition } from '../core/department';
 import { MERIDIAN_DYNAMICS } from './companies';
 import { generateOfficeLayout } from '../core/layout';
 import type { SceneState } from '../core/scene';
@@ -1046,6 +1046,7 @@ const SEED_DEPARTMENTS: Array<Pick<DepartmentDefinition, 'id' | 'label' | 'categ
 export const DEFAULT_DEPARTMENTS: DepartmentDefinition[] = SEED_DEPARTMENTS.map((d) => ({
   ...d,
   capabilities: defaultCapabilitiesForCategory(d.category),
+  theme: defaultThemeForCategory(d.category),
 }));
 
 /** Everything in the default project except the baseline office scene. */

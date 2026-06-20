@@ -75,6 +75,34 @@ export function defaultCapabilitiesForCategory(category: string): string[] {
   return [...(CATEGORY_CAPABILITIES[category] ?? [])];
 }
 
+/**
+ * A department's visual theme — what makes its wing read as *its own place* in the
+ * generated office. `floor`/`wall` are preferred asset ids (the layout falls back
+ * to the room-kind default when absent or unresolved); `accent` is a hex colour for
+ * the editor / wing labels / future trim. Authored per department, seeded by category.
+ */
+export interface DepartmentTheme {
+  floor?: string;
+  wall?: string;
+  accent?: string;
+}
+
+/** Default visual theme per functional category — distinct floor/wall/accent so a
+ *  generated office reads department-by-department instead of one carpet sea. */
+export const CATEGORY_THEMES: Record<string, DepartmentTheme> = {
+  leadership: { floor: 'floor-wood', wall: 'wall-panel', accent: '#C9A227' },
+  finance: { floor: 'floor-terrazzo', wall: 'wall-office', accent: '#2E8B57' },
+  commercial: { floor: 'floor-carpet-tiles', wall: 'wall-glass', accent: '#3D7FD8' },
+  technical: { floor: 'floor-utility-vinyl', wall: 'wall-glass', accent: '#1FB6C9' },
+  operations: { floor: 'floor-rubber-mat', wall: 'wall-brick', accent: '#D8732F' },
+  administrative: { floor: 'floor-quiet-carpet', wall: 'wall-office', accent: '#8A5FB0' },
+};
+
+/** The default visual theme for a department of the given category (copy). */
+export function defaultThemeForCategory(category: string): DepartmentTheme {
+  return { ...(CATEGORY_THEMES[category] ?? {}) };
+}
+
 /** A department — a structured catalog entry with a stable id. */
 export interface DepartmentDefinition {
   /** Stable slug; referenced by personas/employees/org-structure. Never re-issued. */
@@ -98,6 +126,12 @@ export interface DepartmentDefinition {
    * *roughly what reaching a department buys* before the contents un-fog.
    */
   capabilities?: string[];
+  /**
+   * Optional **visual theme** — floor/wall/accent that makes the department's wing
+   * distinct in the generated office. Authored per department, seeded by category;
+   * absent falls back to the room-kind defaults. See {@link DepartmentTheme}.
+   */
+  theme?: DepartmentTheme;
 }
 
 /** Turn a free-text department name into a stable kebab-case id. */
