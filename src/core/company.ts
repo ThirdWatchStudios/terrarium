@@ -451,3 +451,35 @@ export function serializeCompany(input: Company): unknown {
     meta: { generator: 'sprite-character-creator', schema: '00-company-root-and-cascade.md' },
   };
 }
+
+/**
+ * Reconstruct an editable {@link Company} from the serialized `company.json` form
+ * (the inverse of {@link serializeCompany}). The flattened climate numbers come
+ * back as **authored** `Derived` values so a round-trip preserves them exactly
+ * (`serializeCompany(parseCompany(serializeCompany(c)))` is stable). Tolerant of a
+ * partial object — missing sections fall back to a default company's.
+ */
+export function parseCompany(input: unknown): Company {
+  const raw = (input ?? {}) as Record<string, unknown>;
+  const base = createDefaultCompany(String(raw.companyId ?? 'company'));
+  const climate = (raw.climate ?? {}) as Partial<Record<keyof CompanyClimate, number>>;
+  const authored = (value: number | undefined, fallback: number): Derived => ({
+    value: clampUnit(typeof value === 'number' ? value : fallback),
+    authored: true,
+  });
+  return {
+    companyId: String(raw.companyId ?? base.companyId),
+    identity: { ...base.identity, ...(raw.identity as object) },
+    culture: { ...base.culture, ...(raw.culture as object) },
+    economy: { ...base.economy, ...(raw.economy as object) },
+    mission: { ...base.mission, ...(raw.mission as object) },
+    history: Array.isArray(raw.history) ? (raw.history as Company['history']) : [],
+    narrative: { ...base.narrative, ...(raw.narrative as object) },
+    socialClimate: { ...base.socialClimate, ...(raw.socialClimate as object) },
+    climate: {
+      factionalism: authored(climate.factionalism, base.climate.factionalism.value),
+      fear: authored(climate.fear, base.climate.fear.value),
+      volatility: authored(climate.volatility, base.climate.volatility.value),
+    },
+  };
+}

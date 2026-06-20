@@ -19,16 +19,42 @@ import { dirname, join, resolve } from 'node:path';
 import { exportAll, type ExportSink } from '../src/core/exporter';
 import { createResvgRasterizer } from '../src/core/rasterizer-node';
 import { generateOfficeLayout } from '../src/core/layout';
-import { defaultProject } from '../src/data/defaults';
+import { defaultProject, DEFAULT_DEPARTMENTS, DEFAULT_RELATIONSHIP_TYPES } from '../src/data/defaults';
+import { generateCompany } from '../src/core/companyTemplate';
+import { COMPANY_ARCHETYPES } from '../src/data/companyArchetypes';
+import { cascadeCompany, cascadeToProject } from '../src/core/companyCascade';
+import { ROLE_TEMPLATES } from '../src/data/roleTemplates';
 import type { ProjectState } from '../src/core/types';
+
+/** Keep the CLI demo render-bounded — a real seed can have thousands of seats. */
+const COMPANY_CLI_HEADCOUNT_CAP = 16;
 
 function usage(msg?: string): never {
   if (msg) console.error(`error: ${msg}\n`);
-  console.error('usage: npm run export -- <project.json|default> <outDir>');
+  console.error('usage: npm run export -- <project.json|default|company:<archetype>:<seed>> <outDir>');
   process.exit(msg ? 1 : 0);
 }
 
+/** Generate a full company package project headlessly (F0.8): `company:<archetype>:<seed>`. */
+function generateCompanyProject(spec: string): ProjectState {
+  const [, archetypeId, seed = '1'] = spec.split(':');
+  const archetype = COMPANY_ARCHETYPES.find((a) => a.id === archetypeId);
+  if (!archetype) usage(`unknown company archetype "${archetypeId}" (have: ${COMPANY_ARCHETYPES.map((a) => a.id).join(', ')})`);
+  const company = generateCompany(archetype, seed);
+  company.identity.headcount = Math.min(company.identity.headcount, COMPANY_CLI_HEADCOUNT_CAP);
+  const base = defaultProject();
+  const result = cascadeCompany(company, {
+    catalog: DEFAULT_DEPARTMENTS,
+    style: base.style,
+    seed,
+    relationshipTypes: DEFAULT_RELATIONSHIP_TYPES,
+    scenarioLibrary: ROLE_TEMPLATES,
+  });
+  return cascadeToProject(result, base);
+}
+
 function loadProject(arg: string): ProjectState {
+  if (arg.startsWith('company:')) return generateCompanyProject(arg);
   if (arg === 'default') {
     // Built-in project + a deterministic office so the scene-dependent outputs
     // (office-layout.json, generated coworkers) are exercised end to end.

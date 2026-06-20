@@ -23,7 +23,7 @@ import type { ScenarioTemplate } from './scenarioTemplate';
 import { generatePopulation, employeeRecipe, getProfile, type EmployeeDefinition } from './employee';
 import { generateEmployeePersona } from './populationPersona';
 import { SENIORITY, type CharacterProfile, type RelationshipTypeDefinition } from './profile';
-import type { CharacterRecipe, StyleSheet } from './types';
+import type { CharacterRecipe, ProjectState, StyleSheet } from './types';
 
 export interface CascadeOptions {
   /** The Epic 2 department catalog to draw from (e.g. DEFAULT_DEPARTMENTS). */
@@ -36,6 +36,13 @@ export interface CascadeOptions {
   relationshipTypes?: RelationshipTypeDefinition[];
   /** The scenario-template library — when given, the result carries F0.7 eligibility. */
   scenarioLibrary?: ScenarioTemplate[];
+  /**
+   * Cap the total generated seats (a studio-preview guard — the relationship graph
+   * is O(n²), so a multi-thousand-seat company would stall a browser). The per-
+   * department split scales down to fit; the department *set* and `company` are
+   * unchanged, so the result is a representative sample of the real company.
+   */
+  maxSeats?: number;
 }
 
 export interface CascadeResult {
@@ -44,6 +51,8 @@ export interface CascadeResult {
   departments: DepartmentDefinition[];
   /** Generated personas, seated + seniority-ranked + reporting-wired. */
   profiles: CharacterProfile[];
+  /** The sprite recipes for the generated personas (recipe.id == persona.agentId). */
+  characters: CharacterRecipe[];
   /** The F0.3 derivation (department set, headcount split, org-chart shape). */
   structure: DerivedStructure;
   /** Seeded inter-department rivalries (F0.4) — the factionalism F0.6 wires. */
@@ -53,6 +62,22 @@ export interface CascadeResult {
 }
 
 const seniorityRank = (s: string): number => Math.max(0, (SENIORITY as readonly string[]).indexOf(s));
+
+/** Scale a per-department headcount split down to a total cap (≥1 each), deterministically. */
+function capSeats(alloc: Record<string, number>, max: number): void {
+  const ids = Object.keys(alloc);
+  let total = ids.reduce((s, id) => s + alloc[id], 0);
+  if (total <= max) return;
+  const factor = max / total;
+  for (const id of ids) alloc[id] = Math.max(1, Math.round(alloc[id] * factor));
+  total = ids.reduce((s, id) => s + alloc[id], 0);
+  // Trim any overflow from the largest departments first (the per-dept floor of 1 can overshoot).
+  const order = [...ids].sort((a, b) => alloc[b] - alloc[a] || a.localeCompare(b));
+  for (let i = 0; total > max && i < order.length * (max + 1); i++) {
+    const id = order[i % order.length];
+    if (alloc[id] > 1) { alloc[id]--; total--; }
+  }
+}
 
 /** A stable, unique agent id for the `i`-th seat of a department. */
 const seatId = (companyId: string, deptId: string, i: number): string =>
@@ -118,11 +143,13 @@ function wireDepartment(members: CharacterProfile[]): CharacterProfile {
 export function cascadeCompany(company: Company, opts: CascadeOptions): CascadeResult {
   const seed = String(opts.seed ?? company.companyId);
   const structure = deriveStructure(company, opts.catalog, seed);
+  if (opts.maxSeats) capSeats(structure.headcountByDept, opts.maxSeats);
   // F0.4 — resolve each department's subculture onto the entity + seed rivalries.
   resolveSubcultures(company, structure.departments, seed);
   const rivalries = seedDepartmentRivalries(company, structure.departments, seed);
 
   const profiles: CharacterProfile[] = [];
+  const characters: CharacterRecipe[] = [];
   const headsByDept: Record<string, CharacterProfile> = {};
 
   for (const dept of structure.departments) {
@@ -137,6 +164,7 @@ export function cascadeCompany(company: Company, opts: CascadeOptions): CascadeR
     const members: CharacterProfile[] = pop.employees.map((emp: EmployeeDefinition, i) => {
       emp.metadata.department = dept.id; // F3.2 archetype flavor + persona department
       const recipe: CharacterRecipe = { ...employeeRecipe(emp), id: seatId(company.companyId, dept.id, i) };
+      characters.push(recipe);
       const persona = generateEmployeePersona(emp, recipe, axisTarget);
       persona.identity.seniority = seniorityForIndex(structure.orgShape, i, count);
       return persona;
@@ -165,5 +193,22 @@ export function cascadeCompany(company: Company, opts: CascadeOptions): CascadeR
     ? rankScenarioEligibility(company, opts.scenarioLibrary, profiles)
     : undefined;
 
-  return { company, departments: structure.departments, profiles, structure, rivalries, eligibility };
+  return { company, departments: structure.departments, profiles, characters, structure, rivalries, eligibility };
+}
+
+/**
+ * Assemble an exportable {@link ProjectState} from a cascade result (Epic 0,
+ * F0.8) — the generated company becomes a loadable **company package**: its
+ * `company` root, derived `departments`, generated `characters` (sprite recipes)
+ * + `profiles` (personas/relationships), over a base project that supplies the
+ * style/scene/catalogs. Everything else on `base` is preserved. Pure.
+ */
+export function cascadeToProject(result: CascadeResult, base: ProjectState): ProjectState {
+  return {
+    ...base,
+    company: result.company,
+    departments: result.departments,
+    characters: result.characters,
+    profiles: result.profiles,
+  };
 }

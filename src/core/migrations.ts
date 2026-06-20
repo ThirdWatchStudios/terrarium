@@ -94,6 +94,9 @@ export function migrateProject(raw: unknown): ProjectState | null {
   // any unmapped names), so the field is a structured, mutable reference.
   migrateV11(project as ProjectState);
 
+  // v11 → v12: the optional `company` root (F0.8). Purely additive — a pre-v12
+  // project simply has no company; nothing to backfill, just the version bump below.
+
   project.version = CURRENT_SCHEMA_VERSION;
   return project as ProjectState;
 }

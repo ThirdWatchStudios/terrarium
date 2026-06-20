@@ -251,6 +251,14 @@ export interface ProjectState {
    * by it. See core/department.ts.
    */
   departments: import('./department').DepartmentDefinition[];
+  /**
+   * The generative company root (Epic 0) — the new-game seed whose culture/history
+   * cascaded into the departments + people + relationships of this project. Optional:
+   * present only for a generated company package; exported as `company.json` (F0.8).
+   * The full editable form (with `Derived` climate wrappers) lives here; the export
+   * flattens it. See core/company.ts.
+   */
+  company?: import('./company').Company;
   /** The scene canvas — persisted so hand-edits survive reloads. */
   scene?: import('./scene').SceneState;
 }
@@ -274,8 +282,10 @@ export interface ProjectState {
  * units with stable ids); seeded from the existing department-name set.
  * v11 made persona `identity.department` a department-catalog **id** (Epic 3 F3.1,
  * mutable for the sim's transfer tier); the step rewrites free-text values to ids.
+ * v12 added the optional `company` root (Epic 0 F0.8 — the generated company a
+ * package is built around); additive, so the step only bumps the version.
  */
-export const CURRENT_SCHEMA_VERSION = 11;
+export const CURRENT_SCHEMA_VERSION = 12;
 
 /** Design-space canvas size. Parts are authored against this; never changes. */
 export const CANVAS = 128;

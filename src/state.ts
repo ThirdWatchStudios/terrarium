@@ -72,6 +72,10 @@ class Store {
     /** Dial: absolute nudge to sampled financial health (-40..40). */
     companyDialHealth: 0,
     company: undefined as import('./core/company').Company | undefined,
+    /** The last full-cascade result (F0.9 Pass 2 inspector); cleared on regenerate. */
+    cascade: undefined as import('./core/companyCascade').CascadeResult | undefined,
+    /** The go/no-go verdict for the last built org (F0.10); cleared with the cascade. */
+    seedValidation: undefined as import('./core/seedValidation').SeedValidation | undefined,
   };
   private listeners: Listener[] = [];
 

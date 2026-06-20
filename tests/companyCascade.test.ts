@@ -76,6 +76,18 @@ describe('F0.3 — cascade structure realization', () => {
     expect(v.errors.length).toBeGreaterThan(0);
   });
 
+  it('maxSeats caps the generated roster while keeping the department set (F0.9)', () => {
+    const c = company({ headcount: 4000, industry: 'Software', sizeBand: 'enterprise' });
+    const full = run(c);
+    const capped = cascadeCompany(c, { catalog: DEFAULT_DEPARTMENTS, style: DEFAULT_STYLE, maxSeats: 50 });
+    expect(full.profiles.length).toBeGreaterThan(50);
+    expect(capped.profiles.length).toBeLessThanOrEqual(50);
+    expect(capped.departments.length).toBe(full.departments.length); // department set unchanged
+    // Still a valid org and the company root keeps the real headcount (it's a sample).
+    expect(validateOrgStructure({ departments: capped.departments, profiles: capped.profiles, characters: [] }).errors).toEqual([]);
+    expect(capped.company.identity.headcount).toBe(4000);
+  });
+
   it('wires history-seeded relationships without breaking the org-structure (F0.6)', () => {
     const c = company({ headcount: 60, industry: 'Software' });
     c.history = [

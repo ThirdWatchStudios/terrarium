@@ -1483,6 +1483,37 @@ textarea {
   padding-left: 18px;
   font-size: 12.5px;
 }
+
+/* F0.10 seed go/no-go verdict */
+.company-verdict {
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 4px 0 12px;
+  border: 1px solid var(--border);
+}
+.company-verdict.go {
+  border-color: rgba(60, 160, 90, 0.6);
+  background: rgba(60, 160, 90, 0.12);
+}
+.company-verdict.nogo {
+  border-color: rgba(196, 80, 60, 0.6);
+  background: rgba(196, 80, 60, 0.12);
+}
+.company-verdict-head {
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+.company-check {
+  font-size: 12.5px;
+  margin: 2px 0;
+}
+.company-check.pass {
+  color: rgb(108, 196, 138);
+}
+.company-check.fail {
+  color: rgb(224, 124, 104);
+}
 .company-list li {
   margin: 2px 0;
 }

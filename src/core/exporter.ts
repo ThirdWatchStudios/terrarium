@@ -24,6 +24,7 @@ import { employeeRecipe } from './employee';
 import { serializeProfile } from './profile';
 import { buildScenarioPackage } from './scenarioRun';
 import { buildOrgStructure } from './orgStructure';
+import { serializeCompany } from './company';
 import { PROP_TEMPLATES } from '../props/templates';
 import { maskName } from '../tiles/templates';
 
@@ -791,6 +792,12 @@ export async function exportAll(
 
   onProgress?.(total, total, 'writing');
   await write('project.json', JSON.stringify(project, null, 2));
+  // The company root (Epic 0 F0.8) — present only for a generated company package.
+  // company.json sits at the bundle root with the org-structure / personas /
+  // relationships / office-layout / scenarios below it as its children.
+  if (project.company) {
+    await write('company.json', JSON.stringify(serializeCompany(project.company), null, 2));
+  }
   // The reusable drive + trait catalogs personas reference by id (see CONTRACT.md).
   await write('drives.json', JSON.stringify(project.drives, null, 2));
   await write('traits.json', JSON.stringify(project.traits, null, 2));

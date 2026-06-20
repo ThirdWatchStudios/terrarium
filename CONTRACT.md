@@ -55,6 +55,7 @@ Coordinate convention: scene grids are row-major `[y][x]`; anchors/spawns carry 
 | `relationshipTypes.json` | `project.relationshipTypes` (verbatim) | project | Reusable relationship-type catalog edges' `relationshipType` reference by id (§3.7). Also embedded in each scenario package. |
 | `departments.json` | `project.departments` (verbatim) | project | Reusable department catalog — the single org model referenced by stable id (§3.10). Also embedded in each scenario package. |
 | `org-structure.json` | `buildOrgStructure` | project | Org chart: departments + members with a visible-structure / fogged-contents split (§3.11). Also embedded in each scenario package. |
+| `company.json` | `serializeCompany(project.company)` | project | The generated **company root** — the new-game seed the rest of the bundle cascaded from (§3.12). Emitted only for a company package; absent otherwise. |
 | `mood-emotes@Nx.png` + `mood-emotes-atlas@Nx.json` | `moodEmotesAtlas` | project | One **shared** strip of overhead mood bubbles (character-independent) — the emote half of a mood, split out of the sheet. Sim blits one above an agent keyed off mood (§3.9). |
 | `activity-badges@Nx.png` + `activity-badges-atlas@Nx.json` | `activityBadgesAtlas` | project | One **shared** strip of overhead status badges (character-independent). Sim blits one above an agent keyed off the routine `activity` string (§3.9). |
 | `conversation-style.json` | `conversationStyleJson` | project | Style for the linked-bubble conversation visual; sim draws it between two paired talking agents (§3.9). |
@@ -351,6 +352,23 @@ The loadable org chart, derived from §3.10 + the personas (`buildOrgStructure`)
 }
 ```
 
+### 3.12 `company.json` (the company root) — project-level, **company package**
+The generative **company root** (Epic 0 F0.8) — present only for a generated company package, written at the **bundle root** with the existing payloads as its children (org-structure / personas / relationships / `office-layout.json` / `scenario(-template)` below it). It is the new-game seed: the culture/economy/history that *cascaded down* into the departments, people, and relationships in the same bundle. Climate aggregates resolve to plain numbers (the sim shouldn't re-derive); the editable form (with `Derived` wrappers + `authored` flags) lives in `project.json`. Additive — no existing payload changes shape, and a non-company export simply omits this file, so single-scenario bundles load exactly as before.
+```jsonc
+{
+  "companyId": "acme",
+  "identity": { "name": "Acme Co", "industry": "Software", "sizeBand": "small", "headcount": 50, "ownership": "bootstrapped", "reputation": 56 },
+  "culture": { "hierarchy": 28, "secrecy": 40, "volatility": 63, "cutthroat": 42, "mercenary": 17, "pace": 86, "fear": 27 },
+  "economy": { "financialHealth": 50, "trajectory": "growing", "morale": 55, "runwayMonths": 18 },
+  "mission": { "statedMission": "…", "actualPriority": "…", "hypocrisyGap": 40 },
+  "history": [ { "id": "lay", "kind": "layoff", "when": "recent", "magnitude": 80, "visibility": "public", "involvedDepartments": ["Engineering"] } ],
+  "narrative": { "officialStory": "…", "realStory": "…", "openSecrets": ["…"] },
+  "socialClimate": { "orgTrust": 50, "rivalries": [], "powerCenters": [] },
+  "climate": { "factionalism": 41, "fear": 39, "volatility": 71 },             // derived → flat numbers (sim doesn't re-derive)
+  "meta": { "generator": "sprite-character-creator", "schema": "00-company-root-and-cascade.md" }
+}
+```
+
 ---
 
 ## 4. Formulas computed **in the tool** (authoritative)
@@ -430,6 +448,6 @@ Things the sim will likely need that the tool does **not** capture yet — decid
 ## 7. Compatibility rules
 
 - **Adding** a suggestion to a free-text vocabulary (drive, trait tag, KPI, location, activity) is **non-breaking** — it only affects authoring autocomplete, never validation or export shape. **Adding an activity badge** is likewise non-breaking: a new shared-atlas cell the sim shows for that `activity` or ignores (§3.9).
-- **Version gating:** `profile.json` and `scenario.json` carry `meta.schemaVersion` (currently **11**, the project schema version — v10 added the `departments.json` catalog §3.10 + the derived `org-structure.json` §3.11; v11 made persona `identity.department` a department-catalog **id**, mutable for the sim's transfer tier). `office-layout.json` carries its **own** payload version (now **3** — v2 added `rooms[].departmentId` + the `wings[]` block; v3 added the `connectivity[]` wing-adjacency graph, §3.4); every addition is additive, so the bumps are non-breaking. The sim version-gates on these — `scenario.json` gates a whole scenario package (the bundled `drives.json`/`traits.json`/`departments.json`/`org-structure.json` are resolved within that already-versioned context); `profile.json` gates the per-character visual-import path. Bare-array catalogs (and the derived `org-structure.json`) are intentionally unversioned — they never travel without a versioned `scenario.json` or `project.json`.
+- **Version gating:** `profile.json` and `scenario.json` carry `meta.schemaVersion` (currently **12**, the project schema version — v10 added the `departments.json` catalog §3.10 + the derived `org-structure.json` §3.11; v11 made persona `identity.department` a department-catalog **id**, mutable for the sim's transfer tier; v12 added the optional `company` root §3.12 — additive, so a pre-v12 project just has no company). `office-layout.json` carries its **own** payload version (now **3** — v2 added `rooms[].departmentId` + the `wings[]` block; v3 added the `connectivity[]` wing-adjacency graph, §3.4); every addition is additive, so the bumps are non-breaking. The sim version-gates on these — `scenario.json` gates a whole scenario package (the bundled `drives.json`/`traits.json`/`departments.json`/`org-structure.json` are resolved within that already-versioned context); `profile.json` gates the per-character visual-import path. Bare-array catalogs (and the derived `org-structure.json`) are intentionally unversioned — they never travel without a versioned `scenario.json` or `project.json`.
 - **Renaming/removing a field** in §3 **is** breaking — bump `CURRENT_SCHEMA_VERSION` (which flows into `meta.schemaVersion`), add a migration step, and update the sim loader.
 - The sim should **fallback + log**, never hard-fail, on an unrecognized free-text id (drive, KPI, activity). That tolerance is what lets the tool ship a richer vocabulary without lockstep sim releases.

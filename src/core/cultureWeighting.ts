@@ -76,3 +76,34 @@ export function populationDivergence(a: CharacterProfile[], b: CharacterProfile[
 
 /** Two cohorts of the same department under contrasting companies should clear this. */
 export const DIVERGENCE_THRESHOLD = 0.2;
+
+/**
+ * Whole-org divergence: the mean of {@link populationDivergence} computed **per
+ * department** (cohorts grouped by `identity.department`, over the departments
+ * both casts share). More sensitive than a single whole-population TVD, which
+ * dilutes a real per-team shift across the org. 0 when the two casts are
+ * identical. Used by the F0.10 drama check.
+ */
+export function meanDepartmentDivergence(a: CharacterProfile[], b: CharacterProfile[]): number {
+  const groupBy = (ps: CharacterProfile[]): Map<string, CharacterProfile[]> => {
+    const m = new Map<string, CharacterProfile[]>();
+    for (const p of ps) (m.get(p.identity.department) ?? m.set(p.identity.department, []).get(p.identity.department)!).push(p);
+    return m;
+  };
+  const ga = groupBy(a);
+  const gb = groupBy(b);
+  let sum = 0;
+  let n = 0;
+  for (const [dept, cohort] of ga) {
+    if (gb.has(dept)) { sum += populationDivergence(cohort, gb.get(dept)!); n++; }
+  }
+  return n ? sum / n : 0;
+}
+
+/**
+ * A whole-org seed should clear this mean-per-department divergence from its
+ * neutral-culture twin to read as "shaped by its company". A *characterless*
+ * (neutral) company diverges by exactly 0; any real culture lands clear of this
+ * floor, even on the small per-department cohorts a capped studio preview makes.
+ */
+export const ORG_DIVERGENCE_THRESHOLD = 0.02;
