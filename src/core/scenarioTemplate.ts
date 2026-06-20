@@ -48,6 +48,7 @@ import {
   type TruthAlignment,
 } from './scenario';
 import { CURRENT_SCHEMA_VERSION } from './types';
+import { deriveReportingLines } from './orgStructure';
 
 // --- the precondition vocabulary --------------------------------------------
 // Built entirely on the catalogs the tool already owns (traits, drives,
@@ -159,6 +160,36 @@ export interface CrossDepartmentPrecondition {
   relation: 'same' | 'different';
 }
 
+/** Which distance signal an organizational-distance precondition reads (F4.3). */
+export type DistanceSource = 'structural' | 'spatial';
+/**
+ * The candidate's **organizational distance** from the agent assigned to another
+ * role (F4.3) — the cross-wing difficulty/payload signal. Relational (resolved at
+ * assignment time against `toRole`) and symmetric. **`source`** picks the signal
+ * (default `'structural'`):
+ * - `'structural'` = hop distance in the reporting tree (derived from the cast's
+ *   `manager`/`direct-report` edges, §3.7) — always available from the cast alone.
+ * - `'spatial'` = wing-hop distance in the office wing-connectivity graph (§3.4) —
+ *   only when the caller supplies a {@link DistanceContext} (a generated office
+ *   scene); the sim refines real spatial proximity at runtime (§5.7).
+ *
+ * Two **forms**, either or both (F4.3 / S4.3.2):
+ * - **hard** (`op` + `value`, a 0–100 normalized distance threshold) — an
+ *   eligibility gate. An **unknown** distance (no path / no spatial context) is
+ *   **inert** — it never blocks the cast (fallback discipline, §7).
+ * - **soft** (`weight`, may be negative) — contributes `weight · distance/100` to
+ *   the casting fit score, so a template can *prefer* a farther-apart (or closer)
+ *   pairing without forbidding any. Inert when the distance is unknown.
+ */
+export interface DistancePrecondition {
+  kind: 'distance';
+  toRole: string;
+  source?: DistanceSource;
+  op?: CompareOp;
+  value?: number;
+  weight?: number;
+}
+
 export type Precondition =
   | TraitPrecondition
   | AxisPrecondition
@@ -167,13 +198,15 @@ export type Precondition =
   | RelationshipPrecondition
   | AggregatePrecondition
   | DepartmentPrecondition
-  | CrossDepartmentPrecondition;
+  | CrossDepartmentPrecondition
+  | DistancePrecondition;
 
 const isRelational = (p: Precondition): p is RelationshipPrecondition => p.kind === 'relationship';
 const isCrossDepartment = (p: Precondition): p is CrossDepartmentPrecondition => p.kind === 'crossDepartment';
+const isDistance = (p: Precondition): p is DistancePrecondition => p.kind === 'distance';
 /** A **cross-role** precondition — evaluated against the agent assigned to another role. */
-type CrossRolePrecondition = RelationshipPrecondition | CrossDepartmentPrecondition;
-const isCrossRole = (p: Precondition): p is CrossRolePrecondition => isRelational(p) || isCrossDepartment(p);
+type CrossRolePrecondition = RelationshipPrecondition | CrossDepartmentPrecondition | DistancePrecondition;
+const isCrossRole = (p: Precondition): p is CrossRolePrecondition => isRelational(p) || isCrossDepartment(p) || isDistance(p);
 
 // --- the template ------------------------------------------------------------
 
@@ -295,6 +328,99 @@ const edgeOf = (from: CharacterProfile, toId: string): Relationship | undefined 
 /** A candidate's department catalog id (`''` = unassigned). */
 const deptOf = (p: CharacterProfile): string => p.identity.department;
 
+// --- organizational distance (F4.3) -----------------------------------------
+// Distance normalization: raw graph-hop counts capped + scaled to 0–100 so a
+// distance threshold reads on the same 0–100 scale as the axis preconditions.
+// CAP hops map to 100; beyond the cap is still 100 (saturated "far apart").
+const DISTANCE_HOP_CAP = 6;
+
+const buildUndirectedAdj = (edges: Array<readonly [string, string]>): Map<string, Set<string>> => {
+  const adj = new Map<string, Set<string>>();
+  const link = (a: string, b: string) => (adj.get(a) ?? adj.set(a, new Set()).get(a)!).add(b);
+  for (const [a, b] of edges) {
+    if (!a || !b || a === b) continue;
+    link(a, b);
+    link(b, a);
+  }
+  return adj;
+};
+
+/** Shortest path length (edge count) between two nodes, or null if unreachable. */
+const bfsHops = (adj: Map<string, Set<string>>, from: string, to: string): number | null => {
+  if (from === to) return 0;
+  const seen = new Set<string>([from]);
+  let frontier = [from];
+  let hops = 0;
+  while (frontier.length) {
+    hops += 1;
+    const next: string[] = [];
+    for (const node of frontier) {
+      for (const n of adj.get(node) ?? []) {
+        if (n === to) return hops;
+        if (!seen.has(n)) {
+          seen.add(n);
+          next.push(n);
+        }
+      }
+    }
+    frontier = next;
+  }
+  return null;
+};
+
+const normalizeHops = (hops: number | null): number | null =>
+  hops === null ? null : Math.min(100, (hops / DISTANCE_HOP_CAP) * 100);
+
+/**
+ * Spatial context for `distance` preconditions sourced `'spatial'` (F4.3): which
+ * wing each agent sits in + the wing-adjacency graph (`computeWingConnectivity`
+ * edges, §3.4). Supplied by a caller that has a generated office scene; absent for
+ * scene-less casting (company cascade, previews), where a `'spatial'` distance term
+ * reads as unknown (and is therefore inert).
+ */
+export interface DistanceContext {
+  wingOfAgent?: Record<string, string>;
+  connectivity?: Array<{ wings: [string, string] }>;
+}
+
+/**
+ * A per-cast distance resolver: normalized 0–100 organizational distance between
+ * two agents on the chosen signal, or null when the distance is unknown (no path
+ * in the graph, or no spatial context for a spatial query).
+ */
+function makeDistanceResolver(cast: CharacterProfile[], ctx: DistanceContext | undefined) {
+  const castIds = new Set(cast.map((p) => p.agentId));
+  const reporting = buildUndirectedAdj(
+    deriveReportingLines(cast, castIds).lines.map((l) => [l.managerAgentId, l.reportAgentId] as const),
+  );
+  const wingOf = ctx?.wingOfAgent ?? {};
+  const wingAdj = buildUndirectedAdj((ctx?.connectivity ?? []).map((e) => e.wings as readonly [string, string]));
+  return (aId: string, bId: string, source: DistanceSource): number | null => {
+    if (aId === bId) return 0;
+    if (source === 'spatial') {
+      const wa = wingOf[aId];
+      const wb = wingOf[bId];
+      if (!wa || !wb) return null; // no spatial context → unknown
+      return normalizeHops(bfsHops(wingAdj, wa, wb));
+    }
+    return normalizeHops(bfsHops(reporting, aId, bId));
+  };
+}
+type DistanceResolver = ReturnType<typeof makeDistanceResolver>;
+
+/** Whether a hard distance threshold holds; unknown distance is inert (passes). */
+function distanceHolds(holder: CharacterProfile, other: CharacterProfile, pre: DistancePrecondition, dist: DistanceResolver): boolean {
+  if (pre.op === undefined || pre.value === undefined) return true; // soft-only term gates nothing
+  const d = dist(holder.agentId, other.agentId, pre.source ?? 'structural');
+  return d === null ? true : cmp(d, pre.op, pre.value);
+}
+/** The soft (weighted) contribution of a distance term to the fit score; 0 when unknown. */
+function distanceScore(holder: CharacterProfile, other: CharacterProfile, pre: DistancePrecondition, dist: DistanceResolver): number {
+  if (pre.weight === undefined) return 0;
+  const d = dist(holder.agentId, other.agentId, pre.source ?? 'structural');
+  return d === null ? 0 : pre.weight * (d / 100);
+}
+
 /** Aggregate a candidate's relationship axis across the rest of the cast. */
 function aggregateValue(p: CharacterProfile, pre: AggregatePrecondition, cast: CharacterProfile[]): number | null {
   const others = cast.filter((o) => o.agentId !== p.agentId);
@@ -330,6 +456,7 @@ function intrinsicHolds(p: CharacterProfile, pre: Precondition, cast: CharacterP
       return pre.mode === 'in' ? deptOf(p) === pre.department : deptOf(p) !== pre.department;
     case 'relationship':
     case 'crossDepartment':
+    case 'distance':
       return true; // cross-role — evaluated against another role at assignment time
   }
 }
@@ -381,12 +508,15 @@ function crossDeptHolds(holder: CharacterProfile, other: CharacterProfile, pre: 
 }
 
 /** Whether a cross-role precondition holds for `holder` toward `other`. */
-function crossRoleHolds(holder: CharacterProfile, other: CharacterProfile, pre: CrossRolePrecondition): boolean {
-  return isCrossDepartment(pre) ? crossDeptHolds(holder, other, pre) : relationHolds(holder, other, pre);
+function crossRoleHolds(holder: CharacterProfile, other: CharacterProfile, pre: CrossRolePrecondition, dist: DistanceResolver): boolean {
+  if (isDistance(pre)) return distanceHolds(holder, other, pre, dist);
+  if (isCrossDepartment(pre)) return crossDeptHolds(holder, other, pre);
+  return relationHolds(holder, other, pre);
 }
-/** Tie-break margin of a cross-role precondition (department is binary: a flat satisfied bonus). */
-function crossRoleMargin(holder: CharacterProfile, other: CharacterProfile, pre: CrossRolePrecondition): number {
-  if (isCrossDepartment(pre)) return crossDeptHolds(holder, other, pre) ? 0.5 : 0;
+/** Tie-break / fit margin of a cross-role precondition. */
+function crossRoleMargin(holder: CharacterProfile, other: CharacterProfile, pre: CrossRolePrecondition, dist: DistanceResolver): number {
+  if (isDistance(pre)) return distanceScore(holder, other, pre, dist);
+  if (isCrossDepartment(pre)) return crossDeptHolds(holder, other, pre) ? 0.5 : 0; // department is binary: a flat satisfied bonus
   return relationMargin(holder, other, pre);
 }
 
@@ -404,6 +534,15 @@ export interface ScoredCandidate {
   agentId: string;
   score: number;
 }
+/** A resolved organizational distance for one of the template's `distance` terms (F4.3). */
+export interface ResolvedDistance {
+  fromRole: string;
+  toRole: string;
+  source: DistanceSource;
+  /** 0–100 normalized distance, or null when unknown (no graph path / no spatial context). */
+  value: number | null;
+}
+
 export interface CastingReport {
   templateId: string;
   assignments: RoleAssignment[];
@@ -411,6 +550,12 @@ export interface CastingReport {
   unfilledOptional: string[];
   /** Who *could* fill each role on intrinsic preconditions alone (coverage). */
   candidatesByRole: Record<string, ScoredCandidate[]>;
+  /**
+   * The organizational distances behind the final cast's `distance` terms (F4.3) —
+   * so the sim/payload can scale difficulty on how far apart the pairing landed.
+   * Empty when the template declares no distance term.
+   */
+  distances: ResolvedDistance[];
   /** Template issues + validation issues on the emitted scenario. */
   issues: string[];
 }
@@ -427,6 +572,12 @@ export interface CastTemplateOptions {
   anchorIds?: string[];
   /** Agent ids the emitted scenario validates against (default: the cast's ids). */
   agentIds?: string[];
+  /**
+   * Spatial context for `'spatial'`-sourced `distance` preconditions (F4.3). Omit
+   * for scene-less casting — `'structural'` distance still resolves from the cast,
+   * and a `'spatial'` term reads as unknown (inert).
+   */
+  distance?: DistanceContext;
 }
 
 /**
@@ -441,6 +592,9 @@ export function castTemplate(template: ScenarioTemplate, cast: CharacterProfile[
   const byId = new Map(cast.map((p) => [p.agentId, p]));
   const order = new Map(cast.map((p, i) => [p.agentId, i]));
   const roleById = new Map(template.roles.map((r) => [r.roleId, r]));
+  // Organizational-distance resolver (F4.3): structural reporting-tree hops from the
+  // cast, plus spatial wing hops when the caller supplies a DistanceContext.
+  const dist = makeDistanceResolver(cast, options.distance);
 
   // 1. intrinsic eligibility per role (ignores relational preconditions).
   const candidatesByRole: Record<string, ScoredCandidate[]> = {};
@@ -467,12 +621,12 @@ export function castTemplate(template: ScenarioTemplate, cast: CharacterProfile[
   const relationalOk = (cand: CharacterProfile, role: RoleSlot, assign: Map<string, string | null>): boolean => {
     for (const pre of relOf(role.roleId)) {
       const tgt = assign.get(pre.toRole);
-      if (tgt && !crossRoleHolds(cand, byId.get(tgt)!, pre)) return false;
+      if (tgt && !crossRoleHolds(cand, byId.get(tgt)!, pre, dist)) return false;
     }
     for (const [rid, agentId] of assign) {
       if (!agentId) continue;
       for (const pre of relOf(rid)) {
-        if (pre.toRole === role.roleId && !crossRoleHolds(byId.get(agentId)!, cand, pre)) return false;
+        if (pre.toRole === role.roleId && !crossRoleHolds(byId.get(agentId)!, cand, pre, dist)) return false;
       }
     }
     return true;
@@ -482,12 +636,12 @@ export function castTemplate(template: ScenarioTemplate, cast: CharacterProfile[
     let s = 0;
     for (const pre of relOf(role.roleId)) {
       const tgt = assign.get(pre.toRole);
-      if (tgt) s += crossRoleMargin(cand, byId.get(tgt)!, pre);
+      if (tgt) s += crossRoleMargin(cand, byId.get(tgt)!, pre, dist);
     }
     for (const [rid, agentId] of assign) {
       if (!agentId) continue;
       for (const pre of relOf(rid)) {
-        if (pre.toRole === role.roleId) s += crossRoleMargin(byId.get(agentId)!, cand, pre);
+        if (pre.toRole === role.roleId) s += crossRoleMargin(byId.get(agentId)!, cand, pre, dist);
       }
     }
     return s;
@@ -546,6 +700,21 @@ export function castTemplate(template: ScenarioTemplate, cast: CharacterProfile[
   const unfilledRequired = template.roles.filter((r) => r.required && !finalAssign.get(r.roleId)).map((r) => r.roleId);
   const unfilledOptional = template.roles.filter((r) => !r.required && !finalAssign.get(r.roleId)).map((r) => r.roleId);
 
+  // Resolve the distances behind the final cast's distance terms (F4.3) so the
+  // payload can scale on how far apart the pairing landed. Only when both ends fill.
+  const distances: ResolvedDistance[] = [];
+  for (const role of template.roles) {
+    const from = finalAssign.get(role.roleId);
+    if (!from) continue;
+    for (const pre of role.preconditions) {
+      if (!isDistance(pre)) continue;
+      const to = finalAssign.get(pre.toRole);
+      if (!to) continue;
+      const source = pre.source ?? 'structural';
+      distances.push({ fromRole: role.roleId, toRole: pre.toRole, source, value: round2x(dist(from, to, source)) });
+    }
+  }
+
   const issues: string[] = [...validateScenarioTemplate(template)];
   let scenario: Scenario | null = null;
   const ok = !!best && unfilledRequired.length === 0;
@@ -557,7 +726,7 @@ export function castTemplate(template: ScenarioTemplate, cast: CharacterProfile[
     issues.push(`Cast incomplete: required role(s) unfilled — ${unfilledRequired.join(', ') || '(none — template invalid)'}`);
   }
 
-  return { ok, scenario, report: { templateId: template.templateId, assignments, unfilledRequired, unfilledOptional, candidatesByRole, issues } };
+  return { ok, scenario, report: { templateId: template.templateId, assignments, unfilledRequired, unfilledOptional, candidatesByRole, distances, issues } };
 }
 
 /** Best-effort assignment used only for the report when a required role can't fill. */
@@ -892,6 +1061,17 @@ export function validateScenarioTemplate(t: ScenarioTemplate): string[] {
           if (pre.toRole === r.roleId) issues.push(`role "${r.roleId}" crossDepartment precondition references itself.`);
           if (!['same', 'different'].includes(pre.relation)) issues.push(`role "${r.roleId}" crossDepartment precondition has invalid relation "${pre.relation}".`);
           break;
+        case 'distance':
+          role(`role "${r.roleId}" distance precondition`, pre.toRole);
+          if (pre.toRole === r.roleId) issues.push(`role "${r.roleId}" distance precondition references itself.`);
+          if (pre.source !== undefined && !['structural', 'spatial'].includes(pre.source)) issues.push(`role "${r.roleId}" distance precondition uses unknown source "${pre.source}".`);
+          if (pre.op !== undefined || pre.value !== undefined) {
+            if (pre.op === undefined || pre.value === undefined) issues.push(`role "${r.roleId}" distance precondition sets a threshold without both op and value.`);
+            else unit(`role "${r.roleId}" distance precondition value`, pre.value);
+          }
+          if (pre.weight !== undefined && typeof pre.weight !== 'number') issues.push(`role "${r.roleId}" distance precondition weight must be a number.`);
+          if (pre.op === undefined && pre.value === undefined && pre.weight === undefined) issues.push(`role "${r.roleId}" distance precondition has neither a threshold (op+value) nor a weight.`);
+          break;
       }
     }
   }
@@ -980,3 +1160,5 @@ export function serializeScenarioTemplateLibrary(templates: ScenarioTemplate[]):
 }
 
 const round2 = (n: number): number => Math.round(n * 100) / 100;
+/** round2 that passes null through (for an unknown distance). */
+const round2x = (n: number | null): number | null => (n === null ? null : round2(n));

@@ -242,6 +242,7 @@ the catalogs §3.5–§3.7 already define — no parallel vocabulary. Discrimina
 { "kind": "aggregate", "axis": "familiarity", "reduce": "avg", "direction": "outgoing", "op": "lte", "value": 30 }
 { "kind": "department", "department": "sales", "mode": "in" }     // department catalog id (§3.10); mode in|notIn
 { "kind": "crossDepartment", "toRole": "loverA", "relation": "different" }   // relation same|different
+{ "kind": "distance", "toRole": "rivalB", "source": "structural", "op": "gte", "value": 50, "weight": 0.5 }  // source structural|spatial; hard (op+value) and/or soft (weight)
 }                                                                // axis ∈ trust|suspicion|affinity|influence|respect|familiarity; type/typeAnyOf = relationshipType id (§3.7)
 ```
 `relationship` constrains a candidate **relative to the agent assigned to `toRole`**
@@ -261,6 +262,34 @@ agent assigned to `toRole`*: `relation:"different"` is the **core cross-departme
 Both sides must have a **known** department — `crossDepartment` never casts onto an
 unassigned (`""`) agent, so a cross-wing template can't silently bind department-less
 agents. The ids are the same stable ids the org chart (§3.11) and wings (§3.4) key on.
+
+**Organizational-distance predicate (F4.3 — the cross-wing difficulty/payload term).**
+`distance` is **relational** (resolved against `toRole`, symmetric) and reads one of two
+signals via `source` (default `"structural"`):
+- **`structural`** = hop distance in the **reporting tree** (derived from the cast's
+  `manager`/`direct-report` edges, §3.7/§3.11) — always resolvable from the cast alone.
+- **`spatial`** = wing-hop distance in the office **wing-connectivity graph** (§3.4) —
+  resolvable only when a generated office scene is in play.
+
+Distances are normalized **0–100** (graph hops capped at 6, then scaled). The term takes
+two **forms**, either or both: a **hard** threshold (`op`+`value`) gating eligibility, and a
+**soft** `weight` (may be negative) adding `weight · distance/100` to the casting fit score so
+a template can *prefer* a farther-apart (or closer) pairing. An **unknown** distance — no
+graph path, or a `spatial` query with no scene — is **inert**: it never blocks the cast and
+contributes 0 to the score (fallback discipline, §7). The resolved distances behind the final
+cast surface in the casting report (`report.distances[]`) so the sim/payload can scale on how
+far apart the pairing landed.
+
+**Distance-source decision (S4.3.1 — recorded, shared with the sim): BOTH, structural-first.**
+The tool's authoring-time caster uses **structural** distance by default because it computes
+from the cast alone (no office scene required — the company cascade and previews are
+scene-less) and is the more semantically meaningful "organizational distance." **Spatial** is
+supported as an opt-in `source` when a scene is present, but real spatial proximity is the
+**sim's** strength at runtime (the same division already set for proximity↔`familiarity`,
+§5.4/§5.7): the sim receives both signals in the bundle — the reporting tree in
+`org-structure.json` (§3.11) and the wing graph in `office-layout.json` (§3.4) — and can refine
+either. Both forms (hard threshold + soft cost) are supported so a template author can *gate*
+on distance or merely *price* difficulty/payload by it.
 
 **Role presence + family.** A role carries `presence: "present" | "absent"` (default
 present). An **absent** ("negative") role is resolved — for distinctness and so the
@@ -443,7 +472,7 @@ On an event, the sim picks among the 7 `reactionTendencies` (already numeric, §
 ### 5.7 Scenario-template casting (one synchronized contract — tool exports, sim casts)
 The full-game direction has the **engine cast templates at runtime** — bind a cast-agnostic `scenario-template.json` (§3.8) onto the live cast/office by precondition match. The **tool** does this at authoring time (`castTemplate` in `scenarioTemplate.ts`: greedy-best-with-backtracking over the precondition vocabulary, strongest-fit wins ties; required roles must fill or the cast fails; optional roles skip) and exports the resulting **bound** `scenario.json` — so **the prototype loader is unchanged**. **As of F4.1 the template library is also exported** (`scenario-template.json`, §3.8), so the sim's runtime caster ("Scenario Loading" epic — E30 generalize / E34) has its input artifact:
 - the input artifact `scenario-template.json` ships beside today's bound `scenario.json`;
-- the sim gains a **runtime caster** = the port of `castTemplate`, **the same precondition vocabulary (§3.8) — one contract, two evaluators**, evaluating against **live** persona + relationship + **real spatial proximity** (the one precondition the sim does better than the tool's `familiarity` proxy);
+- the sim gains a **runtime caster** = the port of `castTemplate`, **the same precondition vocabulary (§3.8) — one contract, two evaluators**, evaluating against **live** persona + relationship + department/org-distance + **real spatial proximity** (the conditions the sim does better than the tool's authoring-time proxies — `familiarity` for proximity, and the `spatial` `distance` source which the tool only resolves when a scene is present while the sim has live positions);
 - a bound `scenario.json` keeps loading as-is — it is the already-cast special case (single-candidate roles).
 
 **Validation parity / drift check.** The precondition vocabulary in §3.8 is the single source of truth both casters implement; `validateScenarioTemplate` is the tool-side authoring gate and the sim's loader runs the equivalent structural check on ingest. The **shared fixture** is the exported library itself — `THE_OFFICE_ROMANCE` round-tripped through both casters against the same cast must produce the same role→agent assignment; a divergence is a contract drift. (The bound-`scenario.json` path obligates no sim change to ship tool work.)

@@ -327,6 +327,10 @@ export const THE_TURF_WAR: ScenarioTemplate = {
         { kind: 'axis', axis: 'ambition', op: 'gte', value: 50 },
         // the cross-wing pairing: rivalA and rivalB must sit in different departments.
         { kind: 'crossDepartment', toRole: 'rivalB', relation: 'different' },
+        // a higher-stakes turf war reaches across more of the org — softly prefer the
+        // more organizationally-distant pairing (F4.3 soft form; structural source so
+        // it works without an office scene, inert when there's no reporting structure).
+        { kind: 'distance', toRole: 'rivalB', source: 'structural', weight: 0.5 },
       ],
     },
     {

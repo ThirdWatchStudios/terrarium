@@ -110,6 +110,7 @@ A `Precondition` is a discriminated union (`kind`):
 | `aggregate` | candidate's rel axis **across the whole cast** | `{ axis, reduce: 'min'\|'max'\|'avg', direction, op, value, missingAs? }` |
 | `department` | one candidate's department (catalog id) | `{ department, mode: 'in' \| 'notIn' }` |
 | `crossDepartment` | candidate's department **vs. another role** | `{ toRole, relation: 'same' \| 'different' }` |
+| `distance` | candidate's **org distance vs. another role** | `{ toRole, source?: 'structural' \| 'spatial', op?, value?, weight? }` |
 
 - **Intrinsic** preconditions (`trait/axis/need/drive/department`) constrain a single
   candidate; **relational** (`relationship`, `crossDepartment`) constrains a candidate
@@ -121,6 +122,13 @@ A `Precondition` is a discriminated union (`kind`):
   cross-wing pairing). Both sides of a `crossDepartment` need a known department — an
   unassigned (`''`) agent satisfies neither, so a cross-department template never binds
   department-less agents.
+- **Distance predicate (F4.3)** grades the *organizational distance* between two slots,
+  reading `source: 'structural'` (reporting-tree hops, from the cast) or `'spatial'`
+  (wing-graph hops, when a scene is supplied), normalized 0–100. It supports a **hard**
+  threshold (`op`+`value`) and/or a **soft** `weight` (fit-score nudge toward farther/
+  closer pairings). An unknown distance is **inert**. Decision (S4.3.1): structural is the
+  authoring-time default; spatial is opt-in and primarily the sim's runtime job. See
+  CONTRACT §3.8.
 - `relationship.direction`: `outgoing` (candidate → other), `incoming`
   (other → candidate), or `mutual` (both edges must satisfy). `axis` may be any of
   the six axes or `affinity`; `op`/`value` give the threshold; `type`/`typeAnyOf`
