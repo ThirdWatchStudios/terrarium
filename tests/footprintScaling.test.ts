@@ -4,13 +4,14 @@ import type { SceneLayoutJson } from '../src/core/layout';
 import type { SceneState } from '../src/core/scene';
 import { defaultProject } from '../src/data/defaults';
 
-// F1.4 footprint constants, mirrored from layout.ts (CORE_WIDTH / WING_WIDTH).
+// Procedural-spine footprint constants, mirrored from layout.ts.
 const CORE_WIDTH = 8;
-const WING_WIDTH = 9;
+const ROOM_BASE_W = 9;
 // Every composed office also carries the shared sim-bound common bays (manager
-// office + break + conference), so the footprint is n department wings + these.
+// office + break + conference). Rooms bud off BOTH sides of the spine, so the width
+// grows with the larger side's room count, not the total.
 const COMMON_BAYS = 3;
-const expectedCols = (n: number): number => CORE_WIDTH + (n + COMMON_BAYS) * (WING_WIDTH - 1);
+const expectedCols = (n: number): number => CORE_WIDTH + Math.ceil((n + COMMON_BAYS) / 2) * (ROOM_BASE_W - 1);
 
 const wallAt = (scene: SceneState, x: number, y: number): boolean => Boolean(scene.wallIds[y]?.[x]);
 
@@ -44,18 +45,6 @@ function assertNoInteriorOverlap(scene: SceneState): void {
       expect(overlap, `interiors of ${rooms[i].id} and ${rooms[j].id} overlap`).toBe(false);
     }
   }
-}
-
-/**
- * The boundary between two adjacent blocks is a SINGLE wall line with room floor
- * on both sides — proving the inclusive overlap-by-1 (no double wall, no gap
- * column). Checked at mid-block height.
- */
-function assertSharedWallSingle(scene: SceneState, x: number): void {
-  const y = Math.floor(scene.rows / 2);
-  expect(wallAt(scene, x, y), `shared column ${x} should be a wall`).toBe(true);
-  expect(wallAt(scene, x - 1, y), `floor expected left of shared wall ${x}`).toBe(false);
-  expect(wallAt(scene, x + 1, y), `floor expected right of shared wall ${x}`).toBe(false);
 }
 
 /** Each doorway is a single-tile gap in a continuous wall run, with a door prop. */
@@ -131,13 +120,15 @@ describe('footprint scaling (Epic 1 / F1.4)', () => {
     assertNoInteriorOverlap(scene);
   });
 
-  it('keeps a single wall line at every wing seam (S1.4.2 — no double walls/gaps)', () => {
+  it('keeps single wall lines between rooms (S1.4.2 — no double walls)', () => {
     const project = defaultProject();
-    const n = 3;
     const { scene } = generateOfficeLayout(project, 6, 7, { wingDepartmentIds: ['sales', 'engineering', 'it'] });
-    // reception↔wing0 seam, then each wing↔wing seam.
-    for (let k = 0; k < n; k++) {
-      assertSharedWallSingle(scene, (CORE_WIDTH - 1) + k * (WING_WIDTH - 1));
+    // Inclusive overlap-by-1 means adjacent rooms share ONE wall column. Scan each
+    // band's interior row: no two consecutive interior columns are both walls.
+    for (const y of [2, scene.rows - 3]) {
+      for (let x = CORE_WIDTH; x < scene.cols - 2; x++) {
+        expect(wallAt(scene, x, y) && wallAt(scene, x + 1, y), `double wall at ${x},${x + 1} row ${y}`).toBe(false);
+      }
     }
   });
 

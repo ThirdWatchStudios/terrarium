@@ -1200,11 +1200,8 @@ function furnishHallway(scene: SceneState, project: ProjectState, room: RoomSpec
   if (chance(rng, 0.5)) addPropNear(scene, project, room, 'hall-plant', 'prop-office-plant', 'office-plant', 0.1, 0.5, rng);
 }
 
-/** Width of the common core block (reception below the hallway band). */
+/** Width of the reception entrance core at the left of a composed office. */
 const CORE_WIDTH = 8;
-/** Width of each department wing block. ≥7 keeps the bullpen interior ≥4 wide so
- * `buildCubicleComb` yields desks; narrower would starve the wing of seats. */
-const WING_WIDTH = 9;
 
 /** The geometry of a generated office: its rooms, doorway cells, and footprint. */
 interface ComposedLayout {
@@ -1228,46 +1225,89 @@ const COMPOSED_COMMON_BAYS: Array<{ id: RoomId; kind: RoomId; label: string }> =
   { id: 'conference-room', kind: 'conference-room', label: 'Conference room' },
 ];
 
+/** Min/base/max bullpen width for the procedural tiler (inclusive overlap-by-1). */
+const ROOM_MIN_W = 7;
+const ROOM_BASE_W = 9;
+const ROOM_MAX_W = 15;
+/** Rows the central spine corridor occupies (y .. y+2); top band above, bottom below. */
+const SPINE_Y = 6;
+
 /**
- * Pack one department wing per requested department into a single grid that grows
- * in width with department count (F1.4). Layout: a full-width **hallway band**
- * across the top that every block opens onto, a **reception** core below it, one
- * full-height **cubicle-farm** wing per department, then the shared common bays
- * (manager office + break + conference) so the office is **sim-complete** — each
- * block shares a single vertical wall edge with its neighbor (inclusive
- * overlap-by-1, so the shared column is one wall, never two) and connects to the
- * band by a single-tile doorway. `management` maps to the manager-office bay, not
- * a bullpen. Pure function of the department list (no rng) — same list ⇒ same office.
+ * Partition a side's inner span into `n` varied room widths (seeded), each ≥ ROOM_MIN_W
+ * and ≤ ROOM_MAX_W, summing so the side tiles to the same office width as the other
+ * side (`sum(w) = spanInner + n` under inclusive overlap-by-1). Varying per side and
+ * per room is what stops the office reading as one uniform comb.
  */
-function composeWingLayout(project: ProjectState, wingDepartmentIds: string[]): ComposedLayout {
+function partitionRoomWidths(spanInner: number, n: number, rng: Rng): number[] {
+  if (n <= 0) return [];
+  const total = spanInner + n;
+  const w = new Array<number>(n).fill(ROOM_MIN_W);
+  let rem = total - ROOM_MIN_W * n;
+  let guard = rem + n * (ROOM_MAX_W - ROOM_MIN_W);
+  while (rem > 0 && guard-- > 0) {
+    const i = Math.floor(rng() * n);
+    if (w[i] < ROOM_MAX_W) {
+      w[i]++;
+      rem--;
+    }
+  }
+  // Any remainder the caps couldn't absorb spills onto the first room (keeps the sum exact).
+  if (rem > 0) w[0] += rem;
+  return w;
+}
+
+/**
+ * Procedural **meandering-spine** office (F-procedural): a central corridor (the
+ * spine) with department bullpens + the shared sim-bound rooms (manager office /
+ * break / conference) **budding off both sides** at varied widths and depths, each
+ * joined by a staggered single-tile doorway. Reception is the full-height entrance
+ * at the left. The two sides tile independently (different counts ⇒ misaligned
+ * walls), so the floorplan reads as a generated space, not a column of cubicles.
+ * `management` maps to the manager office, never a bullpen. Seeded ⇒ deterministic.
+ */
+function composeWingLayout(project: ProjectState, wingDepartmentIds: string[], rng: Rng): ComposedLayout {
   const rows = ROWS;
-  const coreX1 = CORE_WIDTH - 1;
+  const startX = CORE_WIDTH - 1; // bays share reception's right wall
   const labelOf = (id: string): string => project.departments?.find((d) => d.id === id)?.label ?? id;
 
-  // Department bullpens for every requested dept except management (which is the
-  // manager office), followed by the always-present shared common bays.
+  // Bays: department bullpens (minus management) + the shared common rooms.
   const deptBays = wingDepartmentIds
     .filter((dep) => dep !== 'management')
-    .map((dep) => ({ id: `cubicle-farm@${dep}` as RoomId, kind: 'cubicle-farm' as RoomId, label: `${labelOf(dep)} bullpen`, departmentId: dep }));
-  const bays = [...deptBays, ...COMPOSED_COMMON_BAYS];
-  const cols = CORE_WIDTH + bays.length * (WING_WIDTH - 1);
+    .map((dep) => ({ id: `cubicle-farm@${dep}` as RoomId, kind: 'cubicle-farm' as RoomId, label: `${labelOf(dep)} bullpen`, departmentId: dep as string | undefined }));
+  const allBays = [...deptBays, ...COMPOSED_COMMON_BAYS.map((b) => ({ ...b, departmentId: undefined as string | undefined }))];
+  // Split across the two sides of the spine (alternate ⇒ depts interleave with common rooms).
+  const top = allBays.filter((_, i) => i % 2 === 0);
+  const bottom = allBays.filter((_, i) => i % 2 === 1);
+
+  // Both sides must reach the same office width: pick the inner span off the larger side.
+  const spanInner = Math.max(top.length, bottom.length) * (ROOM_BASE_W - 1);
+  const topW = partitionRoomWidths(spanInner, top.length, rng);
+  const bottomW = partitionRoomWidths(spanInner, bottom.length, rng);
+  const cols = CORE_WIDTH + spanInner; // = startX + spanInner + 1
 
   const rooms: RoomSpec[] = [
-    // One connected corridor spanning the full width — reception + every block
-    // open up into it, so the whole office is reachable through the band. ≥3 rows
-    // so the band has a walkable interior row between its top and bottom walls.
-    { id: 'hallway', kind: 'hallway', label: 'Hallway', x: 0, y: 0, cols, rows: 3 },
-    { id: 'reception', kind: 'reception', label: 'Reception', x: 0, y: 2, cols: CORE_WIDTH, rows: rows - 2 },
+    { id: 'reception', kind: 'reception', label: 'Reception', x: 0, y: 0, cols: CORE_WIDTH, rows },
+    { id: 'hallway', kind: 'hallway', label: 'Hallway', x: startX, y: SPINE_Y, cols: cols - startX, rows: 3 },
   ];
-  // Doorways sit on row 2 — the shared wall between the band's floor and each
-  // block below it. Single-tile; badge-reader pairing applies as for any doorway.
-  const doors: Array<[number, number]> = [[3, 2]];
+  const doors: Array<[number, number]> = [[startX, SPINE_Y + 1]]; // reception → spine
 
-  bays.forEach((bay, k) => {
-    const x0 = coreX1 + k * (WING_WIDTH - 1);
-    rooms.push({ ...bay, x: x0, y: 2, cols: WING_WIDTH, rows: rows - 2 });
-    doors.push([x0 + Math.floor(WING_WIDTH / 2), 2]);
-  });
+  // Lay a side's rooms left→right with inclusive overlap-by-1; door staggered per room.
+  const layRow = (bays: typeof top, widths: number[], y: number, height: number, doorY: number): void => {
+    let x = startX;
+    bays.forEach((bay, i) => {
+      const w = widths[i];
+      rooms.push({ ...bay, x, y, cols: w, rows: height });
+      // Stagger the doorway within the room's interior columns (deterministic).
+      const lo = x + 1;
+      const hi = x + w - 2;
+      const doorX = hi > lo ? lo + Math.floor(rng() * (hi - lo + 1)) : x + Math.floor(w / 2);
+      doors.push([doorX, doorY]);
+      x += w - 1;
+    });
+  };
+  // Top band: rows 0..SPINE_Y (door on the SPINE_Y shared wall). Bottom: SPINE_Y+2..end.
+  layRow(top, topW, 0, SPINE_Y + 1, SPINE_Y);
+  layRow(bottom, bottomW, SPINE_Y + 2, rows - (SPINE_Y + 2), SPINE_Y + 2);
 
   return { rooms, doors, cols, rows, templateId: 'composed-wings' };
 }
@@ -1337,7 +1377,7 @@ export function generateOfficeLayout(
   let rows: number;
   let templateId: string;
   if (wingDepartmentIds.length) {
-    ({ rooms, doors, cols, rows, templateId } = composeWingLayout(project, wingDepartmentIds));
+    ({ rooms, doors, cols, rows, templateId } = composeWingLayout(project, wingDepartmentIds, rng));
   } else {
     const template = pick(rng, LAYOUT_TEMPLATES);
     // Tag the hero office's rooms onto the cast's departments (F1.1) so a plain
