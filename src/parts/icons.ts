@@ -180,6 +180,218 @@ export const ICONS: IconDef[] = [
     // Lightning bolt.
     shapes: [lit('M 4 -28 L -14 6 L 0 6 L -4 28 L 18 -8 L 4 -8 Z', UI_PALETTE.relationship.adversarial)],
   },
+
+  // ===========================================================================
+  // Epic 36 surveillance-workstation chrome glyphs (all tintable). Grounded in
+  // the UI epic's named surfaces + the prototype slices of the pressure model and
+  // interaction taxonomy (docs/epic-36-ui-assets.md). Floor overlays are NOT here
+  // (Shapes draws those); these are the terminal-chrome icons.
+  // ===========================================================================
+
+  // --- Transport (S36.1.3) — play/pause are above ---------------------------
+  { id: 'ui-step', label: 'Step', mode: 'tintable', shapes: [fill('M -26 -26 L 6 0 L -26 26 Z'), fill(rr(12, -26, 10, 52, 3))] },
+  {
+    id: 'ui-speed',
+    label: 'Speed',
+    mode: 'tintable',
+    shapes: [fill('M -30 -24 L -2 0 L -30 24 Z'), fill('M 2 -24 L 30 0 L 2 24 Z')],
+  },
+
+  // --- Surveillance (F36.5 + visual-design "REC framing") -------------------
+  { id: 'ui-capture', label: 'Capture', mode: 'tintable', shapes: [stroke(circle(0, 0, 26), 8), fill(circle(0, 0, 9))] },
+  {
+    id: 'ui-focus',
+    label: 'Focus',
+    mode: 'tintable',
+    shapes: [
+      stroke(circle(0, 0, 20), 7),
+      stroke('M 0 -30 L 0 -24'),
+      stroke('M 0 24 L 0 30'),
+      stroke('M -30 0 L -24 0'),
+      stroke('M 24 0 L 30 0'),
+      fill(circle(0, 0, 4)),
+    ],
+  },
+
+  // --- Layer toggles (Tier 2: names / relationships / information / beliefs / environment)
+  {
+    id: 'layer-names',
+    label: 'Names layer',
+    mode: 'tintable',
+    shapes: [stroke(rr(-28, -16, 56, 32, 5), 7), stroke('M -18 -4 L 12 -4', 6), stroke('M -18 6 L 4 6', 6)],
+  },
+  {
+    id: 'layer-relationships',
+    label: 'Relationships layer',
+    mode: 'tintable',
+    shapes: [
+      stroke('M -22 -10 L 22 -10', 6),
+      stroke('M -22 -10 L 0 20', 6),
+      stroke('M 22 -10 L 0 20', 6),
+      fill(circle(-22, -10, 7)),
+      fill(circle(22, -10, 7)),
+      fill(circle(0, 20, 7)),
+    ],
+  },
+  {
+    id: 'layer-information',
+    label: 'Information layer',
+    mode: 'tintable',
+    shapes: [fill(circle(-6, 0, 7)), stroke('M 6 -14 A 18 18 0 0 1 6 14', 6), stroke('M 16 -24 A 30 30 0 0 1 16 24', 6)],
+  },
+  {
+    id: 'layer-beliefs',
+    label: 'Beliefs layer',
+    mode: 'tintable',
+    shapes: [stroke(circle(2, -4, 20), 7), fill(circle(-14, 18, 4)), fill(circle(-22, 27, 2.5))],
+  },
+  {
+    id: 'layer-environment',
+    label: 'Environment layer',
+    mode: 'tintable',
+    shapes: [
+      stroke(rr(-24, -26, 48, 52, 3), 7),
+      fill(rr(-14, -14, 9, 9, 1)),
+      fill(rr(5, -14, 9, 9, 1)),
+      fill(rr(-14, 4, 9, 9, 1)),
+      fill(rr(5, 4, 9, 9, 1)),
+    ],
+  },
+
+  // --- Inspector / cause trace (F36.4) --------------------------------------
+  {
+    id: 'ui-cause-chain',
+    label: 'Cause chain',
+    mode: 'tintable',
+    shapes: [fill(circle(0, -24, 5)), fill(circle(0, 0, 5)), fill(circle(0, 24, 5)), stroke('M 0 -19 L 0 -5', 6), stroke('M 0 5 L 0 19', 6)],
+  },
+  {
+    id: 'ui-unknown',
+    label: 'Unknown',
+    mode: 'tintable',
+    shapes: [stroke('M -10 -12 Q -10 -28 6 -28 Q 22 -28 22 -12 Q 22 2 6 10 L 6 18', 8), fill(circle(6, 30, 4))],
+  },
+  {
+    id: 'ui-truth-belief',
+    label: 'Truth vs belief',
+    mode: 'tintable',
+    // A ring split down the middle; one half filled — observed vs believed.
+    shapes: [stroke(circle(0, 0, 24), 7), fill('M 0 -24 A 24 24 0 0 0 0 24 Z')],
+  },
+
+  // --- Pressure glyphs (behavioral_pressure_model.md prototype slice of 7) ---
+  // One dominant pressure per agent (roster card / floor marker).
+  {
+    id: 'pressure-suspicion',
+    label: 'Suspicion',
+    mode: 'tintable',
+    shapes: [stroke('M -26 0 Q 0 -16 26 0 Q 0 16 -26 0 Z', 7), fill(circle(0, 0, 6))],
+  },
+  {
+    id: 'pressure-trust-source',
+    label: 'Trust in source',
+    mode: 'tintable',
+    // A verified document.
+    shapes: [stroke(rr(-18, -24, 36, 48, 3), 7), stroke('M -9 -2 L -2 6 L 11 -12', 6)],
+  },
+  {
+    id: 'pressure-management-trust',
+    label: 'Management trust',
+    mode: 'tintable',
+    // Confidence directed up toward leadership.
+    shapes: [stroke('M -16 -22 L 16 -22', 8), stroke('M 0 24 L 0 -8', 8), stroke('M -14 6 L 0 -8 L 14 6', 8)],
+  },
+  {
+    id: 'pressure-recognition-hunger',
+    label: 'Recognition hunger',
+    mode: 'tintable',
+    // Outlined star (distinct from the filled need-recognition star).
+    shapes: [stroke('M 0 -28 L 8 -8 L 30 -8 L 12 6 L 18 28 L 0 14 L -18 28 L -12 6 L -30 -8 L -8 -8 Z', 6)],
+  },
+  { id: 'pressure-resentment', label: 'Resentment', mode: 'tintable', shapes: [stroke('M -16 -24 L 4 -6 L -8 4 L 14 24', 8)] },
+  {
+    id: 'pressure-confidence',
+    label: 'Confidence',
+    mode: 'tintable',
+    shapes: [stroke('M -18 6 L 0 -12 L 18 6', 8), stroke('M -18 22 L 0 4 L 18 22', 8)],
+  },
+  {
+    id: 'pressure-routine-interruption',
+    label: 'Routine interruption',
+    mode: 'tintable',
+    // A broken loop.
+    shapes: [stroke('M 10 -24 A 26 26 0 1 0 24 10', 8), stroke('M 17 -19 L 31 -7', 8)],
+  },
+
+  // --- Intervention dock (interaction_taxonomy.md supported prototype set) ---
+  {
+    id: 'intervention-submit',
+    label: 'Submit request',
+    mode: 'tintable',
+    // A requisition slip — not a god-button (per visual-design guardrail).
+    shapes: [stroke(rr(-20, -26, 40, 52, 3), 7), stroke('M -10 -12 L 10 -12', 6), stroke('M -10 -2 L 10 -2', 6), stroke('M -10 8 L 2 8', 6)],
+  },
+  {
+    id: 'intervention-announcement',
+    label: 'Public announcement',
+    mode: 'tintable',
+    // Megaphone.
+    shapes: [fill('M -26 -8 L 4 -18 L 4 18 L -26 8 Z'), fill(rr(8, -14, 8, 28, 2))],
+  },
+  {
+    id: 'intervention-notification',
+    label: 'Private notification',
+    mode: 'tintable',
+    // Envelope.
+    shapes: [stroke(rr(-26, -16, 52, 32, 3), 7), stroke('M -26 -12 L 0 6 L 26 -12', 6)],
+  },
+  {
+    id: 'intervention-lock',
+    label: 'Break-room lock',
+    mode: 'tintable',
+    // Padlock.
+    shapes: [stroke(rr(-18, -2, 36, 28, 4), 7), stroke('M -10 -2 L -10 -14 A 10 10 0 0 1 10 -14 L 10 -2', 7)],
+  },
+
+  // --- Tier-3 review surfaces (F36.6; run-comparison is MVP, deferred) -------
+  {
+    id: 'review-graph',
+    label: 'Relationship graph',
+    mode: 'tintable',
+    shapes: [
+      stroke('M -20 -16 L 20 -14', 5),
+      stroke('M -20 -16 L -4 18', 5),
+      stroke('M 20 -14 L 24 16', 5),
+      stroke('M -4 18 L 24 16', 5),
+      fill(circle(-20, -16, 6)),
+      fill(circle(20, -14, 6)),
+      fill(circle(-4, 18, 6)),
+      fill(circle(24, 16, 6)),
+    ],
+  },
+  {
+    id: 'review-info-path',
+    label: 'Information path',
+    mode: 'tintable',
+    shapes: [stroke('M -28 16 L -8 -8 L 12 8 L 30 -16', 7), fill(circle(-28, 16, 4)), fill(circle(30, -16, 4))],
+  },
+  {
+    id: 'review-dossier',
+    label: 'Case dossier',
+    mode: 'tintable',
+    // IRIS case file (folder).
+    shapes: [stroke('M -26 -12 L -6 -12 L 0 -18 L 26 -18 L 26 18 L -26 18 Z', 7), stroke('M -26 -2 L 26 -2', 5)],
+  },
+
+  // --- Misc chrome ----------------------------------------------------------
+  { id: 'ui-alert', label: 'Alert', mode: 'tintable', shapes: [stroke('M 0 -22 L 0 6', 9), fill(circle(0, 20, 5))] },
+  {
+    id: 'iris-mark',
+    label: 'IRIS',
+    mode: 'tintable',
+    // An eye — IRIS, the surveillance chrome voice.
+    shapes: [stroke('M -28 0 Q 0 -18 28 0 Q 0 18 -28 0 Z', 7), stroke(circle(0, 0, 9), 6), fill(circle(0, 0, 4))],
+  },
 ];
 
 // --- Cursors (PNG-only; literal so the ink fill + light halo render) ---------

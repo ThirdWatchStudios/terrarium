@@ -21,12 +21,13 @@ bake them as assets, and it reshapes the icon set toward *workstation-operator c
 
 ## What the tool SHOULD build for Epic 36
 
-> **Status (2026-06-21):** Items **1 (theme alignment) and 3 (overlay-style.json) are BUILT** —
-> the shared "floor look" contract. The theme is re-tuned to the surveillance palette (teal-blue
-> accent, charcoal/slate, amber/red) with floor-overlay channel tokens, and `overlay-style.json`
-> ships the Shapes look spec. Item **2 (workstation icon set) is not started** (needs
-> `behavioral_pressure_model.md` + `interaction_taxonomy.md`). Next layer = the **game-side
-> importer** (Layer B in the integration plan) in The-Water-Cooler.
+> **Status (2026-06-21):** **All three tool-side items BUILT.** (1) theme re-tuned to the
+> surveillance palette + floor-overlay channel tokens; (3) `overlay-style.json` Shapes look spec;
+> (2) the workstation icon set — 28 new tintable glyphs in [icons.ts](../src/parts/icons.ts),
+> grounded in the UI epic + the *prototype slices* of `behavioral_pressure_model.md` (7 pressures)
+> and `interaction_taxonomy.md` (3 supported interventions). Game-side **Layer B importer is also
+> built** in The-Water-Cooler (theme/icons/cursors/overlay → 4 SOs). Remaining: **Layer C** (consume
+> in live UI) — gated on the Epic 36 build.
 
 ### 1. Epic 36 theme alignment (highest leverage) — ✅ BUILT
 `ui_visual_design.md` → "Visual Language" mandates a specific palette, and it differs from
@@ -42,7 +43,7 @@ channel tokens (`--wc-trust`, `--wc-suspicion`, `--wc-belief-rumor`, `--wc-belie
 `--wc-pressure`, `--wc-surveillance`) so **Shapes (floor) and USS (chrome) resolve the same
 colors.** One palette, two renderers.
 
-### 2. Workstation chrome icon set (the real list, grounded in stories)
+### 2. Workstation chrome icon set — ✅ BUILT (28 glyphs)
 Replaces the speculative control/dept/relationship batches with what the stories name:
 - **Transport** (S36.1.3): play ✓, pause ✓, **step**, **speed/fast-forward**. (stop optional)
 - **Capture** (F36.5): an aperture / REC dot — the surveillance capture verb.

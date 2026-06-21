@@ -173,7 +173,17 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     // The diegetic + literal batches are present: a literal icon ships real color
     // (not a white mask), and the catalog-grounded groups exist.
     const ids = manifest.icons.map((i: { id: string }) => i.id);
-    for (const id of ['dept-leadership', 'need-recognition', 'rel-romantic']) {
+    for (const id of [
+      'dept-leadership',
+      'need-recognition',
+      'rel-romantic',
+      // Epic 36 workstation chrome (docs/epic-36-ui-assets.md).
+      'ui-capture',
+      'layer-relationships',
+      'pressure-suspicion',
+      'intervention-lock',
+      'iris-mark',
+    ]) {
       expect(ids, `icon set missing ${id}`).toContain(id);
     }
     const romance = json.get('icons/rel-romantic.svg')!;
