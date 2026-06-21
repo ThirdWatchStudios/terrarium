@@ -8,7 +8,7 @@ import {
 } from '../src/core/scenario';
 import { DEFAULT_CAST, DEFAULT_SCENARIOS, defaultProject } from '../src/data/defaults';
 import { migrateProject, CURRENT_SCHEMA_VERSION } from '../src/core/migrations';
-import { computeOfficeAnchors, generateOfficeLayout } from '../src/core/layout';
+import { computeOfficeAnchors } from '../src/core/layout';
 import { exportAll, type ExportSink } from '../src/core/exporter';
 import { buildScenarioPackage, resolveScenarioRun } from '../src/core/scenarioRun';
 
@@ -82,10 +82,11 @@ describe('scenario model', () => {
 });
 
 describe('scenario ↔ office anchor binding', () => {
-  it('promotion_rumor_001 bindings resolve against a generated office (seed 1)', () => {
+  it('promotion_rumor_001 bindings resolve against the default office', () => {
+    // The office is the baked default scene now (ADR-0001: the sim owns generation);
+    // computeOfficeAnchors still reads anchors from whatever scene the project carries.
     const project = defaultProject();
-    const office = generateOfficeLayout(project, 6, 1);
-    const anchors = computeOfficeAnchors(office.scene, project);
+    const anchors = computeOfficeAnchors(project.scene, project);
     const ids = anchors.map((a) => a.anchorId);
     // per-agent desks + the rooms the scenario binds to all exist as anchors
     for (const id of ['desk:janice', 'desk:carl', 'desk:linda', 'cubicle-farm', 'manager-office', 'break-room', 'hallway']) {
@@ -95,21 +96,10 @@ describe('scenario ↔ office anchor binding', () => {
     expect(validateScenario(promo, { agentIds: project.characters.map((c) => c.id), anchorIds: ids })).toEqual([]);
   });
 
-  it('guarantees all three desk anchors even on a small-cubicle-farm template (seed 7)', () => {
-    // seed 7 (cross-hall-compact) only fits 2 desk pods; the fallback tops up
-    // desk:linda from a free cubicle-farm cell so the cast always binds.
-    const project = defaultProject();
-    const office = generateOfficeLayout(project, 6, 7);
-    const ids = computeOfficeAnchors(office.scene, project).map((a) => a.anchorId);
-    for (const id of ['desk:janice', 'desk:carl', 'desk:linda']) expect(ids).toContain(id);
-    expect(validateScenario(promo, { agentIds: project.characters.map((c) => c.id), anchorIds: ids })).toEqual([]);
-  });
-
   it('emits one room anchor per room and excludes the manager from desk anchors', () => {
     const project = defaultProject();
-    const office = generateOfficeLayout(project, 6, 1);
-    const anchors = computeOfficeAnchors(office.scene, project);
-    const rooms = office.scene.rooms ?? [];
+    const anchors = computeOfficeAnchors(project.scene, project);
+    const rooms = project.scene.rooms ?? [];
     expect(anchors.filter((a) => a.kind === 'room').length).toBe(rooms.length);
     expect(anchors.some((a) => a.anchorId === 'desk:manager')).toBe(false);
   });
@@ -170,8 +160,7 @@ describe('scenario run resolver (studio↔sim parity)', () => {
 
 describe('scenario export', () => {
   it('exportAll writes a split scenario package per authored scenario', async () => {
-    const project = defaultProject();
-    project.scene = generateOfficeLayout(project, 6, 1).scene; // office so anchors/interaction files emit
+    const project = defaultProject(); // carries the baked default office, so anchors/interaction files emit
     const paths: string[] = [];
     const sink: ExportSink = { file: (p) => void paths.push(p) };
     // Stub rasterizer — we only care that the package JSON is emitted, not pixels.

@@ -11,7 +11,7 @@ import { DEFAULT_CAST, DEFAULT_PROFILES } from '../src/data/defaults';
 import { defaultProject } from '../src/data/defaults';
 import { createDefaultProfile, type Relationship } from '../src/core/profile';
 import { validateScenario } from '../src/core/scenario';
-import { computeOfficeAnchors, generateOfficeLayout } from '../src/core/layout';
+import { computeOfficeAnchors } from '../src/core/layout';
 
 // --- fixtures for the model-extension tests ---------------------------------
 
@@ -112,10 +112,9 @@ describe('casting a template onto a cast', () => {
     expect(validateScenario(scenario!, { agentIds })).toEqual([]);
   });
 
-  it('the emitted scenario binds to a generated office (anchor resolution on)', () => {
+  it('the emitted scenario binds to the default office (anchor resolution on)', () => {
     const project = defaultProject();
-    const office = generateOfficeLayout(project, 6, 1);
-    const anchorIds = computeOfficeAnchors(office.scene, project).map((a) => a.anchorId);
+    const anchorIds = computeOfficeAnchors(project.scene, project).map((a) => a.anchorId);
     const { scenario } = castTemplate(THE_OFFICE_ROMANCE, profiles, { anchorIds });
     // desk bindings resolve to desk:<lover> (e.g. desk:carl), rooms resolve too.
     expect(validateScenario(scenario!, { agentIds, anchorIds })).toEqual([]);
@@ -319,10 +318,9 @@ describe('The Contested Promotion (templatized promotion_rumor_001)', () => {
     expect(s.truthFacts[0].subjectAgentIds.sort()).toEqual(['janice', 'manager']);
   });
 
-  it('binds the recipient/skeptic/amplifier desks against a generated office', () => {
+  it('binds the recipient/skeptic/amplifier desks against the default office', () => {
     const project = defaultProject();
-    const office = generateOfficeLayout(project, 6, 1);
-    const anchorIds = computeOfficeAnchors(office.scene, project).map((a) => a.anchorId);
+    const anchorIds = computeOfficeAnchors(project.scene, project).map((a) => a.anchorId);
     const { scenario } = castTemplate(THE_CONTESTED_PROMOTION, DEFAULT_PROFILES, { anchorIds });
     expect(validateScenario(scenario!, { agentIds: DEFAULT_PROFILES.map((p) => p.agentId), anchorIds })).toEqual([]);
     const recipientDesk = scenario!.locations.find((l) => l.locationId === 'advanced_desk')!;

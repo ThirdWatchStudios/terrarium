@@ -7,7 +7,7 @@
 import type { ChangeKind } from '../state';
 import { store } from '../state';
 import { downloadJson } from '../core/exporter';
-import { GENERATED_COWORKER_PREFIX, computeInteractionAnchors, computeOfficeAnchors, generateOfficeLayout } from '../core/layout';
+import { computeInteractionAnchors, computeOfficeAnchors } from '../core/layout';
 import { STANCES } from '../core/profile';
 import { resolveScenarioRun, type ResolvedAgent, type ResolvedRun } from '../core/scenarioRun';
 import { SCENARIO_TEMPLATES } from '../data/scenarioTemplates';
@@ -97,14 +97,6 @@ function metaSection(s: Scenario): HTMLElement {
 }
 
 function officeSection(s: Scenario): HTMLElement {
-  const generate = (seed: number | undefined) => {
-    const gen = generateOfficeLayout(store.state, store.ui.sceneCoworkers, seed);
-    store.mutate((st) => {
-      st.characters = st.characters.filter((r) => !r.id.startsWith(GENERATED_COWORKER_PREFIX)).concat(gen.coworkers);
-      st.scene = gen.scene;
-      s.officeSeed = gen.seed; // s is the live selected scenario reference
-    }, 'structure');
-  };
   const seedInput = el('input', {
     type: 'number',
     value: s.officeSeed === undefined ? '' : String(s.officeSeed),
@@ -117,17 +109,10 @@ function officeSection(s: Scenario): HTMLElement {
   });
   return section(
     'Office',
-    el('p', { className: 'hint' }, 'The shared project office this scenario binds to. Pin a seed so the bound layout is reproducible.'),
-    labeled(
-      'Seed',
-      el(
-        'span',
-        { className: 'effect-row' },
-        seedInput,
-        button('Generate', () => generate(s.officeSeed), 'primary'),
-        button('🎲 New', () => generate(undefined)),
-      ),
-    ),
+    // The sim generates the office from this seed at runtime (ADR-0001); the tool no
+    // longer generates a preview office here. Pin a seed for a reproducible layout.
+    el('p', { className: 'hint' }, 'The office seed this scenario binds to. The sim generates the office from it at runtime; pin one for a reproducible bound layout.'),
+    labeled('Seed', seedInput),
   );
 }
 

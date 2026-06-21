@@ -11,6 +11,14 @@ behavior, dialogue, or outcomes; the simulation owns everything after 8:00 AM.
 > `generator` ids keep their original names for compatibility; "Terrarium" is the
 > product brand.
 
+> **Generation boundary (ADR-0001, in the sim repo):** procedural *office generation*
+> lives in the sim now (a new-game seed builds a fresh office at runtime) — Terrarium no
+> longer generates offices. It paints/imports a scene and exports it; the shared
+> office-layout contract is `docs/schema/office-layout.schema.json` in the sim repo.
+> Terrarium keeps only the scene-reading helpers it needs for export (`computeWings`,
+> `computeWingConnectivity`, `computeInteractionAnchors`, `computeOfficeAnchors`,
+> `sceneToLayoutJson`).
+
 It began as (and still contains) a sprite compositor: generate RimWorld-style office
 characters and props as PNG sprite sheets with a globally tweakable art style.
 

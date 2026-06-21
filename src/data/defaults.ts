@@ -5,8 +5,13 @@ import { applyDerived, createDefaultProfile } from '../core/profile';
 import type { Scenario } from '../core/scenario';
 import { defaultCapabilitiesForCategory, defaultThemeForCategory, type DepartmentDefinition } from '../core/department';
 import { MERIDIAN_DYNAMICS } from './companies';
-import { generateOfficeLayout } from '../core/layout';
 import type { SceneState } from '../core/scene';
+// Baked office scenes (ADR-0001): the sim now owns procedural office generation, so the
+// tool ships static snapshots of its default offices instead of generating them. Re-bake
+// (if the cast/theme inputs change) by temporarily restoring a generate call — see
+// docs/adr/0001 and the sim's Tools/ParityHarness.
+import defaultSceneJson from './baked/default-scene.json';
+import goldenSceneJson from './baked/golden-scene.json';
 import { deriveDepartments } from '../core/companyStructure';
 import { generatePopulation, employeeRecipe, getProfile } from '../core/employee';
 import { generateEmployeePersona } from '../core/populationPersona';
@@ -1076,7 +1081,6 @@ function baseDefaultProject(): ProjectState {
 }
 
 /** Deterministic seed for the baseline office, matching the headless `default` export. */
-const DEFAULT_OFFICE_SEED = 1;
 
 /**
  * The baseline office, generated once at module load so a Reset-all restores the
@@ -1085,7 +1089,7 @@ const DEFAULT_OFFICE_SEED = 1;
  * common). Hero cast only (no throwaway coworkers) — populate via the Office tab.
  * Cloned per `defaultProject()` call so callers can mutate freely.
  */
-const DEFAULT_SCENE: SceneState = generateOfficeLayout(baseDefaultProject(), 0, DEFAULT_OFFICE_SEED).scene;
+const DEFAULT_SCENE = defaultSceneJson as unknown as SceneState;
 
 export function defaultProject(): ProjectState {
   return { ...baseDefaultProject(), scene: structuredClone(DEFAULT_SCENE) };
@@ -1139,9 +1143,10 @@ function buildDefaultGoldenProject(): ProjectState {
   generateRelationshipGraph(profiles, { seed: 'golden', relationshipTypes: base.relationshipTypes });
 
   const project: ProjectState = { ...base, characters, profiles };
-  // Compose the populated multi-department office (explicit wing set so operations
-  // is a wing even though the hero — not generated coworkers — populate it).
-  project.scene = generateOfficeLayout(project, 0, GOLDEN_SEED, { wingDepartmentIds, denseSeating: true }).scene;
+  // The populated multi-department office is a baked snapshot (ADR-0001) — the sim owns
+  // office generation now. The population above stays deterministic, so the baked scene's
+  // desks/spawns still match this cast; re-bake if the population inputs change.
+  project.scene = structuredClone(goldenSceneJson) as unknown as SceneState;
   return project;
 }
 

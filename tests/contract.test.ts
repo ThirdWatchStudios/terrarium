@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { LAYOUT_TEMPLATES, generateOfficeLayout } from '../src/core/layout';
 import { MOODS } from '../src/core/types';
-import { DEFAULT_CAST, DEFAULT_PROPS, defaultProject } from '../src/data/defaults';
+import { DEFAULT_CAST, DEFAULT_PROPS } from '../src/data/defaults';
 import { PROP_TEMPLATES } from '../src/props/templates';
 
 /**
@@ -16,10 +15,10 @@ import { PROP_TEMPLATES } from '../src/props/templates';
  * half drifted; update BOTH repos together when a contract genuinely changes.
  */
 
-// Sim LocationIds bind to these layout room ids (SpriteToolkitOfficeBinder
-// DefaultLocationMap). Every generated office must contain them or some sim
-// location resolves to nothing.
-const SIM_BOUND_ROOMS = ['manager-office', 'break-room', 'hallway', 'cubicle-farm', 'conference-room'];
+// NOTE: office generation (and the "every office carries the sim-bound rooms"
+// invariant) moved to the sim per ADR-0001; that contract is now enforced sim-side by
+// docs/schema/office-layout.schema.json + OfficeLayoutWingGoldenTests. The remaining
+// contracts below are the authored-ingredient ids the tool still owns.
 
 // Sim AgentIds (Phase2 scenario fixture). Must equal recipe ids 1:1 so the
 // exported layer-atlas family matches the agent the game spawns.
@@ -34,27 +33,6 @@ const SIM_MOOD_NAMES = ['normal', 'curious', 'suspicious', 'defensive', 'hostile
 const SIM_PROP_TEMPLATES = ['water-cooler', 'coffee-machine', 'printer', 'mail-station', 'supply-cabinet', 'door', 'desk'];
 
 describe('tool ↔ game integration contracts', () => {
-  it('every layout template contains the rooms the sim binds locations to', () => {
-    for (const template of LAYOUT_TEMPLATES) {
-      const roomIds = template.rooms.map((room) => room.id);
-      for (const required of SIM_BOUND_ROOMS) {
-        expect(roomIds, `template "${template.id}" is missing sim-bound room "${required}"`).toContain(required);
-      }
-    }
-  });
-
-  it('a composed multi-department office stays sim-complete (carries the shared bound rooms)', () => {
-    // The composed path suffixes the bullpen per department (cubicle-farm@<dept>),
-    // so the sim binds the desk anchor; the rest of the bound rooms must be present
-    // verbatim or the sim's location map / scripted scenario silently falls back.
-    const { scene } = generateOfficeLayout(defaultProject(), 6, 1, { wingDepartmentIds: ['sales', 'engineering'] });
-    const roomIds = (scene.rooms ?? []).map((r) => r.id);
-    for (const required of ['manager-office', 'break-room', 'conference-room', 'hallway']) {
-      expect(roomIds, `composed office is missing sim-bound room "${required}"`).toContain(required);
-    }
-    expect(roomIds.some((id) => id.startsWith('cubicle-farm')), 'composed office has no cubicle-farm bullpen').toBe(true);
-  });
-
   it('default cast ids equal the sim agent ids exactly', () => {
     expect([...DEFAULT_CAST.map((recipe) => recipe.id)].sort()).toEqual([...SIM_AGENT_IDS].sort());
   });

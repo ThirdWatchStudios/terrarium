@@ -3,11 +3,9 @@ import type { SceneBrush, SceneState } from '../core/scene';
 import { FACINGS, MOODS } from '../core/types';
 import { composeCharacter, composeFloorTile, composeProp, composeWallTile } from '../core/compositor';
 import {
-  GENERATED_COWORKER_PREFIX,
   INTERACTION_PROP_TYPES,
   computeInteractionAnchors,
   computeOfficeAnchors,
-  generateOfficeLayout,
   sceneToLayoutJson,
   type OfficeAnchor,
 } from '../core/layout';
@@ -398,11 +396,10 @@ function placedCharacterRows(current: SceneState): HTMLElement {
   return rows;
 }
 
-// Office controls split into focused tabs so paint settings, office generation,
-// and export aren't all competing for attention beside the canvas at once.
+// Office controls split into focused tabs. Office *generation* moved to the sim
+// (ADR-0001) — the tool paints/imports a scene and exports it, it no longer generates.
 const SCENE_TABS: ReadonlyArray<{ id: string; label: string }> = [
   { id: 'paint', label: 'Paint' },
-  { id: 'generate', label: 'Generate' },
   { id: 'export', label: 'Export' },
 ];
 
@@ -429,7 +426,6 @@ function renderLayoutControls(container: HTMLElement): void {
   );
 
   if (sceneControlsTab === 'paint') renderScenePaint(container, current);
-  else if (sceneControlsTab === 'generate') renderSceneGenerate(container);
   else renderSceneExport(container, current);
 }
 
@@ -551,94 +547,4 @@ function renderSceneExport(container: HTMLElement, current: SceneState): void {
       button('Reset scene', () => store.mutate((state) => (state.scene = createDefaultScene(state)), 'structure')),
     ),
   );
-}
-
-function renderSceneGenerate(container: HTMLElement): void {
-  const coworkerInput = el('input', {
-    type: 'number',
-    min: 0,
-    max: 12,
-    step: 1,
-    value: store.ui.sceneCoworkers,
-    onInput: (event: Event) => {
-      const value = Number((event.target as HTMLInputElement).value);
-      store.ui.sceneCoworkers = Number.isFinite(value) ? Math.max(0, Math.min(12, Math.floor(value))) : 0;
-    },
-  });
-
-  const seedInput = el('input', {
-    type: 'text',
-    placeholder: 'random',
-    value: store.ui.sceneSeed,
-    onInput: (event: Event) => {
-      store.ui.sceneSeed = (event.target as HTMLInputElement).value.trim();
-    },
-  });
-
-  const generate = (seed: number | undefined) => {
-    const generated = generateOfficeLayout(store.state, store.ui.sceneCoworkers, seed, {
-      wingDepartmentIds: store.ui.sceneWingDepartmentIds,
-    });
-    store.ui.sceneSeed = String(generated.seed);
-    store.ui.sceneOccupancy = generated.occupancy;
-    store.mutate((state) => {
-      state.characters = state.characters
-        .filter((recipe) => !recipe.id.startsWith(GENERATED_COWORKER_PREFIX))
-        .concat(generated.coworkers);
-      state.scene = generated.scene;
-    }, 'structure');
-  };
-
-  // replays the seed in the field (or rolls one when blank)
-  const generateBtn = button('Generate office', () => {
-    const parsed = Number.parseInt(store.ui.sceneSeed, 10);
-    generate(Number.isFinite(parsed) ? parsed : undefined);
-  }, 'primary');
-
-  // always rolls a fresh seed — one click, new office
-  const randomBtn = button('🎲 New office', () => generate(undefined), 'primary');
-
-  // Department wings (F1.4): each checked department becomes its own wing, and the
-  // footprint grows to fit them. None checked = the classic single office.
-  const wingBox = el('div', { className: 'check-grid' });
-  for (const dept of store.state.departments) {
-    wingBox.append(
-      el(
-        'label',
-        { className: 'check-item' },
-        el('input', {
-          type: 'checkbox',
-          ...(store.ui.sceneWingDepartmentIds.includes(dept.id) ? { checked: true } : {}),
-          onChange: () => {
-            store.ui.sceneWingDepartmentIds = store.ui.sceneWingDepartmentIds.includes(dept.id)
-              ? store.ui.sceneWingDepartmentIds.filter((id) => id !== dept.id)
-              : [...store.ui.sceneWingDepartmentIds, dept.id];
-          },
-        }),
-        dept.label,
-      ),
-    );
-  }
-
-  container.append(
-    el('h3', {}, 'Random office'),
-    el('p', { className: 'hint' }, 'Roll a fresh office and coworker cast, or replay a pinned seed.'),
-    labeled('Random coworkers', coworkerInput),
-    labeled('Seed (same seed = same office)', seedInput),
-    labeled('Department wings (optional)', wingBox),
-    el('p', { className: 'hint' }, 'Leave unchecked to auto-derive a wing per department in the generated cast; check departments to override the wing set. Unchecked + no population = a single office.'),
-    el('div', { className: 'btn-row' }, randomBtn, generateBtn),
-  );
-
-  // F3.4: warn when a wing can't seat all of its generated population.
-  if (store.ui.sceneOccupancy.length > 0) {
-    container.append(
-      el(
-        'div',
-        { className: 'warning' },
-        el('strong', {}, 'Wing over capacity:'),
-        ...store.ui.sceneOccupancy.map((msg) => el('p', { className: 'hint' }, msg)),
-      ),
-    );
-  }
 }
