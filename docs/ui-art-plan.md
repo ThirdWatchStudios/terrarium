@@ -202,12 +202,18 @@ boundary — the same way the Family=recipe-id binding is pinned for sprites.
 
 ## Suggested build order
 
-1. `uiPalette.ts` + repoint `INK`/badge colors (no output change; pure refactor to one source).
-2. `theme.uss` + `theme.json` export (Extension 2 — small, unblocks USS theming immediately).
-3. `icons.ts` + `composeIcon` + a first batch of control glyphs (`ui-gear`, `ui-close`, `ui-play`, `ui-pause`, `ui-save`).
-4. Icons export pass (SVG + PNG + manifest).
-5. Diegetic batches (department, status, relationship icons).
-6. Cursors (PNG-only) + decorative trim.
-7. CONTRACT.md "UI assets" section.
+1. ✅ `uiPalette.ts` + repoint `INK`/`GLYPH`/badge colors (pure refactor to one source — pixel-identical, snapshot-verified).
+2. ✅ `theme.uss` + `theme.json` export (Extension 2).
+3. ✅ `icons.ts` + `composeIcon` + first batch of control glyphs (`ui-gear`, `ui-close`, `ui-play`, `ui-pause`, `ui-save`).
+4. ✅ Icons export pass (SVG + PNG ladder + manifest; verified through the resvg headless backend).
+5. ✅ Diegetic batches — department CATEGORY (6), the six NEEDS (6, tintable), relationship CATEGORY (4, literal). Grounded in the real catalogs; reconcile leaf-level coverage against Epic 36.
+6. ✅ Cursors (4, PNG-only + hotspots) + decorative trim (divider, corner, spinner).
+7. ✅ CONTRACT.md "UI assets" section (§3.13).
+
+**All build-order steps complete.** Next: reconcile the icon/cursor set against The Water Cooler's UI epic (Epic 36) — it should name the exact glyphs the UI needs, which this catalog-grounded baseline then maps onto or extends.
+
+Done so far lives in: [src/data/uiPalette.ts](../src/data/uiPalette.ts), [src/parts/icons.ts](../src/parts/icons.ts),
+`composeIcon`/`emitIconMask` in [src/core/compositor.ts](../src/core/compositor.ts), the export passes in
+[src/core/exporter.ts](../src/core/exporter.ts), and the guard in [tests/defaultBundle.test.ts](../tests/defaultBundle.test.ts).
 ```
 

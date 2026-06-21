@@ -8,6 +8,7 @@ import {
   composeActivityBadge,
   composeCharacter,
   composeFloorTile,
+  composeIcon,
   composeMoodEmote,
   composeProp,
   composeWallTile,
@@ -29,6 +30,7 @@ import { serializeScenarioTemplateLibrary, type ScenarioTemplate } from './scena
 import { PROP_TEMPLATES } from '../props/templates';
 import { maskName } from '../tiles/templates';
 import { themeUss, themeJson } from '../data/uiPalette';
+import { ICONS, CURSORS } from '../parts/icons';
 
 /** Sheet frame order. West is baked as mirrored east for engine convenience. */
 const SHEET_FACINGS = ['south', 'east', 'north', 'west'] as const;
@@ -303,6 +305,56 @@ export function moodEmotesAtlas(style: StyleSheet, scale: number) {
       facingIndependent: true,
       note: 'Overhead mood bubble; no longer baked in the mood sheet. Place above the head, stacks with the activity badge.',
     },
+  };
+}
+
+/**
+ * One UI icon as a single-cell sheet. Icons never pixelate (pixelScale 1) — the
+ * RimWorld dither is for world sprites; UI chrome wants clean edges.
+ */
+function iconDesc(iconId: string, style: StyleSheet, scale: number): SheetDesc {
+  const size = style.render.baseSize * scale;
+  return {
+    width: size,
+    height: size,
+    pixelScale: 1,
+    cells: [{ svg: composeIcon(iconId, size), dx: 0, dy: 0, dw: size, dh: size }],
+  };
+}
+
+/** Index of the exported UI icons: SVG (UI Toolkit) + PNG ladder (uGUI) per id. */
+export function iconsManifest() {
+  return {
+    kind: 'icons' as const,
+    generator: 'sprite-character-creator',
+    designCanvas: CANVAS,
+    icons: ICONS.map((i) => ({
+      id: i.id,
+      label: i.label,
+      mode: i.mode,
+      svg: `icons/${i.id}.svg`,
+      png: EXPORT_SCALES.map((s) => `icons/${i.id}@${s}x.png`),
+    })),
+    note:
+      'tintable icons are white masks — recolor via USS unity-background-image-tint-color ' +
+      'or uGUI Image.color (theme.uss --wc-*). literal icons ship final colors.',
+  };
+}
+
+/** Cursors: PNG-only (USS `cursor` / uGUI need a texture), each with a hotspot. */
+export function cursorsManifest() {
+  return {
+    kind: 'cursors' as const,
+    generator: 'sprite-character-creator',
+    designCanvas: CANVAS,
+    cursors: CURSORS.map((c) => ({
+      id: c.id,
+      label: c.label,
+      png: EXPORT_SCALES.map((s) => `cursors/${c.id}@${s}x.png`),
+      // Normalized active pixel (0..1) — multiply by the chosen texture size.
+      hotspot: c.hotspot,
+    })),
+    note: 'No SVG — USS `cursor` and uGUI take a texture + hotspot, not a vector.',
   };
 }
 
@@ -704,7 +756,9 @@ export async function exportAll(
     project.props.length * scales +
     (project.walls?.length ?? 0) * scales +
     (project.floors?.length ?? 0) * scales +
-    scales * 2; // one shared activity-badge + one shared mood-emote atlas per scale
+    scales * 2 + // one shared activity-badge + one shared mood-emote atlas per scale
+    ICONS.length + // one tick per UI icon (its SVG + PNG ladder)
+    CURSORS.length; // one tick per cursor (PNG ladder)
   let done = 0;
   const tick = (label: string) => {
     done += 1;
@@ -788,6 +842,31 @@ export async function exportAll(
     await write(`mood-emotes-atlas@${scale}x.json`, JSON.stringify(moodEmotesAtlas(style, scale), null, 2));
     tick('mood emotes');
   }
+  // UI icon set — framing-UI glyphs (docs/ui-art-plan.md). Each icon emits a
+  // resolution-independent SVG (UI Toolkit VectorImage) plus a non-pixelated PNG
+  // ladder (uGUI Sprite) from one definition, so assets survive the uGUI→UI
+  // Toolkit migration without re-authoring. tintable icons are white masks the
+  // framework recolors from theme.uss (--wc-*).
+  for (const icon of ICONS) {
+    await write(`icons/${icon.id}.svg`, composeIcon(icon.id));
+    for (const scale of EXPORT_SCALES) {
+      await write(`icons/${icon.id}@${scale}x.png`, await png(iconDesc(icon.id, style, scale)));
+    }
+    tick(`icon ${icon.id}`);
+  }
+  await write('icons/icons-manifest.json', JSON.stringify(iconsManifest(), null, 2));
+
+  // Cursors — PNG-only (USS `cursor` / uGUI take a texture + hotspot, not a
+  // vector). composeIcon renders the literal ink-on-halo glyph; the manifest
+  // carries each hotspot.
+  for (const cursor of CURSORS) {
+    for (const scale of EXPORT_SCALES) {
+      await write(`cursors/${cursor.id}@${scale}x.png`, await png(iconDesc(cursor.id, style, scale)));
+    }
+    tick(`cursor ${cursor.id}`);
+  }
+  await write('cursors/cursors-manifest.json', JSON.stringify(cursorsManifest(), null, 2));
+
   // Conversation style — the sim draws the connector between paired talking
   // agents from this (tool owns the look, sim owns pairing + placement).
   await write('conversation-style.json', JSON.stringify(conversationStyleJson(), null, 2));

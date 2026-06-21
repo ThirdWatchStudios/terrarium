@@ -60,6 +60,8 @@ Coordinate convention: scene grids are row-major `[y][x]`; anchors/spawns carry 
 | `mood-emotes@Nx.png` + `mood-emotes-atlas@Nx.json` | `moodEmotesAtlas` | project | One **shared** strip of overhead mood bubbles (character-independent) — the emote half of a mood, split out of the sheet. Sim blits one above an agent keyed off mood (§3.9). |
 | `activity-badges@Nx.png` + `activity-badges-atlas@Nx.json` | `activityBadgesAtlas` | project | One **shared** strip of overhead status badges (character-independent). Sim blits one above an agent keyed off the routine `activity` string (§3.9). |
 | `conversation-style.json` | `conversationStyleJson` | project | Style for the linked-bubble conversation visual; sim draws it between two paired talking agents (§3.9). |
+| `theme.uss` + `theme.json` | `themeUss` / `themeJson` | project | The **shared UI palette** as UI Toolkit `:root` custom properties (`--wc-*`) and a framework-neutral map. The single color source the framing UI resolves so chrome and world agree without sharing a pipeline (§3.13). `--wc-line` carries the project's actual `style.outline.color`. |
+| `icons/<id>.svg` + `icons/<id>@Nx.png` + `icons/icons-manifest.json` | `composeIcon` / `iconsManifest` | project | **UI icon set** — framing-UI glyphs. Each icon ships a resolution-independent SVG (UI Toolkit `VectorImage`) **and** a PNG ladder (uGUI `Sprite`). `tintable` icons are white masks the framework recolors from `theme.uss`; `literal` icons ship final colors (§3.13). |
 | `office-layout.json` | `sceneToLayoutJson` | scene | Rooms, floors, walls, props, spawns, anchors, interaction anchors (§3.4). |
 | `interaction-anchors.json` | `computeInteractionAnchors` | scene | Interaction points derived from placed props. |
 
@@ -427,6 +429,30 @@ The **company root** (Epic 0 F0.8), written at the **bundle root** with the exis
   "meta": { "generator": "sprite-character-creator", "schema": "00-company-root-and-cascade.md" }
 }
 ```
+
+### 3.13 UI assets — `theme.uss` / `theme.json` + `icons/*` (project-level)
+The framing UI's share of the bundle (full rationale: [docs/ui-art-plan.md](docs/ui-art-plan.md)).
+
+**Ownership boundary.** The tool owns every UI shape with **no state, no layout, and no text** — icons, glyphs, ornaments — plus the shared color palette. The Unity UI framework (uGUI today, UI Toolkit/USS as the migration target) owns every **container, control, state, and string**: panels, buttons, scrollbars, typography, and all interaction states (`:hover`/`:active`/`:disabled`), 9-slice, and layout. An icon may sit *inside* a button; a button is never a tool asset. Do not request panel/button/text sprites from this tool.
+
+**`theme.json` / `theme.uss`** — one canonical palette ([src/data/uiPalette.ts](src/data/uiPalette.ts)) emitted two ways: USS `:root` custom properties for UI Toolkit and a flat `{ palette: { name: hex } }` map for uGUI / non-USS consumers. Names: `ink`, `on-color`, `line` (= the project's `style.outline.color`), `surface`, `panel`, `accent`, `status-*` (info/positive/warning/danger/neutral), and `emote-*` (the activity + mood bubble hues, so chrome legends match the world). This is the cohesion contract: world sprites and chrome resolve the **same** colors without sharing a pipeline.
+
+**`icons/`** — each `IconDef` emits `icons/<id>.svg` (resolution-independent, design `viewBox="0 0 128 128"` — import as a UI Toolkit `VectorImage`) and a non-pixelated PNG ladder `icons/<id>@{1,2,4}x.png` (uGUI `Sprite`), from one definition, so assets survive the uGUI→UI Toolkit migration unchanged. `icons/icons-manifest.json` indexes them:
+```jsonc
+{
+  "kind": "icons",
+  "designCanvas": 128,
+  "icons": [
+    { "id": "ui-gear", "label": "Settings", "mode": "tintable",
+      "svg": "icons/ui-gear.svg", "png": ["icons/ui-gear@1x.png", "icons/ui-gear@2x.png", "icons/ui-gear@4x.png"] }
+  ]
+}
+```
+**Tinting.** `mode: "tintable"` icons are **white masks** — recolor with one flat multiply (USS `unity-background-image-tint-color`, uGUI `Image.color`), pulling from `theme.uss` `--wc-*`. Because the multiply is flat, tintable icons are single-color by construction. `mode: "literal"` icons ship final multi-hue colors and are not recolored. Unknown ids draw nothing (free-text-with-fallback, consistent with badges).
+
+The shipped icon set is catalog-grounded: control glyphs + trim (tintable), department-CATEGORY glyphs (`dept-*`, tintable — the six `DEFAULT_DEPARTMENTS` categories), the six canonical needs (`need-*`, tintable), and relationship-CATEGORY glyphs (`rel-*`, literal, colored from `--wc-rel-*`). These cover the coarse groupings; leaf-level coverage tracks the UI epic.
+
+**`cursors/`** — cursors are textures, not vectors, so they export **PNG-only**: `cursors/<id>@{1,2,4}x.png` + `cursors/cursors-manifest.json`. Each manifest entry carries a **normalized `hotspot`** `{x,y}` (0..1, multiply by chosen texture size for the active pixel). Cursors render dark ink under a light halo so the pointer reads on any background. Wire via USS `cursor: url("…") <x> <y>` / uGUI `Cursor.SetCursor`.
 
 ---
 

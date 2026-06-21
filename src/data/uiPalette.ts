@@ -29,6 +29,8 @@ const SKY = '#5B8DEF';
 const INDIGO = '#6E5BC4';
 const AZURE = '#3E78C8';
 const RED = '#CE4038';
+const SLATE = '#5B6B7A';
+const ROSE = '#D8638F';
 
 export const UI_PALETTE = {
   /** Near-black ink — eyes, hardware, bubble rings, and UI text. */
@@ -47,6 +49,13 @@ export const UI_PALETTE = {
     warning: AMBER,
     danger: RED,
     neutral: GREY,
+  },
+  /** Relationship-category hues — diegetic, baked into literal relationship icons. */
+  relationship: {
+    professional: SLATE,
+    social: GREEN,
+    romantic: ROSE,
+    adversarial: RED,
   },
   /** Diegetic overhead-emote bubble hues (activity + mood badges). */
   emote: {
@@ -85,6 +94,10 @@ export function themeColors(style: StyleSheet): Record<string, string> {
     'status-warning': UI_PALETTE.status.warning,
     'status-danger': UI_PALETTE.status.danger,
     'status-neutral': UI_PALETTE.status.neutral,
+    'rel-professional': UI_PALETTE.relationship.professional,
+    'rel-social': UI_PALETTE.relationship.social,
+    'rel-romantic': UI_PALETTE.relationship.romantic,
+    'rel-adversarial': UI_PALETTE.relationship.adversarial,
     'emote-work': UI_PALETTE.emote.work,
     'emote-talking': UI_PALETTE.emote.talking,
     'emote-meeting': UI_PALETTE.emote.meeting,

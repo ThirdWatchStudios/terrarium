@@ -16,6 +16,7 @@ import { getPart } from '../parts/library';
 import { MOOD_EMOTES, MOOD_OVERLAYS } from '../parts/moods';
 import type { Activity } from '../parts/activities';
 import { ACTIVITY_BADGES } from '../parts/activities';
+import { getIcon } from '../parts/icons';
 import { PROP_TEMPLATES } from '../props/templates';
 import { FLOOR_TEMPLATES, WALL_TEMPLATES } from '../tiles/templates';
 
@@ -400,6 +401,35 @@ function emitMaskShape(s: ShapeSpec): string {
 }
 
 const identityResolve: ResolveToken = (ref) => ref;
+
+/**
+ * Emit a UI-icon shape as a flat white mask — geometry only, ALL fills/strokes
+ * forced white (unlike emitMaskShape, which keeps literal colors). The framework
+ * recolors the mask, so a tintable icon needs no token bookkeeping.
+ */
+function emitIconMask(s: ShapeSpec): string {
+  const attrs: string[] = [`d="${s.d}"`, `fill="${s.fill ? '#FFFFFF' : 'none'}"`];
+  if (s.stroke) {
+    attrs.push('stroke="#FFFFFF"');
+    attrs.push(`stroke-width="${s.strokeWidth ?? 1.5}" stroke-linecap="round" stroke-linejoin="round"`);
+  }
+  if (s.opacity !== undefined) attrs.push(`opacity="${s.opacity}"`);
+  return `<path ${attrs.join(' ')}/>`;
+}
+
+/**
+ * Render one UI icon, centered in the canvas (docs/ui-art-plan.md). 'tintable'
+ * icons emit as a white mask the framework recolors; 'literal' icons ship final
+ * colors. Unknown ids return an empty canvas. The SVG feeds UI Toolkit
+ * (VectorImage); the same markup rasterizes to the uGUI PNG ladder.
+ */
+export function composeIcon(iconId: string, pixelSize: number = CANVAS): string {
+  const icon = getIcon(iconId);
+  if (!icon) return svgWrap('', pixelSize);
+  const emit = icon.mode === 'tintable' ? emitIconMask : (s: ShapeSpec) => emitColorShape(s, identityResolve);
+  const inner = icon.shapes.map(emit).join('');
+  return svgWrap(`<g transform="translate(${CANVAS / 2} ${CANVAS / 2})">${inner}</g>`, pixelSize);
+}
 
 interface IdPlaced {
   partId: string;

@@ -63,6 +63,8 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     'walls/',
     'floors/',
     'scenarios/', // authored scenario run package
+    'icons/', // UI icon set — SVG + PNG ladder (docs/ui-art-plan.md)
+    'cursors/', // cursor textures — PNG-only + hotspots (docs/ui-art-plan.md)
   ];
 
   it('emits one root artifact for every system', async () => {
@@ -135,6 +137,40 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     expect(theme.palette.accent, 'theme is missing an accent color').toBeTruthy();
     // theme.uss is the USS form of the same palette.
     expect(json.get('theme.uss'), 'theme.uss missing accent var').toContain('--wc-accent:');
+  });
+
+  it('emits the UI icon set as both SVG (UI Toolkit) and PNG (uGUI) with a manifest', async () => {
+    const { paths, json } = await exportPaths();
+    const manifest = JSON.parse(json.get('icons/icons-manifest.json')!);
+    expect(manifest.icons.length, 'no UI icons shipped').toBeGreaterThan(0);
+    for (const icon of manifest.icons) {
+      expect(paths.has(`icons/${icon.id}.svg`), `icon ${icon.id} missing SVG`).toBe(true);
+      expect(paths.has(`icons/${icon.id}@1x.png`), `icon ${icon.id} missing 1x PNG`).toBe(true);
+    }
+    // SVG is resolution-independent (carries the design viewBox).
+    const svg = json.get(`icons/${manifest.icons[0].id}.svg`)!;
+    expect(svg, 'icon SVG missing design viewBox').toContain('viewBox="0 0 128 128"');
+    // The diegetic + literal batches are present: a literal icon ships real color
+    // (not a white mask), and the catalog-grounded groups exist.
+    const ids = manifest.icons.map((i: { id: string }) => i.id);
+    for (const id of ['dept-leadership', 'need-recognition', 'rel-romantic']) {
+      expect(ids, `icon set missing ${id}`).toContain(id);
+    }
+    const romance = json.get('icons/rel-romantic.svg')!;
+    expect(romance, 'literal icon should ship its real color, not a white mask').toContain('#D8638F');
+  });
+
+  it('emits PNG-only cursors with normalized hotspots', async () => {
+    const { paths, json } = await exportPaths();
+    const manifest = JSON.parse(json.get('cursors/cursors-manifest.json')!);
+    expect(manifest.cursors.length, 'no cursors shipped').toBeGreaterThan(0);
+    for (const cursor of manifest.cursors) {
+      expect(paths.has(`cursors/${cursor.id}@1x.png`), `cursor ${cursor.id} missing 1x PNG`).toBe(true);
+      // Cursors are textures — no SVG.
+      expect(paths.has(`cursors/${cursor.id}.svg`), `cursor ${cursor.id} should not ship an SVG`).toBe(false);
+      expect(cursor.hotspot.x, `cursor ${cursor.id} hotspot out of range`).toBeGreaterThanOrEqual(0);
+      expect(cursor.hotspot.x).toBeLessThanOrEqual(1);
+    }
   });
 
   it('ships a generated supporting population (multiple departments, personas, relationships)', async () => {
