@@ -53,6 +53,7 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     'mood-emotes-atlas@1x.json',
     'theme.uss', // shared UI palette — UI Toolkit (docs/ui-art-plan.md)
     'theme.json', // shared UI palette — uGUI / non-USS consumers
+    'overlay-style.json', // floor-overlay look spec for the Shapes layer (Epic 36)
   ];
 
   // Per-entity systems — at least one folder of each must exist.
@@ -137,6 +138,25 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     expect(theme.palette.accent, 'theme is missing an accent color').toBeTruthy();
     // theme.uss is the USS form of the same palette.
     expect(json.get('theme.uss'), 'theme.uss missing accent var').toContain('--wc-accent:');
+    // Epic 36 channel tokens are present so floor (Shapes) + chrome share one palette.
+    for (const tok of ['--wc-trust', '--wc-suspicion', '--wc-pressure', '--wc-surveillance']) {
+      expect(json.get('theme.uss'), `theme.uss missing channel token ${tok}`).toContain(tok);
+    }
+  });
+
+  it('emits a floor-overlay style spec the Shapes layer can read', async () => {
+    const { json } = await exportPaths();
+    const overlay = JSON.parse(json.get('overlay-style.json')!);
+    expect(overlay.kind).toBe('floor-overlay-style');
+    expect(overlay.renderer).toBe('shapes');
+    // The two protective rules from ui_visual_design.md.
+    expect(overlay.rules.motionEncodesEvents).toBe(true);
+    expect(overlay.rules.oneDominantPressurePerAgent).toBe(true);
+    // Every channel cites a theme token (color or belief axis), not a raw hex.
+    for (const [name, ch] of Object.entries<Record<string, unknown>>(overlay.channels)) {
+      const refs = JSON.stringify(ch);
+      expect(refs.includes('--wc-'), `overlay channel ${name} should reference a --wc-* token`).toBe(true);
+    }
   });
 
   it('emits the UI icon set as both SVG (UI Toolkit) and PNG (uGUI) with a manifest', async () => {

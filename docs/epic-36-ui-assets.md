@@ -21,12 +21,14 @@ bake them as assets, and it reshapes the icon set toward *workstation-operator c
 
 ## What the tool SHOULD build for Epic 36
 
-> **Status (2026-06-21):** determination only — build deferred by owner. The palette
-> *direction* is decided: **re-tune the shared theme to the surveillance palette** (teal-blue
-> institutional accent, charcoal/slate base, amber/red, + channel tokens) when we build.
-> Items 2–3 (icon set, overlay-style.json) are scoped but not started.
+> **Status (2026-06-21):** Items **1 (theme alignment) and 3 (overlay-style.json) are BUILT** —
+> the shared "floor look" contract. The theme is re-tuned to the surveillance palette (teal-blue
+> accent, charcoal/slate, amber/red) with floor-overlay channel tokens, and `overlay-style.json`
+> ships the Shapes look spec. Item **2 (workstation icon set) is not started** (needs
+> `behavioral_pressure_model.md` + `interaction_taxonomy.md`). Next layer = the **game-side
+> importer** (Layer B in the integration plan) in The-Water-Cooler.
 
-### 1. Epic 36 theme alignment (highest leverage) — DIRECTION DECIDED, build deferred
+### 1. Epic 36 theme alignment (highest leverage) — ✅ BUILT
 `ui_visual_design.md` → "Visual Language" mandates a specific palette, and it differs from
 the generic one we shipped:
 - base: **desaturated charcoal / slate** (not warm paper)
@@ -53,12 +55,13 @@ Replaces the speculative control/dept/relationship batches with what the stories
 - **Misc chrome**: settings (gear ✓), close ✓, the IRIS mark.
 All tintable masks (single flat color from `--wc-*`), per the pipeline already built.
 
-### 3. Floor-overlay STYLE SPEC (the Shapes bridge)
+### 3. Floor-overlay STYLE SPEC (the Shapes bridge) — ✅ BUILT
 Shapes draws the floor, but **art direction stays tool-side** (matches the project rule that
-style must stay tweakable post-build). Emit an `overlay-style.json` — the same idea as the
-shipped `conversation-style.json` — encoding the Visual Language table as data the Shapes layer
-reads: per channel { hue (→ `--wc-*`), line weight, dash pattern, motion (pulse/still),
-"one dominant pressure only" rule }. Tool owns the look; Shapes owns the drawing.
+style must stay tweakable post-build). `overlay-style.json` ([src/core/overlayStyle.ts](../src/core/overlayStyle.ts))
+— the same idea as the shipped `conversation-style.json` — encodes the Visual Language table as
+data the Shapes layer reads: per channel { color (→ `--wc-*`), form, line weight, dash pattern,
+motion (pulse/still), the "one dominant pressure only" rule }. Tool owns the look; Shapes owns
+the drawing.
 
 ## Reconciliation with the speculative set (steps 5–6)
 

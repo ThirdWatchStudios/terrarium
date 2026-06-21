@@ -31,24 +31,44 @@ const AZURE = '#3E78C8';
 const RED = '#CE4038';
 const SLATE = '#5B6B7A';
 const ROSE = '#D8638F';
+const TEAL_BLUE = '#2E89A8'; // Epic 36 single institutional accent (ui_visual_design.md)
+const CORAL = '#C76B3F'; // rumor pole of the belief-drift axis
 
 export const UI_PALETTE = {
   /** Near-black ink — eyes, hardware, bubble rings, and UI text. */
   ink: '#2C2C2A',
   /** White sitting on a colored fill (glyph-on-bubble, text-on-accent). */
   onColor: '#FFFFFF',
-  /** Warm paper surface + raised panel — chrome backgrounds. */
-  surface: '#F4F1EA',
-  panel: '#FFFFFF',
-  /** Primary action color for chrome. */
-  accent: BLUE,
-  /** Semantic status colors for chrome (badges, toasts, validation). */
+  /** Surveillance-workstation chrome (Epic 36): desaturated charcoal base, slate
+   *  raised panels, light text. Dark by design — the operator's monitor. */
+  surface: '#1E2329',
+  panel: '#2A323A',
+  text: '#E6E9EC',
+  textMuted: '#98A2AC',
+  /** Single institutional accent — teal-blue (ui_visual_design.md "Visual Language"). */
+  accent: TEAL_BLUE,
+  /** Semantic status colors for chrome. info === the institutional accent. */
   status: {
-    info: BLUE,
+    info: TEAL_BLUE,
     positive: GREEN,
     warning: AMBER,
     danger: RED,
     neutral: GREY,
+  },
+  /** Floor-overlay channel hues (Epic 36 Visual Language). Shapes draws the floor
+   *  from these; overlay-style.json carries the form/weight/motion per channel.
+   *  One channel per concept — colors may repeat across channels because the FORM
+   *  (line vs marker-tint vs halo vs token) is what distinguishes them. */
+  channel: {
+    trust: TEAL_BLUE, // cool tie; line weight encodes strength
+    suspicion: AMBER, // warm dashed tie
+    hostility: RED, // active conflict (used rarely, so it means something)
+    beliefTruth: TEAL_BLUE, // official-truth pole of the belief axis
+    beliefRumor: CORAL, // rumor pole of the belief axis
+    pressure: AMBER, // stress halo; pulse rate (motion) encodes intensity
+    information: TEAL_BLUE, // carried rumor token
+    change: '#FFFFFF', // single-pulse flash on a recent change
+    surveillance: TEAL_BLUE, // scan / REC framing tint
   },
   /** Relationship-category hues — diegetic, baked into literal relationship icons. */
   relationship: {
@@ -88,12 +108,23 @@ export function themeColors(style: StyleSheet): Record<string, string> {
     line: style.outline.color,
     surface: UI_PALETTE.surface,
     panel: UI_PALETTE.panel,
+    text: UI_PALETTE.text,
+    'text-muted': UI_PALETTE.textMuted,
     accent: UI_PALETTE.accent,
     'status-info': UI_PALETTE.status.info,
     'status-positive': UI_PALETTE.status.positive,
     'status-warning': UI_PALETTE.status.warning,
     'status-danger': UI_PALETTE.status.danger,
     'status-neutral': UI_PALETTE.status.neutral,
+    trust: UI_PALETTE.channel.trust,
+    suspicion: UI_PALETTE.channel.suspicion,
+    hostility: UI_PALETTE.channel.hostility,
+    'belief-truth': UI_PALETTE.channel.beliefTruth,
+    'belief-rumor': UI_PALETTE.channel.beliefRumor,
+    pressure: UI_PALETTE.channel.pressure,
+    information: UI_PALETTE.channel.information,
+    change: UI_PALETTE.channel.change,
+    surveillance: UI_PALETTE.channel.surveillance,
     'rel-professional': UI_PALETTE.relationship.professional,
     'rel-social': UI_PALETTE.relationship.social,
     'rel-romantic': UI_PALETTE.relationship.romantic,

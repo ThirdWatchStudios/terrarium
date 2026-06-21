@@ -31,6 +31,7 @@ import { PROP_TEMPLATES } from '../props/templates';
 import { maskName } from '../tiles/templates';
 import { themeUss, themeJson } from '../data/uiPalette';
 import { ICONS, CURSORS } from '../parts/icons';
+import { overlayStyleJson } from './overlayStyle';
 
 /** Sheet frame order. West is baked as mirrored east for engine convenience. */
 const SHEET_FACINGS = ['south', 'east', 'north', 'west'] as const;
@@ -870,6 +871,11 @@ export async function exportAll(
   // Conversation style — the sim draws the connector between paired talking
   // agents from this (tool owns the look, sim owns pairing + placement).
   await write('conversation-style.json', JSON.stringify(conversationStyleJson(), null, 2));
+
+  // Floor-overlay style spec (Epic 36) — the look the Shapes floor layer reads to
+  // draw relationship arcs / pressure halos / info packets / belief tints from sim
+  // state. Tool owns the look (colors → theme --wc-*); Shapes owns the drawing.
+  await write('overlay-style.json', JSON.stringify(overlayStyleJson(), null, 2));
 
   // Shared UI theme — the single palette the framing UI resolves so chrome and
   // world agree without sharing a pipeline (docs/ui-art-plan.md). theme.uss for
