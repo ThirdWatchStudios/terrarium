@@ -19,6 +19,25 @@ The consequence: **the tool does not produce floor-overlay sprites.** Arcs, halo
 reticles are drawn procedurally by Shapes — not exported PNG/SVG. That kills any plan to
 bake them as assets, and it reshapes the icon set toward *workstation-operator chrome glyphs*.
 
+## Chrome framework decision (2026-06-21): UI Toolkit
+
+The terminal chrome will be built in **UI Toolkit (USS)**, not uGUI. Rationale:
+- Team is open — decide on tech fit, no familiarity constraint.
+- **Zoom-crisp icons are a hard requirement** (the surveillance camera zooms) → SVG
+  `VectorImage` is resolution-independent where PNG sprites soften / need a scale ladder.
+  (Same logic `ui_visual_design.md` used to make the Shapes floor layer vector.)
+- The chrome is dashboard-shaped (panels / feed / lists / dual-register text) — UIT's
+  wheelhouse (flexbox layout, `ListView` virtualization for the feed, USS theming).
+- Unity 6 (6000.5) runtime UI Toolkit is production-ready.
+- The tool's richest exports (`theme.uss`, per-icon `.svg`) are UIT-native, so central
+  theming + tintable vector icons come nearly for free. uGUI's one edge (world-space UI)
+  is moot — the diegetic floor layer is Shapes + sprite atlases.
+
+**Consequence:** `theme.uss` + SVG are now the PRIMARY consumption path (validates the
+dual-export design); PNG + `theme.json` remain as a fallback. When **Layer C** starts:
+add `com.unity.vectorgraphics`, bind the SVG `VectorImage` into `UiIconCatalog` (keep the
+PNG sprite as preview/fallback), and route `theme.uss` into the project's stylesheets.
+
 ## What the tool SHOULD build for Epic 36
 
 > **Status (2026-06-21):** **All three tool-side items BUILT.** (1) theme re-tuned to the
