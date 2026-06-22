@@ -108,10 +108,21 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     // F1.1/F1.4 — the golden office is a MULTI-department populated office: several
     // department wings (not just one) + the sim-bound common rooms, all connected.
     const layout = JSON.parse(json.get('office-layout.json')!);
-    // Schema v4 added the building-surround `tenantRect` (additive). A plain export
-    // has no surround, so the whole grid is playable → tenantRect is null.
+    // Schema v4 + building surround: the golden baseline SHIPS the "floor in a tower"
+    // border (every system contributes a default), so the export carries a tenantRect
+    // and a grown grid. The tenant region stays smaller than the full (tenant+ring) grid.
     expect(layout.version, 'office-layout should be schema v4').toBe(4);
-    expect(layout.tenantRect, 'a plain export has no surround → tenantRect should be null').toBeNull();
+    expect(layout.tenantRect, 'golden baseline should ship a building surround').not.toBeNull();
+    expect(layout.tenantRect.cols, 'tenant should be narrower than the grown grid').toBeLessThan(layout.cols);
+    expect(layout.tenantRect.rows, 'tenant should be shorter than the grown grid').toBeLessThan(layout.rows);
+    // Ring props are decor only — they must never produce interaction anchors.
+    const tr = layout.tenantRect;
+    const inTenant = (a: { x: number; y: number }) =>
+      a.x >= tr.x && a.y >= tr.y && a.x < tr.x + tr.cols && a.y < tr.y + tr.rows;
+    expect(
+      layout.interactionAnchors.every(inTenant),
+      'no interaction anchor should sit in the building-surround ring',
+    ).toBe(true);
     const deptWings = layout.wings.filter((w: { departmentId: string | null }) => w.departmentId);
     expect(deptWings.length, 'golden office should have multiple department wings').toBeGreaterThan(1);
     expect(layout.connectivity.length, 'golden office wings are not connected (F1.3)').toBeGreaterThan(0);

@@ -240,12 +240,48 @@ parity, golden + default-bundle updates, the three Unity seams.
   `tenantRect` (new `insideTenant` helper) so ring decor never becomes a usable anchor.
   CONTRACT §3.4 updated (additive — old loaders ignore the field). Default-bundle guard
   asserts v4 + `tenantRect: null`; 4 new export/anchor tests. Full suite 406 pass.
-- ⬜ **Recede polish** (darker outer-ring tiles) · the two **Unity** code-change seams
-  (walkability `&& insideTenantRect` clamp; `TryGetTenantBounds()` + camera repoint).
+- ✅ **Unity seams (BUILT — pending an in-editor Test Runner pass)** in `The-Water-Cooler`:
+  - **Layout** (`SpriteToolkitOfficeLayout.cs`) parses `tenantRect` (importer
+    `SpriteToolkitZipImporter.cs`) into **flattened** fields + a `hasTenantRect` flag
+    (Unity can't round-trip a nullable nested reference — a missing one deserializes as
+    a zero instance; flattening matches the wing-bounds precedent). Exposes
+    `HasSurround`, `TenantRect` (defaults to the whole grid), `IsInsideTenant(x,y)`.
+  - **Walkability (SEAM 1)** — `BuildObstacleAwareWalkableGrid` clamps ring cells
+    (`!IsInsideTenant`) to non-walkable before the floor rule, so NPCs can't path into
+    the lobby. No-op when there's no surround.
+  - **Camera (SEAM 3)** — new `SpriteToolkitSceneAssembler.TryGetTenantBounds` (+ grid
+    helper `RectBoundsLocal`); `ProductionCameraController.TryFrameOffice` frames the
+    tenant, not the grown grid, so the ring bleeds off-screen.
+  - **3 EditMode tests** added to `SpriteToolkitOfficeBinderTests.cs` (clamp + a control
+    proving the clamp is what blocks the ring; tenant-rect accessors; rect-bounds math).
+    Verified by careful review; **could not run headless** (the editor was open, so no
+    batchmode lock) — run them in the Test Runner to confirm green.
+- ✅ **Sim-side generation port (BUILT — pending in-editor Test Runner pass)** — per the
+  ADR-0001 direction that the C# `OfficeLayoutGenerator` is the canonical, permanent office
+  generator. `BuildingSurround.Apply` (a faithful port of `addBuildingSurround`) is an
+  **additive pass** on the generator's `OfficeLayoutResult`, mirroring the tool (where the
+  surround is separate from generation). The bare `Generate()` stays surround-free so the
+  F1.5 structural goldens are untouched; `GenerateAsset(req, applyBuildingSurround: true)`
+  (the `OfficeLayoutGeneratorDriver`'s default) wraps the ring + v4 `tenantRect`. Kit ids
+  registered in `OfficeLayoutContent` defaults so a catalog-less generated office resolves
+  the surround sprites. 7 EditMode tests in `BuildingSurroundTests.cs`. Parity is
+  **structural, not byte-for-byte** (seeds are engine-local — README-F1.5-parity.md).
+- ⬜ **Recede polish** (darker outer-ring tiles) — optional tool-side follow-up.
 
-With the export landed, the tool→sim boundary is complete: a surrounded office now
-exports a v4 `office-layout.json` the sim can consume, carrying the `tenantRect` the two
-Unity seams clamp against.
+- ✅ **Shipped in the golden baseline (BUILT)** — `defaultGoldenProject()` applies
+  `addBuildingSurround` to its baked office (`src/data/defaults.ts`), so Reset-all,
+  first-load, and `npm run export -- default` all carry the surround with no manual
+  toggle (the "every system contributes a default" principle). Applied as a live
+  tool-side transform on top of the baked scene (not baked into the JSON), so it tracks
+  the surround logic. Verified: a headless default export emits v4, grid 54×18,
+  `tenantRect {2,2,50,14}`, 22 ring props, 44 interaction anchors all inside the tenant,
+  and the new tile/prop sprite folders. Default-bundle guard updated to assert the
+  surround ships.
+
+**The build is complete end to end:** kit → ring generation → v4 export, **on by default
+in the golden baseline** (tool) and layout parse → walkability clamp → camera framing
+(sim). A plain export now ships a v4 `office-layout.json` the sim consumes, rendering the
+ring as inert decor, keeping NPCs in the tenant, and framing the playable office.
 
 > Note on perimeter: the pass overwrites the tenant's outer wall with the building
 > shell (suite wall *is* the demising wall — the single-wall reading). `composeSceneSvg`

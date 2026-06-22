@@ -12,6 +12,7 @@ import type { SceneState } from '../core/scene';
 // docs/adr/0001 and the sim's Tools/ParityHarness.
 import defaultSceneJson from './baked/default-scene.json';
 import goldenSceneJson from './baked/golden-scene.json';
+import { addBuildingSurround } from '../core/buildingSurround';
 import { deriveDepartments } from '../core/companyStructure';
 import { generatePopulation, employeeRecipe, getProfile } from '../core/employee';
 import { generateEmployeePersona } from '../core/populationPersona';
@@ -1209,7 +1210,13 @@ function buildDefaultGoldenProject(): ProjectState {
   // The populated multi-department office is a baked snapshot (ADR-0001) — the sim owns
   // office generation now. The population above stays deterministic, so the baked scene's
   // desks/spawns still match this cast; re-bake if the population inputs change.
-  project.scene = structuredClone(goldenSceneJson) as unknown as SceneState;
+  const office = structuredClone(goldenSceneJson) as unknown as SceneState;
+  // Bake in the non-playable building surround (the "floor in a tower" border) so the
+  // golden baseline ships it: a plain Reset / first-load / `export default` carries the
+  // ring + tenantRect, per the "every system contributes a default" principle. This is a
+  // deterministic tool-side transform we own (core/buildingSurround.ts), applied on top
+  // of the baked office rather than baked into the JSON, so it tracks the surround logic.
+  project.scene = addBuildingSurround(office, project);
   return project;
 }
 
