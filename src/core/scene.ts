@@ -54,6 +54,13 @@ export interface SceneState {
   source?: 'starter' | 'generated' | 'hand-authored';
   /** Set for generated layouts: same template + seed regenerates this exact office. */
   generated?: { templateId: string; seed: number };
+  /**
+   * The playable office sub-region when a non-playable building surround has been
+   * added (see core/buildingSurround.ts and docs/building-surround-model.md). The
+   * grid (`cols`/`rows`) is the grown tenant+ring extent; `tenantRect` names the
+   * cells the sim may use. Absent ⇒ the whole grid is playable (no surround).
+   */
+  tenantRect?: { x: number; y: number; cols: number; rows: number };
 }
 
 const DEFAULT_COLS = 12;

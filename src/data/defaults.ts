@@ -417,6 +417,44 @@ export const DEFAULT_PROPS: PropInstance[] = [
     params: { diameter: 52, stools: 4 },
     palette: { primary: '#9C6B43', secondary: '#C9B79C', accent: '#D85A30' },
   },
+  // Building surround props (floor-in-a-tower border) — decorative only; the
+  // ring generator places these outside the tenant rect and emits no
+  // interaction anchors for them.
+  {
+    id: 'prop-elevator-bank',
+    name: 'Elevator bank',
+    templateId: 'elevator-bank',
+    params: { doors: 2, height: 74 },
+    palette: { primary: '#5A616B', secondary: '#AEB6BD', accent: '#EF9F27' },
+  },
+  {
+    id: 'prop-exit-sign',
+    name: 'Exit / stairwell door',
+    templateId: 'exit-sign',
+    params: { height: 76 },
+    palette: { primary: '#5A616B', secondary: '#8A9199', accent: '#C0392B' },
+  },
+  {
+    id: 'prop-neighbor-glass',
+    name: 'Neighbor suite glass',
+    templateId: 'neighbor-glass',
+    params: { width: 96, lit: 0 },
+    palette: { primary: '#4A535E', secondary: '#C3D2DD', accent: '#6E7A86' },
+  },
+  {
+    id: 'prop-directory-placard',
+    name: 'Building directory',
+    templateId: 'directory-placard',
+    params: { lines: 5 },
+    palette: { primary: '#454B54', secondary: '#D7DCE0', accent: '#B08D57' },
+  },
+  {
+    id: 'prop-fire-extinguisher',
+    name: 'Extinguisher cabinet',
+    templateId: 'fire-extinguisher',
+    params: { size: 20 },
+    palette: { primary: '#C0392B', secondary: '#D7DCE0', accent: '#A93226' },
+  },
 ];
 
 export const DEFAULT_WALLS: TileInstance[] = [
@@ -454,6 +492,23 @@ export const DEFAULT_WALLS: TileInstance[] = [
     templateId: 'panel-wall',
     params: { thickness: 20 },
     palette: { primary: '#6E6A63', secondary: '#9AA0A6', accent: '#185FA5' },
+  },
+  // Building surround (floor-in-a-tower border). Cooler, heavier greys than the
+  // tenant partitions so the shell reads as "the building, not yours."
+  {
+    id: 'wall-demising',
+    name: 'Demising wall',
+    templateId: 'demising-wall',
+    params: { thickness: 36 },
+    palette: { primary: '#7E8590', secondary: '#5A616B', accent: '#454B54' },
+  },
+  {
+    id: 'wall-curtain',
+    name: 'Curtain wall',
+    templateId: 'curtain-wall',
+    // accent = the `$sky` token (flat sky tint for v1)
+    params: { thickness: 16 },
+    palette: { primary: '#4A535E', secondary: '#ABC4D6', accent: '#A8C8E0' },
   },
 ];
 
@@ -513,6 +568,14 @@ export const DEFAULT_FLOORS: TileInstance[] = [
     templateId: 'rubber-mat',
     params: { studs: 8 },
     palette: { primary: '#3C4651', secondary: '#56626E', accent: '#2A323A' },
+  },
+  // Building surround — the shared elevator lobby / corridor ring.
+  {
+    id: 'floor-lobby-stone',
+    name: 'Lobby stone',
+    templateId: 'lobby-stone',
+    params: { slab: 64, sheen: 2 },
+    palette: { primary: '#9AA0A6', secondary: '#7E848B', accent: '#5F5E5A' },
   },
 ];
 

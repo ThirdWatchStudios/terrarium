@@ -19,6 +19,7 @@ import {
   stampWall,
 } from '../core/scene';
 import { downloadBlob, downloadJson, scenePosterPng } from '../core/exporter';
+import { addBuildingSurround, removeBuildingSurround } from '../core/buildingSurround';
 import { PROP_TEMPLATES } from '../props/templates';
 import { store } from '../state';
 import { button, clear, el, labeled, select } from './dom';
@@ -536,6 +537,14 @@ function renderSceneExport(container: HTMLElement, current: SceneState): void {
     }
   }, 'primary');
 
+  const hasSurround = !!current.tenantRect;
+  const surroundBtn = button(hasSurround ? 'Remove surround' : 'Add building surround', () =>
+    store.mutate((state) => {
+      const scene = state.scene ?? createDefaultScene(state);
+      state.scene = scene.tenantRect ? removeBuildingSurround(scene) : addBuildingSurround(scene, state);
+    }, 'structure'),
+  );
+
   container.append(
     el('h3', {}, 'Export'),
     labeled('Export scale', scaleSelect),
@@ -544,6 +553,7 @@ function renderSceneExport(container: HTMLElement, current: SceneState): void {
       { className: 'btn-row' },
       exportBtn,
       button('Layout JSON', () => downloadJson('office-layout.json', sceneToLayoutJson(current, store.state))),
+      surroundBtn,
       button('Reset scene', () => store.mutate((state) => (state.scene = createDefaultScene(state)), 'structure')),
     ),
   );

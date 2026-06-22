@@ -1062,6 +1062,172 @@ const breakTable: PropTemplate = {
   },
 };
 
+// ---------------------------------------------------------------------------
+// Building-surround props (the "floor in a tower" border — see
+// docs/building-surround-model.md). Decorative only: the generator places these
+// in the ring OUTSIDE the tenant rect and must NOT emit interaction anchors for
+// them, so the sim never treats a neighbor's elevator as a usable amenity.
+// ---------------------------------------------------------------------------
+
+const elevatorBank: PropTemplate = {
+  id: 'elevator-bank',
+  label: 'Elevator bank',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 30, ry: 4 },
+  params: [
+    { key: 'doors', label: 'Doors', min: 1, max: 3, step: 1, default: 2 },
+    { key: 'height', label: 'Door height', min: 60, max: 84, step: 2, default: 74 },
+  ],
+  build(params) {
+    const doors = params.doors ?? 2;
+    const h = params.height ?? 74;
+    const top = GROUND - h;
+    const dw = 26;
+    const gap = 8;
+    const totalW = doors * dw + (doors - 1) * gap;
+    const startX = CX - totalW / 2;
+    const shapes: ShapeSpec[] = [
+      // surround / wall facing
+      { d: rr(startX - 8, top - 10, totalW + 16, h + 10, 3), fill: '$primary' },
+    ];
+    for (let i = 0; i < doors; i++) {
+      const x = startX + i * (dw + gap);
+      shapes.push(
+        // metal door pair
+        { d: rr(x, top, dw, h, 2), fill: '$secondary' },
+        // centre meeting seam
+        { d: `M ${x + dw / 2} ${top + 2} L ${x + dw / 2} ${GROUND - 2}`, stroke: '#00000033', strokeWidth: 1.5, silhouette: false },
+        // brushed-metal highlight
+        { d: rr(x + 3, top + 3, 3, h - 6, 1), fill: '#FFFFFF1F', silhouette: false },
+        // floor indicator above the door
+        { d: rr(x + dw / 2 - 6, top - 8, 12, 5, 1), fill: '#1A1A18', silhouette: false },
+        { d: circle(x + dw / 2, top - 5.5, 1.4), fill: '$accent', silhouette: false },
+        // call button panel between/beside doors
+        { d: rr(x + dw + gap / 2 - 2, top + h * 0.4, 4, 9, 1), fill: '$accent', silhouette: false },
+      );
+    }
+    return shapes;
+  },
+};
+
+const exitSign: PropTemplate = {
+  id: 'exit-sign',
+  label: 'Exit / stairwell door',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 22, ry: 4 },
+  params: [{ key: 'height', label: 'Door height', min: 64, max: 84, step: 2, default: 76 }],
+  build(params) {
+    const h = params.height ?? 76;
+    const top = GROUND - h;
+    const w = 40;
+    const x = CX - w / 2;
+    return [
+      // door frame + slab
+      { d: rr(x - 4, top - 2, w + 8, h + 2, 2), fill: '$primary' },
+      { d: rr(x, top + 2, w, h - 2, 1), fill: '$secondary' },
+      // push bar
+      { d: rr(x + 4, top + h * 0.5, w - 8, 5, 2), fill: '#00000026', silhouette: false },
+      // kick plate
+      { d: rr(x + 3, GROUND - 12, w - 6, 9, 1), fill: '#00000018', silhouette: false },
+      // illuminated EXIT sign above (accent defaults to signage red)
+      { d: rr(CX - 16, top - 16, 32, 12, 1.5), fill: '$accent' },
+      // light letter bars
+      { d: rr(CX - 12, top - 12, 5, 5, 0.5), fill: '#F7F4EC', silhouette: false },
+      { d: rr(CX - 5, top - 12, 5, 5, 0.5), fill: '#F7F4EC', silhouette: false },
+      { d: rr(CX + 2, top - 12, 5, 5, 0.5), fill: '#F7F4EC', silhouette: false },
+      { d: rr(CX + 9, top - 12, 4, 5, 0.5), fill: '#F7F4EC', silhouette: false },
+    ];
+  },
+};
+
+const neighborGlass: PropTemplate = {
+  id: 'neighbor-glass',
+  label: 'Neighbor suite glass',
+  projection: 'plan',
+  placement: 'wall-slot',
+  params: [
+    { key: 'width', label: 'Width', min: 64, max: 112, step: 4, default: 96 },
+    { key: 'lit', label: 'Suite lit', min: 0, max: 1, step: 1, default: 0 },
+  ],
+  build(params) {
+    const w = params.width ?? 96;
+    const x = CX - w / 2;
+    const y = 46;
+    const h = 32;
+    const glass = (params.lit ?? 0) >= 1 ? 0.4 : 0.7;
+    const shapes: ShapeSpec[] = [
+      // storefront frame
+      { d: rr(x - 3, y - 3, w + 6, h + 6, 2), fill: '$primary' },
+      // frosted glazing (darker = unlit suite behind)
+      { d: rr(x, y, w, h, 1), fill: '$secondary', opacity: glass },
+    ];
+    // vertical mullions dividing the storefront into bays
+    const bays = 4;
+    for (let i = 1; i < bays; i++) {
+      const mx = x + (w * i) / bays;
+      shapes.push({ d: `M ${mx} ${y} L ${mx} ${y + h}`, stroke: '$primary', strokeWidth: 2, silhouette: false });
+    }
+    // fictional company name placard on the centre bay
+    shapes.push(
+      { d: rr(CX - 18, y + h / 2 - 4, 36, 8, 1), fill: '$primary', silhouette: false },
+      { d: rr(CX - 14, y + h / 2 - 1.5, 28, 3, 1), fill: '$accent', silhouette: false },
+    );
+    return shapes;
+  },
+};
+
+const directoryPlacard: PropTemplate = {
+  id: 'directory-placard',
+  label: 'Building directory',
+  projection: 'plan',
+  placement: 'wall-slot',
+  params: [{ key: 'lines', label: 'Listing lines', min: 3, max: 7, step: 1, default: 5 }],
+  build(params) {
+    const w = 36;
+    const x = CX - w / 2;
+    const y = 50;
+    const h = 40;
+    const shapes: ShapeSpec[] = [
+      { d: rr(x - 2, y - 2, w + 4, h + 4, 2), fill: '$primary' },
+      { d: rr(x, y, w, h, 1), fill: '$secondary', silhouette: false },
+      // header band
+      { d: rr(x + 2, y + 2, w - 4, 6, 1), fill: '$accent', silhouette: false },
+    ];
+    const lines = params.lines ?? 5;
+    for (let i = 0; i < lines; i++) {
+      const ly = y + 12 + i * ((h - 14) / lines);
+      // floor number tick + listing line
+      shapes.push(
+        { d: rr(x + 3, ly, 5, 2.5, 0.5), fill: '$accent', silhouette: false },
+        { d: rr(x + 11, ly, w - 16 - (i % 2) * 5, 2.5, 0.5), fill: '#00000044', silhouette: false },
+      );
+    }
+    return shapes;
+  },
+};
+
+const fireExtinguisher: PropTemplate = {
+  id: 'fire-extinguisher',
+  label: 'Extinguisher cabinet',
+  projection: 'plan',
+  placement: 'wall-slot',
+  params: [{ key: 'size', label: 'Cabinet size', min: 16, max: 26, step: 2, default: 20 }],
+  build(params) {
+    const s = params.size ?? 20;
+    const x = CX - s / 2;
+    const y = 56;
+    return [
+      // recessed wall cabinet (accent defaults to signage red)
+      { d: rr(x - 2, y - 2, s + 4, s * 1.3 + 4, 2), fill: '$accent' },
+      // glass front
+      { d: rr(x, y, s, s * 1.3, 1), fill: '$secondary', opacity: 0.55, silhouette: false },
+      // extinguisher silhouette behind the glass
+      { d: rr(CX - 3, y + 4, 6, s * 1.3 - 8, 2), fill: '$primary', silhouette: false },
+      { d: rr(CX - 1.5, y + 1, 3, 4, 1), fill: '$primary', silhouette: false },
+    ];
+  },
+};
+
 export const PROP_TEMPLATES: PropTemplate[] = [
   waterCooler,
   printer,
@@ -1095,4 +1261,9 @@ export const PROP_TEMPLATES: PropTemplate[] = [
   kitchenetteCounter,
   loungeSeating,
   breakTable,
+  elevatorBank,
+  exitSign,
+  neighborGlass,
+  directoryPlacard,
+  fireExtinguisher,
 ];

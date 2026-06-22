@@ -150,7 +150,89 @@ const panelWall: WallTemplate = {
   },
 };
 
-export const WALL_TEMPLATES: WallTemplate[] = [officeWall, glassPartition, cubiclePartition, brickWall, panelWall];
+// ---------------------------------------------------------------------------
+// Building-surround walls (the "floor in a tower" border — see
+// docs/building-surround-model.md). These read as the building shell, not the
+// tenant's partitions. They are art-directed independently via their own tile
+// instance palettes (the spec's "$building"/"$sky" token groups are realized as
+// dedicated instances, since every tile carries its own primary/secondary/accent).
+// ---------------------------------------------------------------------------
+
+/**
+ * The structural wall that separates the leased suite from the rest of the
+ * floor. Heavier than `officeWall`, with a darker structural core seam so it
+ * reads as part of the building, not a tenant partition.
+ */
+const demisingWall: WallTemplate = {
+  kind: 'wall',
+  id: 'demising-wall',
+  label: 'Demising wall',
+  params: [{ key: 'thickness', label: 'Thickness', min: 28, max: 44, step: 2, default: 36 }],
+  build(mask, params) {
+    const t = params.thickness ?? 36;
+    const shapes = wallArms(mask, t, '$primary');
+    // structural core: a darker stripe down the centre of each arm (overdraws
+    // the edge by OVERHANG and clips to the viewBox, staying seamless).
+    const cw = Math.max(3, t * 0.28);
+    const ch = cw / 2;
+    const core = (x: number, y: number, w: number, hgt: number) =>
+      shapes.push({ d: rr(x, y, w, hgt, 0), fill: '$secondary', silhouette: false });
+    if (mask & WALL_BITS.N) core(C - ch, -OVERHANG, cw, C + OVERHANG);
+    if (mask & WALL_BITS.S) core(C - ch, C, cw, C + OVERHANG);
+    if (mask & WALL_BITS.W) core(-OVERHANG, C - ch, C + OVERHANG, cw);
+    if (mask & WALL_BITS.E) core(C, C - ch, C + OVERHANG, cw);
+    // junction block keeps the core continuous through corners/tees
+    shapes.push({ d: rr(C - ch, C - ch, cw, cw, 0), fill: '$secondary', silhouette: false });
+    return shapes;
+  },
+};
+
+/**
+ * Floor-to-ceiling exterior glazing. The glass is tinted toward the sky color
+ * (the instance's `$accent` slot = the spec's `$sky` token); v1 is a flat tint
+ * (parallax/day-night skyline is deferred). Bold mullions + a heavy frame post
+ * read as building-perimeter curtain wall rather than an interior partition.
+ */
+const curtainWall: WallTemplate = {
+  kind: 'wall',
+  id: 'curtain-wall',
+  label: 'Curtain wall',
+  params: [{ key: 'thickness', label: 'Thickness', min: 12, max: 22, step: 2, default: 16 }],
+  build(mask, params) {
+    const t = params.thickness ?? 16;
+    const h = t / 2;
+    // sky-tinted glass body, semi-opaque so the exterior reads with depth
+    const shapes: ShapeSpec[] = wallArms(mask, t, '$accent').map((s) => ({ ...s, opacity: 0.82 }));
+    // frame rails: thin dark edges running the length of each glazed arm
+    const rail = (d: string) => shapes.push({ d, stroke: '$primary', strokeWidth: 2, silhouette: false });
+    if (mask & WALL_BITS.N) rail(`M ${C - h} 0 L ${C - h} ${C} M ${C + h} 0 L ${C + h} ${C}`);
+    if (mask & WALL_BITS.S) rail(`M ${C - h} ${C} L ${C - h} 128 M ${C + h} ${C} L ${C + h} 128`);
+    if (mask & WALL_BITS.W) rail(`M 0 ${C - h} L ${C} ${C - h} M 0 ${C + h} L ${C} ${C + h}`);
+    if (mask & WALL_BITS.E) rail(`M ${C} ${C - h} L 128 ${C - h} M ${C} ${C + h} L 128 ${C + h}`);
+    // mullions: vertical posts spaced along the glazing
+    const mull = (x: number, y: number, w: number, hgt: number) =>
+      shapes.push({ d: rr(x, y, w, hgt, 0.5), fill: '$primary', silhouette: false });
+    for (const off of [20, 44, 84, 108]) {
+      if (mask & WALL_BITS.N && off < 64) mull(C - h, off - 1.5, t, 3);
+      if (mask & WALL_BITS.S && off > 64) mull(C - h, off - 1.5, t, 3);
+      if (mask & WALL_BITS.W && off < 64) mull(off - 1.5, C - h, 3, t);
+      if (mask & WALL_BITS.E && off > 64) mull(off - 1.5, C - h, 3, t);
+    }
+    // frame post at the junction
+    shapes.push({ d: rr(C - h - 1, C - h - 1, t + 2, t + 2, 1), fill: '$primary', silhouette: false });
+    return shapes;
+  },
+};
+
+export const WALL_TEMPLATES: WallTemplate[] = [
+  officeWall,
+  glassPartition,
+  cubiclePartition,
+  brickWall,
+  panelWall,
+  demisingWall,
+  curtainWall,
+];
 
 // ---------------------------------------------------------------------------
 // Floors
@@ -382,6 +464,47 @@ const rubberMat: FloorTemplate = {
   },
 };
 
+/**
+ * Polished stone floor for the shared elevator lobby / corridor ring of the
+ * building surround (see docs/building-surround-model.md). Large square slabs
+ * with grout seams and a soft diagonal sheen — reads as a public building
+ * lobby, distinct from the tenant's carpet/terrazzo. Seams sit on exact
+ * divisors of 128 so slabs wrap seamlessly across tiles.
+ */
+const lobbyStone: FloorTemplate = {
+  kind: 'floor',
+  id: 'lobby-stone',
+  label: 'Lobby stone',
+  params: [
+    { key: 'slab', label: 'Slab size', min: 32, max: 64, step: 16, default: 64 },
+    { key: 'sheen', label: 'Sheen', min: 0, max: 3, step: 1, default: 2 },
+  ],
+  build(params) {
+    const g = params.slab ?? 64;
+    const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
+    // checker the slabs faintly so the grid reads as stone, not a single sheet
+    for (let y = 0; y < 128; y += g) {
+      for (let x = 0; x < 128; x += g) {
+        if (((x / g) + (y / g)) % 2 === 1) shapes.push(flat(rr(x, y, g, g, 0), '$secondary', 0.5));
+      }
+    }
+    // grout seams (wrap because they sit on divisors of 128)
+    for (let v = 0; v <= 128; v += g) {
+      shapes.push({ d: `M ${v} 0 L ${v} 128`, stroke: '#0000001C', strokeWidth: 1.5, silhouette: false });
+      shapes.push({ d: `M 0 ${v} L 128 ${v}`, stroke: '#0000001C', strokeWidth: 1.5, silhouette: false });
+    }
+    // diagonal polish streaks, wrapped across both edges
+    const n = params.sheen ?? 2;
+    for (let i = 0; i < n; i++) {
+      const off = -128 + i * 48;
+      for (const d of [0, 128]) {
+        shapes.push({ d: `M ${off + d} 128 L ${off + 128 + d} 0`, stroke: '#FFFFFF14', strokeWidth: 6, silhouette: false });
+      }
+    }
+    return shapes;
+  },
+};
+
 export const FLOOR_TEMPLATES: FloorTemplate[] = [
   carpet,
   carpetTiles,
@@ -391,6 +514,7 @@ export const FLOOR_TEMPLATES: FloorTemplate[] = [
   quietCarpet,
   terrazzo,
   rubberMat,
+  lobbyStone,
 ];
 
 /** Human-readable name for a wall mask, used in atlas JSON. */
