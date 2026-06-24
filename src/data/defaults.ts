@@ -215,6 +215,32 @@ export const DEFAULT_PROPS: PropInstance[] = [
     params: { height: 48 },
     palette: { primary: '#444441', secondary: '#B4B2A9', accent: '#E24B4A' },
   },
+  // Broken twins of the interaction props — baked so the sim can swap to them when
+  // the player tampers (jam / break / empty). Same params + palette as the base
+  // prop so the swap reads as the same object, just damaged. Names slug to the
+  // template ids the sim resolves against (printer-jammed, coffee-machine-broken,
+  // water-cooler-empty).
+  {
+    id: 'prop-printer-jammed',
+    name: 'Printer (jammed)',
+    templateId: 'printer-jammed',
+    params: { width: 56 },
+    palette: { primary: '#5F5E5A', secondary: '#B4B2A9', accent: '#97C459' },
+  },
+  {
+    id: 'prop-coffee-machine-broken',
+    name: 'Coffee machine (broken)',
+    templateId: 'coffee-machine-broken',
+    params: { height: 48 },
+    palette: { primary: '#444441', secondary: '#B4B2A9', accent: '#E24B4A' },
+  },
+  {
+    id: 'prop-water-cooler-empty',
+    name: 'Water cooler (empty)',
+    templateId: 'water-cooler-empty',
+    params: { height: 56 },
+    palette: { primary: '#85B7EB', secondary: '#F1EFE8', accent: '#378ADD' },
+  },
   {
     id: 'prop-office-plant',
     name: 'Office plant',

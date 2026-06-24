@@ -128,6 +128,106 @@ const coffeeMachine: PropTemplate = {
   },
 };
 
+// --- Tampered / broken variants -------------------------------------------
+// Damaged twins of the interaction props above, used by the sim's tamper system:
+// when the player jams/breaks/empties a prop, the runtime swaps the live sprite
+// to the matching broken template (printer→printer-jammed, coffee-machine→
+// coffee-machine-broken, water-cooler→water-cooler-empty). They keep the base
+// footprint, params, and palette so the swap lands in place and reads as the
+// same object — just visibly broken. Not auto-placed by the office generator;
+// they exist only to be baked and swapped in.
+
+const printerJammed: PropTemplate = {
+  id: 'printer-jammed',
+  label: 'Printer (jammed)',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 26, ry: 4 },
+  params: [{ key: 'width', label: 'Width', min: 44, max: 72, step: 2, default: 56 }],
+  build(params) {
+    const w = params.width;
+    const x = CX - w / 2;
+    const bodyTop = GROUND - 34;
+    return [
+      // crumpled sheet jammed in the feed — half-ejected and torn
+      {
+        d:
+          `M ${CX - w * 0.24} ${bodyTop - 3} L ${CX - w * 0.12} ${bodyTop - 15} ` +
+          `L ${CX - w * 0.02} ${bodyTop - 6} L ${CX + w * 0.1} ${bodyTop - 17} ` +
+          `L ${CX + w * 0.2} ${bodyTop - 4} L ${CX + w * 0.24} ${bodyTop + 1} Z`,
+        fill: '#EDE7D6',
+      },
+      // crease shadows on the crumpled sheet
+      { d: `M ${CX - w * 0.12} ${bodyTop - 13} L ${CX - w * 0.02} ${bodyTop - 6}`, stroke: '#00000026', strokeWidth: 1.5, silhouette: false },
+      { d: `M ${CX + w * 0.1} ${bodyTop - 15} L ${CX + w * 0.02} ${bodyTop - 5}`, stroke: '#00000026', strokeWidth: 1.5, silhouette: false },
+      // body
+      { d: rr(x, bodyTop, w, 34, 5), fill: '$secondary' },
+      // output slot, choked with paper
+      { d: rr(x + 6, bodyTop + 9, w - 12, 4, 2), fill: '#00000040', silhouette: false },
+      { d: rr(x + 8, bodyTop + 8, w - 22, 3, 1), fill: '#EDE7D6', silhouette: false },
+      // red error light (the status accent gone wrong) with a soft halo
+      { d: circle(x + w - 10, bodyTop + 24, 5), fill: '#D8362F33', silhouette: false },
+      { d: circle(x + w - 10, bodyTop + 24, 3), fill: '#D8362F', silhouette: false },
+      // jam-prone paper tray
+      { d: rr(x + 5, GROUND - 7, w - 24, 5, 2), fill: '$primary', silhouette: false },
+    ];
+  },
+};
+
+const coffeeMachineBroken: PropTemplate = {
+  id: 'coffee-machine-broken',
+  label: 'Coffee machine (broken)',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 18, ry: 3.5 },
+  params: [{ key: 'height', label: 'Height', min: 40, max: 56, step: 2, default: 48 }],
+  build(params) {
+    const h = params.height;
+    const top = GROUND - h;
+    return [
+      // leak pooling on the floor
+      { d: ellipse(CX + 2, GROUND + 1, 16, 3.5), fill: '#6E4A2A66', silhouette: false },
+      // back column
+      { d: rr(CX - 17, top, 34, h, 4), fill: '$primary' },
+      // brew head overhang
+      { d: rr(CX - 21, top, 42, 12, 4), fill: '$primary' },
+      // empty carafe — no coffee, glass clouded
+      { d: rr(CX - 11, GROUND - 20, 22, 17, 5), fill: '#C9D6E0', opacity: 0.55 },
+      { d: rr(CX - 11, GROUND - 20, 22, 5, 2), fill: '$secondary', silhouette: false },
+      // crack zig-zagging across the carafe
+      { d: `M ${CX - 7} ${GROUND - 18} L ${CX - 2} ${GROUND - 12} L ${CX + 3} ${GROUND - 14} L ${CX + 6} ${GROUND - 6}`, stroke: '#2C2C2A', strokeWidth: 1, silhouette: false },
+      // dead status lights — both red
+      { d: circle(CX - 11, top + 6, 2.2), fill: '#D8362F', silhouette: false },
+      { d: circle(CX - 4, top + 6, 2.2), fill: '#D8362F', silhouette: false },
+    ];
+  },
+};
+
+const waterCoolerEmpty: PropTemplate = {
+  id: 'water-cooler-empty',
+  label: 'Water cooler (empty)',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 21, ry: 4 },
+  params: [{ key: 'height', label: 'Body height', min: 44, max: 68, step: 2, default: 56 }],
+  build(params) {
+    const bodyH = params.height;
+    const bodyTop = GROUND - bodyH;
+    return [
+      // bottle drained — pale, clear, no waterline glint
+      { d: rr(CX - 16, bodyTop - 34, 32, 30, 9), fill: '#E8EEF2', opacity: 0.5 },
+      { d: rr(CX - 6, bodyTop - 7, 12, 8, 2), fill: '#E8EEF2', opacity: 0.5 },
+      // cabinet
+      { d: rr(CX - 20, bodyTop, 40, bodyH, 5), fill: '$secondary' },
+      // taps (dry)
+      { d: rr(CX - 13, bodyTop + 12, 7, 9, 2), fill: '$accent', silhouette: false },
+      { d: rr(CX + 6, bodyTop + 12, 7, 9, 2), fill: '#D85A30', silhouette: false },
+      // drip tray
+      { d: rr(CX - 11, bodyTop + 26, 22, 4, 2), fill: '#00000026', silhouette: false },
+      // OUT OF SERVICE tag taped to the cabinet
+      { d: rr(CX - 13, bodyTop + 33, 26, 10, 2), fill: '#D8362F', silhouette: false },
+      { d: rr(CX - 9, bodyTop + 37, 18, 2, 1), fill: '#FFFFFFCC', silhouette: false },
+    ];
+  },
+};
+
 const officePlant: PropTemplate = {
   id: 'office-plant',
   label: 'Office plant',
@@ -1233,6 +1333,9 @@ export const PROP_TEMPLATES: PropTemplate[] = [
   printer,
   desk,
   coffeeMachine,
+  printerJammed,
+  coffeeMachineBroken,
+  waterCoolerEmpty,
   officePlant,
   fridge,
   conferenceTable,

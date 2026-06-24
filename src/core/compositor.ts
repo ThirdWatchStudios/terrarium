@@ -16,6 +16,7 @@ import { getPart } from '../parts/library';
 import { MOOD_EMOTES, MOOD_OVERLAYS } from '../parts/moods';
 import type { Activity } from '../parts/activities';
 import { ACTIVITY_BADGES } from '../parts/activities';
+import { PROP_STATUS_BADGES, type PropStatus } from '../parts/propStatus';
 import { getIcon } from '../parts/icons';
 import { PROP_TEMPLATES } from '../props/templates';
 import { FLOOR_TEMPLATES, WALL_TEMPLATES } from '../tiles/templates';
@@ -348,6 +349,11 @@ export function composeActivityBadge(activity: Activity, pixelSize: number = CAN
 /** Shared-atlas cell for one mood's overhead emote (the bubble, not the face overlay). */
 export function composeMoodEmote(mood: Mood, pixelSize: number = CANVAS): string {
   return composeOverheadEmote(MOOD_EMOTES[mood], pixelSize);
+}
+
+/** Shared-atlas cell for one prop tamper-status badge (floats above a tampered prop). */
+export function composePropStatusBadge(status: PropStatus, pixelSize: number = CANVAS): string {
+  return composeOverheadEmote(PROP_STATUS_BADGES[status], pixelSize);
 }
 
 // ---------------------------------------------------------------------------

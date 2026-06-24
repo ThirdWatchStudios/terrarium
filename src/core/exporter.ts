@@ -11,12 +11,14 @@ import {
   composeIcon,
   composeMoodEmote,
   composeProp,
+  composePropStatusBadge,
   composeWallTile,
   layerCellSvg,
   overheadAnchor,
 } from './compositor';
 import { ACTIVITIES, ACTIVITY_BADGES } from '../parts/activities';
 import { MOOD_EMOTES } from '../parts/moods';
+import { PROP_STATUSES } from '../parts/propStatus';
 import { conversationStyleJson } from './conversation';
 import { sceneToLayoutJson } from './layout';
 import { composeSceneSvg } from './scene';
@@ -305,6 +307,55 @@ export function moodEmotesAtlas(style: StyleSheet, scale: number) {
       shared: true,
       facingIndependent: true,
       note: 'Overhead mood bubble; no longer baked in the mood sheet. Place above the head, stacks with the activity badge.',
+    },
+  };
+}
+
+/**
+ * Prop-status badges: a single shared strip, one cell per tamper state, exactly
+ * like the activity badges. The sim blits the matching cell above a *tampered*
+ * prop, keyed off the prop's active tamper-state id. Prop-independent — a jam
+ * looks the same over any printer.
+ */
+function propStatusBadgesDesc(style: StyleSheet, scale: number): SheetDesc {
+  const size = style.render.baseSize * scale;
+  return {
+    width: size * PROP_STATUSES.length,
+    height: size,
+    pixelScale: renderScale(style),
+    cells: PROP_STATUSES.map((status, i) => ({
+      svg: composePropStatusBadge(status, size),
+      dx: i * size,
+      dy: 0,
+      dw: size,
+      dh: size,
+    })),
+  };
+}
+
+export async function propStatusBadgesPng(style: StyleSheet, scale: number): Promise<Blob> {
+  return asBlob(defaultRasterizer().rasterizeSheet(propStatusBadgesDesc(style, scale)));
+}
+
+export function propStatusBadgesAtlas(style: StyleSheet, scale: number) {
+  const size = style.render.baseSize * scale;
+  const frames: Record<string, { x: number; y: number; w: number; h: number }> = {};
+  PROP_STATUSES.forEach((status, i) => {
+    frames[status] = { x: i * size, y: 0, w: size, h: size };
+  });
+  return {
+    kind: 'prop-status-badges' as const,
+    frameSize: size,
+    scale,
+    statuses: [...PROP_STATUSES],
+    frames,
+    // Bubble centered in its cell — the sim hangs it above the prop's top.
+    pivot: { x: 0.5, y: 0.5 },
+    meta: {
+      generator: 'sprite-character-creator',
+      shared: true,
+      propIndependent: true,
+      note: "Selected at runtime by a prop's active tamper-state id; unknown ids draw nothing. Place above the tampered prop, like an agent's activity badge.",
     },
   };
 }
@@ -757,7 +808,7 @@ export async function exportAll(
     project.props.length * scales +
     (project.walls?.length ?? 0) * scales +
     (project.floors?.length ?? 0) * scales +
-    scales * 2 + // one shared activity-badge + one shared mood-emote atlas per scale
+    scales * 3 + // shared activity-badge + mood-emote + prop-status-badge atlas per scale
     ICONS.length + // one tick per UI icon (its SVG + PNG ladder)
     CURSORS.length; // one tick per cursor (PNG ladder)
   let done = 0;
@@ -842,6 +893,9 @@ export async function exportAll(
     await write(`mood-emotes@${scale}x.png`, await png(moodEmotesDesc(style, scale)));
     await write(`mood-emotes-atlas@${scale}x.json`, JSON.stringify(moodEmotesAtlas(style, scale), null, 2));
     tick('mood emotes');
+    await write(`prop-status-badges@${scale}x.png`, await png(propStatusBadgesDesc(style, scale)));
+    await write(`prop-status-badges-atlas@${scale}x.json`, JSON.stringify(propStatusBadgesAtlas(style, scale), null, 2));
+    tick('prop status badges');
   }
   // UI icon set — framing-UI glyphs (docs/ui-art-plan.md). Each icon emits a
   // resolution-independent SVG (UI Toolkit VectorImage) plus a non-pixelated PNG

@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { MOODS } from '../src/core/types';
 import { DEFAULT_CAST, DEFAULT_PROPS } from '../src/data/defaults';
 import { PROP_TEMPLATES } from '../src/props/templates';
+import { PROP_STATUSES } from '../src/parts/propStatus';
 
 /**
  * Tool ↔ game integration contracts.
@@ -32,6 +33,18 @@ const SIM_MOOD_NAMES = ['normal', 'curious', 'suspicious', 'defensive', 'hostile
 // prop template id the binder's AnchorTemplateMap points at.
 const SIM_PROP_TEMPLATES = ['water-cooler', 'coffee-machine', 'printer', 'mail-station', 'supply-cabinet', 'door', 'desk'];
 
+// Tampered-prop swap contract: the sim swaps a prop's sprite to a broken variant
+// keyed by the active tamper state (CoercionProductionRuntime tamper-state id →
+// broken prop template, mirrored in ProductionPresentationFloorBinding's
+// BrokenPropTemplateByTamperState). Each broken template must exist and ship a
+// default instance, or the swap silently falls back to a red tint.
+const SIM_BROKEN_PROP_TEMPLATES = ['printer-jammed', 'coffee-machine-broken', 'water-cooler-empty'];
+
+// Overhead prop-status badge ids — the sim selects a cell from the shared
+// prop-status-badges atlas by a prop's active tamper-state id, so these must
+// equal the sim's CoercionProductionRuntime degraded tamper-state ids exactly.
+const SIM_TAMPER_STATE_IDS = ['jammed', 'broken', 'out_of_service'];
+
 describe('tool ↔ game integration contracts', () => {
   it('default cast ids equal the sim agent ids exactly', () => {
     expect([...DEFAULT_CAST.map((recipe) => recipe.id)].sort()).toEqual([...SIM_AGENT_IDS].sort());
@@ -48,5 +61,18 @@ describe('tool ↔ game integration contracts', () => {
       expect(templateIds, `missing prop template "${id}"`).toContain(id);
       expect(instanceTemplateIds, `no default instance exports prop "${id}"`).toContain(id);
     }
+  });
+
+  it('every tampered-prop swap target has a matching broken template and a default instance', () => {
+    const templateIds = PROP_TEMPLATES.map((template) => template.id);
+    const instanceTemplateIds = DEFAULT_PROPS.map((prop) => prop.templateId);
+    for (const id of SIM_BROKEN_PROP_TEMPLATES) {
+      expect(templateIds, `missing broken prop template "${id}"`).toContain(id);
+      expect(instanceTemplateIds, `no default instance exports broken prop "${id}"`).toContain(id);
+    }
+  });
+
+  it('prop-status badge ids are a 1:1 match with the sim tamper-state ids', () => {
+    expect([...PROP_STATUSES].sort()).toEqual([...SIM_TAMPER_STATE_IDS].sort());
   });
 });
