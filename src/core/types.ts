@@ -252,6 +252,13 @@ export interface ProjectState {
    */
   departments: import('./department').DepartmentDefinition[];
   /**
+   * The reusable workplace-behavior catalog — observable actions (Steal Lunch,
+   * Spread Rumor, …) the sim selects for agents under pressure. Tool authors the
+   * catalog + constraints/couplings; the sim owns selection. See core/behavior.ts
+   * (BehaviorDefinition) and CONTRACT.md §3.14. Exported verbatim as behaviors.json.
+   */
+  behaviors: import('./behavior').BehaviorDefinition[];
+  /**
    * The generative company root (Epic 0) — the new-game seed whose culture/history
    * cascaded into the departments + people + relationships of this project. Optional:
    * present only for a generated company package; exported as `company.json` (F0.8).
@@ -284,8 +291,10 @@ export interface ProjectState {
  * mutable for the sim's transfer tier); the step rewrites free-text values to ids.
  * v12 added the optional `company` root (Epic 0 F0.8 — the generated company a
  * package is built around); additive, so the step only bumps the version.
+ * v13 added the reusable `behaviors` catalog (workplace behaviors — observable
+ * actions the sim selects under pressure); seeded from DEFAULT_BEHAVIORS, additive.
  */
-export const CURRENT_SCHEMA_VERSION = 12;
+export const CURRENT_SCHEMA_VERSION = 13;
 
 /** Design-space canvas size. Parts are authored against this; never changes. */
 export const CANVAS = 128;

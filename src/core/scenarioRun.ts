@@ -209,6 +209,8 @@ export function buildScenarioPackage(scenario: Scenario, project: ProjectState):
     'drives.json': project.drives,
     'traits.json': project.traits,
     'relationshipTypes.json': project.relationshipTypes,
+    // The workplace-behavior catalog the sim selects from under pressure (§3.14).
+    'behaviors.json': project.behaviors,
     // The org chart — departments + members with the visible/fogged split (F2.2).
     'departments.json': project.departments,
     'org-structure.json': buildOrgStructure(project),

@@ -44,6 +44,7 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     'drives.json',
     'traits.json',
     'relationshipTypes.json', // reusable bond catalog (CONTRACT §3.7)
+    'behaviors.json', // reusable workplace-behavior catalog (CONTRACT §3.14)
     'departments.json', // department catalog (+ F2.4 capabilities)
     'org-structure.json', // derived org chart (Epic 2)
     'scenario-template.json', // cast-agnostic template library (Epic 4)
@@ -99,6 +100,11 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     // F2.4 — capabilities also surface in the visible org chart.
     const org = JSON.parse(json.get('org-structure.json')!);
     expect(org.structure.departments.some((d: { capabilities?: string[] }) => (d.capabilities?.length ?? 0) > 0), 'org-structure carries no capabilities (F2.4)').toBe(true);
+    // §3.14 — the shipped behavior catalog is non-trivial and spans multiple families,
+    // so an agent has several recognizable ways to express pressure out of the box.
+    const behaviors = JSON.parse(json.get('behaviors.json')!);
+    expect(behaviors.length, 'behavior catalog is too small (§3.14)').toBeGreaterThanOrEqual(20);
+    expect(new Set(behaviors.map((b: { category: string }) => b.category)).size, 'behaviors span too few categories').toBeGreaterThan(3);
     // F4.3 — the shipped template library includes an organizational-distance term.
     const lib = JSON.parse(json.get('scenario-template.json')!);
     const hasDistance = lib.templates.some((t: { roles: { preconditions: { kind: string }[] }[] }) =>

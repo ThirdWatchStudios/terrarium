@@ -51,11 +51,11 @@ describe('F0.8 — company.json serialize/deserialize (S0.8.1)', () => {
     expect(parsed.identity.name).toBe('Acme Co');
   });
 
-  it('the schema version is bumped to 12 and a pre-v12 project migrates cleanly', () => {
-    expect(CURRENT_SCHEMA_VERSION).toBe(12);
+  it('the company root is additive — a pre-v12 project migrates cleanly without one', () => {
+    expect(CURRENT_SCHEMA_VERSION).toBeGreaterThanOrEqual(12);
     const old = { ...defaultProject(), version: 11, company: undefined };
     const migrated = migrateProject(JSON.parse(JSON.stringify(old)))!;
-    expect(migrated.version).toBe(12);
+    expect(migrated.version).toBe(CURRENT_SCHEMA_VERSION);
     expect(migrated.company).toBeUndefined(); // additive — nothing fabricated
   });
 });

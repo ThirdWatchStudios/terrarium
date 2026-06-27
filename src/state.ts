@@ -18,7 +18,7 @@ class Store {
   state: ProjectState;
   /** UI selection, not persisted as part of the project. */
   ui = {
-    tab: 'characters' as 'characters' | 'persona' | 'drives' | 'traits' | 'relationships' | 'props' | 'tiles' | 'scene' | 'scenario' | 'employees' | 'company' | 'departments' | 'style',
+    tab: 'characters' as 'characters' | 'persona' | 'drives' | 'traits' | 'relationships' | 'behaviors' | 'props' | 'tiles' | 'scene' | 'scenario' | 'employees' | 'company' | 'departments' | 'style',
     /** Remembers the last sub-tab visited within each top-level nav group. */
     lastSubByGroup: {} as Record<string, string>,
     selectedCharacterId: '',
@@ -28,6 +28,7 @@ class Store {
     selectedDriveId: '',
     selectedTraitId: '',
     selectedRelationshipTypeId: '',
+    selectedBehaviorId: '',
     selectedDepartmentId: '',
     exportScale: 2,
     /** Preview-only mood; never stored in recipes. */

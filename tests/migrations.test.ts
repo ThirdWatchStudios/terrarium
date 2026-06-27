@@ -76,6 +76,16 @@ describe('migrateProject', () => {
     expect(migrated.traits.some((t) => t.id === 'a_made_up_trait')).toBe(true); // absorbed
   });
 
+  it('seeds the behavior catalog for a save that predates it (v13)', () => {
+    const legacy = defaultProject();
+    legacy.version = 12;
+    delete (legacy as { behaviors?: unknown }).behaviors; // pre-v13 save had no catalog
+    const migrated = migrateProject(legacy)!;
+    expect(migrated.version).toBe(CURRENT_SCHEMA_VERSION);
+    expect(migrated.behaviors.length).toBeGreaterThan(0);
+    expect(migrated.behaviors.some((b) => b.id === 'steal_lunch')).toBe(true); // seeded
+  });
+
   it('seeds the new render fields on the style and every preset (v8)', () => {
     const legacy = defaultProject();
     legacy.version = 7;

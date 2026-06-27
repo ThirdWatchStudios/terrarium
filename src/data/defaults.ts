@@ -4,6 +4,7 @@ import type { CharacterProfile, DriveDefinition, Relationship, RelationshipTypeD
 import { applyDerived, createDefaultProfile } from '../core/profile';
 import type { Scenario } from '../core/scenario';
 import { defaultCapabilitiesForCategory, defaultThemeForCategory, type DepartmentDefinition } from '../core/department';
+import type { BehaviorCategory, BehaviorDefinition, BehaviorRelationshipRequirements, BehaviorSeverity, BehaviorVisibility } from '../core/behavior';
 import { MERIDIAN_DYNAMICS } from './companies';
 import type { SceneState } from '../core/scene';
 // Baked office scenes (ADR-0001): the sim now owns procedural office generation, so the
@@ -1115,6 +1116,276 @@ export const DEFAULT_RELATIONSHIP_TYPES: RelationshipTypeDefinition[] = [
 ];
 
 /**
+ * The shared, reusable workplace-behavior catalog. Behaviors are observable
+ * actions the sim selects for agents under pressure (CONTRACT.md §3.14). The tool
+ * authors *what exists* + the constraints/couplings; the sim owns selection. The
+ * same behavior is reachable from many motivations — "Steal lunch" pulls under
+ * resentment, jealousy, spite, or boredom — so `pressureWeights` is a relative
+ * pull, not a trigger. `traitModifiers` keys are trait ids (DEFAULT_TRAITS);
+ * `relationshipTypeAnyOf` are relationship-type ids (DEFAULT_RELATIONSHIP_TYPES).
+ * Free to extend — a designer can add 20–30 more without code.
+ */
+const behavior = (b: {
+  id: string;
+  displayName: string;
+  category: BehaviorCategory;
+  description: string;
+  visibility: BehaviorVisibility;
+  severity: BehaviorSeverity;
+  context?: string[];
+  affordances?: string[];
+  pressures?: Record<string, number>;
+  traits?: Record<string, number>;
+  rel?: Partial<BehaviorRelationshipRequirements>;
+  outcomes?: string[];
+}): BehaviorDefinition => ({
+  id: b.id,
+  displayName: b.displayName,
+  category: b.category,
+  description: b.description,
+  requiredContext: b.context ?? [],
+  requiredAffordances: b.affordances ?? [],
+  pressureWeights: b.pressures ?? {},
+  traitModifiers: b.traits ?? {},
+  relationshipRequirements: {
+    requiresTarget: b.rel?.requiresTarget ?? false,
+    targetKnown: b.rel?.targetKnown ?? false,
+    relationshipTypeAnyOf: b.rel?.relationshipTypeAnyOf ?? [],
+  },
+  visibility: b.visibility,
+  severity: b.severity,
+  outcomes: b.outcomes ?? [],
+});
+
+export const DEFAULT_BEHAVIORS: BehaviorDefinition[] = [
+  // --- Productivity ---------------------------------------------------------
+  behavior({
+    id: 'complete_task', displayName: 'Complete task', category: 'productivity', visibility: 'semi-private', severity: 'trivial',
+    description: 'Finishes assigned work on time.',
+    affordances: ['computer', 'document'],
+    pressures: { ambition: 2, anxiety: 1 }, traits: { workaholic: 2, hard_working: 2, overachiever: 1, slacker: -2 },
+    outcomes: ['task_complete', 'reputation_gain'],
+  }),
+  behavior({
+    id: 'print_report', displayName: 'Print report', category: 'productivity', visibility: 'public', severity: 'trivial',
+    description: 'Heads to the printer to run off a report — a routine trip that puts them in a shared space.',
+    context: ['own_desk'], affordances: ['printer', 'document'],
+    pressures: { ambition: 1 }, traits: { hard_working: 1, organized: 1 },
+    outcomes: ['task_complete'],
+  }),
+  behavior({
+    id: 'volunteer', displayName: 'Volunteer', category: 'productivity', visibility: 'public', severity: 'minor',
+    description: 'Puts a hand up for extra or visible work.',
+    context: ['meeting', 'audience_present'],
+    pressures: { ambition: 3, insecurity: 1 }, traits: { ambitious: 2, climber: 2, overachiever: 2, brown_noser: 1, slacker: -2 },
+    outcomes: ['reputation_gain', 'manager_notices'],
+  }),
+  behavior({
+    id: 'ask_for_help', displayName: 'Ask for help', category: 'productivity', visibility: 'semi-private', severity: 'trivial',
+    description: 'Reaches out to a colleague when stuck.',
+    context: ['target_employee'],
+    pressures: { anxiety: 2, overwhelm: 2 }, traits: { team_player: 1, people_pleaser: 1, lone_wolf: -2, private: -1 },
+    rel: { requiresTarget: true, targetKnown: true },
+    outcomes: ['task_complete', 'trust_gain'],
+  }),
+  behavior({
+    id: 'delay_task', displayName: 'Delay task', category: 'productivity', visibility: 'private', severity: 'minor',
+    description: 'Pushes work to the last possible moment.',
+    affordances: ['computer'],
+    pressures: { boredom: 2, overwhelm: 2, anxiety: 1 }, traits: { procrastinator: 3, slacker: 2, deadline_driven: 1, hard_working: -2 },
+    outcomes: ['task_delayed'],
+  }),
+  behavior({
+    id: 'skip_task', displayName: 'Skip task', category: 'productivity', visibility: 'private', severity: 'moderate',
+    description: 'Quietly drops an assigned task and hopes no one notices.',
+    pressures: { boredom: 2, resentment: 2, overwhelm: 1, spite: 1 }, traits: { slacker: 3, coaster: 2, rule_bender: 1, reliable: -2, hard_working: -3 },
+    outcomes: ['task_delayed', 'reputation_loss', 'manager_notices'],
+  }),
+  // --- Social ---------------------------------------------------------------
+  behavior({
+    id: 'start_conversation', displayName: 'Start conversation', category: 'social', visibility: 'public', severity: 'trivial',
+    description: 'Strikes up a chat with a coworker.',
+    context: ['target_employee', 'break_room'],
+    pressures: { loneliness: 3, boredom: 2 }, traits: { social: 3, charmer: 1, wallflower: -2, lone_wolf: -2, private: -1 },
+    rel: { requiresTarget: true },
+    outcomes: ['trust_gain', 'morale_boost'],
+  }),
+  behavior({
+    id: 'share_information', displayName: 'Share information', category: 'social', visibility: 'semi-private', severity: 'minor',
+    description: 'Passes along something useful they know.',
+    context: ['target_employee'],
+    pressures: { loneliness: 1, ambition: 1 }, traits: { team_player: 2, social: 1, oversharer: 1, private: -2, lone_wolf: -1 },
+    rel: { requiresTarget: true, targetKnown: true },
+    outcomes: ['trust_gain', 'gossip_seed'],
+  }),
+  behavior({
+    id: 'spread_rumor', displayName: 'Spread rumor', category: 'social', visibility: 'semi-private', severity: 'major',
+    description: 'Passes around an unverified, damaging story about someone.',
+    context: ['target_employee', 'break_room'],
+    pressures: { jealousy: 3, resentment: 3, spite: 2, envy: 2, boredom: 1 },
+    traits: { gossip: 3, instigator: 2, drama_magnet: 2, spin_doctor: 2, diplomat: -2, private: -1, straight_shooter: -2 },
+    rel: { requiresTarget: true, targetKnown: true },
+    outcomes: ['gossip_seed', 'reputation_loss', 'trust_loss', 'conflict_escalation'],
+  }),
+  behavior({
+    id: 'defend_coworker', displayName: 'Defend coworker', category: 'social', visibility: 'public', severity: 'moderate',
+    description: 'Steps in to back up a colleague who is being criticized.',
+    context: ['target_employee', 'audience_present'],
+    pressures: { anger: 2, loneliness: 1, pride: 1 },
+    traits: { loyalist: 3, team_player: 2, straight_shooter: 1, office_mom: 1, opportunist: -1 },
+    rel: { requiresTarget: true, targetKnown: true, relationshipTypeAnyOf: ['friend', 'close-friend', 'ally', 'protege', 'mentor'] },
+    outcomes: ['trust_gain', 'alliance_formed', 'conflict_escalation'],
+  }),
+  behavior({
+    id: 'exclude_coworker', displayName: 'Exclude coworker', category: 'social', visibility: 'semi-private', severity: 'moderate',
+    description: 'Deliberately leaves someone out of a lunch, thread, or huddle.',
+    context: ['target_employee', 'audience_present'],
+    pressures: { resentment: 3, jealousy: 2, contempt: 2, spite: 2 },
+    traits: { prickly: 2, instigator: 1, drama_magnet: 1, grudge_holder: 2, office_mom: -2, peacemaker: -2 },
+    rel: { requiresTarget: true, targetKnown: true },
+    outcomes: ['morale_drop', 'trust_loss', 'gossip_seed'],
+  }),
+  behavior({
+    id: 'take_credit', displayName: 'Take credit', category: 'social', visibility: 'public', severity: 'major',
+    description: 'Claims someone else’s work or idea as their own.',
+    context: ['target_employee', 'meeting', 'audience_present'],
+    pressures: { ambition: 3, insecurity: 2, envy: 2 },
+    traits: { opportunist: 3, climber: 2, ambitious: 2, brown_noser: 1, spin_doctor: 1, loyalist: -2, straight_shooter: -2 },
+    rel: { requiresTarget: true, targetKnown: true },
+    outcomes: ['reputation_gain', 'trust_loss', 'conflict_escalation', 'gossip_seed'],
+  }),
+  // --- Territorial ----------------------------------------------------------
+  behavior({
+    id: 'take_preferred_seat', displayName: 'Take preferred seat', category: 'territorial', visibility: 'public', severity: 'trivial',
+    description: 'Claims the good desk or chair before anyone else can.',
+    context: ['open_floor', 'shared_space'], affordances: ['preferred_seat'],
+    pressures: { insecurity: 1, pride: 2, spite: 1 }, traits: { competitive: 2, prickly: 1, status_conscious: 2, easygoing: -2 },
+    outcomes: ['target_annoyed'],
+  }),
+  behavior({
+    id: 'reserve_meeting_room', displayName: 'Reserve meeting room', category: 'territorial', visibility: 'semi-private', severity: 'minor',
+    description: 'Block-books a room they may not need, denying it to others.',
+    affordances: ['meeting_room', 'shared_calendar'],
+    pressures: { insecurity: 2, pride: 1, contempt: 1 }, traits: { status_conscious: 2, micromanager: 1, competitive: 1, team_player: -1 },
+    outcomes: ['target_annoyed', 'reputation_loss'],
+  }),
+  behavior({
+    id: 'hide_supplies', displayName: 'Hide supplies', category: 'territorial', visibility: 'private', severity: 'moderate',
+    description: 'Squirrels away shared supplies so only they can use them.',
+    context: ['shared_space'], affordances: ['supplies'],
+    pressures: { insecurity: 3, resentment: 2, spite: 2, anxiety: 1 }, traits: { frugal: 2, prickly: 2, suspicious: 1, generous: -2, team_player: -2 },
+    outcomes: ['target_annoyed', 'gossip_seed'],
+  }),
+  behavior({
+    id: 'take_parking_spot', displayName: 'Take parking spot', category: 'territorial', visibility: 'public', severity: 'minor',
+    description: 'Grabs someone’s usual parking spot.',
+    affordances: ['parking_spot'],
+    pressures: { spite: 2, resentment: 2, contempt: 1, pride: 1 }, traits: { competitive: 2, prickly: 2, grudge_holder: 1, easygoing: -2 },
+    rel: { requiresTarget: true },
+    outcomes: ['target_annoyed', 'conflict_escalation'],
+  }),
+  behavior({
+    id: 'steal_lunch', displayName: 'Steal lunch', category: 'territorial', visibility: 'private', severity: 'major',
+    description: 'Takes another employee’s lunch from the break room.',
+    context: ['break_room', 'target_employee', 'manager_absent'], affordances: ['lunch'],
+    pressures: { resentment: 3, jealousy: 2, spite: 2, boredom: 1, contempt: 1 },
+    traits: { rule_bender: 2, prickly: 2, opportunist: 1, grudge_holder: 1, rule_follower: -3, reliable: -2 },
+    rel: { requiresTarget: true },
+    outcomes: ['target_annoyed', 'trust_loss', 'gossip_seed'],
+  }),
+  // --- Coping ---------------------------------------------------------------
+  behavior({
+    id: 'eat_lunch_alone', displayName: 'Eat lunch alone', category: 'coping', visibility: 'public', severity: 'trivial',
+    description: 'Withdraws to eat by themselves rather than with the group.',
+    context: ['break_room', 'private_space'], affordances: ['lunch'],
+    pressures: { loneliness: 2, anxiety: 2, overwhelm: 2, resentment: 1 }, traits: { lone_wolf: 3, wallflower: 2, private: 2, social: -2, office_mom: -1 },
+    outcomes: ['stress_relief', 'morale_drop'],
+  }),
+  behavior({
+    id: 'browse_job_boards', displayName: 'Browse job boards', category: 'coping', visibility: 'private', severity: 'moderate',
+    description: 'Quietly looks at other jobs during the workday.',
+    context: ['own_desk', 'manager_absent'], affordances: ['computer'],
+    pressures: { resentment: 3, frustration: 3, overwhelm: 2, contempt: 1 }, traits: { cynical: 2, opportunist: 2, loyalist: -3 },
+    outcomes: ['morale_drop'],
+  }),
+  behavior({
+    id: 'take_long_walk', displayName: 'Take long walk', category: 'coping', visibility: 'semi-private', severity: 'trivial',
+    description: 'Steps out for an extended break to cool off.',
+    context: ['after_hours', 'manager_absent'],
+    pressures: { overwhelm: 3, anger: 2, anxiety: 2, frustration: 2 }, traits: { even_keeled: 1, worrier: 1, high_strung: 1 },
+    outcomes: ['stress_relief'],
+  }),
+  behavior({
+    id: 'vent_to_friend', displayName: 'Vent to friend', category: 'coping', visibility: 'semi-private', severity: 'minor',
+    description: 'Unloads frustrations to a trusted colleague.',
+    context: ['target_employee', 'break_room', 'one_on_one'],
+    pressures: { frustration: 3, resentment: 2, anger: 2, loneliness: 1 }, traits: { social: 1, oversharer: 1, private: -1, lone_wolf: -2 },
+    rel: { requiresTarget: true, targetKnown: true, relationshipTypeAnyOf: ['friend', 'close-friend', 'confidant', 'work-spouse'] },
+    outcomes: ['stress_relief', 'gossip_seed', 'trust_gain'],
+  }),
+  behavior({
+    id: 'excessive_coffee', displayName: 'Excessive coffee', category: 'coping', visibility: 'public', severity: 'trivial',
+    description: 'Makes repeated trips to the coffee machine to self-soothe and stall.',
+    context: ['break_room'], affordances: ['coffee_machine'],
+    pressures: { anxiety: 3, overwhelm: 2, boredom: 2 }, traits: { high_strung: 2, worrier: 1 },
+    outcomes: ['stress_relief'],
+  }),
+  // --- Escalation -----------------------------------------------------------
+  behavior({
+    id: 'direct_confrontation', displayName: 'Direct confrontation', category: 'escalation', visibility: 'public', severity: 'major',
+    description: 'Confronts someone face to face about a grievance.',
+    context: ['target_employee', 'one_on_one'],
+    pressures: { anger: 3, resentment: 3, frustration: 2, pride: 1 },
+    traits: { hot_headed: 3, blunt: 2, straight_shooter: 2, contrarian: 1, competitive: 1, peacemaker: -3, people_pleaser: -2, even_keeled: -2 },
+    rel: { requiresTarget: true, targetKnown: true },
+    outcomes: ['conflict_escalation', 'trust_loss', 'stress_relief'],
+  }),
+  behavior({
+    id: 'meeting_outburst', displayName: 'Meeting outburst', category: 'escalation', visibility: 'public', severity: 'severe',
+    description: 'Loses their composure in front of the room.',
+    context: ['meeting', 'audience_present'],
+    pressures: { anger: 3, frustration: 3, resentment: 2, overwhelm: 2 },
+    traits: { hot_headed: 3, high_strung: 2, drama_magnet: 2, blunt: 1, even_keeled: -3, thick_skinned: -2, diplomat: -2 },
+    outcomes: ['conflict_escalation', 'reputation_loss', 'gossip_seed', 'manager_notices'],
+  }),
+  behavior({
+    id: 'public_complaint', displayName: 'Public complaint', category: 'escalation', visibility: 'public', severity: 'major',
+    description: 'Airs a grievance loudly where everyone can hear.',
+    context: ['open_floor', 'audience_present'],
+    pressures: { frustration: 3, resentment: 3, anger: 2, contempt: 1 },
+    traits: { blunt: 2, contrarian: 2, drama_magnet: 2, instigator: 1, diplomat: -2, private: -2 },
+    outcomes: ['gossip_seed', 'conflict_escalation', 'reputation_loss'],
+  }),
+  behavior({
+    id: 'passive_aggressive_note', displayName: 'Passive-aggressive note', category: 'escalation', visibility: 'semi-private', severity: 'moderate',
+    description: 'Leaves a pointed note or message instead of saying it directly.',
+    context: ['shared_space'], affordances: ['document'],
+    pressures: { resentment: 3, spite: 2, frustration: 2, contempt: 2 },
+    traits: { grudge_holder: 2, prickly: 2, spin_doctor: 1, straight_shooter: -2, blunt: -1, diplomat: -1 },
+    rel: { requiresTarget: true, targetKnown: true },
+    outcomes: ['target_annoyed', 'gossip_seed', 'conflict_escalation'],
+  }),
+  behavior({
+    id: 'anonymous_report', displayName: 'Anonymous report', category: 'escalation', visibility: 'private', severity: 'major',
+    description: 'Reports someone without attaching their own name.',
+    context: ['manager_absent'], affordances: ['computer'],
+    pressures: { resentment: 3, spite: 3, fear: 2, contempt: 2, guilt: 1 },
+    traits: { whistleblower: 2, cynical: 2, grudge_holder: 2, opportunist: 1, straight_shooter: -2, loyalist: -2 },
+    rel: { requiresTarget: true, targetKnown: true },
+    outcomes: ['hr_attention', 'reputation_loss', 'conflict_escalation'],
+  }),
+  behavior({
+    id: 'hr_complaint', displayName: 'HR complaint', category: 'escalation', visibility: 'semi-private', severity: 'severe',
+    description: 'Files a formal complaint through official channels.',
+    context: ['one_on_one', 'private_space'], affordances: ['document'],
+    pressures: { anger: 2, resentment: 3, fear: 2, frustration: 2 },
+    traits: { whistleblower: 3, rule_follower: 2, straight_shooter: 2, idealist: 1, people_pleaser: -2, loyalist: -1 },
+    rel: { requiresTarget: true, targetKnown: true },
+    outcomes: ['hr_attention', 'conflict_escalation', 'reputation_loss'],
+  }),
+];
+
+/**
  * The seed department catalog (Epic 2 F2.1 / S2.1.2) — the existing office
  * department-name set (profile.ts DEPARTMENTS + the Office Population Generator
  * profiles) promoted to structured entries with stable kebab-case ids, so authors
@@ -1160,6 +1431,7 @@ function baseDefaultProject(): ProjectState {
     traits: structuredClone(DEFAULT_TRAITS),
     relationshipTypes: structuredClone(DEFAULT_RELATIONSHIP_TYPES),
     departments: structuredClone(DEFAULT_DEPARTMENTS),
+    behaviors: structuredClone(DEFAULT_BEHAVIORS),
     // The default project is a complete company package: MERIDIAN_DYNAMICS (the
     // reference declining-incumbent, exercising every Company field) is the org
     // the hero cast works at, so a plain export emits company.json and the full

@@ -31,23 +31,29 @@ const AZURE = '#3E78C8';
 const RED = '#CE4038';
 const SLATE = '#5B6B7A';
 const ROSE = '#D8638F';
-const TEAL_BLUE = '#2E89A8'; // Epic 36 single institutional accent (ui_visual_design.md)
+const TEAL_BLUE = '#2E89A8'; // floor-overlay cool tie (trust / info / belief-truth / surveillance)
 const CORAL = '#C76B3F'; // rumor pole of the belief-drift axis
+const SEA_TEAL = '#3FA7C4'; // Third Watch brand accent — muted deep-sea teal; the lone cool beacon on
+                           // the deep-navy chrome field. Brand reversal (2026-06-27) of the old Epic 36
+                           // brass-amber "corporate dark mode" accent; amber (#D69B4B) now survives only
+                           // as the sim-side active/divider highlight, not the institutional accent.
 
 export const UI_PALETTE = {
   /** Near-black ink — eyes, hardware, bubble rings, and UI text. */
   ink: '#2C2C2A',
   /** White sitting on a colored fill (glyph-on-bubble, text-on-accent). */
   onColor: '#FFFFFF',
-  /** Surveillance-workstation chrome (Epic 36): desaturated charcoal base, slate
-   *  raised panels, light text. Dark by design — the operator's monitor. */
+  /** Surveillance-workstation chrome (Third Watch brand, 2026-06-27): deep-sea-navy base,
+   *  cool raised panels, cool-white text. Dark by design — the operator's monitor. Reversed off
+   *  the old warm-graphite "corporate dark mode" toward the deep-navy field of the brand guide. */
   surface: '#1E2329',
   panel: '#2A323A',
   text: '#E6E9EC',
   textMuted: '#98A2AC',
-  /** Single institutional accent — teal-blue (ui_visual_design.md "Visual Language"). */
-  accent: TEAL_BLUE,
-  /** Semantic status colors for chrome. info === the institutional accent. */
+  /** Single institutional accent — muted deep-sea teal (Third Watch brand guide, 2026-06-27;
+   *  reversed off the old brass-amber). Decoupled from the floor's cool ties (those stay TEAL_BLUE). */
+  accent: SEA_TEAL,
+  /** Semantic status colors for chrome. info stays the floor's cool tie, distinct from accent. */
   status: {
     info: TEAL_BLUE,
     positive: GREEN,

@@ -1152,6 +1152,32 @@ textarea {
   color: var(--text-dim);
 }
 
+/* ---------- weighted-map editor (behavior pressure / trait modifiers) ---------- */
+
+.weighted-map {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.weighted-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.weighted-row input[type='range'] {
+  flex: 1;
+}
+
+.weighted-value {
+  min-width: 28px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
 .scenario-valid {
   color: #3b8a4e;
   font-weight: 600;

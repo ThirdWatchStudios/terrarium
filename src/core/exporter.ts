@@ -955,6 +955,10 @@ export async function exportAll(
   // The department catalog — the single org model the office-scale work references
   // by stable id (Epic 2 F2.1).
   await write('departments.json', JSON.stringify(project.departments, null, 2));
+  // The reusable workplace-behavior catalog (CONTRACT §3.14) — observable actions the
+  // sim selects for agents under pressure. Tool authors the catalog; sim owns
+  // selection. A bundle-root sibling of drives/traits (also embedded per scenario).
+  await write('behaviors.json', JSON.stringify(project.behaviors, null, 2));
   // The org-structure artifact — departments + members with a visible-structure /
   // fogged-contents split the sim renders as the org chart (Epic 2 F2.2).
   await write('org-structure.json', JSON.stringify(buildOrgStructure(project), null, 2));

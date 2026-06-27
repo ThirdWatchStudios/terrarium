@@ -1,6 +1,6 @@
 import type { ProjectState } from './types';
 import { CURRENT_SCHEMA_VERSION } from './types';
-import { DEFAULT_DEPARTMENTS, DEFAULT_DRIVES, DEFAULT_FLOORS, DEFAULT_PROFILES, DEFAULT_PROPS, DEFAULT_RELATIONSHIP_TYPES, DEFAULT_SCENARIOS, DEFAULT_STYLE, DEFAULT_STYLE_PRESETS, DEFAULT_TRAITS, DEFAULT_WALLS } from '../data/defaults';
+import { DEFAULT_BEHAVIORS, DEFAULT_DEPARTMENTS, DEFAULT_DRIVES, DEFAULT_FLOORS, DEFAULT_PROFILES, DEFAULT_PROPS, DEFAULT_RELATIONSHIP_TYPES, DEFAULT_SCENARIOS, DEFAULT_STYLE, DEFAULT_STYLE_PRESETS, DEFAULT_TRAITS, DEFAULT_WALLS } from '../data/defaults';
 import { mapDepartmentNameToId, slugifyDepartment } from './department';
 
 // Re-export so callers can keep importing the version from the migration module.
@@ -97,6 +97,12 @@ export function migrateProject(raw: unknown): ProjectState | null {
   // v11 → v12: the optional `company` root (F0.8). Purely additive — a pre-v12
   // project simply has no company; nothing to backfill, just the version bump below.
 
+  // v12 → v13: the reusable `behaviors` catalog. Seed defaults for saves that
+  // predate it. Nothing references behavior ids yet (the sim selects them at
+  // runtime), so there are no back-references to absorb — just ensure the catalog
+  // exists so every project ships a behavior vocabulary.
+  backfillV13(project as ProjectState);
+
   project.version = CURRENT_SCHEMA_VERSION;
   return project as ProjectState;
 }
@@ -114,6 +120,18 @@ function migrateV11(project: ProjectState): void {
   }
   if (unmapped.length && typeof console !== 'undefined') {
     console.warn(`migrateV11: ${unmapped.length} department value(s) did not map to a catalog id: ${[...new Set(unmapped)].join(', ')}`);
+  }
+}
+
+/** v13 step: ensure the `behaviors` catalog exists and seed any default it lacks (by id). */
+function backfillV13(project: ProjectState): void {
+  project.behaviors ??= [];
+  const present = new Set(project.behaviors.map((b) => b.id));
+  for (const def of DEFAULT_BEHAVIORS) {
+    if (!present.has(def.id)) {
+      project.behaviors.push(structuredClone(def));
+      present.add(def.id);
+    }
   }
 }
 

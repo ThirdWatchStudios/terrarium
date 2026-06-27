@@ -26,6 +26,7 @@ pin down what data we must capture here so the sim has what it needs.
 | Drive catalog (structured, reusable; `amplifiesNeeds`) | **Tool** | Project-level catalog (§3.5); personas reference by id. The need coupling is tool-authored data the sim acts on. |
 | Trait catalog (structured, reusable; `biasesReactions`) | **Tool** | Project-level catalog (§3.6); persona `traitTags` are ids into it. Reaction nudges are tool-authored data the sim applies on top of the spine-derived tendencies. |
 | Relationship-type catalog (structured, reusable; `biasesReactions` + `thirdParty`) | **Tool** | Project-level catalog (§3.7); relationship edges' `relationshipType` are ids into it. Carries reaction bias toward the target *and* the third-party (jealousy/protectiveness) coupling — tool-authored data the sim applies at interaction time. |
+| Behavior **catalog** (structured, reusable; observable actions + constraints/couplings) | **Tool** | Project-level catalog (§3.14). Authors *what behaviors exist* (Steal Lunch, Spread Rumor, …) plus their context/affordance requirements, pressure pulls, trait modifiers (trait ids, §3.6), relationship requirements (bond ids, §3.7), and expected outcomes. The catalog is tool-authored data; *which behavior happens now* is sim-owned (the row below). |
 | Scenario situation (truth, information, experiment, objective, seeds) | **Tool** | Authored + exported. |
 | Scenario **templates** (role slots + preconditions + emotional payload) | **Tool** | Cast-agnostic authoring (§3.8). The tool casts a template → a bound scenario at authoring time and exports the bound `scenario.json`; runtime casting is a future sim concern (§5.7). |
 | **Behavior** — how any of the above turns into decisions, need depletion, relationship drift, belief spread, KPI scoring | **Sim** | Not implemented in this repo. See §5. |
@@ -54,6 +55,7 @@ Coordinate convention: scene grids are row-major `[y][x]`; anchors/spawns carry 
 | `traits.json` | `project.traits` (verbatim) | project | Reusable trait catalog persona `traitTags` reference by id (§3.6). Also embedded in each scenario package. |
 | `relationshipTypes.json` | `project.relationshipTypes` (verbatim) | project | Reusable relationship-type catalog edges' `relationshipType` reference by id (§3.7). Also embedded in each scenario package. |
 | `departments.json` | `project.departments` (verbatim) | project | Reusable department catalog — the single org model referenced by stable id (§3.10). Also embedded in each scenario package. |
+| `behaviors.json` | `project.behaviors` (verbatim) | project | Reusable workplace-behavior catalog — observable actions the sim selects for agents under pressure (§3.14). Also embedded in each scenario package. |
 | `org-structure.json` | `buildOrgStructure` | project | Org chart: departments + members with a visible-structure / fogged-contents split (§3.11). Also embedded in each scenario package. |
 | `company.json` | `serializeCompany(project.company)` | project | The **company root** — the new-game seed the rest of the bundle cascaded from (§3.12). The default project ships `MERIDIAN_DYNAMICS`, so a plain export is a company package; emitted whenever `project.company` is set, absent only for a company-stripped (sprite-only) project. |
 | `scenario-template.json` | `serializeScenarioTemplateLibrary` | project | The cast-agnostic **scenario-template library** the sim's runtime caster binds onto the live cast/office (§3.8/§5.7). Emitted when a library is supplied to `exportAll`; absent for a sprite-only export. |
@@ -457,6 +459,28 @@ The shipped icon set is catalog-grounded: control glyphs + trim (tintable), depa
 **`cursors/`** — cursors are textures, not vectors, so they export **PNG-only**: `cursors/<id>@{1,2,4}x.png` + `cursors/cursors-manifest.json`. Each manifest entry carries a **normalized `hotspot`** `{x,y}` (0..1, multiply by chosen texture size for the active pixel). Cursors render dark ink under a light halo so the pointer reads on any background. Wire via USS `cursor: url("…") <x> <y>` / uGUI `Cursor.SetCursor`.
 
 **Epic 36 palette + floor channels.** The theme ships the surveillance-workstation palette (`ui_visual_design.md` "Visual Language"): charcoal/slate `--wc-surface`/`--wc-panel`, light `--wc-text`, a single institutional **teal-blue** `--wc-accent`, amber `--wc-status-warning`, red `--wc-status-danger` (used rarely). It also ships the **floor-overlay channel tokens** — `--wc-trust`, `--wc-suspicion`, `--wc-hostility`, `--wc-belief-truth`, `--wc-belief-rumor`, `--wc-pressure`, `--wc-information`, `--wc-change`, `--wc-surveillance` — so the Shapes floor layer (`overlay-style.json`) and the chrome resolve **one** palette. Note `emote-*` (sprite badge hues) are separate and unchanged.
+
+### 3.14 `behaviors.json` (reusable workplace-behavior catalog) — project-level
+The shared set of **observable office actions** an agent can take to express inner state — the bridge between drives / needs / pressures / traits / emotional state and what a coworker actually *sees happen*. The tool authors **what behaviors exist** and their constraints/couplings; the sim owns **which behavior happens now** (selection, scoring, simulation, outcome resolution). A behavior is reusable: the same definition ("Steal lunch") is selectable by many agents under different motivations (resentment, jealousy, revenge, boredom) — the behavior is constant, the motivation varies.
+```jsonc
+[
+  { "id": "steal_lunch", "displayName": "Steal lunch",
+    "category": "productivity|social|territorial|coping|escalation",
+    "description": "Takes another employee's lunch from the break room.",
+    "requiredContext": ["break_room", "target_employee", "manager_absent"],  // situational tokens the sim matches
+    "requiredAffordances": ["lunch"],                                         // objects/resources the sim binds to props
+    "pressureWeights": { "resentment": 3, "jealousy": 2, "spite": 2 },        // relative PULL per pressure (not a trigger)
+    "traitModifiers": { "rule_bender": 2, "rule_follower": -3 },              // trait ids (§3.6) → signed nudge
+    "relationshipRequirements": {
+      "requiresTarget": true,           // does it act on another employee?
+      "targetKnown": false,             // must the actor already know the target?
+      "relationshipTypeAnyOf": [] },    // optional: only toward these bond-type ids (§3.7); empty = any
+    "visibility": "private|semi-private|public",   // how observable — sim weights social fallout
+    "severity": "trivial|minor|moderate|major|severe",
+    "outcomes": ["target_annoyed", "trust_loss", "gossip_seed"] }            // EXPECTED consequences (sim resolves actuals)
+]
+```
+`pressureWeights` / `traitModifiers` keys, `requiredContext` / `requiredAffordances`, and `outcomes` are **free-text-with-fallback** (the tool ships curated suggestion vocabularies, but the sim's pressure/context/affordance/outcome model is authoritative — unknown tokens fall back + log, §7). `traitModifiers` keys SHOULD resolve to the trait catalog (§3.6) and `relationshipTypeAnyOf` to the relationship-type catalog (§3.7) — the tool warns on a dangling id but never blocks. The catalog is exported **verbatim**; behaviors are not referenced by id from personas (the sim selects them at runtime), so there are no back-references. Shipped at the bundle root and in each scenario package. The default project ships ~28 behaviors across all five categories so a plain export gives the sim a complete behavior vocabulary to test against.
 
 ---
 
