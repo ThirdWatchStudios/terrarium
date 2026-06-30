@@ -164,6 +164,10 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     for (const tok of ['--wc-trust', '--wc-suspicion', '--wc-pressure', '--wc-surveillance']) {
       expect(json.get('theme.uss'), `theme.uss missing channel token ${tok}`).toContain(tok);
     }
+    // QuotaOS chrome elevation/border/beacon tokens — the USS shell resolves these.
+    for (const tok of ['--wc-field', '--wc-well', '--wc-border', '--wc-border-strong', '--wc-beacon']) {
+      expect(json.get('theme.uss'), `theme.uss missing chrome token ${tok}`).toContain(tok);
+    }
   });
 
   it('emits a floor-overlay style spec the Shapes layer can read', async () => {
@@ -233,6 +237,26 @@ describe('default bundle is a complete, sim-importable baseline', () => {
       'pressure-suspicion',
       'intervention-lock',
       'iris-mark',
+      // QuotaOS shell first wave (docs/design/quotaos-shell-build-plan.md §2).
+      'quotaco-mark',
+      'app-behavioral-optimization',
+      'app-inbox',
+      'app-employee-directory',
+      'app-evidence-archive',
+      'app-performance-review',
+      'app-iris-console',
+      'app-system-tools',
+      // QuotaOS shell second wave: window controls, taskbar, status, frame.
+      'ui-minimize',
+      'ui-maximize',
+      'ui-restore',
+      'taskbar-menu',
+      'ui-mail',
+      'status-trend-up',
+      'status-trend-down',
+      'status-trend-flat',
+      'ui-folder',
+      'portrait-frame',
     ]) {
       expect(ids, `icon set missing ${id}`).toContain(id);
     }

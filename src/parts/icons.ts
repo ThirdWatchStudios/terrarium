@@ -65,6 +65,31 @@ const GEAR_TEETH: ShapeSpec[] = [
 
 const HEART = 'M 0 26 C -30 4 -22 -22 0 -8 C 22 -22 30 4 0 26 Z';
 
+// QuotaCo mark — a centered-hexagonal dot lattice with a halftone radius falloff
+// (large core dots → fine rim dots). 37 dots; axial hex coords scaled to fit the
+// canvas. Desaturated cool slate, shipped literal so the chrome never tints it.
+const QUOTACO_INK = '#727A80';
+const QUOTACO_DOTS: ShapeSpec[] = (() => {
+  const N = 3,
+    FIT = 44,
+    S3 = Math.sqrt(3);
+  const raw: { x: number; y: number; dist: number }[] = [];
+  for (let q = -N; q <= N; q++) {
+    for (let r = -N; r <= N; r++) {
+      if (Math.max(Math.abs(q), Math.abs(r), Math.abs(q + r)) > N) continue;
+      raw.push({
+        x: S3 * (q + r / 2),
+        y: 1.5 * r,
+        dist: (Math.abs(q) + Math.abs(r) + Math.abs(q + r)) / 2,
+      });
+    }
+  }
+  const k = FIT / Math.max(...raw.flatMap((p) => [Math.abs(p.x), Math.abs(p.y)]));
+  return raw.map((p) =>
+    lit(circle(+(p.x * k).toFixed(1), +(p.y * k).toFixed(1), +(6.2 - 1.1 * p.dist).toFixed(1)), QUOTACO_INK),
+  );
+})();
+
 export const ICONS: IconDef[] = [
   // --- Control glyphs (tintable) --------------------------------------------
   {
@@ -391,6 +416,167 @@ export const ICONS: IconDef[] = [
     mode: 'tintable',
     // An eye — IRIS, the surveillance chrome voice.
     shapes: [stroke('M -28 0 Q 0 -18 28 0 Q 0 18 -28 0 Z', 7), stroke(circle(0, 0, 9), 6), fill(circle(0, 0, 4))],
+  },
+
+  // --- QuotaOS shell — first wave (docs/design/quotaos-shell-build-plan.md §2) -
+  // The marks ship LITERAL (desaturated, never tinted); the app/folder glyphs
+  // are TINTABLE single-color line work the chrome recolors. Cold, flat,
+  // institutional — no bevels, gradients, or glow.
+  {
+    id: 'quotaco-mark',
+    label: 'QuotaCo',
+    mode: 'literal',
+    // Desaturated halftone hexagon — a centered-hex dot lattice (big core → fine
+    // rim) that reads as an etched corporate seal, not a friendly logo.
+    shapes: QUOTACO_DOTS,
+  },
+  {
+    id: 'app-behavioral-optimization',
+    label: 'Behavioral Optimization',
+    mode: 'tintable',
+    // A subject (head + shoulders) inside observation brackets.
+    shapes: [
+      fill(circle(0, -8, 9)),
+      stroke('M -16 20 Q 0 2 16 20', 9),
+      stroke('M -34 -22 L -34 -34 L -22 -34', 8),
+      stroke('M 34 -22 L 34 -34 L 22 -34', 8),
+      stroke('M -34 30 L -34 38 L -24 38', 8),
+      stroke('M 34 30 L 34 38 L 24 38', 8),
+    ],
+  },
+  {
+    id: 'app-inbox',
+    label: 'Inbox',
+    mode: 'tintable',
+    // Tray with an intake arrow dropping in.
+    shapes: [
+      stroke('M -28 -6 L -28 20 L 28 20 L 28 -6', 9),
+      stroke('M -28 -6 L -16 -6 L -10 6 L 10 6 L 16 -6 L 28 -6', 9),
+      stroke('M 0 -30 L 0 -12', 9),
+      stroke('M -9 -19 L 0 -10 L 9 -19', 9),
+    ],
+  },
+  {
+    id: 'app-employee-directory',
+    label: 'Employee Directory',
+    mode: 'tintable',
+    // Two-person roster (back figure + front figure).
+    shapes: [
+      fill(circle(10, -12, 7)),
+      stroke('M -2 14 Q 12 -2 28 14', 8),
+      fill(circle(-10, -6, 9)),
+      stroke('M -30 24 Q -10 2 12 24', 9),
+    ],
+  },
+  {
+    id: 'app-evidence-archive',
+    label: 'Evidence Archive',
+    mode: 'tintable',
+    // A two-drawer filing cabinet.
+    shapes: [
+      stroke('M -30 -30 L 30 -30 L 30 30 L -30 30 Z', 9),
+      stroke('M -30 0 L 30 0', 7),
+      stroke('M -9 -16 L 9 -16', 8),
+      stroke('M -9 16 L 9 16', 8),
+    ],
+  },
+  {
+    id: 'app-performance-review',
+    label: 'Performance Review',
+    mode: 'tintable',
+    // Clipboard with an assessment check.
+    shapes: [
+      stroke('M -26 -28 L 26 -28 L 26 34 L -26 34 Z', 8),
+      stroke('M -11 -36 L 11 -36 L 11 -24 L -11 -24 Z', 7),
+      stroke('M -14 4 L -4 16 L 16 -10', 9),
+    ],
+  },
+  {
+    id: 'app-iris-console',
+    label: 'IRIS Console',
+    mode: 'tintable',
+    // Terminal window with a command prompt.
+    shapes: [
+      stroke('M -32 -26 L 32 -26 L 32 26 L -32 26 Z', 8),
+      stroke('M -18 -6 L -8 2 L -18 10', 8),
+      stroke('M 2 12 L 18 12', 8),
+    ],
+  },
+  {
+    id: 'app-system-tools',
+    label: 'System Tools',
+    mode: 'tintable',
+    // Config sliders (deliberately not a gear — ui-gear already owns settings).
+    shapes: [
+      stroke('M -28 -16 L 28 -16', 7),
+      stroke('M -28 0 L 28 0', 7),
+      stroke('M -28 16 L 28 16', 7),
+      fill(circle(-8, -16, 6.5)),
+      fill(circle(12, 0, 6.5)),
+      fill(circle(-2, 16, 6.5)),
+    ],
+  },
+
+  // --- QuotaOS shell — second wave: window controls, taskbar, status, frame ---
+  // Tintable glyphs the chrome recolors. The chrome STRUCTURE (panels, toolbars,
+  // tables, meters, the taskbar strip) stays USS in the sim — these are the
+  // sprite-shaped pieces only. Online dots, dept color-chips, expand chevrons and
+  // progress bars are deliberately left to USS, not authored here.
+  { id: 'ui-minimize', label: 'Minimize', mode: 'tintable', shapes: [stroke('M -22 18 L 22 18', 9)] },
+  { id: 'ui-maximize', label: 'Maximize', mode: 'tintable', shapes: [stroke('M -22 -22 L 22 -22 L 22 22 L -22 22 Z', 8)] },
+  {
+    id: 'ui-restore',
+    label: 'Restore',
+    mode: 'tintable',
+    // Restore-down: a back window peeking behind the front one.
+    shapes: [stroke('M -8 -22 L 22 -22 L 22 8', 7), stroke('M -22 -8 L 8 -8 L 8 22 L -22 22 Z', 8)],
+  },
+  {
+    id: 'taskbar-menu',
+    label: 'QuotaOS menu',
+    mode: 'tintable',
+    // The taskbar Q — start-menu mark.
+    shapes: [stroke(circle(0, 0, 20), 8), stroke('M 10 10 L 24 24', 9)],
+  },
+  {
+    id: 'ui-mail',
+    label: 'Messages',
+    mode: 'tintable',
+    shapes: [stroke('M -28 -16 L 28 -16 L 28 16 L -28 16 Z', 7), stroke('M -28 -16 L 0 6 L 28 -16', 7)],
+  },
+  {
+    id: 'status-trend-up',
+    label: 'Trend up',
+    mode: 'tintable',
+    // Direction only — the sim tints by valence (a rise can be good or bad).
+    shapes: [stroke('M 0 20 L 0 -16', 9), stroke('M -13 -3 L 0 -20 L 13 -3', 9)],
+  },
+  {
+    id: 'status-trend-down',
+    label: 'Trend down',
+    mode: 'tintable',
+    shapes: [stroke('M 0 -20 L 0 16', 9), stroke('M -13 3 L 0 20 L 13 3', 9)],
+  },
+  { id: 'status-trend-flat', label: 'Trend flat', mode: 'tintable', shapes: [stroke('M -20 0 L 20 0', 10)] },
+  {
+    id: 'ui-folder',
+    label: 'Folder',
+    mode: 'tintable',
+    shapes: [stroke('M -28 -16 L -10 -16 L -4 -8 L 28 -8 L 28 18 L -28 18 Z', 8)],
+  },
+  {
+    id: 'portrait-frame',
+    label: 'Portrait frame',
+    mode: 'tintable',
+    // An ID-photo frame: thin border + heavier corner registration ticks. The
+    // center stays empty (no fill) so the portrait shows through.
+    shapes: [
+      stroke('M -40 -40 L 40 -40 L 40 40 L -40 40 Z', 5),
+      stroke('M -40 -22 L -40 -40 L -22 -40', 8),
+      stroke('M 40 -22 L 40 -40 L 22 -40', 8),
+      stroke('M -40 22 L -40 40 L -22 40', 8),
+      stroke('M 40 22 L 40 40 L 22 40', 8),
+    ],
   },
 ];
 

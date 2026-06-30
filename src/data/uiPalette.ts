@@ -47,14 +47,29 @@ export const UI_PALETTE = {
   onColor: '#FFFFFF',
   /** Surveillance-workstation chrome (Third Watch brand, 2026-06-27): deep-sea-navy base,
    *  cool raised panels, cool-white text. Dark by design — the operator's monitor. Reversed off
-   *  the old warm-graphite "corporate dark mode" toward the deep-navy field of the brand guide. */
+   *  the old warm-graphite "corporate dark mode" toward the deep-navy field of the brand guide.
+   *
+   *  Elevation ladder (deepest → highest), so the QuotaOS chrome reads as flat tiers, not bevels:
+   *    field  — the desktop/login backdrop behind every window (deep-sea navy)
+   *    well   — inset wells: text fields, meter tracks, the sparkline area (darker than the window)
+   *    surface— the window body
+   *    panel  — raised panels and title bars on the body */
+  field: '#0A1217',
+  well: '#161B20',
   surface: '#1E2329',
   panel: '#2A323A',
+  /** Hairline borders on the dark field — flat dividers, not bevels. `border` is the
+   *  default panel/divider line; `borderStrong` is the emphasized one (title-bar underline). */
+  border: '#3A434C',
+  borderStrong: '#4C5762',
   text: '#E6E9EC',
   textMuted: '#98A2AC',
   /** Single institutional accent — muted deep-sea teal (Third Watch brand guide, 2026-06-27;
    *  reversed off the old brass-amber). Decoupled from the floor's cool ties (those stay TEAL_BLUE). */
   accent: SEA_TEAL,
+  /** The lone warm beacon — amber — for active/selected highlights on the cool chrome (active
+   *  directive, selected tab/row underline). Used sparingly so it keeps meaning (tone §3). */
+  beacon: BEACON_AMBER,
   /** Semantic status colors for chrome. info stays the floor's cool tie, distinct from accent. */
   status: {
     info: TEAL_BLUE,
@@ -127,11 +142,16 @@ export function themeColors(style: StyleSheet): Record<string, string> {
     ink: UI_PALETTE.ink,
     'on-color': UI_PALETTE.onColor,
     line: style.outline.color,
+    field: UI_PALETTE.field,
+    well: UI_PALETTE.well,
     surface: UI_PALETTE.surface,
     panel: UI_PALETTE.panel,
+    border: UI_PALETTE.border,
+    'border-strong': UI_PALETTE.borderStrong,
     text: UI_PALETTE.text,
     'text-muted': UI_PALETTE.textMuted,
     accent: UI_PALETTE.accent,
+    beacon: UI_PALETTE.beacon,
     'status-info': UI_PALETTE.status.info,
     'status-positive': UI_PALETTE.status.positive,
     'status-warning': UI_PALETTE.status.warning,

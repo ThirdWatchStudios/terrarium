@@ -6,9 +6,30 @@ lingering, lean, attention — independent of what the body actually does. It is
 counterpart to the Persona's psychological model, and the character-body analog of the
 overhead-badge **motion-intent** system the tool already ships (`src/parts/overheadMotion.ts`).
 
-Written 2026-06-29 to capture a design exploration. **Nothing here is built.** Formulas and
-field lists are illustrative, not final. Decisions settled in discussion are marked
-**[agreed]**; everything else is open.
+Written 2026-06-29. **Built (increments 1–4):** the data layer + spine derivation, the preset
+library, the Persona-tab UI, and the per-mood modulation map (schema v15) — see the build log at
+the end. Decisions settled in discussion are marked **[agreed]**; everything else is open.
+
+> **Status update 2026-06-29 — derivation moved to the sim.** Persona generation has migrated
+> into The Water Cooler (`Runtime/Phase2/Generation/PersonaGenerator.cs` ports the spine →
+> temper/reaction/volatility derivation), and Terrarium is now mostly an **art-asset supplier**.
+> Since presence is the physical sibling of the persona, **it follows the spine: presence is
+> derived in the sim's `PersonaGenerator` for generated agents** (`gaitSpeed` → walk pace is wired
+> end-to-end; see The-Water-Cooler `SPRITE_INTEGRATION.md` §W6.1). This document's **formulas
+> remain the authoritative spec** the sim mirrors (exactly as `profile.ts`'s reaction derivation
+> is mirrored there); what changed is *where derivation runs*. The tool-side presence layer below
+> (UI / presets / `presenceMoods`) now serves the **hand-authoring path** — which is itself moving
+> to Unity (no tooling there yet). Read the layer model and boundary rules as the design; read the
+> derivation-location as sim-side.
+
+> **What Presence is for — the one sentence every future system should read first.** Recipe
+> answers *what do I look like?*; Persona answers *why do I do things?*; **Presence answers *how
+> does my internal state leak into the physical world?*** It is the **physical manifestation of
+> Persona** — a complete, foundational layer alongside Recipe and Persona, not a feature bolted
+> onto either. And, just as importantly for every future engineer: Presence does **not** own
+> animation, rigs, clips, blend trees, or bones. It owns the *behavioral constraints* that any
+> presentation layer — sprites, 3D, stick figures, paper dolls, something not yet invented —
+> expresses in its own way.
 
 > **Naming.** This was first floated as "Performance Profile." We renamed it to **Presence
 > Profile** **[agreed]**. "Performance" smells like animation clips and pulls toward a
@@ -34,6 +55,42 @@ This is not "Terrarium gets an animation editor." It is the missing third leg of
 tool already stands on: it already separates *look* (recipe) from *self* (persona) and already
 cedes *behavior* to the sim. Presence is *physical expression* — the layer between who someone
 is and what they do.
+
+### 1.1 Profile vs State — the standing self and its momentary leak **[agreed]**
+
+Presence has two faces, and only one is authored here:
+
+- **Presence Profile (this tool)** — the *standing* dispositions: expressiveness low, confidence
+  high, conversation distance medium. The answer to "how does this person occupy space?" Stable,
+  per-character, exported in `profile.json`.
+- **Presence State (the sim, at runtime)** — the *momentary* projection: currently withdrawn,
+  currently animated, currently avoiding eye contact. The answer to "how is this person occupying
+  space *right now*?"
+
+Crucially, **State is not a new authored object — it is `Profile ⊕ current-emotion`, computed by
+the sim each tick.** That computation is exactly the per-mood modulation map already built (§4.1 /
+`presenceMoods`): baseline presence **+** the current mood's deltas **=** the resolved State. This
+is why "a shy embarrassed person looks different from an outgoing embarrassed person" needs no new
+code — same emotion delta, different baseline, different resolved State, all by sampling. **Emotion
+*modifies* Presence; it never *replaces* it.**
+
+### 1.2 The consumption pipeline **[agreed]**
+
+The authoring view above (Recipe/Persona/Presence authored, Sim consumes) has a runtime mirror —
+how a Presence value becomes motion on screen:
+
+```
+Simulation    →  decides what happens, and the current emotion
+Presence      →  Profile ⊕ emotion = the resolved behavioral constraints (the State)
+Director      →  sequences & times the moment (whose turn, when to start, actual ms)
+Presentation  →  the renderer: sprites | 3D | stick figures | paper dolls
+Actor         →  the concrete body that moves
+```
+
+The seam that matters: **Presence stops at "behavioral constraints." Everything below the Director
+line can be swapped wholesale and Presence survives unchanged.** That is the litmus test for
+whether a field belongs in Presence at all — if changing the renderer would change the field, the
+field is in the wrong layer.
 
 ## 2. The priors / sampler contract **[agreed]**
 
@@ -237,7 +294,7 @@ spine-derived `reactionTendencies`.
 - **Export & versioning:** `presence.json` as a per-character sibling of `recipe.json` /
   `profile.json`, folded into the same bundle / `company.json` package. Additive optional field
   on `CharacterProfile` (rides along like `reactionTendencies`); bump the serialized profile
-  schema (currently `schemaVersion: 9`) and add a migrate step. Optional + derivable ⇒ old
+  schema (now `schemaVersion: 15`) and add a migrate step. Optional + derivable ⇒ old
   profiles load forward with no pain, and later finer channels are new optional fields old
   consumers ignore (open-vocabulary, like moods/behaviors).
 - **UI:** a pack-driven **Presence tab**, sibling to Persona / Cast / Behaviors, showing only
@@ -253,8 +310,45 @@ spine-derived `reactionTendencies`.
   (consistency, collaboration scores). Those are **sim-owned** per `CONTRACT.md`. Presence is
   *manner of motion*, not *how well someone does their job*. A `performanceMetric`-style field
   appearing in the schema is a sign the concept has slipped its boundary.
-- **No clips / keyframes / frame indices / ms.** That would weld it to today's sprite renderer
-  and force schema churn to add animation. Qualities only.
+- **No presentation mechanics — ever.** No animation clip / state / tree, no blend tree, no rig,
+  no IK, no bone data, no frame indices, no framerate-bound milliseconds. Presence is
+  *behavioral*; the Director and Presentation layers (§1.2) consume it. Anything that names *how
+  the art moves*, rather than *what the body tends to do*, has crossed the line — the moment a
+  literal millisecond or clip name appears, a future renderer can no longer honor the profile and
+  the abstraction has leaked. Qualities and tendencies only.
+
+## 11.5 Consumption-facing structure — the four signatures
+
+Restating the whole layer as the four things a Director consumes, with build status. The thesis
+that fell out of discussion: **almost nothing genuinely new is needed** — most of this is already
+built, or is a *name* for something that already exists.
+
+1. **Spatial Signature** — *steady-state; BUILT.* Walking pace, personal-space tolerance, idle
+   restlessness, expressiveness, gait control. Candidate additions (**[proposed]**): preferred
+   conversation distance, head-movement frequency, orientation commitment, an aggregate
+   confidence. The always-on "how I stand in a room."
+2. **Transition Signature** ⭐ — *partly BUILT (`commitment` / `latency` / `attentiveness`); a
+   naming + split is **[proposed]**.* Notice delay, decision delay, departure delay, interruption
+   likelihood, commitment speed, plus a **Conversation Exit Style** enum (slips-away |
+   leaves-dramatically | …). The single biggest personality lever, and **pure timing — not
+   animation.**
+   - ⚠ **Unit discipline.** Author these as **normalized 0–100 delay *tendencies*, never literal
+     ms** (the "800 ms / 2.3 s" from discussion). Literal time is framerate/presentation-bound and
+     breaks the renderer-agnostic rule (§6); the **Director** maps a tendency → actual ms (§1.2).
+     Exit Style as a *categorical* is legal — it names a tendency, not a clip.
+3. **Conversation Geometry** ⭐ — *pure, **[proposed]**, not built.* Preferred angle (side-by-side
+   | face-to-face | diagonal), preferred distance (close | medium | far), witness comfort (private
+   | public | center-of-attention), who-closes-the-gap (me | them | 50/50). Social *choreography*,
+   not animation — squarely on-philosophy; resolved pairwise by the sim (§7).
+4. **Gesture Vocabulary** ⭐ — ***[proposed]**, not built.* An **allow-list** of *semantic* gesture
+   tokens (cross-arms, point, shrug, hands-behind-back, celebrate, head-down, finger-tap, none).
+   **Presence decides *whether*; the Director decides *when*; Presentation decides *how it
+   looks*.** Keep tokens semantic, never mechanical (`point`, not `raise_right_arm_30°`), or it
+   becomes animation by the back door. (Same intent-not-clip discipline as `overheadMotion.ts`.)
+
+Only items 3, 4, and the Transition-Signature split are genuinely new schema — and all three are
+**pure** (enums + an allow-list + normalized scalars). They are **[proposed]**: a small, optional
+**v16** increment to confirm, not yet agreed. Everything else here already ships.
 
 ## 11. Open questions
 
