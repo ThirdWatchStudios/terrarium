@@ -1,0 +1,371 @@
+<!doctype html>
+<!--
+  Performance Direction — falsification harness.
+  ONE micro-scenario (a reprimand) driven through the three layers of
+  docs/performance-direction-contract.md:
+
+    Simulation  (stub)  — emits ONE authorized-meaning event. Owns TRUTH.
+    Performance         — composes a staging, schedules beats, owns the IN-BETWEEN.
+    Renderer   (dumb)   — knows only: pose · orientation · hold · move. Swappable by law.
+
+  Purpose: try to BREAK the constitution against reality. Watch for:
+   - can the pose layer read at a glance? (Art. III razor)
+   - do beat-scheduled transitions feel like performance, or a slideshow? (snap vs lerp toggle)
+   - does "performance trails truth" degrade gracefully when truth changes? (Art. VII preempt)
+   - does the SAME event block differently per person? (presence knobs — variety w/o new art)
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Performance Direction — falsification harness</title>
+<style>
+  :root{ --ink:#23201d; --paper:#efe6d2; --warm1:#efdcae; --warm2:#e0c489;
+         --chrome:#1b2026; --chrome-tx:#c9d6dd; --teal:#3FA7C4; --amber:#D69B4B; --mut:#8fa6b0; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+       font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+  header{padding:14px 18px 6px}
+  h1{font-size:16px;font-weight:600;margin:0}
+  .sub{color:#6b6458;font-size:12.5px;margin:2px 0 0}
+  .wrap{display:flex;gap:14px;padding:12px 18px 24px;flex-wrap:wrap}
+  .stagebox{flex:1 1 620px;min-width:520px}
+  svg{width:100%;height:auto;display:block;border-radius:10px;background:#0000}
+  .side{flex:1 1 300px;min-width:280px;display:flex;flex-direction:column;gap:12px}
+  .card{background:#fff;border:1px solid #0000001a;border-radius:10px;padding:12px 14px}
+  .card h2{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#8a8272;margin:0 0 8px}
+  .layer{border-left:3px solid var(--teal);padding-left:10px;margin-bottom:10px}
+  .layer.sim{border-color:#9b8b5a}.layer.perf{border-color:var(--teal)}.layer.rend{border-color:#b06}
+  .kv{font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;color:#3a3630;white-space:pre-wrap}
+  .kv b{color:#000}
+  .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  button{font:13px inherit;padding:7px 12px;border-radius:8px;border:1px solid #0003;
+         background:#fff;cursor:pointer}
+  button.primary{background:var(--chrome);color:#fff;border-color:var(--chrome)}
+  button.warn{background:var(--amber);border-color:#0002;color:#2a2008;font-weight:600}
+  .row{display:flex;align-items:center;gap:8px;margin:6px 0}
+  .row label{width:120px;font-size:12.5px;color:#5a5346}
+  .row input[type=range]{flex:1}
+  .row output{width:38px;text-align:right;font:12px ui-monospace,monospace}
+  .toggle{display:flex;gap:6px;align-items:center;font-size:12.5px}
+  .note{font-size:12px;color:#7a7266}
+  .banner{position:absolute;left:50%;transform:translateX(-50%);top:8px;
+          background:var(--amber);color:#241a04;padding:4px 12px;border-radius:20px;
+          font-size:12.5px;font-weight:600;opacity:0;transition:opacity .2s}
+  .banner.show{opacity:1}
+  .stagewrap{position:relative}
+</style>
+</head>
+<body>
+<header>
+  <h1>Performance Direction — falsification harness</h1>
+  <p class="sub">One reprimand, driven Simulation → Performance → Renderer. Try to break the constitution.</p>
+</header>
+
+<div class="wrap">
+  <div class="stagebox">
+    <div class="stagewrap">
+      <div id="banner" class="banner">TRUTH CHANGED — performance degraded to neutral (did not finish the scene)</div>
+      <svg id="stage" viewBox="0 0 660 300" role="img" aria-label="Two office workers; a reprimand performance">
+        <defs>
+          <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="var(--warm1)"/><stop offset="1" stop-color="var(--warm2)"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="150" width="660" height="150" fill="url(#floor)"/>
+        <!-- a desk: the affordance the staging is composed around -->
+        <g id="desk" opacity="0.9">
+          <rect x="372" y="212" width="86" height="14" rx="3" fill="#8a6a44"/>
+          <rect x="378" y="226" width="8" height="24" fill="#6f5335"/>
+          <rect x="444" y="226" width="8" height="24" fill="#6f5335"/>
+          <ellipse cx="415" cy="252" rx="52" ry="6" fill="#00000015"/>
+        </g>
+        <ellipse id="mgrShadow" cx="120" cy="250" rx="20" ry="5" fill="#6b4a3330"/>
+        <ellipse id="empShadow" cx="415" cy="250" rx="18" ry="4.5" fill="#6b4a3330"/>
+        <g id="mgr"><g class="lower"></g><g class="tilt"><path class="torso"/><g class="detail"></g><rect class="neck" x="-5" y="6" width="10" height="11"/><g class="arms"></g><circle class="head" r="15"/><g class="face"></g><g class="hair"></g></g></g>
+        <g id="emp"><g class="lower"></g><g class="tilt"><path class="torso"/><g class="detail"></g><rect class="neck" x="-5" y="6" width="10" height="11"/><g class="arms"></g><circle class="head" r="15"/><g class="face"></g><g class="hair"></g></g></g>
+        <g id="hud"></g>
+      </svg>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <div class="controls">
+        <button class="primary" id="play">▶ Play scene</button>
+        <button class="warn" id="preempt">⚡ Change the truth (mid-scene)</button>
+        <span class="toggle"><input type="checkbox" id="snap"/><label for="snap">snap (no in-between)</label></span>
+        <span class="toggle"><input type="checkbox" id="hudOn"/><label for="hudOn">HUD badges</label></span>
+        <span class="toggle"><input type="checkbox" id="sil"/><label for="sil">silhouette</label></span>
+      </div>
+      <div class="row"><label>manager gaitSpeed</label><input type="range" id="gait" min="0" max="100" value="55"/><output id="gaitO">55</output></div>
+      <div class="row"><label>employee latency</label><input type="range" id="lat" min="0" max="100" value="45"/><output id="latO">45</output></div>
+      <div class="row"><label>employee commitment</label><input type="range" id="com" min="0" max="100" value="60"/><output id="comO">60</output></div>
+      <p class="note">Low commitment inserts a hesitation beat ("Carl") before the employee withdraws. Same event, different person — variety from scheduling, not new art.</p>
+    </div>
+  </div>
+
+  <div class="side">
+    <div class="card">
+      <h2>The three layers, live</h2>
+      <div class="layer sim"><div class="kv" id="simView"></div></div>
+      <div class="layer perf"><div class="kv" id="perfView"></div></div>
+      <div class="layer rend"><div class="kv" id="rendView"></div></div>
+    </div>
+    <div class="card">
+      <h2>What this is trying to falsify</h2>
+      <p class="note">• Pose layer readable at a glance? (watch with HUD off)<br/>
+      • Beat scheduling = performance or slideshow? (toggle <b>snap</b>)<br/>
+      • Truth-trails law graceful? (hit <b>Change the truth</b> mid-scene)<br/>
+      • One event, many people? (move <b>commitment</b> to 20, replay)</p>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+// ============================================================================
+// LAYER 0 — SIMULATION (stub). Owns TRUTH. Emits ONE authorized-meaning event.
+// Performance may read these fields and stage CONSISTENT-WITH them; never exceed.
+// ============================================================================
+const EVENT = {
+  act: 'reprimand',
+  initiator: 'manager', recipient: 'employee',
+  severity: 0.7, public: false, witnesses: 0,
+  relationship: 'supervisor→report', salience: 0.8,
+};
+let truthValid = true;               // Simulation can revoke the scene at any instant (Art. VII)
+
+// ============================================================================
+// RENDERER — DUMB BY LAW. Vocabulary: pose · orientation · hold · move.
+// It does not know what a "reprimand", a "beat", or a "stage" is.
+// Swap this function for a Unity backend and nothing above changes.
+// ============================================================================
+const HIP_Y = -34, HEAD_Y = -98;
+const STANCE = {
+  stand:  'M-14 0 L-14 -36 L14 -36 L14 0 Z',
+  stride: 'M-16 0 L-9 -34 L-1 -34 L-5 0 Z  M3 -34 L13 -34 L19 0 L9 0 Z',
+};
+const TORSO = 'M-13 -34 L13 -34 L20 -80 L10 -86 L-10 -86 L-20 -80 Z';
+const ARMS = {
+  side:    '<rect x="-25" y="-82" width="9" height="44" rx="4"/><rect x="16" y="-82" width="9" height="44" rx="4"/>',
+  swing:   '<path d="M-13 -78 L-20 -56 L-13 -52 L-8 -70 Z"/><path d="M12 -78 L20 -58 L14 -52 L8 -70 Z"/>',
+  crossed: '<path d="M-19 -72 L15 -56 L19 -50 L-15 -66 Z"/><path d="M19 -72 L-15 -56 L-19 -50 L15 -66 Z"/>',
+  akimbo:  '<path d="M14 -76 L30 -60 L14 -46 L8 -51 L23 -62 L10 -72 Z"/><path d="M-14 -76 L-30 -60 L-14 -46 L-8 -51 L-22 -62 L-10 -72 Z"/>',
+  point:   '<path d="M13 -78 L46 -62 L47 -53 L14 -66 Z"/><path d="M-14 -76 L-31 -60 L-14 -46 L-7 -51 L-23 -62 L-10 -74 Z"/>',
+  tucked:  '<path d="M-14 -66 L0 -44 L4 -46 L15 -66 L9 -70 L2 -52 L-8 -70 Z"/>',
+};
+// Pose = a named held state: which arms, how the torso leans, where the head sits, stance, scale.
+const POSE = {
+  neutral: { arms:'side',    tilt:0,   hdx:0, hdy:0, stance:'stand',  s:1 },
+  walk:    { arms:'swing',   tilt:6,   hdx:2, hdy:0, stance:'stride', s:1 },
+  notice:  { arms:'side',    tilt:2,   hdx:7, hdy:-2,stance:'stand',  s:1 },
+  crossed: { arms:'crossed', tilt:0,   hdx:0, hdy:0, stance:'stand',  s:1 },
+  loom:    { arms:'akimbo',  tilt:9,   hdx:8, hdy:-1,stance:'stand',  s:1 },
+  point:   { arms:'point',   tilt:11,  hdx:7, hdy:0, stance:'stand',  s:1 },
+  slump:   { arms:'tucked',  tilt:-7,  hdx:5, hdy:3, stance:'stand',  s:0.9 },
+};
+const BASE_Y = 232, WORLD_S = 1.15;
+// Character recipes — the real Terrarium model: palette tokens + part shapes, never baked style.
+const PAL = {
+  mgr:{ skin:'#c98d5f', hair:'#37302a', outfitPrimary:'#39434f', trousers:'#252a30',
+        hairPath:'M-14 -4 Q-13 -15 0 -15 Q13 -15 14 -4 Q7 -10 0 -10 Q-8 -10 -14 -4 Z',
+        detail:'<path d="M-7 -83 L0 -56 L7 -83 Z" fill="#2b333d"/><path d="M-1.2 -80 L1.2 -80 L1 -60 L-1 -60 Z" fill="#b0562f"/>',
+        face:'<circle cx="6" cy="-2" r="1.7" fill="#23201d"/><circle cx="11.6" cy="-2" r="1.7" fill="#23201d"/><g stroke="#23201d" stroke-width="1.3" fill="none"><circle cx="6" cy="-2" r="3.4"/><circle cx="12.6" cy="-2" r="3.4"/><path d="M9.4 -2 h1.6"/></g>'},
+  emp:{ skin:'#dc9d74', hair:'#6b4a2f', outfitPrimary:'#6d818e', trousers:'#3d4247',
+        hairPath:'M-15 1 Q-17 -17 0 -17 Q17 -17 15 1 Q12 -9 8 -10 Q3 -13 0 -13 Q-4 -13 -8 -10 Q-12 -9 -15 1 Z',
+        detail:'<path d="M-7 -82 L0 -64 L7 -82" fill="none" stroke="#54636e" stroke-width="3.2" stroke-linejoin="round"/>',
+        face:'<circle cx="6" cy="-2.5" r="1.7" fill="#23201d"/><circle cx="11.6" cy="-2.5" r="1.7" fill="#23201d"/>'},
+};
+function render(el, r, pal){                // r = { pose, x, orient, tilt, hdx, hdy, s }  ← the ONLY interface
+  const p = POSE[r.pose];
+  const sil = document.getElementById('sil').checked;
+  const ink = '#23201d', sw = sil ? 0 : 3.1;
+  const cOut = sil ? ink : pal.outfitPrimary, cLeg = sil ? ink : pal.trousers;
+  const cSkin = sil ? ink : pal.skin, cHair = sil ? ink : pal.hair;
+  const line = f => `fill="${f}" stroke="${ink}" stroke-width="${sw}" stroke-linejoin="round" stroke-linecap="round"`;
+  el.setAttribute('transform', `translate(${r.x} ${BASE_Y}) scale(${r.orient*WORLD_S*r.s} ${WORLD_S*r.s})`);
+  el.querySelector('.lower').innerHTML = `<path d="${STANCE[p.stance]}" ${line(cLeg)}/>`;
+  el.querySelector('.tilt').setAttribute('transform', `rotate(${r.tilt} 0 ${HIP_Y})`);
+  const tor = el.querySelector('.torso');
+  tor.setAttribute('d', TORSO); tor.setAttribute('fill', cOut);
+  tor.setAttribute('stroke', ink); tor.setAttribute('stroke-width', sw); tor.setAttribute('stroke-linejoin','round');
+  el.querySelector('.detail').innerHTML = sil ? '' : pal.detail;
+  const arms = el.querySelector('.arms');
+  arms.innerHTML = ARMS[p.arms];
+  for (const [k,v] of Object.entries({fill:cOut,stroke:ink,'stroke-width':sw,'stroke-linejoin':'round','stroke-linecap':'round'})) arms.setAttribute(k,v);
+  const hx = r.hdx, hy = HEAD_Y + r.hdy;
+  const neck = el.querySelector('.neck');
+  neck.setAttribute('transform', `translate(${hx} ${hy})`); neck.setAttribute('fill', cSkin); neck.setAttribute('stroke','none');
+  const head = el.querySelector('.head');
+  head.setAttribute('cx', hx); head.setAttribute('cy', hy);
+  head.setAttribute('fill', cSkin); head.setAttribute('stroke', ink); head.setAttribute('stroke-width', sw);
+  const hair = el.querySelector('.hair');
+  hair.setAttribute('transform', `translate(${hx} ${hy})`);
+  hair.innerHTML = sil ? '' : `<path d="${pal.hairPath}" ${line(cHair)}/>`;
+  const face = el.querySelector('.face');
+  face.setAttribute('transform', `translate(${hx} ${hy})`);
+  face.innerHTML = sil ? '' : pal.face;
+}
+
+// ============================================================================
+// PERFORMANCE — composes a staging from affordances, schedules beats,
+// OWNS THE IN-BETWEEN (easing continuous params; swapping discrete arms).
+// Reads presence to shape timing. Reads truthValid to preempt.
+// ============================================================================
+const AFFORDANCES = ['authority','across-barrier','approach-front'];   // desk stage, composed
+const knob = id => +document.getElementById(id).value;
+
+function buildSchedule(){
+  // presence shaping
+  const gait = knob('gait'), lat = knob('lat'), com = knob('com');
+  const walkDur = 1600 * (1.4 - gait/100);          // faster gait → shorter approach
+  const latK    = 0.7 + lat/100;                    // higher latency → longer dwells
+  const EX = 415, MX_far = 120, MX_near = 322;       // world x of employee / manager start / plant
+  let t = 0;
+  const mgr = [], emp = [];
+  const push=(a,pose,x,hold)=>{ a.push({t, pose, x}); t += hold; };
+
+  // MANAGER
+  t=0;
+  push(mgr,'neutral',MX_far, 700);
+  push(mgr,'walk',   MX_near, walkDur);
+  push(mgr,'loom',   MX_near, 900*latK);
+  push(mgr,'point',  MX_near, 950);                 // KEY beat, fixed weight
+  push(mgr,'loom',   MX_near, 650*latK);
+  push(mgr,'walk',   MX_far,  walkDur);
+  push(mgr,'neutral',MX_far,  1);
+  const mgrEnd = t;
+
+  // EMPLOYEE — timeline anchored to the manager's arrival
+  t=0;
+  push(emp,'neutral',EX, 700 + walkDur - 250);      // stands until M nearly arrives
+  push(emp,'notice', EX, 250*latK);                 // anticipation: head turns to notice
+  push(emp,'neutral',EX, 900*latK + 950 - 250*latK);// weathering the loom + point
+  if (com < 45){                                    // low commitment → "Carl" hesitation beat
+    push(emp,'notice', EX-6, 220*latK);             // half-step toward, second-guess
+    push(emp,'slump',  EX+10, 650*latK);
+  } else {
+    push(emp,'slump',  EX+10, 650*latK);
+  }
+  push(emp,'slump', EX+10, 9000);                   // residual, holds
+  return { mgr, emp, end: Math.max(mgrEnd, t), gait, lat, com };
+}
+
+// active state eased toward the current beat's target
+function targetAt(track, now){
+  let k = track[0];
+  for (const b of track) if (b.t <= now) k = b; else break;
+  return k;
+}
+
+const els = { mgr:document.getElementById('mgr'), emp:document.getElementById('emp') };
+const cur = {
+  mgr:{ pose:'neutral', x:120, orient:1,  tilt:0, hdx:0, hdy:0, s:1 },
+  emp:{ pose:'neutral', x:415, orient:-1, tilt:0, hdx:0, hdy:0, s:1 },
+};
+let sched = buildSchedule();
+let playing = false, t0 = 0, now = 0, preemptAt = null;
+
+function ease(c, targetPose, targetX, tau, dt){
+  const p = POSE[targetPose];
+  c.pose = targetPose;                              // arms swap discretely (honest: arms are the discrete layer)
+  const k = tau <= 0 ? 1 : 1 - Math.exp(-dt/tau);   // continuous params glide
+  c.x   += (targetX - c.x) * k;
+  c.tilt+= (p.tilt  - c.tilt) * k;
+  c.hdx += (p.hdx   - c.hdx) * k;
+  c.hdy += (p.hdy   - c.hdy) * k;
+  c.s   += (p.s     - c.s)   * k;
+}
+
+let last = 0;
+function frame(ts){
+  if (!last) last = ts;
+  const dt = Math.min(64, ts - last); last = ts;
+  const snap = document.getElementById('snap').checked;
+  const tau = snap ? 0 : 70 * (0.7 + sched.lat/100);   // latency also softens the in-between
+
+  if (playing){
+    now = ts - t0;
+
+    if (truthValid){
+      const bm = targetAt(sched.mgr, now), be = targetAt(sched.emp, now);
+      ease(cur.mgr, bm.pose, bm.x, tau, dt);
+      ease(cur.emp, be.pose, be.x, tau, dt);
+      setPerfView(bm, be);
+      if (now > sched.end + 800){ playing = false; }
+    } else {
+      // ---- ART. VII: truth revoked. Do NOT finish the scene. Degrade to neutral. ----
+      ease(cur.mgr, 'neutral', 120, snap?0:150, dt);
+      ease(cur.emp, 'neutral', 415, snap?0:150, dt);
+      setPerfView({pose:'—',t:0},{pose:'—',t:0}, true);
+    }
+  }
+
+  render(els.mgr, cur.mgr, PAL.mgr); render(els.emp, cur.emp, PAL.emp);
+  document.getElementById('mgrShadow').setAttribute('cx', cur.mgr.x);
+  document.getElementById('empShadow').setAttribute('cx', cur.emp.x);
+  drawHud();
+  setRendView();
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+
+// ---- HUD (off by default — the thing the constitution keeps sterile) ----
+function drawHud(){
+  const on = document.getElementById('hudOn').checked;
+  const hud = document.getElementById('hud');
+  if (!on || !playing || !truthValid){ hud.innerHTML=''; return; }
+  const badge = (c, glyph, col)=>`<g transform="translate(${c.x} ${BASE_Y-135})">
+      <circle r="12" fill="${col}"/><text y="4.5" text-anchor="middle" font-size="15"
+      font-family="sans-serif" font-weight="700" fill="#fff">${glyph}</text></g>`;
+  hud.innerHTML = badge(cur.mgr,'!','#c0553a') + badge(cur.emp,'?','#6a5ea0');
+}
+
+// ---- inspector panels ----
+function setSimView(){
+  document.getElementById('simView').innerHTML =
+   `<b>SIMULATION · owns truth</b>\nevent: ${EVENT.act}\ninitiator→recipient: ${EVENT.initiator}→${EVENT.recipient}`
+   +`\nseverity ${EVENT.severity}  public ${EVENT.public}  witnesses ${EVENT.witnesses}`
+   +`\nsalience ${EVENT.salience}   truthValid: <b>${truthValid}</b>`;
+}
+function setPerfView(bm, be, degraded){
+  document.getElementById('perfView').innerHTML =
+   `<b>PERFORMANCE · owns observable consequence</b>`
+   +`\nstage: composed from {${AFFORDANCES.join(', ')}}`
+   +`\nauthorized public=${EVENT.public} → private staging`
+   +(degraded ? `\n<b>PREEMPTED → degrading to neutral</b>`
+              : `\nbeat  mgr:${bm.pose.padEnd(8)} emp:${be.pose}`)
+   +`\npresence  gait ${sched.gait}  lat ${sched.lat}  com ${sched.com}`
+   +(sched.com<45 ? `\n  ↳ low commitment: hesitation beat inserted` : ``);
+}
+function setRendView(){
+  const f = n => (n>=0?' ':'') + n.toFixed(0);
+  document.getElementById('rendView').innerHTML =
+   `<b>RENDERER · pose·orientation·hold·move</b>`
+   +`\nmgr  pose=${cur.mgr.pose.padEnd(8)} x=${f(cur.mgr.x)} tilt=${f(cur.mgr.tilt)}`
+   +`\nemp  pose=${cur.emp.pose.padEnd(8)} x=${f(cur.emp.x)} tilt=${f(cur.emp.tilt)}`
+   +`\n(knows no "reprimand", "beat", or "stage")`;
+}
+
+// ---- controls ----
+function replay(){
+  truthValid = true; preemptAt = null;
+  document.getElementById('banner').classList.remove('show');
+  sched = buildSchedule();
+  cur.mgr = { pose:'neutral', x:120, orient:1,  tilt:0, hdx:0, hdy:0, s:1 };
+  cur.emp = { pose:'neutral', x:415, orient:-1, tilt:0, hdx:0, hdy:0, s:1 };
+  t0 = performance.now(); now = 0; playing = true; setSimView();
+}
+document.getElementById('play').onclick = replay;
+document.getElementById('preempt').onclick = ()=>{
+  if (!playing){ return; }
+  truthValid = false;
+  document.getElementById('banner').classList.add('show');
+  setSimView();
+};
+for (const id of ['gait','lat','com']){
+  const el = document.getElementById(id), out = document.getElementById(id+'O');
+  el.oninput = ()=>{ out.value = el.value; };
+}
+setSimView(); setPerfView({pose:'—'},{pose:'—'}); setRendView();
+// draw a first frame at rest
+render(els.mgr, cur.mgr); render(els.emp, cur.emp);
+</script>
+</body>
+</html>
