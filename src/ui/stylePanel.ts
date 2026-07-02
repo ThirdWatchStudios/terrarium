@@ -1,6 +1,7 @@
 import type { ProjectState, StylePreset, StyleSheet } from '../core/types';
 import { composeCharacter, composeProp } from '../core/compositor';
 import { composeSceneSvg } from '../core/scene';
+import { applyClinicalLook } from '../core/look';
 import { DEFAULT_STYLE, DEFAULT_STYLE_PRESETS } from '../data/defaults';
 import { normalizePixelScale, store } from '../state';
 import { button, clear, colorInput, el, labeled, select, slider } from './dom';
@@ -196,6 +197,29 @@ function renderPresetControls(container: HTMLElement): void {
   });
 
   container.append(
+    el('h3', {}, 'Looks'),
+    el(
+      'p',
+      { className: 'muted' },
+      'A look restyles the WHOLE project in one move — style sheet + every prop/wall/floor palette. ',
+      'Characters are never touched: the architecture goes clinical, the people stay warm ',
+      '(register-constitution.md Article VIII).',
+    ),
+    el(
+      'div',
+      { className: 'btn-row' },
+      button('Apply clinical plan (IRIS view)', () => {
+        if (
+          !confirm(
+            'Apply the clinical-plan look?\n\nSets thin ink outlines + no shadows and sweeps every prop/wall/floor ' +
+              'palette to near-white plan surfaces. Characters are untouched. This edits instance palettes ' +
+              '(re-color individual assets to revert, or Reset all).',
+          )
+        )
+          return;
+        store.mutate((state) => applyClinicalLook(state), 'structure');
+      }, 'primary'),
+    ),
     el('h3', {}, 'Style presets'),
     presetCards,
     labeled('Save current style', nameInput),
