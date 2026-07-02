@@ -167,7 +167,9 @@ function placeParts(recipe: CharacterRecipe, facing: Facing, mood: Mood, pose?: 
     group: 'body',
   });
 
-  const moodShapes = MOOD_OVERLAYS[mood][facing];
+  // Faceless heads (the unit disc) take no mood overlay — feelings arrive as
+  // IRIS claims, never on the head (Article VIII).
+  const moodShapes = getPart(recipe.parts.head)?.noFace ? undefined : MOOD_OVERLAYS[mood][facing];
   if (moodShapes && moodShapes.length > 0) {
     placed.push({
       variant: { shapes: moodShapes, z: MOOD_Z },

@@ -45,7 +45,7 @@ import { ICONS, CURSORS } from '../parts/icons';
 import { overlayStyleJson } from './overlayStyle';
 import { symbolRegistryJson } from './registry';
 import { POSES, poseCatalogJson } from '../parts/poses';
-import { unitPalette, unitRecipe } from './renderings';
+import { unitRecipe, unitRenderingSpec } from './renderings';
 
 /** Sheet frame order. West is baked as mirrored east for engine convenience. */
 const SHEET_FACINGS = ['south', 'east', 'north', 'west'] as const;
@@ -744,10 +744,10 @@ export function characterLayerManifest(recipe: CharacterRecipe, style: StyleShee
     tokens: [...PALETTE_TOKENS],
     moods: [...MOODS],
     palette: recipe.palette,
-    // Alternate rendering palettes (Article VIII): multiply the same tintable
-    // masks by `renderings.unit` and the runtime compositor draws the
-    // operational unit — same geometry, same poses, IRIS pigment.
-    renderings: { unit: unitPalette(recipe.palette) },
+    // NOTE (Article VIII): these masks are the WARM identity's geometry. The
+    // operational unit is a different drawing (pictogram parts) and cannot be
+    // produced by re-tinting them — consume the baked unit sheets, or
+    // re-compose from recipe.json#renderings.unit.
     pivot: { x: 0.5, y: 0.09 },
     // Composite order: stack ascending z (ties broken by order). Multiply each
     // layer by palette[tint] (skip when tint is null). Show base layers (mood
@@ -841,13 +841,19 @@ export function posesAtlas(recipe: CharacterRecipe, style: StyleSheet, scale: nu
 }
 
 /**
- * Operational-unit sheet: the same 4 facings as the base sheet, re-dressed by
- * IRIS (register-constitution.md Article VIII — the floor rendering). A pure
- * palette swap over the identity: geometry, anchors and poses are untouched
- * by construction (renderings.ts).
+ * Operational-unit sheets: IRIS's own drawing of the identity (register-
+ * constitution.md Article VIII — the floor rendering). A PICTOGRAM — coding-
+ * hue figure, featureless head disc — on the same canvas, anchors and pose
+ * rig, so conduct is untouched by construction (renderings.ts). Ships both
+ * the 4-facing base sheet and the full pose sheet, because the floor default
+ * intent is the unit rendering and the floor is where poses live.
  */
 function unitSheetDesc(recipe: CharacterRecipe, style: StyleSheet, scale: number): SheetDesc {
   return characterSheetDesc(unitRecipe(recipe), style, scale);
+}
+
+function unitPoseSheetDesc(recipe: CharacterRecipe, style: StyleSheet, scale: number): SheetDesc {
+  return poseSheetDesc(unitRecipe(recipe), style, scale);
 }
 
 export function unitAtlas(recipe: CharacterRecipe, style: StyleSheet, scale: number) {
@@ -855,6 +861,14 @@ export function unitAtlas(recipe: CharacterRecipe, style: StyleSheet, scale: num
   return {
     ...atlas,
     meta: { ...atlas.meta, rendering: 'operational-unit', author: 'iris', warm: 'portrait@Nx.png' },
+  };
+}
+
+export function unitPosesAtlas(recipe: CharacterRecipe, style: StyleSheet, scale: number) {
+  const atlas = posesAtlas(recipe, style, scale);
+  return {
+    ...atlas,
+    meta: { ...atlas.meta, rendering: 'operational-unit', author: 'iris' },
   };
 }
 
@@ -1104,7 +1118,7 @@ export async function exportAll(
   // Total PNG renders (the slow part): per character sheet + moods + layers,
   // plus one per prop/wall/floor — each across every scale.
   const total =
-    project.characters.length * scales * 6 +
+    project.characters.length * scales * 7 +
     project.props.length * scales +
     (project.walls?.length ?? 0) * scales +
     (project.floors?.length ?? 0) * scales +
@@ -1137,15 +1151,18 @@ export async function exportAll(
       await write(`${dir}/unit@${scale}x.png`, await png(unitSheetDesc(recipe, style, scale)));
       await write(`${dir}/unit-atlas@${scale}x.json`, JSON.stringify(unitAtlas(recipe, style, scale), null, 2));
       tick(`${recipe.name} unit`);
+      await write(`${dir}/unit-poses@${scale}x.png`, await png(unitPoseSheetDesc(recipe, style, scale)));
+      await write(`${dir}/unit-poses-atlas@${scale}x.json`, JSON.stringify(unitPosesAtlas(recipe, style, scale), null, 2));
+      tick(`${recipe.name} unit poses`);
       await write(`${dir}/portrait@${scale}x.png`, await png(portraitDesc(recipe, style, scale)));
       tick(`${recipe.name} portrait`);
     }
     // The recipe is the IDENTITY; renderings are how each author draws it
-    // (Article VIII). `renderings.unit` ships the derived palette so a runtime
-    // compositor can re-dress the layer atlas without re-deriving the ramp.
+    // (Article VIII). `renderings.unit` ships IRIS's drawing spec (pictogram
+    // parts + coding palette) so any consumer can re-derive the unit exactly.
     await write(
       `${dir}/recipe.json`,
-      JSON.stringify({ ...recipe, renderings: { unit: { palette: unitPalette(recipe.palette) } } }, null, 2),
+      JSON.stringify({ ...recipe, renderings: { unit: unitRenderingSpec(recipe) } }, null, 2),
     );
     // The full-game persona (sim-consumer form: derived fields resolved to plain
     // numbers). Keyed by agentId == recipe id; emitted only when authored.

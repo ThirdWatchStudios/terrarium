@@ -64,6 +64,12 @@ export interface PartDef {
   anchor: AnchorName;
   /** Missing facing = part not drawn from that angle (e.g. lanyard from behind). */
   facings: Partial<Record<Facing, PartVariant>>;
+  /**
+   * Head parts only: this head has no face, so mood overlays never draw on it
+   * (the operational-unit disc — feelings arrive as IRIS claims, never on the
+   * head; register-constitution.md Article VIII).
+   */
+  noFace?: boolean;
 }
 
 /** A character is pure data — parts by id plus a palette. */

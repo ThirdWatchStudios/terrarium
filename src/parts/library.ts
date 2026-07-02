@@ -934,12 +934,67 @@ const ACCESSORIES: PartDef[] = [
 
 export const PART_LIBRARY: PartDef[] = [...BODIES, ...HEADS, ...HAIR, ...OUTFITS, ...ACCESSORIES];
 
-const byId = new Map(PART_LIBRARY.map((p) => [p.id, p]));
+// ---------------------------------------------------------------------------
+// Internal parts — resolvable by id but NOT offered in the authoring pickers.
+// These are the operational-unit pictogram (register-constitution.md Article
+// VIII): IRIS's own drawing of a person, not an authorable character choice.
+// The mockup grammar: a flat coding-hue figure with a featureless dark head
+// disc — no face, no hair; identity is color + silhouette + (sim-side) label.
+// Same canvas, anchors and pose rig as the warm bodies, so arms/poses attach
+// unchanged.
+// ---------------------------------------------------------------------------
+
+export const INTERNAL_PARTS: PartDef[] = [
+  {
+    id: 'body-unit',
+    label: 'Unit (internal)',
+    slot: 'body',
+    anchor: 'body',
+    facings: {
+      // Rounded shoulders tapering slightly to the base — pictogram bullet.
+      south: {
+        z: 10,
+        shapes: [
+          { d: 'M -24 -6 Q -24 -29 0 -29 Q 24 -29 24 -6 L 20 19 Q 18 29 8 29 L -8 29 Q -18 29 -20 19 Z', fill: '$outfitPrimary' },
+        ],
+      },
+      north: {
+        z: 10,
+        shapes: [
+          { d: 'M -24 -6 Q -24 -29 0 -29 Q 24 -29 24 -6 L 20 19 Q 18 29 8 29 L -8 29 Q -18 29 -20 19 Z', fill: '$outfitPrimary' },
+        ],
+      },
+      east: {
+        z: 10,
+        shapes: [
+          { d: 'M -18 -6 Q -18 -29 0 -29 Q 18 -29 18 -6 L 15 19 Q 13 29 6 29 L -6 29 Q -13 29 -15 19 Z', fill: '$outfitPrimary' },
+        ],
+      },
+    },
+  },
+  {
+    id: 'head-unit',
+    label: 'Unit head (internal)',
+    slot: 'head',
+    anchor: 'headCenter',
+    noFace: true,
+    facings: {
+      // A featureless disc in the unit ink — the unit has no face. Feelings
+      // arrive as IRIS claims, never on the head.
+      south: { z: 40, shapes: [{ d: circle(0, 0, 18), fill: '$skin' }] },
+      east: { z: 40, shapes: [{ d: circle(1, 0, 17), fill: '$skin' }] },
+      north: { z: 40, shapes: [{ d: circle(0, 0, 18), fill: '$skin' }] },
+    },
+  },
+];
+
+const byId = new Map([...PART_LIBRARY, ...INTERNAL_PARTS].map((p) => [p.id, p]));
 
 export function getPart(id: string): PartDef | undefined {
   return byId.get(id);
 }
 
+/** Authoring pickers only — internal (renderer-owned) parts are excluded. */
 export function partsForSlot(slot: Slot): PartDef[] {
   return PART_LIBRARY.filter((p) => p.slot === slot);
 }
