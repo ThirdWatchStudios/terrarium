@@ -20,6 +20,7 @@ import { renderPropControls, renderPropList, renderPropPreview } from './propPan
 import { renderSceneControls, renderSceneList, renderScenePreview } from './scenePanel';
 import { renderStyleControls, renderStylePreview } from './stylePanel';
 import { renderTileControls, renderTileList, renderTilePreview } from './tilePanel';
+import { renderLanguageControls, renderLanguagePreview } from './languagePanel';
 
 /**
  * Two-level navigation: top-level groups, each with sub-tabs. The leaf id (sub
@@ -71,6 +72,11 @@ const NAV: NavGroup[] = [
       { id: 'company', label: 'Generate' },
       { id: 'departments', label: 'Departments' },
     ],
+  },
+  {
+    id: 'language',
+    label: 'Language',
+    subs: [{ id: 'language', label: 'Reading Test' }],
   },
 ];
 
@@ -224,7 +230,7 @@ export function mountApp(root: HTMLElement): void {
   function render(kind: 'structure' | 'data'): void {
     renderTabs();
     const tab = store.ui.tab;
-    main.classList.toggle('no-sidebar', tab === 'style');
+    main.classList.toggle('no-sidebar', tab === 'style' || tab === 'language');
     main.classList.toggle('swap', SWAP_TABS.has(tab));
     // Scenario gets a wider inspector column for its dense analysis views.
     main.classList.toggle('scenario-layout', tab === 'scenario');
@@ -282,6 +288,10 @@ export function mountApp(root: HTMLElement): void {
       renderDepartmentList(sidebar);
       renderDepartmentPreview(preview);
       if (kind === 'structure') renderDepartmentControls(controls);
+    } else if (tab === 'language') {
+      clear(sidebar);
+      renderLanguagePreview(preview);
+      if (kind === 'structure') renderLanguageControls(controls);
     } else {
       clear(sidebar);
       renderStylePreview(preview);
