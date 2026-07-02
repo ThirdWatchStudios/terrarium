@@ -20,6 +20,7 @@ import { MOODS, type Mood } from '../core/types';
 import { ACTIVITIES, type Activity } from './activities';
 import { MOOD_EMOTES } from './moods';
 import { PROP_STATUSES, type PropStatus } from './propStatus';
+import { SOCIAL_STATES, type SocialState } from './socialStates';
 import { type AttentionPuff } from './attention';
 
 /** How a badge appears. */
@@ -60,6 +61,8 @@ const BADGED_ACTIVITIES = ACTIVITIES.filter((a) => a !== 'none');
 export const MOOD_MOTION: Record<string, OverheadMotionIntent> = uniform(EMOTED_MOODS as Mood[], MOOD_INTENT);
 export const ACTIVITY_MOTION: Record<string, OverheadMotionIntent> = uniform(BADGED_ACTIVITIES as Activity[], ACTIVITY_INTENT);
 export const PROP_STATUS_MOTION: Record<string, OverheadMotionIntent> = uniform(PROP_STATUSES as PropStatus[], PROP_STATUS_INTENT);
+/** Short-term social state — ongoing STATE like a mood (same tier, same soft discipline). */
+export const SOCIAL_STATE_MOTION: Record<string, OverheadMotionIntent> = uniform(SOCIAL_STATES as SocialState[], MOOD_INTENT);
 
 /**
  * Transient event puffs — all pop-and-fade, but the salience tier is the §7

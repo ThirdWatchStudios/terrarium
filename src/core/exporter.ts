@@ -13,6 +13,7 @@ import {
   composeMoodEmote,
   composeProp,
   composePropStatusBadge,
+  composeSocialStateBadge,
   composeWallTile,
   layerCellSvg,
   overheadAnchor,
@@ -20,8 +21,9 @@ import {
 import { ACTIVITIES, ACTIVITY_BADGES } from '../parts/activities';
 import { MOOD_EMOTES } from '../parts/moods';
 import { PROP_STATUSES } from '../parts/propStatus';
+import { SOCIAL_STATES } from '../parts/socialStates';
 import { ATTENTION_PUFFS } from '../parts/attention';
-import { ACTIVITY_MOTION, MOOD_MOTION, PROP_STATUS_MOTION, ATTENTION_MOTION } from '../parts/overheadMotion';
+import { ACTIVITY_MOTION, MOOD_MOTION, PROP_STATUS_MOTION, SOCIAL_STATE_MOTION, ATTENTION_MOTION } from '../parts/overheadMotion';
 import { conversationStyleJson } from './conversation';
 import { sceneToLayoutJson } from './layout';
 import { composeSceneSvg } from './scene';
@@ -364,6 +366,61 @@ export function propStatusBadgesAtlas(style: StyleSheet, scale: number) {
       shared: true,
       propIndependent: true,
       note: "Selected at runtime by a prop's active tamper-state id; unknown ids draw nothing. Place above the tampered prop, like an agent's activity badge.",
+    },
+  };
+}
+
+/**
+ * Social-state badges: a single shared strip, one cell per short-term social
+ * state, exactly like the activity badges. The sim blits the matching cell at
+ * the aboveHead anchor keyed off the agent's short-term social-state id
+ * (mirrors ShortTermSocialStateLabel) — the interpersonal weather made legible
+ * from the floor instead of inspector-text-only (docs/icon-expansion-plan.md §3.D).
+ */
+function socialStateBadgesDesc(style: StyleSheet, scale: number): SheetDesc {
+  const size = style.render.baseSize * scale;
+  return {
+    width: size * SOCIAL_STATES.length,
+    height: size,
+    pixelScale: renderScale(style),
+    cells: SOCIAL_STATES.map((state, i) => ({
+      svg: composeSocialStateBadge(state, size),
+      dx: i * size,
+      dy: 0,
+      dw: size,
+      dh: size,
+    })),
+  };
+}
+
+export async function socialStateBadgesPng(style: StyleSheet, scale: number): Promise<Blob> {
+  return asBlob(defaultRasterizer().rasterizeSheet(socialStateBadgesDesc(style, scale)));
+}
+
+export function socialStateBadgesAtlas(style: StyleSheet, scale: number) {
+  const size = style.render.baseSize * scale;
+  const frames: Record<string, { x: number; y: number; w: number; h: number }> = {};
+  SOCIAL_STATES.forEach((state, i) => {
+    frames[state] = { x: i * size, y: 0, w: size, h: size };
+  });
+  return {
+    kind: 'social-state-badges' as const,
+    frameSize: size,
+    scale,
+    states: [...SOCIAL_STATES],
+    frames,
+    pivot: { x: 0.5, y: 0.5 },
+    attach: { anchor: 'aboveHead', normalizedSouth: normalizedAboveHead().south },
+    // Ongoing state (minutes-scale, but still state): soft in/out, no nagging loop.
+    motion: { transient: false, byId: SOCIAL_STATE_MOTION },
+    meta: {
+      generator: 'sprite-character-creator',
+      shared: true,
+      facingIndependent: true,
+      note:
+        "Selected at runtime by the agent's short-term social-state id; unknown ids draw " +
+        'nothing. Bubble hue encodes valence (rose = negative, teal-blue = positive); the ' +
+        'glyph says which state. Stacks with the mood/activity badges at aboveHead.',
     },
   };
 }
@@ -876,7 +933,7 @@ export async function exportAll(
     project.props.length * scales +
     (project.walls?.length ?? 0) * scales +
     (project.floors?.length ?? 0) * scales +
-    scales * 4 + // shared activity-badge + mood-emote + prop-status-badge + attention-puff atlas per scale
+    scales * 5 + // shared activity-badge + mood-emote + prop-status-badge + social-state-badge + attention-puff atlas per scale
     ICONS.length + // one tick per UI icon (its SVG + PNG ladder)
     CURSORS.length; // one tick per cursor (PNG ladder)
   let done = 0;
@@ -964,6 +1021,9 @@ export async function exportAll(
     await write(`prop-status-badges@${scale}x.png`, await png(propStatusBadgesDesc(style, scale)));
     await write(`prop-status-badges-atlas@${scale}x.json`, JSON.stringify(propStatusBadgesAtlas(style, scale), null, 2));
     tick('prop status badges');
+    await write(`social-state-badges@${scale}x.png`, await png(socialStateBadgesDesc(style, scale)));
+    await write(`social-state-badges-atlas@${scale}x.json`, JSON.stringify(socialStateBadgesAtlas(style, scale), null, 2));
+    tick('social state badges');
     await write(`attention-puffs@${scale}x.png`, await png(attentionPuffsDesc(style, scale)));
     await write(`attention-puffs-atlas@${scale}x.json`, JSON.stringify(attentionPuffsAtlas(style, scale), null, 2));
     tick('attention puffs');

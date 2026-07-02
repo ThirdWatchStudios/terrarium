@@ -376,8 +376,20 @@ looks identical over anyone, so it ships once, not per character.
   "meta": { "shared": true, "facingIndependent": true }
 }
 ```
-All four overhead atlases (`activity-badges`, `mood-emotes`, `prop-status-badges`,
-`attention-puffs`) now carry this `motion` block. `transient: true` marks the
+**Social-state badges** (`social-state-badges-atlas@Nx.json`, one **shared**
+project-level strip) — the third overhead sibling: an agent's SHORT-TERM social
+state (`anxious` / `slighted` / `confident` / `defensive` / `reassured`), the
+interpersonal weather left by recent encounters. Ids mirror the sim's
+`ShortTermSocialStateLabel`; same shape as the activity atlas (`states` +
+`frames` + `attach` at `aboveHead`, stacks with mood/activity). The bubble hue
+encodes **valence** (rose = negative, teal-blue = positive — the same semantic
+channels as the emotion-spike puff and the trust line); the glyph says which
+state. Unknown ids draw nothing. *Sim consumption is a new seam:* today these
+states are inspector-text-only — wiring the badge is game-side work
+(docs/icon-expansion-plan.md §3.D).
+
+All five overhead atlases (`activity-badges`, `mood-emotes`, `prop-status-badges`,
+`social-state-badges`, `attention-puffs`) carry this `motion` block. `transient: true` marks the
 event-flash family (attention puffs); the state families are `false`. `salienceTier`
 (higher wins) is the authored importance the sim uses for its salience budget, draw
 order, and base scale — for attention puffs the tiers encode the §7 hierarchy with

@@ -65,6 +65,15 @@ const GEAR_TEETH: ShapeSpec[] = [
 
 const HEART = 'M 0 26 C -30 4 -22 -22 0 -8 C 22 -22 30 4 0 26 Z';
 
+// Viewfinder corner brackets — the shared carrier for the capture-outcome
+// family (docs/icon-expansion-plan.md §3.A). The center mark says the outcome.
+const CAPTURE_BRACKETS: ShapeSpec[] = [
+  stroke('M -26 -14 L -26 -26 L -14 -26', 7),
+  stroke('M 14 -26 L 26 -26 L 26 -14', 7),
+  stroke('M 26 14 L 26 26 L 14 26', 7),
+  stroke('M -14 26 L -26 26 L -26 14', 7),
+];
+
 // QuotaCo mark — a centered-hexagonal dot lattice with a halftone radius falloff
 // (large core dots → fine rim dots). 37 dots; axial hex coords scaled to fit the
 // canvas. Desaturated cool slate, shipped literal so the chrome never tints it.
@@ -577,6 +586,80 @@ export const ICONS: IconDef[] = [
       stroke('M -40 22 L -40 40 L -22 40', 8),
       stroke('M 40 22 L 40 40 L 22 40', 8),
     ],
+  },
+
+  // --- Directive status + capture outcomes (docs/icon-expansion-plan.md §3.A) -
+  // Two carrier silhouettes so the families triage color-blind: directives ride
+  // a RING (the objective's scope), capture outcomes ride VIEWFINDER BRACKETS
+  // (the surveillance frame). Sim consumers: the IRIS objective banner and
+  // CaptureResultPresentation (E33), both stubbed awaiting these ids.
+  {
+    id: 'directive-in-progress',
+    label: 'Directive in progress',
+    mode: 'tintable',
+    // An open ring chased by an arrowhead — the objective in motion.
+    shapes: [stroke('M 0 -22 A 22 22 0 1 1 -22 0', 7), fill('M -22 -12 L -30 2 L -14 2 Z')],
+  },
+  {
+    id: 'directive-target-met',
+    label: 'Directive target met',
+    mode: 'tintable',
+    shapes: [stroke(circle(0, 0, 22), 7), stroke('M -10 0 L -3 8 L 12 -8', 7)],
+  },
+  {
+    id: 'directive-failed',
+    label: 'Directive failed',
+    mode: 'tintable',
+    shapes: [stroke(circle(0, 0, 22), 7), stroke('M -9 -9 L 9 9', 7), stroke('M 9 -9 L -9 9', 7)],
+  },
+  {
+    id: 'directive-deferred',
+    label: 'Directive deferred',
+    mode: 'tintable',
+    // Parked, not dead — pause bars inside the ring.
+    shapes: [stroke(circle(0, 0, 22), 7), fill(rr(-9, -9, 6, 18, 2)), fill(rr(3, -9, 6, 18, 2))],
+  },
+  {
+    id: 'directive-deadline',
+    label: 'Directive deadline',
+    mode: 'tintable',
+    // Hourglass — the one directive glyph with its own silhouette: time is the
+    // pressure, not a status inside the objective's scope.
+    shapes: [
+      stroke('M -16 -26 L 16 -26', 8),
+      stroke('M -16 26 L 16 26', 8),
+      stroke('M -12 -26 L -12 -18 Q -12 -6 0 0 Q -12 6 -12 18 L -12 26', 6),
+      stroke('M 12 -26 L 12 -18 Q 12 -6 0 0 Q 12 6 12 18 L 12 26', 6),
+      fill('M 0 6 L 7 17 L -7 17 Z'),
+    ],
+  },
+  {
+    id: 'capture-captured',
+    label: 'Capture: captured',
+    mode: 'tintable',
+    // The REC dot held inside the frame (echoes ui-capture's aperture dot).
+    shapes: [...CAPTURE_BRACKETS, fill(circle(0, 0, 11))],
+  },
+  {
+    id: 'capture-missed',
+    label: 'Capture: missed',
+    mode: 'tintable',
+    // Hollow where the dot should be — the reading escaped the frame.
+    shapes: [...CAPTURE_BRACKETS, stroke(circle(0, 0, 11), 7)],
+  },
+  {
+    id: 'capture-invalid',
+    label: 'Capture: invalid',
+    mode: 'tintable',
+    // No-op slash through the empty frame (echoes cursor-invalid).
+    shapes: [...CAPTURE_BRACKETS, stroke('M -12 12 L 12 -12', 8)],
+  },
+  {
+    id: 'capture-collateral',
+    label: 'Capture: collateral',
+    mode: 'tintable',
+    // Captured, but it splashed — the dot plus spatter flecks.
+    shapes: [...CAPTURE_BRACKETS, fill(circle(0, 0, 9)), fill(circle(15, -13, 5)), fill(circle(-14, 12, 4.5)), fill(circle(12, 15, 4))],
   },
 ];
 

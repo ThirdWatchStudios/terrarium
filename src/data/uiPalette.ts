@@ -110,11 +110,29 @@ export const UI_PALETTE = {
     idle: GREY,
     walk: TEAL,
     monitoring: SKY,
+    // Routine knocked off course — the warm rumor coral, not alert red: disrupted
+    // is off-nominal, not a fault (the prop-status family owns the fault red).
+    disrupted: CORAL,
     moodSuspicious: INDIGO,
     moodCurious: AZURE,
     moodDefensive: AMBER,
     moodHostile: RED,
     moodConfused: TEAL,
+  },
+  /**
+   * Short-term social-state bubble hues (docs/icon-expansion-plan.md §3.D). The
+   * bubble color encodes VALENCE (two hues), the glyph says which state — the
+   * same one-signal-first rule as the prop-status alert bubble. Negative states
+   * ride the emotion rose (the acute-affect register the emotion-spike puff
+   * already owns); positive states ride the trust teal-blue. Both echoes are
+   * deliberate: same semantic channel, different carrier (bubble vs puff/line).
+   */
+  socialState: {
+    anxious: ROSE,
+    slighted: ROSE,
+    defensive: ROSE,
+    confident: TEAL_BLUE,
+    reassured: TEAL_BLUE,
   },
   /**
    * Attention-puff hues (active-loop §7) — the transient event register the sim
@@ -178,6 +196,12 @@ export function themeColors(style: StyleSheet): Record<string, string> {
     'emote-idle': UI_PALETTE.emote.idle,
     'emote-walk': UI_PALETTE.emote.walk,
     'emote-monitoring': UI_PALETTE.emote.monitoring,
+    'emote-disrupted': UI_PALETTE.emote.disrupted,
+    'social-anxious': UI_PALETTE.socialState.anxious,
+    'social-slighted': UI_PALETTE.socialState.slighted,
+    'social-defensive': UI_PALETTE.socialState.defensive,
+    'social-confident': UI_PALETTE.socialState.confident,
+    'social-reassured': UI_PALETTE.socialState.reassured,
     'emote-mood-suspicious': UI_PALETTE.emote.moodSuspicious,
     'emote-mood-curious': UI_PALETTE.emote.moodCurious,
     'emote-mood-defensive': UI_PALETTE.emote.moodDefensive,

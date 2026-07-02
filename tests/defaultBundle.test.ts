@@ -52,6 +52,7 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     'conversation-style.json',
     'activity-badges-atlas@1x.json',
     'mood-emotes-atlas@1x.json',
+    'social-state-badges-atlas@1x.json', // short-term social-state atlas (docs/icon-expansion-plan.md §3.D)
     'attention-puffs-atlas@1x.json', // transient event-flash atlas (active-loop §7)
     'theme.uss', // shared UI palette — UI Toolkit (docs/ui-art-plan.md)
     'theme.json', // shared UI palette — uGUI / non-USS consumers
@@ -197,12 +198,23 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     const { json } = await exportPaths();
     const activity = JSON.parse(json.get('activity-badges-atlas@1x.json')!);
     const attention = JSON.parse(json.get('attention-puffs-atlas@1x.json')!);
+    const social = JSON.parse(json.get('social-state-badges-atlas@1x.json')!);
     // Ongoing state badges carry intent but are NOT transient (no flash); every
     // badged id has an intro/loop/outro + salience tier.
     expect(activity.motion.transient).toBe(false);
     for (const intent of Object.values<Record<string, unknown>>(activity.motion.byId)) {
       expect(intent.intro).toBeTruthy();
       expect(intent.salienceTier).toBeGreaterThan(0);
+    }
+    // The activity vocabulary covers the sim's disruption state (no more
+    // "disrupted — no badge yet" hole), and the social-state family mirrors
+    // the sim's ShortTermSocialStateLabel ids (docs/icon-expansion-plan.md §3.D).
+    expect(activity.activities).toContain('disrupted');
+    expect(social.motion.transient).toBe(false);
+    expect(social.states).toEqual(['anxious', 'slighted', 'confident', 'defensive', 'reassured']);
+    for (const state of social.states) {
+      expect(social.frames[state], `social-state atlas missing frame for ${state}`).toBeTruthy();
+      expect(social.motion.byId[state]?.salienceTier).toBeGreaterThan(0);
     }
     // Attention puffs are transient events, and harvestable sits at the top of the
     // salience hierarchy (§7) — the player's call-to-action.
@@ -257,6 +269,16 @@ describe('default bundle is a complete, sim-importable baseline', () => {
       'status-trend-flat',
       'ui-folder',
       'portrait-frame',
+      // Directive status + capture outcomes (docs/icon-expansion-plan.md §3.A).
+      'directive-in-progress',
+      'directive-target-met',
+      'directive-failed',
+      'directive-deferred',
+      'directive-deadline',
+      'capture-captured',
+      'capture-missed',
+      'capture-invalid',
+      'capture-collateral',
     ]) {
       expect(ids, `icon set missing ${id}`).toContain(id);
     }

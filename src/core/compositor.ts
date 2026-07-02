@@ -17,6 +17,7 @@ import { MOOD_EMOTES, MOOD_OVERLAYS } from '../parts/moods';
 import type { Activity } from '../parts/activities';
 import { ACTIVITY_BADGES } from '../parts/activities';
 import { PROP_STATUS_BADGES, type PropStatus } from '../parts/propStatus';
+import { SOCIAL_STATE_BADGES, type SocialState } from '../parts/socialStates';
 import { ATTENTION_PUFF_ART, type AttentionPuff, type AttentionPuffArt } from '../parts/attention';
 import { getIcon } from '../parts/icons';
 import { PROP_TEMPLATES } from '../props/templates';
@@ -380,6 +381,11 @@ export function composeMoodEmote(mood: Mood, pixelSize: number = CANVAS): string
 /** Shared-atlas cell for one prop tamper-status badge (floats above a tampered prop). */
 export function composePropStatusBadge(status: PropStatus, pixelSize: number = CANVAS): string {
   return composeOverheadEmote(PROP_STATUS_BADGES[status], pixelSize);
+}
+
+/** Shared-atlas cell for one short-term social-state badge (interpersonal weather). */
+export function composeSocialStateBadge(state: SocialState, pixelSize: number = CANVAS): string {
+  return composeOverheadEmote(SOCIAL_STATE_BADGES[state], pixelSize);
 }
 
 /**

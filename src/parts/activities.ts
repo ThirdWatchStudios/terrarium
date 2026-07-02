@@ -28,7 +28,8 @@ export type Activity =
   | 'lunch'
   | 'idle'
   | 'walk'
-  | 'monitoring';
+  | 'monitoring'
+  | 'disrupted';
 
 /** Canonical order. Also the set of cells emitted into the shared atlas. */
 export const ACTIVITIES: Activity[] = [
@@ -41,6 +42,7 @@ export const ACTIVITIES: Activity[] = [
   'idle',
   'walk',
   'monitoring',
+  'disrupted',
 ];
 
 export interface ActivityBadge {
@@ -135,5 +137,14 @@ export const ACTIVITY_BADGES: Record<Activity, ActivityBadge | null> = {
   monitoring: {
     color: UI_PALETTE.emote.monitoring,
     glyph: [gRing(-1, -1, 3), { d: 'M 1.2 1.2 L 4.4 4.4', stroke: GLYPH, strokeWidth: 2.2, silhouette: false }],
+  },
+
+  // Broken loop — "routine knocked off course" (badge-scale echo of the
+  // pressure-routine-interruption chrome glyph, so the vocabulary rhymes).
+  // Closes the sim's explicit "disrupted — no badge yet" hole
+  // (docs/icon-expansion-plan.md §3.D).
+  disrupted: {
+    color: UI_PALETTE.emote.disrupted,
+    glyph: [gStroke('M 1.2 -3.6 A 3.8 3.8 0 1 0 3.6 1.2'), gStroke('M 2.2 -2.4 L 4.6 -0.2')],
   },
 };
