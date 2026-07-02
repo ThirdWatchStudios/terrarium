@@ -147,6 +147,21 @@ export const UI_PALETTE = {
     information: TEAL_BLUE,
     harvestable: BEACON_AMBER,
   },
+  /**
+   * Reaction-emoji hues (the HUMAN register's glyph set — register-constitution.md
+   * Article V.3). Shipped literal: reactions are what people chose to say, so the
+   * chrome never tints them into its own voice. Face-yellow is deliberately warm
+   * and appears nowhere else in the chrome palette — a spot of floor temperature
+   * inside the cold log panel (Article VIII).
+   */
+  reaction: {
+    face: '#F2C94C',
+    faceInk: '#8A6D1F',
+    heart: RED,
+    fire: ORANGE,
+    party: PURPLE,
+    hand: '#F2C94C',
+  },
 } as const;
 
 /**

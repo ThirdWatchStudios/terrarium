@@ -3,6 +3,7 @@ import { circle, rr } from '../core/geometry';
 import { UI_PALETTE } from '../data/uiPalette';
 import { EMOTION_ICONS } from './emotions';
 import { STATE_ICONS } from './stateIcons';
+import { REACTION_ICONS } from './reactions';
 
 /**
  * UI icon set — flat geometric glyphs for the framing UI (docs/ui-art-plan.md).
@@ -683,6 +684,11 @@ export const ICONS: IconDef[] = [
   // SIGNALS strip, Thread and dossier surfaces. Tight-crop line icons; ids are
   // the cross-repo contract.
   ...STATE_ICONS,
+
+  // --- Reaction emoji, human register (reactions.ts) ---------------------------
+  // Literal `reaction-<id>` glyphs for the sim's Slack log — quoted speech, never
+  // tinted into the chrome's voice (register-constitution.md Article V.3).
+  ...REACTION_ICONS,
 ];
 
 // --- Cursors (PNG-only; literal so the ink fill + light halo render) ---------

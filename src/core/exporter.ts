@@ -41,6 +41,7 @@ import { maskName } from '../tiles/templates';
 import { themeUss, themeJson } from '../data/uiPalette';
 import { ICONS, CURSORS } from '../parts/icons';
 import { overlayStyleJson } from './overlayStyle';
+import { symbolRegistryJson } from './registry';
 
 /** Sheet frame order. West is baked as mirrored east for engine convenience. */
 const SHEET_FACINGS = ['south', 'east', 'north', 'west'] as const;
@@ -1129,6 +1130,11 @@ export async function exportAll(
   // draw relationship arcs / pressure halos / info packets / belief tints from sim
   // state. Tool owns the look (colors → theme --wc-*); Shapes owns the drawing.
   await write('overlay-style.json', JSON.stringify(overlayStyleJson(), null, 2));
+
+  // Symbol registry — every symbol id above resolved to its register (truth /
+  // human / iris) + provenance + mirrors (register-constitution.md Article I:
+  // no unregistered speech; CONTRACT.md §3.15). Derived, never hand-edited.
+  await write('symbol-registry.json', JSON.stringify(symbolRegistryJson(), null, 2));
 
   // Shared UI theme — the single palette the framing UI resolves so chrome and
   // world agree without sharing a pipeline (docs/ui-art-plan.md). theme.uss for

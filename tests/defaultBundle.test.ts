@@ -62,6 +62,7 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     'theme.uss', // shared UI palette — UI Toolkit (docs/ui-art-plan.md)
     'theme.json', // shared UI palette — uGUI / non-USS consumers
     'overlay-style.json', // floor-overlay look spec for the Shapes layer (Epic 36)
+    'symbol-registry.json', // every symbol id → register/provenance/mirrors (register-constitution.md §3.15)
   ];
 
   // Per-entity systems — at least one folder of each must exist.

@@ -114,6 +114,10 @@ export function migrateProject(raw: unknown): ProjectState | null {
   // each mood, §5.8). Purely additive — a pre-v15 profile simply has no map and the
   // sim applies no mood modulation; nothing to backfill, just the version bump below.
 
+  // v15 → v16: the exported symbol registry + reaction icon family
+  // (register-constitution.md). Derived at export time from code-owned
+  // vocabularies — no project data changed; just the version bump below.
+
   project.version = CURRENT_SCHEMA_VERSION;
   return project as ProjectState;
 }

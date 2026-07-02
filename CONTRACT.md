@@ -64,6 +64,7 @@ Coordinate convention: scene grids are row-major `[y][x]`; anchors/spawns carry 
 | `activity-badges@Nx.png` + `activity-badges-atlas@Nx.json` | `activityBadgesAtlas` | project | One **shared** strip of overhead status badges (character-independent). Sim blits one above an agent keyed off the routine `activity` string (§3.9). |
 | `conversation-style.json` | `conversationStyleJson` | project | Style for the linked-bubble conversation visual; sim draws it between two paired talking agents (§3.9). |
 | `overlay-style.json` | `overlayStyleJson` | project | **Floor-overlay look spec** (Epic 36) — the per-channel form/weight/dash/motion **plus the static-richness grammar** (`glow` bloom, directional `flow`, per-agent `endpoints`, emotion-keyed `jitter`) and a cross-channel `focus` model the **Shapes** floor layer reads to draw relationship arcs, pressure halos, info packets, and belief tints from sim state. Discipline preserved: state lines pop via static richness (glow/gradient/endpoints), animation stays reserved for events (`rules.motionEncodesEvents`). Tool owns the look; Shapes owns the drawing. Colors reference theme `--wc-*` (§3.13). |
+| `symbol-registry.json` | `symbolRegistryJson` | project | The **symbol registry** — every symbol id in the bundle (floor badges/glyphs/puffs, overlay channels, chrome icons, reactions, cursors) resolved to its **register** (`truth` / `human` / `iris`), `kind` (`signal` / `chrome`), IRIS `provenance` (`measured` / `inferred` / `asserted`), and `mirrors` cross-links between truth↔IRIS siblings (§3.15). Derived from the code-owned vocabularies; the design law is `docs/register-constitution.md`. |
 | `theme.uss` + `theme.json` | `themeUss` / `themeJson` | project | The **shared UI palette** as UI Toolkit `:root` custom properties (`--wc-*`) and a framework-neutral map. The single color source the framing UI AND the Shapes floor layer resolve so chrome and world agree without sharing a pipeline (§3.13). `--wc-line` carries the project's actual `style.outline.color`. |
 | `icons/<id>.svg` + `icons/<id>@Nx.png` + `icons/icons-manifest.json` | `composeIcon` / `iconsManifest` | project | **UI icon set** — framing-UI glyphs. Each icon ships a resolution-independent SVG (UI Toolkit `VectorImage`) **and** a PNG ladder (uGUI `Sprite`). `tintable` icons are white masks the framework recolors from `theme.uss`; `literal` icons ship final colors (§3.13). |
 | `office-layout.json` | `sceneToLayoutJson` | scene | Rooms, floors, walls, props, spawns, anchors, interaction anchors (§3.4). |
@@ -535,6 +536,29 @@ The shared set of **observable office actions** an agent can take to express inn
 ]
 ```
 `pressureWeights` / `traitModifiers` keys, `requiredContext` / `requiredAffordances`, and `outcomes` are **free-text-with-fallback** (the tool ships curated suggestion vocabularies, but the sim's pressure/context/affordance/outcome model is authoritative — unknown tokens fall back + log, §7). `traitModifiers` keys SHOULD resolve to the trait catalog (§3.6) and `relationshipTypeAnyOf` to the relationship-type catalog (§3.7) — the tool warns on a dangling id but never blocks. The catalog is exported **verbatim**; behaviors are not referenced by id from personas (the sim selects them at runtime), so there are no back-references. Shipped at the bundle root and in each scenario package. The default project ships ~28 behaviors across all five categories so a plain export gives the sim a complete behavior vocabulary to test against.
+
+### 3.15 `symbol-registry.json` (register resolution for every symbol id) — project-level
+The register constitution (`docs/register-constitution.md`) made data: every symbol id shipped anywhere in the bundle, resolved to **who is speaking**. The tool authors the assignments (they are per-id design decisions, versioned in [src/core/registry.ts](src/core/registry.ts)); the sim **reads** them — it selects symbols at runtime as before, but may not move an id across registers, and its UI can resolve register/provenance without duplicating these decisions.
+```jsonc
+{ "kind": "symbol-registry",
+  "schema": "register-constitution.md",
+  "registers": {                                   // the three narrators + how each fails (Article I/II)
+    "truth": { "speaks": "what bodies leak",             "fails": "ambiguity" },
+    "human": { "speaks": "what people choose to say",    "fails": "spin" },
+    "iris":  { "speaks": "what the corporation claims",  "fails": "systematic-error" } },
+  "rules": { "noUnregisteredSpeech": true,         // every exported id appears below (CI-enforced tool-side)
+             "provenanceRequiredFor": "iris signals",
+             "registersMayDisagree": true },       // the UI must never resolve a disagreement for the player
+  "symbols": [
+    { "id": "embarrassment", "family": "emotion-glyph", "carrier": "emotion-glyphs-atlas",
+      "register": "truth", "kind": "signal" },
+    { "id": "state-emotion-embarrassment", "family": "state-icon", "carrier": "icons-manifest",
+      "register": "iris", "kind": "signal", "provenance": "inferred",
+      "mirrors": "emotion-glyph/embarrassment" },  // the sanctioned lane for staged truth↔IRIS disagreement
+    { "id": "reaction-eyes", "family": "reaction", "carrier": "icons-manifest",
+      "register": "human", "kind": "signal" } ] }
+```
+Key semantics: **`kind`** — `signal` narrates the office's live state; `chrome` is workstation furniture (buttons, window controls, app marks) and never carries provenance. **`provenance`** (IRIS signals only, Article IV.4) — `measured` (IRIS's own bookkeeping: directives, readings, metrics, detected events), `inferred` (claims about inner/social states: emotions, needs, pressures, relationships, `harvestable`), `asserted` (reserved; no shipped id uses it yet). **`mirrors`** — the same vocabulary word in another carrier/register as `"<family>/<id>"`; when the sim wants IRIS to be *wrong*, it shows one sibling on the floor and the other in the chrome, and the link is how it knows it is lying. Notable assignment: the attention-puff family **splits** — `attn-emotion-spike`/`attn-conflict`/`attn-information` are truth (the floor leaking "this just changed"), `attn-harvestable` is IRIS/`inferred` (a corporate valuation; no body leaks "harvestable"). The `reaction-*` icons are the human register's full current membership (quoted Slack speech, always `literal` — the chrome never tints another narrator's voice).
 
 ---
 

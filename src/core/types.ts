@@ -299,8 +299,12 @@ export interface ProjectState {
  * v15 added the optional per-character `presenceMoods` map (how a body physically
  * expresses each mood — sparse deltas over the baseline presence, §5.8); additive,
  * absent ⇒ no mood-specific modulation, so the step only bumps the version.
+ * v16 added the exported `symbol-registry.json` (every symbol id → register /
+ * provenance / mirrors, register-constitution.md) and the human-register
+ * `reaction-*` icon family. Derived at export from code-owned vocabularies —
+ * nothing is stored in the project, so the step only bumps the version.
  */
-export const CURRENT_SCHEMA_VERSION = 15;
+export const CURRENT_SCHEMA_VERSION = 16;
 
 /** Design-space canvas size. Parts are authored against this; never changes. */
 export const CANVAS = 128;
