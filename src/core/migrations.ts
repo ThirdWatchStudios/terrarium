@@ -122,6 +122,10 @@ export function migrateProject(raw: unknown): ProjectState | null {
   // A pose is a sim-selected state, never stored in the recipe — no project
   // data changed; just the version bump below.
 
+  // v17 → v18: renderings (unit sheets + portraits + renderings.unit palettes).
+  // Derived from the identity at export — no project data changed; version
+  // bump only.
+
   project.version = CURRENT_SCHEMA_VERSION;
   return project as ProjectState;
 }

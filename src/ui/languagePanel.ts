@@ -1,4 +1,5 @@
 import { composeAttentionPuff, composeCharacter, composeEmotionGlyph } from '../core/compositor';
+import { unitRecipe } from '../core/renderings';
 import type { AttentionPuff } from '../parts/attention';
 import type { Pose } from '../parts/poses';
 import type { PreviewScene, SceneActor, StageMark } from '../data/previewScenes';
@@ -37,10 +38,12 @@ interface Playback {
   truth: boolean;
   iris: boolean;
   capsules: boolean;
+  /** Operational-unit rendering (Article VIII): IRIS pigment, human conduct. */
+  unit: boolean;
 }
 
 /** Module-level so toggles/playhead survive store-driven re-renders. */
-const pb: Playback = { t: 0, playing: false, raf: 0, lastTick: 0, hud: true, truth: true, iris: true, capsules: false };
+const pb: Playback = { t: 0, playing: false, raf: 0, lastTick: 0, hud: true, truth: true, iris: true, capsules: false, unit: true };
 
 const scene: PreviewScene = REPRIMAND_SCENE;
 
@@ -83,9 +86,12 @@ const spriteCache = new Map<string, string>();
 
 function agentSprite(actor: SceneActor, state: ActorState): string {
   const characters = store.state.characters;
-  const recipe = actor === 'M' ? characters[0] : characters[1] ?? characters[0];
+  const identity = actor === 'M' ? characters[0] : characters[1] ?? characters[0];
+  // The floor shows IRIS's rendering of the identity, not the identity itself
+  // (Article VIII) — pigment changes, conduct doesn't.
+  const recipe = pb.unit ? unitRecipe(identity) : identity;
   const pose = pb.capsules ? undefined : state.pose;
-  const key = `${recipe.id}|${pose ?? 'capsule'}|${state.facing}`;
+  const key = `${identity.id}|${pb.unit ? 'unit' : 'warm'}|${pose ?? 'capsule'}|${state.facing}`;
   let uri = spriteCache.get(key);
   if (!uri) {
     const svg = composeCharacter(recipe, store.state.style, state.facing, AGENT_PX, 'normal', { badge: false, pose });
@@ -303,12 +309,11 @@ export function renderLanguagePreview(container: HTMLElement): void {
 export function renderLanguageControls(container: HTMLElement): void {
   clear(container);
 
-  const toggle = (label: string, key: 'hud' | 'truth' | 'iris' | 'capsules', hint: string) => {
+  const toggle = (label: string, key: 'hud' | 'truth' | 'iris' | 'capsules' | 'unit', hint: string) => {
     const input = el('input', {
       type: 'checkbox',
       onChange: (e: Event) => {
         pb[key] = (e.target as HTMLInputElement).checked;
-        if (key === 'capsules') spriteCache.clear();
         updateStage();
       },
     }) as HTMLInputElement;
@@ -358,6 +363,7 @@ export function renderLanguageControls(container: HTMLElement): void {
     toggle('Truth register', 'truth', '— what the body earns (emotion glyphs).'),
     toggle('IRIS register', 'iris', '— what the corporation claims (arcs, halos, readings). Watch it disagree.'),
     toggle('Capsules only (Build A)', 'capsules', '— strip the pose layer: the armless-capsule control.'),
+    toggle('Unit rendering (IRIS floor)', 'unit', '— IRIS pigment, human conduct. Off = warm identity (pre-amendment view).'),
     el('h3', {}, 'Beat script'),
     ...beatRows,
     el(

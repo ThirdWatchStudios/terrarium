@@ -2,8 +2,9 @@
 
 **A constitutional document — who is allowed to speak, and how each voice is allowed to be wrong.**
 
-Status: **ratified 2026-07-02** (all articles, including Article I's unregistered-speech rule and
-Article VIII's temperature decision, confirmed as drafted). Peer to
+Status: **ratified 2026-07-02**; **Article VIII amended same day** (renderings law — "every
+register redraws the person; none may rewrite their behavior" — supersedes the original
+temperature-is-register formulation; warmth is proximity, not truth). Peer to
 `performance-direction-contract.md` — that document governs how the body *performs* truth; this
 one governs the three languages that *narrate* it. Cross-repo: Terrarium authors the vocabulary
 of each register; The Water Cooler selects and speaks at runtime.
@@ -51,7 +52,9 @@ see Article IV.)
 | **Voice** | involuntary — bodies leak | performed — self-report to an audience | confident, clinical, sincere |
 | **Carriers** | poses, beats, staging, emotion glyphs, activity badges, floor bubbles | Slack messages, reactions/emoji | overlays, `state-*` chrome, readings, alerts, dossier claims |
 | **How it fails** | **ambiguity** — a slump reads as fatigue or defeat | **spin** — people lie, minimize, save face | **systematic error** — misreads, misattributes, over-labels |
-| **Temperature** | warm | warm | cold |
+
+(Temperature was originally a register property; the 2026-07-02 amendment moved it to
+**renderings** — see Article VIII. Warmth is proximity, not truth.)
 
 Every visual element in the game declares its register. **There is no unregistered speech.** An
 element that cannot say who is speaking does not ship.
@@ -165,17 +168,42 @@ Two consequences with teeth:
 
 ---
 
-## Article VIII — Temperature is register
+## Article VIII — Renderings (amended 2026-07-02; supersedes "Temperature is register")
 
-The warm-floor / cold-chrome split and the register split are **the same split**:
+> **Every register redraws the person. None may rewrite their behavior.**
 
-- **Warm = truth + human.** Bodies, floor bubbles, Slack voice.
-- **Cold = IRIS.** Chrome, overlays, readings.
+There is no canonical image of an employee. There are only **renderings**, each with an author:
 
-Overlays are the cold layer *projected onto* the warm world; toggling them off must reveal
-warmth. **Quiet is not cold:** the environment recedes so the people read — it does not adopt
-IRIS's palette. Warmth creeping into chrome or cold creeping into the floor is a constitutional
-change, not an art revision.
+| Rendering | Surface | Author | Character |
+|---|---|---|---|
+| **Operational unit** | the floor | IRIS | cold, near-anonymous, institutional — and it *moves like a person* |
+| **Corporate identity** | badge photo — inspector, dossier, directory | the corporation | warm, curated, official; the forced smile |
+| **Human presence** | Slack avatar, profile | the person | warm, self-authored — the dog photo, the selfie, the default grey silhouette. The *choice* is characterization. |
+| **Reality** | — | no one | **never rendered.** The player never gets omniscience; only representations. |
+
+**Warmth is proximity, not truth.** A badge photo is warm and curated; the floor is cold and
+often the most honest surface in the game. Truth and warmth are orthogonal:
+
+| | Warm | Cold |
+|---|---|---|
+| **Truthful** | body language (conduct) | floor movement |
+| **Misleading** | Slack spin | IRIS interpretation |
+
+Laws:
+
+1. **The simulation is the sole owner of behavior.** A rendering styles the person; conduct —
+   pose, beat, approach, hesitation, exit — passes through every rendering **undistorted**
+   (performance contract, Article II). IRIS may draw you as a unit; it cannot make you move
+   like one.
+2. **Renderings are never visually unified.** No surface shows another surface's drawing — no
+   face on the floor, no floor-unit thumbnail in Slack. The player reconciles the renderings
+   into one human being, and that act of reconciliation is the game's central perception; any
+   feature that performs it for the player has stolen it. (Id-level linkage — selection,
+   cross-highlighting — is mechanics, and stays.)
+3. **Quiet is not cold** (retained): the environment recedes so the people read — clinical
+   architecture, not IRIS's claim palette on the walls.
+4. **A rendering's temperature belongs to its author.** A slick cinematic floor or a cold
+   institutional Slack is a constitutional change, not an art revision.
 
 ---
 
@@ -211,6 +239,10 @@ Concrete sins. If you are doing one of these, stop — you are across a boundary
 - **A symbol ships without a register.** Unregistered speech (Article I).
 - **The UI tells the player which register is right.** Triangulation done for them —
   interpretation dies, and with it the game.
+- **A surface shows another rendering's drawing.** The badge photo on the floor, the unit in
+  Slack — the reconciliation moment stolen (Article VIII.2).
+- **Reality is rendered.** Any "true view" of an employee ships — omniscience granted, the
+  representations collapse, Article VII's destination deleted.
 
 ---
 
@@ -223,6 +255,13 @@ The player's progression is not gaining more information. It is **shedding inter
 
 Early game: IRIS tells you what happened.
 Late game: you tell IRIS what happened.
+
+And the renderings (Article VIII) give that progression its emotional shape: the player does not
+become more powerful because the dashboards get bigger — they become more **perceptive**, because
+each new representation lets them reconcile another piece of the same human being. The first time
+a dossier's badge photo puts a face on the muted unit they've watched for two hours, nothing
+changes mechanically. The player changes. Most management games start with people and reduce them
+to systems; this game starts with systems and gradually reveals the people hiding inside them.
 
 The software dehumanizes. The simulation rehumanizes. Everything in between is the player,
 learning to see people.

@@ -94,12 +94,23 @@ describe('default bundle is a complete, sim-importable baseline', () => {
   });
 
   it('ships an authored persona profile and a self-contained scenario package', async () => {
-    const { paths } = await exportPaths();
+    const { paths, json } = await exportPaths();
     expect([...paths].some((p) => /^characters\/.+\/profile\.json$/.test(p)), 'no character profile.json').toBe(true);
     expect(
       [...paths].some((p) => /^characters\/.+\/poses-atlas@1x\.json$/.test(p)),
       'no character poses atlas (§3.16)',
     ).toBe(true);
+    expect(
+      [...paths].some((p) => /^characters\/.+\/unit-atlas@1x\.json$/.test(p)),
+      'no operational-unit atlas (§3.17)',
+    ).toBe(true);
+    expect(
+      [...paths].some((p) => /^characters\/.+\/portrait@1x\.png$/.test(p)),
+      'no corporate-identity portrait (§3.17)',
+    ).toBe(true);
+    const recipePath = [...paths].find((p) => /^characters\/.+\/recipe\.json$/.test(p));
+    const recipe = JSON.parse(json.get(recipePath!)!);
+    expect(recipe.renderings?.unit?.palette?.skin, 'recipe.json missing renderings.unit palette (§3.17)').toBeTruthy();
     expect([...paths].some((p) => /^scenarios\/.+\/scenario\.json$/.test(p)), 'no scenario.json').toBe(true);
     // The scenario package must carry the catalogs so a bundle is self-contained.
     expect([...paths].some((p) => /^scenarios\/.+\/relationshipTypes\.json$/.test(p)), 'scenario package missing relationshipTypes.json').toBe(true);

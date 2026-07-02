@@ -16,6 +16,7 @@ import {
   composePropStatusBadge,
   composeSocialStateBadge,
   composeWallTile,
+  composePortrait,
   layerCellSvg,
   overheadAnchor,
   poseRigAnchors,
@@ -44,6 +45,7 @@ import { ICONS, CURSORS } from '../parts/icons';
 import { overlayStyleJson } from './overlayStyle';
 import { symbolRegistryJson } from './registry';
 import { POSES, poseCatalogJson } from '../parts/poses';
+import { unitPalette, unitRecipe } from './renderings';
 
 /** Sheet frame order. West is baked as mirrored east for engine convenience. */
 const SHEET_FACINGS = ['south', 'east', 'north', 'west'] as const;
@@ -742,6 +744,10 @@ export function characterLayerManifest(recipe: CharacterRecipe, style: StyleShee
     tokens: [...PALETTE_TOKENS],
     moods: [...MOODS],
     palette: recipe.palette,
+    // Alternate rendering palettes (Article VIII): multiply the same tintable
+    // masks by `renderings.unit` and the runtime compositor draws the
+    // operational unit — same geometry, same poses, IRIS pigment.
+    renderings: { unit: unitPalette(recipe.palette) },
     pivot: { x: 0.5, y: 0.09 },
     // Composite order: stack ascending z (ties broken by order). Multiply each
     // layer by palette[tint] (skip when tint is null). Show base layers (mood
@@ -831,6 +837,35 @@ export function posesAtlas(recipe: CharacterRecipe, style: StyleSheet, scale: nu
       // A pose is a sim-selected held state (register: truth) — never in the recipe.
       register: 'truth',
     },
+  };
+}
+
+/**
+ * Operational-unit sheet: the same 4 facings as the base sheet, re-dressed by
+ * IRIS (register-constitution.md Article VIII — the floor rendering). A pure
+ * palette swap over the identity: geometry, anchors and poses are untouched
+ * by construction (renderings.ts).
+ */
+function unitSheetDesc(recipe: CharacterRecipe, style: StyleSheet, scale: number): SheetDesc {
+  return characterSheetDesc(unitRecipe(recipe), style, scale);
+}
+
+export function unitAtlas(recipe: CharacterRecipe, style: StyleSheet, scale: number) {
+  const atlas = characterAtlas(recipe, style, scale);
+  return {
+    ...atlas,
+    meta: { ...atlas.meta, rendering: 'operational-unit', author: 'iris', warm: 'portrait@Nx.png' },
+  };
+}
+
+/** Corporate-identity bust (the badge photo) — one frame per scale. */
+function portraitDesc(recipe: CharacterRecipe, style: StyleSheet, scale: number): SheetDesc {
+  const size = style.render.baseSize * scale;
+  return {
+    width: size,
+    height: size,
+    pixelScale: renderScale(style),
+    cells: [{ svg: composePortrait(recipe, style, size), dx: 0, dy: 0, dw: size, dh: size }],
   };
 }
 
@@ -1069,7 +1104,7 @@ export async function exportAll(
   // Total PNG renders (the slow part): per character sheet + moods + layers,
   // plus one per prop/wall/floor — each across every scale.
   const total =
-    project.characters.length * scales * 4 +
+    project.characters.length * scales * 6 +
     project.props.length * scales +
     (project.walls?.length ?? 0) * scales +
     (project.floors?.length ?? 0) * scales +
@@ -1099,8 +1134,19 @@ export async function exportAll(
       await write(`${dir}/poses@${scale}x.png`, await png(poseSheetDesc(recipe, style, scale)));
       await write(`${dir}/poses-atlas@${scale}x.json`, JSON.stringify(posesAtlas(recipe, style, scale), null, 2));
       tick(`${recipe.name} poses`);
+      await write(`${dir}/unit@${scale}x.png`, await png(unitSheetDesc(recipe, style, scale)));
+      await write(`${dir}/unit-atlas@${scale}x.json`, JSON.stringify(unitAtlas(recipe, style, scale), null, 2));
+      tick(`${recipe.name} unit`);
+      await write(`${dir}/portrait@${scale}x.png`, await png(portraitDesc(recipe, style, scale)));
+      tick(`${recipe.name} portrait`);
     }
-    await write(`${dir}/recipe.json`, JSON.stringify(recipe, null, 2));
+    // The recipe is the IDENTITY; renderings are how each author draws it
+    // (Article VIII). `renderings.unit` ships the derived palette so a runtime
+    // compositor can re-dress the layer atlas without re-deriving the ramp.
+    await write(
+      `${dir}/recipe.json`,
+      JSON.stringify({ ...recipe, renderings: { unit: { palette: unitPalette(recipe.palette) } } }, null, 2),
+    );
     // The full-game persona (sim-consumer form: derived fields resolved to plain
     // numbers). Keyed by agentId == recipe id; emitted only when authored.
     const profile = project.profiles?.find((p) => p.agentId === recipe.id);

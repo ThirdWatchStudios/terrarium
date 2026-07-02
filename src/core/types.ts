@@ -318,8 +318,13 @@ export interface ProjectState {
  * couplings; the beat-schedule contract's tool half), and the shoulderLeft /
  * shoulderRight / hip rig anchors. A pose is a sim-selected state — never in
  * the recipe — so nothing is stored in the project; version bump only.
+ * v18 added renderings (register-constitution.md Article VIII as amended):
+ * per-character `unit@Nx.png` + `unit-atlas@Nx.json` (operational-unit floor
+ * rendering), `portrait@Nx.png` (corporate-identity badge photo), and a
+ * derived `renderings.unit` palette in exported recipe.json + layer manifests.
+ * All derived from the identity at export; version bump only.
  */
-export const CURRENT_SCHEMA_VERSION = 17;
+export const CURRENT_SCHEMA_VERSION = 18;
 
 /** Design-space canvas size. Parts are authored against this; never changes. */
 export const CANVAS = 128;

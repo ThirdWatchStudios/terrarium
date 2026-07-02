@@ -403,6 +403,26 @@ export function composeCharacter(
  * arc to the same point the badges sit at.
  */
 /**
+ * Corporate-identity rendering (register-constitution.md Article VIII): the
+ * badge photo. Head-and-shoulders bust crop, full warm recipe palette, studio
+ * paper behind — curated, official, the forced smile. Warmth here is
+ * PROXIMITY, not truth: this is the corporation's drawing of the person, and
+ * the UI frames it (see the `portrait-frame` icon); the photo ships bare.
+ */
+export function composePortrait(recipe: CharacterRecipe, style: StyleSheet, pixelSize: number = CANVAS): string {
+  const placed = placeParts(recipe, 'south', 'normal');
+  const inner = renderPlaced(placed, 'south', style, makeCharacterResolver(recipe));
+  // Bust crop: head (center y 44, r ~21 + hair) and shoulders (body top y 58).
+  const crop = { x: 24, y: 2, w: 80, h: 80 };
+  return (
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${crop.x} ${crop.y} ${crop.w} ${crop.h}" ` +
+    `width="${pixelSize}" height="${pixelSize}">` +
+    `<rect x="${crop.x}" y="${crop.y}" width="${crop.w}" height="${crop.h}" fill="#D9D4C9"/>` +
+    `${inner}</svg>`
+  );
+}
+
+/**
  * The pose rig's attach points (shoulders + hip) per facing, canvas coords —
  * exported in the poses atlas so a runtime compositor (or a future 3D backend)
  * can bind arm layers to the same skeleton the tool authored against. West is
