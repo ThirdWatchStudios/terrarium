@@ -118,6 +118,10 @@ export function migrateProject(raw: unknown): ProjectState | null {
   // (register-constitution.md). Derived at export time from code-owned
   // vocabularies — no project data changed; just the version bump below.
 
+  // v16 → v17: the pose layer (pose sheets + pose-catalog.json + rig anchors).
+  // A pose is a sim-selected state, never stored in the recipe — no project
+  // data changed; just the version bump below.
+
   project.version = CURRENT_SCHEMA_VERSION;
   return project as ProjectState;
 }

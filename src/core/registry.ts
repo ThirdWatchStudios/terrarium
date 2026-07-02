@@ -7,6 +7,7 @@ import { PROP_STATUSES } from '../parts/propStatus';
 import { EMOTION_DEFS } from '../parts/emotions';
 import { ATTENTION_PUFFS, type AttentionPuff } from '../parts/attention';
 import { ICONS, CURSORS } from '../parts/icons';
+import { POSE_DEFS, POSES } from '../parts/poses';
 
 /**
  * The symbol registry — register-constitution.md Article I made mechanical.
@@ -207,6 +208,19 @@ export function buildSymbolRegistry(): SymbolEntry[] {
       register: PUFF_REGISTER[puff].register,
       kind: 'signal',
       ...(PUFF_REGISTER[puff].provenance ? { provenance: PUFF_REGISTER[puff].provenance } : {}),
+    });
+  }
+
+  // Poses — the body's own held states (the Social Theater vocabulary,
+  // CONTRACT §3.16). Nothing is more truth-register than the posture itself.
+  for (const pose of POSES) {
+    entries.push({
+      id: pose,
+      label: POSE_DEFS[pose].label,
+      family: 'pose',
+      carrier: 'poses-atlas',
+      register: 'truth',
+      kind: 'signal',
     });
   }
 

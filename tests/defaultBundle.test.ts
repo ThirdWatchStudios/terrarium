@@ -63,6 +63,7 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     'theme.json', // shared UI palette — uGUI / non-USS consumers
     'overlay-style.json', // floor-overlay look spec for the Shapes layer (Epic 36)
     'symbol-registry.json', // every symbol id → register/provenance/mirrors (register-constitution.md §3.15)
+    'pose-catalog.json', // pose vocabulary + presence couplings — the beat-schedule contract's tool half (§3.16)
   ];
 
   // Per-entity systems — at least one folder of each must exist.
@@ -95,6 +96,10 @@ describe('default bundle is a complete, sim-importable baseline', () => {
   it('ships an authored persona profile and a self-contained scenario package', async () => {
     const { paths } = await exportPaths();
     expect([...paths].some((p) => /^characters\/.+\/profile\.json$/.test(p)), 'no character profile.json').toBe(true);
+    expect(
+      [...paths].some((p) => /^characters\/.+\/poses-atlas@1x\.json$/.test(p)),
+      'no character poses atlas (§3.16)',
+    ).toBe(true);
     expect([...paths].some((p) => /^scenarios\/.+\/scenario\.json$/.test(p)), 'no scenario.json').toBe(true);
     // The scenario package must carry the catalogs so a bundle is self-contained.
     expect([...paths].some((p) => /^scenarios\/.+\/relationshipTypes\.json$/.test(p)), 'scenario package missing relationshipTypes.json').toBe(true);

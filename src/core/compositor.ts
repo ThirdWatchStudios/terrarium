@@ -21,6 +21,7 @@ import { SOCIAL_STATE_BADGES, type SocialState } from '../parts/socialStates';
 import { getEmotion, type EmotionMark } from '../parts/emotions';
 import { ATTENTION_PUFF_ART, type AttentionPuff, type AttentionPuffArt } from '../parts/attention';
 import { getIcon } from '../parts/icons';
+import { getPose, type Pose, type PoseTransforms } from '../parts/poses';
 import { PROP_TEMPLATES } from '../props/templates';
 import { FLOOR_TEMPLATES, WALL_TEMPLATES } from '../tiles/templates';
 
@@ -36,6 +37,9 @@ const ANCHORS: Record<Facing, Record<AnchorName, { x: number; y: number }>> = {
     aboveHead: { x: 64, y: 12 },
     chest: { x: 64, y: 80 },
     handRight: { x: 89, y: 99 },
+    shoulderLeft: { x: 38, y: 66 },
+    shoulderRight: { x: 90, y: 66 },
+    hip: { x: 64, y: 100 },
   },
   east: {
     body: { x: 64, y: 87 },
@@ -44,6 +48,9 @@ const ANCHORS: Record<Facing, Record<AnchorName, { x: number; y: number }>> = {
     aboveHead: { x: 67, y: 12 },
     chest: { x: 64, y: 80 },
     handRight: { x: 80, y: 99 },
+    shoulderLeft: { x: 60, y: 66 },
+    shoulderRight: { x: 69, y: 66 },
+    hip: { x: 64, y: 100 },
   },
   north: {
     body: { x: 64, y: 87 },
@@ -52,6 +59,9 @@ const ANCHORS: Record<Facing, Record<AnchorName, { x: number; y: number }>> = {
     aboveHead: { x: 64, y: 12 },
     chest: { x: 64, y: 80 },
     handRight: { x: 89, y: 99 },
+    shoulderLeft: { x: 38, y: 66 },
+    shoulderRight: { x: 90, y: 66 },
+    hip: { x: 64, y: 100 },
   },
 };
 
@@ -115,7 +125,12 @@ interface PlacedPart {
 /** Mood overlays paint over the head (z 40) but under hair (z 50). */
 const MOOD_Z = 45;
 
-function placeParts(recipe: CharacterRecipe, facing: Facing, mood: Mood): PlacedPart[] {
+/** Pose arm layers: front arms over body+outfit but under the head (z 40)… */
+const POSE_FRONT_Z = 30;
+/** …and the far arm (east profile) behind the body capsule (z 10). */
+const POSE_BACK_Z = 6;
+
+function placeParts(recipe: CharacterRecipe, facing: Facing, mood: Mood, pose?: Pose): PlacedPart[] {
   const ids = [
     recipe.parts.body,
     recipe.parts.outfit,
@@ -160,17 +175,51 @@ function placeParts(recipe: CharacterRecipe, facing: Facing, mood: Mood): Placed
       group: 'head',
     });
   }
+
+  // Pose arm layers (parts/poses.ts) — body-local like the outfit overlays, so
+  // they ride the bodyWidth group transform and stay attached to the capsule.
+  const poseVariant = pose ? getPose(pose)?.facings[facing] : undefined;
+  if (poseVariant) {
+    if (poseVariant.back && poseVariant.back.length > 0) {
+      placed.push({
+        variant: { shapes: poseVariant.back, z: POSE_BACK_Z },
+        anchor: ANCHORS[facing].body,
+        group: 'body',
+      });
+    }
+    placed.push({
+      variant: { shapes: poseVariant.front, z: POSE_FRONT_Z },
+      anchor: ANCHORS[facing].body,
+      group: 'body',
+    });
+  }
   return placed.sort((a, b) => a.variant.z - b.variant.z);
 }
 
-function groupTransform(group: 'body' | 'head', facing: Facing, style: StyleSheet): string {
+function groupTransform(
+  group: 'body' | 'head',
+  facing: Facing,
+  style: StyleSheet,
+  pose?: PoseTransforms,
+): string {
   if (group === 'head') {
     const neck = ANCHORS[facing].neck;
     const s = style.proportions.headScale;
-    return `translate(${neck.x} ${neck.y}) scale(${s}) translate(${-neck.x} ${-neck.y})`;
+    // Pose posture (parts/poses.ts): drop toward the chest, tilt around the
+    // neck. Group transforms, not art — the lerpable half of a pose.
+    const drop = pose?.headDropY ? `translate(0 ${pose.headDropY}) ` : '';
+    const tilt = pose?.headTiltDeg ? ` rotate(${pose.headTiltDeg})` : '';
+    return `${drop}translate(${neck.x} ${neck.y})${tilt} scale(${s}) translate(${-neck.x} ${-neck.y})`;
   }
   const s = style.proportions.bodyWidth;
-  return `translate(${CANVAS / 2} 0) scale(${s} 1) translate(${-CANVAS / 2} 0)`;
+  // Profile lean around the hip — east/west only (on south/north a rotation
+  // reads as a sideways topple, not a lean); the west mirror flips it for free.
+  const hip = ANCHORS[facing].hip;
+  const lean =
+    pose?.bodyLeanDeg && facing === 'east'
+      ? `translate(${hip.x} ${hip.y}) rotate(${pose.bodyLeanDeg}) translate(${-hip.x} ${-hip.y}) `
+      : '';
+  return `${lean}translate(${CANVAS / 2} 0) scale(${s} 1) translate(${-CANVAS / 2} 0)`;
 }
 
 function renderPlaced(
@@ -178,6 +227,7 @@ function renderPlaced(
   facing: Facing,
   style: StyleSheet,
   resolve: ResolveToken,
+  poseTransforms?: PoseTransforms,
 ): string {
   const partMarkup = (p: PlacedPart, emit: (s: ShapeSpec) => string, only?: 'silhouette') => {
     const shapes = p.variant.shapes.filter((s) => (only ? shapeIsSilhouette(s) : true));
@@ -186,7 +236,7 @@ function renderPlaced(
   };
 
   const wrapGroup = (group: 'body' | 'head', inner: string) =>
-    inner ? `<g transform="${groupTransform(group, facing, style)}">${inner}</g>` : '';
+    inner ? `<g transform="${groupTransform(group, facing, style, poseTransforms)}">${inner}</g>` : '';
 
   const outlineOn = style.outline.width > 0;
 
@@ -312,11 +362,12 @@ export function composeCharacter(
   facing: Facing | 'west',
   pixelSize?: number,
   mood: Mood = 'normal',
-  opts: { badge?: boolean; activity?: Activity } = {},
+  opts: { badge?: boolean; activity?: Activity; pose?: Pose } = {},
 ): string {
   const actual: Facing = facing === 'west' ? 'east' : facing;
-  const placed = placeParts(recipe, actual, mood);
-  let inner = renderPlaced(placed, actual, style, makeCharacterResolver(recipe));
+  const placed = placeParts(recipe, actual, mood, opts.pose);
+  const poseTransforms = opts.pose ? getPose(opts.pose)?.transforms : undefined;
+  let inner = renderPlaced(placed, actual, style, makeCharacterResolver(recipe), poseTransforms);
   if (facing === 'west') {
     inner = `<g transform="translate(${CANVAS} 0) scale(-1 1)">${inner}</g>`;
   }
@@ -351,6 +402,22 @@ export function composeCharacter(
  * mirrored for west. Exposed so the conversation renderer can attach its linking
  * arc to the same point the badges sit at.
  */
+/**
+ * The pose rig's attach points (shoulders + hip) per facing, canvas coords —
+ * exported in the poses atlas so a runtime compositor (or a future 3D backend)
+ * can bind arm layers to the same skeleton the tool authored against. West is
+ * the east mirror: x flips and the shoulders swap sides.
+ */
+export function poseRigAnchors(facing: Facing | 'west'): Record<'shoulderLeft' | 'shoulderRight' | 'hip', { x: number; y: number }> {
+  if (facing === 'west') {
+    const east = ANCHORS.east;
+    const flip = (a: { x: number; y: number }) => ({ x: CANVAS - a.x, y: a.y });
+    return { shoulderLeft: flip(east.shoulderRight), shoulderRight: flip(east.shoulderLeft), hip: flip(east.hip) };
+  }
+  const a = ANCHORS[facing];
+  return { shoulderLeft: a.shoulderLeft, shoulderRight: a.shoulderRight, hip: a.hip };
+}
+
 export function overheadAnchor(facing: Facing | 'west'): { x: number; y: number } {
   const actual: Facing = facing === 'west' ? 'east' : facing;
   const a = ANCHORS[actual].aboveHead;

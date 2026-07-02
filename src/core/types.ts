@@ -40,7 +40,16 @@ export interface ShapeSpec {
 }
 
 /** Named attachment points, defined per facing in the compositor. */
-export type AnchorName = 'body' | 'neck' | 'headCenter' | 'aboveHead' | 'chest' | 'handRight';
+export type AnchorName =
+  | 'body'
+  | 'neck'
+  | 'headCenter'
+  | 'aboveHead'
+  | 'chest'
+  | 'handRight'
+  | 'shoulderLeft'
+  | 'shoulderRight'
+  | 'hip';
 
 export interface PartVariant {
   shapes: ShapeSpec[];
@@ -303,8 +312,14 @@ export interface ProjectState {
  * provenance / mirrors, register-constitution.md) and the human-register
  * `reaction-*` icon family. Derived at export from code-owned vocabularies —
  * nothing is stored in the project, so the step only bumps the version.
+ * v17 added the pose layer (social-theater-presentation-experiment.md Appendix
+ * B/C): per-character `poses@Nx.png` + `poses-atlas@Nx.json` (8 held states ×
+ * 4 facings), the project-level `pose-catalog.json` (vocabulary + presence
+ * couplings; the beat-schedule contract's tool half), and the shoulderLeft /
+ * shoulderRight / hip rig anchors. A pose is a sim-selected state — never in
+ * the recipe — so nothing is stored in the project; version bump only.
  */
-export const CURRENT_SCHEMA_VERSION = 16;
+export const CURRENT_SCHEMA_VERSION = 17;
 
 /** Design-space canvas size. Parts are authored against this; never changes. */
 export const CANVAS = 128;

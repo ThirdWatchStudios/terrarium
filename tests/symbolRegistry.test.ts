@@ -10,6 +10,7 @@ import { EMOTIONS } from '../src/parts/emotions';
 import { ATTENTION_PUFFS } from '../src/parts/attention';
 import { ICONS, CURSORS } from '../src/parts/icons';
 import { REACTIONS } from '../src/parts/reactions';
+import { POSES } from '../src/parts/poses';
 
 /**
  * Register-constitution coverage guard (docs/register-constitution.md).
@@ -37,6 +38,7 @@ describe('symbol registry — no unregistered speech (Article I)', () => {
     for (const emotion of EMOTIONS) expectRegistered('emotion-glyph', emotion);
     for (const status of PROP_STATUSES) expectRegistered('prop-status-badge', status);
     for (const puff of ATTENTION_PUFFS) expectRegistered('attention-puff', puff);
+    for (const pose of POSES) expectRegistered('pose', pose);
   });
 
   it('registers every overlay channel and the conversation link', () => {
@@ -95,6 +97,11 @@ describe('symbol registry — register law', () => {
     // Overlay channels are the cold layer projected onto the warm floor (Article VIII).
     for (const channel of Object.keys(DEFAULT_OVERLAY_STYLE)) {
       expect(byKey.get(`overlay-channel/${channel}`)?.register, `overlay ${channel} must be iris`).toBe('iris');
+    }
+
+    // Poses are the body's own held states — nothing is more truth-register.
+    for (const pose of POSES) {
+      expect(byKey.get(`pose/${pose}`)?.register, `pose ${pose} must be truth`).toBe('truth');
     }
 
     // Reactions are quoted human speech, one per canonical id.

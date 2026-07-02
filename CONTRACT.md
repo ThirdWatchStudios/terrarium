@@ -64,6 +64,8 @@ Coordinate convention: scene grids are row-major `[y][x]`; anchors/spawns carry 
 | `activity-badges@Nx.png` + `activity-badges-atlas@Nx.json` | `activityBadgesAtlas` | project | One **shared** strip of overhead status badges (character-independent). Sim blits one above an agent keyed off the routine `activity` string (§3.9). |
 | `conversation-style.json` | `conversationStyleJson` | project | Style for the linked-bubble conversation visual; sim draws it between two paired talking agents (§3.9). |
 | `overlay-style.json` | `overlayStyleJson` | project | **Floor-overlay look spec** (Epic 36) — the per-channel form/weight/dash/motion **plus the static-richness grammar** (`glow` bloom, directional `flow`, per-agent `endpoints`, emotion-keyed `jitter`) and a cross-channel `focus` model the **Shapes** floor layer reads to draw relationship arcs, pressure halos, info packets, and belief tints from sim state. Discipline preserved: state lines pop via static richness (glow/gradient/endpoints), animation stays reserved for events (`rules.motionEncodesEvents`). Tool owns the look; Shapes owns the drawing. Colors reference theme `--wc-*` (§3.13). |
+| `characters/<id>/poses@Nx.png` + `poses-atlas@Nx.json` | `poseSheetPng` / `posesAtlas` | character | **Pose sheet** — the 8 Social Theater held states × 4 facings as full posed frames, keyed `<pose>_<facing>` (§3.16). Ships the `shoulderLeft`/`shoulderRight`/`hip` rig anchors (normalized). A pose is a sim-selected state like a mood — never in the recipe. |
+| `pose-catalog.json` | `poseCatalogJson` | project | **Pose vocabulary** — ids + reads-as + presence couplings + transform hints; the beat-schedule contract's tool half (§3.16). No sequencing: beats/dwell/blocking are the sim Director's. |
 | `symbol-registry.json` | `symbolRegistryJson` | project | The **symbol registry** — every symbol id in the bundle (floor badges/glyphs/puffs, overlay channels, chrome icons, reactions, cursors) resolved to its **register** (`truth` / `human` / `iris`), `kind` (`signal` / `chrome`), IRIS `provenance` (`measured` / `inferred` / `asserted`), and `mirrors` cross-links between truth↔IRIS siblings (§3.15). Derived from the code-owned vocabularies; the design law is `docs/register-constitution.md`. |
 | `theme.uss` + `theme.json` | `themeUss` / `themeJson` | project | The **shared UI palette** as UI Toolkit `:root` custom properties (`--wc-*`) and a framework-neutral map. The single color source the framing UI AND the Shapes floor layer resolve so chrome and world agree without sharing a pipeline (§3.13). `--wc-line` carries the project's actual `style.outline.color`. |
 | `icons/<id>.svg` + `icons/<id>@Nx.png` + `icons/icons-manifest.json` | `composeIcon` / `iconsManifest` | project | **UI icon set** — framing-UI glyphs. Each icon ships a resolution-independent SVG (UI Toolkit `VectorImage`) **and** a PNG ladder (uGUI `Sprite`). `tintable` icons are white masks the framework recolors from `theme.uss`; `literal` icons ship final colors (§3.13). |
@@ -559,6 +561,26 @@ The register constitution (`docs/register-constitution.md`) made data: every sym
       "register": "human", "kind": "signal" } ] }
 ```
 Key semantics: **`kind`** — `signal` narrates the office's live state; `chrome` is workstation furniture (buttons, window controls, app marks) and never carries provenance. **`provenance`** (IRIS signals only, Article IV.4) — `measured` (IRIS's own bookkeeping: directives, readings, metrics, detected events), `inferred` (claims about inner/social states: emotions, needs, pressures, relationships, `harvestable`), `asserted` (reserved; no shipped id uses it yet). **`mirrors`** — the same vocabulary word in another carrier/register as `"<family>/<id>"`; when the sim wants IRIS to be *wrong*, it shows one sibling on the floor and the other in the chrome, and the link is how it knows it is lying. Notable assignment: the attention-puff family **splits** — `attn-emotion-spike`/`attn-conflict`/`attn-information` are truth (the floor leaking "this just changed"), `attn-harvestable` is IRIS/`inferred` (a corporate valuation; no body leaks "harvestable"). The `reaction-*` icons are the human register's full current membership (quoted Slack speech, always `literal` — the chrome never tints another narrator's voice).
+
+### 3.16 Poses + the beat-schedule boundary (`pose-catalog.json`, per-character pose sheets)
+The Social Theater pipeline's data layer (docs/social-theater-presentation-experiment.md Appendix B/C; constitutional law in docs/performance-direction-contract.md). Three layers, three owners — the boundary is the deliverable:
+
+- **Tool (this repo):** the pose **vocabulary** — 8 held states (`neutral`, `walk-approach`, `notice`, `arms-crossed`, `hands-on-hips`, `point`, `slump`, `walk-away`), each with reads-as, the **presence channels** (§5.8) that shape its blocking, and lerpable **transform hints** (`headTiltDeg`/`headDropY`/`bodyLeanDeg` — group transforms, not frame animation). Art ships per character as full posed frames keyed `<pose>_<facing>` plus the `shoulderLeft`/`shoulderRight`/`hip` rig anchors.
+- **Sim Director:** **sequencing** — beat schedules, dwell times, blocking, orientation, and the presence-signature modulation (this M plants closer; that E hesitates before withdrawing). None of that data exists tool-side, by design: a beat schedule found in this repo is a boundary violation.
+- **Renderer:** `pose · orientation · hold · move` — it draws the named held state and knows nothing else (no "reprimand", no "beat"). This is what keeps the renderer swappable (2D silhouettes vs. a 3D backend consume the same vocabulary; the presentation experiment's Build C depends on it).
+
+```jsonc
+// pose-catalog.json
+{ "kind": "pose-catalog",
+  "boundary": { "tool": "...vocabulary...", "director": "...sequencing is sim-side...", "renderer": "pose · orientation · hold · move" },
+  "poses": [
+    { "id": "point", "label": "Point", "readsAs": "the accusation (key beat)",
+      "presenceChannels": ["expressiveness"], "transforms": {} },
+    { "id": "slump", "label": "Slump", "readsAs": "submission / withdrawal",
+      "presenceChannels": ["commitment", "latency", "postureSlump"],
+      "transforms": { "headDropY": 7, "headTiltDeg": 6 } } ] }
+```
+A pose is a **sim-selected state** (register: `truth` — the body's own posture, §3.15), never stored in the recipe. Unknown pose ids fall back to `neutral` (free-text-with-fallback, §7). West is mirrored east; south/north `point` extends to the viewer's right, so the Director orients the agent (or uses west) to aim the arm. `bodyLeanDeg` renders on east/west only (a profile lean; on south/north it would read as a sideways topple).
 
 ---
 

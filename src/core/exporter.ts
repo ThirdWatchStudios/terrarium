@@ -18,6 +18,7 @@ import {
   composeWallTile,
   layerCellSvg,
   overheadAnchor,
+  poseRigAnchors,
 } from './compositor';
 import { ACTIVITIES, ACTIVITY_BADGES } from '../parts/activities';
 import { MOOD_EMOTES } from '../parts/moods';
@@ -42,6 +43,7 @@ import { themeUss, themeJson } from '../data/uiPalette';
 import { ICONS, CURSORS } from '../parts/icons';
 import { overlayStyleJson } from './overlayStyle';
 import { symbolRegistryJson } from './registry';
+import { POSES, poseCatalogJson } from '../parts/poses';
 
 /** Sheet frame order. West is baked as mirrored east for engine convenience. */
 const SHEET_FACINGS = ['south', 'east', 'north', 'west'] as const;
@@ -198,6 +200,25 @@ function moodSheetDesc(recipe: CharacterRecipe, style: StyleSheet, scale: number
     });
   });
   return { width: size * SHEET_FACINGS.length, height: size * MOODS.length, pixelScale: renderScale(style), cells };
+}
+
+function poseSheetDesc(recipe: CharacterRecipe, style: StyleSheet, scale: number): SheetDesc {
+  const size = style.render.baseSize * scale;
+  const cells: RasterCell[] = [];
+  POSES.forEach((pose, row) => {
+    SHEET_FACINGS.forEach((facing, col) => {
+      cells.push({
+        // Full posed character per cell (the renderer swaps whole held states —
+        // `pose · orientation · hold · move`), badge-free like the mood sheet.
+        svg: composeCharacter(recipe, style, facing, size, 'normal', { badge: false, pose }),
+        dx: col * size,
+        dy: row * size,
+        dw: size,
+        dh: size,
+      });
+    });
+  });
+  return { width: size * SHEET_FACINGS.length, height: size * POSES.length, pixelScale: renderScale(style), cells };
 }
 
 function layerSheetDesc(recipe: CharacterRecipe, style: StyleSheet, scale: number): SheetDesc {
@@ -760,6 +781,59 @@ export async function moodSheetPng(
   return asBlob(defaultRasterizer().rasterizeSheet(moodSheetDesc(recipe, style, scale)));
 }
 
+/**
+ * Pose sheet: one row per pose (POSES order), one column per facing — the held
+ * states of the Social Theater pipeline (CONTRACT §3.16). Full posed frames,
+ * so the renderer swaps whole sprites; the pose vocabulary + presence
+ * couplings ship separately in pose-catalog.json.
+ */
+export async function poseSheetPng(
+  recipe: CharacterRecipe,
+  style: StyleSheet,
+  scale: number,
+): Promise<Blob> {
+  return asBlob(defaultRasterizer().rasterizeSheet(poseSheetDesc(recipe, style, scale)));
+}
+
+export function posesAtlas(recipe: CharacterRecipe, style: StyleSheet, scale: number) {
+  const size = style.render.baseSize * scale;
+  const frames: Record<string, { x: number; y: number; w: number; h: number }> = {};
+  POSES.forEach((pose, row) => {
+    SHEET_FACINGS.forEach((facing, col) => {
+      frames[`${pose}_${facing}`] = { x: col * size, y: row * size, w: size, h: size };
+    });
+  });
+  // The pose rig's attach points, normalized bottom-left origin (Unity pivot
+  // convention) — so a runtime compositor or 3D backend binds to the same
+  // skeleton the arm layers were authored against.
+  const anchors: Record<string, Record<string, { x: number; y: number }>> = {};
+  for (const facing of SHEET_FACINGS) {
+    const rig = poseRigAnchors(facing);
+    anchors[facing] = Object.fromEntries(
+      Object.entries(rig).map(([name, a]) => [name, { x: a.x / CANVAS, y: (CANVAS - a.y) / CANVAS }]),
+    );
+  }
+  return {
+    name: recipe.name,
+    id: recipe.id,
+    frameSize: size,
+    scale,
+    poses: [...POSES],
+    facings: [...SHEET_FACINGS],
+    frames,
+    pivot: { x: 0.5, y: 0.09 },
+    anchors,
+    meta: {
+      generator: 'sprite-character-creator',
+      schema: 'social-theater-presentation-experiment.md#appendix-b',
+      westIsMirroredEast: true,
+      catalog: 'pose-catalog.json',
+      // A pose is a sim-selected held state (register: truth) — never in the recipe.
+      register: 'truth',
+    },
+  };
+}
+
 export function moodAtlas(recipe: CharacterRecipe, style: StyleSheet, scale: number) {
   const size = style.render.baseSize * scale;
   const frames: Record<string, { x: number; y: number; w: number; h: number }> = {};
@@ -995,7 +1069,7 @@ export async function exportAll(
   // Total PNG renders (the slow part): per character sheet + moods + layers,
   // plus one per prop/wall/floor — each across every scale.
   const total =
-    project.characters.length * scales * 3 +
+    project.characters.length * scales * 4 +
     project.props.length * scales +
     (project.walls?.length ?? 0) * scales +
     (project.floors?.length ?? 0) * scales +
@@ -1022,6 +1096,9 @@ export async function exportAll(
       await write(`${dir}/moods@${scale}x.png`, await png(moodSheetDesc(recipe, style, scale)));
       await write(`${dir}/moods-atlas@${scale}x.json`, JSON.stringify(moodAtlas(recipe, style, scale), null, 2));
       tick(`${recipe.name} moods`);
+      await write(`${dir}/poses@${scale}x.png`, await png(poseSheetDesc(recipe, style, scale)));
+      await write(`${dir}/poses-atlas@${scale}x.json`, JSON.stringify(posesAtlas(recipe, style, scale), null, 2));
+      tick(`${recipe.name} poses`);
     }
     await write(`${dir}/recipe.json`, JSON.stringify(recipe, null, 2));
     // The full-game persona (sim-consumer form: derived fields resolved to plain
@@ -1135,6 +1212,11 @@ export async function exportAll(
   // human / iris) + provenance + mirrors (register-constitution.md Article I:
   // no unregistered speech; CONTRACT.md §3.15). Derived, never hand-edited.
   await write('symbol-registry.json', JSON.stringify(symbolRegistryJson(), null, 2));
+
+  // Pose catalog — the beat-schedule contract's tool half (CONTRACT §3.16):
+  // pose ids + reads-as + presence couplings + transform hints. Sequencing
+  // (beats, dwell, blocking) is the sim Director's; frames ship per character.
+  await write('pose-catalog.json', JSON.stringify(poseCatalogJson(), null, 2));
 
   // Shared UI theme — the single palette the framing UI resolves so chrome and
   // world agree without sharing a pipeline (docs/ui-art-plan.md). theme.uss for
