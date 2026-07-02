@@ -21,6 +21,7 @@ import { ACTIVITIES, type Activity } from './activities';
 import { MOOD_EMOTES } from './moods';
 import { PROP_STATUSES, type PropStatus } from './propStatus';
 import { SOCIAL_STATES, type SocialState } from './socialStates';
+import { EMOTION_DEFS } from './emotions';
 import { type AttentionPuff } from './attention';
 
 /** How a badge appears. */
@@ -63,6 +64,19 @@ export const ACTIVITY_MOTION: Record<string, OverheadMotionIntent> = uniform(BAD
 export const PROP_STATUS_MOTION: Record<string, OverheadMotionIntent> = uniform(PROP_STATUSES as PropStatus[], PROP_STATUS_INTENT);
 /** Short-term social state — ongoing STATE like a mood (same tier, same soft discipline). */
 export const SOCIAL_STATE_MOTION: Record<string, OverheadMotionIntent> = uniform(SOCIAL_STATES as SocialState[], MOOD_INTENT);
+
+/**
+ * Emotion glyphs — transient like puffs (the glyph lives for the spike's
+ * duration; the overlay tracks intensity and fades on decay). Acute spikes sit a
+ * tier above the ambient set: they are the dramatic register the discovery layer
+ * exists for.
+ */
+export const EMOTION_MOTION: Record<string, OverheadMotionIntent> = Object.fromEntries(
+  EMOTION_DEFS.map((e) => [
+    e.id,
+    { intro: 'pop-scale', loop: 'none', outro: 'fade-out', salienceTier: e.tier === 'acute' ? 3 : 2 } satisfies OverheadMotionIntent,
+  ]),
+);
 
 /**
  * Transient event puffs — all pop-and-fade, but the salience tier is the §7

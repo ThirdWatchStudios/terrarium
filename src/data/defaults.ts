@@ -527,15 +527,16 @@ export const DEFAULT_WALLS: TileInstance[] = [
     id: 'wall-demising',
     name: 'Demising wall',
     templateId: 'demising-wall',
-    params: { thickness: 36 },
+    // 28-unit band, matching wall-office — shell/tenant junctions align mid-run.
+    params: { thickness: 28 },
     palette: { primary: '#7E8590', secondary: '#5A616B', accent: '#454B54' },
   },
   {
     id: 'wall-curtain',
     name: 'Curtain wall',
     templateId: 'curtain-wall',
-    // accent = the `$sky` token (flat sky tint for v1)
-    params: { thickness: 16 },
+    // accent = the `$sky` token (flat sky tint for v1); 28-unit band like wall-office.
+    params: { thickness: 28 },
     palette: { primary: '#4A535E', secondary: '#ABC4D6', accent: '#A8C8E0' },
   },
 ];

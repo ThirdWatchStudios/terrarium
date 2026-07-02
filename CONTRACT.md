@@ -388,8 +388,20 @@ state. Unknown ids draw nothing. *Sim consumption is a new seam:* today these
 states are inspector-text-only — wiring the badge is game-side work
 (docs/icon-expansion-plan.md §3.D).
 
-All five overhead atlases (`activity-badges`, `mood-emotes`, `prop-status-badges`,
-`social-state-badges`, `attention-puffs`) carry this `motion` block. `transient: true` marks the
+**Emotion glyphs** (`emotion-glyphs-atlas@Nx.json`, one **shared** project-level
+strip) — the harvest vocabulary made visible (14 ambient emotions + 3 acute
+spikes: `embarrassment` / `vindication` / `relief`). NOT an overhead bubble: each
+cell is the bare mark drawn ink-on-halo, **colorless by design** — it sits inside
+the Shapes-drawn acute-spike outline, which supplies the emotion's hue from the
+overlay-style channels (style stays tweakable post-build). `byId` carries
+`{ tier, group, label }` per emotion (tier = ambient|acute; group = the shared
+silhouette family). The same geometry ships as tintable `emotion-<id>` icons in
+`icons/` for chrome (inspector / capture UI). `meta.placement: "floor-overlay"` —
+the overlay owns placement, intensity (tracks the spike), and decay. Unknown ids
+draw nothing. (docs/icon-expansion-plan.md §3.B)
+
+All six shared atlases (`activity-badges`, `mood-emotes`, `prop-status-badges`,
+`social-state-badges`, `emotion-glyphs`, `attention-puffs`) carry this `motion` block. `transient: true` marks the
 event-flash family (attention puffs); the state families are `false`. `salienceTier`
 (higher wins) is the authored importance the sim uses for its salience budget, draw
 order, and base scale — for attention puffs the tiers encode the §7 hierarchy with
@@ -495,6 +507,8 @@ The framing UI's share of the bundle (full rationale: [docs/ui-art-plan.md](docs
 **Tinting.** `mode: "tintable"` icons are **white masks** — recolor with one flat multiply (USS `unity-background-image-tint-color`, uGUI `Image.color`), pulling from `theme.uss` `--wc-*`. Because the multiply is flat, tintable icons are single-color by construction. `mode: "literal"` icons ship final multi-hue colors and are not recolored. Unknown ids draw nothing (free-text-with-fallback, consistent with badges).
 
 The shipped icon set is catalog-grounded: control glyphs + trim (tintable), department-CATEGORY glyphs (`dept-*`, tintable — the six `DEFAULT_DEPARTMENTS` categories), the six canonical needs (`need-*`, tintable), and relationship-CATEGORY glyphs (`rel-*`, literal, colored from `--wc-rel-*`). These cover the coarse groupings; leaf-level coverage tracks the UI epic.
+
+**UI-STATE-ICON set (`state-*`, tintable)** — the **chrome register** of the overhead floor-state vocabulary, for the workstation inspector's SIGNALS strip / Thread / dossier (dual-register rule: the floor speaks in sitcom bubbles, the chrome in clinical line icons — the floor atlases are the wrong art for UI even at @4x). One tight-crop (~8% padding) single-color line icon per floor-state cell, id = `state-<family>-<id>`: `state-activity-{work,walk,break,meeting,talking,idle,disrupted}` (the sim-surfaced routine states), `state-social-<id>` (all 5 `social-state-badges` cells), `state-mood-<id>` (the 5 emoted `mood-emotes` cells; `normal` has no cell), `state-emotion-<id>` (all 17 `emotion-glyphs` cells), and `state-attn-<id>` (all 4 attention categories). Strong floor silhouettes (harvestable gem, conflict shuriken, tremor lines…) carry over re-drawn in line style so recognition survives the register switch. Ids are the contract — the sim resolves them through this icon catalog and should fall back to the floor sprite when a `state-*` id is missing; art may be revised freely. Authored in [src/parts/stateIcons.ts](src/parts/stateIcons.ts); legibility guard: `docs/previews/state-icons-preview.html` (24 px, both themes; regenerate with `npx tsx scripts/stateIconPreview.ts`).
 
 **`cursors/`** — cursors are textures, not vectors, so they export **PNG-only**: `cursors/<id>@{1,2,4}x.png` + `cursors/cursors-manifest.json`. Each manifest entry carries a **normalized `hotspot`** `{x,y}` (0..1, multiply by chosen texture size for the active pixel). Cursors render dark ink under a light halo so the pointer reads on any background. Wire via USS `cursor: url("…") <x> <y>` / uGUI `Cursor.SetCursor`.
 

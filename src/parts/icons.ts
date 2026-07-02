@@ -1,6 +1,8 @@
 import type { ShapeSpec } from '../core/types';
 import { circle, rr } from '../core/geometry';
 import { UI_PALETTE } from '../data/uiPalette';
+import { EMOTION_ICONS } from './emotions';
+import { STATE_ICONS } from './stateIcons';
 
 /**
  * UI icon set — flat geometric glyphs for the framing UI (docs/ui-art-plan.md).
@@ -34,6 +36,12 @@ export interface IconDef {
   mode: IconMode;
   /** Local-coord shapes, centered on (0,0). */
   shapes: ShapeSpec[];
+  /**
+   * Uniform fit-scale applied at composition (default 1). Lets a glyph authored
+   * at another register's coordinates fill the icon frame — e.g. the state-icon
+   * set re-fits the emotion marks to its tight crop. Strokes scale with it.
+   */
+  scale?: number;
 }
 
 /** A cursor: an icon plus a normalized hotspot (the active pixel, 0..1). */
@@ -661,6 +669,20 @@ export const ICONS: IconDef[] = [
     // Captured, but it splashed — the dot plus spatter flecks.
     shapes: [...CAPTURE_BRACKETS, fill(circle(0, 0, 9)), fill(circle(15, -13, 5)), fill(circle(-14, 12, 4.5)), fill(circle(12, 15, 4))],
   },
+
+  // --- Emotion glyphs, chrome emission (docs/icon-expansion-plan.md §3.B) -----
+  // 17 tintable `emotion-<id>` masks for the inspector / capture UI. Geometry is
+  // authored ONCE in emotions.ts; the floor gets the same marks via the shared
+  // `emotion-glyphs` atlas (ink-on-halo, colorless — the Shapes spike outline
+  // carries the hue).
+  ...EMOTION_ICONS,
+
+  // --- UI-STATE-ICON set (stateIcons.ts) --------------------------------------
+  // Chrome-register `state-<family>-<id>` variants of the overhead floor-state
+  // vocabulary (activity / social / mood / emotion / attention) for the sim's
+  // SIGNALS strip, Thread and dossier surfaces. Tight-crop line icons; ids are
+  // the cross-repo contract.
+  ...STATE_ICONS,
 ];
 
 // --- Cursors (PNG-only; literal so the ink fill + light halo render) ---------

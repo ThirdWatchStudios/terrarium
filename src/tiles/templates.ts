@@ -160,16 +160,18 @@ const panelWall: WallTemplate = {
 
 /**
  * The structural wall that separates the leased suite from the rest of the
- * floor. Heavier than `officeWall`, with a darker structural core seam so it
- * reads as part of the building, not a tenant partition.
+ * floor. Same 28-unit band geometry as `officeWall` — the shell walls must
+ * share the tenant band so mid-run junctions align seam-free when the sim
+ * mixes them — with a darker structural core seam carrying the "part of the
+ * building, not a tenant partition" identity instead of extra thickness.
  */
 const demisingWall: WallTemplate = {
   kind: 'wall',
   id: 'demising-wall',
   label: 'Demising wall',
-  params: [{ key: 'thickness', label: 'Thickness', min: 28, max: 44, step: 2, default: 36 }],
+  params: [{ key: 'thickness', label: 'Thickness', min: 20, max: 36, step: 2, default: 28 }],
   build(mask, params) {
-    const t = params.thickness ?? 36;
+    const t = params.thickness ?? 28;
     const shapes = wallArms(mask, t, '$primary');
     // structural core: a darker stripe down the centre of each arm (overdraws
     // the edge by OVERHANG and clips to the viewBox, staying seamless).
@@ -192,14 +194,16 @@ const demisingWall: WallTemplate = {
  * (the instance's `$accent` slot = the spec's `$sky` token); v1 is a flat tint
  * (parallax/day-night skyline is deferred). Bold mullions + a heavy frame post
  * read as building-perimeter curtain wall rather than an interior partition.
+ * Same 28-unit band geometry as `officeWall`/`demisingWall` so shell↔tenant
+ * junctions align seam-free; the glazing + mullions carry the identity.
  */
 const curtainWall: WallTemplate = {
   kind: 'wall',
   id: 'curtain-wall',
   label: 'Curtain wall',
-  params: [{ key: 'thickness', label: 'Thickness', min: 12, max: 22, step: 2, default: 16 }],
+  params: [{ key: 'thickness', label: 'Thickness', min: 20, max: 36, step: 2, default: 28 }],
   build(mask, params) {
-    const t = params.thickness ?? 16;
+    const t = params.thickness ?? 28;
     const h = t / 2;
     // sky-tinted glass body, semi-opaque so the exterior reads with depth
     const shapes: ShapeSpec[] = wallArms(mask, t, '$accent').map((s) => ({ ...s, opacity: 0.82 }));

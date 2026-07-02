@@ -1,10 +1,11 @@
 # Icon expansion plan — comprehensive coverage for upcoming systems
 
 Status: audit complete (2026-07-01); §2 verification PASSED same day (no drift —
-see §2); **Family A and Family D BUILT tool-side** (2026-07-01). Families B/C/E/F
-awaiting the §5 sign-offs / their gating work. Produced by a cross-repo sweep of
-this tool (what is authored/exported) against The-Water-Cooler (what the sim
-consumes, what its design docs specify, and what currently renders as fallback).
+see §2); **Families A, B, and D BUILT tool-side** (2026-07-01; B under the shared
+silhouette grammar, §5 decision 4). Families C/E/F await their gating work.
+Produced by a cross-repo sweep of this tool (what is authored/exported) against
+The-Water-Cooler (what the sim consumes, what its design docs specify, and what
+currently renders as fallback).
 
 Companion docs: [ui-art-plan.md](ui-art-plan.md) (ownership rules + pipeline),
 [epic-36-ui-assets.md](epic-36-ui-assets.md) (workstation chrome set, built).
@@ -74,7 +75,7 @@ pending"). Small set, immediate payoff. Tintable chrome icons, standard SVG+PNG 
 Grounding: The-Water-Cooler `docs/design/ui-ux-design.md` §2/§7,
 `CaptureResultPresentation.cs`.
 
-### Family B — Emotion glyphs (17 ids) — the core-loop centerpiece
+### Family B — Emotion glyphs (17 ids) — ✅ BUILT tool-side (2026-07-01)
 
 The harvest loop's entire vocabulary has **zero icon coverage**. The floor overlay's
 discovery layer specs "outline + emotion glyph" on acute spikes
@@ -100,6 +101,20 @@ fear/anxiety pair share a base form with one differentiator) rather than 17 unre
 marks.
 
 Grounding: The-Water-Cooler `docs/design/core-loop-emotion-harvesting.md` §1/§4.5/§9.
+
+> Built in [emotions.ts](../src/parts/emotions.ts) (§5 decision 4 resolved as the
+> shared grammar): six silhouette families — hostile = the JAG (bottled / blocked /
+> erupting / barbed), covetous = the GAZE (eye + coveted gem), fear = TREMOR & WEIGHT
+> over a small self-dot, deprivation = EMPTINESS, expansive = the RISE, acute = the
+> BURST. One geometry, two emissions: tintable `emotion-<id>` chrome icons + the
+> `emotion-glyphs` atlas (bare ink-on-halo marks, colorless — the Shapes spike
+> outline supplies the hue, so color stays sim-tweakable). Atlas `byId` ships
+> `{tier, group, label}`; motion transient with acute > ambient salience.
+> CONTRACT §3.9 block added. **Sim WIRED (2026-07-01)**: `AcuteSpikeIntent` added to
+> FloorOverlayFrame (persists for the hot window, intensity01 for honest fade);
+> ProductionFloorStateOverlay draws the pressure-hued spike outline; the binding blits
+> the glyph inside it (ApplyEmotionGlyphs, sorting 260 between badges and puffs).
+> Degrades honestly: no atlas → outline alone.
 
 ### Family C — Behavior icons (5 category + optionally 28 per-behavior)
 
@@ -134,9 +149,10 @@ Slots straight into the existing overhead-badge atlas convention.
 > bubble, broken-loop glyph echoing `pressure-routine-interruption`); new
 > `social-state-badges` atlas family in [socialStates.ts](../src/parts/socialStates.ts)
 > (bubble hue = valence: rose negative / teal-blue positive; glyph = which state) +
-> compositor/exporter/motion wiring + CONTRACT §3.9. **Sim wiring still open**: the
-> game maps routine state → badge id and must add `disrupted`, and short-term social
-> states are inspector-text-only until the sim consumes the new atlas.
+> compositor/exporter/motion wiring + CONTRACT §3.9. **Sim WIRED (2026-07-01)**:
+> `disrupted` added to the routine-state badge map; the social-state badge joined the
+> overhead row (three-slot layout: activity / social / mood, centered on aboveHead);
+> importer + import catalog extended for both new atlases.
 
 | Atlas | New cells | Grounding |
 |---|---|---|
@@ -179,6 +195,28 @@ game sweep:
 panel (QuotaOS Surface 4) is built. When it is, expect small additions: role marker
 (manager vs IC) and availability status — enumerate then, not now.
 
+### Family H — UI-STATE-ICON set (38 ids) — ✅ BUILT tool-side (2026-07-02)
+
+Post-audit addition (sim request): the workstation inspector's SIGNALS strip
+(and the Thread / dossier surfaces) surface an agent's active floor states as
+icon + label, and had been borrowing the overhead bubble sprites — sitcom floor
+art that reads poorly as chrome iconography even at @4x. This family is the
+**chrome register** of the whole state vocabulary (dual-register rule): one
+tintable, tight-crop (~8% padding) line icon per floor-state cell, joining the
+existing ui-icons catalog so the sim resolves them by id with zero import
+changes.
+
+> Built in [stateIcons.ts](../src/parts/stateIcons.ts): `state-activity-*` (7
+> sim-surfaced routine states), `state-social-*` (5), `state-mood-*` (the 5
+> emoted mood cells), `state-emotion-*` (all 17 — geometry reused from
+> emotions.ts via the new `IconDef.scale` fit, so the marks stay authored once),
+> `state-attn-*` (4 — gem/shuriken silhouettes carried over in line style).
+> Legibility guard: `docs/previews/state-icons-preview.html` + `.png` (every icon
+> at 24 px, near-black on light / near-white on dark; regenerate with
+> `npx tsx scripts/stateIconPreview.ts`). CONTRACT §3.13 block added. **Sim
+> wiring open**: SIGNALS strip should prefer `state-*` ids with fallback to the
+> floor sprites.
+
 ## 4. Totals & build order
 
 Roughly **55–60 new ids now** (A 9, B 17, C 5, D 6, F ~21), with C's per-behavior 28
@@ -186,8 +224,8 @@ and E's presence set as later expansions.
 
 1. ✅ **§2 verification pass** — fresh export + id diff ran 2026-07-01; clean (see §2).
 2. ✅ **Family A** (directive/capture, 9) — built 2026-07-01.
-3. **Family B** (emotions, 17 + new atlas family) — core loop; includes the
-   atlas-emission pipeline addition. NEXT — needs §5 decision 4 (style grammar).
+3. ✅ **Family B** (emotions, 17 + new atlas family) — built tool-side 2026-07-01
+   (§5 decision 4 resolved: shared silhouette grammar); sim wiring open.
 4. ✅ **Family D** (badge extensions, 6) — built tool-side 2026-07-01; sim wiring open.
 5. **Family F** (HUD misc, ~21) — as the consuming UI firms up; signage/build-menu
    can trail.
@@ -214,5 +252,5 @@ rule, motion intent), and the directive/capture ids join the icons manifest note
 3. **Unmapped event-feed types** (`RunStarted`, `RoutineAdvanced`, `OutcomeMarked`,
    `RunEnded`, `DayStarted`, `DayEnded`) — recommend these stay text-only
    (structural, not dramatic); confirm.
-4. **Emotion glyph style family** — one shared base-form grammar per valence group
-   (recommended, see Family B) vs 17 independent marks. Affects authoring order.
+4. ~~**Emotion glyph style family**~~ — RESOLVED 2026-07-01: built with the shared
+   base-form grammar (six silhouette families, see Family B note).

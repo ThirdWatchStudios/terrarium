@@ -2,6 +2,10 @@ import { describe, it, expect } from 'vitest';
 import { exportAll, type ExportSink, type Rasterizer } from '../src/core/exporter';
 import { defaultGoldenProject } from '../src/data/defaults';
 import { ROLE_TEMPLATES } from '../src/data/roleTemplates';
+import { SOCIAL_STATES } from '../src/parts/socialStates';
+import { MOOD_EMOTES } from '../src/parts/moods';
+import { EMOTIONS } from '../src/parts/emotions';
+import { ATTENTION_PUFFS } from '../src/parts/attention';
 
 /**
  * Default-bundle coverage guard.
@@ -53,6 +57,7 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     'activity-badges-atlas@1x.json',
     'mood-emotes-atlas@1x.json',
     'social-state-badges-atlas@1x.json', // short-term social-state atlas (docs/icon-expansion-plan.md §3.D)
+    'emotion-glyphs-atlas@1x.json', // harvest-vocabulary glyphs for the discovery layer (§3.B)
     'attention-puffs-atlas@1x.json', // transient event-flash atlas (active-loop §7)
     'theme.uss', // shared UI palette — UI Toolkit (docs/ui-art-plan.md)
     'theme.json', // shared UI palette — uGUI / non-USS consumers
@@ -216,6 +221,16 @@ describe('default bundle is a complete, sim-importable baseline', () => {
       expect(social.frames[state], `social-state atlas missing frame for ${state}`).toBeTruthy();
       expect(social.motion.byId[state]?.salienceTier).toBeGreaterThan(0);
     }
+    // Emotion glyphs cover the full harvest vocabulary (14 ambient + 3 acute) and
+    // are transient like puffs; acute spikes outrank the ambient set (§3.B).
+    const emotions = JSON.parse(json.get('emotion-glyphs-atlas@1x.json')!);
+    expect(emotions.emotions.length).toBe(17);
+    expect(emotions.motion.transient).toBe(true);
+    for (const id of ['resentment', 'pride', 'embarrassment', 'vindication', 'relief']) {
+      expect(emotions.frames[id], `emotion atlas missing frame for ${id}`).toBeTruthy();
+    }
+    expect(emotions.byId.embarrassment.tier).toBe('acute');
+    expect(emotions.motion.byId.embarrassment.salienceTier).toBeGreaterThan(emotions.motion.byId.boredom.salienceTier);
     // Attention puffs are transient events, and harvestable sits at the top of the
     // salience hierarchy (§7) — the player's call-to-action.
     expect(attention.motion.transient).toBe(true);
@@ -279,9 +294,36 @@ describe('default bundle is a complete, sim-importable baseline', () => {
       'capture-missed',
       'capture-invalid',
       'capture-collateral',
+      // Emotion glyphs, chrome emission (docs/icon-expansion-plan.md §3.B) —
+      // sample one per silhouette group + the flagship acute spike.
+      'emotion-resentment',
+      'emotion-envy',
+      'emotion-anxiety',
+      'emotion-loneliness',
+      'emotion-pride',
+      'emotion-embarrassment',
     ]) {
       expect(ids, `icon set missing ${id}`).toContain(id);
     }
+    // UI-STATE-ICON set — the chrome register of the overhead floor-state
+    // vocabulary (stateIcons.ts). The sim's SIGNALS strip keys on these exact
+    // ids with fallback to the floor sprites, so this is a FULL enumeration,
+    // derived from the same vocabulary modules the floor atlases emit from.
+    const STATE_ICON_IDS = [
+      // The routine states the sim surfaces as signals (subset of ACTIVITIES).
+      ...['work', 'walk', 'break', 'meeting', 'talking', 'idle', 'disrupted'].map((a) => `state-activity-${a}`),
+      ...SOCIAL_STATES.map((s) => `state-social-${s}`),
+      // The emoted moods — the mood-emotes atlas cells (`normal` has no cell).
+      ...Object.entries(MOOD_EMOTES).filter(([, emote]) => emote).map(([mood]) => `state-mood-${mood}`),
+      ...EMOTIONS.map((e) => `state-emotion-${e}`),
+      ...ATTENTION_PUFFS.map((p) => `state-${p}`), // attn-* ids already carry the family
+    ];
+    for (const id of STATE_ICON_IDS) {
+      expect(ids, `state-icon set missing ${id}`).toContain(id);
+    }
+    // The chrome register is tintable line work: white masks, tight crop.
+    const gem = json.get('icons/state-attn-harvestable.svg')!;
+    expect(gem, 'state icons must be tintable white masks').toContain('#FFFFFF');
     const romance = json.get('icons/rel-romantic.svg')!;
     expect(romance, 'literal icon should ship its real color, not a white mask').toContain('#D8638F');
   });

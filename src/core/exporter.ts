@@ -9,6 +9,7 @@ import {
   composeCharacter,
   composeFloorTile,
   composeAttentionPuff,
+  composeEmotionGlyph,
   composeIcon,
   composeMoodEmote,
   composeProp,
@@ -22,8 +23,9 @@ import { ACTIVITIES, ACTIVITY_BADGES } from '../parts/activities';
 import { MOOD_EMOTES } from '../parts/moods';
 import { PROP_STATUSES } from '../parts/propStatus';
 import { SOCIAL_STATES } from '../parts/socialStates';
+import { EMOTION_DEFS, EMOTIONS } from '../parts/emotions';
 import { ATTENTION_PUFFS } from '../parts/attention';
-import { ACTIVITY_MOTION, MOOD_MOTION, PROP_STATUS_MOTION, SOCIAL_STATE_MOTION, ATTENTION_MOTION } from '../parts/overheadMotion';
+import { ACTIVITY_MOTION, MOOD_MOTION, PROP_STATUS_MOTION, SOCIAL_STATE_MOTION, EMOTION_MOTION, ATTENTION_MOTION } from '../parts/overheadMotion';
 import { conversationStyleJson } from './conversation';
 import { sceneToLayoutJson } from './layout';
 import { composeSceneSvg } from './scene';
@@ -421,6 +423,69 @@ export function socialStateBadgesAtlas(style: StyleSheet, scale: number) {
         "Selected at runtime by the agent's short-term social-state id; unknown ids draw " +
         'nothing. Bubble hue encodes valence (rose = negative, teal-blue = positive); the ' +
         'glyph says which state. Stacks with the mood/activity badges at aboveHead.',
+    },
+  };
+}
+
+/**
+ * Emotion glyphs: a single shared strip, one cell per emotion in the harvest
+ * vocabulary (14 ambient + 3 acute; docs/icon-expansion-plan.md §3.B). Unlike
+ * the badge families these are NOT bubbles — each cell is the bare mark drawn
+ * ink-on-halo, meant to sit inside the Shapes-drawn acute-spike outline (the
+ * outline carries the emotion's hue; the cell stays colorless so the look is
+ * tweakable post-build). The same geometry ships as tintable `emotion-<id>`
+ * icons for chrome.
+ */
+function emotionGlyphsDesc(style: StyleSheet, scale: number): SheetDesc {
+  const size = style.render.baseSize * scale;
+  return {
+    width: size * EMOTIONS.length,
+    height: size,
+    pixelScale: renderScale(style),
+    cells: EMOTIONS.map((id, i) => ({
+      svg: composeEmotionGlyph(id, size),
+      dx: i * size,
+      dy: 0,
+      dw: size,
+      dh: size,
+    })),
+  };
+}
+
+export async function emotionGlyphsPng(style: StyleSheet, scale: number): Promise<Blob> {
+  return asBlob(defaultRasterizer().rasterizeSheet(emotionGlyphsDesc(style, scale)));
+}
+
+export function emotionGlyphsAtlas(style: StyleSheet, scale: number) {
+  const size = style.render.baseSize * scale;
+  const frames: Record<string, { x: number; y: number; w: number; h: number }> = {};
+  EMOTIONS.forEach((id, i) => {
+    frames[id] = { x: i * size, y: 0, w: size, h: size };
+  });
+  return {
+    kind: 'emotion-glyphs' as const,
+    frameSize: size,
+    scale,
+    emotions: [...EMOTIONS],
+    // Grouping the sim/inspector can lean on: tier (ambient vs acute spike) and
+    // the silhouette family each glyph belongs to (the §5-4 style grammar).
+    byId: Object.fromEntries(EMOTION_DEFS.map((e) => [e.id, { tier: e.tier, group: e.group, label: e.label }])),
+    frames,
+    pivot: { x: 0.5, y: 0.5 },
+    // Transient like a puff: lives for the spike, fades on decay.
+    motion: { transient: true, byId: EMOTION_MOTION },
+    meta: {
+      generator: 'sprite-character-creator',
+      shared: true,
+      facingIndependent: true,
+      // NOT an overhead bubble — no aboveHead attach. The floor overlay owns
+      // placement (inside the acute-spike outline at the agent), intensity
+      // (tracks the spike), and decay.
+      placement: 'floor-overlay',
+      note:
+        'Bare ink-on-halo emotion marks for the discovery layer; the Shapes spike outline ' +
+        'supplies the color. Selected by the sim-side emotion id; unknown ids draw nothing. ' +
+        'The same geometry ships as tintable emotion-<id> chrome icons in icons/.',
     },
   };
 }
@@ -933,7 +998,7 @@ export async function exportAll(
     project.props.length * scales +
     (project.walls?.length ?? 0) * scales +
     (project.floors?.length ?? 0) * scales +
-    scales * 5 + // shared activity-badge + mood-emote + prop-status-badge + social-state-badge + attention-puff atlas per scale
+    scales * 6 + // shared activity/mood/prop-status/social-state/emotion-glyph/attention-puff atlas per scale
     ICONS.length + // one tick per UI icon (its SVG + PNG ladder)
     CURSORS.length; // one tick per cursor (PNG ladder)
   let done = 0;
@@ -1024,6 +1089,9 @@ export async function exportAll(
     await write(`social-state-badges@${scale}x.png`, await png(socialStateBadgesDesc(style, scale)));
     await write(`social-state-badges-atlas@${scale}x.json`, JSON.stringify(socialStateBadgesAtlas(style, scale), null, 2));
     tick('social state badges');
+    await write(`emotion-glyphs@${scale}x.png`, await png(emotionGlyphsDesc(style, scale)));
+    await write(`emotion-glyphs-atlas@${scale}x.json`, JSON.stringify(emotionGlyphsAtlas(style, scale), null, 2));
+    tick('emotion glyphs');
     await write(`attention-puffs@${scale}x.png`, await png(attentionPuffsDesc(style, scale)));
     await write(`attention-puffs-atlas@${scale}x.json`, JSON.stringify(attentionPuffsAtlas(style, scale), null, 2));
     tick('attention puffs');

@@ -18,6 +18,7 @@ import type { Activity } from '../parts/activities';
 import { ACTIVITY_BADGES } from '../parts/activities';
 import { PROP_STATUS_BADGES, type PropStatus } from '../parts/propStatus';
 import { SOCIAL_STATE_BADGES, type SocialState } from '../parts/socialStates';
+import { getEmotion, type EmotionMark } from '../parts/emotions';
 import { ATTENTION_PUFF_ART, type AttentionPuff, type AttentionPuffArt } from '../parts/attention';
 import { getIcon } from '../parts/icons';
 import { PROP_TEMPLATES } from '../props/templates';
@@ -389,6 +390,31 @@ export function composeSocialStateBadge(state: SocialState, pixelSize: number = 
 }
 
 /**
+ * Shared-atlas cell for one emotion glyph (docs/icon-expansion-plan.md §3.B):
+ * the bare mark drawn ink-on-halo (the cursor treatment — dark ink over a light
+ * contrast halo) so it reads inside the Shapes-drawn acute-spike outline on any
+ * floor. Deliberately COLORLESS: the surrounding outline carries the emotion's
+ * hue (overlay-style channels), keeping the look tweakable post-build. All halo
+ * passes are drawn first, then all ink passes, so overlapping marks don't halo
+ * over each other's ink.
+ */
+export function composeEmotionGlyph(emotionId: string, pixelSize: number = CANVAS): string {
+  const def = getEmotion(emotionId);
+  if (!def) return svgWrap('', pixelSize);
+  const HALO_EXTRA = 6;
+  const halo = (m: EmotionMark): string =>
+    m.kind === 'stroke'
+      ? `<path d="${m.d}" fill="none" stroke="${BADGE_HALO}" stroke-width="${(m.w ?? 7) + HALO_EXTRA}" stroke-linecap="round" stroke-linejoin="round"/>`
+      : `<path d="${m.d}" fill="${BADGE_HALO}" stroke="${BADGE_HALO}" stroke-width="${HALO_EXTRA}" stroke-linejoin="round"/>`;
+  const ink = (m: EmotionMark): string =>
+    m.kind === 'stroke'
+      ? `<path d="${m.d}" fill="none" stroke="${BADGE_INK}" stroke-width="${m.w ?? 7}" stroke-linecap="round" stroke-linejoin="round"/>`
+      : `<path d="${m.d}" fill="${BADGE_INK}"/>`;
+  const inner = def.marks.map(halo).join('') + def.marks.map(ink).join('');
+  return svgWrap(`<g transform="translate(${CANVAS / 2} ${CANVAS / 2})">${inner}</g>`, pixelSize);
+}
+
+/**
  * An attention puff: a per-category silhouette (spark / shuriken / round / gem)
  * holding a white glyph, drawn at the same overhead anchor and scale as the emote
  * badges so it stacks with them — but with NO thought-tail (a puff is an event
@@ -493,7 +519,10 @@ export function composeIcon(iconId: string, pixelSize: number = CANVAS): string 
   if (!icon) return svgWrap('', pixelSize);
   const emit = icon.mode === 'tintable' ? emitIconMask : (s: ShapeSpec) => emitColorShape(s, identityResolve);
   const inner = icon.shapes.map(emit).join('');
-  return svgWrap(`<g transform="translate(${CANVAS / 2} ${CANVAS / 2})">${inner}</g>`, pixelSize);
+  // Optional fit-scale (IconDef.scale): re-fits glyphs authored at another
+  // register's coordinates to this icon's crop. Strokes scale with the group.
+  const fit = icon.scale && icon.scale !== 1 ? ` scale(${icon.scale})` : '';
+  return svgWrap(`<g transform="translate(${CANVAS / 2} ${CANVAS / 2})${fit}">${inner}</g>`, pixelSize);
 }
 
 interface IdPlaced {

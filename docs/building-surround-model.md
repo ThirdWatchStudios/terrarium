@@ -40,8 +40,9 @@ The renderer loops **every** grid cell and draws floors → walls → props from
 1. **A bigger grid renders for free.** Extra ring cells flow through the same
    floor/wall/prop code — no new render subsystem.
 2. **Walls autotile by neighbor mask with a 16px `OVERHANG`** ([templates.ts:18](../src/tiles/templates.ts)),
-   so runs stay seamless across seams. A *demising wall* is just `officeWall` with a
-   heavier `thickness` — the autotiler handles its corners and joins.
+   so runs stay seamless across seams. A *demising wall* is just `officeWall` on the
+   same 28-unit band with a structural core seam — the autotiler handles its corners
+   and joins, and junctions against tenant walls align mid-run.
 3. **Quadrant floor-clipping has an `'out'` sentinel** ([scene.ts:330](../src/core/scene.ts))
    for out-of-bounds neighbors. Today the office's outer wall faces `'out'` (void);
    add a ring beyond it and those quadrants face building floor instead, so the office
@@ -98,8 +99,8 @@ instance's `$accent` slot.
 
 | Template (id) | Based on | Role |
 |---|---|---|
-| `demising-wall` | `officeWall` | Thicker default + a darker `$secondary` structural core seam; the hard suite/building edge. |
-| `curtain-wall` | `glassPartition` | Sky-tinted glazing (`$accent` = `$sky`, flat v1) + bold mullions + frame post. The one exterior peek. |
+| `demising-wall` | `officeWall` | Same 28-unit band as `officeWall` (shell↔tenant junctions align mid-run) + a darker `$secondary` structural core seam; the hard suite/building edge. |
+| `curtain-wall` | `glassPartition` | Sky-tinted glazing (`$accent` = `$sky`, flat v1) + bold mullions + frame post, on the shared 28-unit band. The one exterior peek. |
 | `lobby-stone` | new (terrazzo-adjacent) | Large polished stone slabs + grout + diagonal sheen; the shared-corridor / elevator-lobby floor. |
 
 ### Prop templates → `src/props/templates.ts` (BUILT, elevation/wall-slot, existing path)
