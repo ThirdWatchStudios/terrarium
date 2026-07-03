@@ -33,14 +33,20 @@ const APPENDIX_B_POSES = [
   'walk-away',
 ];
 
+// Composition set added on top of the Appendix-B confrontation vocabulary.
+const COMPOSITION_POSES = ['lean-in', 'glance-back', 'laugh', 'shrug', 'recoil', 'celebrate', 'console'];
+const ALL_POSES = [...APPENDIX_B_POSES, ...COMPOSITION_POSES];
+
 function baseline() {
   const project = defaultGoldenProject();
   return { recipe: project.characters[0], style: project.style };
 }
 
 describe('pose catalog (Appendix B)', () => {
-  it('ships exactly the eight Appendix B poses, in canonical order', () => {
-    expect([...POSES]).toEqual(APPENDIX_B_POSES);
+  it('ships the Appendix B confrontation set first, then the composition set', () => {
+    expect([...POSES]).toEqual(ALL_POSES);
+    // The confrontation set stays the canonical first 8 (the reprimand ordering).
+    expect(POSES.slice(0, APPENDIX_B_POSES.length)).toEqual(APPENDIX_B_POSES);
   });
 
   it('every pose covers every authored facing with a non-empty front layer', () => {
@@ -68,7 +74,7 @@ describe('pose catalog (Appendix B)', () => {
   it('the exported catalog carries vocabulary but no sequencing', () => {
     const catalog = poseCatalogJson();
     expect(catalog.kind).toBe('pose-catalog');
-    expect(catalog.poses.map((p) => p.id)).toEqual(APPENDIX_B_POSES);
+    expect(catalog.poses.map((p) => p.id)).toEqual(ALL_POSES);
     expect(catalog.boundary.director).toContain('sim-side');
     const text = JSON.stringify(catalog);
     for (const simWord of ['dwell', 'beat', 'schedule']) {

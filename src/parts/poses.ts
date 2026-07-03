@@ -32,6 +32,7 @@ import { circle } from '../core/geometry';
  */
 
 export type Pose =
+  // Confrontation set (Appendix B) — the reprimand/snap.
   | 'neutral'
   | 'walk-approach'
   | 'notice'
@@ -39,7 +40,15 @@ export type Pose =
   | 'hands-on-hips'
   | 'point'
   | 'slump'
-  | 'walk-away';
+  | 'walk-away'
+  // Composition set — gossip huddle, warmth, three-way, resource friction, fallout.
+  | 'lean-in'
+  | 'glance-back'
+  | 'laugh'
+  | 'shrug'
+  | 'recoil'
+  | 'celebrate'
+  | 'console';
 
 /** Canonical order — also the pose-sheet row order and the atlas key order. */
 export const POSES: Pose[] = [
@@ -51,6 +60,13 @@ export const POSES: Pose[] = [
   'point',
   'slump',
   'walk-away',
+  'lean-in',
+  'glance-back',
+  'laugh',
+  'shrug',
+  'recoil',
+  'celebrate',
+  'console',
 ];
 
 /** Arm layers for one facing. `front` draws over body+outfit (under the head); `back` behind the body. */
@@ -201,6 +217,105 @@ export const POSE_DEFS: Record<Pose, PoseDef> = {
     presenceChannels: ['gaitSpeed', 'restlessness'],
     transforms: { bodyLeanDeg: -4 },
     facings: { south: WALK_SOUTH, east: WALK_EAST, north: WALK_SOUTH },
+  },
+
+  // --- composition set --------------------------------------------------------
+
+  'lean-in': {
+    id: 'lean-in',
+    label: 'Lean in',
+    readsAs: 'sharing a secret (conspiratorial — huddle/gossip)',
+    presenceChannels: ['proximityRange', 'attentiveness'],
+    transforms: { headTiltDeg: 5 },
+    facings: {
+      // One hand cupped up near the mouth; the other hangs. The whisper tell.
+      south: { front: [arm('M -26 -21 Q -31 -6 -29 10'), hand(-29, 13), arm('M 26 -21 Q 34 -30 16 -24'), hand(13, -25)] },
+      east: { front: [arm('M 5 -21 Q 13 -30 -3 -24'), hand(-5, -25)], back: [arm('M -2 -21 Q -6 -8 -4 8')] },
+      north: { front: [arm('M -26 -21 Q -31 -6 -29 10'), hand(-29, 13), arm('M 26 -21 Q 34 -30 16 -24'), hand(13, -25)] },
+    },
+  },
+
+  'glance-back': {
+    id: 'glance-back',
+    label: 'Glance back',
+    readsAs: 'checking who is watching (secrecy / the excluded look)',
+    presenceChannels: ['attentiveness', 'restlessness'],
+    transforms: { headTiltDeg: -14 },
+    facings: {
+      // Arms tucked, shoulders hunched; the head does the work (transform).
+      south: { front: [arm('M -26 -20 Q -24 -12 -8 -8'), arm('M 26 -20 Q 24 -12 8 -8')] },
+      east: { front: [arm('M 4 -20 Q -2 -12 6 -8')] },
+      north: { front: [arm('M -26 -20 Q -24 -12 -8 -8'), arm('M 26 -20 Q 24 -12 8 -8')] },
+    },
+  },
+
+  laugh: {
+    id: 'laugh',
+    label: 'Laugh',
+    readsAs: 'shared warmth (open laugh — side-by-side)',
+    presenceChannels: ['expressiveness'],
+    transforms: { headTiltDeg: -9 },
+    facings: {
+      // Head tossed back (transform); one hand to the belly, the other swung out.
+      south: { front: [arm('M -26 -21 Q -35 -8 -31 8'), hand(-32, 10), arm('M 26 -21 Q 29 -6 8 -3'), hand(6, -3)] },
+      east: { front: [arm('M 5 -21 Q 7 -6 -4 -3'), hand(-6, -3)] },
+      north: { front: [arm('M -26 -21 Q -35 -8 -31 8'), hand(-32, 10), arm('M 26 -21 Q 29 -6 8 -3'), hand(6, -3)] },
+    },
+  },
+
+  shrug: {
+    id: 'shrug',
+    label: 'Shrug',
+    readsAs: 'deflection / helplessness ("not my problem")',
+    presenceChannels: ['commitment', 'expressiveness'],
+    facings: {
+      // Shoulders up, forearms out, palms open to the sides.
+      south: { front: [arm('M -26 -19 Q -36 -16 -34 -3'), hand(-35, -1), arm('M 26 -19 Q 36 -16 34 -3'), hand(35, -1)] },
+      east: { front: [arm('M 5 -19 Q 15 -16 13 -3'), hand(14, -1)], back: [arm('M -2 -19 Q -12 -16 -10 -3'), hand(-11, -1)] },
+      north: { front: [arm('M -26 -19 Q -36 -16 -34 -3'), hand(-35, -1), arm('M 26 -19 Q 36 -16 34 -3'), hand(35, -1)] },
+    },
+  },
+
+  recoil: {
+    id: 'recoil',
+    label: 'Recoil',
+    readsAs: 'shock / recoil (taking it hard — exclusion, a snap landing)',
+    presenceChannels: ['latency', 'attentiveness'],
+    transforms: { bodyLeanDeg: -8, headTiltDeg: -6 },
+    facings: {
+      // Both forearms thrown up in front, warding off; the body leans away (east).
+      south: { front: [arm('M -26 -21 Q -20 -12 -13 -21'), hand(-12, -23), arm('M 26 -21 Q 20 -12 13 -21'), hand(12, -23)] },
+      east: { front: [arm('M 5 -21 Q 0 -12 9 -21'), hand(10, -23)] },
+      north: { front: [arm('M -26 -21 Q -20 -12 -13 -21'), hand(-12, -23), arm('M 26 -21 Q 20 -12 13 -21'), hand(12, -23)] },
+    },
+  },
+
+  celebrate: {
+    id: 'celebrate',
+    label: 'Celebrate',
+    readsAs: 'triumph / kudos (arms up)',
+    presenceChannels: ['expressiveness'],
+    facings: {
+      // Both arms flung up and out — the cheer.
+      south: { front: [arm('M -26 -21 L -33 -41'), hand(-34, -43), arm('M 26 -21 L 33 -41'), hand(34, -43)] },
+      east: { front: [arm('M 5 -21 L 10 -41'), hand(11, -43)], back: [arm('M -2 -21 L -7 -40'), hand(-8, -42)] },
+      north: { front: [arm('M -26 -21 L -33 -41'), hand(-34, -43), arm('M 26 -21 L 33 -41'), hand(34, -43)] },
+    },
+  },
+
+  console: {
+    id: 'console',
+    label: 'Console',
+    readsAs: 'comfort / reaching out (a hand toward another — gentler than point)',
+    presenceChannels: ['proximityRange', 'commitment'],
+    transforms: { headTiltDeg: 4 },
+    facings: {
+      // One arm reaches level toward the neighbour (not up like the accusation);
+      // the other hangs. The Director orients it toward the comforted party.
+      south: { front: [arm('M -26 -21 Q -31 -6 -29 10'), hand(-29, 13), arm('M 25 -18 Q 40 -14 47 -6'), hand(49, -4)] },
+      east: { front: [arm('M 5 -18 Q 22 -14 40 -8'), hand(42, -7)], back: [arm('M -2 -21 Q -6 -8 -4 8')] },
+      north: { front: [arm('M -26 -21 Q -31 -6 -29 10'), hand(-29, 13), arm('M 25 -18 Q 40 -14 47 -6'), hand(49, -4)] },
+    },
   },
 };
 
