@@ -71,7 +71,9 @@ function renderComparePreview(container: HTMLElement): void {
     if (currentScene) {
       setScenePreviewSvg(
         sceneFrame,
-        composeSceneSvg(currentScene, projectWithStyle(item.style), 26),
+        // Identity rendering here on purpose: the compare grid demos how the
+        // style restyles the CHARACTERS; units would hide exactly that.
+        composeSceneSvg(currentScene, projectWithStyle(item.style), 26, { agents: 'identity' }),
         item.style,
         currentScene.cols * 26,
         currentScene.rows * 26,

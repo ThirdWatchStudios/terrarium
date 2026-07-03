@@ -80,6 +80,19 @@ describe('operational-unit rendering (Article VIII)', () => {
   });
 });
 
+describe("the floor is IRIS's view", () => {
+  it('composeSceneSvg draws agents as units by default; identity is opt-in', async () => {
+    const { composeSceneSvg } = await import('../src/core/scene');
+    const project = defaultGoldenProject();
+    expect(project.scene?.entities.some((e) => e.kind === 'character'), 'golden scene has no characters').toBe(true);
+    const floor = composeSceneSvg(project.scene!, project, 8);
+    const authoring = composeSceneSvg(project.scene!, project, 8, { agents: 'identity' });
+    expect(floor).toContain(UNIT_INK); // the featureless head disc
+    expect(floor).not.toContain(project.characters[0].palette.skin.toUpperCase());
+    expect(authoring).toContain(project.characters[0].palette.skin.toUpperCase());
+  });
+});
+
 describe('corporate-identity rendering (the badge photo)', () => {
   it('is a bust crop with a studio background, warm palette intact', () => {
     const { characters, style } = defaultGoldenProject();

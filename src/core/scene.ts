@@ -1,6 +1,7 @@
 import type { CharacterRecipe, Facing, Mood, ProjectState, PropInstance, TileInstance } from './types';
 import { CANVAS } from './types';
 import { composeCharacter, composeFloorTile, composeProp, composeWallTile, floorTileMarkup } from './compositor';
+import { unitRecipe } from './renderings';
 import { PROP_TEMPLATES } from '../props/templates';
 import { MOOD_EMOTES } from '../parts/moods';
 
@@ -296,7 +297,18 @@ function propProjection(prop: PropInstance | undefined): 'plan' | 'elevation' {
   return PROP_TEMPLATES.find((template) => template.id === prop?.templateId)?.projection ?? 'elevation';
 }
 
-export function composeSceneSvg(scene: SceneState, project: ProjectState, cellPixelSize: number): string {
+/**
+ * Render the office scene. The scene IS the floor — IRIS's view — so agents
+ * default to the operational-unit rendering (register-constitution.md Article
+ * VIII); pass `agents: 'identity'` for authoring surfaces that need the warm
+ * drawing (e.g. the style-compare grid, which demos character restyling).
+ */
+export function composeSceneSvg(
+  scene: SceneState,
+  project: ProjectState,
+  cellPixelSize: number,
+  opts: { agents?: 'unit' | 'identity' } = {},
+): string {
   const width = scene.cols * CANVAS;
   const height = scene.rows * CANVAS;
   let body = `<rect width="${width}" height="${height}" fill="#181614"/>`;
@@ -402,10 +414,14 @@ export function composeSceneSvg(scene: SceneState, project: ProjectState, cellPi
     .filter((entity) => entity.kind === 'character' || propProjection(findProp(project, entity.refId)) === 'elevation')
     .sort((a, b) => a.y - b.y || a.x - b.x);
 
+  const asUnit = (opts.agents ?? 'unit') === 'unit';
   for (const entity of ySorted) {
     if (entity.kind === 'character') {
       const recipe = findCharacter(project, entity.refId);
-      if (recipe) body += svgAt(composeCharacter(recipe, project.style, entity.facing, CANVAS, entity.mood), entity.x, entity.y);
+      if (recipe) {
+        const drawn = asUnit ? unitRecipe(recipe) : recipe;
+        body += svgAt(composeCharacter(drawn, project.style, entity.facing, CANVAS, entity.mood), entity.x, entity.y);
+      }
     } else {
       const prop = findProp(project, entity.refId);
       if (prop) body += svgAt(composeProp(prop, project.style, CANVAS), entity.x, entity.y);

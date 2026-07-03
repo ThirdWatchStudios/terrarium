@@ -221,11 +221,37 @@ function clearAt(x: number, y: number): void {
   }, 'structure');
 }
 
+/**
+ * Which drawing of the agents the office preview shows. Defaults to the
+ * operational unit — the scene is the floor, and the floor is IRIS's view
+ * (register-constitution.md Article VIII). Module-level so it survives
+ * store-driven re-renders without becoming project state.
+ */
+let agentView: 'unit' | 'identity' = 'unit';
+
 export function renderScenePreview(container: HTMLElement): void {
   clear(container);
   const mode = store.ui.mapMode;
   container.append(
     viewTabs(mode, MAP_MODES, (id) => store.mutateUi((ui) => (ui.mapMode = id as MapMode))),
+  );
+
+  const unitCheck = el('input', {
+    type: 'checkbox',
+    onChange: (e: Event) => {
+      agentView = (e.target as HTMLInputElement).checked ? 'unit' : 'identity';
+      store.mutateUi(() => {});
+    },
+  }) as HTMLInputElement;
+  unitCheck.checked = agentView === 'unit';
+  container.append(
+    el(
+      'label',
+      { className: 'field scene-mode-hint' },
+      unitCheck,
+      el('span', {}, ' IRIS floor view '),
+      el('span', { className: 'muted' }, '— agents as operational units. Off = warm identities (authoring view).'),
+    ),
   );
   if (mode === 'assign') container.append(el('p', { className: 'hint scene-mode-hint' }, assignHint()));
   else if (mode === 'interactions')
@@ -236,7 +262,7 @@ export function renderScenePreview(container: HTMLElement): void {
   const art = el('div', { className: `scene-art ${store.state.style.render.pixelScale > 1 ? 'pixelated-preview' : ''}` });
   setScenePreviewSvg(
     art,
-    composeSceneSvg(current, store.state, 64),
+    composeSceneSvg(current, store.state, 64, { agents: agentView }),
     store.state.style,
     current.cols * 64,
     current.rows * 64,
