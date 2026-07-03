@@ -698,13 +698,17 @@ export function characterLayers(recipe: CharacterRecipe, style: StyleSheet): Cha
     }
   }
 
-  // mood overlays — literal ink, head group, only south/east have shapes
-  for (const mood of MOODS) {
-    for (const facing of facings) {
-      const shapes = MOOD_OVERLAYS[mood][facing];
-      if (!shapes || shapes.length === 0) continue;
-      const layer = ensure(`mood-${mood}`, 'mood', mood, MOOD_Z, null, mood);
-      layer.markup[facing] = positioned('head', facing, style, ANCHORS[facing].headCenter, shapes.map((s) => emitColorShape(s, identityResolve)).join(''));
+  // mood overlays — literal ink, head group, only south/east have shapes. A
+  // faceless head (the operational-unit disc) takes none: it has no face, so
+  // the unit layer atlas carries no mood layers (Article VIII).
+  if (!getPart(recipe.parts.head)?.noFace) {
+    for (const mood of MOODS) {
+      for (const facing of facings) {
+        const shapes = MOOD_OVERLAYS[mood][facing];
+        if (!shapes || shapes.length === 0) continue;
+        const layer = ensure(`mood-${mood}`, 'mood', mood, MOOD_Z, null, mood);
+        layer.markup[facing] = positioned('head', facing, style, ANCHORS[facing].headCenter, shapes.map((s) => emitColorShape(s, identityResolve)).join(''));
+      }
     }
   }
 

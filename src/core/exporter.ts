@@ -744,10 +744,11 @@ export function characterLayerManifest(recipe: CharacterRecipe, style: StyleShee
     tokens: [...PALETTE_TOKENS],
     moods: [...MOODS],
     palette: recipe.palette,
-    // NOTE (Article VIII): these masks are the WARM identity's geometry. The
-    // operational unit is a different drawing (pictogram parts) and cannot be
-    // produced by re-tinting them — consume the baked unit sheets, or
-    // re-compose from recipe.json#renderings.unit.
+    // NOTE (Article VIII): these masks are the WARM identity's geometry. IRIS's
+    // operational unit is a DIFFERENT drawing (pictogram parts) and cannot be
+    // produced by re-tinting them — it ships as its own layer atlas beside this
+    // one (`unit-layers@Nx.png` + `unit-manifest@Nx.json`, same composer path,
+    // its coding hue baked into that manifest's palette).
     pivot: { x: 0.5, y: 0.09 },
     // Composite order: stack ascending z (ties broken by order). Multiply each
     // layer by palette[tint] (skip when tint is null). Show base layers (mood
@@ -771,6 +772,27 @@ export function characterLayerManifest(recipe: CharacterRecipe, style: StyleShee
           ? 'baked-silhouette-layer (layer key "outline", z -1: draw first, untinted)'
           : 'none',
     },
+  };
+}
+
+/**
+ * Operational-unit layer atlas (register-constitution.md Article VIII, the
+ * floor rendering via Option B): the identity re-drawn as IRIS's pictogram,
+ * decomposed into the SAME re-tintable layer form as the warm atlas, so the
+ * sim's existing layer compositor renders it by resolving this atlas instead of
+ * the warm one — no baked-sprite fork in the floor's hot path. The faceless
+ * unit head carries no mood layers (characterLayers respects `noFace`), and the
+ * coding hue rides in the manifest palette (unitRecipe sets `palette`).
+ */
+function unitLayerSheetDesc(recipe: CharacterRecipe, style: StyleSheet, scale: number): SheetDesc {
+  return layerSheetDesc(unitRecipe(recipe), style, scale);
+}
+
+export function unitCharacterLayerManifest(recipe: CharacterRecipe, style: StyleSheet, scale: number) {
+  const manifest = characterLayerManifest(unitRecipe(recipe), style, scale);
+  return {
+    ...manifest,
+    meta: { ...manifest.meta, rendering: 'operational-unit', author: 'iris' },
   };
 }
 
@@ -1118,7 +1140,7 @@ export async function exportAll(
   // Total PNG renders (the slow part): per character sheet + moods + layers,
   // plus one per prop/wall/floor — each across every scale.
   const total =
-    project.characters.length * scales * 7 +
+    project.characters.length * scales * 8 +
     project.props.length * scales +
     (project.walls?.length ?? 0) * scales +
     (project.floors?.length ?? 0) * scales +
@@ -1181,6 +1203,11 @@ export async function exportAll(
       await write(`${dir}/layers@${scale}x.png`, await png(layerSheetDesc(recipe, style, scale)));
       await write(`${dir}/manifest@${scale}x.json`, JSON.stringify(characterLayerManifest(recipe, style, scale), null, 2));
       tick(`${recipe.name} layers`);
+      // IRIS's operational-unit rendering as a sibling layer atlas (Article VIII,
+      // Option B) — the floor composes this instead of the warm one for the unit view.
+      await write(`${dir}/unit-layers@${scale}x.png`, await png(unitLayerSheetDesc(recipe, style, scale)));
+      await write(`${dir}/unit-manifest@${scale}x.json`, JSON.stringify(unitCharacterLayerManifest(recipe, style, scale), null, 2));
+      tick(`${recipe.name} unit layers`);
     }
     await write(`${dir}/recipe.json`, JSON.stringify(recipe, null, 2));
   }

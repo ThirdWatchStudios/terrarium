@@ -111,6 +111,16 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     const recipePath = [...paths].find((p) => /^characters\/.+\/recipe\.json$/.test(p));
     const recipe = JSON.parse(json.get(recipePath!)!);
     expect(recipe.renderings?.unit?.palette?.skin, 'recipe.json missing renderings.unit palette (§3.17)').toBeTruthy();
+    // The operational-unit LAYER atlas — the floor's composer path (Option B).
+    const unitManifestPath = [...paths].find((p) => /^character-layers\/.+\/unit-manifest@1x\.json$/.test(p));
+    expect(unitManifestPath, 'no operational-unit layer atlas (§3.17)').toBeTruthy();
+    const unitManifest = JSON.parse(json.get(unitManifestPath!)!);
+    expect(unitManifest.meta.rendering, 'unit manifest not tagged operational-unit').toBe('operational-unit');
+    expect(unitManifest.palette.skin, 'unit manifest palette should be the coding ink, not warm skin').toBe('#333A40');
+    expect(
+      unitManifest.layers.some((l: { mood: string | null }) => l.mood !== null),
+      'unit layer atlas must carry NO mood layers (faceless disc)',
+    ).toBe(false);
     expect([...paths].some((p) => /^scenarios\/.+\/scenario\.json$/.test(p)), 'no scenario.json').toBe(true);
     // The scenario package must carry the catalogs so a bundle is self-contained.
     expect([...paths].some((p) => /^scenarios\/.+\/relationshipTypes\.json$/.test(p)), 'scenario package missing relationshipTypes.json').toBe(true);
