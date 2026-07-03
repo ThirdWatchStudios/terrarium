@@ -23,6 +23,7 @@ import { generateCompany } from '../src/core/companyTemplate';
 import { COMPANY_ARCHETYPES } from '../src/data/companyArchetypes';
 import { cascadeCompany, cascadeToProject } from '../src/core/companyCascade';
 import { ROLE_TEMPLATES } from '../src/data/roleTemplates';
+import { applyClinicalLook } from '../src/core/look';
 import type { ProjectState } from '../src/core/types';
 
 /** Keep the CLI demo render-bounded — a real seed can have thousands of seats. */
@@ -53,6 +54,14 @@ function generateCompanyProject(spec: string): ProjectState {
 }
 
 function loadProject(arg: string): ProjectState {
+  // `:clinical` suffix applies the IRIS clinical-plan look before export — the
+  // floor's temperature is the export's job (register-constitution.md Article VIII),
+  // so a sim IRIS-view bundle ships clinical surfaces. Composes with any base spec.
+  if (arg.endsWith(':clinical')) {
+    const base = loadProject(arg.slice(0, -':clinical'.length));
+    applyClinicalLook(base);
+    return base;
+  }
   if (arg.startsWith('company:')) return generateCompanyProject(arg);
   if (arg === 'default') {
     // The complete golden baseline: hero cast inside a generated multi-department
