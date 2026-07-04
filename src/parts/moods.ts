@@ -17,33 +17,40 @@ const brow = (d: string): ShapeSpec => ({ d, stroke: INK, strokeWidth: 2, silhou
 const mouth = (d: string): ShapeSpec => ({ d, stroke: INK, strokeWidth: 2, silhouette: false });
 
 export const MOOD_OVERLAYS: Record<Mood, Partial<Record<Facing, ShapeSpec[]>>> = {
-  // Eyes-only neutral face, RimWorld-style.
+  // Eyes-only neutral face, RimWorld-style. The `none` short-term state.
   normal: {},
 
-  // Narrowed: flat brows pressed low, tight frown.
-  suspicious: {
+  // Anxious — worry: inner brows pulled up-and-together, a small tense mouth.
+  anxious: {
     south: [
-      brow('M -12 -6 L -4 -5'),
-      brow('M 4 -5 L 12 -6'),
-      mouth('M -4 12 Q 0 10 4 12'),
+      brow('M -12 -4 L -4 -8'),
+      brow('M 4 -8 L 12 -4'),
+      mouth('M -4 12 Q 0 13.5 4 12'),
     ],
-    east: [brow('M 5 -5 L 15 -6'), mouth('M 11 12 Q 14 10 17 12')],
+    east: [brow('M 5 -4 L 15 -8'), mouth('M 11 12 Q 14 13.5 17 12')],
   },
 
-  // Raised brows, small round mouth.
-  curious: {
+  // Slighted — offended/put-out: flat brows pressed low, a downturned pout.
+  slighted: {
     south: [
-      brow('M -12 -7 Q -8 -10 -4 -7'),
-      brow('M 4 -7 Q 8 -10 12 -7'),
-      { d: 'M -2 11 a 2 2.4 0 1 0 4 0 a 2 2.4 0 1 0 -4 0 Z', fill: INK, silhouette: false },
+      brow('M -12 -6 L -4 -6'),
+      brow('M 4 -6 L 12 -6'),
+      mouth('M -5 13 Q 0 11 5 13'),
     ],
-    east: [
-      brow('M 6 -7 Q 10 -10 15 -7'),
-      { d: 'M 12 11 a 2 2.4 0 1 0 4 0 a 2 2.4 0 1 0 -4 0 Z', fill: INK, silhouette: false },
-    ],
+    east: [brow('M 6 -6 L 15 -6'), mouth('M 11 13 Q 14 11 17 13')],
   },
 
-  // Worried: brows slanted up-and-out, short guarded mouth.
+  // Confident — self-assured: smooth gently-arched brows, an easy open smile.
+  confident: {
+    south: [
+      brow('M -12 -6 Q -8 -8 -4 -7'),
+      brow('M 4 -7 Q 8 -8 12 -6'),
+      mouth('M -5 11 Q 0 14 5 11'),
+    ],
+    east: [brow('M 6 -7 Q 10 -8 15 -6'), mouth('M 11 11 Q 14 14 17 11')],
+  },
+
+  // Defensive — guarded/braced: brows slanted up-and-out, a short pressed mouth.
   defensive: {
     south: [
       brow('M -12 -8 L -4 -5'),
@@ -53,24 +60,14 @@ export const MOOD_OVERLAYS: Record<Mood, Partial<Record<Facing, ShapeSpec[]>>> =
     east: [brow('M 6 -5 L 15 -8'), mouth('M 12 11 L 17 11')],
   },
 
-  // Angry: brows slanted down toward the nose, deep frown.
-  hostile: {
+  // Reassured — comforted/calm: soft near-flat brows, a small gentle smile.
+  reassured: {
     south: [
-      brow('M -12 -8 L -4 -4'),
-      brow('M 4 -4 L 12 -8'),
-      mouth('M -5 13 Q 0 9 5 13'),
+      brow('M -12 -6 L -4 -6.5'),
+      brow('M 4 -6.5 L 12 -6'),
+      mouth('M -4 12 Q 0 14 4 12'),
     ],
-    east: [brow('M 6 -8 L 15 -4'), mouth('M 10 13 Q 14 9 17 13')],
-  },
-
-  // One brow up, one pressed down, squiggle mouth.
-  confused: {
-    south: [
-      brow('M -12 -7 Q -8 -9 -4 -6'),
-      brow('M 4 -5 L 12 -6'),
-      mouth('M -4 11 Q -2 9 0 11 Q 2 13 4 11'),
-    ],
-    east: [brow('M 6 -6 Q 10 -8 14 -5'), mouth('M 10 11 Q 12 9 14 11 Q 16 13 17 11')],
+    east: [brow('M 6 -6 L 15 -6.5'), mouth('M 11 12 Q 14 14 17 12')],
   },
 };
 
@@ -102,38 +99,33 @@ const gDot = (cx: number, cy: number): ShapeSpec =>
 export const MOOD_EMOTES: Record<Mood, MoodEmote | null> = {
   normal: null,
 
-  // Watching eye — almond lens with a pupil.
-  suspicious: {
-    color: UI_PALETTE.emote.moodSuspicious,
-    glyph: [gStroke('M -5 0 Q 0 -2.6 5 0 Q 0 2.6 -5 0 Z'), gDot(0, 0)],
+  // Sweat drop — the nervous bead. Bubble rides the negative (rose) valence.
+  anxious: {
+    color: UI_PALETTE.emote.moodAnxious,
+    glyph: [gFill('M 0 -4.6 Q 3 0.6 0 3.6 Q -3 0.6 0 -4.6 Z')],
   },
 
-  // Question mark.
-  curious: {
-    color: UI_PALETTE.emote.moodCurious,
-    glyph: [gStroke('M -2.6 -2.8 Q -2.6 -5.4 0 -5.4 Q 2.8 -5.4 2.8 -3 Q 2.8 -1 0 0.6 L 0 2.2'), gDot(0, 4.4)],
+  // Downturned pout — the offended frown.
+  slighted: {
+    color: UI_PALETTE.emote.moodSlighted,
+    glyph: [gStroke('M -4 1.6 Q 0 -2 4 1.6'), gDot(-3, -3), gDot(3, -3)],
   },
 
-  // Exclamation mark.
+  // Upward check — assured, affirmed. Bubble rides the positive (teal) valence.
+  confident: {
+    color: UI_PALETTE.emote.moodConfident,
+    glyph: [gStroke('M -3.6 0 L -1 2.8 L 4 -3.2')],
+  },
+
+  // Exclamation mark — guard up.
   defensive: {
     color: UI_PALETTE.emote.moodDefensive,
     glyph: [gStroke('M 0 -5.2 L 0 1.6'), gDot(0, 4.2)],
   },
 
-  // Scowl — furrowed brows over a frown. The vein-pop (💢) doesn't read at
-  // badge scale, but angry brows are unmistakable.
-  hostile: {
-    color: UI_PALETTE.emote.moodHostile,
-    glyph: [
-      gStroke('M -5.5 -4.5 L -1 -1.5'),
-      gStroke('M 5.5 -4.5 L 1 -1.5'),
-      gStroke('M -3.2 4 Q 0 1.4 3.2 4'),
-    ],
-  },
-
-  // Dizzy swirl.
-  confused: {
-    color: UI_PALETTE.emote.moodConfused,
-    glyph: [gStroke('M 3.4 -1.2 Q 3.4 -4.4 0 -4.4 Q -4.4 -4.4 -4.4 0 Q -4.4 4.4 1 4.4 Q 5 4.4 5 -0.6')],
+  // Gentle smile — calmed, comforted.
+  reassured: {
+    color: UI_PALETTE.emote.moodReassured,
+    glyph: [gStroke('M -4 -1 Q 0 2.6 4 -1'), gDot(-3, -3), gDot(3, -3)],
   },
 };

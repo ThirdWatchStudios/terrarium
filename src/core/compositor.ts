@@ -411,8 +411,13 @@ export function composeCharacter(
  * PROXIMITY, not truth: this is the corporation's drawing of the person, and
  * the UI frames it (see the `portrait-frame` icon); the photo ships bare.
  */
-export function composePortrait(recipe: CharacterRecipe, style: StyleSheet, pixelSize: number = CANVAS): string {
-  const placed = placeParts(recipe, 'south', 'normal');
+export function composePortrait(
+  recipe: CharacterRecipe,
+  style: StyleSheet,
+  pixelSize: number = CANVAS,
+  mood: Mood = 'normal',
+): string {
+  const placed = placeParts(recipe, 'south', mood);
   const inner = renderPlaced(placed, 'south', style, makeCharacterResolver(recipe));
   // Bust crop: head (center y 44, r ~21 + hair) and shoulders (body top y 58).
   const crop = { x: 24, y: 2, w: 80, h: 80 };

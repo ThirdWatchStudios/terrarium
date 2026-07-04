@@ -110,7 +110,7 @@ describe('symbol registry — register law', () => {
     }
 
     // The state-icon chrome mirrors the floor: same word, IRIS voice.
-    expect(byKey.get('state-icon/state-mood-hostile')?.mirrors).toBe('mood-emote/hostile');
+    expect(byKey.get('state-icon/state-mood-defensive')?.mirrors).toBe('mood-emote/defensive');
     expect(byKey.get('state-icon/state-emotion-embarrassment')?.mirrors).toBe('emotion-glyph/embarrassment');
     expect(byKey.get('state-icon/state-attn-harvestable')?.provenance).toBe('inferred');
     expect(byKey.get('state-icon/state-attn-conflict')?.provenance).toBe('measured');

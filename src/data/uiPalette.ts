@@ -26,8 +26,6 @@ const ORANGE = '#E0772F';
 const GREY = '#8A9099';
 const TEAL = '#2FA98F';
 const SKY = '#5B8DEF';
-const INDIGO = '#6E5BC4';
-const AZURE = '#3E78C8';
 const RED = '#CE4038';
 const SLATE = '#5B6B7A';
 const ROSE = '#D8638F';
@@ -113,11 +111,14 @@ export const UI_PALETTE = {
     // Routine knocked off course — the warm rumor coral, not alert red: disrupted
     // is off-nominal, not a fault (the prop-status family owns the fault red).
     disrupted: CORAL,
-    moodSuspicious: INDIGO,
-    moodCurious: AZURE,
-    moodDefensive: AMBER,
-    moodHostile: RED,
-    moodConfused: TEAL,
+    // Mood-face overhead bubbles — keyed to the sim's short-term social states.
+    // Bubble encodes VALENCE (negative→rose, positive→teal-blue), the glyph says
+    // which state (same rule as socialState below; the two now agree by hue).
+    moodAnxious: ROSE,
+    moodSlighted: ROSE,
+    moodConfident: TEAL_BLUE,
+    moodDefensive: ROSE,
+    moodReassured: TEAL_BLUE,
   },
   /**
    * Short-term social-state bubble hues (docs/icon-expansion-plan.md §3.D). The
@@ -217,11 +218,11 @@ export function themeColors(style: StyleSheet): Record<string, string> {
     'social-defensive': UI_PALETTE.socialState.defensive,
     'social-confident': UI_PALETTE.socialState.confident,
     'social-reassured': UI_PALETTE.socialState.reassured,
-    'emote-mood-suspicious': UI_PALETTE.emote.moodSuspicious,
-    'emote-mood-curious': UI_PALETTE.emote.moodCurious,
+    'emote-mood-anxious': UI_PALETTE.emote.moodAnxious,
+    'emote-mood-slighted': UI_PALETTE.emote.moodSlighted,
+    'emote-mood-confident': UI_PALETTE.emote.moodConfident,
     'emote-mood-defensive': UI_PALETTE.emote.moodDefensive,
-    'emote-mood-hostile': UI_PALETTE.emote.moodHostile,
-    'emote-mood-confused': UI_PALETTE.emote.moodConfused,
+    'emote-mood-reassured': UI_PALETTE.emote.moodReassured,
     'attn-emotion-spike': UI_PALETTE.attention.emotionSpike,
     'attn-conflict': UI_PALETTE.attention.conflict,
     'attn-information': UI_PALETTE.attention.information,

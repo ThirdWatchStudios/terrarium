@@ -1245,7 +1245,7 @@
       "y": 7,
       "refId": "janice",
       "facing": "east",
-      "mood": "suspicious",
+      "mood": "slighted",
       "rotation": 0
     },
     {
@@ -1255,7 +1255,7 @@
       "y": 1,
       "refId": "carl",
       "facing": "north",
-      "mood": "curious",
+      "mood": "confident",
       "rotation": 0
     },
     {
@@ -1275,7 +1275,7 @@
       "y": 11,
       "refId": "manager",
       "facing": "north",
-      "mood": "hostile",
+      "mood": "anxious",
       "rotation": 0
     }
   ],

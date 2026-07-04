@@ -171,18 +171,25 @@ const SOCIAL_STATE_STATE_ICONS: IconDef[] = [
 // --- Moods (the emoted mood-emotes atlas cells; moods.ts) ---------------------
 const MOOD_STATE_ICONS: IconDef[] = [
   {
-    id: 'state-mood-suspicious',
-    label: 'Suspicious',
+    id: 'state-mood-anxious',
+    label: 'Anxious',
     mode: 'tintable',
-    // The watching eye, as on the emote bubble.
-    shapes: [stroke('M -44 0 Q 0 -26 44 0 Q 0 26 -44 0 Z', 8), fill(circle(0, 0, 10))],
+    // Sweat drop — the nervous bead, as on the emote bubble.
+    shapes: [fill('M 0 -36 Q 24 4 0 28 Q -24 4 0 -36 Z')],
   },
   {
-    id: 'state-mood-curious',
-    label: 'Curious',
+    id: 'state-mood-slighted',
+    label: 'Slighted',
     mode: 'tintable',
-    // Question mark.
-    shapes: [stroke('M -24 -22 Q -24 -44 0 -44 Q 24 -44 24 -20 Q 24 -2 0 8 L 0 20', 10), fill(circle(0, 40, 8))],
+    // Downturned pout — lowered eyes over an offended frown.
+    shapes: [stroke('M -30 12 Q 0 -16 30 12', 10), fill(circle(-22, -22, 6)), fill(circle(22, -22, 6))],
+  },
+  {
+    id: 'state-mood-confident',
+    label: 'Confident',
+    mode: 'tintable',
+    // Upward check — assured, affirmed.
+    shapes: [stroke('M -28 0 L -8 22 L 32 -26', 12)],
   },
   {
     id: 'state-mood-defensive',
@@ -193,19 +200,11 @@ const MOOD_STATE_ICONS: IconDef[] = [
     shapes: [stroke('M 0 -44 L 0 12', 12), fill(circle(0, 38, 9))],
   },
   {
-    id: 'state-mood-hostile',
-    label: 'Hostile',
+    id: 'state-mood-reassured',
+    label: 'Reassured',
     mode: 'tintable',
-    // The scowl — furrowed brows over a frown.
-    shapes: [stroke('M -42 -34 L -8 -12', 10), stroke('M 42 -34 L 8 -12', 10), stroke('M -26 34 Q 0 12 26 34', 10)],
-  },
-  {
-    id: 'state-mood-confused',
-    label: 'Confused',
-    mode: 'tintable',
-    // Dizzy swirl — a turn and a half so the curl reads at 24px (the emote's
-    // single loop flattens into a broken circle at icon scale).
-    shapes: [stroke('M 6 0 Q 24 4 24 -12 Q 24 -38 0 -38 Q -38 -38 -38 0 Q -38 38 6 38 Q 44 38 44 -8', 9)],
+    // Gentle smile — calmed, comforted.
+    shapes: [stroke('M -30 -8 Q 0 22 30 -8', 10), fill(circle(-22, -22, 6)), fill(circle(22, -22, 6))],
   },
 ];
 

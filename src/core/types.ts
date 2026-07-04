@@ -6,12 +6,17 @@ export const FACINGS: Facing[] = ['south', 'east', 'north'];
 export type Slot = 'body' | 'head' | 'hair' | 'outfit' | 'accessory';
 
 /**
- * The six emotional states from the behavioral pressure model. Moods are
- * runtime state, not identity — they are face overlays selected at render
- * time, never stored in a recipe.
+ * The six short-term social states the simulation drives (the sim's
+ * `ShortTermSocialStateLabel`: none→normal, anxious, slighted, confident,
+ * defensive, reassured). Moods are runtime state, not identity — they are face
+ * overlays selected at render time, never stored in a recipe. This vocabulary
+ * is the shared contract with the sim: the floor body and the roster portrait
+ * both resolve the atlas by these keys, so the labels here MUST match the labels
+ * the sim emits (SpriteToolkitOfficeBinder.MoodOverlayIdFor). `confident` and
+ * `reassured` are the positive states — the only faces that read as a smile.
  */
-export type Mood = 'normal' | 'suspicious' | 'curious' | 'defensive' | 'hostile' | 'confused';
-export const MOODS: Mood[] = ['normal', 'suspicious', 'curious', 'defensive', 'hostile', 'confused'];
+export type Mood = 'normal' | 'anxious' | 'slighted' | 'confident' | 'defensive' | 'reassured';
+export const MOODS: Mood[] = ['normal', 'anxious', 'slighted', 'confident', 'defensive', 'reassured'];
 
 /**
  * Palette tokens. Parts never hardcode style colors — they reference tokens

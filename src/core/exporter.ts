@@ -1,7 +1,7 @@
 import JSZip from 'jszip';
 import type { CharacterRecipe, ProjectState, PropInstance, StyleSheet, TileInstance } from './types';
 import type { SceneState } from './scene';
-import { CANVAS, MOODS } from './types';
+import { CANVAS, MOODS, type Mood } from './types';
 import {
   PALETTE_TOKENS,
   characterLayers,
@@ -894,16 +894,24 @@ export function unitPosesAtlas(recipe: CharacterRecipe, style: StyleSheet, scale
   };
 }
 
-/** Corporate-identity bust (the badge photo) — one frame per scale. */
-function portraitDesc(recipe: CharacterRecipe, style: StyleSheet, scale: number): SheetDesc {
+/**
+ * Corporate-identity bust (the badge photo) — one frame per scale. `mood`
+ * selects the face overlay: the plain `portrait@` ships `normal`; the per-mood
+ * `portrait-<mood>@` variants let a consumer (the roster row) show the same
+ * expression the floor body wears for a given short-term social state.
+ */
+function portraitDesc(recipe: CharacterRecipe, style: StyleSheet, scale: number, mood: Mood = 'normal'): SheetDesc {
   const size = style.render.baseSize * scale;
   return {
     width: size,
     height: size,
     pixelScale: renderScale(style),
-    cells: [{ svg: composePortrait(recipe, style, size), dx: 0, dy: 0, dw: size, dh: size }],
+    cells: [{ svg: composePortrait(recipe, style, size, mood), dx: 0, dy: 0, dw: size, dh: size }],
   };
 }
+
+/** The non-normal moods, emitted as `portrait-<mood>@`; `normal` ships as the bare `portrait@`. */
+const PORTRAIT_MOODS: Mood[] = MOODS.filter((m) => m !== 'normal');
 
 export function moodAtlas(recipe: CharacterRecipe, style: StyleSheet, scale: number) {
   const size = style.render.baseSize * scale;
@@ -1177,6 +1185,12 @@ export async function exportAll(
       await write(`${dir}/unit-poses-atlas@${scale}x.json`, JSON.stringify(unitPosesAtlas(recipe, style, scale), null, 2));
       tick(`${recipe.name} unit poses`);
       await write(`${dir}/portrait@${scale}x.png`, await png(portraitDesc(recipe, style, scale)));
+      // Per-mood head-cropped portraits — the roster face reads the sim's
+      // short-term social state from these (portrait-<mood>@); `normal` stays the
+      // bare portrait@ above. Same bust crop, so they slot into a face-sized cell.
+      for (const mood of PORTRAIT_MOODS) {
+        await write(`${dir}/portrait-${mood}@${scale}x.png`, await png(portraitDesc(recipe, style, scale, mood)));
+      }
       tick(`${recipe.name} portrait`);
     }
     // The recipe is the IDENTITY; renderings are how each author draws it

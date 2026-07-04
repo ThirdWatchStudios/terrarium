@@ -2609,7 +2609,7 @@
       "y": 9,
       "refId": "manager",
       "facing": "north",
-      "mood": "hostile",
+      "mood": "anxious",
       "rotation": 0
     },
     {
@@ -2629,7 +2629,7 @@
       "y": 1,
       "refId": "carl",
       "facing": "east",
-      "mood": "curious",
+      "mood": "confident",
       "rotation": 0
     },
     {
@@ -2639,7 +2639,7 @@
       "y": 1,
       "refId": "linda",
       "facing": "east",
-      "mood": "suspicious",
+      "mood": "slighted",
       "rotation": 0
     },
     {
@@ -2659,7 +2659,7 @@
       "y": 11,
       "refId": "golden-executive-2",
       "facing": "north",
-      "mood": "suspicious",
+      "mood": "slighted",
       "rotation": 0
     },
     {
@@ -2669,7 +2669,7 @@
       "y": 2,
       "refId": "golden-hr-1",
       "facing": "north",
-      "mood": "suspicious",
+      "mood": "slighted",
       "rotation": 0
     },
     {
@@ -2689,7 +2689,7 @@
       "y": 11,
       "refId": "golden-finance-1",
       "facing": "north",
-      "mood": "suspicious",
+      "mood": "slighted",
       "rotation": 0
     },
     {
@@ -2709,7 +2709,7 @@
       "y": 2,
       "refId": "golden-it-1",
       "facing": "north",
-      "mood": "confused",
+      "mood": "reassured",
       "rotation": 0
     },
     {
@@ -2719,7 +2719,7 @@
       "y": 2,
       "refId": "golden-it-2",
       "facing": "north",
-      "mood": "curious",
+      "mood": "confident",
       "rotation": 0
     }
   ],

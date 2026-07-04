@@ -172,10 +172,10 @@ export function createDefaultScene(project: ProjectState): SceneState {
   addProp('prop-conference-table', 8, 5);
   addProp('prop-couch', 10, 5);
   addProp('prop-office-plant', 2, 5);
-  addCharacter('janice', 6, 5, 'suspicious', 'west');
-  addCharacter('carl', 7, 5, 'curious', 'east');
+  addCharacter('janice', 6, 5, 'slighted', 'west');
+  addCharacter('carl', 7, 5, 'confident', 'east');
   addCharacter('linda', 8, 4, 'defensive', 'south');
-  addCharacter('manager', 9, 5, 'hostile', 'south');
+  addCharacter('manager', 9, 5, 'anxious', 'south');
 
   return { cols, rows, floorIds, wallIds, entities, source: 'starter' };
 }

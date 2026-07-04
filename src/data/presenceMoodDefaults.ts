@@ -16,16 +16,16 @@ import type { PresenceChannel } from '../core/profile';
 export const DEFAULT_MOOD_EXPRESSION: Record<Mood, Partial<Record<PresenceChannel, number>>> = {
   // Baseline — no modulation.
   normal: {},
-  // Guarded and watchful: keeps distance, scans, holds back.
-  suspicious: { personalSpace: 20, attentiveness: 20, expressiveness: -10, gaitControl: 5, commitment: -5 },
-  // Drawn in and tracking: leans toward, quick to notice, a touch faster.
-  curious: { attentiveness: 25, personalSpace: -10, gaitSpeed: 5, latency: -5, expressiveness: 5 },
+  // Anxious — keyed up and self-protective: more space, jittery, scans, hesitant.
+  anxious: { personalSpace: 15, restlessness: 20, attentiveness: 15, gaitControl: -10, expressiveness: -10, commitment: -10 },
+  // Slighted — withdrawn and stewing: pulls back, closes off, slow to re-engage.
+  slighted: { personalSpace: 15, expressiveness: -15, latency: 10, commitment: -10, restlessness: 10 },
+  // Confident — open and decisive: closes distance, animated, quick, committed.
+  confident: { personalSpace: -15, expressiveness: 20, latency: -10, commitment: 20, gaitControl: 10, gaitSpeed: 5 },
   // Braced and contained: more space, tighter control, less open, a little keyed up.
   defensive: { personalSpace: 20, gaitControl: 10, expressiveness: -15, restlessness: 10, commitment: -5 },
-  // Closing in, fast and animated: less space, quicker, bigger, decisive.
-  hostile: { restlessness: 20, personalSpace: -20, gaitSpeed: 15, latency: -15, expressiveness: 15, commitment: 10 },
-  // Hesitant and fumbling: long pauses, second-guesses, loose control.
-  confused: { latency: 20, commitment: -20, gaitControl: -15, restlessness: 15, attentiveness: 5 },
+  // Reassured — settled and calm: relaxes in, steadier, warmer, quicker to commit.
+  reassured: { personalSpace: -10, restlessness: -15, gaitControl: 10, expressiveness: 10, commitment: 10 },
 };
 
 /** The default deltas for a mood (a fresh object), or `{}` for the baseline / unknown. */

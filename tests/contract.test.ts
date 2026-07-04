@@ -25,8 +25,10 @@ import { PROP_STATUSES } from '../src/parts/propStatus';
 // exported layer-atlas family matches the agent the game spawns.
 const SIM_AGENT_IDS = ['janice', 'carl', 'linda', 'manager'];
 
-// Sim ShortTermSocialStateLabel, lowercased — the mood overlay names.
-const SIM_MOOD_NAMES = ['normal', 'curious', 'suspicious', 'defensive', 'hostile', 'confused'];
+// Sim ShortTermSocialStateLabel, lowercased (None→normal) — the mood overlay
+// names the floor body + roster portrait resolve the atlas by. Must equal
+// WaterCooler.Simulation.ShortTermSocialStateLabel exactly.
+const SIM_MOOD_NAMES = ['normal', 'anxious', 'slighted', 'confident', 'defensive', 'reassured'];
 
 // Sim interaction anchors that need a *physical* prop counterpart (the rest are
 // navigation waypoints that resolve to location bounds, not props) → the tool
