@@ -288,7 +288,27 @@ export interface ProjectState {
   company?: import('./company').Company;
   /** The scene canvas — persisted so hand-edits survive reloads. */
   scene?: import('./scene').SceneState;
+  /**
+   * The project-wide LOOK (core/look.ts) — a coordinated restyle applied at
+   * EXPORT time over the authored palettes, NOT baked into them. Persisting the
+   * choice (instead of a one-time destructive palette sweep) means every asset
+   * refresh re-derives the same look; it can't silently drop when props/floors
+   * are re-randomized. Absent ⇒ {@link DEFAULT_LOOK}. Authored palettes stay
+   * vivid and editable in the tool; the look is a lens over them.
+   */
+  look?: LookId;
 }
+
+/**
+ * A project-wide look (core/look.ts). `clinical` is the IRIS plan view —
+ * desaturated architecture, thin uniform ink, no shadows (people stay warm,
+ * Article VIII). `raw` is the authored palettes untouched (the vivid authoring
+ * view). Applied at export/preview time; never baked into the stored palettes.
+ */
+export type LookId = 'raw' | 'clinical';
+export const LOOKS: LookId[] = ['clinical', 'raw'];
+/** The look a project exports as when it hasn't chosen one — the game's canonical floor. */
+export const DEFAULT_LOOK: LookId = 'clinical';
 
 /**
  * Current project/export schema version. Lives here (a dependency-free module)

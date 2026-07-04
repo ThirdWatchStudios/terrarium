@@ -18,6 +18,7 @@ import {
   stampProp,
   stampWall,
 } from '../core/scene';
+import { projectWithLook } from '../core/look';
 import { downloadBlob, downloadJson, scenePosterPng } from '../core/exporter';
 import { addBuildingSurround, removeBuildingSurround } from '../core/buildingSurround';
 import { PROP_TEMPLATES } from '../props/templates';
@@ -258,12 +259,16 @@ export function renderScenePreview(container: HTMLElement): void {
     container.append(el('p', { className: 'hint scene-mode-hint' }, 'Pick an interaction prop on the left, then click the map to place it. Right-click removes a prop.'));
 
   const current = scene();
+  // Preview through the project's LOOK lens (core/look.ts) so the tool shows the
+  // desaturated clinical floor exactly as it exports — the toggle isn't invisible
+  // until export. People stay warm (the lens leaves recipes untouched).
+  const lensed = projectWithLook(store.state);
   const frame = el('div', { className: 'scene-frame', style: `aspect-ratio: ${current.cols} / ${current.rows};` });
   const art = el('div', { className: `scene-art ${store.state.style.render.pixelScale > 1 ? 'pixelated-preview' : ''}` });
   setScenePreviewSvg(
     art,
-    composeSceneSvg(current, store.state, 64, { agents: agentView }),
-    store.state.style,
+    composeSceneSvg(current, lensed, 64, { agents: agentView }),
+    lensed.style,
     current.cols * 64,
     current.rows * 64,
     true,

@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { exportAll, type ExportSink, type Rasterizer } from '../src/core/exporter';
+import { projectWithLook } from '../src/core/look';
 import { defaultGoldenProject } from '../src/data/defaults';
 import { ROLE_TEMPLATES } from '../src/data/roleTemplates';
 import { SOCIAL_STATES } from '../src/parts/socialStates';
@@ -186,9 +187,11 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     const { json } = await exportPaths();
     const theme = JSON.parse(json.get('theme.json')!);
     const project = JSON.parse(json.get('project.json')!);
-    // The theme is generated from the same style, so --wc-line tracks the world.
-    expect(theme.palette.line, 'theme line color should equal the project outline').toBe(
-      project.style.outline.color,
+    // The theme tracks the outline the ART was actually rendered with — i.e. through
+    // the project's LOOK lens (core/look.ts), not the raw authored outline. project.json
+    // ships raw (editable) palettes; theme.uss ships the exported world's line color.
+    expect(theme.palette.line, 'theme line color should equal the exported (lensed) outline').toBe(
+      projectWithLook(project).style.outline.color,
     );
     expect(theme.palette.accent, 'theme is missing an accent color').toBeTruthy();
     // theme.uss is the USS form of the same palette.

@@ -1,4 +1,5 @@
 import type { ProjectState, StyleSheet } from './types';
+import { DEFAULT_LOOK } from './types';
 
 /**
  * Project-wide "looks" — coordinated restyles that touch BOTH the style sheet
@@ -78,9 +79,34 @@ export function clinicalStyle(base: StyleSheet): StyleSheet {
 }
 
 /**
+ * The project as it should RENDER under its chosen look — a non-destructive lens
+ * over the authored palettes (core/types.ts `ProjectState.look`). This is the
+ * seam the exporter and previews resolve through, so the look is reproducible:
+ * every asset refresh re-derives it from the persisted flag instead of relying
+ * on a one-time palette sweep that silently drops when assets are re-randomized.
+ *
+ * `raw` returns the project untouched (same reference — no clone). `clinical`
+ * returns a deep clone with {@link applyClinicalLook} applied, leaving the input
+ * (the authored, vivid, still-editable project) untouched. Absent look ⇒
+ * {@link DEFAULT_LOOK}.
+ */
+export function projectWithLook(project: ProjectState): ProjectState {
+  const look = project.look ?? DEFAULT_LOOK;
+  if (look !== 'clinical') {
+    return project;
+  }
+
+  const lensed = structuredClone(project);
+  applyClinicalLook(lensed);
+  lensed.look = 'clinical';
+  return lensed;
+}
+
+/**
  * Apply the clinical-plan look to the whole project: style sheet + every
  * prop/wall/floor palette. Characters keep their recipes untouched (people
- * stay warm — Article VIII). Idempotent: re-applying converges.
+ * stay warm — Article VIII). Idempotent: re-applying converges. MUTATES the
+ * argument — callers wanting a non-destructive result use {@link projectWithLook}.
  */
 export function applyClinicalLook(project: ProjectState): void {
   project.style = clinicalStyle(project.style);

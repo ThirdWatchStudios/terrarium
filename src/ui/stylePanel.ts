@@ -1,7 +1,7 @@
-import type { ProjectState, StylePreset, StyleSheet } from '../core/types';
+import type { LookId, ProjectState, StylePreset, StyleSheet } from '../core/types';
+import { DEFAULT_LOOK } from '../core/types';
 import { composeCharacter, composeProp } from '../core/compositor';
 import { composeSceneSvg } from '../core/scene';
-import { applyClinicalLook } from '../core/look';
 import { DEFAULT_STYLE, DEFAULT_STYLE_PRESETS } from '../data/defaults';
 import { normalizePixelScale, store } from '../state';
 import { button, clear, colorInput, el, labeled, select, slider } from './dom';
@@ -203,24 +203,21 @@ function renderPresetControls(container: HTMLElement): void {
     el(
       'p',
       { className: 'muted' },
-      'A look restyles the WHOLE project in one move — style sheet + every prop/wall/floor palette. ',
-      'Characters are never touched: the architecture goes clinical, the people stay warm ',
-      '(register-constitution.md Article VIII).',
+      'The look is a LENS applied at export/preview time over the authored palettes — not baked into ',
+      'them. It is persisted with the project, so every asset refresh re-derives the same look and it ',
+      'can never silently drop when props/floors are re-randomized. Characters are never touched: the ',
+      'architecture goes clinical, the people stay warm (register-constitution.md Article VIII).',
     ),
-    el(
-      'div',
-      { className: 'btn-row' },
-      button('Apply clinical plan (IRIS view)', () => {
-        if (
-          !confirm(
-            'Apply the clinical-plan look?\n\nSets thin ink outlines + no shadows and sweeps every prop/wall/floor ' +
-              'palette to near-white plan surfaces. Characters are untouched. This edits instance palettes ' +
-              '(re-color individual assets to revert, or Reset all).',
-          )
-        )
-          return;
-        store.mutate((state) => applyClinicalLook(state), 'structure');
-      }, 'primary'),
+    labeled(
+      'Project look',
+      select(
+        [
+          { value: 'clinical', label: 'Clinical plan (IRIS view) — desaturated architecture' },
+          { value: 'raw', label: 'Raw — authored palettes, vivid (authoring view)' },
+        ],
+        store.state.look ?? DEFAULT_LOOK,
+        (v) => store.mutate((state) => (state.look = v as LookId), 'structure'),
+      ),
     ),
     el('h3', {}, 'Style presets'),
     presetCards,

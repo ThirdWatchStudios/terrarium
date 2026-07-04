@@ -46,6 +46,7 @@ import { overlayStyleJson } from './overlayStyle';
 import { symbolRegistryJson } from './registry';
 import { POSES, poseCatalogJson } from '../parts/poses';
 import { unitRecipe, unitRenderingSpec } from './renderings';
+import { projectWithLook } from './look';
 
 /** Sheet frame order. West is baked as mirrored east for engine convenience. */
 const SHEET_FACINGS = ['south', 'east', 'north', 'west'] as const;
@@ -1138,10 +1139,16 @@ export interface ExportSink {
  * it, so their outputs are structurally identical.
  */
 export async function exportAll(
-  project: ProjectState,
+  rawProject: ProjectState,
   opts: { sink: ExportSink; rasterizer: Rasterizer; onProgress?: ExportProgress; scenarioTemplates?: ScenarioTemplate[] },
 ): Promise<void> {
   const { sink, rasterizer, onProgress } = opts;
+  // Render every asset through the project's LOOK (a non-destructive lens over the
+  // authored palettes — see core/look.ts). This is what makes the look reproducible:
+  // it re-derives on every export instead of depending on a one-time palette sweep.
+  // project.json below ships the RAW authored project (+ the look flag) so re-import
+  // preserves the editable palettes and never double-applies the look.
+  const project = projectWithLook(rawProject);
   const { style } = project;
   const scales = EXPORT_SCALES.length;
 
@@ -1330,7 +1337,9 @@ export async function exportAll(
   await write('theme.json', themeJson(style));
 
   onProgress?.(total, total, 'writing');
-  await write('project.json', JSON.stringify(project, null, 2));
+  // Ship the RAW authored project (vivid palettes + the look flag) so a re-import
+  // keeps editable colors and re-derives the look rather than double-applying it.
+  await write('project.json', JSON.stringify(rawProject, null, 2));
   // The company root (Epic 0 F0.8) — present only for a generated company package.
   // company.json sits at the bundle root with the org-structure / personas /
   // relationships / office-layout / scenarios below it as its children.
