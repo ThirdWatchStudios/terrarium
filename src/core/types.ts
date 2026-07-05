@@ -119,8 +119,29 @@ export interface PropTemplate {
    * Optional contact-shadow footprint in canvas coords (128 units). When set and
    * style.render.contactShadow > 0, composeProp draws a soft dark ellipse here,
    * beneath the prop. Omit for wall-slot props and anything that shouldn't cast.
+   * NOTE: this is a shadow ellipse, NOT grid occupancy — see gridFootprint.
    */
   footprint?: { cx: number; cy: number; rx: number; ry: number };
+  /**
+   * Whole-cell grid occupancy for the free-grid office builder (the office-builder
+   * pivot; terrarium-office-builder-assets.md §1). This is the collision /
+   * walkability / placement-validation unit the sim reasons about — distinct from
+   * `footprint` (a canvas-unit contact-shadow ellipse) and from the sprite's visual
+   * bounds. Art-determined: most props are 1×1; desks/tables/couches/cubicles claim
+   * more, per what the facility represents in the world (a conference table reads as
+   * several cells even though its art is drawn in one 128-unit cell). Emitted in the
+   * prop atlas, the office-layout props[], and the facility catalog so it travels to
+   * Unity.
+   */
+  gridFootprint: { w: number; h: number };
+  /**
+   * Sub-cell pivot within the grid footprint, as a fraction (0..1) of the footprint
+   * on each axis — where the prop's placement/origin cell sits inside the claimed
+   * area. Only meaningful for multi-cell props whose art isn't centered over the
+   * footprint. Absent ⇒ footprint center ({ x: 0.5, y: 0.5 }). Lets the builder align
+   * the rendered sprite over the occupied cells.
+   */
+  gridPivot?: { x: number; y: number };
   params: PropParamDef[];
   /**
    * Build shapes in canvas coords (128 design units). Elevation props rest on

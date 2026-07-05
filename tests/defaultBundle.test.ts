@@ -54,6 +54,7 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     'org-structure.json', // derived org chart (Epic 2)
     'scenario-template.json', // cast-agnostic template library (Epic 4)
     'office-layout.json', // rooms / wings / anchors (Epic 1)
+    'facility-catalog.json', // placeable-facility catalog (office-builder pivot, §1) — provisional v0
     'conversation-style.json',
     'activity-badges-atlas@1x.json',
     'mood-emotes-atlas@1x.json',
@@ -181,6 +182,87 @@ describe('default bundle is a complete, sim-importable baseline', () => {
         .filter((r: string) => r.startsWith('cubicle-farm')),
     );
     expect(coolerWings.size, 'department wings have no per-wing amenities').toBeGreaterThan(1);
+  });
+
+  it('ships a provisional facility catalog the office-builder can place from', async () => {
+    const { json } = await exportPaths();
+    const catalog = JSON.parse(json.get('facility-catalog.json')!);
+    // Provisional v0 schema — the sim (B1) may refine it once placement is proven.
+    expect(catalog.kind).toBe('facility-catalog');
+    expect(catalog.version).toBe(0);
+    expect(catalog.provisional).toBe(true);
+    expect(catalog.facilities.length, 'catalog covers more than a handful').toBeGreaterThan(15);
+    const byId = new Map<string, Record<string, unknown>>(catalog.facilities.map((f: { id: string }) => [f.id, f]));
+    // Every entry mirrors the sim FacilityDefinition shape: a whole-cell footprint,
+    // a kind, a rendering propId, and the reserved (unpopulated) need slot.
+    for (const f of catalog.facilities) {
+      expect(Number.isInteger(f.gridFootprint.w) && f.gridFootprint.w >= 1, `bad footprint on ${f.id}`).toBe(true);
+      expect(Number.isInteger(f.gridFootprint.h) && f.gridFootprint.h >= 1, `bad footprint on ${f.id}`).toBe(true);
+      expect(['Wall', 'Object', 'AnchoredFacility']).toContain(f.kind);
+      expect(typeof f.propId, `${f.id} missing propId`).toBe('string');
+      // B2's need-satisfaction slot must ship reserved (null), never populated yet.
+      expect(f.needsSatisfied, `${f.id} must leave needsSatisfied unpopulated`).toBeNull();
+    }
+    // Walls are a Wall-kind facility; the starter office set is present.
+    expect([...byId.values()].some((f) => f.kind === 'Wall'), 'no wall facility').toBe(true);
+    for (const id of ['desk', 'water_cooler', 'break_table', 'coffee_machine', 'conference_table']) {
+      expect(byId.has(id), `catalog missing starter facility "${id}"`).toBe(true);
+    }
+    // Interaction facilities are AnchoredFacility + carry the sim interactionType;
+    // larger furniture claims more than one cell (footprint is real, not always 1×1).
+    const cooler = byId.get('water_cooler')!;
+    expect(cooler.kind).toBe('AnchoredFacility');
+    expect(cooler.isInteractionAnchor).toBe(true);
+    expect(cooler.interactionType).toBe('water_cooler');
+    expect((byId.get('conference_table')!.gridFootprint as { w: number }).w).toBeGreaterThan(1);
+  });
+
+  it('ships re-tintable layer atlases for props, walls, and floors (palette-as-runtime-lever)', async () => {
+    const { paths, json } = await exportPaths();
+    const TOKENS = ['primary', 'secondary', 'accent'];
+    const validTint = (t: unknown) => t === null || TOKENS.includes(t as string);
+
+    // Props — flat sprite PLUS a layer sheet + manifest; token layers are recolorable.
+    expect([...paths].some((p) => /^props\/.+\/layers@1x\.png$/.test(p)), 'no prop layer sheet').toBe(true);
+    const propManifestPath = [...paths].find((p) => /^props\/.+\/layers-manifest@1x\.json$/.test(p));
+    expect(propManifestPath, 'no prop layer manifest').toBeTruthy();
+    const pm = JSON.parse(json.get(propManifestPath!)!);
+    expect(pm.kind).toBe('prop-layers');
+    expect(pm.tokens).toEqual(TOKENS);
+    for (const tok of TOKENS) expect(pm.palette[tok], `prop manifest palette missing default ${tok}`).toBeTruthy();
+    expect(pm.layers.length, 'prop manifest has no layers').toBeGreaterThan(0);
+    expect(pm.layers.some((l: { tint: unknown }) => l.tint !== null), 'prop has no re-tintable token layer').toBe(true);
+    expect(pm.layers.every((l: { tint: unknown }) => validTint(l.tint)), 'prop layer has an unknown tint').toBe(true);
+
+    // Walls — per-mask layer lists (each autotile segment splits independently), all 16 masks.
+    expect([...paths].some((p) => /^walls\/.+\/layers@1x\.png$/.test(p)), 'no wall layer sheet').toBe(true);
+    const wallManifestPath = [...paths].find((p) => /^walls\/.+\/layers-manifest@1x\.json$/.test(p));
+    const wm = JSON.parse(json.get(wallManifestPath!)!);
+    expect(wm.kind).toBe('wall-layers');
+    expect(wm.masks.length, 'wall manifest should carry all 16 neighbour masks').toBe(16);
+    expect(wm.masks.every((m: { layers: unknown[] }) => m.layers.length > 0), 'a wall mask has no layers').toBe(true);
+    expect(
+      wm.masks.every((m: { layers: { tint: unknown }[] }) => m.layers.every((l) => validTint(l.tint))),
+      'a wall layer has an unknown tint',
+    ).toBe(true);
+
+    // Floors — a layer atlas with a recolorable primary base.
+    expect([...paths].some((p) => /^floors\/.+\/layers@1x\.png$/.test(p)), 'no floor layer sheet').toBe(true);
+    const floorManifestPath = [...paths].find((p) => /^floors\/.+\/layers-manifest@1x\.json$/.test(p));
+    const fm = JSON.parse(json.get(floorManifestPath!)!);
+    expect(fm.kind).toBe('floor-layers');
+    expect(fm.tileable).toBe(true);
+    expect(fm.layers.some((l: { tint: unknown }) => l.tint === 'primary'), 'floor has no recolorable primary base').toBe(true);
+  });
+
+  it('emits per-prop grid footprints in office-layout.json (office-builder pivot)', async () => {
+    const { json } = await exportPaths();
+    const layout = JSON.parse(json.get('office-layout.json')!);
+    expect(layout.props.length, 'golden office has placed props').toBeGreaterThan(0);
+    for (const p of layout.props) {
+      expect(p.gridFootprint, `prop ${p.id} missing gridFootprint`).toBeTruthy();
+      expect(p.gridFootprint.w >= 1 && p.gridFootprint.h >= 1, `prop ${p.id} bad footprint`).toBe(true);
+    }
   });
 
   it('emits a UI theme whose line color matches the exported outline', async () => {

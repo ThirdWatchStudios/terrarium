@@ -1,10 +1,15 @@
 import JSZip from 'jszip';
 import type { CharacterRecipe, ProjectState, PropInstance, StyleSheet, TileInstance } from './types';
 import type { SceneState } from './scene';
-import { CANVAS, MOODS, type Mood } from './types';
+import { CANVAS, MOODS, type Mood, type PropPaletteToken } from './types';
 import {
   PALETTE_TOKENS,
+  PROP_PALETTE_TOKENS,
+  type TileLayer,
   characterLayers,
+  propLayers,
+  wallMaskLayers,
+  floorLayers,
   composeActivityBadge,
   composeCharacter,
   composeFloorTile,
@@ -29,7 +34,7 @@ import { EMOTION_DEFS, EMOTIONS } from '../parts/emotions';
 import { ATTENTION_PUFFS } from '../parts/attention';
 import { ACTIVITY_MOTION, MOOD_MOTION, PROP_STATUS_MOTION, SOCIAL_STATE_MOTION, EMOTION_MOTION, ATTENTION_MOTION } from '../parts/overheadMotion';
 import { conversationStyleJson } from './conversation';
-import { sceneToLayoutJson } from './layout';
+import { sceneToLayoutJson, facilityCatalogJson } from './layout';
 import { composeSceneSvg } from './scene';
 import type { EmployeeDefinition } from './employee';
 import { employeeRecipe } from './employee';
@@ -1005,6 +1010,10 @@ export function propAtlas(prop: PropInstance, style: StyleSheet, scale: number) 
   const template = PROP_TEMPLATES.find((t) => t.id === prop.templateId);
   const projection = template?.projection ?? 'elevation';
   const placement = template?.placement ?? 'floor';
+  // Whole-cell grid occupancy for the free-grid builder (office-builder pivot).
+  // Unknown-template props fall back to 1×1 (single cell), pivot to footprint center.
+  const gridFootprint = template?.gridFootprint ?? { w: 1, h: 1 };
+  const gridPivot = template?.gridPivot ?? { x: 0.5, y: 0.5 };
   const size = style.render.baseSize * scale;
   return {
     name: prop.name,
@@ -1014,6 +1023,8 @@ export function propAtlas(prop: PropInstance, style: StyleSheet, scale: number) 
     scale,
     projection,
     placement,
+    gridFootprint,
+    gridPivot,
     pivot: projection === 'plan' ? { x: 0.5, y: 0.5 } : { x: 0.5, y: 0.09 },
     meta: {
       generator: 'sprite-character-creator',
@@ -1026,6 +1037,149 @@ export function propAtlas(prop: PropInstance, style: StyleSheet, scale: number) 
 
 export async function propPng(prop: PropInstance, style: StyleSheet, scale: number): Promise<Blob> {
   return asBlob(defaultRasterizer().rasterizeSheet(propDesc(prop, style, scale)));
+}
+
+// ---------------------------------------------------------------------------
+// Re-tintable environment layer atlases (palette-as-runtime-lever). Each prop /
+// wall / floor also ships a `layers@Nx.png` sheet + `layers-manifest@Nx.json`
+// alongside its flat sprite: one row per re-tintable layer, token layers as white
+// masks the engine multiplies by a runtime colour, mirroring the character layer
+// atlas. Sheets never pixelate — re-tint masks must stay crisp/exact. The flat
+// sprite stays the default; a consumer that wants runtime palette control reads
+// the layer atlas instead.
+// ---------------------------------------------------------------------------
+
+interface LayerFrame {
+  key: string;
+  tint: PropPaletteToken | null;
+  frame: { x: number; y: number; w: number; h: number };
+}
+
+/** Stack an ordered TileLayer[] as a 1-column vertical sheet starting at `rowStart`. */
+function stackLayerCells(
+  layers: TileLayer[],
+  size: number,
+  rowStart: number,
+): { cells: RasterCell[]; frames: LayerFrame[] } {
+  const cells: RasterCell[] = [];
+  const frames: LayerFrame[] = layers.map((layer, i) => {
+    const y = (rowStart + i) * size;
+    cells.push({ svg: layerCellSvg(layer.markup, size), dx: 0, dy: y, dw: size, dh: size });
+    return { key: layer.key, tint: layer.tint, frame: { x: 0, y, w: size, h: size } };
+  });
+  return { cells, frames };
+}
+
+/** Shared manifest tail — the composite rule the engine follows to re-tint. */
+function layerCompositeMeta() {
+  return {
+    generator: 'sprite-character-creator',
+    composite:
+      'stack layers by ascending row; multiply each layer whose tint is non-null ' +
+      'by palette[tint] (white masks preserve anti-aliasing), draw tint:null layers as-is',
+  };
+}
+
+function propLayerSheetDesc(prop: PropInstance, style: StyleSheet, scale: number): SheetDesc {
+  const size = style.render.baseSize * scale;
+  const { cells } = stackLayerCells(propLayers(prop, style), size, 0);
+  return { width: size, height: size * Math.max(1, cells.length), pixelScale: 1, cells };
+}
+
+export function propLayerManifest(prop: PropInstance, style: StyleSheet, scale: number) {
+  const size = style.render.baseSize * scale;
+  const template = PROP_TEMPLATES.find((t) => t.id === prop.templateId);
+  const projection = template?.projection ?? 'elevation';
+  const { frames } = stackLayerCells(propLayers(prop, style), size, 0);
+  return {
+    kind: 'prop-layers' as const,
+    id: prop.id,
+    name: prop.name,
+    templateId: prop.templateId,
+    frameSize: size,
+    scale,
+    canvas: CANVAS,
+    projection,
+    placement: template?.placement ?? 'floor',
+    pivot: projection === 'plan' ? { x: 0.5, y: 0.5 } : { x: 0.5, y: 0.09 },
+    /** The palette tokens the engine may recolour (the runtime tint levers). */
+    tokens: [...PROP_PALETTE_TOKENS],
+    /** Authored default colours — an untouched import renders identically to the flat sprite. */
+    palette: prop.palette,
+    layers: frames,
+    meta: layerCompositeMeta(),
+  };
+}
+
+function floorLayerSheetDesc(floor: TileInstance, style: StyleSheet, scale: number): SheetDesc {
+  const size = style.render.baseSize * scale;
+  const { cells } = stackLayerCells(floorLayers(floor), size, 0);
+  return { width: size, height: size * Math.max(1, cells.length), pixelScale: 1, cells };
+}
+
+export function floorLayerManifest(floor: TileInstance, style: StyleSheet, scale: number) {
+  const size = style.render.baseSize * scale;
+  const { frames } = stackLayerCells(floorLayers(floor), size, 0);
+  return {
+    kind: 'floor-layers' as const,
+    id: floor.id,
+    name: floor.name,
+    templateId: floor.templateId,
+    frameSize: size,
+    scale,
+    canvas: CANVAS,
+    tileable: true,
+    pivot: { x: 0.5, y: 0.5 },
+    tokens: [...PROP_PALETTE_TOKENS],
+    palette: floor.palette,
+    // NOTE: floor layers are coalesced per token (not paint-order runs), so the
+    // stacked composite can differ imperceptibly from the flat tile where
+    // translucent speckles of different tokens overlap. Acceptable for flat,
+    // seamless floor patterns; run-splitting would explode the layer count.
+    layers: frames,
+    meta: layerCompositeMeta(),
+  };
+}
+
+function wallLayerSheetDesc(wall: TileInstance, style: StyleSheet, scale: number): SheetDesc {
+  const size = style.render.baseSize * scale;
+  const cells: RasterCell[] = [];
+  let row = 0;
+  for (let mask = 0; mask < 16; mask++) {
+    const layers = wallMaskLayers(wall, style, mask);
+    cells.push(...stackLayerCells(layers, size, row).cells);
+    row += layers.length;
+  }
+  return { width: size, height: size * Math.max(1, row), pixelScale: 1, cells };
+}
+
+export function wallLayerManifest(wall: TileInstance, style: StyleSheet, scale: number) {
+  const size = style.render.baseSize * scale;
+  const masks: Array<{ mask: number; name: string; layers: LayerFrame[] }> = [];
+  let row = 0;
+  for (let mask = 0; mask < 16; mask++) {
+    const layers = wallMaskLayers(wall, style, mask);
+    const { frames } = stackLayerCells(layers, size, row);
+    masks.push({ mask, name: maskName(mask), layers: frames });
+    row += layers.length;
+  }
+  return {
+    kind: 'wall-layers' as const,
+    id: wall.id,
+    name: wall.name,
+    templateId: wall.templateId,
+    frameSize: size,
+    scale,
+    canvas: CANVAS,
+    bits: { N: 1, E: 2, S: 4, W: 8 },
+    pivot: { x: 0.5, y: 0.5 },
+    tokens: [...PROP_PALETTE_TOKENS],
+    palette: wall.palette,
+    // Per-mask layers (each autotile segment splits independently), so the layer
+    // set varies by mask — read masks[m].layers, not a flat layer list.
+    masks,
+    meta: layerCompositeMeta(),
+  };
 }
 
 export async function scenePosterPng(scene: SceneState, project: ProjectState, scale: number): Promise<Blob> {
@@ -1238,6 +1392,9 @@ export async function exportAll(
     for (const scale of EXPORT_SCALES) {
       await write(`${dir}/sprite@${scale}x.png`, await png(propDesc(prop, style, scale)));
       await write(`${dir}/atlas@${scale}x.json`, JSON.stringify(propAtlas(prop, style, scale), null, 2));
+      // Re-tintable layer atlas (palette-as-runtime-lever) beside the flat sprite.
+      await write(`${dir}/layers@${scale}x.png`, await png(propLayerSheetDesc(prop, style, scale)));
+      await write(`${dir}/layers-manifest@${scale}x.json`, JSON.stringify(propLayerManifest(prop, style, scale), null, 2));
       tick(prop.name);
     }
     await write(`${dir}/prop.json`, JSON.stringify(prop, null, 2));
@@ -1248,6 +1405,9 @@ export async function exportAll(
     for (const scale of EXPORT_SCALES) {
       await write(`${dir}/tileset@${scale}x.png`, await png(wallTilesetDesc(wall, style, scale)));
       await write(`${dir}/atlas@${scale}x.json`, JSON.stringify(wallAtlas(wall, style, scale), null, 2));
+      // Re-tintable per-mask layer atlas beside the flat autotile tileset.
+      await write(`${dir}/layers@${scale}x.png`, await png(wallLayerSheetDesc(wall, style, scale)));
+      await write(`${dir}/layers-manifest@${scale}x.json`, JSON.stringify(wallLayerManifest(wall, style, scale), null, 2));
       tick(wall.name);
     }
     await write(`${dir}/wall.json`, JSON.stringify(wall, null, 2));
@@ -1258,6 +1418,9 @@ export async function exportAll(
     for (const scale of EXPORT_SCALES) {
       await write(`${dir}/tile@${scale}x.png`, await png(floorTileDesc(floor, style, scale)));
       await write(`${dir}/atlas@${scale}x.json`, JSON.stringify(floorAtlas(floor, style, scale), null, 2));
+      // Re-tintable layer atlas beside the flat tile.
+      await write(`${dir}/layers@${scale}x.png`, await png(floorLayerSheetDesc(floor, style, scale)));
+      await write(`${dir}/layers-manifest@${scale}x.json`, JSON.stringify(floorLayerManifest(floor, style, scale), null, 2));
       tick(floor.name);
     }
     await write(`${dir}/floor.json`, JSON.stringify(floor, null, 2));
@@ -1365,6 +1528,13 @@ export async function exportAll(
   if (project.scene) {
     await write('office-layout.json', JSON.stringify(sceneToLayoutJson(project.scene, project), null, 2));
   }
+  // The builder-facing facility catalog (office-builder pivot; terrarium-office-
+  // builder-assets.md §1) — a curated subset of the prop/wall templates flagged as
+  // placeable facilities, each mirroring the sim's FacilityDefinition (grid footprint,
+  // placement, rotatable, blocksWalk, interaction anchor). A stable, code-derived
+  // manifest (no project data), so it ships in every bundle. Schema is provisional
+  // (version 0) until B1 placement is proven.
+  await write('facility-catalog.json', JSON.stringify(facilityCatalogJson(), null, 2));
   // The cast-agnostic scenario-template library (Epic 4 F4.1) — the sim's runtime
   // caster binds these onto the live cast/office by precondition match (§3.8/§5.7).
   // The library is passed in (the UI supplies ROLE_TEMPLATES) so core carries no

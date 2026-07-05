@@ -2,7 +2,11 @@ import { describe, it, expect } from 'vitest';
 import { MOODS } from '../src/core/types';
 import { DEFAULT_CAST, DEFAULT_PROPS } from '../src/data/defaults';
 import { PROP_TEMPLATES } from '../src/props/templates';
+import { WALL_TEMPLATES, FLOOR_TEMPLATES } from '../src/tiles/templates';
 import { PROP_STATUSES } from '../src/parts/propStatus';
+import { INTERACTION_PROP_TYPES, facilityCatalogJson } from '../src/core/layout';
+import { tileShapeIsTintImpure } from '../src/core/compositor';
+import type { PropPalette, ShapeSpec } from '../src/core/types';
 
 /**
  * Tool ↔ game integration contracts.
@@ -76,5 +80,50 @@ describe('tool ↔ game integration contracts', () => {
 
   it('prop-status badge ids are a 1:1 match with the sim tamper-state ids', () => {
     expect([...PROP_STATUSES].sort()).toEqual([...SIM_TAMPER_STATE_IDS].sort());
+  });
+
+  // Office-builder pivot (terrarium-office-builder-assets.md §1, b1 build-spec §4):
+  // every prop template carries a whole-cell grid footprint, and the facility
+  // catalog mirrors the sim FacilityDefinition. These gate the tool half so the
+  // footprint/catalog fields can't silently drift from what the sim binds against.
+  it('every prop template declares a whole-cell grid footprint', () => {
+    for (const t of PROP_TEMPLATES) {
+      expect(t.gridFootprint, `prop template "${t.id}" missing gridFootprint`).toBeTruthy();
+      expect(Number.isInteger(t.gridFootprint.w) && t.gridFootprint.w >= 1, `bad footprint w on "${t.id}"`).toBe(true);
+      expect(Number.isInteger(t.gridFootprint.h) && t.gridFootprint.h >= 1, `bad footprint h on "${t.id}"`).toBe(true);
+    }
+  });
+
+  // Palette-as-runtime-lever (re-tintable layer atlases): every prop/wall/floor
+  // template must keep its palette TOKENS and fixed LITERALS on separate shapes,
+  // so each shape lands cleanly in one tint layer. A shape mixing a token on one
+  // channel with a literal on the other would get its literal part wrongly tinted
+  // at runtime. This is the tripwire — if it trips, promote the literal to a token
+  // or split the shape (see tileShapeIsTintImpure).
+  it('no prop/wall/floor template shape mixes a palette token with a literal', () => {
+    const PAL: PropPalette = { primary: '$primary', secondary: '$secondary', accent: '$accent' };
+    const params = (t: { params: Array<{ key: string; default: number }> }): Record<string, number> =>
+      Object.fromEntries(t.params.map((p) => [p.key, p.default]));
+    const offenders: string[] = [];
+    const scan = (id: string, shapes: ShapeSpec[]) => {
+      for (const s of shapes) if (tileShapeIsTintImpure(s)) offenders.push(`${id}: ${s.fill ?? ''}/${s.stroke ?? ''}`);
+    };
+    for (const t of PROP_TEMPLATES) scan(`prop ${t.id}`, t.build(params(t), PAL));
+    for (const t of FLOOR_TEMPLATES) scan(`floor ${t.id}`, t.build(params(t), PAL));
+    for (const t of WALL_TEMPLATES) for (let mask = 0; mask < 16; mask++) scan(`wall ${t.id} mask=${mask}`, t.build(mask, params(t), PAL));
+    expect(offenders, `tint-impure shapes:\n${offenders.join('\n')}`).toEqual([]);
+  });
+
+  it('facility-catalog interaction anchors mirror INTERACTION_PROP_TYPES exactly', () => {
+    const catalog = facilityCatalogJson();
+    // Provisional v0 schema — flagged so a bump is a deliberate, noticed change.
+    expect(catalog.version).toBe(0);
+    for (const f of catalog.facilities) {
+      if (f.kind === 'Wall') continue;
+      const expected = INTERACTION_PROP_TYPES[f.propId];
+      // AnchoredFacility ⇔ has an interaction type; the type equals the map value.
+      expect(f.isInteractionAnchor, `${f.id} anchor flag disagrees with the interaction map`).toBe(Boolean(expected));
+      expect(f.interactionType, `${f.id} interactionType disagrees with the interaction map`).toBe(expected ?? undefined);
+    }
   });
 });

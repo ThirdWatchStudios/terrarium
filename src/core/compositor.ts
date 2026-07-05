@@ -6,6 +6,7 @@ import type {
   PartVariant,
   PropInstance,
   PropPalette,
+  PropPaletteToken,
   ShapeSpec,
   StyleSheet,
 } from './types';
@@ -787,6 +788,150 @@ export function floorTileMarkup(floor: TileInstance): string {
 /** Render a floor tile: flat pattern, no outline pass, seamlessly tileable. */
 export function composeFloorTile(floor: TileInstance, style: StyleSheet, pixelSize?: number): string {
   return svgWrap(floorTileMarkup(floor), pixelSize ?? style.render.baseSize);
+}
+
+// ---------------------------------------------------------------------------
+// Re-tintable environment layers (palette-as-runtime-lever).
+//
+// The character pipeline already ships re-tintable part layers (characterLayers):
+// each palette-token bucket renders as a WHITE MASK the engine multiplies by a
+// runtime colour, preserving anti-aliasing; literal detail (fixed hex) stays
+// untinted. These functions extend that mechanism to props / walls / floors, so
+// the sim can recolour the whole environment at runtime (per-office theming, the
+// clinical drain) instead of the palette being baked into a flat sprite.
+//
+// Paint order is load-bearing: a couch's arms are painted OVER its seat, a wall's
+// junction post over its arms. Coalescing all same-token shapes into one layer
+// (the character model) would reorder those overlaps, so props + walls split into
+// CONTIGUOUS same-bucket runs (`runLayers`), which preserves the exact compose*
+// paint order when the layers are stacked in order. Floors are the exception:
+// they scatter hundreds of alternating $secondary/$accent speckles where runs
+// would explode into hundreds of one-shape layers, but the pattern is flat and
+// overlap-insensitive, so floors coalesce by token (`bucketLayers`).
+// ---------------------------------------------------------------------------
+
+/** The prop/wall/floor palette tokens the sim drives at runtime (the tint levers). */
+export const PROP_PALETTE_TOKENS: PropPaletteToken[] = ['primary', 'secondary', 'accent'];
+
+export interface TileLayer {
+  /** Stable layer key: a token name, `literal`/`literal-N`, `outline`, or `shadow`. */
+  key: string;
+  /** Palette token the engine multiplies this layer by, or null for untinted layers. */
+  tint: PropPaletteToken | null;
+  /** Inner SVG for one 128-unit cell (token shapes are white masks; literals real). */
+  markup: string;
+}
+
+function propTokenOf(ref: string | undefined): PropPaletteToken | null {
+  return ref && ref.startsWith('$') ? (ref.slice(1) as PropPaletteToken) : null;
+}
+
+/** Which tint bucket a shape belongs to — its fill token, else stroke token, else literal. */
+function bucketOf(s: ShapeSpec): PropPaletteToken | 'literal' {
+  return propTokenOf(s.fill) ?? propTokenOf(s.stroke) ?? 'literal';
+}
+
+/**
+ * True when a shape mixes a palette TOKEN on one channel with a fixed LITERAL on
+ * the other (e.g. `fill: '$primary'` + `stroke: '#000'`). Such a shape can't be
+ * assigned cleanly to a single tint layer — its literal part would be multiplied
+ * by the layer's token colour at runtime. No current template does this; the
+ * contract test asserts it stays that way (promote the literal to a token, or
+ * split the shape, if one ever appears).
+ */
+export function tileShapeIsTintImpure(s: ShapeSpec): boolean {
+  const fillTok = propTokenOf(s.fill);
+  const strokeTok = propTokenOf(s.stroke);
+  const fillLiteral = s.fill !== undefined && fillTok === null;
+  const strokeLiteral = s.stroke !== undefined && strokeTok === null;
+  return (fillTok !== null && strokeLiteral) || (strokeTok !== null && fillLiteral);
+}
+
+/** Emit a bucket's shapes: token buckets as white masks, the literal bucket in real colour. */
+function emitBucket(shapes: ShapeSpec[], bucket: PropPaletteToken | 'literal'): string {
+  const emit = bucket === 'literal' ? (s: ShapeSpec) => emitColorShape(s, identityResolve) : emitMaskShape;
+  return shapes.map(emit).join('');
+}
+
+/** Split an ordered shape list into contiguous same-bucket run layers (paint order preserved). */
+function runLayers(shapes: ShapeSpec[]): TileLayer[] {
+  const out: TileLayer[] = [];
+  let literalRun = 0;
+  for (let i = 0; i < shapes.length; ) {
+    const bucket = bucketOf(shapes[i]);
+    const run: ShapeSpec[] = [];
+    while (i < shapes.length && bucketOf(shapes[i]) === bucket) run.push(shapes[i++]);
+    out.push({
+      key: bucket === 'literal' ? `literal-${literalRun++}` : bucket,
+      tint: bucket === 'literal' ? null : bucket,
+      markup: emitBucket(run, bucket),
+    });
+  }
+  return out;
+}
+
+/** Coalesce into one layer per bucket, ordered by first appearance (flat floors). */
+function bucketLayers(shapes: ShapeSpec[]): TileLayer[] {
+  const order: Array<PropPaletteToken | 'literal'> = [];
+  const groups = new Map<string, ShapeSpec[]>();
+  for (const s of shapes) {
+    const bucket = bucketOf(s);
+    if (!groups.has(bucket)) {
+      groups.set(bucket, []);
+      order.push(bucket);
+    }
+    groups.get(bucket)!.push(s);
+  }
+  return order.map((bucket) => ({
+    key: bucket === 'literal' ? 'literal' : bucket,
+    tint: bucket === 'literal' ? null : bucket,
+    markup: emitBucket(groups.get(bucket)!, bucket),
+  }));
+}
+
+/** The baked outline layer (untinted) — the same silhouette pass compose* draws under colour. */
+function outlineLayer(shapes: ShapeSpec[], style: StyleSheet): TileLayer | null {
+  if (style.outline.width <= 0) return null;
+  const markup = shapes.filter(shapeIsSilhouette).map((s) => emitOutlineShape(s, style)).join('');
+  return markup ? { key: 'outline', tint: null, markup } : null;
+}
+
+/**
+ * A prop as re-tintable layers, stacked bottom→top exactly as composeProp paints:
+ * contact shadow (untinted), outline (untinted), then the colour runs. Empty when
+ * the template is unknown.
+ */
+export function propLayers(prop: PropInstance, style: StyleSheet): TileLayer[] {
+  const template = PROP_TEMPLATES.find((t) => t.id === prop.templateId);
+  if (!template) return [];
+  const shapes = template.build(prop.params, prop.palette);
+  const layers: TileLayer[] = [];
+  const fp = template.footprint;
+  const shadow = fp ? contactShadow(fp.cx, fp.cy, fp.rx, fp.ry, style) : '';
+  if (shadow) layers.push({ key: 'shadow', tint: null, markup: shadow });
+  const outline = outlineLayer(shapes, style);
+  if (outline) layers.push(outline);
+  layers.push(...runLayers(shapes));
+  return layers;
+}
+
+/** One autotile wall segment (neighbour mask) as re-tintable layers: outline then colour runs. */
+export function wallMaskLayers(wall: TileInstance, style: StyleSheet, mask: number): TileLayer[] {
+  const template = WALL_TEMPLATES.find((t) => t.id === wall.templateId);
+  if (!template) return [];
+  const shapes = template.build(mask, wall.params, wall.palette);
+  const layers: TileLayer[] = [];
+  const outline = outlineLayer(shapes, style);
+  if (outline) layers.push(outline);
+  layers.push(...runLayers(shapes));
+  return layers;
+}
+
+/** A floor tile as re-tintable layers — coalesced by token (flat, seamless pattern). */
+export function floorLayers(floor: TileInstance): TileLayer[] {
+  const template = FLOOR_TEMPLATES.find((t) => t.id === floor.templateId);
+  if (!template) return [];
+  return bucketLayers(template.build(floor.params, floor.palette));
 }
 
 /**

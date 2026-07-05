@@ -15,6 +15,7 @@ const SIZE = 128;
 const waterCooler: PropTemplate = {
   id: 'water-cooler',
   label: 'Water cooler',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'elevation',
   footprint: { cx: CX, cy: 117, rx: 21, ry: 4 },
   params: [{ key: 'height', label: 'Body height', min: 44, max: 68, step: 2, default: 56 }],
@@ -42,6 +43,7 @@ const waterCooler: PropTemplate = {
 const printer: PropTemplate = {
   id: 'printer',
   label: 'Printer',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'elevation',
   footprint: { cx: CX, cy: 117, rx: 26, ry: 4 },
   params: [{ key: 'width', label: 'Width', min: 44, max: 72, step: 2, default: 56 }],
@@ -68,6 +70,8 @@ const desk: PropTemplate = {
   id: 'desk',
   label: 'Desk',
   projection: 'plan',
+  // desk + chair approach reads as two cells across
+  gridFootprint: { w: 2, h: 1 },
   params: [
     { key: 'width', label: 'Width', min: 72, max: 120, step: 4, default: 100 },
     { key: 'monitor', label: 'Monitor', min: 0, max: 1, step: 1, default: 1 },
@@ -105,6 +109,7 @@ const desk: PropTemplate = {
 const coffeeMachine: PropTemplate = {
   id: 'coffee-machine',
   label: 'Coffee machine',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'elevation',
   footprint: { cx: CX, cy: 117, rx: 18, ry: 3.5 },
   params: [{ key: 'height', label: 'Height', min: 40, max: 56, step: 2, default: 48 }],
@@ -140,6 +145,7 @@ const coffeeMachine: PropTemplate = {
 const printerJammed: PropTemplate = {
   id: 'printer-jammed',
   label: 'Printer (jammed)',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'elevation',
   footprint: { cx: CX, cy: 117, rx: 26, ry: 4 },
   params: [{ key: 'width', label: 'Width', min: 44, max: 72, step: 2, default: 56 }],
@@ -176,6 +182,7 @@ const printerJammed: PropTemplate = {
 const coffeeMachineBroken: PropTemplate = {
   id: 'coffee-machine-broken',
   label: 'Coffee machine (broken)',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'elevation',
   footprint: { cx: CX, cy: 117, rx: 18, ry: 3.5 },
   params: [{ key: 'height', label: 'Height', min: 40, max: 56, step: 2, default: 48 }],
@@ -204,6 +211,7 @@ const coffeeMachineBroken: PropTemplate = {
 const waterCoolerEmpty: PropTemplate = {
   id: 'water-cooler-empty',
   label: 'Water cooler (empty)',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'elevation',
   footprint: { cx: CX, cy: 117, rx: 21, ry: 4 },
   params: [{ key: 'height', label: 'Body height', min: 44, max: 68, step: 2, default: 56 }],
@@ -231,6 +239,7 @@ const waterCoolerEmpty: PropTemplate = {
 const officePlant: PropTemplate = {
   id: 'office-plant',
   label: 'Office plant',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'elevation',
   footprint: { cx: CX, cy: 117, rx: 15, ry: 3.5 },
   params: [{ key: 'bushiness', label: 'Bushiness', min: 1, max: 3, step: 1, default: 2 }],
@@ -256,9 +265,364 @@ const officePlant: PropTemplate = {
   },
 };
 
+// --- Greenery (warm-personality set; prop-variety-gap-analysis.md P0) ----------
+// The office had exactly one plant. These add floor, wall, and desktop scale so a
+// space can read as lived-in and green. Foliage on $primary/$secondary and the pot
+// on $accent so they swatch cleanly per placement.
+
+const pottedTree: PropTemplate = {
+  id: 'potted-tree',
+  label: 'Potted tree',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 17, ry: 4 },
+  gridFootprint: { w: 1, h: 1 },
+  params: [
+    { key: 'height', label: 'Height', min: 74, max: 100, step: 2, default: 90 },
+    { key: 'fullness', label: 'Fullness', min: 1, max: 3, step: 1, default: 2 },
+  ],
+  build(params) {
+    const h = params.height ?? 90;
+    const canopyR = 22;
+    const canopyCy = GROUND - h + canopyR;
+    const potTop = GROUND - 22;
+    const trunkTop = canopyCy + 8;
+    const shapes: ShapeSpec[] = [
+      // tapered planter
+      { d: `M ${CX - 15} ${potTop} L ${CX + 15} ${potTop} L ${CX + 12} ${GROUND} L ${CX - 12} ${GROUND} Z`, fill: '$accent' },
+      { d: rr(CX - 16, potTop - 4, 32, 6, 2), fill: '$accent' },
+      // soil
+      { d: ellipse(CX, potTop - 1, 13, 3), fill: '#3B2F26', silhouette: false },
+      // woody trunk (literal detail — not a swatch token)
+      { d: rr(CX - 3, trunkTop, 6, potTop - trunkTop + 2, 2), fill: '#6E4A2A' },
+    ];
+    // canopy clusters
+    const clusters: Array<[number, number, number]> = [
+      [CX, canopyCy, canopyR],
+      [CX - 14, canopyCy + 11, 15],
+      [CX + 14, canopyCy + 11, 15],
+      [CX, canopyCy + 21, 16],
+    ];
+    if ((params.fullness ?? 2) >= 2) clusters.push([CX - 11, canopyCy - 8, 12], [CX + 12, canopyCy - 6, 11]);
+    if ((params.fullness ?? 2) >= 3) clusters.push([CX - 21, canopyCy + 3, 10], [CX + 21, canopyCy + 3, 10]);
+    for (const [cx, cy, r] of clusters) shapes.push({ d: circle(cx, cy, r), fill: '$primary' });
+    // depth shading
+    shapes.push(
+      { d: circle(CX + 9, canopyCy + 15, 10), fill: '$secondary', silhouette: false },
+      { d: circle(CX - 12, canopyCy + 6, 8), fill: '$secondary', silhouette: false },
+    );
+    return shapes;
+  },
+};
+
+const hangingPlant: PropTemplate = {
+  id: 'hanging-plant',
+  label: 'Hanging plant',
+  projection: 'plan',
+  placement: 'wall-slot',
+  gridFootprint: { w: 1, h: 1 },
+  params: [
+    { key: 'trail', label: 'Vine length', min: 14, max: 34, step: 2, default: 24 },
+    { key: 'fullness', label: 'Fullness', min: 1, max: 3, step: 1, default: 2 },
+  ],
+  build(params) {
+    const trail = params.trail ?? 24;
+    const topY = 46;
+    const potY = topY + 10;
+    const halfW = 11;
+    const shapes: ShapeSpec[] = [
+      // ceiling hook + hanging cords to the pot rim
+      { d: rr(CX - 1.5, topY - 6, 3, 5, 1), fill: '#5F5E5A', silhouette: false },
+      { d: `M ${CX - halfW + 2} ${potY} L ${CX} ${topY - 1} L ${CX + halfW - 2} ${potY}`, stroke: '#00000033', strokeWidth: 1, silhouette: false },
+      // planter
+      { d: `M ${CX - halfW} ${potY} L ${CX + halfW} ${potY} L ${CX + halfW - 3} ${potY + 11} L ${CX - halfW + 3} ${potY + 11} Z`, fill: '$accent' },
+      { d: rr(CX - halfW, potY - 2, halfW * 2, 4, 1.5), fill: '$accent' },
+    ];
+    // Foliage mound spilling over the rim (the plant body), THEN thin trailing
+    // vines with little paired leaves — reads as ivy/pothos, not a drip.
+    const rimY = potY + 2;
+    for (const [dx, r] of [[-8, 5], [-2, 6], [4, 6], [9, 5], [0, 5]] as Array<[number, number]>) {
+      shapes.push({ d: circle(CX + dx, rimY, r), fill: '$primary' });
+    }
+    shapes.push(
+      { d: circle(CX - 4, rimY + 1, 4), fill: '$secondary', silhouette: false },
+      { d: circle(CX + 6, rimY + 1, 3.5), fill: '$secondary', silhouette: false },
+    );
+    const vineTop = rimY + 4;
+    const vines: Array<[number, number]> = [[-8, 0.95], [-3, 1.15], [3, 1.0], [8, 0.85]];
+    const nv = Math.min(vines.length, (params.fullness ?? 2) + 1);
+    for (let i = 0; i < nv; i++) {
+      const [dx, k] = vines[i];
+      const vx = CX + dx;
+      const len = trail * k;
+      const sway = dx < 0 ? -1 : 1;
+      shapes.push({ d: `M ${vx} ${vineTop} q ${sway * 5} ${len * 0.4} ${sway * 2} ${len * 0.7} t ${-sway * 3} ${len * 0.3}`, stroke: '$primary', strokeWidth: 1.6, silhouette: false });
+      const leaves = 3;
+      for (let j = 1; j <= leaves; j++) {
+        const t = j / (leaves + 1);
+        const lx = vx + sway * 4 * Math.sin(t * Math.PI);
+        const ly = vineTop + len * t;
+        shapes.push({ d: ellipse(lx + (j % 2 ? 2 : -2), ly, 2, 3.2), fill: j % 2 ? '$secondary' : '$primary', silhouette: false });
+      }
+    }
+    return shapes;
+  },
+};
+
+const deskSucculent: PropTemplate = {
+  id: 'desk-succulent',
+  label: 'Desk succulent',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 9, ry: 2.5 },
+  gridFootprint: { w: 1, h: 1 },
+  params: [{ key: 'size', label: 'Size', min: 10, max: 18, step: 2, default: 14 }],
+  build(params) {
+    const s = params.size ?? 14;
+    const potTop = GROUND - s * 0.85;
+    const shapes: ShapeSpec[] = [
+      // terracotta pot
+      { d: `M ${CX - s * 0.55} ${potTop} L ${CX + s * 0.55} ${potTop} L ${CX + s * 0.46} ${GROUND} L ${CX - s * 0.46} ${GROUND} Z`, fill: '$accent' },
+      { d: rr(CX - s * 0.6, potTop - 3, s * 1.2, 5, 1.5), fill: '$accent' },
+      { d: ellipse(CX, potTop - 1, s * 0.48, 2), fill: '#3B2F26', silhouette: false },
+    ];
+    // Upright echeveria rosette: pointed leaves radiating from the crown, fanning
+    // up-and-out (never past ~55° off vertical, so it never crescents sideways).
+    const cy = potTop - 1;
+    const up = -Math.PI / 2;
+    const leaf = (deg: number, L: number, W: number, fill: string, sil = true) => {
+      const a = up + (deg * Math.PI) / 180;
+      const tx = CX + Math.cos(a) * L;
+      const ty = cy + Math.sin(a) * L;
+      const mx = CX + Math.cos(a) * L * 0.5;
+      const my = cy + Math.sin(a) * L * 0.5;
+      const px = Math.cos(a + Math.PI / 2) * W;
+      const py = Math.sin(a + Math.PI / 2) * W;
+      shapes.push({ d: `M ${CX} ${cy} Q ${mx + px} ${my + py} ${tx} ${ty} Q ${mx - px} ${my - py} ${CX} ${cy} Z`, fill, silhouette: sil });
+    };
+    // outer ring (darker, wider fan) then a tighter, lighter, more upright inner ring
+    for (const d of [-54, -27, 0, 27, 54]) leaf(d, s * 0.95, s * 0.17, '$secondary');
+    for (const d of [-30, 0, 30]) leaf(d, s * 0.62, s * 0.15, '$primary', false);
+    shapes.push({ d: circle(CX, cy - 1, 1.6), fill: '$primary', silhouette: false });
+    return shapes;
+  },
+};
+
+// --- Warm lighting + shelving (warm-personality set; P0) -----------------------
+// Warm lamps are the strongest "lived-in office" signal. Shade/foliage on the
+// palette tokens; the warm bulb-glow stays a fixed literal so a lamp always reads
+// as "on" regardless of swatch.
+
+const floorLamp: PropTemplate = {
+  id: 'floor-lamp',
+  label: 'Floor lamp',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 12, ry: 3.5 },
+  gridFootprint: { w: 1, h: 1 },
+  params: [{ key: 'height', label: 'Height', min: 78, max: 104, step: 2, default: 92 }],
+  build(params) {
+    const h = params.height ?? 92;
+    const top = GROUND - h;
+    const shadeBot = top + 24;
+    return [
+      // base + pole
+      { d: ellipse(CX, GROUND - 3, 13, 4), fill: '$secondary' },
+      { d: rr(CX - 3, GROUND - 6, 6, 4, 1), fill: '$secondary', silhouette: false },
+      { d: rr(CX - 2, shadeBot, 4, GROUND - shadeBot - 4, 2), fill: '$secondary' },
+      // warm light pooling below the shade
+      { d: ellipse(CX, shadeBot + 3, 16, 5), fill: '#FFE7A0', opacity: 0.4, silhouette: false },
+      // empire shade (wider at the bottom)
+      { d: `M ${CX - 18} ${shadeBot} L ${CX + 18} ${shadeBot} L ${CX + 13} ${top} L ${CX - 13} ${top} Z`, fill: '$primary' },
+      // warm glow at the shade mouth + accent trims
+      { d: rr(CX - 16, shadeBot - 3, 32, 4, 2), fill: '#FFE7A0', opacity: 0.6, silhouette: false },
+      { d: `M ${CX - 13} ${top + 1} L ${CX + 13} ${top + 1}`, stroke: '$accent', strokeWidth: 1.5, silhouette: false },
+      { d: `M ${CX - 18} ${shadeBot - 1} L ${CX + 18} ${shadeBot - 1}`, stroke: '$accent', strokeWidth: 1.5, silhouette: false },
+    ];
+  },
+};
+
+const deskLamp: PropTemplate = {
+  id: 'desk-lamp',
+  label: 'Desk lamp',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 9, ry: 3 },
+  gridFootprint: { w: 1, h: 1 },
+  params: [{ key: 'size', label: 'Size', min: 26, max: 40, step: 2, default: 32 }],
+  build(params) {
+    const s = params.size ?? 32;
+    const shadeBot = GROUND - s;
+    return [
+      // weighted base + stem (banker's-lamp silhouette)
+      { d: rr(CX - 8, GROUND - 5, 16, 5, 2), fill: '$secondary' },
+      { d: ellipse(CX, GROUND - 5, 9, 2.5), fill: '$secondary', silhouette: false },
+      { d: rr(CX - 1.5, shadeBot, 3, GROUND - shadeBot - 4, 1), fill: '$secondary' },
+      // warm glow under the dome
+      { d: ellipse(CX, shadeBot + 1, 11, 3), fill: '#FFE7A0', opacity: 0.55, silhouette: false },
+      // dome shade + accent band + finial
+      { d: `M ${CX - 13} ${shadeBot} L ${CX + 13} ${shadeBot} L ${CX + 11} ${shadeBot - 6} Q ${CX} ${shadeBot - 12} ${CX - 11} ${shadeBot - 6} Z`, fill: '$primary' },
+      { d: `M ${CX - 11} ${shadeBot - 1} L ${CX + 11} ${shadeBot - 1}`, stroke: '$accent', strokeWidth: 1.5, silhouette: false },
+      { d: circle(CX, shadeBot - 12, 1.6), fill: '$accent', silhouette: false },
+    ];
+  },
+};
+
+const bookshelf: PropTemplate = {
+  id: 'bookshelf',
+  label: 'Bookshelf',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 24, ry: 4.5 },
+  gridFootprint: { w: 1, h: 1 },
+  params: [
+    { key: 'shelves', label: 'Shelves', min: 3, max: 5, step: 1, default: 4 },
+    { key: 'fill', label: 'Stocked', min: 1, max: 3, step: 1, default: 3 },
+  ],
+  build(params) {
+    const shelves = params.shelves ?? 4;
+    const shelfH = 22;
+    const w = 44;
+    const h = shelves * shelfH + 6;
+    const top = GROUND - h;
+    const x = CX - w / 2;
+    const stock = params.fill ?? 3;
+    const shapes: ShapeSpec[] = [
+      // carcass + recessed back
+      { d: rr(x, top, w, h, 3), fill: '$primary' },
+      { d: rr(x + 3, top + 3, w - 6, h - 6, 2), fill: '#00000022', silhouette: false },
+    ];
+    const bookColors = ['$accent', '$secondary', '#B8543E', '#3D6B8E', '#C9A24B', '#6E8B5A'];
+    for (let s = 0; s < shelves; s++) {
+      const shelfBottom = top + 3 + (s + 1) * shelfH - 2;
+      shapes.push({ d: rr(x + 3, shelfBottom, w - 6, 3, 1), fill: '$primary', silhouette: false });
+      let bx = x + 6;
+      let k = s * 3 + 1;
+      while (bx < x + w - 9) {
+        const bw = 3 + ((k * 7) % 4);
+        const bh = 12 + ((k * 5) % 6);
+        const by = shelfBottom - bh;
+        if (stock >= 2 || k % 3 !== 0) {
+          if (k % 5 === 0) {
+            // a leaning book
+            shapes.push({ d: `M ${bx} ${shelfBottom} L ${bx + bh * 0.25} ${by + 1} L ${bx + bh * 0.25 + bw} ${by + 3} L ${bx + bw} ${shelfBottom} Z`, fill: bookColors[k % bookColors.length], silhouette: false });
+          } else {
+            shapes.push({ d: rr(bx, by, bw, bh, 0.5), fill: bookColors[k % bookColors.length], silhouette: false });
+          }
+        }
+        bx += bw + 1.5;
+        k++;
+      }
+    }
+    // personality on top: a couple of flat-stacked books + a small plant (literal green)
+    shapes.push(
+      { d: rr(x + 6, top - 5, 15, 5, 1), fill: '$accent', silhouette: false },
+      { d: rr(x + 8, top - 8, 11, 4, 1), fill: '$secondary', silhouette: false },
+      { d: rr(CX + 11, top - 7, 8, 7, 1), fill: '#8A5A3C', silhouette: false },
+      { d: circle(CX + 15, top - 10, 4), fill: '#5C8A3A', silhouette: false },
+      { d: circle(CX + 12, top - 8, 3), fill: '#4A7030', silhouette: false },
+    );
+    return shapes;
+  },
+};
+
+// --- Wall decor (warm-personality set; P0). Wall-slot, authored for the wall
+// band. Frame/paper/rim on the palette tokens; ink + mat stay literal. ------------
+
+const framedArt: PropTemplate = {
+  id: 'framed-art',
+  label: 'Framed art',
+  projection: 'plan',
+  placement: 'wall-slot',
+  gridFootprint: { w: 1, h: 1 },
+  params: [
+    { key: 'width', label: 'Width', min: 28, max: 46, step: 2, default: 36 },
+    { key: 'scene', label: 'Scene', min: 0, max: 2, step: 1, default: 1 },
+  ],
+  build(params) {
+    const w = params.width ?? 36;
+    const h = Math.round(w * 0.74);
+    const x = CX - w / 2;
+    const y = 64 - h / 2;
+    const scene = params.scene ?? 1;
+    const shapes: ShapeSpec[] = [
+      // frame + mat
+      { d: rr(x - 3, y - 3, w + 6, h + 6, 2), fill: '$primary' },
+      { d: rr(x, y, w, h, 1), fill: '#F2EDE0', silhouette: false },
+    ];
+    const ax = x + 3, ay = y + 3, aw = w - 6, ah = h - 6;
+    // simple framed landscape: sky wash, a hill, a sun
+    shapes.push({ d: rr(ax, ay, aw, ah, 1), fill: '$secondary', silhouette: false });
+    if (scene !== 2) shapes.push({ d: circle(ax + aw * 0.72, ay + ah * 0.32, aw * 0.11), fill: '$accent', silhouette: false });
+    shapes.push({ d: `M ${ax} ${ay + ah} L ${ax} ${ay + ah * 0.6} Q ${ax + aw * 0.4} ${ay + ah * 0.4} ${ax + aw * 0.7} ${ay + ah * 0.62} T ${ax + aw} ${ay + ah * 0.58} L ${ax + aw} ${ay + ah} Z`, fill: '#2F5D3A', silhouette: false });
+    if (scene >= 1) shapes.push({ d: `M ${ax} ${ay + ah * 0.78} Q ${ax + aw * 0.5} ${ay + ah * 0.62} ${ax + aw} ${ay + ah * 0.8} L ${ax + aw} ${ay + ah} L ${ax} ${ay + ah} Z`, fill: '#244A2E', silhouette: false });
+    return shapes;
+  },
+};
+
+const poster: PropTemplate = {
+  id: 'poster',
+  label: 'Poster',
+  projection: 'plan',
+  placement: 'wall-slot',
+  gridFootprint: { w: 1, h: 1 },
+  params: [{ key: 'lines', label: 'Caption lines', min: 1, max: 3, step: 1, default: 2 }],
+  build(params) {
+    const w = 30;
+    const h = 40;
+    const x = CX - w / 2;
+    const y = 64 - h / 2;
+    const shapes: ShapeSpec[] = [
+      // paper + thin border
+      { d: rr(x, y, w, h, 1), fill: '$primary' },
+      { d: rr(x + 1.5, y + 1.5, w - 3, h - 3, 1), stroke: '$secondary', strokeWidth: 1, silhouette: false },
+      // hero graphic — a summit (the eternal motivational-poster mountain)
+      { d: `M ${x + 5} ${y + h * 0.56} L ${x + w * 0.42} ${y + h * 0.22} L ${x + w - 5} ${y + h * 0.56} Z`, fill: '$accent', silhouette: false },
+      { d: `M ${x + w * 0.42} ${y + h * 0.22} L ${x + w * 0.52} ${y + h * 0.36} L ${x + w * 0.34} ${y + h * 0.36} Z`, fill: '#F2EDE0', silhouette: false },
+      // headline bar
+      { d: rr(x + 5, y + h * 0.64, w - 10, 4, 1), fill: '$secondary', silhouette: false },
+    ];
+    const lines = params.lines ?? 2;
+    for (let i = 0; i < lines; i++) {
+      shapes.push({ d: rr(x + 7, y + h * 0.76 + i * 4, w - 14 - i * 4, 2, 1), fill: '#00000055', silhouette: false });
+    }
+    return shapes;
+  },
+};
+
+const wallClock: PropTemplate = {
+  id: 'wall-clock',
+  label: 'Wall clock',
+  projection: 'plan',
+  placement: 'wall-slot',
+  gridFootprint: { w: 1, h: 1 },
+  params: [{ key: 'time', label: 'Hour hand', min: 0, max: 11, step: 1, default: 10 }],
+  build(params) {
+    const cy = 62;
+    const r = 15;
+    const shapes: ShapeSpec[] = [
+      { d: circle(CX, cy, r), fill: '$primary' },
+      { d: circle(CX, cy, r - 3), fill: '#F4F1E8', silhouette: false },
+    ];
+    // hour ticks
+    for (let i = 0; i < 12; i++) {
+      const a = (i / 12) * Math.PI * 2;
+      const ox = CX + Math.sin(a) * (r - 4);
+      const oy = cy - Math.cos(a) * (r - 4);
+      shapes.push({ d: circle(ox, oy, i % 3 === 0 ? 1.1 : 0.6), fill: '#2C2C2A', silhouette: false });
+    }
+    // hands
+    const hour = params.time ?? 10;
+    const ha = (hour / 12) * Math.PI * 2;
+    const ma = (Math.PI * 2) * 0.0; // 12 o'clock minute
+    shapes.push(
+      { d: `M ${CX} ${cy} L ${CX + Math.sin(ha) * (r - 8)} ${cy - Math.cos(ha) * (r - 8)}`, stroke: '#2C2C2A', strokeWidth: 2, silhouette: false },
+      { d: `M ${CX} ${cy} L ${CX + Math.sin(ma) * (r - 5)} ${cy - Math.cos(ma) * (r - 5)}`, stroke: '#2C2C2A', strokeWidth: 1.4, silhouette: false },
+      { d: circle(CX, cy, 1.6), fill: '$accent', silhouette: false },
+    );
+    return shapes;
+  },
+};
+
 const fridge: PropTemplate = {
   id: 'fridge',
   label: 'Break room fridge',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'elevation',
   footprint: { cx: CX, cy: 117, rx: 21, ry: 4.5 },
   params: [{ key: 'height', label: 'Height', min: 66, max: 90, step: 2, default: 78 }],
@@ -286,6 +650,8 @@ const conferenceTable: PropTemplate = {
   id: 'conference-table',
   label: 'Conference table',
   projection: 'plan',
+  // large meeting table ringed with chairs — a whole room's centerpiece
+  gridFootprint: { w: 3, h: 2 },
   params: [
     { key: 'width', label: 'Width', min: 84, max: 120, step: 4, default: 110 },
     { key: 'chairs', label: 'Chairs', min: 0, max: 8, step: 1, default: 6 },
@@ -325,6 +691,8 @@ const receptionDesk: PropTemplate = {
   id: 'reception-desk',
   label: 'Reception desk',
   projection: 'plan',
+  // L-shaped counter — front run plus a side return
+  gridFootprint: { w: 2, h: 2 },
   params: [{ key: 'width', label: 'Width', min: 72, max: 104, step: 4, default: 88 }],
   build(params) {
     const w = params.width ?? 88;
@@ -348,6 +716,7 @@ const receptionDesk: PropTemplate = {
 const badgeReader: PropTemplate = {
   id: 'badge-reader',
   label: 'Badge reader',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'plan',
   placement: 'wall-slot',
   params: [{ key: 'granted', label: 'Access granted', min: 0, max: 1, step: 1, default: 1 }],
@@ -373,6 +742,7 @@ const badgeReader: PropTemplate = {
 const door: PropTemplate = {
   id: 'door',
   label: 'Door',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'plan',
   placement: 'wall-slot',
   params: [
@@ -431,6 +801,7 @@ const door: PropTemplate = {
 const window: PropTemplate = {
   id: 'window',
   label: 'Window',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'plan',
   placement: 'wall-slot',
   params: [
@@ -460,6 +831,7 @@ const window: PropTemplate = {
 const nameplate: PropTemplate = {
   id: 'nameplate',
   label: 'Nameplate',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'plan',
   placement: 'wall-slot',
   params: [
@@ -485,6 +857,7 @@ const nameplate: PropTemplate = {
 const hvacVent: PropTemplate = {
   id: 'hvac-vent',
   label: 'HVAC vent',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'plan',
   placement: 'wall-slot',
   params: [
@@ -511,6 +884,7 @@ const hvacVent: PropTemplate = {
 const deskClutter: PropTemplate = {
   id: 'desk-clutter',
   label: 'Desk clutter',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'plan',
   params: [
     { key: 'papers', label: 'Paper piles', min: 1, max: 4, step: 1, default: 3 },
@@ -548,6 +922,7 @@ const couch: PropTemplate = {
   id: 'couch',
   label: 'Couch',
   projection: 'plan',
+  gridFootprint: { w: 2, h: 1 },
   params: [
     { key: 'width', label: 'Width', min: 62, max: 98, step: 4, default: 82 },
     { key: 'cushions', label: 'Cushions', min: 2, max: 3, step: 1, default: 3 },
@@ -576,6 +951,8 @@ const rug: PropTemplate = {
   id: 'rug',
   label: 'Rug',
   projection: 'plan',
+  // area rug defining a lounge zone; walkable, so it never blocks
+  gridFootprint: { w: 2, h: 2 },
   params: [
     { key: 'width', label: 'Width', min: 72, max: 112, step: 4, default: 96 },
     { key: 'pattern', label: 'Pattern', min: 0, max: 2, step: 1, default: 1 },
@@ -604,6 +981,7 @@ const rug: PropTemplate = {
 const vendingMachine: PropTemplate = {
   id: 'vending-machine',
   label: 'Vending machine',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'elevation',
   footprint: { cx: CX, cy: 117, rx: 25, ry: 4.5 },
   params: [
@@ -635,6 +1013,7 @@ const vendingMachine: PropTemplate = {
 const officeChair: PropTemplate = {
   id: 'office-chair',
   label: 'Office chair',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'plan',
   params: [{ key: 'size', label: 'Seat size', min: 10, max: 16, step: 1, default: 13 }],
   build(params) {
@@ -662,6 +1041,8 @@ const cubicleWorkstation: PropTemplate = {
   id: 'cubicle-workstation',
   label: 'Cubicle workstation',
   projection: 'plan',
+  // a partitioned one-person pod — desk, chair, and surrounding panels
+  gridFootprint: { w: 2, h: 2 },
   params: [
     { key: 'openness', label: 'Opening side', min: 0, max: 3, step: 1, default: 0 },
     { key: 'clutter', label: 'Desk clutter', min: 0, max: 2, step: 1, default: 1 },
@@ -734,6 +1115,7 @@ const cubicleWorkstation: PropTemplate = {
 const whiteboard: PropTemplate = {
   id: 'whiteboard',
   label: 'Whiteboard',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'elevation',
   footprint: { cx: CX, cy: 117, rx: 28, ry: 4 },
   params: [
@@ -771,6 +1153,7 @@ const whiteboard: PropTemplate = {
 const filingCabinet: PropTemplate = {
   id: 'filing-cabinet',
   label: 'Filing cabinet',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'elevation',
   footprint: { cx: CX, cy: 117, rx: 19, ry: 4 },
   params: [{ key: 'drawers', label: 'Drawers', min: 2, max: 4, step: 1, default: 3 }],
@@ -795,6 +1178,7 @@ const filingCabinet: PropTemplate = {
 const supplyCabinet: PropTemplate = {
   id: 'supply-cabinet',
   label: 'Supply cabinet',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'elevation',
   footprint: { cx: CX, cy: 117, rx: 22, ry: 4.5 },
   params: [{ key: 'height', label: 'Height', min: 60, max: 84, step: 2, default: 72 }],
@@ -829,6 +1213,7 @@ const supplyCabinet: PropTemplate = {
 const mailStation: PropTemplate = {
   id: 'mail-station',
   label: 'Mail station',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'elevation',
   footprint: { cx: CX, cy: 117, rx: 24, ry: 4.5 },
   params: [
@@ -876,6 +1261,7 @@ const mailStation: PropTemplate = {
 const trashBin: PropTemplate = {
   id: 'trash-bin',
   label: 'Trash bin',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'elevation',
   footprint: { cx: CX, cy: 117, rx: 14, ry: 3.5 },
   params: [{ key: 'height', label: 'Height', min: 28, max: 46, step: 2, default: 36 }],
@@ -903,6 +1289,7 @@ const trashBin: PropTemplate = {
 const waterStation: PropTemplate = {
   id: 'water-station',
   label: 'Water station',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'elevation',
   footprint: { cx: CX, cy: 117, rx: 18, ry: 4 },
   params: [{ key: 'height', label: 'Height', min: 46, max: 64, step: 2, default: 54 }],
@@ -929,6 +1316,7 @@ const waterStation: PropTemplate = {
 const coatRack: PropTemplate = {
   id: 'coat-rack',
   label: 'Coat rack',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'elevation',
   footprint: { cx: CX, cy: 117, rx: 12, ry: 3.5 },
   params: [{ key: 'hooks', label: 'Hooks', min: 2, max: 5, step: 1, default: 4 }],
@@ -960,6 +1348,7 @@ const coatRack: PropTemplate = {
 const bulletinBoard: PropTemplate = {
   id: 'bulletin-board',
   label: 'Bulletin board',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'elevation',
   params: [
     { key: 'width', label: 'Width', min: 48, max: 80, step: 4, default: 64 },
@@ -999,6 +1388,7 @@ const bulletinBoard: PropTemplate = {
 const wallCalendar: PropTemplate = {
   id: 'wall-calendar',
   label: 'Wall calendar',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'plan',
   placement: 'wall-slot',
   params: [{ key: 'rows', label: 'Week rows', min: 4, max: 6, step: 1, default: 5 }],
@@ -1030,6 +1420,7 @@ const wallCalendar: PropTemplate = {
 const waterFountain: PropTemplate = {
   id: 'water-fountain',
   label: 'Water fountain',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'plan',
   placement: 'wall-slot',
   params: [{ key: 'basins', label: 'Basins', min: 1, max: 2, step: 1, default: 1 }],
@@ -1060,6 +1451,8 @@ const kitchenetteCounter: PropTemplate = {
   id: 'kitchenette-counter',
   label: 'Kitchenette counter',
   projection: 'plan',
+  // a long galley counter run
+  gridFootprint: { w: 3, h: 1 },
   params: [
     { key: 'length', label: 'Length', min: 80, max: 124, step: 4, default: 108 },
     { key: 'sink', label: 'Sink', min: 0, max: 1, step: 1, default: 1 },
@@ -1101,6 +1494,8 @@ const loungeSeating: PropTemplate = {
   id: 'lounge-seating',
   label: 'Lounge seating',
   projection: 'plan',
+  // a ring of armchairs around a low table
+  gridFootprint: { w: 2, h: 2 },
   params: [{ key: 'seats', label: 'Seats', min: 2, max: 4, step: 1, default: 3 }],
   build(params) {
     const seats = params.seats ?? 3;
@@ -1130,6 +1525,8 @@ const breakTable: PropTemplate = {
   id: 'break-table',
   label: 'Break room table',
   projection: 'plan',
+  // round café table with a ring of stools
+  gridFootprint: { w: 2, h: 2 },
   params: [
     { key: 'diameter', label: 'Diameter', min: 40, max: 64, step: 4, default: 52 },
     { key: 'stools', label: 'Stools', min: 2, max: 4, step: 1, default: 4 },
@@ -1172,6 +1569,7 @@ const breakTable: PropTemplate = {
 const elevatorBank: PropTemplate = {
   id: 'elevator-bank',
   label: 'Elevator bank',
+  gridFootprint: { w: 2, h: 1 },
   projection: 'elevation',
   footprint: { cx: CX, cy: 117, rx: 30, ry: 4 },
   params: [
@@ -1213,6 +1611,7 @@ const elevatorBank: PropTemplate = {
 const exitSign: PropTemplate = {
   id: 'exit-sign',
   label: 'Exit / stairwell door',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'elevation',
   footprint: { cx: CX, cy: 117, rx: 22, ry: 4 },
   params: [{ key: 'height', label: 'Door height', min: 64, max: 84, step: 2, default: 76 }],
@@ -1243,6 +1642,7 @@ const exitSign: PropTemplate = {
 const neighborGlass: PropTemplate = {
   id: 'neighbor-glass',
   label: 'Neighbor suite glass',
+  gridFootprint: { w: 2, h: 1 },
   projection: 'plan',
   placement: 'wall-slot',
   params: [
@@ -1279,6 +1679,7 @@ const neighborGlass: PropTemplate = {
 const directoryPlacard: PropTemplate = {
   id: 'directory-placard',
   label: 'Building directory',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'plan',
   placement: 'wall-slot',
   params: [{ key: 'lines', label: 'Listing lines', min: 3, max: 7, step: 1, default: 5 }],
@@ -1309,6 +1710,7 @@ const directoryPlacard: PropTemplate = {
 const fireExtinguisher: PropTemplate = {
   id: 'fire-extinguisher',
   label: 'Extinguisher cabinet',
+  gridFootprint: { w: 1, h: 1 },
   projection: 'plan',
   placement: 'wall-slot',
   params: [{ key: 'size', label: 'Cabinet size', min: 16, max: 26, step: 2, default: 20 }],
@@ -1337,6 +1739,15 @@ export const PROP_TEMPLATES: PropTemplate[] = [
   coffeeMachineBroken,
   waterCoolerEmpty,
   officePlant,
+  pottedTree,
+  hangingPlant,
+  deskSucculent,
+  floorLamp,
+  deskLamp,
+  bookshelf,
+  framedArt,
+  poster,
+  wallClock,
   fridge,
   conferenceTable,
   receptionDesk,
