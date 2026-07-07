@@ -117,7 +117,7 @@ export function applyClinicalLook(project: ProjectState): void {
       accent: clinicalSurfaceColor(prop.palette.accent),
     };
   }
-  for (const tile of [...(project.walls ?? []), ...(project.floors ?? [])]) {
+  for (const tile of [...(project.walls ?? []), ...(project.floors ?? []), ...(project.ground ?? [])]) {
     tile.palette = {
       primary: clinicalSurfaceColor(tile.palette.primary),
       secondary: clinicalSurfaceColor(tile.palette.secondary),

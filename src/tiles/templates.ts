@@ -509,6 +509,138 @@ const lobbyStone: FloorTemplate = {
   },
 };
 
+// ---------------------------------------------------------------------------
+// Outdoor ground (B1.5 "the build site" — the bare parking lot the office is
+// raised onto). Authored with the same flat, seamless tile machinery as the
+// interior floors (they ARE FloorTemplates, so composeFloorTile renders them),
+// but they SHIP as a DISTINCT ground KIND (own export dir + sort band −20000 +
+// clinical-drain treatment — decision D2). Deliberately NO sheen bands or
+// non-tiling accents: ground spans the whole outdoor map, so any per-tile band
+// would print a visible 128-unit grid. Pure seamless speckle/joints only.
+// ---------------------------------------------------------------------------
+
+const grass: FloorTemplate = {
+  kind: 'floor',
+  id: 'grass',
+  label: 'Grass',
+  params: [
+    { key: 'blades', label: 'Blade density', min: 1, max: 3, step: 1, default: 2 },
+    { key: 'seed', label: 'Pattern seed', min: 1, max: 9, step: 1, default: 5 },
+  ],
+  build(params) {
+    const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
+    const rng = mulberry32((params.seed ?? 5) * 22307);
+    const count = (params.blades ?? 2) * 42;
+    for (let i = 0; i < count; i++) {
+      // resolve per-blade props before the wrap loops so edge blades match across tiles
+      const x = rng() * 128;
+      const y = rng() * 128;
+      const h = 3 + rng() * 4;
+      const lean = (rng() - 0.5) * 3;
+      const fill = rng() > 0.5 ? '$secondary' : '$accent';
+      for (const dx of [0, -128, 128]) {
+        for (const dy of [0, -128, 128]) {
+          if (x + dx > -4 && x + dx < 132 && y + dy > -6 && y + dy < 132) {
+            shapes.push({ d: `M ${x + dx} ${y + dy} L ${x + dx + lean} ${y + dy - h}`, stroke: fill, strokeWidth: 1.3, opacity: 0.5, silhouette: false });
+          }
+        }
+      }
+    }
+    return shapes;
+  },
+};
+
+const dirt: FloorTemplate = {
+  kind: 'floor',
+  id: 'dirt',
+  label: 'Dirt',
+  params: [
+    { key: 'clods', label: 'Clods', min: 1, max: 3, step: 1, default: 2 },
+    { key: 'seed', label: 'Pattern seed', min: 1, max: 9, step: 1, default: 3 },
+  ],
+  build(params) {
+    const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
+    const rng = mulberry32((params.seed ?? 3) * 40009);
+    const count = (params.clods ?? 2) * 30;
+    for (let i = 0; i < count; i++) {
+      const x = rng() * 128;
+      const y = rng() * 128;
+      const r = 1 + rng() * 3;
+      const ry = r * (0.6 + rng() * 0.4);
+      const fill = rng() > 0.5 ? '$secondary' : '$accent';
+      const op = 0.22 + rng() * 0.3;
+      for (const dx of [0, -128, 128]) {
+        for (const dy of [0, -128, 128]) {
+          if (x + dx > -6 && x + dx < 134 && y + dy > -6 && y + dy < 134) {
+            shapes.push(flat(ellipse(x + dx, y + dy, r, ry), fill, op));
+          }
+        }
+      }
+    }
+    return shapes;
+  },
+};
+
+const asphalt: FloorTemplate = {
+  kind: 'floor',
+  id: 'asphalt',
+  label: 'Asphalt',
+  params: [
+    { key: 'aggregate', label: 'Aggregate', min: 1, max: 3, step: 1, default: 2 },
+    { key: 'seed', label: 'Pattern seed', min: 1, max: 9, step: 1, default: 7 },
+  ],
+  build(params) {
+    const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
+    const rng = mulberry32((params.seed ?? 7) * 69061);
+    const count = (params.aggregate ?? 2) * 44;
+    for (let i = 0; i < count; i++) {
+      const x = rng() * 128;
+      const y = rng() * 128;
+      const r = 0.7 + rng() * 1.4;
+      const fill = rng() > 0.5 ? '$secondary' : '$accent';
+      const op = 0.2 + rng() * 0.28;
+      for (const dx of [0, -128, 128]) {
+        for (const dy of [0, -128, 128]) {
+          if (x + dx > -4 && x + dx < 132 && y + dy > -4 && y + dy < 132) {
+            shapes.push(flat(circle(x + dx, y + dy, r), fill, op));
+          }
+        }
+      }
+    }
+    return shapes;
+  },
+};
+
+const sidewalk: FloorTemplate = {
+  kind: 'floor',
+  id: 'sidewalk',
+  label: 'Sidewalk',
+  params: [{ key: 'slab', label: 'Slab size', min: 32, max: 64, step: 16, default: 64 }],
+  build(params) {
+    const g = params.slab ?? 64;
+    const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
+    // faint concrete fleck (fixed seed → deterministic)
+    const rng = mulberry32(51413);
+    for (let i = 0; i < 40; i++) {
+      const x = rng() * 128;
+      const y = rng() * 128;
+      for (const dx of [0, -128, 128]) {
+        for (const dy of [0, -128, 128]) {
+          if (x + dx > -2 && x + dx < 130 && y + dy > -2 && y + dy < 130) {
+            shapes.push(flat(circle(x + dx, y + dy, 0.8), '$secondary', 0.3));
+          }
+        }
+      }
+    }
+    // expansion joints on exact divisors of 128 → seams wrap seamlessly
+    for (let v = 0; v <= 128; v += g) {
+      shapes.push({ d: `M ${v} 0 L ${v} 128`, stroke: '#0000001F', strokeWidth: 1.5, silhouette: false });
+      shapes.push({ d: `M 0 ${v} L 128 ${v}`, stroke: '#0000001F', strokeWidth: 1.5, silhouette: false });
+    }
+    return shapes;
+  },
+};
+
 export const FLOOR_TEMPLATES: FloorTemplate[] = [
   carpet,
   carpetTiles,
@@ -519,7 +651,18 @@ export const FLOOR_TEMPLATES: FloorTemplate[] = [
   terrazzo,
   rubberMat,
   lobbyStone,
+  // Outdoor ground surfaces (B1.5 — shipped as the distinct ground kind).
+  grass,
+  dirt,
+  asphalt,
+  sidewalk,
 ];
+
+/** Ground-surface template ids — the outdoor floors that ship as the distinct
+ *  ground kind (B1.5 / D2), NOT interior floor. The sim imports these as a
+ *  separate layer (own sort band −20000). Kept here so the tool has one source
+ *  of truth for which FloorTemplates are ground. */
+export const GROUND_TEMPLATE_IDS = ['grass', 'dirt', 'asphalt', 'sidewalk'] as const;
 
 /** Human-readable name for a wall mask, used in atlas JSON. */
 export function maskName(mask: number): string {

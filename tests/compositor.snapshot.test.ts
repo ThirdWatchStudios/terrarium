@@ -12,6 +12,7 @@ import { PART_LIBRARY } from '../src/parts/library';
 import {
   DEFAULT_CAST,
   DEFAULT_FLOORS,
+  DEFAULT_GROUND,
   DEFAULT_PROPS,
   DEFAULT_STYLE,
   DEFAULT_WALLS,
@@ -140,6 +141,16 @@ describe('props', () => {
   for (const prop of DEFAULT_PROPS) {
     it(`${prop.id}`, async () => {
       await expect(composeProp(prop, STYLE, SIZE)).toMatchFileSnapshot(snap(`props/${prop.id}`));
+    });
+  }
+});
+
+// Outdoor ground (B1.5) — ground tiles render through the same flat-floor
+// compositor (they ARE FloorTemplates), so they snapshot exactly like floors.
+describe('ground', () => {
+  for (const g of DEFAULT_GROUND) {
+    it(`${g.id}`, async () => {
+      await expect(composeFloorTile(g, STYLE, SIZE)).toMatchFileSnapshot(snap(`ground/${g.id}`));
     });
   }
 });
