@@ -272,11 +272,17 @@ function wallConnects(scene: SceneState, doors: Set<string>, x: number, y: numbe
 }
 
 function wallMask(scene: SceneState, doors: Set<string>, x: number, y: number): number {
+  // Raw 8-neighbor bits (tiles/blob.ts NB layout) — the diagonals let the wall
+  // bevel turn inside corners. Doors connect diagonally by the same rule as edges.
   return (
     (wallConnects(scene, doors, x, y - 1) ? 1 : 0) |
     (wallConnects(scene, doors, x + 1, y) ? 2 : 0) |
     (wallConnects(scene, doors, x, y + 1) ? 4 : 0) |
-    (wallConnects(scene, doors, x - 1, y) ? 8 : 0)
+    (wallConnects(scene, doors, x - 1, y) ? 8 : 0) |
+    (wallConnects(scene, doors, x + 1, y - 1) ? 16 : 0) |
+    (wallConnects(scene, doors, x + 1, y + 1) ? 32 : 0) |
+    (wallConnects(scene, doors, x - 1, y + 1) ? 64 : 0) |
+    (wallConnects(scene, doors, x - 1, y - 1) ? 128 : 0)
   );
 }
 

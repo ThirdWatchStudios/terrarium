@@ -8,7 +8,8 @@ import {
   wallAtlas,
   wallTilesetPng,
 } from '../core/exporter';
-import { FLOOR_TEMPLATES, WALL_TEMPLATES, maskName } from '../tiles/templates';
+import { FLOOR_TEMPLATES, WALL_TEMPLATES, blobTileLabel } from '../tiles/templates';
+import { BLOB_CONFIGS, BLOB_TILE_COUNT } from '../tiles/blob';
 import { store } from '../state';
 import { button, clear, el, labeled, select, slider } from './dom';
 import { exportScaleSelect, listItem, paletteGrid, PROP_PALETTE_LABELS, uid } from './controls';
@@ -109,17 +110,17 @@ export function renderTilePreview(container: HTMLElement): void {
       DEMO_ROOM[0].length * 44,
       DEMO_ROOM.length * 44,
     );
-    container.append(el('p', { className: 'preview-caption' }, 'Sample room from the 16-piece autotile set'), room);
+    container.append(el('p', { className: 'preview-caption' }, 'Sample room from the 47-piece blob autotile set'), room);
 
     // the full tileset
     const sheet = el('div', { className: 'tile-sheet' });
-    for (let mask = 0; mask < 16; mask++) {
+    for (let i = 0; i < BLOB_TILE_COUNT; i++) {
       const cell = el('div', { className: `tile-sheet-cell checker${pixelated}` });
-      setPreviewSvg(cell, composeWallTile(tile, style, mask, 56), style, 56);
+      setPreviewSvg(cell, composeWallTile(tile, style, BLOB_CONFIGS[i], 56), style, 56);
       sheet.append(cell, );
-      cell.title = `${mask}: ${maskName(mask)}`;
+      cell.title = `${i}: ${blobTileLabel(i)}`;
     }
-    container.append(el('p', { className: 'preview-caption' }, 'Tileset (masks 0–15, hover for names)'), sheet);
+    container.append(el('p', { className: 'preview-caption' }, 'Tileset (blob tiles 0–46, hover for edges·pockets)'), sheet);
   } else {
     // 3x2 repeat in one svg proves the tile is seamless
     const repeat = el('div', { className: `tile-repeat${pixelated}` });

@@ -212,9 +212,10 @@ export interface StylePreset {
 }
 
 /**
- * Wall neighbor bitmask: N=1, E=2, S=4, W=8. A wall tileset has 16 segments,
- * one per mask, so walls auto-connect into straights, corners, tees, and
- * crosses when placed on the grid.
+ * Wall EDGE-neighbor bits: N=1, E=2, S=4, W=8 — the low 4 bits of the full
+ * 8-neighbor blob layout (tiles/blob.ts NB adds NE=16 SE=32 SW=64 NW=128).
+ * A wall tileset has 47 blob segments (BLOB_TILE_COUNT), so walls auto-connect
+ * into straights, corners, tees, crosses — and the bevel turns inside corners.
  */
 export const WALL_BITS = { N: 1, E: 2, S: 4, W: 8 } as const;
 
@@ -223,9 +224,11 @@ export interface WallTemplate {
   id: string;
   label: string;
   params: PropParamDef[];
-  /** Build one autotile segment for a neighbor mask. Connected arms overdraw
-   *  the tile edge so outlines stay continuous across tiles. */
-  build(mask: number, params: Record<string, number>, palette: PropPalette): ShapeSpec[];
+  /** Build one autotile segment for RAW 8-neighbor bits (tiles/blob.ts NB
+   *  layout; edge bits = WALL_BITS, so 4-bit detail passes keep working).
+   *  Connected arms overdraw the tile edge so outlines stay continuous across
+   *  tiles; the bevel resolves corners through the blob contract. */
+  build(neighbors: number, params: Record<string, number>, palette: PropPalette): ShapeSpec[];
 }
 
 export interface FloorTemplate {

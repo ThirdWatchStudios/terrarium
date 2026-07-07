@@ -752,16 +752,18 @@ export function layerCellSvg(markup: string, pixelSize: number): string {
   return svgWrap(markup, pixelSize);
 }
 
-/** Render one wall autotile segment (neighbor mask N=1,E=2,S=4,W=8). */
+/** Render one wall autotile segment for RAW 8-neighbor bits (tiles/blob.ts NB
+ *  layout: N1 E2 S4 W8 NE16 SE32 SW64 NW128). For the 47-tile catalog pass
+ *  `BLOB_CONFIGS[i]` (each canonical config is its own raw value). */
 export function composeWallTile(
   wall: TileInstance,
   style: StyleSheet,
-  mask: number,
+  neighbors: number,
   pixelSize?: number,
 ): string {
   const template = WALL_TEMPLATES.find((t) => t.id === wall.templateId);
   if (!template) return svgWrap('', pixelSize ?? style.render.baseSize);
-  const shapes = template.build(mask, wall.params, wall.palette);
+  const shapes = template.build(neighbors, wall.params, wall.palette);
   const resolve = makePropResolver(wall.palette);
   const outline =
     style.outline.width > 0
@@ -796,18 +798,19 @@ export function composeFloorTile(floor: TileInstance, style: StyleSheet, pixelSi
 // The character pipeline already ships re-tintable part layers (characterLayers):
 // each palette-token bucket renders as a WHITE MASK the engine multiplies by a
 // runtime colour, preserving anti-aliasing; literal detail (fixed hex) stays
-// untinted. These functions extend that mechanism to props / walls / floors, so
-// the sim can recolour the whole environment at runtime (per-office theming, the
-// clinical drain) instead of the palette being baked into a flat sprite.
+// untinted. These functions extend that mechanism to props / floors, so the sim
+// can recolour the environment at runtime (per-office theming, the clinical
+// drain) instead of the palette being baked into a flat sprite. (Walls opted
+// OUT: they are a fixed look — 47-blob plan D2 — and ship only flat autotiles.)
 //
-// Paint order is load-bearing: a couch's arms are painted OVER its seat, a wall's
-// junction post over its arms. Coalescing all same-token shapes into one layer
-// (the character model) would reorder those overlaps, so props + walls split into
-// CONTIGUOUS same-bucket runs (`runLayers`), which preserves the exact compose*
-// paint order when the layers are stacked in order. Floors are the exception:
-// they scatter hundreds of alternating $secondary/$accent speckles where runs
-// would explode into hundreds of one-shape layers, but the pattern is flat and
-// overlap-insensitive, so floors coalesce by token (`bucketLayers`).
+// Paint order is load-bearing: a couch's arms are painted OVER its seat.
+// Coalescing all same-token shapes into one layer (the character model) would
+// reorder those overlaps, so props split into CONTIGUOUS same-bucket runs
+// (`runLayers`), which preserves the exact compose* paint order when the layers
+// are stacked in order. Floors are the exception: they scatter hundreds of
+// alternating $secondary/$accent speckles where runs would explode into hundreds
+// of one-shape layers, but the pattern is flat and overlap-insensitive, so
+// floors coalesce by token (`bucketLayers`).
 // ---------------------------------------------------------------------------
 
 /** The prop/wall/floor palette tokens the sim drives at runtime (the tint levers). */
@@ -889,20 +892,6 @@ function bucketLayers(shapes: ShapeSpec[]): TileLayer[] {
   }));
 }
 
-/**
- * Wall masks stack ×16 into one atlas sheet, so a single mask that splits into a
- * pathological number of runs (heavy token-alternating detail — e.g. a foliage
- * wall whose leaves alternate $secondary/$accent) would blow the sheet height past
- * the rasterizer's max dimension. Cap it: beyond MAX_WALL_MASK_RUN_LAYERS, fall back
- * to token-coalescing (like floors). Safe here — a mask that busy is decorative
- * scatter, not the structural overlap run-splitting exists to preserve.
- */
-const MAX_WALL_MASK_RUN_LAYERS = 5;
-function boundedColorLayers(shapes: ShapeSpec[]): TileLayer[] {
-  const runs = runLayers(shapes);
-  return runs.length > MAX_WALL_MASK_RUN_LAYERS ? bucketLayers(shapes) : runs;
-}
-
 /** The baked outline layer (untinted) — the same silhouette pass compose* draws under colour. */
 function outlineLayer(shapes: ShapeSpec[], style: StyleSheet): TileLayer | null {
   if (style.outline.width <= 0) return null;
@@ -929,17 +918,9 @@ export function propLayers(prop: PropInstance, style: StyleSheet): TileLayer[] {
   return layers;
 }
 
-/** One autotile wall segment (neighbour mask) as re-tintable layers: outline then colour runs. */
-export function wallMaskLayers(wall: TileInstance, style: StyleSheet, mask: number): TileLayer[] {
-  const template = WALL_TEMPLATES.find((t) => t.id === wall.templateId);
-  if (!template) return [];
-  const shapes = template.build(mask, wall.params, wall.palette);
-  const layers: TileLayer[] = [];
-  const outline = outlineLayer(shapes, style);
-  if (outline) layers.push(outline);
-  layers.push(...boundedColorLayers(shapes));
-  return layers;
-}
+// NOTE: walls have NO re-tintable layer path — walls are a fixed look (47-blob
+// plan, D2). The old wallMaskLayers / per-mask layer atlas was dropped with the
+// 16→47 move; floors + props keep theirs below.
 
 /** A floor tile as re-tintable layers — coalesced by token (flat, seamless pattern). */
 export function floorLayers(floor: TileInstance): TileLayer[] {
@@ -950,8 +931,12 @@ export function floorLayers(floor: TileInstance): TileLayer[] {
 
 /**
  * Render a whole demo room as ONE svg from a wall layout grid (1 = wall).
- * Masks are computed from neighbors; a single unified outline pass runs under
- * all cells, so runs read as continuous walls with no per-tile seams.
+ * Each cell is the cell's finished autotile sprite (composeWallTile), nested as
+ * a clipped sub-<svg> and butted against its neighbours — EXACTLY how the sim
+ * assembles imported tiles. (An earlier version painted raw shapes unclipped;
+ * the bodies' connected-side overhang then over-painted the previous cell's
+ * bevel at every seam — an artifact the game never shows, because sprites clip
+ * the overhang at export.)
  */
 export function composeWallRoom(
   wall: TileInstance,
@@ -959,7 +944,6 @@ export function composeWallRoom(
   layout: number[][],
   cellPixelSize: number,
 ): string {
-  const template = WALL_TEMPLATES.find((t) => t.id === wall.templateId);
   const rows = layout.length;
   const cols = layout[0]?.length ?? 0;
   const width = cellPixelSize * cols;
@@ -967,26 +951,27 @@ export function composeWallRoom(
   const head =
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${cols * CANVAS} ${rows * CANVAS}" ` +
     `width="${width}" height="${height}">`;
-  if (!template) return `${head}</svg>`;
-
   const at = (r: number, c: number) => layout[r]?.[c] === 1;
-  const cells: Array<{ r: number; c: number; shapes: ShapeSpec[] }> = [];
+  let body = '';
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
       if (!at(r, c)) continue;
-      const mask = (at(r - 1, c) ? 1 : 0) | (at(r, c + 1) ? 2 : 0) | (at(r + 1, c) ? 4 : 0) | (at(r, c - 1) ? 8 : 0);
-      cells.push({ r, c, shapes: template.build(mask, wall.params, wall.palette) });
+      // Raw 8-neighbor bits (blob.ts NB layout) — diagonals let the bevel turn
+      // inside corners. The blob contract canonicalizes non-counting corners.
+      const neighbors =
+        (at(r - 1, c) ? 1 : 0) |
+        (at(r, c + 1) ? 2 : 0) |
+        (at(r + 1, c) ? 4 : 0) |
+        (at(r, c - 1) ? 8 : 0) |
+        (at(r - 1, c + 1) ? 16 : 0) |
+        (at(r + 1, c + 1) ? 32 : 0) |
+        (at(r + 1, c - 1) ? 64 : 0) |
+        (at(r - 1, c - 1) ? 128 : 0);
+      const tile = composeWallTile(wall, style, neighbors, CANVAS);
+      body += `<svg x="${c * CANVAS}" y="${r * CANVAS}" width="${CANVAS}" height="${CANVAS}" viewBox="0 0 ${CANVAS} ${CANVAS}">${tile.replace(/^<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '')}</svg>`;
     }
   }
-  const resolve = makePropResolver(wall.palette);
-  const place = (cell: { r: number; c: number }, inner: string) =>
-    inner ? `<g transform="translate(${cell.c * CANVAS} ${cell.r * CANVAS})">${inner}</g>` : '';
-  const outline =
-    style.outline.width > 0
-      ? cells.map((cell) => place(cell, cell.shapes.filter(shapeIsSilhouette).map((s) => emitOutlineShape(s, style)).join(''))).join('')
-      : '';
-  const color = cells.map((cell) => place(cell, cell.shapes.map((s) => emitColorShape(s, resolve)).join(''))).join('');
-  return `${head}${outline}${color}</svg>`;
+  return `${head}${body}</svg>`;
 }
 
 /** Render a floor tile repeated cols x rows in ONE svg to prove seamlessness. */

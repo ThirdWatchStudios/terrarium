@@ -1,5 +1,6 @@
 import type { FloorTemplate, ShapeSpec, WallTemplate } from '../core/types';
 import { WALL_BITS } from '../core/types';
+import { blobIndex, configForIndex } from './blob';
 import { rr, circle, ellipse } from '../core/geometry';
 import { mulberry32 } from '../core/random';
 
@@ -38,42 +39,84 @@ function wallBody(mask: number, fill: string): ShapeSpec {
   return { d: rr(x0, y0, x1 - x0, y1 - y0, radius), fill };
 }
 
+// Per-side chamfer widths (of 128) + face paint — RimWorld shading: a narrow
+// top/back cap, a TALLER lit vertical front face (the wall's visible height),
+// soft light on the left, shadow on the right, and a thin dark crease where the
+// flat top meets the front face.
+const BEVEL = {
+  n: { w: 10, fill: '#FFFFFF', opacity: 0.14 }, // top rim — soft light
+  s: { w: 30, fill: '#FFFFFF', opacity: 0.26 }, // FRONT FACE — lit
+  w: { w: 12, fill: '#FFFFFF', opacity: 0.1 }, //  left — soft light
+  e: { w: 14, fill: '#000000', opacity: 0.16 }, // right — shadow
+} as const;
+const CREASE = { stroke: '#000000', strokeWidth: 2, opacity: 0.18 } as const;
+
 /**
  * A top-lit bevel that makes a full-cell wall read as a raised, extruded block
- * (RimWorld-style dimension) instead of a flat slab: a highlight down the lit
- * (top / left) EXPOSED edges and a shadow down the shaded (bottom / right) ones.
- * Literal white/black at low alpha, so it layers over any wall colour and stays
- * fixed under runtime re-tinting (it's a light effect, not a palette surface).
- * Connected edges get nothing, so a wall run still reads as one continuous mass.
+ * (RimWorld-style dimension) instead of a flat slab: chamfered faces along the
+ * wall-mass PERIMETER, shaded per BEVEL. Literal white/black at low alpha, so it
+ * layers over any wall colour and stays fixed under runtime re-tinting (it's a
+ * light effect, not a palette surface).
+ *
+ * Takes the RAW 8-neighbor bits (blob.ts NB layout) and resolves them through the
+ * blob contract, so per corner it can branch three ways:
+ * - an adjacent edge is EXPOSED → the straight face handles it (miters at 45°
+ *   where two exposed sides meet, runs flush into any connected side);
+ * - both edges + the diagonal are wall (`solid`) → interior, flat, nothing;
+ * - both edges wall but the diagonal is floor (`concave`) → an inside corner. The
+ *   neighbours' faces run flush up to this cell and stop; the notch drawn here
+ *   turns the chamfer through the corner: the two faces bordering the floor
+ *   pocket sweep into the corner rectangle and meet along the 45° miter from the
+ *   pocket corner to the chamfer's inner corner (offset-polygon geometry), so the
+ *   dimension connects at tees, thick-wall pockets, and L insides.
  */
-function wallBevel(mask: number): ShapeSpec[] {
-  // Chamfered faces along the wall-mass PERIMETER, shaded the RimWorld way: the
-  // SOUTH exposed edge is the lit vertical FRONT FACE (brightest, so the wall reads
-  // as a raised block you're looking at from the front-top), the top rim + left
-  // catch a little light, the right sits in shadow, and a thin crease marks where
-  // the flat top surface meets the front face. A face runs flush to any CONNECTED
-  // side (so a straight run reads as one continuous wall) and miters at 45° where
-  // two exposed sides meet. Connected-only cells (a thick wall's interior) get no
-  // bevel and merge flat. Literal white/black → untinted layer, re-tint-safe.
-  const e = exposedSides(mask);
+function wallBevel(neighbors: number): ShapeSpec[] {
+  const cfg = configForIndex(blobIndex(neighbors));
   const s = SIZE;
-  const w = 22; // chamfer face width (of 128)
-  // Inner-edge offsets: miter toward a corner only when that adjacent side is also
-  // exposed; otherwise run flush to the connected edge.
-  const xL = e.w ? w : 0;
-  const xR = e.e ? s - w : s;
-  const yT = e.n ? w : 0;
-  const yB = e.s ? s - w : s;
   const out: ShapeSpec[] = [];
-  const face = (d: string, fill: string, opacity: number) => out.push({ d, fill, opacity, silhouette: false });
-  if (e.n) face(`M 0 0 L ${s} 0 L ${xR} ${w} L ${xL} ${w} Z`, '#FFFFFF', 0.14); //      top rim — soft light
-  if (e.w) face(`M 0 0 L 0 ${s} L ${w} ${yB} L ${w} ${yT} Z`, '#FFFFFF', 0.1); //       left — soft light
-  if (e.e) face(`M ${s} 0 L ${s} ${s} L ${s - w} ${yB} L ${s - w} ${yT} Z`, '#000000', 0.16); // right — shadow
-  if (e.s) {
-    face(`M 0 ${s} L ${s} ${s} L ${xR} ${s - w} L ${xL} ${s - w} Z`, '#FFFFFF', 0.26); // FRONT FACE — lit
-    // crease where the flat top surface meets the lit front face
-    out.push({ d: `M ${xL} ${s - w} L ${xR} ${s - w}`, stroke: '#000000', strokeWidth: 2, opacity: 0.18, silhouette: false });
+  const face = (d: string, side: keyof typeof BEVEL) =>
+    out.push({ d, fill: BEVEL[side].fill, opacity: BEVEL[side].opacity, silhouette: false });
+  const crease = (x0: number, x1: number, y: number) =>
+    out.push({ d: `M ${x0} ${y} L ${x1} ${y}`, ...CREASE, silhouette: false });
+
+  const exp = { n: !cfg.n, e: !cfg.e, s: !cfg.s, w: !cfg.w };
+  // Inner-edge offsets: miter toward a corner only when that adjacent side is also
+  // exposed; otherwise run flush to the connected edge (the notch takes over there).
+  const xL = exp.w ? BEVEL.w.w : 0;
+  const xR = exp.e ? s - BEVEL.e.w : s;
+  const yT = exp.n ? BEVEL.n.w : 0;
+  const yB = exp.s ? s - BEVEL.s.w : s;
+  if (exp.n) face(`M 0 0 L ${s} 0 L ${xR} ${BEVEL.n.w} L ${xL} ${BEVEL.n.w} Z`, 'n');
+  if (exp.w) face(`M 0 0 L 0 ${s} L ${BEVEL.w.w} ${yB} L ${BEVEL.w.w} ${yT} Z`, 'w');
+  if (exp.e) face(`M ${s} 0 L ${s} ${s} L ${s - BEVEL.e.w} ${yB} L ${s - BEVEL.e.w} ${yT} Z`, 'e');
+  if (exp.s) {
+    face(`M 0 ${s} L ${s} ${s} L ${xR} ${s - BEVEL.s.w} L ${xL} ${s - BEVEL.s.w} Z`, 's');
+    crease(xL, xR, s - BEVEL.s.w); // flat top meets the lit front face
   }
+
+  // Concave inside-corner notches. Per corner: P = the pocket corner point, the
+  // horizontal band (from the N/S side's face) enters along the E/W edge, the
+  // vertical band (from the E/W side's face) enters along the N/S edge, and
+  // I = the chamfer's inner corner. Each face fills its triangle of the corner
+  // rectangle; the shared hypotenuse P→I is the inside-corner miter.
+  const notch = (corner: 'ne' | 'se' | 'sw' | 'nw') => {
+    if (cfg[corner] !== 'concave') return;
+    const h = corner[0] as 'n' | 's'; // horizontal band's face (top rim / front)
+    const v = corner[1] as 'e' | 'w'; // vertical band's face (shadow / left light)
+    const P = { x: v === 'e' ? s : 0, y: h === 's' ? s : 0 };
+    const I = {
+      x: v === 'e' ? s - BEVEL.e.w : BEVEL.w.w,
+      y: h === 's' ? s - BEVEL.s.w : BEVEL.n.w,
+    };
+    face(`M ${P.x} ${P.y} L ${P.x} ${I.y} L ${I.x} ${I.y} Z`, h);
+    face(`M ${P.x} ${P.y} L ${I.x} ${P.y} L ${I.x} ${I.y} Z`, v);
+    // continue the neighbour's crease along the notch's front-face top edge
+    if (h === 's') crease(Math.min(P.x, I.x), Math.max(P.x, I.x), I.y);
+  };
+  notch('ne');
+  notch('se');
+  notch('sw');
+  notch('nw');
   return out;
 }
 
@@ -849,20 +892,12 @@ export const FLOOR_TEMPLATES: FloorTemplate[] = [
  *  of truth for which FloorTemplates are ground. */
 export const GROUND_TEMPLATE_IDS = ['grass', 'dirt', 'asphalt', 'sidewalk'] as const;
 
-/** Human-readable name for a wall mask, used in atlas JSON. */
-export function maskName(mask: number): string {
-  if (mask === 0) return 'isolated';
-  const dirs = [
-    mask & WALL_BITS.N ? 'N' : '',
-    mask & WALL_BITS.E ? 'E' : '',
-    mask & WALL_BITS.S ? 'S' : '',
-    mask & WALL_BITS.W ? 'W' : '',
-  ].join('');
-  const bits = dirs.length;
-  if (bits === 1) return `end-${dirs}`;
-  if (mask === 5) return 'straight-NS';
-  if (mask === 10) return 'straight-EW';
-  if (bits === 2) return `corner-${dirs}`;
-  if (bits === 3) return `tee-${dirs}`;
-  return 'cross';
+/** Human-readable label for a blob tile index (UI hover / preview sheets only —
+ *  atlas frame names stay the generic `mask_<i>`/`tile_<i>`, D3). */
+export function blobTileLabel(index: number): string {
+  const cfg = configForIndex(index);
+  const edges = ['n', 'e', 's', 'w'].filter((k) => cfg[k as 'n' | 'e' | 's' | 'w']).map((k) => k.toUpperCase());
+  const pockets = ['ne', 'se', 'sw', 'nw'].filter((k) => cfg[k as 'ne' | 'se' | 'sw' | 'nw'] === 'concave');
+  const base = edges.length ? edges.join('') : 'isolated';
+  return pockets.length ? `${base}·${pockets.join(',')}` : base;
 }

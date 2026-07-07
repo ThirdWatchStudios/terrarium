@@ -3,6 +3,7 @@ import { MOODS } from '../src/core/types';
 import { DEFAULT_CAST, DEFAULT_PROPS } from '../src/data/defaults';
 import { PROP_TEMPLATES } from '../src/props/templates';
 import { WALL_TEMPLATES, FLOOR_TEMPLATES } from '../src/tiles/templates';
+import { BLOB_CONFIGS } from '../src/tiles/blob';
 import { PROP_STATUSES } from '../src/parts/propStatus';
 import { INTERACTION_PROP_TYPES, facilityCatalogJson } from '../src/core/layout';
 import { tileShapeIsTintImpure } from '../src/core/compositor';
@@ -110,7 +111,8 @@ describe('tool ↔ game integration contracts', () => {
     };
     for (const t of PROP_TEMPLATES) scan(`prop ${t.id}`, t.build(params(t), PAL));
     for (const t of FLOOR_TEMPLATES) scan(`floor ${t.id}`, t.build(params(t), PAL));
-    for (const t of WALL_TEMPLATES) for (let mask = 0; mask < 16; mask++) scan(`wall ${t.id} mask=${mask}`, t.build(mask, params(t), PAL));
+    for (const t of WALL_TEMPLATES)
+      for (const cfg of BLOB_CONFIGS) scan(`wall ${t.id} config=${cfg}`, t.build(cfg, params(t), PAL));
     expect(offenders, `tint-impure shapes:\n${offenders.join('\n')}`).toEqual([]);
   });
 

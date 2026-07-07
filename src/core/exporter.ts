@@ -8,7 +8,6 @@ import {
   type TileLayer,
   characterLayers,
   propLayers,
-  wallMaskLayers,
   floorLayers,
   composeActivityBadge,
   composeCharacter,
@@ -44,7 +43,7 @@ import { buildOrgStructure } from './orgStructure';
 import { serializeCompany } from './company';
 import { serializeScenarioTemplateLibrary, type ScenarioTemplate } from './scenarioTemplate';
 import { PROP_TEMPLATES } from '../props/templates';
-import { maskName } from '../tiles/templates';
+import { BLOB_CONFIGS, BLOB_TILE_COUNT } from '../tiles/blob';
 import { themeUss, themeJson } from '../data/uiPalette';
 import { ICONS, CURSORS } from '../parts/icons';
 import { overlayStyleJson } from './overlayStyle';
@@ -634,16 +633,16 @@ export function cursorsManifest() {
 function wallTilesetDesc(wall: TileInstance, style: StyleSheet, scale: number): SheetDesc {
   const size = style.render.baseSize * scale;
   const cells: RasterCell[] = [];
-  for (let mask = 0; mask < 16; mask++) {
+  for (let i = 0; i < BLOB_TILE_COUNT; i++) {
     cells.push({
-      svg: composeWallTile(wall, style, mask, size),
-      dx: (mask % 4) * size,
-      dy: Math.floor(mask / 4) * size,
+      svg: composeWallTile(wall, style, BLOB_CONFIGS[i], size),
+      dx: (i % 8) * size,
+      dy: Math.floor(i / 8) * size,
       dw: size,
       dh: size,
     });
   }
-  return { width: size * 4, height: size * 4, pixelScale: renderScale(style), cells };
+  return { width: size * 8, height: size * 6, pixelScale: renderScale(style), cells };
 }
 
 function floorTileDesc(floor: TileInstance, style: StyleSheet, scale: number): SheetDesc {
@@ -950,8 +949,10 @@ export function moodAtlas(recipe: CharacterRecipe, style: StyleSheet, scale: num
 }
 
 /**
- * Wall tileset: 4x4 sheet, one segment per neighbor mask 0-15 in row-major
- * order (mask = row * 4 + column; bits N=1, E=2, S=4, W=8).
+ * Wall tileset: 8x6 sheet, one segment per blob tile index 0-46 in row-major
+ * order (index = row * 8 + column). Indices are the shared 256→47 contract
+ * (src/tiles/blob.ts + blob-index-table.json); the Unity sim computes the
+ * identical table and selects frames by the same index.
  */
 export async function wallTilesetPng(wall: TileInstance, style: StyleSheet, scale: number): Promise<Blob> {
   return asBlob(defaultRasterizer().rasterizeSheet(wallTilesetDesc(wall, style, scale)));
@@ -960,13 +961,15 @@ export async function wallTilesetPng(wall: TileInstance, style: StyleSheet, scal
 export function wallAtlas(wall: TileInstance, style: StyleSheet, scale: number) {
   const size = style.render.baseSize * scale;
   const frames: Record<string, { x: number; y: number; w: number; h: number; name: string }> = {};
-  for (let mask = 0; mask < 16; mask++) {
-    frames[`mask_${mask}`] = {
-      x: (mask % 4) * size,
-      y: Math.floor(mask / 4) * size,
+  // Frame naming stays `mask_<i>` (D3) — "mask" now means "blob index 0..46",
+  // so the sim's MaskFromFrameName parse is unchanged.
+  for (let i = 0; i < BLOB_TILE_COUNT; i++) {
+    frames[`mask_${i}`] = {
+      x: (i % 8) * size,
+      y: Math.floor(i / 8) * size,
       w: size,
       h: size,
-      name: maskName(mask),
+      name: `tile_${i}`,
     };
   }
   return {
@@ -976,10 +979,15 @@ export function wallAtlas(wall: TileInstance, style: StyleSheet, scale: number) 
     frameSize: size,
     scale,
     kind: 'wall' as const,
-    bits: { N: 1, E: 2, S: 4, W: 8 },
+    bits: { N: 1, E: 2, S: 4, W: 8, NE: 16, SE: 32, SW: 64, NW: 128 },
     frames,
     pivot: { x: 0.5, y: 0.5 },
-    meta: { generator: 'sprite-character-creator', autotile: '4-bit neighbor mask', sorting: 'wall-layer' },
+    meta: {
+      generator: 'sprite-character-creator',
+      autotile: '8-neighbor blob (47)',
+      blobTable: 'blob-index-table.json (shared 256→47 contract; frame mask_<i> = blob index)',
+      sorting: 'wall-layer',
+    },
   };
 }
 
@@ -1067,7 +1075,8 @@ export async function propPng(prop: PropInstance, style: StyleSheet, scale: numb
 
 // ---------------------------------------------------------------------------
 // Re-tintable environment layer atlases (palette-as-runtime-lever). Each prop /
-// wall / floor also ships a `layers@Nx.png` sheet + `layers-manifest@Nx.json`
+// floor also ships a `layers@Nx.png` sheet + `layers-manifest@Nx.json` (walls do
+// NOT — fixed look, 47-blob plan D2)
 // alongside its flat sprite: one row per re-tintable layer, token layers as white
 // masks the engine multiplies by a runtime colour, mirroring the character layer
 // atlas. Sheets never pixelate — re-tint masks must stay crisp/exact. The flat
@@ -1105,34 +1114,6 @@ function envLayerAtlas(
     return { key: layer.key, tint: layer.tint, frame: name };
   });
   return { cells, frames, entries };
-}
-
-/** Wall layer atlas: a grid of 16 mask columns × layer rows; frame names m<mask>_L<i>. */
-function wallLayerAtlas(
-  perMask: TileLayer[][],
-  size: number,
-): {
-  cells: RasterCell[];
-  frames: Record<string, FrameRect>;
-  masks: Array<{ mask: number; name: string; layers: LayerEntry[] }>;
-  maxRows: number;
-} {
-  const cells: RasterCell[] = [];
-  const frames: Record<string, FrameRect> = {};
-  let maxRows = 0;
-  const masks = perMask.map((layers, mask) => {
-    maxRows = Math.max(maxRows, layers.length);
-    const entries: LayerEntry[] = layers.map((layer, i) => {
-      const name = `m${mask}_L${i}`;
-      const x = mask * size;
-      const y = i * size;
-      cells.push({ svg: layerCellSvg(layer.markup, size), dx: x, dy: y, dw: size, dh: size });
-      frames[name] = { x, y, w: size, h: size };
-      return { key: layer.key, tint: layer.tint, frame: name };
-    });
-    return { mask, name: maskName(mask), layers: entries };
-  });
-  return { cells, frames, masks, maxRows };
 }
 
 /** Shared manifest tail — the composite rule the engine follows to re-tint. */
@@ -1233,56 +1214,8 @@ export function groundLayerManifest(ground: TileInstance, style: StyleSheet, sca
   };
 }
 
-// Wall layer atlas layout: a GRID of 16 mask COLUMNS × layer ROWS (NOT one tall
-// column). Stacking all masks' layers vertically produced a single column tens of
-// thousands of px tall — fine for the headless resvg backend but past the browser
-// canvas max-dimension (~16384px), so the in-app export died on the wall sheets.
-// The grid caps width at 16·size and height at maxLayers·size (the per-mask run
-// count is bounded in compositor.wallMaskLayers), keeping both well under the limit.
-function wallMaskLayerGrid(wall: TileInstance, style: StyleSheet) {
-  const perMask: TileLayer[][] = [];
-  let maxLayers = 0;
-  for (let mask = 0; mask < 16; mask++) {
-    const layers = wallMaskLayers(wall, style, mask);
-    perMask.push(layers);
-    maxLayers = Math.max(maxLayers, layers.length);
-  }
-  return { perMask, maxLayers };
-}
-
-function wallLayerSheetDesc(wall: TileInstance, style: StyleSheet, scale: number): SheetDesc {
-  const size = style.render.baseSize * scale;
-  const { perMask } = wallMaskLayerGrid(wall, style);
-  const { cells, maxRows } = wallLayerAtlas(perMask, size);
-  return { width: size * 16, height: size * Math.max(1, maxRows), pixelScale: 1, cells };
-}
-
-export function wallLayerManifest(wall: TileInstance, style: StyleSheet, scale: number) {
-  const size = style.render.baseSize * scale;
-  const { perMask } = wallMaskLayerGrid(wall, style);
-  const { frames, masks } = wallLayerAtlas(perMask, size);
-  return {
-    kind: 'wall-layers' as const,
-    id: wall.id,
-    name: wall.name,
-    templateId: wall.templateId,
-    frameSize: size,
-    scale,
-    canvas: CANVAS,
-    bits: { N: 1, E: 2, S: 4, W: 8 },
-    // Grid layout: column = neighbour mask (0..15), row = layer index within the mask.
-    cols: 16,
-    pivot: { x: 0.5, y: 0.5 },
-    tokens: [...PROP_PALETTE_TOKENS],
-    palette: wall.palette,
-    /** name → rect (top-down) across all masks; sliced like every other sheet. */
-    frames,
-    // Per-mask layers (each autotile segment splits independently), so the layer
-    // set varies by mask — read masks[m].layers, each referencing its `frame` name.
-    masks,
-    meta: layerCompositeMeta(),
-  };
-}
+// NOTE: no wall layer atlas — walls are a fixed look (47-blob plan, D2); they
+// ship only the flat 47-tile autotile sheet. Floors/props keep their layer path.
 
 export async function scenePosterPng(scene: SceneState, project: ProjectState, scale: number): Promise<Blob> {
   // Scene cells span the whole grid, so this sheet has one cell whose source
@@ -1536,11 +1469,9 @@ export async function exportAll(
   for (const wall of project.walls ?? []) {
     const dir = `walls/${slug(wall.name)}`;
     for (const scale of EXPORT_SCALES) {
+      // Flat 47-blob autotile only — no re-tintable wall layer atlas (D2).
       await write(`${dir}/tileset@${scale}x.png`, await png(wallTilesetDesc(wall, style, scale)));
       await write(`${dir}/atlas@${scale}x.json`, JSON.stringify(wallAtlas(wall, style, scale), null, 2));
-      // Re-tintable per-mask layer atlas beside the flat autotile tileset.
-      await write(`${dir}/layers@${scale}x.png`, await png(wallLayerSheetDesc(wall, style, scale)));
-      await write(`${dir}/layers-manifest@${scale}x.json`, JSON.stringify(wallLayerManifest(wall, style, scale), null, 2));
       tick(wall.name);
     }
     await write(`${dir}/wall.json`, JSON.stringify(wall, null, 2));

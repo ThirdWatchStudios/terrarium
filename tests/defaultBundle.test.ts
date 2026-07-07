@@ -275,7 +275,7 @@ describe('default bundle is a complete, sim-importable baseline', () => {
       'construction worker must NOT be in the office cast').toBe(false);
   });
 
-  it('ships re-tintable layer atlases for props, walls, and floors (palette-as-runtime-lever)', async () => {
+  it('ships re-tintable layer atlases for props and floors (palette-as-runtime-lever)', async () => {
     const { paths, json } = await exportPaths();
     const TOKENS = ['primary', 'secondary', 'accent'];
     const validTint = (t: unknown) => t === null || TOKENS.includes(t as string);
@@ -296,23 +296,12 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     expect(pm.frames && typeof pm.frames === 'object', 'prop manifest missing frames map').toBe(true);
     expect(pm.layers.every((l: { frame: string }) => l.frame in pm.frames), 'a prop layer frame name is not in frames').toBe(true);
 
-    // Walls — per-mask layer lists (each autotile segment splits independently), all 16 masks.
-    expect([...paths].some((p) => /^walls\/.+\/layers@1x\.png$/.test(p)), 'no wall layer sheet').toBe(true);
-    const wallManifestPath = [...paths].find((p) => /^walls\/.+\/layers-manifest@1x\.json$/.test(p));
-    const wm = JSON.parse(json.get(wallManifestPath!)!);
-    expect(wm.kind).toBe('wall-layers');
-    expect(wm.masks.length, 'wall manifest should carry all 16 neighbour masks').toBe(16);
-    expect(wm.masks.every((m: { layers: unknown[] }) => m.layers.length > 0), 'a wall mask has no layers').toBe(true);
+    // Walls ship NO layer atlas — fixed look (47-blob plan, D2), flat autotile only.
+    expect([...paths].some((p) => /^walls\/.+\/layers@1x\.png$/.test(p)), 'wall layer sheet should be gone (D2)').toBe(false);
     expect(
-      wm.masks.every((m: { layers: { tint: unknown }[] }) => m.layers.every((l) => validTint(l.tint))),
-      'a wall layer has an unknown tint',
-    ).toBe(true);
-    // Shared top-level frames map; every per-mask layer resolves by `frame` name.
-    expect(wm.frames && typeof wm.frames === 'object', 'wall manifest missing frames map').toBe(true);
-    expect(
-      wm.masks.every((m: { layers: { frame: string }[] }) => m.layers.every((l) => l.frame in wm.frames)),
-      'a wall layer frame name is not in frames',
-    ).toBe(true);
+      [...paths].some((p) => /^walls\/.+\/layers-manifest@1x\.json$/.test(p)),
+      'wall layer manifest should be gone (D2)',
+    ).toBe(false);
 
     // Floors — a layer atlas with a recolorable primary base.
     expect([...paths].some((p) => /^floors\/.+\/layers@1x\.png$/.test(p)), 'no floor layer sheet').toBe(true);
@@ -325,9 +314,9 @@ describe('default bundle is a complete, sim-importable baseline', () => {
 
   it('keeps every layer atlas within the browser canvas max dimension', async () => {
     // The in-app export rasterizes via a <canvas>, which caps each dimension at
-    // ~16384px (Chrome). Wall layer sheets stack per-mask, so a naive tall column
-    // or a token-alternating wall (foliage) once blew past it and killed the export
-    // at the wall stage. This guards the grid layout + the per-mask run cap.
+    // ~16384px (Chrome). A pathological layer sheet (one tall column) once blew
+    // past it and killed the export mid-zip. (Walls no longer ship layer sheets
+    // at all — D2 — which deleted the worst offender.)
     const { json } = await exportPaths();
     const LIMIT = 16384;
     const assertUnder = (path: string, frames: Array<{ x: number; y: number; w: number; h: number }>) => {
@@ -338,7 +327,7 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     };
     // @4x is the largest exported scale — the worst case. Every sheet carries a
     // top-level `frames` map (name → rect), like the character manifest, so read it.
-    for (const path of [...json.keys()].filter((p) => /^(props|walls|floors)\/.+\/layers-manifest@4x\.json$/.test(p))) {
+    for (const path of [...json.keys()].filter((p) => /^(props|floors)\/.+\/layers-manifest@4x\.json$/.test(p))) {
       const m = JSON.parse(json.get(path)!);
       assertUnder(path, Object.values(m.frames) as Array<{ x: number; y: number; w: number; h: number }>);
     }

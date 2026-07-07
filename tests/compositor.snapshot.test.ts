@@ -9,6 +9,7 @@ import {
 import type { CharacterRecipe } from '../src/core/types';
 import { CANVAS, FACINGS, MOODS } from '../src/core/types';
 import { PART_LIBRARY } from '../src/parts/library';
+import { BLOB_CONFIGS, BLOB_TILE_COUNT } from '../src/tiles/blob';
 import {
   DEFAULT_CAST,
   DEFAULT_FLOORS,
@@ -116,13 +117,13 @@ describe('parts', () => {
   }
 });
 
-describe('walls — all 16 autotile masks', () => {
+describe('walls — all 47 blob autotile tiles', () => {
   for (const wall of DEFAULT_WALLS) {
     it(`${wall.id}`, async () => {
-      const masks = Array.from({ length: 16 }, (_, mask) =>
-        composeWallTile(wall, STYLE, mask, SIZE),
+      const tiles = Array.from({ length: BLOB_TILE_COUNT }, (_, i) =>
+        composeWallTile(wall, STYLE, BLOB_CONFIGS[i], SIZE),
       );
-      await expect(grid(masks, 4)).toMatchFileSnapshot(snap(`walls/${wall.id}`));
+      await expect(grid(tiles, 8)).toMatchFileSnapshot(snap(`walls/${wall.id}`));
     });
   }
 });
