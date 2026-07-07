@@ -47,20 +47,28 @@ function wallBody(mask: number, fill: string): ShapeSpec {
  * Connected edges get nothing, so a wall run still reads as one continuous mass.
  */
 function wallBevel(mask: number): ShapeSpec[] {
+  // A chamfer along the wall-mass PERIMETER: an angled bevel face on each EXPOSED
+  // side (lit top/left, shadowed right/bottom) so the mass reads as one solid
+  // extruded block with depth (RimWorld-style). A face runs flush to any CONNECTED
+  // side (so a straight run reads continuous) and miters at 45° where two exposed
+  // sides meet (a real corner). Connected-only cells (interior of a thick wall) get
+  // no bevel — the flat top merges seamlessly. Literal white/black at low alpha, so
+  // it layers over any wall colour and survives runtime re-tinting.
   const e = exposedSides(mask);
+  const s = SIZE;
+  const w = 22; // chamfer face width (of 128) — how "tall"/deep the block reads
+  // Inner-edge offsets: pull in (miter) toward a corner only when that adjacent
+  // side is ALSO exposed; otherwise run flush to the connected edge.
+  const xL = e.w ? w : 0;
+  const xR = e.e ? s - w : s;
+  const yT = e.n ? w : 0;
+  const yB = e.s ? s - w : s;
   const out: ShapeSpec[] = [];
-  const band = (x: number, y: number, w: number, h: number, fill: string, opacity: number) =>
-    out.push({ d: rr(x, y, w, h, 0), fill, opacity, silhouette: false });
-  // Lit top + faint lit left (light from the top-left).
-  if (e.n) band(0, 0, SIZE, 10, '#FFFFFF', 0.26);
-  if (e.w) band(0, 0, 6, SIZE, '#FFFFFF', 0.12);
-  // Shaded right, and a deep two-step shadow at the base so the wall reads as
-  // having HEIGHT (the front face + the ground-contact shadow, RimWorld-style).
-  if (e.e) band(SIZE - 8, 0, 8, SIZE, '#000000', 0.18);
-  if (e.s) {
-    band(0, SIZE - 18, SIZE, 18, '#000000', 0.22); // front face in shadow
-    band(0, SIZE - 7, SIZE, 7, '#000000', 0.2); //    darker ground-contact line
-  }
+  const face = (d: string, fill: string, opacity: number) => out.push({ d, fill, opacity, silhouette: false });
+  if (e.n) face(`M 0 0 L ${s} 0 L ${xR} ${w} L ${xL} ${w} Z`, '#FFFFFF', 0.3); //       top — brightest
+  if (e.w) face(`M 0 0 L 0 ${s} L ${w} ${yB} L ${w} ${yT} Z`, '#FFFFFF', 0.14); //      left — light
+  if (e.e) face(`M ${s} 0 L ${s} ${s} L ${s - w} ${yB} L ${s - w} ${yT} Z`, '#000000', 0.2); // right — shadow
+  if (e.s) face(`M 0 ${s} L ${s} ${s} L ${xR} ${s - w} L ${xL} ${s - w} Z`, '#000000', 0.36); // bottom — deepest
   return out;
 }
 
