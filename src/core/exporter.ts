@@ -52,6 +52,7 @@ import { symbolRegistryJson } from './registry';
 import { POSES, poseCatalogJson } from '../parts/poses';
 import { unitRecipe, unitRenderingSpec } from './renderings';
 import { projectWithLook } from './look';
+import { CONSTRUCTION_CREW, CONSTRUCTION_PROFILES } from '../data/defaults';
 
 /** Sheet frame order. West is baked as mirrored east for engine convenience. */
 const SHEET_FACINGS = ['south', 'east', 'north', 'west'] as const;
@@ -1001,6 +1002,31 @@ export function floorAtlas(floor: TileInstance, style: StyleSheet, scale: number
 }
 
 /**
+ * Ground atlas — the DISTINCT ground kind (B1.5 / decision D2). Identical tile
+ * geometry to a floor (rendered by the same composeFloorTile), but tagged
+ * `kind: 'ground'` and carrying the ground sort band (−20000, below floors) so
+ * the sim's ImportGround imports it as its own layer, drawn under the interior
+ * floor and everything else, and never treated as paintable interior floor.
+ */
+export function groundAtlas(ground: TileInstance, style: StyleSheet, scale: number) {
+  return {
+    name: ground.name,
+    id: ground.id,
+    templateId: ground.templateId,
+    frameSize: style.render.baseSize * scale,
+    scale,
+    kind: 'ground' as const,
+    tileable: true,
+    pivot: { x: 0.5, y: 0.5 },
+    meta: {
+      generator: 'sprite-character-creator',
+      sorting: 'ground-layer (below floors; sort band -20000)',
+      surface: 'outdoor',
+    },
+  };
+}
+
+/**
  * Prop atlas: projection drives how the engine should treat the sprite.
  * Plan props pivot at center, sit on the furniture layer below characters,
  * and rotate freely. Elevation props pivot at the base (same 9% ground
@@ -1136,6 +1162,28 @@ export function floorLayerManifest(floor: TileInstance, style: StyleSheet, scale
     // stacked composite can differ imperceptibly from the flat tile where
     // translucent speckles of different tokens overlap. Acceptable for flat,
     // seamless floor patterns; run-splitting would explode the layer count.
+    layers: frames,
+    meta: layerCompositeMeta(),
+  };
+}
+
+/** Re-tintable ground layer atlas — same tile machinery as floors (ground IS a
+ *  FloorTemplate), tagged `ground-layers` so the sim keeps the distinct kind. */
+export function groundLayerManifest(ground: TileInstance, style: StyleSheet, scale: number) {
+  const size = style.render.baseSize * scale;
+  const { frames } = stackLayerCells(floorLayers(ground), size, 0);
+  return {
+    kind: 'ground-layers' as const,
+    id: ground.id,
+    name: ground.name,
+    templateId: ground.templateId,
+    frameSize: size,
+    scale,
+    canvas: CANVAS,
+    tileable: true,
+    pivot: { x: 0.5, y: 0.5 },
+    tokens: [...PROP_PALETTE_TOKENS],
+    palette: ground.palette,
     layers: frames,
     meta: layerCompositeMeta(),
   };
@@ -1310,9 +1358,11 @@ export async function exportAll(
   // plus one per prop/wall/floor — each across every scale.
   const total =
     project.characters.length * scales * 8 +
+    CONSTRUCTION_CREW.length * scales * 2 + // construction crew: base+moods, layers per scale
     project.props.length * scales +
     (project.walls?.length ?? 0) * scales +
     (project.floors?.length ?? 0) * scales +
+    (project.ground?.length ?? 0) * scales + // distinct ground kind (B1.5 / D2)
     scales * 6 + // shared activity/mood/prop-status/social-state/emotion-glyph/attention-puff atlas per scale
     ICONS.length + // one tick per UI icon (its SVG + PNG ladder)
     CURSORS.length; // one tick per cursor (PNG ladder)
@@ -1387,6 +1437,35 @@ export async function exportAll(
     await write(`${dir}/recipe.json`, JSON.stringify(recipe, null, 2));
   }
 
+  // Construction crew (B1.5 / decision D4) — an authored construction PERSONA the
+  // sim spawns the build crew from, shipped as a code-owned ingredient in its OWN
+  // `construction-crew/` folder so it stays decoupled from the editable office cast
+  // (never seated, never in the org chart) and never trips the 4-hero agent-id
+  // lockstep. Ships the binder's essential set: baked sheet+atlas, the mood overlay
+  // atlas, the re-tintable layer atlas (the NPC composer's input), and IRIS's
+  // operational-unit rendering, plus the recipe + persona.
+  for (const recipe of CONSTRUCTION_CREW) {
+    const dir = `construction-crew/${slug(recipe.id)}`;
+    for (const scale of EXPORT_SCALES) {
+      await write(`${dir}/sheet@${scale}x.png`, await png(characterSheetDesc(recipe, style, scale)));
+      await write(`${dir}/atlas@${scale}x.json`, JSON.stringify(characterAtlas(recipe, style, scale), null, 2));
+      await write(`${dir}/moods@${scale}x.png`, await png(moodSheetDesc(recipe, style, scale)));
+      await write(`${dir}/moods-atlas@${scale}x.json`, JSON.stringify(moodAtlas(recipe, style, scale), null, 2));
+      tick(recipe.name);
+      await write(`${dir}/layers@${scale}x.png`, await png(layerSheetDesc(recipe, style, scale)));
+      await write(`${dir}/manifest@${scale}x.json`, JSON.stringify(characterLayerManifest(recipe, style, scale), null, 2));
+      await write(`${dir}/unit-layers@${scale}x.png`, await png(unitLayerSheetDesc(recipe, style, scale)));
+      await write(`${dir}/unit-manifest@${scale}x.json`, JSON.stringify(unitCharacterLayerManifest(recipe, style, scale), null, 2));
+      tick(`${recipe.name} layers`);
+    }
+    await write(
+      `${dir}/recipe.json`,
+      JSON.stringify({ ...recipe, renderings: { unit: unitRenderingSpec(recipe) } }, null, 2),
+    );
+    const profile = CONSTRUCTION_PROFILES.find((p) => p.agentId === recipe.id);
+    if (profile) await write(`${dir}/profile.json`, JSON.stringify(serializeProfile(profile), null, 2));
+  }
+
   for (const prop of project.props) {
     const dir = `props/${slug(prop.name)}`;
     for (const scale of EXPORT_SCALES) {
@@ -1424,6 +1503,24 @@ export async function exportAll(
       tick(floor.name);
     }
     await write(`${dir}/floor.json`, JSON.stringify(floor, null, 2));
+  }
+
+  // Outdoor ground (B1.5 "the build site") — the DISTINCT ground kind (decision
+  // D2): its own top-level `ground/` folder, atlases tagged `kind: 'ground'` with
+  // the −20000 sort band, so the sim's ImportGround pulls them in as a separate
+  // layer (drawn under the interior floor) rather than as paintable floor. Same
+  // flat-tile machinery as floors otherwise (ground templates ARE FloorTemplates).
+  for (const g of project.ground ?? []) {
+    const dir = `ground/${slug(g.name)}`;
+    for (const scale of EXPORT_SCALES) {
+      await write(`${dir}/tile@${scale}x.png`, await png(floorTileDesc(g, style, scale)));
+      await write(`${dir}/atlas@${scale}x.json`, JSON.stringify(groundAtlas(g, style, scale), null, 2));
+      // Re-tintable layer atlas beside the flat tile (kind: ground-layers).
+      await write(`${dir}/layers@${scale}x.png`, await png(floorLayerSheetDesc(g, style, scale)));
+      await write(`${dir}/layers-manifest@${scale}x.json`, JSON.stringify(groundLayerManifest(g, style, scale), null, 2));
+      tick(g.name);
+    }
+    await write(`${dir}/ground.json`, JSON.stringify(g, null, 2));
   }
 
   // Shared activity-badge atlas (one per scale, character-independent). The sim

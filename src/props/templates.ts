@@ -1730,6 +1730,109 @@ const fireExtinguisher: PropTemplate = {
   },
 };
 
+// ---------------------------------------------------------------------------
+// Exterior vehicles + lot decals (B1.5 "the build site"). Plan-projected (seen
+// from above), multi-cell footprints, decor-only (added to NON_PLACEABLE_TEMPLATES
+// in core/layout.ts — cars are scenery, not a placeable facility). Drawn nose-east
+// in the 128 canvas; the sim rotates the plan sprite over its footprint cells.
+// Precedent for exterior props: the building-surround ring (core/buildingSurround.ts).
+// ---------------------------------------------------------------------------
+
+const car: PropTemplate = {
+  id: 'car',
+  label: 'Car',
+  projection: 'plan',
+  // A sedan reads as ~4 cells long × 2 wide from above.
+  gridFootprint: { w: 4, h: 2 },
+  params: [{ key: 'trim', label: 'Lights', min: 0, max: 1, step: 1, default: 1 }],
+  build(params) {
+    const shapes: ShapeSpec[] = [
+      // body shell
+      { d: rr(10, 42, 108, 44, 18), fill: '$primary' },
+      // hood + trunk shut-lines
+      { d: `M 32 44 L 32 84`, stroke: '#00000018', strokeWidth: 1.5, silhouette: false },
+      { d: `M 96 44 L 96 84`, stroke: '#00000018', strokeWidth: 1.5, silhouette: false },
+      // cabin / roof
+      { d: rr(38, 48, 52, 32, 10), fill: '$secondary', silhouette: false },
+      // rear + front glass (trapezoids fore & aft of the roof)
+      { d: `M 34 51 L 40 62 L 40 66 L 34 77 Z`, fill: '$accent', silhouette: false },
+      { d: `M 94 51 L 88 62 L 88 66 L 94 77 Z`, fill: '$accent', silhouette: false },
+      // side windows
+      { d: rr(44, 50, 40, 6, 2), fill: '$accent', silhouette: false },
+      { d: rr(44, 72, 40, 6, 2), fill: '$accent', silhouette: false },
+      // side mirrors
+      { d: rr(86, 40, 6, 3, 1), fill: '$primary', silhouette: false },
+      { d: rr(86, 85, 6, 3, 1), fill: '$primary', silhouette: false },
+    ];
+    if ((params.trim ?? 1) >= 1) {
+      // headlights (nose, east) + tail-lights (tail, west)
+      shapes.push(
+        { d: rr(113, 48, 4, 8, 1.5), fill: '#F7F1D8', silhouette: false },
+        { d: rr(113, 72, 4, 8, 1.5), fill: '#F7F1D8', silhouette: false },
+        { d: rr(11, 48, 4, 8, 1.5), fill: '#C0392B', silhouette: false },
+        { d: rr(11, 72, 4, 8, 1.5), fill: '#C0392B', silhouette: false },
+      );
+    }
+    return shapes;
+  },
+};
+
+const carSuv: PropTemplate = {
+  id: 'car-suv',
+  label: 'SUV',
+  projection: 'plan',
+  gridFootprint: { w: 4, h: 2 },
+  params: [{ key: 'rails', label: 'Roof rails', min: 0, max: 1, step: 1, default: 1 }],
+  build(params) {
+    const shapes: ShapeSpec[] = [
+      // boxier, taller body than the sedan
+      { d: rr(8, 38, 112, 52, 14), fill: '$primary' },
+      // large greenhouse / roof
+      { d: rr(30, 44, 74, 40, 8), fill: '$secondary', silhouette: false },
+      // windshield + rear glass bands
+      { d: rr(34, 46, 66, 8, 2), fill: '$accent', silhouette: false },
+      { d: rr(34, 70, 66, 8, 2), fill: '$accent', silhouette: false },
+      // roof seam
+      { d: `M 30 64 L 104 64`, stroke: '#00000018', strokeWidth: 1.5, silhouette: false },
+      // mirrors
+      { d: rr(90, 36, 6, 3, 1), fill: '$primary', silhouette: false },
+      { d: rr(90, 89, 6, 3, 1), fill: '$primary', silhouette: false },
+    ];
+    if ((params.rails ?? 1) >= 1) {
+      shapes.push(
+        { d: rr(32, 41, 70, 2.5, 1), fill: '$accent', silhouette: false },
+        { d: rr(32, 84.5, 70, 2.5, 1), fill: '$accent', silhouette: false },
+      );
+    }
+    shapes.push(
+      { d: rr(116, 44, 4, 8, 1.5), fill: '#F7F1D8', silhouette: false },
+      { d: rr(116, 76, 4, 8, 1.5), fill: '#F7F1D8', silhouette: false },
+      { d: rr(8, 44, 4, 8, 1.5), fill: '#C0392B', silhouette: false },
+      { d: rr(8, 76, 4, 8, 1.5), fill: '#C0392B', silhouette: false },
+    );
+    return shapes;
+  },
+};
+
+const parkingLine: PropTemplate = {
+  id: 'parking-line',
+  label: 'Parking line',
+  projection: 'plan',
+  // one painted bay (~2 cells wide × 2 deep); mostly transparent decal on asphalt.
+  gridFootprint: { w: 2, h: 2 },
+  params: [{ key: 'stop', label: 'Stop bar', min: 0, max: 1, step: 1, default: 1 }],
+  build(params) {
+    const shapes: ShapeSpec[] = [
+      // the two stall divider lines running the depth of the bay
+      { d: rr(24, 20, 4, 88, 1), fill: '$primary', silhouette: false },
+      { d: rr(100, 20, 4, 88, 1), fill: '$primary', silhouette: false },
+    ];
+    // head / wheel-stop bar across the top of the bay
+    if ((params.stop ?? 1) >= 1) shapes.push({ d: rr(24, 20, 80, 4, 1), fill: '$primary', silhouette: false });
+    return shapes;
+  },
+};
+
 export const PROP_TEMPLATES: PropTemplate[] = [
   waterCooler,
   printer,
@@ -1780,4 +1883,8 @@ export const PROP_TEMPLATES: PropTemplate[] = [
   neighborGlass,
   directoryPlacard,
   fireExtinguisher,
+  // Exterior vehicles + lot decals (B1.5 build site).
+  car,
+  carSuv,
+  parkingLine,
 ];

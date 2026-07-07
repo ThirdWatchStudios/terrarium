@@ -642,6 +642,51 @@ const OUTFITS: PartDef[] = [
       },
     },
   },
+  {
+    // Hi-vis safety vest (B1.5 construction crew). The vest is $outfitSecondary
+    // (the hi-vis fabric) over the $outfitPrimary work shirt; reflective bands are
+    // a fixed silver literal so they read as reflective regardless of swatch. Bold
+    // vest panel + horizontal bands so it survives the unit-pictogram / portrait
+    // flattening (IRIS's own drawing loses fine detail).
+    id: 'outfit-hi-vis',
+    label: 'Hi-vis vest',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: {
+      south: {
+        z: 20,
+        shapes: [
+          // open-front vest panel with a shallow collar V
+          { d: `M -12 -29 L -12 20 L 12 20 L 12 -29 L 4 -29 L 0 -20 L -4 -29 Z`, fill: '$outfitSecondary', silhouette: false },
+          // reflective bands over each shoulder + two across the chest (silver literal)
+          { d: rr(-9, -19, 3.5, 15, 0.5), fill: '#E4E8EC', silhouette: false },
+          { d: rr(5.5, -19, 3.5, 15, 0.5), fill: '#E4E8EC', silhouette: false },
+          { d: rr(-12, -6, 24, 3.5, 0.5), fill: '#E4E8EC', silhouette: false },
+          { d: rr(-12, 3, 24, 3.5, 0.5), fill: '#E4E8EC', silhouette: false },
+          // center zip
+          { d: `M 0 -19 L 0 20`, stroke: '#00000030', strokeWidth: 1.5, silhouette: false },
+        ],
+      },
+      north: {
+        z: 20,
+        shapes: [
+          { d: rr(-12, -29, 24, 49, 3), fill: '$outfitSecondary', silhouette: false },
+          { d: rr(-9, -24, 3.5, 40, 0.5), fill: '#E4E8EC', silhouette: false },
+          { d: rr(5.5, -24, 3.5, 40, 0.5), fill: '#E4E8EC', silhouette: false },
+          { d: rr(-12, -4, 24, 3.5, 0.5), fill: '#E4E8EC', silhouette: false },
+        ],
+      },
+      east: {
+        z: 20,
+        shapes: [
+          { d: `M 7 -29 L 7 20 L 17 20 L 17 -29 Z`, fill: '$outfitSecondary', silhouette: false },
+          { d: rr(7, -19, 10, 3.5, 0.5), fill: '#E4E8EC', silhouette: false },
+          { d: rr(7, -6, 10, 3.5, 0.5), fill: '#E4E8EC', silhouette: false },
+          { d: rr(7, 3, 10, 3.5, 0.5), fill: '#E4E8EC', silhouette: false },
+        ],
+      },
+    },
+  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -771,6 +816,46 @@ const ACCESSORIES: PartDef[] = [
           { d: `M -21 -6 A 22 22 0 0 1 21 -6`, stroke: INK, strokeWidth: 3, silhouette: false },
           { d: ellipse(-20, 0, 3.5, 5), fill: INK },
           { d: ellipse(20, 0, 3.5, 5), fill: INK },
+        ],
+      },
+    },
+  },
+  {
+    // Hard hat (B1.5 construction crew). A domed shell + front brim on the crown,
+    // painted $accent (the recipe's safety colour) so it reads as hi-vis; z 60 so
+    // it sits over the hair. Bold silhouette so it survives the unit-pictogram.
+    id: 'acc-hard-hat',
+    label: 'Hard hat',
+    slot: 'accessory',
+    anchor: 'headCenter',
+    facings: {
+      south: {
+        z: 60,
+        shapes: [
+          // domed shell over the crown
+          { d: `M -19 -6 Q 0 -30 19 -6 Z`, fill: '$accent', silhouette: false },
+          // front brim jutting toward the viewer
+          { d: `M -21 -6 Q 0 0 21 -6 L 19 -9 Q 0 -4 -19 -9 Z`, fill: '$accent', silhouette: false },
+          // crown ridges
+          { d: `M 0 -25 L 0 -6`, stroke: '#00000026', strokeWidth: 2, silhouette: false },
+          { d: `M -8 -20 L -8 -6 M 8 -20 L 8 -6`, stroke: '#00000018', strokeWidth: 1.5, silhouette: false },
+        ],
+      },
+      east: {
+        z: 60,
+        shapes: [
+          { d: `M -16 -6 Q 3 -30 17 -8 Z`, fill: '$accent', silhouette: false },
+          // brim jutting east (the direction faced)
+          { d: `M 11 -6 Q 22 -4 25 -9 L 23 -12 Q 14 -9 11 -9 Z`, fill: '$accent', silhouette: false },
+          { d: `M 1 -25 L 3 -8`, stroke: '#00000022', strokeWidth: 2, silhouette: false },
+        ],
+      },
+      north: {
+        z: 60,
+        shapes: [
+          { d: `M -19 -6 Q 0 -30 19 -6 Z`, fill: '$accent', silhouette: false },
+          { d: `M 0 -25 L 0 -6`, stroke: '#00000022', strokeWidth: 2, silhouette: false },
+          { d: `M -8 -20 L -8 -6 M 8 -20 L 8 -6`, stroke: '#00000018', strokeWidth: 1.5, silhouette: false },
         ],
       },
     },

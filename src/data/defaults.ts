@@ -546,6 +546,38 @@ export const DEFAULT_PROPS: PropInstance[] = [
     params: { size: 20 },
     palette: { primary: '#C0392B', secondary: '#D7DCE0', accent: '#A93226' },
   },
+  // Exterior vehicles + lot decals (B1.5 build site) — decor on the outdoor
+  // ground (NON_PLACEABLE), so the parking lot reads as a lot. A template with
+  // no instance ships nothing, so each car style ships at least one instance;
+  // two sedan colours give the lot variety.
+  {
+    id: 'prop-car',
+    name: 'Car',
+    templateId: 'car',
+    params: { trim: 1 },
+    palette: { primary: '#8A3A34', secondary: '#5E2723', accent: '#BFD4E4' },
+  },
+  {
+    id: 'prop-car-blue',
+    name: 'Car blue',
+    templateId: 'car',
+    params: { trim: 1 },
+    palette: { primary: '#2E4A6E', secondary: '#22384F', accent: '#BFD4E4' },
+  },
+  {
+    id: 'prop-car-suv',
+    name: 'SUV',
+    templateId: 'car-suv',
+    params: { rails: 1 },
+    palette: { primary: '#3A3F45', secondary: '#2C3035', accent: '#C7D2DA' },
+  },
+  {
+    id: 'prop-parking-line',
+    name: 'Parking line',
+    templateId: 'parking-line',
+    params: { stop: 1 },
+    palette: { primary: '#E8E4D2', secondary: '#C9C6B6', accent: '#B7B4A4' },
+  },
 ];
 
 export const DEFAULT_WALLS: TileInstance[] = [
@@ -668,6 +700,45 @@ export const DEFAULT_FLOORS: TileInstance[] = [
     templateId: 'lobby-stone',
     params: { slab: 64, sheen: 2 },
     palette: { primary: '#9AA0A6', secondary: '#7E848B', accent: '#5F5E5A' },
+  },
+];
+
+/**
+ * Outdoor ground surfaces (B1.5 "the build site"). These ship as the DISTINCT
+ * ground KIND (decision D2): their own `ground/` export folder, own atlas kind,
+ * own sort band (−20000), so the sim draws them under everything and never
+ * confuses them with interior floor. Generated-only for now (§9 — not
+ * player-paintable), so there's no ground UI; they're a code-owned default the
+ * export always ships, lensed by the LOOK like floors (core/look.ts).
+ */
+export const DEFAULT_GROUND: TileInstance[] = [
+  {
+    id: 'ground-grass',
+    name: 'Lawn grass',
+    templateId: 'grass',
+    params: { blades: 2, seed: 5 },
+    palette: { primary: '#5C8A3A', secondary: '#3E6B26', accent: '#7DA84E' },
+  },
+  {
+    id: 'ground-dirt',
+    name: 'Bare dirt',
+    templateId: 'dirt',
+    params: { clods: 2, seed: 3 },
+    palette: { primary: '#8A6B47', secondary: '#6E4F30', accent: '#A5865E' },
+  },
+  {
+    id: 'ground-asphalt',
+    name: 'Parking-lot asphalt',
+    templateId: 'asphalt',
+    params: { aggregate: 2, seed: 7 },
+    palette: { primary: '#3C3E42', secondary: '#4E5157', accent: '#2C2E31' },
+  },
+  {
+    id: 'ground-sidewalk',
+    name: 'Concrete sidewalk',
+    templateId: 'sidewalk',
+    params: { slab: 64 },
+    palette: { primary: '#B8B7B0', secondary: '#9C9B94', accent: '#8A8982' },
   },
 ];
 
@@ -858,6 +929,60 @@ function buildDefaultProfiles(): CharacterProfile[] {
 }
 
 export const DEFAULT_PROFILES: CharacterProfile[] = buildDefaultProfiles();
+
+// ---------------------------------------------------------------------------
+// Construction crew (B1.5 "the construction crew" — the builders who physically
+// raise the office the player designs). Shipped as an authored PERSONA the sim
+// spawns the crew from (decision D4), NOT a fixed default-cast agent id: keeping
+// it out of DEFAULT_CAST avoids the contract.test.ts 4-hero agent-id lockstep and
+// lets the sim size the crew dynamically. It's a code-owned ingredient (like the
+// icon set), exported into its own `construction-crew/` folder decoupled from the
+// editable office cast — never seated at a desk, never in the org chart.
+// ---------------------------------------------------------------------------
+
+/** The hi-vis palette: slate work shirt, orange vest, safety-yellow hard hat. */
+export const HI_VIS_PALETTE = {
+  skin: '#D9A06B',
+  hair: '#3A2A1C',
+  outfitPrimary: '#37414F',
+  outfitSecondary: '#F26A1B',
+  accent: '#F2C310',
+} as const;
+
+export const CONSTRUCTION_CREW: CharacterRecipe[] = [
+  {
+    id: 'construction-worker',
+    name: 'Construction Worker',
+    parts: {
+      body: 'body-broad',
+      head: 'head-round',
+      hair: 'hair-short',
+      outfit: 'outfit-hi-vis',
+      accessories: ['acc-hard-hat'],
+    },
+    palette: { ...HI_VIS_PALETTE },
+  },
+];
+
+function buildConstructionProfiles(): CharacterProfile[] {
+  return CONSTRUCTION_CREW.map((recipe) => {
+    const p = createDefaultProfile(recipe);
+    p.identity = {
+      ...p.identity,
+      roleTitle: 'Construction Worker',
+      department: '', // not an office employee — the crew builds it, doesn't staff it
+      seniority: 'junior',
+      prototypeRole: 'Construction Crew',
+      bio: 'Raises the office the player designs — hi-vis, hard hat, and a punch list.',
+    };
+    p.personality.ocean = { openness: 45, conscientiousness: 72, extraversion: 50, agreeableness: 60, neuroticism: 32 };
+    p.personality.axes = { ambition: 40, integrity: 70, loyalty: 55, discretion: 50 };
+    p.personality.traitTags = ['hard_working', 'practical', 'reliable'];
+    return p;
+  }).map(applyDerived);
+}
+
+export const CONSTRUCTION_PROFILES: CharacterProfile[] = buildConstructionProfiles();
 
 // ---------------------------------------------------------------------------
 // Default scenarios — Experiment 001 ("The Promotion Rumor") authored as the
@@ -1489,6 +1614,7 @@ function baseDefaultProject(): ProjectState {
     props: structuredClone(DEFAULT_PROPS),
     walls: structuredClone(DEFAULT_WALLS),
     floors: structuredClone(DEFAULT_FLOORS),
+    ground: structuredClone(DEFAULT_GROUND),
     profiles: structuredClone(DEFAULT_PROFILES),
     scenarios: structuredClone(DEFAULT_SCENARIOS),
     drives: structuredClone(DEFAULT_DRIVES),

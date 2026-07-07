@@ -1,6 +1,6 @@
 import type { ProjectState } from './types';
 import { CURRENT_SCHEMA_VERSION } from './types';
-import { DEFAULT_BEHAVIORS, DEFAULT_DEPARTMENTS, DEFAULT_DRIVES, DEFAULT_FLOORS, DEFAULT_PROFILES, DEFAULT_PROPS, DEFAULT_RELATIONSHIP_TYPES, DEFAULT_SCENARIOS, DEFAULT_STYLE, DEFAULT_STYLE_PRESETS, DEFAULT_TRAITS, DEFAULT_WALLS } from '../data/defaults';
+import { DEFAULT_BEHAVIORS, DEFAULT_DEPARTMENTS, DEFAULT_DRIVES, DEFAULT_FLOORS, DEFAULT_GROUND, DEFAULT_PROFILES, DEFAULT_PROPS, DEFAULT_RELATIONSHIP_TYPES, DEFAULT_SCENARIOS, DEFAULT_STYLE, DEFAULT_STYLE_PRESETS, DEFAULT_TRAITS, DEFAULT_WALLS } from '../data/defaults';
 import { mapDepartmentNameToId, slugifyDepartment } from './department';
 import { ensurePresence } from './profile';
 
@@ -319,6 +319,7 @@ function backfillV1(project: ProjectState): void {
   project.props ??= structuredClone(DEFAULT_PROPS);
   project.walls ??= structuredClone(DEFAULT_WALLS);
   project.floors ??= structuredClone(DEFAULT_FLOORS);
+  project.ground ??= structuredClone(DEFAULT_GROUND);
   project.stylePresets ??= structuredClone(DEFAULT_STYLE_PRESETS);
   project.style.render.pixelScale = normalizePixelScale(project.style.render.pixelScale ?? 1);
 
@@ -346,6 +347,11 @@ function backfillV1(project: ProjectState): void {
   for (const floor of DEFAULT_FLOORS) {
     if (!project.floors.some((item) => item.id === floor.id || item.templateId === floor.templateId)) {
       project.floors.push(structuredClone(floor));
+    }
+  }
+  for (const g of DEFAULT_GROUND) {
+    if (!project.ground!.some((item) => item.id === g.id || item.templateId === g.templateId)) {
+      project.ground!.push(structuredClone(g));
     }
   }
 }

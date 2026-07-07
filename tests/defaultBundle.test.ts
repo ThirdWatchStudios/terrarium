@@ -75,6 +75,8 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     'props/',
     'walls/',
     'floors/',
+    'ground/', // outdoor ground surfaces — the distinct ground kind (B1.5 / D2)
+    'construction-crew/', // authored construction persona the sim spawns the crew from (B1.5 / D4)
     'scenarios/', // authored scenario run package
     'icons/', // UI icon set — SVG + PNG ladder (docs/ui-art-plan.md)
     'cursors/', // cursor textures — PNG-only + hotspots (docs/ui-art-plan.md)
@@ -215,6 +217,62 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     expect(cooler.isInteractionAnchor).toBe(true);
     expect(cooler.interactionType).toBe('water_cooler');
     expect((byId.get('conference_table')!.gridFootprint as { w: number }).w).toBeGreaterThan(1);
+  });
+
+  it('ships the outdoor ground as a DISTINCT kind, not interior floor (B1.5 / D2)', async () => {
+    const { paths, json } = await exportPaths();
+    // Ground rides its own top-level folder, separate from floors/.
+    const tilePath = [...paths].find((p) => /^ground\/.+\/atlas@1x\.json$/.test(p));
+    expect(tilePath, 'no ground/ atlas — the build-site ground did not ship').toBeTruthy();
+    const atlas = JSON.parse(json.get(tilePath!)!);
+    // The distinctness that lets the sim's ImportGround keep ground off the floor layer:
+    // its own kind + its own sort band, never `floor`.
+    expect(atlas.kind, 'ground atlas must be tagged kind:"ground", not floor').toBe('ground');
+    expect(atlas.meta.sorting, 'ground must carry its own sort band (−20000)').toContain('-20000');
+    // A re-tintable ground layer atlas ships too (tagged ground-layers, tileable).
+    const manifestPath = [...paths].find((p) => /^ground\/.+\/layers-manifest@1x\.json$/.test(p));
+    const gm = JSON.parse(json.get(manifestPath!)!);
+    expect(gm.kind).toBe('ground-layers');
+    expect(gm.tileable).toBe(true);
+    // The bare-lot surfaces (grass / asphalt / …) are present as ground, and NO
+    // ground surface leaked into the interior floors/ folder.
+    const groundTemplates = new Set(
+      [...paths]
+        .filter((p) => /^ground\/.+\/ground\.json$/.test(p))
+        .map((p) => JSON.parse(json.get(p)!).templateId),
+    );
+    for (const surface of ['grass', 'asphalt']) {
+      expect(groundTemplates.has(surface), `ground kind missing surface "${surface}"`).toBe(true);
+    }
+    const floorTemplates = new Set(
+      [...paths]
+        .filter((p) => /^floors\/.+\/floor\.json$/.test(p))
+        .map((p) => JSON.parse(json.get(p)!).templateId),
+    );
+    expect([...floorTemplates].some((t) => ['grass', 'dirt', 'asphalt', 'sidewalk'].includes(t as string)),
+      'a ground surface leaked into interior floors/').toBe(false);
+  });
+
+  it('ships an authored construction persona the sim spawns the crew from (B1.5 / D4)', async () => {
+    const { paths, json } = await exportPaths();
+    // The crew rides its OWN folder (decoupled from the office cast under characters/).
+    const recipePath = [...paths].find((p) => /^construction-crew\/.+\/recipe\.json$/.test(p));
+    expect(recipePath, 'no construction-crew recipe shipped').toBeTruthy();
+    const recipe = JSON.parse(json.get(recipePath!)!);
+    // It wires the hi-vis outfit + hard-hat accessory (the B-T1 parts).
+    expect(recipe.parts.outfit).toBe('outfit-hi-vis');
+    expect(recipe.parts.accessories).toContain('acc-hard-hat');
+    // It ships the binder essentials: baked sheet + atlas, the mood overlay atlas,
+    // and the re-tintable layer atlas (the NPC composer's input), plus a persona.
+    expect([...paths].some((p) => /^construction-crew\/.+\/sheet@1x\.png$/.test(p)), 'no crew sheet').toBe(true);
+    expect([...paths].some((p) => /^construction-crew\/.+\/moods-atlas@1x\.json$/.test(p)), 'no crew mood atlas').toBe(true);
+    expect([...paths].some((p) => /^construction-crew\/.+\/manifest@1x\.json$/.test(p)), 'no crew layer atlas').toBe(true);
+    expect([...paths].some((p) => /^construction-crew\/.+\/profile\.json$/.test(p)), 'no crew persona').toBe(true);
+    // It is NOT one of the four lockstep hero agents (decision D4) — kept off the
+    // office cast so it never trips the contract.test.ts agent-id lockstep.
+    const project = JSON.parse(json.get('project.json')!);
+    expect(project.characters.some((c: { id: string }) => c.id === 'construction-worker'),
+      'construction worker must NOT be in the office cast').toBe(false);
   });
 
   it('ships re-tintable layer atlases for props, walls, and floors (palette-as-runtime-lever)', async () => {

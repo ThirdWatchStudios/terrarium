@@ -257,6 +257,14 @@ export interface ProjectState {
   walls: TileInstance[];
   floors: TileInstance[];
   /**
+   * Outdoor ground surfaces (B1.5 "the build site"). Same TileInstance shape as
+   * floors, but exported as the DISTINCT ground kind (own `ground/` folder, own
+   * sort band −20000; decision D2) so the sim imports them as a separate layer.
+   * Optional + additive — a pre-B1.5 project simply has no ground (back-filled by
+   * migrateProject). Generated-only, not player-painted (§9), so no UI editor.
+   */
+  ground?: TileInstance[];
+  /**
    * Full-game character profiles, keyed by agentId (== a character recipe id).
    * Optional and sparse — a character need not have one. See core/profile.ts and
    * game-design-docs/the-water-cooler/docs/design/character_model.md.
