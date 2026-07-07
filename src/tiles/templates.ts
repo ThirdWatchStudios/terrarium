@@ -150,6 +150,91 @@ const panelWall: WallTemplate = {
   },
 };
 
+// --- Feature walls (prop-variety-gap-analysis.md §4; warm↔clinical variety) ----
+
+/** A moss / greenery feature wall — the warm end. Backing on $primary, foliage
+ *  on $secondary/$accent, so recolouring shifts the whole planted face. */
+const livingWall: WallTemplate = {
+  kind: 'wall',
+  id: 'living-wall',
+  label: 'Living wall',
+  params: [{ key: 'thickness', label: 'Thickness', min: 24, max: 34, step: 2, default: 28 }],
+  build(mask, params) {
+    const t = params.thickness ?? 28;
+    const shapes = wallArms(mask, t, '$primary'); // moss backing
+    const pts: Array<[number, number]> = [];
+    const along = [8, 24, 40, 56];
+    const across = [-7, 0, 7];
+    if (mask & WALL_BITS.N) for (const a of along) for (const c of across) pts.push([C + c, a]);
+    if (mask & WALL_BITS.S) for (const a of along) for (const c of across) pts.push([C + c, C + a + 8]);
+    if (mask & WALL_BITS.W) for (const a of along) for (const c of across) pts.push([a, C + c]);
+    if (mask & WALL_BITS.E) for (const a of along) for (const c of across) pts.push([C + a + 8, C + c]);
+    // junction fill so corners/tees stay planted
+    for (const c of across) for (const c2 of across) pts.push([C + c, C + c2]);
+    // Leaves first, then highlights — one $secondary run + one $accent run. Keeps
+    // the re-tint layer atlas exact + cheap (under the per-mask run cap) instead of
+    // alternating buckets per leaf, which exploded the sheet.
+    for (const [px, py] of pts) shapes.push({ d: circle(px, py, 4), fill: '$secondary', silhouette: false });
+    for (const [px, py] of pts) shapes.push({ d: circle(px + 1.5, py - 1.5, 2.3), fill: '$accent', silhouette: false });
+    return shapes;
+  },
+};
+
+/** A corporate accent wall — the clinical end. Solid brand face, a crisp accent
+ *  stripe down each arm, and a logo placard at the junction. */
+const brandedWall: WallTemplate = {
+  kind: 'wall',
+  id: 'branded-wall',
+  label: 'Branded wall',
+  params: [{ key: 'thickness', label: 'Thickness', min: 18, max: 28, step: 2, default: 24 }],
+  build(mask, params) {
+    const t = params.thickness ?? 24;
+    const shapes = wallArms(mask, t, '$primary');
+    const stripe = (d: string) => shapes.push({ d, stroke: '$accent', strokeWidth: 3, silhouette: false });
+    if (mask & WALL_BITS.N) stripe(`M ${C} 0 L ${C} ${C}`);
+    if (mask & WALL_BITS.S) stripe(`M ${C} ${C} L ${C} 128`);
+    if (mask & WALL_BITS.W) stripe(`M 0 ${C} L ${C} ${C}`);
+    if (mask & WALL_BITS.E) stripe(`M ${C} ${C} L 128 ${C}`);
+    // logo placard at the junction
+    shapes.push(
+      { d: rr(C - 7, C - 7, 14, 14, 2), fill: '$secondary', silhouette: false },
+      { d: circle(C, C, 3.5), fill: '$accent', silhouette: false },
+      { d: circle(C, C, 1.6), fill: '$primary', silhouette: false },
+    );
+    return shapes;
+  },
+};
+
+/** A wood acoustic-slat wall — warm-modern. Slat shadow lines run across the band
+ *  at a regular pitch along each arm. */
+const slatWall: WallTemplate = {
+  kind: 'wall',
+  id: 'slat-wall',
+  label: 'Wood slat wall',
+  params: [{ key: 'thickness', label: 'Thickness', min: 18, max: 28, step: 2, default: 22 }],
+  build(mask, params) {
+    const t = params.thickness ?? 22;
+    const h = t / 2;
+    const shapes = wallArms(mask, t, '$primary');
+    const slats = (vertical: boolean, base: number, len: number) => {
+      const n = Math.max(2, Math.round(len / 6));
+      for (let i = 1; i < n; i++) {
+        const p = base + (i * len) / n;
+        shapes.push(
+          vertical
+            ? { d: `M ${C - h} ${p} L ${C + h} ${p}`, stroke: '$secondary', strokeWidth: 1.2, opacity: 0.7, silhouette: false }
+            : { d: `M ${p} ${C - h} L ${p} ${C + h}`, stroke: '$secondary', strokeWidth: 1.2, opacity: 0.7, silhouette: false },
+        );
+      }
+    };
+    if (mask & WALL_BITS.N) slats(true, 0, C);
+    if (mask & WALL_BITS.S) slats(true, C, C);
+    if (mask & WALL_BITS.W) slats(false, 0, C);
+    if (mask & WALL_BITS.E) slats(false, C, C);
+    return shapes;
+  },
+};
+
 // ---------------------------------------------------------------------------
 // Building-surround walls (the "floor in a tower" border — see
 // docs/building-surround-model.md). These read as the building shell, not the
@@ -234,6 +319,9 @@ export const WALL_TEMPLATES: WallTemplate[] = [
   cubiclePartition,
   brickWall,
   panelWall,
+  livingWall,
+  brandedWall,
+  slatWall,
   demisingWall,
   curtainWall,
 ];
@@ -641,6 +729,109 @@ const sidewalk: FloorTemplate = {
   },
 };
 
+// --- Added floors (prop-variety-gap-analysis.md §4) ----------------------------
+
+/** Smooth industrial concrete — the clinical/institutional surface. Faint
+ *  mottling + saw-cut control joints on 128-divisors (seamless) + a soft sheen. */
+const polishedConcrete: FloorTemplate = {
+  kind: 'floor',
+  id: 'polished-concrete',
+  label: 'Polished concrete',
+  params: [
+    { key: 'joints', label: 'Control joints', min: 0, max: 2, step: 1, default: 1 },
+    { key: 'seed', label: 'Pattern seed', min: 1, max: 9, step: 1, default: 3 },
+  ],
+  build(params) {
+    const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
+    const rng = mulberry32((params.seed ?? 3) * 21937);
+    for (let i = 0; i < 28; i++) {
+      const x = rng() * 128;
+      const y = rng() * 128;
+      const r = 6 + rng() * 14;
+      const fill = rng() > 0.5 ? '$secondary' : '$accent';
+      for (const dx of [0, -128, 128]) {
+        for (const dy of [0, -128, 128]) {
+          if (x + dx > -20 && x + dx < 148 && y + dy > -20 && y + dy < 148) shapes.push(flat(circle(x + dx, y + dy, r), fill, 0.06));
+        }
+      }
+    }
+    const joints = params.joints ?? 1;
+    if (joints >= 1)
+      for (const v of [64]) {
+        shapes.push({ d: `M ${v} 0 L ${v} 128`, stroke: '#00000018', strokeWidth: 1.2, silhouette: false });
+        shapes.push({ d: `M 0 ${v} L 128 ${v}`, stroke: '#00000018', strokeWidth: 1.2, silhouette: false });
+      }
+    if (joints >= 2)
+      for (const v of [32, 96]) {
+        shapes.push({ d: `M ${v} 0 L ${v} 128`, stroke: '#00000010', strokeWidth: 1, silhouette: false });
+        shapes.push({ d: `M 0 ${v} L 128 ${v}`, stroke: '#00000010', strokeWidth: 1, silhouette: false });
+      }
+    shapes.push(flat(rr(0, 0, 128, 12, 0), '#FFFFFF0A'));
+    return shapes;
+  },
+};
+
+/** A bold decorative tile for defining a zone (lounge / breakout). Checker of
+ *  $primary/$secondary with an $accent diamond motif; grout on divisors (seamless). */
+const accentTile: FloorTemplate = {
+  kind: 'floor',
+  id: 'accent-tile',
+  label: 'Accent tile',
+  params: [
+    { key: 'grid', label: 'Tile size', min: 32, max: 64, step: 16, default: 32 },
+    { key: 'motif', label: 'Motif', min: 0, max: 2, step: 1, default: 1 },
+  ],
+  build(params) {
+    const g = params.grid ?? 32;
+    const motif = params.motif ?? 1;
+    const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
+    for (let y = 0; y < 128; y += g) {
+      for (let x = 0; x < 128; x += g) {
+        if ((x / g + y / g) % 2 === 1) shapes.push(flat(rr(x, y, g, g, 0), '$secondary', 0.8));
+        if (motif >= 1) {
+          const cx = x + g / 2;
+          const cy = y + g / 2;
+          const d = g * 0.22;
+          shapes.push(flat(`M ${cx} ${cy - d} L ${cx + d} ${cy} L ${cx} ${cy + d} L ${cx - d} ${cy} Z`, '$accent', 0.85));
+        }
+      }
+    }
+    for (let v = 0; v <= 128; v += g) {
+      shapes.push({ d: `M ${v} 0 L ${v} 128`, stroke: '#00000018', strokeWidth: 1, silhouette: false });
+      shapes.push({ d: `M 0 ${v} L 128 ${v}`, stroke: '#00000018', strokeWidth: 1, silhouette: false });
+    }
+    return shapes;
+  },
+};
+
+/** Astroturf for the game room — the fun/warm end. Mowing stripes on divisors +
+ *  a wrapped grass-fleck texture. */
+const astroturf: FloorTemplate = {
+  kind: 'floor',
+  id: 'astroturf',
+  label: 'Astroturf',
+  params: [{ key: 'seed', label: 'Pattern seed', min: 1, max: 9, step: 1, default: 5 }],
+  build(params) {
+    const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
+    // mowing stripes (32-wide, wrap on divisors)
+    for (let i = 1; i < 4; i += 2) shapes.push(flat(rr(i * 32, 0, 32, 128, 0), '$secondary', 0.32));
+    // grass flecks
+    const rng = mulberry32((params.seed ?? 5) * 71317);
+    for (let i = 0; i < 90; i++) {
+      const x = rng() * 128;
+      const y = rng() * 128;
+      const len = 2 + rng() * 2;
+      const fill = rng() > 0.5 ? '$secondary' : '$accent';
+      for (const dx of [0, -128, 128]) {
+        for (const dy of [0, -128, 128]) {
+          if (x + dx > -4 && x + dx < 132 && y + dy > -4 && y + dy < 132) shapes.push({ d: `M ${x + dx} ${y + dy} L ${x + dx} ${y + dy - len}`, stroke: fill, strokeWidth: 1, opacity: 0.5, silhouette: false });
+        }
+      }
+    }
+    return shapes;
+  },
+};
+
 export const FLOOR_TEMPLATES: FloorTemplate[] = [
   carpet,
   carpetTiles,
@@ -651,6 +842,9 @@ export const FLOOR_TEMPLATES: FloorTemplate[] = [
   terrazzo,
   rubberMat,
   lobbyStone,
+  polishedConcrete,
+  accentTile,
+  astroturf,
   // Outdoor ground surfaces (B1.5 — shipped as the distinct ground kind).
   grass,
   dirt,

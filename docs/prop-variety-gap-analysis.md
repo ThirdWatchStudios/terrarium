@@ -83,6 +83,10 @@ storage (IT/storage)**, and the **decor/personality + wellness** sets that the b
 
 ## 4. Walls & floors
 
+**✅ Shipped 2026-07-05** — walls 7→10 (**living-wall** warm, **branded-wall** clinical, **slat-wall**
+warm-modern); floors 9→12 (**polished-concrete** clinical, **accent-tile** zone-definer, **astroturf** game
+room). All autotile/tile seamlessly and are swatch-clean. Walls auto-appear as `Wall` facilities in the catalog.
+
 Reasonable spread already. Gaps tied to the warm↔clinical axis and area definition:
 
 - **Walls:** add a **living / moss wall** (warm feature), a **branded / logo wall** (clinical corporate), maybe a
@@ -156,6 +160,11 @@ Concrete author list, tagged with the template conventions (`projection` plan/el
 floor/wall-slot, `gridFootprint`, interaction-anchor?). Footprints are first-guess; art-determined at authoring.
 
 ### P0 — highest value (warm personality + glaring holes)
+
+**✅ Shipped 2026-07-05** — all P0 props authored, wired (templates + `gridFootprint` + default instances),
+and flowing into the prop atlas, facility catalog, and re-tint layer atlases. `PROP_TEMPLATES` 40→52. The
+`wall-screen (TV)` moved to P1 (functional, not narrative). Scatter set shipped with a `variant` param that
+yields distinct arrangements (the anti-monotony lever). Restrooms shipped abstracted (sink bank + stall).
 | id | role | warm/clinical | proj | placement | footprint | interaction |
 |---|---|---|---|---|---|---|
 | potted-tree | plant variety | warm | elevation | floor | 1×1 | no |
@@ -171,6 +180,11 @@ floor/wall-slot, `gridFootprint`, interaction-anchor?). Footprints are first-gue
 | personal-desk-items | dressing set (scatter) | warm | plan | floor | 1×1 | no |
 
 ### P1 — believability + satire
+
+**✅ Shipped 2026-07-05** — all P1 props authored, eyeballed, and wired. `PROP_TEMPLATES` 40→68 across P0+P1
+(28 new props). Interaction anchors wired into `INTERACTION_PROP_TYPES`: reuses `copier`→`printer`,
+`kanban-board`→`whiteboard`; new sim types `phone_booth`, `microwave`, `recreation` (ping-pong + foosball) —
+the sim binds these in B2, graceful fallback until then. `restroom-sink/stall` shipped in P0.
 | id | role | warm/clinical | proj | placement | footprint | interaction |
 |---|---|---|---|---|---|---|
 | standing-desk | workstation | neutral | plan | floor | 2×1 | no |
@@ -192,6 +206,10 @@ floor/wall-slot, `gridFootprint`, interaction-anchor?). Footprints are first-gue
 | restroom-stall | fixture (abstracted) | neutral | elevation | floor | 1×1 | no |
 
 ### P2 — flavor / long tail
+
+**Partially shipped 2026-07-05** — fish-tank, nap-pod (`nap_pod` rest anchor), pet-bed, string-lights, bar-cart,
+recycling-bins. Remaining long-tail (water-feature, magazine-rack, dish-rack, umbrella-stand, A-frame sign,
+photo-pinboard, awards-shelf, acoustic-panel, standee, exec-credenza) is optional / author-on-demand.
 recycling-bins (pair trash), fish-tank / water-feature (warm reception), nap-pod (satire), pet-bed (warm), string-
 lights / wall-vines (warm), magazine-rack, dish-rack, A-frame floor sign, exec-credenza, bar-cart, awards-shelf,
 motivational standee/easel, umbrella-stand, photo pinboard, acoustic-panel.

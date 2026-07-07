@@ -889,6 +889,20 @@ function bucketLayers(shapes: ShapeSpec[]): TileLayer[] {
   }));
 }
 
+/**
+ * Wall masks stack ×16 into one atlas sheet, so a single mask that splits into a
+ * pathological number of runs (heavy token-alternating detail — e.g. a foliage
+ * wall whose leaves alternate $secondary/$accent) would blow the sheet height past
+ * the rasterizer's max dimension. Cap it: beyond MAX_WALL_MASK_RUN_LAYERS, fall back
+ * to token-coalescing (like floors). Safe here — a mask that busy is decorative
+ * scatter, not the structural overlap run-splitting exists to preserve.
+ */
+const MAX_WALL_MASK_RUN_LAYERS = 5;
+function boundedColorLayers(shapes: ShapeSpec[]): TileLayer[] {
+  const runs = runLayers(shapes);
+  return runs.length > MAX_WALL_MASK_RUN_LAYERS ? bucketLayers(shapes) : runs;
+}
+
 /** The baked outline layer (untinted) — the same silhouette pass compose* draws under colour. */
 function outlineLayer(shapes: ShapeSpec[], style: StyleSheet): TileLayer | null {
   if (style.outline.width <= 0) return null;
@@ -923,7 +937,7 @@ export function wallMaskLayers(wall: TileInstance, style: StyleSheet, mask: numb
   const layers: TileLayer[] = [];
   const outline = outlineLayer(shapes, style);
   if (outline) layers.push(outline);
-  layers.push(...runLayers(shapes));
+  layers.push(...boundedColorLayers(shapes));
   return layers;
 }
 

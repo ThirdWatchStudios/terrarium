@@ -336,8 +336,15 @@ export interface ProjectState {
  */
 export type LookId = 'raw' | 'clinical';
 export const LOOKS: LookId[] = ['clinical', 'raw'];
-/** The look a project exports as when it hasn't chosen one — the game's canonical floor. */
-export const DEFAULT_LOOK: LookId = 'clinical';
+/**
+ * The look a project exports as when it hasn't chosen one. `raw` = the warm,
+ * authored palettes: the office ships vivid and the SIM drives the warm→clinical
+ * drain at runtime (the office-builder palette lever — the environment recolours
+ * live), rather than baking clinical at export. `clinical` stays available as an
+ * explicit look (the `:clinical` CLI suffix / an authored choice) for a bundle that
+ * should ship pre-drained.
+ */
+export const DEFAULT_LOOK: LookId = 'raw';
 
 /**
  * Current project/export schema version. Lives here (a dependency-free module)

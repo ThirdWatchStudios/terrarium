@@ -619,6 +619,968 @@ const wallClock: PropTemplate = {
   },
 };
 
+// --- Desk dressing + abstracted restroom (P0) ---------------------------------
+// personal-desk-items is the top-down scatter overlay (the cheap anti-monotony
+// lever): a `variant` param yields distinct arrangements, so repeated desks read
+// as individually owned. The restroom fixtures are deliberately abstracted —
+// suggestive, not literal plumbing — enough to read a room as a bathroom.
+
+const personalDeskItems: PropTemplate = {
+  id: 'personal-desk-items',
+  label: 'Personal desk items',
+  projection: 'plan',
+  gridFootprint: { w: 1, h: 1 },
+  params: [
+    { key: 'variant', label: 'Arrangement', min: 0, max: 3, step: 1, default: 0 },
+    { key: 'items', label: 'Item count', min: 2, max: 4, step: 1, default: 3 },
+  ],
+  build(params) {
+    const v = params.variant ?? 0;
+    const n = params.items ?? 3;
+    const sticky = ['#F6D34B', '#F29DB0', '#9AD6A0', '#8FC7E8'];
+    const toy = ['#D85A30', '#5B8DB8', '#97C459', '#B968A6'];
+    const jx = (i: number) => ((v * 13 + i * 29) % 9) - 4;
+    const jy = (i: number) => ((v * 17 + i * 23) % 9) - 4;
+    const shapes: ShapeSpec[] = [];
+    // framed photo (seen from above)
+    if (n >= 1) {
+      const px = 44 + jx(0), py = 48 + jy(0);
+      shapes.push(
+        { d: rr(px, py, 20, 15, 2), fill: '$secondary' },
+        { d: rr(px + 2, py + 2, 16, 11, 1), fill: '#EDE7D6', silhouette: false },
+        { d: circle(px + 10, py + 7, 3.2), fill: '$accent', silhouette: false },
+      );
+    }
+    // coffee mug (top-down: handle behind, ring, coffee)
+    if (n >= 2) {
+      const mx = 84 + jx(1), my = 62 + jy(1);
+      shapes.push(
+        { d: `M ${mx + 6} ${my - 2} q 6 2 0 6`, stroke: '$primary', strokeWidth: 3, silhouette: false },
+        { d: circle(mx, my, 7.5), fill: '$primary' },
+        { d: circle(mx, my, 5), fill: '#6E4A2A', silhouette: false },
+      );
+    }
+    // sticky note
+    if (n >= 3) {
+      const sx = 56 + jx(2), sy = 72 + jy(2);
+      shapes.push(
+        { d: rr(sx, sy, 12, 12, 1), fill: sticky[v % sticky.length], silhouette: false },
+        { d: `M ${sx + 2} ${sy + 4} L ${sx + 10} ${sy + 4} M ${sx + 2} ${sy + 7} L ${sx + 8} ${sy + 7}`, stroke: '#00000030', strokeWidth: 0.8, silhouette: false },
+      );
+    }
+    // a figurine or a tiny plant (alternates by variant)
+    if (n >= 4) {
+      const tx = 80 + jx(3), ty = 42 + jy(3);
+      if (v % 2 === 0) {
+        shapes.push({ d: circle(tx, ty, 4.5), fill: toy[v % toy.length] }, { d: circle(tx, ty - 3, 3), fill: toy[(v + 2) % toy.length], silhouette: false });
+      } else {
+        shapes.push({ d: rr(tx - 3.5, ty, 7, 5, 1), fill: '#B07A4B' }, { d: circle(tx, ty - 2, 4), fill: '#5C8A3A', silhouette: false });
+      }
+    }
+    return shapes;
+  },
+};
+
+const restroomSink: PropTemplate = {
+  id: 'restroom-sink',
+  label: 'Restroom sinks',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 30, ry: 4.5 },
+  gridFootprint: { w: 2, h: 1 },
+  params: [{ key: 'basins', label: 'Basins', min: 1, max: 3, step: 1, default: 2 }],
+  build(params) {
+    const basins = params.basins ?? 2;
+    const w = 96;
+    const x = CX - w / 2;
+    const counterTop = GROUND - 34;
+    const shapes: ShapeSpec[] = [
+      // mirror band
+      { d: rr(x + 4, counterTop - 30, w - 8, 22, 2), fill: '$secondary' },
+      { d: rr(x + 6, counterTop - 28, w - 12, 18, 1), fill: '#CFE0E6', opacity: 0.7, silhouette: false },
+      { d: `M ${x + 12} ${counterTop - 26} L ${x + 22} ${counterTop - 26}`, stroke: '#FFFFFF80', strokeWidth: 2, silhouette: false },
+      // vanity counter + apron
+      { d: rr(x, counterTop, w, 14, 3), fill: '$primary' },
+      { d: rr(x + 2, GROUND - 20, w - 4, 20, 2), fill: '$primary', silhouette: false },
+    ];
+    for (let i = 0; i < basins; i++) {
+      const bx = x + ((i + 0.5) * w) / basins;
+      const br = (w / basins) * 0.3;
+      shapes.push(
+        { d: ellipse(bx, counterTop + 6, br, 4.5), fill: '#E8EEF0', silhouette: false },
+        { d: ellipse(bx, counterTop + 6, br * 0.7, 3), fill: '#00000022', silhouette: false },
+        { d: rr(bx - 1.5, counterTop - 4, 3, 6, 1), fill: '$accent', silhouette: false },
+        { d: `M ${bx} ${counterTop - 4} q 0 -4 4 -4`, stroke: '$accent', strokeWidth: 2, silhouette: false },
+      );
+    }
+    return shapes;
+  },
+};
+
+const restroomStall: PropTemplate = {
+  id: 'restroom-stall',
+  label: 'Restroom stall',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 26, ry: 4 },
+  gridFootprint: { w: 1, h: 1 },
+  params: [
+    { key: 'height', label: 'Panel height', min: 62, max: 82, step: 2, default: 72 },
+    { key: 'occupied', label: 'Occupied', min: 0, max: 1, step: 1, default: 0 },
+  ],
+  build(params) {
+    const h = params.height ?? 72;
+    const w = 48;
+    const x = CX - w / 2;
+    const top = GROUND - h;
+    const gap = 12; // floor gap under the partitions
+    const panelBot = GROUND - gap;
+    const light = (params.occupied ?? 0) >= 1 ? '#D8362F' : '#97C459';
+    return [
+      // side partitions
+      { d: rr(x - 3, top, 6, panelBot - top, 1), fill: '$primary' },
+      { d: rr(x + w - 3, top, 6, panelBot - top, 1), fill: '$primary' },
+      // stall door + inset
+      { d: rr(x + 3, top, w - 6, panelBot - top, 1), fill: '$secondary' },
+      { d: rr(x + 6, top + 4, w - 12, panelBot - top - 8, 1), fill: '#00000012', silhouette: false },
+      // vacant/occupied latch indicator
+      { d: rr(x + w - 13, top + (panelBot - top) / 2 - 3, 7, 6, 1), fill: light, silhouette: false },
+      // partition legs (the feet gap)
+      { d: rr(x - 2, panelBot, 4, gap, 1), fill: '$primary', silhouette: false },
+      { d: rr(x + w - 2, panelBot, 4, gap, 1), fill: '$primary', silhouette: false },
+    ];
+  },
+};
+
+// --- P1: AV + open storage (functional believability holes) --------------------
+
+const wallScreen: PropTemplate = {
+  id: 'wall-screen',
+  label: 'Wall screen',
+  projection: 'plan',
+  placement: 'wall-slot',
+  gridFootprint: { w: 2, h: 1 },
+  params: [
+    { key: 'width', label: 'Width', min: 44, max: 68, step: 4, default: 56 },
+    { key: 'content', label: 'On-screen', min: 0, max: 2, step: 1, default: 1 },
+  ],
+  build(params) {
+    const w = params.width ?? 56;
+    const h = Math.round(w * 0.58);
+    const x = CX - w / 2;
+    const y = 64 - h / 2;
+    const content = params.content ?? 1;
+    const shapes: ShapeSpec[] = [
+      // bezel + screen
+      { d: rr(x - 2, y - 2, w + 4, h + 4, 2), fill: '$primary' },
+      { d: rr(x, y, w, h, 1), fill: '$secondary', silhouette: false },
+    ];
+    if (content === 1) {
+      // a title slide
+      shapes.push(
+        { d: rr(x + 5, y + 5, w * 0.5, 4, 1), fill: '#F2EDE0', opacity: 0.85, silhouette: false },
+        { d: rr(x + 5, y + 14, w - 12, 2.5, 1), fill: '#FFFFFF66', silhouette: false },
+        { d: rr(x + 5, y + 20, w - 20, 2.5, 1), fill: '#FFFFFF66', silhouette: false },
+        { d: rr(x + 5, y + 26, w - 16, 2.5, 1), fill: '#FFFFFF66', silhouette: false },
+      );
+    } else if (content === 2) {
+      // a bar chart
+      for (let i = 0; i < 4; i++) {
+        const bh = 6 + ((i * 7) % 12);
+        shapes.push({ d: rr(x + 6 + i * ((w - 12) / 4), y + h - 6 - bh, (w - 16) / 4 - 2, bh, 1), fill: i % 2 ? '$accent' : '#F2EDE0', opacity: 0.85, silhouette: false });
+      }
+    }
+    // power LED
+    shapes.push({ d: circle(x + w - 3, y + h + 2, 1.4), fill: '$accent', silhouette: false });
+    return shapes;
+  },
+};
+
+const lockers: PropTemplate = {
+  id: 'lockers',
+  label: 'Lockers',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 27, ry: 4.5 },
+  gridFootprint: { w: 1, h: 1 },
+  params: [
+    { key: 'columns', label: 'Doors', min: 2, max: 4, step: 1, default: 3 },
+    { key: 'height', label: 'Height', min: 72, max: 92, step: 2, default: 84 },
+  ],
+  build(params) {
+    const cols = params.columns ?? 3;
+    const h = params.height ?? 84;
+    const w = 52;
+    const x = CX - w / 2;
+    const top = GROUND - h;
+    const shapes: ShapeSpec[] = [{ d: rr(x, top, w, h, 2), fill: '$primary' }];
+    const dw = (w - 4) / cols;
+    for (let i = 0; i < cols; i++) {
+      const dx = x + 2 + i * dw;
+      shapes.push(
+        { d: rr(dx + 1, top + 2, dw - 2, h - 4, 1.5), fill: '$secondary', silhouette: false },
+        // top vents
+        { d: `M ${dx + 4} ${top + 6} L ${dx + dw - 5} ${top + 6} M ${dx + 4} ${top + 9} L ${dx + dw - 5} ${top + 9}`, stroke: '#00000033', strokeWidth: 1, silhouette: false },
+        // number plate + handle
+        { d: rr(dx + dw / 2 - 4, top + 14, 8, 4, 0.5), fill: '#F2EDE0', silhouette: false },
+        { d: rr(dx + dw - 7, top + h / 2 - 5, 3, 10, 1), fill: '$accent', silhouette: false },
+      );
+    }
+    return shapes;
+  },
+};
+
+const openShelving: PropTemplate = {
+  id: 'open-shelving',
+  label: 'Open shelving',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 26, ry: 4.5 },
+  gridFootprint: { w: 1, h: 1 },
+  params: [
+    { key: 'shelves', label: 'Shelves', min: 3, max: 5, step: 1, default: 4 },
+    { key: 'fill', label: 'Stocked', min: 1, max: 3, step: 1, default: 3 },
+  ],
+  build(params) {
+    const shelves = params.shelves ?? 4;
+    const shelfH = 20;
+    const w = 50;
+    const h = shelves * shelfH + 4;
+    const x = CX - w / 2;
+    const top = GROUND - h;
+    const stock = params.fill ?? 3;
+    const binColors = ['$secondary', '$accent', '#3D6B8E', '#B8543E', '#C9A24B'];
+    const shapes: ShapeSpec[] = [
+      // uprights (metal rack)
+      { d: rr(x, top, 4, h, 1), fill: '$primary' },
+      { d: rr(x + w - 4, top, 4, h, 1), fill: '$primary' },
+    ];
+    for (let s = 0; s <= shelves; s++) {
+      shapes.push({ d: rr(x, top + s * shelfH, w, 3, 1), fill: '$primary', silhouette: s === 0 });
+    }
+    // boxes / bins on the shelves
+    for (let s = 0; s < shelves; s++) {
+      const shelfY = top + (s + 1) * shelfH;
+      let bx = x + 5;
+      let k = s * 2 + 1;
+      while (bx < x + w - 10) {
+        const bw = 9 + ((k * 5) % 7);
+        const bh = 9 + ((k * 3) % 6);
+        if (stock >= 2 || k % 2 === 0) {
+          shapes.push(
+            { d: rr(bx, shelfY - bh - 3, bw, bh, 1), fill: binColors[k % binColors.length], silhouette: false },
+            { d: rr(bx + 1.5, shelfY - bh - 1, bw * 0.5, 2, 0.5), fill: '#F2EDE0', silhouette: false },
+          );
+        }
+        bx += bw + 3;
+        k++;
+      }
+    }
+    return shapes;
+  },
+};
+
+// --- P1: service + IT equipment ------------------------------------------------
+
+const copier: PropTemplate = {
+  id: 'copier',
+  label: 'Copier',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 24, ry: 4.5 },
+  gridFootprint: { w: 1, h: 1 },
+  params: [{ key: 'height', label: 'Height', min: 60, max: 78, step: 2, default: 70 }],
+  build(params) {
+    const h = params.height ?? 70;
+    const w = 46;
+    const x = CX - w / 2;
+    const top = GROUND - h;
+    const scannerH = 16;
+    return [
+      // body
+      { d: rr(x, top + scannerH, w, h - scannerH, 3), fill: '$primary' },
+      // scanner deck + glass + lid seam
+      { d: rr(x - 1, top, w + 2, scannerH, 3), fill: '$secondary' },
+      { d: rr(x + 4, top + 3, w - 8, 5, 1), fill: '#B7C7CE', silhouette: false },
+      { d: `M ${x + 3} ${top + scannerH - 2} L ${x + w - 3} ${top + scannerH - 2}`, stroke: '#00000026', strokeWidth: 1, silhouette: false },
+      // control panel + buttons
+      { d: rr(x + w - 18, top + scannerH + 4, 14, 8, 1.5), fill: '$accent', silhouette: false },
+      { d: circle(x + w - 14, top + scannerH + 8, 1.4), fill: '#F2EDE0', silhouette: false },
+      { d: circle(x + w - 9, top + scannerH + 8, 1.4), fill: '#F2EDE0', silhouette: false },
+      // output tray + a printed sheet
+      { d: rr(x + 4, top + scannerH + 16, w - 8, 4, 1), fill: '#00000033', silhouette: false },
+      { d: rr(x + 9, top + scannerH + 13, w - 26, 6, 0.5), fill: '#F7F4EC', silhouette: false },
+      // paper drawers
+      { d: rr(x + 4, GROUND - 18, w - 8, 6, 1), fill: '$secondary', silhouette: false },
+      { d: rr(x + 4, GROUND - 10, w - 8, 6, 1), fill: '$secondary', silhouette: false },
+      { d: rr(CX - 5, GROUND - 16, 10, 2, 1), fill: '#00000033', silhouette: false },
+      { d: rr(CX - 5, GROUND - 8, 10, 2, 1), fill: '#00000033', silhouette: false },
+    ];
+  },
+};
+
+const shredder: PropTemplate = {
+  id: 'shredder',
+  label: 'Paper shredder',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 17, ry: 4 },
+  gridFootprint: { w: 1, h: 1 },
+  params: [{ key: 'height', label: 'Bin height', min: 34, max: 50, step: 2, default: 42 }],
+  build(params) {
+    const h = params.height ?? 42;
+    const binTop = GROUND - h;
+    const bw = 30;
+    const shapes: ShapeSpec[] = [
+      // bin (slightly tapered)
+      { d: `M ${CX - bw / 2} ${binTop} L ${CX + bw / 2} ${binTop} L ${CX + bw / 2 - 2} ${GROUND} L ${CX - bw / 2 + 2} ${GROUND} Z`, fill: '$primary' },
+      // shredder head (overhangs the bin)
+      { d: rr(CX - bw / 2 - 3, binTop - 10, bw + 6, 12, 2), fill: '$secondary' },
+      // feed slot
+      { d: rr(CX - 10, binTop - 6, 20, 2.5, 1), fill: '#1A1A18', silhouette: false },
+      // a sheet feeding in + shredded strips below the slot
+      { d: rr(CX - 6, binTop - 18, 12, 12, 0.5), fill: '#F7F4EC', silhouette: false },
+      { d: `M ${CX - 8} ${binTop + 4} L ${CX - 8} ${binTop + 14} M ${CX - 3} ${binTop + 4} L ${CX - 3} ${binTop + 16} M ${CX + 3} ${binTop + 4} L ${CX + 3} ${binTop + 13} M ${CX + 8} ${binTop + 4} L ${CX + 8} ${binTop + 15}`, stroke: '#FFFFFF55', strokeWidth: 1.2, silhouette: false },
+      // power light
+      { d: circle(CX + bw / 2 - 2, binTop - 4, 1.6), fill: '$accent', silhouette: false },
+    ];
+    return shapes;
+  },
+};
+
+const serverRack: PropTemplate = {
+  id: 'server-rack',
+  label: 'Server rack',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 21, ry: 4.5 },
+  gridFootprint: { w: 1, h: 1 },
+  params: [
+    { key: 'height', label: 'Height', min: 72, max: 94, step: 2, default: 86 },
+    { key: 'units', label: 'Units', min: 3, max: 6, step: 1, default: 5 },
+  ],
+  build(params) {
+    const h = params.height ?? 86;
+    const units = params.units ?? 5;
+    const w = 40;
+    const x = CX - w / 2;
+    const top = GROUND - h;
+    const shapes: ShapeSpec[] = [
+      // cabinet + inner bay
+      { d: rr(x, top, w, h, 3), fill: '$primary' },
+      { d: rr(x + 3, top + 3, w - 6, h - 6, 1), fill: '#111214', silhouette: false },
+    ];
+    const bayTop = top + 5;
+    const bayH = h - 10;
+    const uh = bayH / units;
+    for (let i = 0; i < units; i++) {
+      const uy = bayTop + i * uh + 1;
+      // server unit faceplate
+      shapes.push({ d: rr(x + 5, uy, w - 10, uh - 2, 1), fill: '$secondary', silhouette: false });
+      // status LEDs
+      shapes.push(
+        { d: circle(x + 9, uy + (uh - 2) / 2, 1.2), fill: i % 3 === 0 ? '#E0B44C' : '$accent', silhouette: false },
+        { d: circle(x + 13, uy + (uh - 2) / 2, 1.2), fill: '$accent', silhouette: false },
+      );
+      // drive slits
+      shapes.push({ d: `M ${x + 20} ${uy + 2} L ${x + w - 8} ${uy + 2} M ${x + 20} ${uy + uh - 4} L ${x + w - 8} ${uy + uh - 4}`, stroke: '#00000040', strokeWidth: 0.8, silhouette: false });
+    }
+    return shapes;
+  },
+};
+
+// --- P1: workstations + lounge seating -----------------------------------------
+
+const standingDesk: PropTemplate = {
+  id: 'standing-desk',
+  label: 'Standing desk',
+  projection: 'plan',
+  gridFootprint: { w: 2, h: 1 },
+  params: [
+    { key: 'width', label: 'Width', min: 84, max: 116, step: 4, default: 100 },
+    { key: 'dual', label: 'Dual monitor', min: 0, max: 1, step: 1, default: 0 },
+  ],
+  build(params) {
+    const w = params.width ?? 100;
+    const x = CX - w / 2;
+    const top = 38;
+    const depth = 52;
+    const shapes: ShapeSpec[] = [
+      // clean minimal desktop
+      { d: rr(x, top, w, depth, 5), fill: '$primary' },
+      { d: rr(x + 6, top + 6, w - 12, depth - 12, 3), fill: '#00000010', silhouette: false },
+    ];
+    // monitor(s) on a slim arm near the back
+    if ((params.dual ?? 0) >= 1) {
+      shapes.push(
+        { d: rr(CX - 26, top + 6, 24, 8, 1.5), fill: '#2C2C2A', silhouette: false },
+        { d: rr(CX + 2, top + 6, 24, 8, 1.5), fill: '#2C2C2A', silhouette: false },
+      );
+    } else {
+      shapes.push({ d: rr(CX - 16, top + 6, 32, 8, 1.5), fill: '#2C2C2A', silhouette: false });
+    }
+    shapes.push({ d: rr(CX - 3, top + 14, 6, 4, 1), fill: '#2C2C2A', silhouette: false });
+    // laptop + keyboard
+    shapes.push(
+      { d: rr(CX - 16, top + 26, 32, 12, 2), fill: '$secondary', silhouette: false },
+      { d: rr(CX - 12, top + 28, 24, 8, 1), fill: '#3A3A38', silhouette: false },
+    );
+    // height-adjust keypad on the front edge (the standing-desk tell) + coffee
+    shapes.push(
+      { d: rr(x + w - 20, top + depth - 8, 14, 5, 1), fill: '$accent', silhouette: false },
+      { d: `M ${x + w - 16} ${top + depth - 5.5} l 2 -2 l 2 2 M ${x + w - 10} ${top + depth - 5.5} l 2 -2 l 2 2`, stroke: '#FFFFFFAA', strokeWidth: 1, silhouette: false },
+      { d: circle(x + 14, top + 14, 4.5), fill: '$accent', silhouette: false },
+      { d: circle(x + 14, top + 14, 2), fill: '#6E4A2A', silhouette: false },
+    );
+    return shapes;
+  },
+};
+
+const waitingBench: PropTemplate = {
+  id: 'waiting-bench',
+  label: 'Waiting bench',
+  projection: 'plan',
+  gridFootprint: { w: 2, h: 1 },
+  params: [
+    { key: 'length', label: 'Length', min: 76, max: 112, step: 4, default: 96 },
+    { key: 'seats', label: 'Cushions', min: 2, max: 4, step: 1, default: 3 },
+  ],
+  build(params) {
+    const w = params.length ?? 96;
+    const x = CX - w / 2;
+    const top = 46;
+    const depth = 34;
+    const shapes: ShapeSpec[] = [
+      // thin back rail along the top edge
+      { d: rr(x, top - 6, w, 8, 3), fill: '$secondary' },
+      // seat pad
+      { d: rr(x, top, w, depth, 5), fill: '$primary' },
+      { d: rr(x + 3, top + 3, w - 6, depth - 6, 4), fill: '#00000010', silhouette: false },
+    ];
+    // cushion divisions
+    const seats = params.seats ?? 3;
+    for (let i = 1; i < seats; i++) {
+      const sx = x + (w * i) / seats;
+      shapes.push({ d: `M ${sx} ${top + 3} L ${sx} ${top + depth - 3}`, stroke: '$secondary', strokeWidth: 2, opacity: 0.6, silhouette: false });
+    }
+    // feet
+    for (const lx of [x + 4, x + w - 8]) shapes.push({ d: rr(lx, top + depth - 2, 4, 4, 1), fill: '$secondary', silhouette: false });
+    return shapes;
+  },
+};
+
+const coffeeTable: PropTemplate = {
+  id: 'coffee-table',
+  label: 'Coffee table',
+  projection: 'plan',
+  gridFootprint: { w: 1, h: 1 },
+  params: [
+    { key: 'width', label: 'Width', min: 48, max: 76, step: 4, default: 62 },
+    { key: 'decor', label: 'Décor', min: 0, max: 2, step: 1, default: 2 },
+  ],
+  build(params) {
+    const w = params.width ?? 62;
+    const d = Math.round(w * 0.66);
+    const x = CX - w / 2;
+    const y = CX - d / 2;
+    const decor = params.decor ?? 2;
+    const shapes: ShapeSpec[] = [
+      // low tabletop
+      { d: rr(x, y, w, d, 6), fill: '$primary' },
+      { d: rr(x + 5, y + 5, w - 10, d - 10, 4), fill: '#00000010', silhouette: false },
+    ];
+    if (decor >= 1) {
+      // fanned magazines
+      shapes.push(
+        { d: rr(x + 8, y + 8, 20, 14, 1), fill: '$secondary', silhouette: false },
+        { d: rr(x + 11, y + 6, 20, 14, 1), fill: '$accent', silhouette: false },
+      );
+    }
+    if (decor >= 2) {
+      // a mug + a tiny plant
+      shapes.push(
+        { d: circle(x + w - 12, y + 12, 4.5), fill: '#F2EDE0', silhouette: false },
+        { d: circle(x + w - 12, y + 12, 2.4), fill: '#6E4A2A', silhouette: false },
+        { d: rr(x + w - 20, y + d - 18, 8, 8, 1.5), fill: '$accent', silhouette: false },
+        { d: circle(x + w - 16, y + d - 16, 4), fill: '#5C8A3A', silhouette: false },
+      );
+    }
+    return shapes;
+  },
+};
+
+// --- P1: focus / collaboration / kitchen ---------------------------------------
+
+const phoneBooth: PropTemplate = {
+  id: 'phone-booth',
+  label: 'Phone booth',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 24, ry: 4.5 },
+  gridFootprint: { w: 1, h: 1 },
+  params: [
+    { key: 'height', label: 'Height', min: 82, max: 98, step: 2, default: 90 },
+    { key: 'occupied', label: 'Occupied', min: 0, max: 1, step: 1, default: 0 },
+  ],
+  build(params) {
+    const h = params.height ?? 90;
+    const w = 46;
+    const x = CX - w / 2;
+    const top = GROUND - h;
+    const occ = (params.occupied ?? 0) >= 1;
+    const shapes: ShapeSpec[] = [
+      // pod shell + roof cap
+      { d: rr(x, top, w, h, 6), fill: '$primary' },
+      { d: rr(x - 2, top - 3, w + 4, 8, 4), fill: '$primary' },
+      // frosted glass door
+      { d: rr(x + 5, top + 8, w - 10, h - 14, 4), fill: '$secondary', opacity: 0.85, silhouette: false },
+      { d: rr(x + 8, top + 11, w - 16, h - 20, 3), fill: '#CFE0E6', opacity: 0.5, silhouette: false },
+    ];
+    if (occ) {
+      // seated occupant silhouette behind the glass
+      shapes.push(
+        { d: circle(CX, top + 34, 8), fill: '#2C2C2A', opacity: 0.55, silhouette: false },
+        { d: rr(CX - 10, top + 42, 20, 24, 6), fill: '#2C2C2A', opacity: 0.55, silhouette: false },
+      );
+    } else {
+      shapes.push({ d: rr(CX - 12, GROUND - 30, 24, 5, 2), fill: '#00000026', silhouette: false });
+    }
+    shapes.push(
+      // handle + vacancy light + glass glint
+      { d: rr(x + w - 11, top + h / 2 - 6, 3, 12, 1.5), fill: '$accent', silhouette: false },
+      { d: circle(x + w - 8, top + 6, 2), fill: occ ? '#D8362F' : '#97C459', silhouette: false },
+      { d: `M ${x + 11} ${top + 14} L ${x + 18} ${top + 14}`, stroke: '#FFFFFF66', strokeWidth: 2, silhouette: false },
+    );
+    return shapes;
+  },
+};
+
+const kanbanBoard: PropTemplate = {
+  id: 'kanban-board',
+  label: 'Kanban board',
+  projection: 'plan',
+  placement: 'wall-slot',
+  gridFootprint: { w: 1, h: 1 },
+  params: [{ key: 'notes', label: 'Cards', min: 3, max: 9, step: 1, default: 6 }],
+  build(params) {
+    const w = 52;
+    const h = 40;
+    const x = CX - w / 2;
+    const y = 64 - h / 2;
+    const shapes: ShapeSpec[] = [
+      { d: rr(x - 2, y - 2, w + 4, h + 4, 2), fill: '$primary' },
+      { d: rr(x, y, w, h, 1), fill: '$secondary', silhouette: false },
+    ];
+    const cols = 3;
+    const colW = w / cols;
+    for (let c = 0; c < cols; c++) {
+      shapes.push({ d: rr(x + c * colW + 2, y + 2, colW - 4, 3, 1), fill: '$accent', silhouette: false });
+      if (c > 0) shapes.push({ d: `M ${x + c * colW} ${y + 1} L ${x + c * colW} ${y + h - 1}`, stroke: '#00000022', strokeWidth: 1, silhouette: false });
+    }
+    const cardColors = ['#F6D34B', '#F29DB0', '#9AD6A0', '#8FC7E8'];
+    const notes = params.notes ?? 6;
+    for (let i = 0; i < notes; i++) {
+      const c = i % cols;
+      const row = Math.floor(i / cols);
+      const cy0 = y + 8 + row * 9;
+      if (cy0 + 7 > y + h) continue;
+      shapes.push({ d: rr(x + c * colW + 3, cy0, colW - 6, 7, 1), fill: cardColors[(i * 3) % cardColors.length], silhouette: false });
+    }
+    return shapes;
+  },
+};
+
+const microwave: PropTemplate = {
+  id: 'microwave',
+  label: 'Microwave',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 22, ry: 4 },
+  gridFootprint: { w: 1, h: 1 },
+  params: [{ key: 'width', label: 'Width', min: 38, max: 52, step: 2, default: 44 }],
+  build(params) {
+    const w = params.width ?? 44;
+    const h = 26;
+    const x = CX - w / 2;
+    const top = GROUND - h;
+    const doorW = w * 0.62;
+    return [
+      // body
+      { d: rr(x, top, w, h, 3), fill: '$primary' },
+      // door + dark window
+      { d: rr(x + 3, top + 3, doorW, h - 6, 2), fill: '$secondary', silhouette: false },
+      { d: rr(x + 5, top + 5, doorW - 4, h - 10, 1.5), fill: '#1D1F22', silhouette: false },
+      // turntable + a dish inside
+      { d: ellipse(x + 3 + doorW / 2, top + h - 8, doorW * 0.32, 2.5), fill: '#3A3D42', silhouette: false },
+      { d: rr(x + 3 + doorW / 2 - 5, top + h - 12, 10, 4, 1), fill: '#C24A3A', silhouette: false },
+      // control panel + keypad + buttons
+      { d: rr(x + doorW + 6, top + 4, w - doorW - 9, h - 8, 1.5), fill: '$secondary', silhouette: false },
+      { d: rr(x + doorW + 8, top + 6, w - doorW - 13, 5, 1), fill: '$accent', silhouette: false },
+      { d: circle(x + doorW + 10, top + 15, 1.2), fill: '#F2EDE0', silhouette: false },
+      { d: circle(x + doorW + 14, top + 15, 1.2), fill: '#F2EDE0', silhouette: false },
+      // handle
+      { d: rr(x + 2, top + 6, 2, h - 12, 1), fill: '$accent', silhouette: false },
+    ];
+  },
+};
+
+const pantryShelf: PropTemplate = {
+  id: 'pantry-shelf',
+  label: 'Pantry shelf',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 25, ry: 4.5 },
+  gridFootprint: { w: 1, h: 1 },
+  params: [{ key: 'shelves', label: 'Shelves', min: 2, max: 4, step: 1, default: 3 }],
+  build(params) {
+    const shelves = params.shelves ?? 3;
+    const shelfH = 22;
+    const w = 48;
+    const h = shelves * shelfH + 4;
+    const x = CX - w / 2;
+    const top = GROUND - h;
+    const shapes: ShapeSpec[] = [
+      // open wooden carcass
+      { d: rr(x, top, w, h, 2), fill: '$primary' },
+      { d: rr(x + 3, top + 3, w - 6, h - 6, 1), fill: '#00000018', silhouette: false },
+    ];
+    const items = ['#D85A30', '#97C459', '#EFC94C', '#3D6B8E', '#B968A6', '#E8E4D8'];
+    for (let s = 0; s < shelves; s++) {
+      const shelfY = top + 3 + (s + 1) * shelfH - 2;
+      shapes.push({ d: rr(x + 3, shelfY, w - 6, 3, 1), fill: '$secondary', silhouette: false });
+      // snack boxes, mugs, coffee bags along the shelf
+      let bx = x + 6;
+      let k = s * 2 + 1;
+      while (bx < x + w - 9) {
+        if (k % 3 === 0) {
+          // a mug
+          shapes.push(
+            { d: circle(bx + 4, shelfY - 4, 4), fill: items[k % items.length], silhouette: false },
+            { d: `M ${bx + 8} ${shelfY - 6} q 3 1 0 4`, stroke: items[k % items.length], strokeWidth: 1.6, silhouette: false },
+          );
+          bx += 12;
+        } else {
+          // a box / bag
+          const bw = 6 + ((k * 5) % 6);
+          const bh = 9 + ((k * 3) % 6);
+          shapes.push(
+            { d: rr(bx, shelfY - bh - 2, bw, bh, 1), fill: items[k % items.length], silhouette: false },
+            { d: rr(bx + 1, shelfY - bh, bw - 2, 2.5, 0.5), fill: '#FFFFFF44', silhouette: false },
+          );
+          bx += bw + 3;
+        }
+        k++;
+      }
+    }
+    return shapes;
+  },
+};
+
+// --- P1: game room / recreation (the warm "before" feels fun) -------------------
+
+const pingPongTable: PropTemplate = {
+  id: 'ping-pong-table',
+  label: 'Ping-pong table',
+  projection: 'plan',
+  gridFootprint: { w: 3, h: 2 },
+  params: [{ key: 'width', label: 'Width', min: 96, max: 118, step: 4, default: 110 }],
+  build(params) {
+    const w = params.width ?? 110;
+    const depth = 62;
+    const x = CX - w / 2;
+    const y = CX - depth / 2;
+    return [
+      // table top
+      { d: rr(x, y, w, depth, 4), fill: '$primary' },
+      // regulation boundary + centre lines
+      { d: rr(x + 4, y + 4, w - 8, depth - 8, 2), stroke: '#F2EDE0', strokeWidth: 1.5, silhouette: false },
+      { d: `M ${x + 4} ${CX} L ${x + w - 4} ${CX}`, stroke: '#F2EDE0', strokeWidth: 1, silhouette: false },
+      // net across the middle + posts
+      { d: rr(CX - 1.5, y - 3, 3, depth + 6, 1), fill: '$secondary', silhouette: false },
+      { d: `M ${CX} ${y - 3} L ${CX} ${y + depth + 3}`, stroke: '#FFFFFF66', strokeWidth: 3, silhouette: false },
+      { d: circle(CX, y - 3, 2), fill: '$secondary', silhouette: false },
+      { d: circle(CX, y + depth + 3, 2), fill: '$secondary', silhouette: false },
+      // paddles at opposite ends + a ball mid-rally
+      { d: ellipse(x + 12, y + 16, 5, 7), fill: '$accent', silhouette: false },
+      { d: rr(x + 9, y + 22, 6, 8, 2), fill: '#6E4A2A', silhouette: false },
+      { d: ellipse(x + w - 12, y + depth - 16, 5, 7), fill: '$accent', silhouette: false },
+      { d: rr(x + w - 15, y + depth - 30, 6, 8, 2), fill: '#6E4A2A', silhouette: false },
+      { d: circle(CX + 20, y + 18, 2.2), fill: '#F2EDE0', silhouette: false },
+    ];
+  },
+};
+
+const foosballTable: PropTemplate = {
+  id: 'foosball-table',
+  label: 'Foosball table',
+  projection: 'plan',
+  gridFootprint: { w: 2, h: 1 },
+  params: [{ key: 'rods', label: 'Player rods', min: 4, max: 8, step: 2, default: 6 }],
+  build(params) {
+    const w = 88;
+    const depth = 52;
+    const x = CX - w / 2;
+    const y = CX - depth / 2;
+    const rods = params.rods ?? 6;
+    const shapes: ShapeSpec[] = [
+      // cabinet + green field
+      { d: rr(x, y, w, depth, 5), fill: '$primary' },
+      { d: rr(x + 6, y + 5, w - 12, depth - 10, 2), fill: '$secondary', silhouette: false },
+      // goals at each end
+      { d: rr(x + 6, CX - 8, 3, 16, 1), fill: '#1D1F22', silhouette: false },
+      { d: rr(x + w - 9, CX - 8, 3, 16, 1), fill: '#1D1F22', silhouette: false },
+      // centre line + ball
+      { d: `M ${CX} ${y + 6} L ${CX} ${y + depth - 6}`, stroke: '#FFFFFF44', strokeWidth: 1, silhouette: false },
+      { d: circle(CX + 6, CX + 4, 2), fill: '#F2EDE0', silhouette: false },
+    ];
+    // player rods across the field, handles poking out, two teams of figures
+    for (let i = 0; i < rods; i++) {
+      const rx = x + 12 + (i * (w - 24)) / (rods - 1);
+      const team = i % 2 ? '$accent' : '#D8362F';
+      shapes.push(
+        { d: `M ${rx} ${y - 3} L ${rx} ${y + depth + 3}`, stroke: '#9AA0A2', strokeWidth: 2, silhouette: false },
+        { d: rr(rx - 2.5, y - 6, 5, 5, 1.5), fill: '$accent', silhouette: false },
+      );
+      for (let p = 0; p < 3; p++) {
+        shapes.push({ d: rr(rx - 2.5, y + 12 + p * ((depth - 20) / 2) - 3, 5, 6, 1), fill: team, silhouette: false });
+      }
+    }
+    return shapes;
+  },
+};
+
+const beanBag: PropTemplate = {
+  id: 'bean-bag',
+  label: 'Bean bag',
+  projection: 'plan',
+  gridFootprint: { w: 1, h: 1 },
+  params: [{ key: 'size', label: 'Size', min: 34, max: 48, step: 2, default: 42 }],
+  build(params) {
+    const s = params.size ?? 42;
+    const r = s / 2;
+    // a soft, slightly irregular blob
+    const blob =
+      `M ${CX - r} ${CX + 2} ` +
+      `Q ${CX - r} ${CX - r} ${CX - r * 0.4} ${CX - r + 2} ` +
+      `Q ${CX} ${CX - r - 3} ${CX + r * 0.4} ${CX - r + 2} ` +
+      `Q ${CX + r} ${CX - r} ${CX + r} ${CX + 2} ` +
+      `Q ${CX + r} ${CX + r} ${CX} ${CX + r + 2} ` +
+      `Q ${CX - r} ${CX + r} ${CX - r} ${CX + 2} Z`;
+    return [
+      { d: blob, fill: '$primary' },
+      // panel seams
+      { d: `M ${CX - r * 0.7} ${CX - 2} Q ${CX} ${CX + r * 0.5} ${CX + r * 0.7} ${CX - 2}`, stroke: '$secondary', strokeWidth: 2, opacity: 0.6, silhouette: false },
+      { d: `M ${CX} ${CX - r + 2} Q ${CX + 3} ${CX} ${CX} ${CX + r}`, stroke: '$secondary', strokeWidth: 1.5, opacity: 0.5, silhouette: false },
+      // sat-in dent + highlight
+      { d: ellipse(CX, CX + 2, r * 0.5, r * 0.36), fill: '#00000018', silhouette: false },
+      { d: ellipse(CX - r * 0.35, CX - r * 0.35, r * 0.22, r * 0.15), fill: '#FFFFFF33', silhouette: false },
+    ];
+  },
+};
+
+// --- P2: warm flavor / long-tail -----------------------------------------------
+
+const fishTank: PropTemplate = {
+  id: 'fish-tank',
+  label: 'Fish tank',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 24, ry: 4.5 },
+  gridFootprint: { w: 1, h: 1 },
+  params: [{ key: 'fish', label: 'Fish', min: 1, max: 4, step: 1, default: 3 }],
+  build(params) {
+    const w = 50;
+    const x = CX - w / 2;
+    const cabH = 30;
+    const tankH = 34;
+    const cabTop = GROUND - cabH;
+    const tankTop = cabTop - tankH;
+    const shapes: ShapeSpec[] = [
+      // stand cabinet
+      { d: rr(x, cabTop, w, cabH, 3), fill: '$primary' },
+      { d: rr(x + 4, cabTop + 5, w - 8, cabH - 10, 2), fill: '#00000018', silhouette: false },
+      { d: circle(x + w - 9, cabTop + cabH / 2, 1.6), fill: '$accent', silhouette: false },
+      // tank frame + water + waterline
+      { d: rr(x + 1, tankTop, w - 2, tankH, 2), fill: '$secondary' },
+      { d: rr(x + 4, tankTop + 3, w - 8, tankH - 6, 1), fill: '#7FC4E8', opacity: 0.85, silhouette: false },
+      { d: rr(x + 5, tankTop + 4, w - 10, 3, 1), fill: '#CFEAF6', opacity: 0.7, silhouette: false },
+      // gravel + plants
+      { d: rr(x + 4, cabTop - 6, w - 8, 3, 1), fill: '#8A7A5C', silhouette: false },
+      { d: `M ${x + 12} ${cabTop - 3} q -3 -12 1 -18`, stroke: '#3B7D3A', strokeWidth: 2.5, silhouette: false },
+      { d: `M ${x + 16} ${cabTop - 3} q 3 -10 0 -15`, stroke: '#57A85A', strokeWidth: 2, silhouette: false },
+    ];
+    const fishColors = ['$accent', '#EF9F27', '#E24B4A', '#F2EDE0'];
+    const fish = params.fish ?? 3;
+    for (let i = 0; i < fish; i++) {
+      const fx = x + 16 + ((i * 13) % (w - 28));
+      const fy = tankTop + 11 + ((i * 9) % (tankH - 18));
+      const dir = i % 2 ? 1 : -1;
+      shapes.push(
+        { d: ellipse(fx, fy, 4, 2.6), fill: fishColors[i % fishColors.length], silhouette: false },
+        { d: `M ${fx - dir * 4} ${fy} l ${-dir * 3} -2 l 0 4 Z`, fill: fishColors[i % fishColors.length], silhouette: false },
+      );
+    }
+    return shapes;
+  },
+};
+
+const napPod: PropTemplate = {
+  id: 'nap-pod',
+  label: 'Nap pod',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 34, ry: 5 },
+  gridFootprint: { w: 2, h: 1 },
+  params: [{ key: 'visor', label: 'Visor down', min: 0, max: 1, step: 1, default: 1 }],
+  build(params) {
+    const visorDown = (params.visor ?? 1) >= 1;
+    const w = 88;
+    const x = CX - w / 2;
+    const seatY = GROUND - 20;
+    const shapes: ShapeSpec[] = [
+      // pod base shell (reclined lounge form, head end raised on the right)
+      { d: `M ${x} ${GROUND} Q ${x - 2} ${seatY - 4} ${x + 16} ${seatY - 6} L ${x + w - 24} ${seatY - 14} Q ${x + w} ${seatY - 18} ${x + w} ${GROUND} Z`, fill: '$primary' },
+      // reclined seat cushion
+      { d: `M ${x + 10} ${seatY - 2} L ${x + w - 26} ${seatY - 12} L ${x + w - 24} ${seatY - 4} L ${x + 12} ${seatY + 4} Z`, fill: '$secondary', silhouette: false },
+      // headrest pillow
+      { d: ellipse(x + w - 22, seatY - 12, 8, 5), fill: '$secondary', silhouette: false },
+      { d: ellipse(x + w - 22, seatY - 12, 5, 3), fill: '#00000018', silhouette: false },
+      // base plinth
+      { d: rr(x + 14, GROUND - 6, w - 34, 6, 2), fill: '$primary', silhouette: false },
+    ];
+    if (visorDown) {
+      // privacy dome sweeping over the head end
+      shapes.push(
+        { d: `M ${x + w - 40} ${seatY - 10} Q ${x + w - 6} ${seatY - 44} ${x + w - 2} ${seatY - 6}`, stroke: '$primary', strokeWidth: 7, silhouette: false },
+        { d: `M ${x + w - 37} ${seatY - 12} Q ${x + w - 11} ${seatY - 39} ${x + w - 6} ${seatY - 11}`, stroke: '#00000020', strokeWidth: 2, silhouette: false },
+      );
+    }
+    // status light
+    shapes.push({ d: circle(x + 20, seatY - 2, 2), fill: '$accent', silhouette: false });
+    return shapes;
+  },
+};
+
+const petBed: PropTemplate = {
+  id: 'pet-bed',
+  label: 'Pet bed',
+  projection: 'plan',
+  gridFootprint: { w: 1, h: 1 },
+  params: [{ key: 'size', label: 'Size', min: 40, max: 58, step: 2, default: 50 }],
+  build(params) {
+    const s = params.size ?? 50;
+    const rx = s / 2;
+    const ry = (s / 2) * 0.82;
+    return [
+      // bolster rim + inner cushion
+      { d: ellipse(CX, CX, rx, ry), fill: '$primary' },
+      { d: ellipse(CX, CX, rx - 7, ry - 6), fill: '$secondary', silhouette: false },
+      { d: ellipse(CX, CX, rx - 10, ry - 9), fill: '#00000012', silhouette: false },
+      // a bunched blanket
+      { d: `M ${CX - rx + 12} ${CX + 4} Q ${CX - 4} ${CX + ry - 8} ${CX + 8} ${CX + 6} Q ${CX - 2} ${CX + 2} ${CX - rx + 12} ${CX + 4} Z`, fill: '$accent', opacity: 0.85, silhouette: false },
+      // a chew-toy bone
+      { d: rr(CX + rx - 20, CX - ry + 8, 10, 3, 1.5), fill: '#F2EDE0', silhouette: false },
+      { d: circle(CX + rx - 20, CX - ry + 9.5, 2, ), fill: '#F2EDE0', silhouette: false },
+      { d: circle(CX + rx - 10, CX - ry + 9.5, 2), fill: '#F2EDE0', silhouette: false },
+    ];
+  },
+};
+
+// --- P2: ambiance / lounge / sorting -------------------------------------------
+
+const stringLights: PropTemplate = {
+  id: 'string-lights',
+  label: 'String lights',
+  projection: 'plan',
+  placement: 'wall-slot',
+  gridFootprint: { w: 1, h: 1 },
+  params: [{ key: 'bulbs', label: 'Bulbs', min: 4, max: 8, step: 1, default: 6 }],
+  build(params) {
+    const bulbs = params.bulbs ?? 6;
+    const y0 = 50;
+    const sag = 10;
+    const shapes: ShapeSpec[] = [
+      // drooping wire across the tile
+      { d: `M 0 ${y0} Q ${CX} ${y0 + sag} ${SIZE} ${y0}`, stroke: '#3A3A38', strokeWidth: 1.5, silhouette: false },
+    ];
+    for (let i = 0; i < bulbs; i++) {
+      const t = (i + 0.5) / bulbs;
+      const bx = t * SIZE;
+      const by = (1 - t) * (1 - t) * y0 + 2 * (1 - t) * t * (y0 + sag) + t * t * y0;
+      shapes.push(
+        { d: `M ${bx} ${by} L ${bx} ${by + 3}`, stroke: '#3A3A38', strokeWidth: 1, silhouette: false },
+        { d: circle(bx, by + 7, 4.5), fill: '#FFE7A0', opacity: 0.5, silhouette: false }, // warm halo
+        { d: ellipse(bx, by + 7, 2.6, 3.4), fill: '$accent', silhouette: false }, // bulb
+        { d: `M ${bx - 1} ${by + 6} q 1 2 2 0`, stroke: '#FFF7D8', strokeWidth: 0.8, silhouette: false }, // filament
+      );
+    }
+    return shapes;
+  },
+};
+
+const barCart: PropTemplate = {
+  id: 'bar-cart',
+  label: 'Bar cart',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 24, ry: 4.5 },
+  gridFootprint: { w: 1, h: 1 },
+  params: [{ key: 'bottles', label: 'Bottles', min: 2, max: 5, step: 1, default: 4 }],
+  build(params) {
+    const w = 48;
+    const x = CX - w / 2;
+    const topY = GROUND - 54;
+    const midY = GROUND - 26;
+    const shapes: ShapeSpec[] = [
+      // frame posts + shelves + wheels + handle
+      { d: rr(x + 2, topY, 3, GROUND - topY - 4, 1.5), fill: '$primary' },
+      { d: rr(x + w - 5, topY, 3, GROUND - topY - 4, 1.5), fill: '$primary' },
+      { d: rr(x, topY, w, 4, 1), fill: '$secondary' },
+      { d: rr(x, midY, w, 4, 1), fill: '$secondary' },
+      { d: circle(x + 5, GROUND - 3, 3), fill: '#2C2C2A', silhouette: false },
+      { d: circle(x + w - 5, GROUND - 3, 3), fill: '#2C2C2A', silhouette: false },
+      { d: `M ${x + w - 3} ${topY + 2} q 7 0 7 8`, stroke: '$primary', strokeWidth: 2, silhouette: false },
+    ];
+    // bottles on the top shelf
+    const bottleColors = ['#3B7D3A', '#8A3A2E', '#C9A24B', '#5A7A9A', '#E8E4D8'];
+    const bottles = params.bottles ?? 4;
+    for (let i = 0; i < bottles; i++) {
+      const bx = x + 7 + i * ((w - 14) / bottles);
+      const bh = 14 + ((i * 5) % 6);
+      shapes.push(
+        { d: rr(bx, topY - bh, 5, bh, 1.5), fill: bottleColors[i % bottleColors.length], silhouette: false },
+        { d: rr(bx + 1.5, topY - bh - 3, 2, 4, 0.5), fill: bottleColors[i % bottleColors.length], silhouette: false },
+      );
+    }
+    // glasses + ice bucket on the mid shelf
+    shapes.push(
+      { d: rr(x + 8, midY - 8, 4, 8, 1), fill: '#CFE0E6', opacity: 0.8, silhouette: false },
+      { d: rr(x + 14, midY - 8, 4, 8, 1), fill: '#CFE0E6', opacity: 0.8, silhouette: false },
+      { d: rr(x + w - 20, midY - 11, 13, 11, 2), fill: '$accent', silhouette: false },
+      { d: ellipse(x + w - 13.5, midY - 11, 6.5, 2), fill: '#CFEAF6', silhouette: false },
+    );
+    return shapes;
+  },
+};
+
+const recyclingBins: PropTemplate = {
+  id: 'recycling-bins',
+  label: 'Recycling bins',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 27, ry: 4.5 },
+  gridFootprint: { w: 1, h: 1 },
+  params: [{ key: 'bins', label: 'Bins', min: 2, max: 3, step: 1, default: 3 }],
+  build(params) {
+    const bins = params.bins ?? 3;
+    const h = 40;
+    const top = GROUND - h;
+    const gap = 3;
+    const totalW = 54;
+    const bw = (totalW - gap * (bins - 1)) / bins;
+    const x0 = CX - totalW / 2;
+    const bodyTokens = ['$primary', '$secondary', '$accent'];
+    const shapes: ShapeSpec[] = [];
+    for (let i = 0; i < bins; i++) {
+      const bx = x0 + i * (bw + gap);
+      shapes.push(
+        // tapered body (colour-coded via the palette trio) + lid + slot + sort mark
+        { d: `M ${bx} ${top + 4} L ${bx + bw} ${top + 4} L ${bx + bw - 1.5} ${GROUND} L ${bx + 1.5} ${GROUND} Z`, fill: bodyTokens[i % 3] },
+        { d: rr(bx - 1, top, bw + 2, 5, 1.5), fill: '#3A3A38', silhouette: false },
+        { d: rr(bx + bw / 2 - 4, top + 1.5, 8, 2, 1), fill: '#1A1A18', silhouette: false },
+        { d: circle(bx + bw / 2, top + 18, 4), stroke: '#F2EDE0', strokeWidth: 1.4, silhouette: false },
+      );
+    }
+    return shapes;
+  },
+};
+
 const fridge: PropTemplate = {
   id: 'fridge',
   label: 'Break room fridge',
@@ -1851,6 +2813,31 @@ export const PROP_TEMPLATES: PropTemplate[] = [
   framedArt,
   poster,
   wallClock,
+  personalDeskItems,
+  restroomSink,
+  restroomStall,
+  wallScreen,
+  lockers,
+  openShelving,
+  copier,
+  shredder,
+  serverRack,
+  standingDesk,
+  waitingBench,
+  coffeeTable,
+  phoneBooth,
+  kanbanBoard,
+  microwave,
+  pantryShelf,
+  pingPongTable,
+  foosballTable,
+  beanBag,
+  fishTank,
+  napPod,
+  petBed,
+  stringLights,
+  barCart,
+  recyclingBins,
   fridge,
   conferenceTable,
   receptionDesk,

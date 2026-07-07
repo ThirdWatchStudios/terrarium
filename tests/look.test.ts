@@ -8,21 +8,23 @@ import type { ProjectState } from '../src/core/types';
 /**
  * The LOOK is a reproducible, non-destructive lens (core/look.ts) — the fix for a
  * one-time palette sweep silently dropping on every asset refresh. These lock the
- * contract: the flag is persisted, defaults to clinical, and re-derives on export
- * without mutating (or baking into) the authored palettes.
+ * contract: the flag is persisted, defaults to RAW (the office ships warm and the
+ * sim drives the drain at runtime — the office-builder palette lever), and the
+ * clinical lens re-derives on export without mutating the authored palettes.
  */
 
 const firstFloor = (p: ProjectState) => p.floors![0].palette.primary;
 
 describe('project look — a reproducible, non-destructive lens', () => {
-  it('defaults to clinical when unset (the game canonical floor)', () => {
-    expect(DEFAULT_LOOK).toBe('clinical');
+  it('defaults to raw when unset — the office ships warm; the sim drains at runtime', () => {
+    expect(DEFAULT_LOOK).toBe('raw');
     const raw = defaultGoldenProject();
     raw.look = undefined;
     const lensed = projectWithLook(raw);
-    // Floors desaturate toward paper; the outline becomes the thin clinical ink.
-    expect(lensed.floors![0].palette.primary).not.toBe(raw.floors![0].palette.primary);
-    expect(lensed.style.outline.color).toBe(CLINICAL_INK);
+    // Untouched: warm authored floors + the authored outline (no baked clinical ink).
+    expect(lensed.floors![0].palette.primary).toBe(raw.floors![0].palette.primary);
+    expect(lensed.style.outline.color).toBe(raw.style.outline.color);
+    expect(lensed.style.outline.color).not.toBe(CLINICAL_INK);
   });
 
   it('does NOT mutate the input — authored palettes stay vivid and editable', () => {

@@ -1075,25 +1075,64 @@ export async function propPng(prop: PropInstance, style: StyleSheet, scale: numb
 // the layer atlas instead.
 // ---------------------------------------------------------------------------
 
-interface LayerFrame {
+type FrameRect = { x: number; y: number; w: number; h: number };
+
+/**
+ * A layer entry references its sprite BY FRAME NAME into the sheet's top-level
+ * `frames` map — mirroring the character layer manifest so the sim slices every
+ * sheet with the same machinery (AtlasJson + ConfigureMultipleSpriteTexture),
+ * no env-layer special case. Run-based layers repeat keys (e.g. `secondary` ×3),
+ * so frames are keyed by a unique index name, not the layer key.
+ */
+interface LayerEntry {
   key: string;
   tint: PropPaletteToken | null;
-  frame: { x: number; y: number; w: number; h: number };
+  frame: string;
 }
 
-/** Stack an ordered TileLayer[] as a 1-column vertical sheet starting at `rowStart`. */
-function stackLayerCells(
+/** Prop/floor layer atlas: a single column; frame names L0, L1, … */
+function envLayerAtlas(
   layers: TileLayer[],
   size: number,
-  rowStart: number,
-): { cells: RasterCell[]; frames: LayerFrame[] } {
+): { cells: RasterCell[]; frames: Record<string, FrameRect>; entries: LayerEntry[] } {
   const cells: RasterCell[] = [];
-  const frames: LayerFrame[] = layers.map((layer, i) => {
-    const y = (rowStart + i) * size;
+  const frames: Record<string, FrameRect> = {};
+  const entries: LayerEntry[] = layers.map((layer, i) => {
+    const name = `L${i}`;
+    const y = i * size;
     cells.push({ svg: layerCellSvg(layer.markup, size), dx: 0, dy: y, dw: size, dh: size });
-    return { key: layer.key, tint: layer.tint, frame: { x: 0, y, w: size, h: size } };
+    frames[name] = { x: 0, y, w: size, h: size };
+    return { key: layer.key, tint: layer.tint, frame: name };
   });
-  return { cells, frames };
+  return { cells, frames, entries };
+}
+
+/** Wall layer atlas: a grid of 16 mask columns × layer rows; frame names m<mask>_L<i>. */
+function wallLayerAtlas(
+  perMask: TileLayer[][],
+  size: number,
+): {
+  cells: RasterCell[];
+  frames: Record<string, FrameRect>;
+  masks: Array<{ mask: number; name: string; layers: LayerEntry[] }>;
+  maxRows: number;
+} {
+  const cells: RasterCell[] = [];
+  const frames: Record<string, FrameRect> = {};
+  let maxRows = 0;
+  const masks = perMask.map((layers, mask) => {
+    maxRows = Math.max(maxRows, layers.length);
+    const entries: LayerEntry[] = layers.map((layer, i) => {
+      const name = `m${mask}_L${i}`;
+      const x = mask * size;
+      const y = i * size;
+      cells.push({ svg: layerCellSvg(layer.markup, size), dx: x, dy: y, dw: size, dh: size });
+      frames[name] = { x, y, w: size, h: size };
+      return { key: layer.key, tint: layer.tint, frame: name };
+    });
+    return { mask, name: maskName(mask), layers: entries };
+  });
+  return { cells, frames, masks, maxRows };
 }
 
 /** Shared manifest tail — the composite rule the engine follows to re-tint. */
@@ -1108,7 +1147,7 @@ function layerCompositeMeta() {
 
 function propLayerSheetDesc(prop: PropInstance, style: StyleSheet, scale: number): SheetDesc {
   const size = style.render.baseSize * scale;
-  const { cells } = stackLayerCells(propLayers(prop, style), size, 0);
+  const { cells } = envLayerAtlas(propLayers(prop, style), size);
   return { width: size, height: size * Math.max(1, cells.length), pixelScale: 1, cells };
 }
 
@@ -1116,7 +1155,7 @@ export function propLayerManifest(prop: PropInstance, style: StyleSheet, scale: 
   const size = style.render.baseSize * scale;
   const template = PROP_TEMPLATES.find((t) => t.id === prop.templateId);
   const projection = template?.projection ?? 'elevation';
-  const { frames } = stackLayerCells(propLayers(prop, style), size, 0);
+  const { frames, entries } = envLayerAtlas(propLayers(prop, style), size);
   return {
     kind: 'prop-layers' as const,
     id: prop.id,
@@ -1132,20 +1171,23 @@ export function propLayerManifest(prop: PropInstance, style: StyleSheet, scale: 
     tokens: [...PROP_PALETTE_TOKENS],
     /** Authored default colours — an untouched import renders identically to the flat sprite. */
     palette: prop.palette,
-    layers: frames,
+    /** name → rect (top-down); the sim slices these like every other sheet. */
+    frames,
+    /** Paint order; each references its sprite by `frame` name. */
+    layers: entries,
     meta: layerCompositeMeta(),
   };
 }
 
 function floorLayerSheetDesc(floor: TileInstance, style: StyleSheet, scale: number): SheetDesc {
   const size = style.render.baseSize * scale;
-  const { cells } = stackLayerCells(floorLayers(floor), size, 0);
+  const { cells } = envLayerAtlas(floorLayers(floor), size);
   return { width: size, height: size * Math.max(1, cells.length), pixelScale: 1, cells };
 }
 
 export function floorLayerManifest(floor: TileInstance, style: StyleSheet, scale: number) {
   const size = style.render.baseSize * scale;
-  const { frames } = stackLayerCells(floorLayers(floor), size, 0);
+  const { frames, entries } = envLayerAtlas(floorLayers(floor), size);
   return {
     kind: 'floor-layers' as const,
     id: floor.id,
@@ -1158,11 +1200,12 @@ export function floorLayerManifest(floor: TileInstance, style: StyleSheet, scale
     pivot: { x: 0.5, y: 0.5 },
     tokens: [...PROP_PALETTE_TOKENS],
     palette: floor.palette,
+    frames,
     // NOTE: floor layers are coalesced per token (not paint-order runs), so the
     // stacked composite can differ imperceptibly from the flat tile where
     // translucent speckles of different tokens overlap. Acceptable for flat,
     // seamless floor patterns; run-splitting would explode the layer count.
-    layers: frames,
+    layers: entries,
     meta: layerCompositeMeta(),
   };
 }
@@ -1189,28 +1232,34 @@ export function groundLayerManifest(ground: TileInstance, style: StyleSheet, sca
   };
 }
 
-function wallLayerSheetDesc(wall: TileInstance, style: StyleSheet, scale: number): SheetDesc {
-  const size = style.render.baseSize * scale;
-  const cells: RasterCell[] = [];
-  let row = 0;
+// Wall layer atlas layout: a GRID of 16 mask COLUMNS × layer ROWS (NOT one tall
+// column). Stacking all masks' layers vertically produced a single column tens of
+// thousands of px tall — fine for the headless resvg backend but past the browser
+// canvas max-dimension (~16384px), so the in-app export died on the wall sheets.
+// The grid caps width at 16·size and height at maxLayers·size (the per-mask run
+// count is bounded in compositor.wallMaskLayers), keeping both well under the limit.
+function wallMaskLayerGrid(wall: TileInstance, style: StyleSheet) {
+  const perMask: TileLayer[][] = [];
+  let maxLayers = 0;
   for (let mask = 0; mask < 16; mask++) {
     const layers = wallMaskLayers(wall, style, mask);
-    cells.push(...stackLayerCells(layers, size, row).cells);
-    row += layers.length;
+    perMask.push(layers);
+    maxLayers = Math.max(maxLayers, layers.length);
   }
-  return { width: size, height: size * Math.max(1, row), pixelScale: 1, cells };
+  return { perMask, maxLayers };
+}
+
+function wallLayerSheetDesc(wall: TileInstance, style: StyleSheet, scale: number): SheetDesc {
+  const size = style.render.baseSize * scale;
+  const { perMask } = wallMaskLayerGrid(wall, style);
+  const { cells, maxRows } = wallLayerAtlas(perMask, size);
+  return { width: size * 16, height: size * Math.max(1, maxRows), pixelScale: 1, cells };
 }
 
 export function wallLayerManifest(wall: TileInstance, style: StyleSheet, scale: number) {
   const size = style.render.baseSize * scale;
-  const masks: Array<{ mask: number; name: string; layers: LayerFrame[] }> = [];
-  let row = 0;
-  for (let mask = 0; mask < 16; mask++) {
-    const layers = wallMaskLayers(wall, style, mask);
-    const { frames } = stackLayerCells(layers, size, row);
-    masks.push({ mask, name: maskName(mask), layers: frames });
-    row += layers.length;
-  }
+  const { perMask } = wallMaskLayerGrid(wall, style);
+  const { frames, masks } = wallLayerAtlas(perMask, size);
   return {
     kind: 'wall-layers' as const,
     id: wall.id,
@@ -1220,11 +1269,15 @@ export function wallLayerManifest(wall: TileInstance, style: StyleSheet, scale: 
     scale,
     canvas: CANVAS,
     bits: { N: 1, E: 2, S: 4, W: 8 },
+    // Grid layout: column = neighbour mask (0..15), row = layer index within the mask.
+    cols: 16,
     pivot: { x: 0.5, y: 0.5 },
     tokens: [...PROP_PALETTE_TOKENS],
     palette: wall.palette,
+    /** name → rect (top-down) across all masks; sliced like every other sheet. */
+    frames,
     // Per-mask layers (each autotile segment splits independently), so the layer
-    // set varies by mask — read masks[m].layers, not a flat layer list.
+    // set varies by mask — read masks[m].layers, each referencing its `frame` name.
     masks,
     meta: layerCompositeMeta(),
   };

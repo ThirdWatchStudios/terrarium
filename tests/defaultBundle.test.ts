@@ -291,6 +291,10 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     expect(pm.layers.length, 'prop manifest has no layers').toBeGreaterThan(0);
     expect(pm.layers.some((l: { tint: unknown }) => l.tint !== null), 'prop has no re-tintable token layer').toBe(true);
     expect(pm.layers.every((l: { tint: unknown }) => validTint(l.tint)), 'prop layer has an unknown tint').toBe(true);
+    // Top-level `frames` map (name → rect), like the character manifest; every layer
+    // resolves its sprite by `frame` name, so the sim slices it with the same machinery.
+    expect(pm.frames && typeof pm.frames === 'object', 'prop manifest missing frames map').toBe(true);
+    expect(pm.layers.every((l: { frame: string }) => l.frame in pm.frames), 'a prop layer frame name is not in frames').toBe(true);
 
     // Walls — per-mask layer lists (each autotile segment splits independently), all 16 masks.
     expect([...paths].some((p) => /^walls\/.+\/layers@1x\.png$/.test(p)), 'no wall layer sheet').toBe(true);
@@ -303,6 +307,12 @@ describe('default bundle is a complete, sim-importable baseline', () => {
       wm.masks.every((m: { layers: { tint: unknown }[] }) => m.layers.every((l) => validTint(l.tint))),
       'a wall layer has an unknown tint',
     ).toBe(true);
+    // Shared top-level frames map; every per-mask layer resolves by `frame` name.
+    expect(wm.frames && typeof wm.frames === 'object', 'wall manifest missing frames map').toBe(true);
+    expect(
+      wm.masks.every((m: { layers: { frame: string }[] }) => m.layers.every((l) => l.frame in wm.frames)),
+      'a wall layer frame name is not in frames',
+    ).toBe(true);
 
     // Floors — a layer atlas with a recolorable primary base.
     expect([...paths].some((p) => /^floors\/.+\/layers@1x\.png$/.test(p)), 'no floor layer sheet').toBe(true);
@@ -311,6 +321,27 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     expect(fm.kind).toBe('floor-layers');
     expect(fm.tileable).toBe(true);
     expect(fm.layers.some((l: { tint: unknown }) => l.tint === 'primary'), 'floor has no recolorable primary base').toBe(true);
+  });
+
+  it('keeps every layer atlas within the browser canvas max dimension', async () => {
+    // The in-app export rasterizes via a <canvas>, which caps each dimension at
+    // ~16384px (Chrome). Wall layer sheets stack per-mask, so a naive tall column
+    // or a token-alternating wall (foliage) once blew past it and killed the export
+    // at the wall stage. This guards the grid layout + the per-mask run cap.
+    const { json } = await exportPaths();
+    const LIMIT = 16384;
+    const assertUnder = (path: string, frames: Array<{ x: number; y: number; w: number; h: number }>) => {
+      const maxX = Math.max(0, ...frames.map((f) => f.x + f.w));
+      const maxY = Math.max(0, ...frames.map((f) => f.y + f.h));
+      expect(maxX, `${path} width ${maxX}px exceeds the ${LIMIT}px canvas limit`).toBeLessThanOrEqual(LIMIT);
+      expect(maxY, `${path} height ${maxY}px exceeds the ${LIMIT}px canvas limit`).toBeLessThanOrEqual(LIMIT);
+    };
+    // @4x is the largest exported scale — the worst case. Every sheet carries a
+    // top-level `frames` map (name → rect), like the character manifest, so read it.
+    for (const path of [...json.keys()].filter((p) => /^(props|walls|floors)\/.+\/layers-manifest@4x\.json$/.test(p))) {
+      const m = JSON.parse(json.get(path)!);
+      assertUnder(path, Object.values(m.frames) as Array<{ x: number; y: number; w: number; h: number }>);
+    }
   });
 
   it('emits per-prop grid footprints in office-layout.json (office-builder pivot)', async () => {
