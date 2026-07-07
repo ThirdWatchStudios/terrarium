@@ -42,18 +42,29 @@ const DEMO_ROOM = [
 ];
 
 // Floor + chrome swatches so the wall's edge/outline reads against open floor.
-const FLOOR = '#6E6A62';
+// Floor sits LIGHTER than the wall top, like the game (RimWorld rooms are light
+// floors ringed by dark wall mass).
+const FLOOR = '#8A8478';
 const PANEL = '#ECEFF1';
 const LABEL = '#3A464C';
 const T = 128; // design units per tile
+
+// Overridable via --primary/--secondary (hex) to judge other material tones —
+// e.g. RimWorld's dark wood (--primary '#5A4633').
+const PALETTE = {
+  // RimWorld-valued slate: the TOP surface reads dark (you look down onto the
+  // mass) and the white-overlay front face lands near RimWorld's lit stone.
+  primary: '#5E6167',
+  secondary: '#8E9196',
+  accent: '#C6603C',
+};
 
 const wallInstance = (id: string): TileInstance => ({
   id: `preview-${id}`,
   name: id,
   templateId: id,
-  // Neutral warm-gray wall so primary/secondary/accent all read distinctly.
   params: {},
-  palette: { primary: '#BDB9AF', secondary: '#6F6C64', accent: '#C6603C' },
+  palette: { ...PALETTE },
 });
 
 function svgInner(svg: string): string {
@@ -102,6 +113,8 @@ let outDir = 'docs/previews';
 const ids: string[] = [];
 for (let i = 0; i < args.length; i++) {
   if (args[i] === '--out') outDir = args[++i];
+  else if (args[i] === '--primary') PALETTE.primary = args[++i];
+  else if (args[i] === '--secondary') PALETTE.secondary = args[++i];
   else ids.push(args[i]);
 }
 if (ids.length === 0) ids.push('office-wall', 'branded-wall', 'demising-wall');

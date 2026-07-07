@@ -39,17 +39,25 @@ function wallBody(mask: number, fill: string): ShapeSpec {
   return { d: rr(x0, y0, x1 - x0, y1 - y0, radius), fill };
 }
 
-// Per-side chamfer widths (of 128) + face paint — RimWorld shading: a narrow
-// top/back cap, a TALLER lit vertical front face (the wall's visible height),
-// soft light on the left, shadow on the right, and a thin dark crease where the
-// flat top meets the front face.
+// Per-side chamfer widths (of 128) + face paint — RimWorld shading: the TOP is
+// the flat material colour (the dark mass you look down onto), the SOUTH face is
+// the wall's visible HEIGHT — tall (~1/3 of the cell) and MUCH lighter, a hard
+// value jump rather than a soft chamfer — with a narrow lit cap on the north rim
+// and slim mitered side bevels (left catches light, right sits in shadow).
 const BEVEL = {
-  n: { w: 10, fill: '#FFFFFF', opacity: 0.14 }, // top rim — soft light
-  s: { w: 30, fill: '#FFFFFF', opacity: 0.26 }, // FRONT FACE — lit
-  w: { w: 12, fill: '#FFFFFF', opacity: 0.1 }, //  left — soft light
-  e: { w: 14, fill: '#000000', opacity: 0.16 }, // right — shadow
+  // RimWorld's block is a SPLAYED FRUSTUM (per the reference single-wall sprite):
+  // a small dark top cap inset from every side, faces flaring out to the tile
+  // edges — south face brightest and tallest (~40%), both sides SYMMETRIC
+  // mid-light (a pyramid read; a light/dark side pair flips it to an engraved
+  // plaque), north a narrow lit band. The authored colour is the dark TOP CAP.
+  n: { w: 16, fill: '#FFFFFF', opacity: 0.18 }, // north band
+  s: { w: 56, fill: '#FFFFFF', opacity: 0.44 }, // FRONT FACE — lit wall height
+  w: { w: 36, fill: '#FFFFFF', opacity: 0.22 }, // left flank
+  e: { w: 36, fill: '#FFFFFF', opacity: 0.19 }, // right flank — a hair dimmer
 } as const;
-const CREASE = { stroke: '#000000', strokeWidth: 2, opacity: 0.18 } as const;
+// The top-surface → front-face boundary reads as the value jump itself in
+// RimWorld; keep only a whisper of a crease so the edge stays crisp at 1x.
+const CREASE = { stroke: '#000000', strokeWidth: 2, opacity: 0.08 } as const;
 
 /**
  * A top-lit bevel that makes a full-cell wall read as a raised, extruded block
@@ -307,7 +315,9 @@ const demisingWall: WallTemplate = {
     // Shell wall (building structure, not a tenant partition): a full-cell body
     // with a WIDE darker structural spine running the length of each connected
     // direction (and filling the junction), so a demising run reads as heavy core.
-    const shapes = wallArms(mask, 0, '$primary');
+    // The spine paints UNDER the bevel (a material feature the light model shades,
+    // like brick mortar) — over the top it collided with the splayed faces.
+    const shapes: ShapeSpec[] = [wallBody(mask, '$primary')];
     const cw = 44;
     const ch = cw / 2;
     const core = (x: number, y: number, w: number, hgt: number) =>
@@ -318,6 +328,7 @@ const demisingWall: WallTemplate = {
     if (mask & WALL_BITS.E) core(C, C - ch, C + OVERHANG, cw);
     // junction / isolated: keep the spine continuous through corners + tees
     shapes.push({ d: rr(C - ch, C - ch, cw, cw, mask === 0 ? 4 : 0), fill: '$secondary', silhouette: false });
+    shapes.push(...wallBevel(mask));
     return shapes;
   },
 };
