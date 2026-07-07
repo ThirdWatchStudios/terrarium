@@ -14,42 +14,68 @@ import { mulberry32 } from '../core/random';
  */
 
 const C = 64;
+const SIZE = 128; // design units per cell (walls are full-cell; see wallBody)
 const OVERHANG = 16;
 
-/** Axis-aligned arm rects for a neighbor mask, all `fill`-colored. */
-function wallArms(mask: number, thickness: number, fill: string): ShapeSpec[] {
-  const h = thickness / 2;
-  const shapes: ShapeSpec[] = [{ d: rr(C - h, C - h, thickness, thickness, mask === 0 ? 5 : 0), fill }];
-  if (mask & WALL_BITS.N) shapes.push({ d: rr(C - h, -OVERHANG, thickness, C + OVERHANG, 0), fill });
-  if (mask & WALL_BITS.S) shapes.push({ d: rr(C - h, C, thickness, C + OVERHANG, 0), fill });
-  if (mask & WALL_BITS.W) shapes.push({ d: rr(-OVERHANG, C - h, C + OVERHANG, thickness, 0), fill });
-  if (mask & WALL_BITS.E) shapes.push({ d: rr(C, C - h, C + OVERHANG, thickness, 0), fill });
-  return shapes;
+/**
+ * The opaque wall BODY for a neighbor mask: a FULL-CELL fill that overhangs the
+ * tile edge by OVERHANG on each CONNECTED side and stops flush at the edge on each
+ * exposed side. Connected wall cells therefore overlap — their shared outline falls
+ * outside the viewBox and clips away, so a wall run reads as one seamless mass —
+ * while every exposed side keeps the outline pass as the wall's crisp edge against
+ * the open floor. This is the RimWorld / Prison-Architect full-cell wall model that
+ * replaced the old thin `thickness`-wide centered band (grid-rescale plan Phase 2).
+ * `thickness` is retained in the signature for callers but no longer sizes the body
+ * (templates still use it to scale their own surface detail).
+ */
+function wallBody(mask: number, fill: string): ShapeSpec {
+  const x0 = mask & WALL_BITS.W ? -OVERHANG : 0;
+  const y0 = mask & WALL_BITS.N ? -OVERHANG : 0;
+  const x1 = mask & WALL_BITS.E ? SIZE + OVERHANG : SIZE;
+  const y1 = mask & WALL_BITS.S ? SIZE + OVERHANG : SIZE;
+  // An isolated pillar gets soft corners; any connected cell fills flush so the mass reads solid.
+  const radius = mask === 0 ? 6 : 0;
+  return { d: rr(x0, y0, x1 - x0, y1 - y0, radius), fill };
 }
 
-/**
- * End-trim caps where a run terminates (cubicle-style): a side gets a cap only
- * when it is unconnected but the opposite side is connected.
- */
-function endCaps(mask: number, thickness: number, fill: string): ShapeSpec[] {
-  const h = thickness / 2;
-  const caps: ShapeSpec[] = [];
-  const cap = (x: number, y: number, w: number, hgt: number) => caps.push({ d: rr(x, y, w, hgt, 3), fill });
-  if (!(mask & WALL_BITS.E) && mask & WALL_BITS.W) cap(C + h - 2, C - h - 2, 6, thickness + 4);
-  if (!(mask & WALL_BITS.W) && mask & WALL_BITS.E) cap(C - h - 4, C - h - 2, 6, thickness + 4);
-  if (!(mask & WALL_BITS.N) && mask & WALL_BITS.S) cap(C - h - 2, C - h - 4, thickness + 4, 6);
-  if (!(mask & WALL_BITS.S) && mask & WALL_BITS.N) cap(C - h - 2, C + h - 2, thickness + 4, 6);
-  return caps;
+/** Back-compat base layer: the full-cell wall body (was a thin centered band). */
+function wallArms(mask: number, _thickness: number, fill: string): ShapeSpec[] {
+  return [wallBody(mask, fill)];
+}
+
+/** The sides of a cell that face open floor (no wall neighbour) — where a wall
+ *  shows a visible face. Full-cell "light detail" goes on the face, not the seam,
+ *  so connected sides stay flush and wall runs merge seamlessly. */
+function exposedSides(mask: number): { n: boolean; e: boolean; s: boolean; w: boolean } {
+  return {
+    n: !(mask & WALL_BITS.N),
+    e: !(mask & WALL_BITS.E),
+    s: !(mask & WALL_BITS.S),
+    w: !(mask & WALL_BITS.W),
+  };
+}
+
+/** A trim line just inside each EXPOSED edge (a border on the wall's visible
+ *  faces). Connected edges get nothing, so adjacent cells still merge seam-free. */
+function faceEdgeTrim(mask: number, color: string, inset: number, width: number, opacity = 1): ShapeSpec[] {
+  const e = exposedSides(mask);
+  const out: ShapeSpec[] = [];
+  const line = (d: string) => out.push({ d, stroke: color, strokeWidth: width, opacity, silhouette: false });
+  if (e.n) line(`M 0 ${inset} L ${SIZE} ${inset}`);
+  if (e.s) line(`M 0 ${SIZE - inset} L ${SIZE} ${SIZE - inset}`);
+  if (e.w) line(`M ${inset} 0 L ${inset} ${SIZE}`);
+  if (e.e) line(`M ${SIZE - inset} 0 L ${SIZE - inset} ${SIZE}`);
+  return out;
 }
 
 const officeWall: WallTemplate = {
   kind: 'wall',
   id: 'office-wall',
   label: 'Office wall',
-  params: [{ key: 'thickness', label: 'Thickness', min: 12, max: 36, step: 2, default: 28 }],
-  build(mask, params) {
-    const t = params.thickness ?? 28;
-    return wallArms(mask, t, '$primary');
+  params: [],
+  build(mask) {
+    // The plain default / building-shell wall: a clean opaque full-cell body.
+    return wallArms(mask, 0, '$primary');
   },
 };
 
@@ -57,22 +83,12 @@ const glassPartition: WallTemplate = {
   kind: 'wall',
   id: 'glass-partition',
   label: 'Glass partition',
-  params: [{ key: 'thickness', label: 'Thickness', min: 8, max: 16, step: 2, default: 10 }],
-  build(mask, params) {
-    const t = params.thickness ?? 10;
-    const h = t / 2;
-    const shapes: ShapeSpec[] = wallArms(mask, t, '$secondary').map((s) => ({ ...s, opacity: 0.6 }));
-    // mullions: frame ticks along each arm
-    const tick = (x: number, y: number, w: number, hgt: number) =>
-      shapes.push({ d: rr(x, y, w, hgt, 1), fill: '$primary', silhouette: false });
-    for (const off of [22, 64, 106]) {
-      if (mask & WALL_BITS.N && off < 64) tick(C - h - 1, off - 2, t + 2, 4);
-      if (mask & WALL_BITS.S && off > 64) tick(C - h - 1, off - 2, t + 2, 4);
-      if (mask & WALL_BITS.W && off < 64) tick(off - 2, C - h - 1, 4, t + 2);
-      if (mask & WALL_BITS.E && off > 64) tick(off - 2, C - h - 1, 4, t + 2);
-    }
-    // frame post at the junction
-    shapes.push({ d: rr(C - h - 1, C - h - 1, t + 2, t + 2, 1.5), fill: '$primary', silhouette: false });
+  params: [],
+  build(mask) {
+    // Translucent full-cell glazing with a thin frame on the exposed faces — reads
+    // as a see-through partition. (Full-cell light detail; grid-rescale Phase 2.)
+    const shapes: ShapeSpec[] = [{ ...wallBody(mask, '$secondary'), opacity: 0.5 }];
+    shapes.push(...faceEdgeTrim(mask, '$primary', 4, 3));
     return shapes;
   },
 };
@@ -81,22 +97,12 @@ const cubiclePartition: WallTemplate = {
   kind: 'wall',
   id: 'cubicle-partition',
   label: 'Cubicle partition',
-  params: [{ key: 'thickness', label: 'Thickness', min: 10, max: 18, step: 2, default: 14 }],
-  build(mask, params) {
-    const t = params.thickness ?? 14;
-    const shapes = wallArms(mask, t, '$primary');
-    // fabric inset
-    const h = t / 2 - 3;
-    if (mask & WALL_BITS.N) shapes.push({ d: rr(C - h, 0, h * 2, C, 0), fill: '#FFFFFF14', silhouette: false });
-    if (mask & WALL_BITS.S) shapes.push({ d: rr(C - h, C, h * 2, 64, 0), fill: '#FFFFFF14', silhouette: false });
-    if (mask & WALL_BITS.W) shapes.push({ d: rr(0, C - h, C, h * 2, 0), fill: '#FFFFFF14', silhouette: false });
-    if (mask & WALL_BITS.E) shapes.push({ d: rr(C, C - h, 64, h * 2, 0), fill: '#FFFFFF14', silhouette: false });
-    // end trim + junction post
-    shapes.push(...endCaps(mask, t, '$secondary'));
-    const bits = [WALL_BITS.N, WALL_BITS.E, WALL_BITS.S, WALL_BITS.W].filter((b) => mask & b).length;
-    if (bits >= 3 || mask === 0) {
-      shapes.push({ d: rr(C - t / 2 - 2, C - t / 2 - 2, t + 4, t + 4, 4), fill: '$secondary' });
-    }
+  params: [],
+  build(mask) {
+    // Low fabric partition: full-cell body with a soft fabric-tone inset on the
+    // exposed faces (light detail; rich weave deferred).
+    const shapes = wallArms(mask, 0, '$primary');
+    shapes.push(...faceEdgeTrim(mask, '$secondary', 10, 3, 0.85));
     return shapes;
   },
 };
@@ -105,23 +111,20 @@ const brickWall: WallTemplate = {
   kind: 'wall',
   id: 'brick-wall',
   label: 'Brick wall',
-  params: [{ key: 'thickness', label: 'Thickness', min: 16, max: 32, step: 2, default: 24 }],
-  build(mask, params) {
-    const t = params.thickness ?? 24;
-    const shapes = wallArms(mask, t, '$primary');
-    const h = t / 2;
-    // mortar: a course line down the centre of each arm + offset header ticks.
-    // Lines overdraw past the tile edge and clip to the viewBox, staying seamless.
-    if (mask & WALL_BITS.W || mask & WALL_BITS.E) {
-      shapes.push({ d: `M ${-OVERHANG} ${C} L ${C + OVERHANG} ${C}`, stroke: '$secondary', strokeWidth: 1, silhouette: false });
+  params: [],
+  build(mask) {
+    // Full-cell brick: horizontal mortar courses across the whole face, with a
+    // half-brick header offset per course. Lines run edge-to-edge so courses stay
+    // continuous across a run. (Light face texture; rich bond pattern deferred.)
+    const shapes = wallArms(mask, 0, '$primary');
+    const mortar = (d: string) =>
+      shapes.push({ d, stroke: '$secondary', strokeWidth: 1.5, opacity: 0.5, silhouette: false });
+    let row = 0;
+    for (let y = 22; y < SIZE; y += 22, row++) {
+      mortar(`M 0 ${y} L ${SIZE} ${y}`);
+      // vertical header joints, offset every other course
+      for (let x = row % 2 ? 0 : 22; x < SIZE; x += 44) mortar(`M ${x} ${y} L ${x} ${y + 22}`);
     }
-    if (mask & WALL_BITS.N || mask & WALL_BITS.S) {
-      shapes.push({ d: `M ${C} ${-OVERHANG} L ${C} ${C + OVERHANG}`, stroke: '$secondary', strokeWidth: 1, silhouette: false });
-    }
-    if (mask & WALL_BITS.W) for (let bx = -OVERHANG + 6; bx < C - h; bx += 12) shapes.push({ d: `M ${bx} ${C - h} L ${bx} ${C + h}`, stroke: '$secondary', strokeWidth: 1, silhouette: false });
-    if (mask & WALL_BITS.E) for (let bx = C + h + 6; bx < C + OVERHANG + C; bx += 12) shapes.push({ d: `M ${bx} ${C - h} L ${bx} ${C + h}`, stroke: '$secondary', strokeWidth: 1, silhouette: false });
-    if (mask & WALL_BITS.N) for (let by = -OVERHANG + 6; by < C - h; by += 12) shapes.push({ d: `M ${C - h} ${by} L ${C + h} ${by}`, stroke: '$secondary', strokeWidth: 1, silhouette: false });
-    if (mask & WALL_BITS.S) for (let by = C + h + 6; by < C + OVERHANG + C; by += 12) shapes.push({ d: `M ${C - h} ${by} L ${C + h} ${by}`, stroke: '$secondary', strokeWidth: 1, silhouette: false });
     return shapes;
   },
 };
@@ -130,22 +133,13 @@ const panelWall: WallTemplate = {
   kind: 'wall',
   id: 'panel-wall',
   label: 'Panel wall',
-  params: [{ key: 'thickness', label: 'Thickness', min: 16, max: 26, step: 2, default: 20 }],
-  build(mask, params) {
-    const t = params.thickness ?? 20;
-    const shapes = wallArms(mask, t, '$primary');
-    const h = t / 2 - 3;
-    const panel = (x: number, y: number, w: number, hgt: number) => shapes.push({ d: rr(x, y, w, hgt, 1), fill: '$secondary', silhouette: false });
-    if (mask & WALL_BITS.N) panel(C - h, 0, h * 2, C);
-    if (mask & WALL_BITS.S) panel(C - h, C, h * 2, 64);
-    if (mask & WALL_BITS.W) panel(0, C - h, C, h * 2);
-    if (mask & WALL_BITS.E) panel(C, C - h, 64, h * 2);
-    // accent rail down the centre of each arm
-    if (mask & WALL_BITS.N) shapes.push({ d: `M ${C} 0 L ${C} ${C}`, stroke: '$accent', strokeWidth: 1.5, silhouette: false });
-    if (mask & WALL_BITS.S) shapes.push({ d: `M ${C} ${C} L ${C} 128`, stroke: '$accent', strokeWidth: 1.5, silhouette: false });
-    if (mask & WALL_BITS.W) shapes.push({ d: `M 0 ${C} L ${C} ${C}`, stroke: '$accent', strokeWidth: 1.5, silhouette: false });
-    if (mask & WALL_BITS.E) shapes.push({ d: `M ${C} ${C} L 128 ${C}`, stroke: '$accent', strokeWidth: 1.5, silhouette: false });
-    shapes.push(...endCaps(mask, t, '$secondary'));
+  params: [],
+  build(mask) {
+    // Full-cell panelling: an inset reveal frame on the exposed faces plus a light
+    // accent mid-rail across the face. (Light detail; per-panel joinery deferred.)
+    const shapes = wallArms(mask, 0, '$primary');
+    shapes.push(...faceEdgeTrim(mask, '$secondary', 12, 2, 0.7));
+    shapes.push({ d: `M 0 ${C} L ${SIZE} ${C}`, stroke: '$accent', strokeWidth: 1.5, opacity: 0.6, silhouette: false });
     return shapes;
   },
 };
@@ -158,24 +152,17 @@ const livingWall: WallTemplate = {
   kind: 'wall',
   id: 'living-wall',
   label: 'Living wall',
-  params: [{ key: 'thickness', label: 'Thickness', min: 24, max: 34, step: 2, default: 28 }],
-  build(mask, params) {
-    const t = params.thickness ?? 28;
-    const shapes = wallArms(mask, t, '$primary'); // moss backing
+  params: [],
+  build(mask) {
+    // Full-cell greenery: foliage planted across the whole face on a moss backing.
+    const shapes = wallArms(mask, 0, '$primary'); // moss backing
     const pts: Array<[number, number]> = [];
-    const along = [8, 24, 40, 56];
-    const across = [-7, 0, 7];
-    if (mask & WALL_BITS.N) for (const a of along) for (const c of across) pts.push([C + c, a]);
-    if (mask & WALL_BITS.S) for (const a of along) for (const c of across) pts.push([C + c, C + a + 8]);
-    if (mask & WALL_BITS.W) for (const a of along) for (const c of across) pts.push([a, C + c]);
-    if (mask & WALL_BITS.E) for (const a of along) for (const c of across) pts.push([C + a + 8, C + c]);
-    // junction fill so corners/tees stay planted
-    for (const c of across) for (const c2 of across) pts.push([C + c, C + c2]);
+    for (let y = 12; y < SIZE; y += 18) for (let x = 12; x < SIZE; x += 18) pts.push([x, y]);
     // Leaves first, then highlights — one $secondary run + one $accent run. Keeps
     // the re-tint layer atlas exact + cheap (under the per-mask run cap) instead of
     // alternating buckets per leaf, which exploded the sheet.
-    for (const [px, py] of pts) shapes.push({ d: circle(px, py, 4), fill: '$secondary', silhouette: false });
-    for (const [px, py] of pts) shapes.push({ d: circle(px + 1.5, py - 1.5, 2.3), fill: '$accent', silhouette: false });
+    for (const [px, py] of pts) shapes.push({ d: circle(px, py, 4.5), fill: '$secondary', silhouette: false });
+    for (const [px, py] of pts) shapes.push({ d: circle(px + 1.5, py - 1.5, 2.4), fill: '$accent', silhouette: false });
     return shapes;
   },
 };
@@ -186,21 +173,12 @@ const brandedWall: WallTemplate = {
   kind: 'wall',
   id: 'branded-wall',
   label: 'Branded wall',
-  params: [{ key: 'thickness', label: 'Thickness', min: 18, max: 28, step: 2, default: 24 }],
-  build(mask, params) {
-    const t = params.thickness ?? 24;
-    const shapes = wallArms(mask, t, '$primary');
-    const stripe = (d: string) => shapes.push({ d, stroke: '$accent', strokeWidth: 3, silhouette: false });
-    if (mask & WALL_BITS.N) stripe(`M ${C} 0 L ${C} ${C}`);
-    if (mask & WALL_BITS.S) stripe(`M ${C} ${C} L ${C} 128`);
-    if (mask & WALL_BITS.W) stripe(`M 0 ${C} L ${C} ${C}`);
-    if (mask & WALL_BITS.E) stripe(`M ${C} ${C} L 128 ${C}`);
-    // logo placard at the junction
-    shapes.push(
-      { d: rr(C - 7, C - 7, 14, 14, 2), fill: '$secondary', silhouette: false },
-      { d: circle(C, C, 3.5), fill: '$accent', silhouette: false },
-      { d: circle(C, C, 1.6), fill: '$primary', silhouette: false },
-    );
+  params: [],
+  build(mask) {
+    // Solid brand face with a crisp accent rail along the exposed faces (a
+    // waist-height brand stripe). (Light detail; logo placards deferred.)
+    const shapes = wallArms(mask, 0, '$primary');
+    shapes.push(...faceEdgeTrim(mask, '$accent', 20, 3));
     return shapes;
   },
 };
@@ -211,26 +189,13 @@ const slatWall: WallTemplate = {
   kind: 'wall',
   id: 'slat-wall',
   label: 'Wood slat wall',
-  params: [{ key: 'thickness', label: 'Thickness', min: 18, max: 28, step: 2, default: 22 }],
-  build(mask, params) {
-    const t = params.thickness ?? 22;
-    const h = t / 2;
-    const shapes = wallArms(mask, t, '$primary');
-    const slats = (vertical: boolean, base: number, len: number) => {
-      const n = Math.max(2, Math.round(len / 6));
-      for (let i = 1; i < n; i++) {
-        const p = base + (i * len) / n;
-        shapes.push(
-          vertical
-            ? { d: `M ${C - h} ${p} L ${C + h} ${p}`, stroke: '$secondary', strokeWidth: 1.2, opacity: 0.7, silhouette: false }
-            : { d: `M ${p} ${C - h} L ${p} ${C + h}`, stroke: '$secondary', strokeWidth: 1.2, opacity: 0.7, silhouette: false },
-        );
-      }
-    };
-    if (mask & WALL_BITS.N) slats(true, 0, C);
-    if (mask & WALL_BITS.S) slats(true, C, C);
-    if (mask & WALL_BITS.W) slats(false, 0, C);
-    if (mask & WALL_BITS.E) slats(false, C, C);
+  params: [],
+  build(mask) {
+    // Full-cell wood slats: evenly pitched vertical shadow lines across the face.
+    const shapes = wallArms(mask, 0, '$primary');
+    for (let x = 10; x < SIZE; x += 10) {
+      shapes.push({ d: `M ${x} 0 L ${x} ${SIZE}`, stroke: '$secondary', strokeWidth: 1.2, opacity: 0.55, silhouette: false });
+    }
     return shapes;
   },
 };
@@ -254,13 +219,13 @@ const demisingWall: WallTemplate = {
   kind: 'wall',
   id: 'demising-wall',
   label: 'Demising wall',
-  params: [{ key: 'thickness', label: 'Thickness', min: 20, max: 36, step: 2, default: 28 }],
-  build(mask, params) {
-    const t = params.thickness ?? 28;
-    const shapes = wallArms(mask, t, '$primary');
-    // structural core: a darker stripe down the centre of each arm (overdraws
-    // the edge by OVERHANG and clips to the viewBox, staying seamless).
-    const cw = Math.max(3, t * 0.28);
+  params: [],
+  build(mask) {
+    // Shell wall (building structure, not a tenant partition): a full-cell body
+    // with a WIDE darker structural spine running the length of each connected
+    // direction (and filling the junction), so a demising run reads as heavy core.
+    const shapes = wallArms(mask, 0, '$primary');
+    const cw = 44;
     const ch = cw / 2;
     const core = (x: number, y: number, w: number, hgt: number) =>
       shapes.push({ d: rr(x, y, w, hgt, 0), fill: '$secondary', silhouette: false });
@@ -268,8 +233,8 @@ const demisingWall: WallTemplate = {
     if (mask & WALL_BITS.S) core(C - ch, C, cw, C + OVERHANG);
     if (mask & WALL_BITS.W) core(-OVERHANG, C - ch, C + OVERHANG, cw);
     if (mask & WALL_BITS.E) core(C, C - ch, C + OVERHANG, cw);
-    // junction block keeps the core continuous through corners/tees
-    shapes.push({ d: rr(C - ch, C - ch, cw, cw, 0), fill: '$secondary', silhouette: false });
+    // junction / isolated: keep the spine continuous through corners + tees
+    shapes.push({ d: rr(C - ch, C - ch, cw, cw, mask === 0 ? 4 : 0), fill: '$secondary', silhouette: false });
     return shapes;
   },
 };
@@ -286,29 +251,15 @@ const curtainWall: WallTemplate = {
   kind: 'wall',
   id: 'curtain-wall',
   label: 'Curtain wall',
-  params: [{ key: 'thickness', label: 'Thickness', min: 20, max: 36, step: 2, default: 28 }],
-  build(mask, params) {
-    const t = params.thickness ?? 28;
-    const h = t / 2;
-    // sky-tinted glass body, semi-opaque so the exterior reads with depth
-    const shapes: ShapeSpec[] = wallArms(mask, t, '$accent').map((s) => ({ ...s, opacity: 0.82 }));
-    // frame rails: thin dark edges running the length of each glazed arm
-    const rail = (d: string) => shapes.push({ d, stroke: '$primary', strokeWidth: 2, silhouette: false });
-    if (mask & WALL_BITS.N) rail(`M ${C - h} 0 L ${C - h} ${C} M ${C + h} 0 L ${C + h} ${C}`);
-    if (mask & WALL_BITS.S) rail(`M ${C - h} ${C} L ${C - h} 128 M ${C + h} ${C} L ${C + h} 128`);
-    if (mask & WALL_BITS.W) rail(`M 0 ${C - h} L ${C} ${C - h} M 0 ${C + h} L ${C} ${C + h}`);
-    if (mask & WALL_BITS.E) rail(`M ${C} ${C - h} L 128 ${C - h} M ${C} ${C + h} L 128 ${C + h}`);
-    // mullions: vertical posts spaced along the glazing
-    const mull = (x: number, y: number, w: number, hgt: number) =>
-      shapes.push({ d: rr(x, y, w, hgt, 0.5), fill: '$primary', silhouette: false });
-    for (const off of [20, 44, 84, 108]) {
-      if (mask & WALL_BITS.N && off < 64) mull(C - h, off - 1.5, t, 3);
-      if (mask & WALL_BITS.S && off > 64) mull(C - h, off - 1.5, t, 3);
-      if (mask & WALL_BITS.W && off < 64) mull(off - 1.5, C - h, 3, t);
-      if (mask & WALL_BITS.E && off > 64) mull(off - 1.5, C - h, 3, t);
+  params: [],
+  build(mask) {
+    // Exterior curtain wall: full-cell sky-tinted glazing (semi-opaque for depth)
+    // with a frame on the exposed faces and mullion posts across the glass.
+    const shapes: ShapeSpec[] = [{ ...wallBody(mask, '$accent'), opacity: 0.8 }];
+    shapes.push(...faceEdgeTrim(mask, '$primary', 4, 3));
+    for (let x = 24; x < SIZE; x += 28) {
+      shapes.push({ d: `M ${x} 0 L ${x} ${SIZE}`, stroke: '$primary', strokeWidth: 2, opacity: 0.85, silhouette: false });
     }
-    // frame post at the junction
-    shapes.push({ d: rr(C - h - 1, C - h - 1, t + 2, t + 2, 1), fill: '$primary', silhouette: false });
     return shapes;
   },
 };
