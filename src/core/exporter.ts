@@ -1214,7 +1214,7 @@ export function floorLayerManifest(floor: TileInstance, style: StyleSheet, scale
  *  FloorTemplate), tagged `ground-layers` so the sim keeps the distinct kind. */
 export function groundLayerManifest(ground: TileInstance, style: StyleSheet, scale: number) {
   const size = style.render.baseSize * scale;
-  const { frames } = stackLayerCells(floorLayers(ground), size, 0);
+  const { frames, entries } = envLayerAtlas(floorLayers(ground), size);
   return {
     kind: 'ground-layers' as const,
     id: ground.id,
@@ -1227,7 +1227,8 @@ export function groundLayerManifest(ground: TileInstance, style: StyleSheet, sca
     pivot: { x: 0.5, y: 0.5 },
     tokens: [...PROP_PALETTE_TOKENS],
     palette: ground.palette,
-    layers: frames,
+    frames,
+    layers: entries,
     meta: layerCompositeMeta(),
   };
 }
