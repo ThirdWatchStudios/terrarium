@@ -47,28 +47,33 @@ function wallBody(mask: number, fill: string): ShapeSpec {
  * Connected edges get nothing, so a wall run still reads as one continuous mass.
  */
 function wallBevel(mask: number): ShapeSpec[] {
-  // A chamfer along the wall-mass PERIMETER: an angled bevel face on each EXPOSED
-  // side (lit top/left, shadowed right/bottom) so the mass reads as one solid
-  // extruded block with depth (RimWorld-style). A face runs flush to any CONNECTED
-  // side (so a straight run reads continuous) and miters at 45° where two exposed
-  // sides meet (a real corner). Connected-only cells (interior of a thick wall) get
-  // no bevel — the flat top merges seamlessly. Literal white/black at low alpha, so
-  // it layers over any wall colour and survives runtime re-tinting.
+  // Chamfered faces along the wall-mass PERIMETER, shaded the RimWorld way: the
+  // SOUTH exposed edge is the lit vertical FRONT FACE (brightest, so the wall reads
+  // as a raised block you're looking at from the front-top), the top rim + left
+  // catch a little light, the right sits in shadow, and a thin crease marks where
+  // the flat top surface meets the front face. A face runs flush to any CONNECTED
+  // side (so a straight run reads as one continuous wall) and miters at 45° where
+  // two exposed sides meet. Connected-only cells (a thick wall's interior) get no
+  // bevel and merge flat. Literal white/black → untinted layer, re-tint-safe.
   const e = exposedSides(mask);
   const s = SIZE;
-  const w = 22; // chamfer face width (of 128) — how "tall"/deep the block reads
-  // Inner-edge offsets: pull in (miter) toward a corner only when that adjacent
-  // side is ALSO exposed; otherwise run flush to the connected edge.
+  const w = 22; // chamfer face width (of 128)
+  // Inner-edge offsets: miter toward a corner only when that adjacent side is also
+  // exposed; otherwise run flush to the connected edge.
   const xL = e.w ? w : 0;
   const xR = e.e ? s - w : s;
   const yT = e.n ? w : 0;
   const yB = e.s ? s - w : s;
   const out: ShapeSpec[] = [];
   const face = (d: string, fill: string, opacity: number) => out.push({ d, fill, opacity, silhouette: false });
-  if (e.n) face(`M 0 0 L ${s} 0 L ${xR} ${w} L ${xL} ${w} Z`, '#FFFFFF', 0.3); //       top — brightest
-  if (e.w) face(`M 0 0 L 0 ${s} L ${w} ${yB} L ${w} ${yT} Z`, '#FFFFFF', 0.14); //      left — light
-  if (e.e) face(`M ${s} 0 L ${s} ${s} L ${s - w} ${yB} L ${s - w} ${yT} Z`, '#000000', 0.2); // right — shadow
-  if (e.s) face(`M 0 ${s} L ${s} ${s} L ${xR} ${s - w} L ${xL} ${s - w} Z`, '#000000', 0.36); // bottom — deepest
+  if (e.n) face(`M 0 0 L ${s} 0 L ${xR} ${w} L ${xL} ${w} Z`, '#FFFFFF', 0.14); //      top rim — soft light
+  if (e.w) face(`M 0 0 L 0 ${s} L ${w} ${yB} L ${w} ${yT} Z`, '#FFFFFF', 0.1); //       left — soft light
+  if (e.e) face(`M ${s} 0 L ${s} ${s} L ${s - w} ${yB} L ${s - w} ${yT} Z`, '#000000', 0.16); // right — shadow
+  if (e.s) {
+    face(`M 0 ${s} L ${s} ${s} L ${xR} ${s - w} L ${xL} ${s - w} Z`, '#FFFFFF', 0.26); // FRONT FACE — lit
+    // crease where the flat top surface meets the lit front face
+    out.push({ d: `M ${xL} ${s - w} L ${xR} ${s - w}`, stroke: '#000000', strokeWidth: 2, opacity: 0.18, silhouette: false });
+  }
   return out;
 }
 
