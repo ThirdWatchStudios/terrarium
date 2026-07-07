@@ -38,9 +38,36 @@ function wallBody(mask: number, fill: string): ShapeSpec {
   return { d: rr(x0, y0, x1 - x0, y1 - y0, radius), fill };
 }
 
-/** Back-compat base layer: the full-cell wall body (was a thin centered band). */
+/**
+ * A top-lit bevel that makes a full-cell wall read as a raised, extruded block
+ * (RimWorld-style dimension) instead of a flat slab: a highlight down the lit
+ * (top / left) EXPOSED edges and a shadow down the shaded (bottom / right) ones.
+ * Literal white/black at low alpha, so it layers over any wall colour and stays
+ * fixed under runtime re-tinting (it's a light effect, not a palette surface).
+ * Connected edges get nothing, so a wall run still reads as one continuous mass.
+ */
+function wallBevel(mask: number): ShapeSpec[] {
+  const e = exposedSides(mask);
+  const out: ShapeSpec[] = [];
+  const band = (x: number, y: number, w: number, h: number, fill: string, opacity: number) =>
+    out.push({ d: rr(x, y, w, h, 0), fill, opacity, silhouette: false });
+  // Lit top + faint lit left (light from the top-left).
+  if (e.n) band(0, 0, SIZE, 10, '#FFFFFF', 0.26);
+  if (e.w) band(0, 0, 6, SIZE, '#FFFFFF', 0.12);
+  // Shaded right, and a deep two-step shadow at the base so the wall reads as
+  // having HEIGHT (the front face + the ground-contact shadow, RimWorld-style).
+  if (e.e) band(SIZE - 8, 0, 8, SIZE, '#000000', 0.18);
+  if (e.s) {
+    band(0, SIZE - 18, SIZE, 18, '#000000', 0.22); // front face in shadow
+    band(0, SIZE - 7, SIZE, 7, '#000000', 0.2); //    darker ground-contact line
+  }
+  return out;
+}
+
+/** Back-compat base layer for SOLID walls: the full-cell body + the raised-block
+ *  bevel. (Translucent walls — glass, curtain — use wallBody directly, no bevel.) */
 function wallArms(mask: number, _thickness: number, fill: string): ShapeSpec[] {
-  return [wallBody(mask, fill)];
+  return [wallBody(mask, fill), ...wallBevel(mask)];
 }
 
 /** The sides of a cell that face open floor (no wall neighbour) — where a wall
