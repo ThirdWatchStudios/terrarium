@@ -1,6 +1,7 @@
 import type { ProjectState, StyleSheet } from './types';
 import { DEFAULT_LOOK } from './types';
 import { NATURAL_GROUND_TEMPLATE_IDS } from '../tiles/templates';
+import { NATURE_PROP_TEMPLATE_IDS } from '../props/templates';
 
 /**
  * Project-wide "looks" — coordinated restyles that touch BOTH the style sheet
@@ -106,16 +107,19 @@ export function projectWithLook(project: ProjectState): ProjectState {
 /**
  * Apply the clinical-plan look to the whole project: style sheet + every
  * prop/wall/floor palette. Characters keep their recipes untouched (people
- * stay warm — Article VIII). NATURAL ground is exempt too (D2 amended): grass,
- * meadow and dirt keep their saturated authored palettes under the clinical
- * plan, so the drained building visibly displaces living ground — nature is
- * TRUTH, like people; only the PAVED surfaces (asphalt / sidewalk) drain.
+ * stay warm — Article VIII). NATURE is exempt too (D2 amended): natural ground
+ * (grass / meadow / dirt) and the nature decor props (trees / bushes / flowers
+ * / boulders) keep their saturated authored palettes under the clinical plan,
+ * so the drained building visibly displaces living ground — nature is TRUTH,
+ * like people; the PAVED surfaces and the cars drain with the office.
  * Idempotent: re-applying converges. MUTATES the argument — callers wanting a
  * non-destructive result use {@link projectWithLook}.
  */
 export function applyClinicalLook(project: ProjectState): void {
   project.style = clinicalStyle(project.style);
+  const natureProps = new Set<string>(NATURE_PROP_TEMPLATE_IDS);
   for (const prop of project.props) {
+    if (natureProps.has(prop.templateId)) continue;
     prop.palette = {
       primary: clinicalSurfaceColor(prop.palette.primary),
       secondary: clinicalSurfaceColor(prop.palette.secondary),

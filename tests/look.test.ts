@@ -74,4 +74,17 @@ describe('project look — a reproducible, non-destructive lens', () => {
       expect(ground(lensed, id).primary, `paved ground "${id}" must drain`).not.toBe(ground(raw, id).primary);
     }
   });
+
+  it('leaves nature decor props vivid while ordinary props drain (D2 amended)', () => {
+    const raw = defaultGoldenProject();
+    raw.look = 'clinical';
+    const lensed = projectWithLook(raw);
+    const prop = (p: ProjectState, id: string) => p.props.find((x) => x.id === id)!.palette;
+    // Trees / bushes / flowers / boulders are nature — TRUTH, exempt like people.
+    for (const id of ['prop-tree', 'prop-tree-b', 'prop-tree-sapling', 'prop-bush-cluster', 'prop-wildflower-patch', 'prop-boulder']) {
+      expect(prop(lensed, id), `nature prop "${id}" must not drain`).toEqual(prop(raw, id));
+    }
+    // The cars are the office's world and drain like any other prop.
+    expect(prop(lensed, 'prop-car').primary).not.toBe(prop(raw, 'prop-car').primary);
+  });
 });

@@ -1,5 +1,7 @@
 import type { PropTemplate, ShapeSpec } from '../core/types';
 import { rr, circle, ellipse } from '../core/geometry';
+import { mulberry32 } from '../core/random';
+import { FLOWER_HUES } from '../tiles/templates';
 
 /**
  * Parametric prop templates. Conventions:
@@ -2795,6 +2797,185 @@ const parkingLine: PropTemplate = {
   },
 };
 
+// ---------------------------------------------------------------------------
+// Nature decor (lush-outside pass — D2 amendment). Plan-projected scenery for
+// the outdoor ground: the living things the build replaces. Same mechanics as
+// the cars (multi-cell footprints, NON_PLACEABLE in core/layout.ts, the sim
+// scatters them over the build site), but EXEMPT from the clinical drain
+// (NATURE_PROP_TEMPLATE_IDS, core/look.ts) — nature stays saturated on the
+// plan, like people and the natural ground under it.
+// ---------------------------------------------------------------------------
+
+/** Push a seeded organic canopy seen from above: a dark under-canopy blob of
+ *  overlapping lobes ($secondary, carries the silhouette/outline), a mid layer
+ *  ($primary) shifted toward the light (NW), and small $accent highlight lobes
+ *  on top. Shared by the mature tree and the sapling. */
+function canopy(shapes: ShapeSpec[], rng: () => number, lobes: number, spread: number, rMin: number, rMax: number): void {
+  const CXY = 64;
+  // soft baked ground shadow, offset SE (scenery decal — not the style's contact shadow)
+  shapes.push({ d: ellipse(CXY + 5, CXY + 6, spread + rMax * 0.9, (spread + rMax * 0.9) * 0.9), fill: '#00000022', silhouette: false });
+  // resolve every lobe before drawing so the three layers stack on the same skeleton
+  const pts: Array<{ x: number; y: number; r: number }> = [];
+  for (let i = 0; i < lobes; i++) {
+    const a = (i / lobes) * Math.PI * 2 + (rng() - 0.5) * 0.7;
+    const d = spread * (0.75 + rng() * 0.5);
+    pts.push({ x: CXY + Math.cos(a) * d, y: CXY + Math.sin(a) * d, r: rMin + rng() * (rMax - rMin) });
+  }
+  // under-canopy: the dark mass whose union is the tree's outline
+  for (const p of pts) shapes.push({ d: circle(p.x, p.y, p.r), fill: '$secondary' });
+  shapes.push({ d: circle(CXY, CXY, spread + rMin * 0.6), fill: '$secondary' });
+  // mid canopy, shifted toward the light
+  for (const p of pts) shapes.push({ d: circle(p.x - 3, p.y - 4, p.r * 0.82), fill: '$primary', silhouette: false });
+  shapes.push({ d: circle(CXY - 3, CXY - 4, spread + rMin * 0.35), fill: '$primary', silhouette: false });
+  // highlight lobes on the lit side (every other lobe keeps it clumpy, not striped)
+  for (let i = 0; i < pts.length; i += 2) {
+    const p = pts[i];
+    shapes.push({ d: circle(p.x - 6, p.y - 7, p.r * 0.45), fill: '$accent', opacity: 0.85, silhouette: false });
+  }
+  shapes.push({ d: circle(CXY - 7, CXY - 8, spread * 0.45), fill: '$accent', opacity: 0.7, silhouette: false });
+}
+
+const treeCanopy: PropTemplate = {
+  id: 'tree-canopy',
+  label: 'Tree',
+  projection: 'plan',
+  // a mature canopy shades a 3×3 block
+  gridFootprint: { w: 3, h: 3 },
+  params: [
+    { key: 'lobes', label: 'Lobes', min: 5, max: 9, step: 1, default: 7 },
+    { key: 'seed', label: 'Shape seed', min: 1, max: 9, step: 1, default: 3 },
+  ],
+  build(params) {
+    const shapes: ShapeSpec[] = [];
+    const rng = mulberry32((params.seed ?? 3) * 15053);
+    canopy(shapes, rng, params.lobes ?? 7, 22, 15, 23);
+    return shapes;
+  },
+};
+
+const treeSapling: PropTemplate = {
+  id: 'tree-sapling',
+  label: 'Sapling',
+  projection: 'plan',
+  gridFootprint: { w: 2, h: 2 },
+  params: [{ key: 'seed', label: 'Shape seed', min: 1, max: 9, step: 1, default: 5 }],
+  build(params) {
+    const shapes: ShapeSpec[] = [];
+    const rng = mulberry32((params.seed ?? 5) * 26041);
+    canopy(shapes, rng, 5, 13, 9, 14);
+    return shapes;
+  },
+};
+
+const bushCluster: PropTemplate = {
+  id: 'bush-cluster',
+  label: 'Bush cluster',
+  projection: 'plan',
+  // a low run of shrubs, 2 cells long
+  gridFootprint: { w: 2, h: 1 },
+  params: [
+    { key: 'bushes', label: 'Bushes', min: 2, max: 4, step: 1, default: 3 },
+    { key: 'seed', label: 'Shape seed', min: 1, max: 9, step: 1, default: 2 },
+  ],
+  build(params) {
+    const rng = mulberry32((params.seed ?? 2) * 33997);
+    const n = params.bushes ?? 3;
+    // resolve all bushes first, then paint layer-by-layer across the whole
+    // cluster (shadows, bases, mids, highlights) — overlapping bushes merge
+    // into one shrub mass, and the re-tintable layer atlas stays at one run
+    // per bucket instead of one per bush (runLayers splits on alternation).
+    const bushes: Array<{ x: number; y: number; r: number }> = [];
+    for (let i = 0; i < n; i++) {
+      bushes.push({
+        // tight spacing so neighbouring bushes overlap into one shrub mass
+        x: 30 + (i / (n - 1 || 1)) * 68 + (rng() - 0.5) * 8,
+        y: 60 + (rng() - 0.5) * 14,
+        r: 15 + rng() * 6,
+      });
+    }
+    const shapes: ShapeSpec[] = [];
+    for (const b of bushes) shapes.push({ d: ellipse(b.x + 3, b.y + 4, b.r, b.r * 0.85), fill: '#00000022', silhouette: false });
+    for (const b of bushes) shapes.push({ d: circle(b.x, b.y, b.r), fill: '$secondary' });
+    for (const b of bushes) shapes.push({ d: circle(b.x - 3, b.y - 4, b.r * 0.75), fill: '$primary', silhouette: false });
+    for (const b of bushes) shapes.push({ d: circle(b.x - b.r * 0.35, b.y - b.r * 0.4, b.r * 0.35), fill: '$accent', opacity: 0.8, silhouette: false });
+    return shapes;
+  },
+};
+
+const wildflowerPatch: PropTemplate = {
+  id: 'wildflower-patch',
+  label: 'Wildflower patch',
+  projection: 'plan',
+  // a mostly-transparent decal over the grass, like the parking line over asphalt
+  gridFootprint: { w: 2, h: 2 },
+  params: [
+    { key: 'density', label: 'Density', min: 1, max: 3, step: 1, default: 2 },
+    { key: 'seed', label: 'Pattern seed', min: 1, max: 9, step: 1, default: 6 },
+  ],
+  build(params) {
+    const rng = mulberry32((params.seed ?? 6) * 47057);
+    // grouped by bucket in paint order ($secondary tufts, $accent counter-blades,
+    // then the literal-hex flowers) so the layer atlas stays at 3 runs — an
+    // interleaved emit would split into one layer per tuft (runLayers).
+    const shapes: ShapeSpec[] = [];
+    const tufts = (params.density ?? 2) * 8;
+    const blades: Array<{ x: number; y: number; h: number; lean: number }> = [];
+    for (let i = 0; i < tufts; i++) {
+      // two rngs averaged → clusters toward the middle, feathered edge
+      blades.push({ x: (rng() + rng()) * 64, y: (rng() + rng()) * 64, h: 4 + rng() * 4, lean: (rng() - 0.5) * 5 });
+    }
+    for (const b of blades) shapes.push({ d: `M ${b.x} ${b.y} L ${b.x + b.lean} ${b.y - b.h}`, stroke: '$secondary', strokeWidth: 1.5, opacity: 0.7, silhouette: false });
+    for (const b of blades) shapes.push({ d: `M ${b.x + 2} ${b.y} L ${b.x + 2 - b.lean} ${b.y - b.h * 0.8}`, stroke: '$accent', strokeWidth: 1.3, opacity: 0.65, silhouette: false });
+    const flowers = (params.density ?? 2) * 7;
+    for (let i = 0; i < flowers; i++) {
+      const x = (rng() + rng()) * 64;
+      const y = (rng() + rng()) * 64;
+      const r = 1.6 + rng() * 1.2;
+      const hue = FLOWER_HUES[Math.floor(rng() * FLOWER_HUES.length)];
+      shapes.push({ d: circle(x, y, r), fill: hue, opacity: 0.95, silhouette: false });
+      if (hue === FLOWER_HUES[0]) shapes.push({ d: circle(x, y, r * 0.4), fill: FLOWER_HUES[1], silhouette: false });
+    }
+    return shapes;
+  },
+};
+
+const boulder: PropTemplate = {
+  id: 'boulder',
+  label: 'Boulder',
+  projection: 'plan',
+  gridFootprint: { w: 1, h: 1 },
+  params: [
+    { key: 'size', label: 'Size', min: 56, max: 96, step: 4, default: 76 },
+    { key: 'seed', label: 'Shape seed', min: 1, max: 9, step: 1, default: 4 },
+  ],
+  build(params) {
+    const shapes: ShapeSpec[] = [];
+    const rng = mulberry32((params.seed ?? 4) * 61129);
+    const R = (params.size ?? 76) / 2;
+    // irregular rounded outcrop: jittered radial polygon with soft corners
+    const pts: string[] = [];
+    const n = 7;
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * Math.PI * 2;
+      const d = R * (0.78 + rng() * 0.3);
+      pts.push(`${64 + Math.cos(a) * d} ${64 + Math.sin(a) * d * 0.88}`);
+    }
+    shapes.push({ d: ellipse(68, 70, R * 0.95, R * 0.8), fill: '#00000022', silhouette: false });
+    shapes.push({ d: `M ${pts[0]} L ${pts.slice(1).join(' L ')} Z`, fill: '$primary' });
+    // lit top facet toward NW + shaded flank SE
+    shapes.push({ d: ellipse(58, 56, R * 0.45, R * 0.32), fill: '$accent', opacity: 0.8, silhouette: false });
+    shapes.push({ d: ellipse(72, 74, R * 0.4, R * 0.26), fill: '$secondary', opacity: 0.7, silhouette: false });
+    // a hairline crack
+    shapes.push({ d: `M ${64 - R * 0.3} ${64 + R * 0.15} L ${64 + R * 0.1} ${64 + R * 0.4}`, stroke: '$secondary', strokeWidth: 1.2, opacity: 0.7, silhouette: false });
+    return shapes;
+  },
+};
+
+/** Nature decor template ids — EXEMPT from the clinical drain (core/look.ts),
+ *  mirroring NATURAL_GROUND_TEMPLATE_IDS: under the clinical look these stay
+ *  saturated while the office (and the cars, and the paved lot) drains. */
+export const NATURE_PROP_TEMPLATE_IDS = ['tree-canopy', 'tree-sapling', 'bush-cluster', 'wildflower-patch', 'boulder'] as const;
+
 export const PROP_TEMPLATES: PropTemplate[] = [
   waterCooler,
   printer,
@@ -2874,4 +3055,10 @@ export const PROP_TEMPLATES: PropTemplate[] = [
   car,
   carSuv,
   parkingLine,
+  // Nature decor (lush-outside pass) — clinical-exempt exterior scenery.
+  treeCanopy,
+  treeSapling,
+  bushCluster,
+  wildflowerPatch,
+  boulder,
 ];

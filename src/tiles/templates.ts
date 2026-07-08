@@ -678,8 +678,10 @@ function groundMottle(shapes: ShapeSpec[], rng: () => number, count: number, opa
 }
 
 /** Fixed-hex wildflower hues — detail colors the 3-slot palette doesn't need
- *  to own (same precedent as the cars' headlight/tail-light hexes). */
-const FLOWER_HUES = ['#F2EED8', '#E8C84A', '#C08BD6'];
+ *  to own (same precedent as the cars' headlight/tail-light hexes). Shared
+ *  with the nature decor props (props/templates.ts) so flowers match across
+ *  ground and decals. */
+export const FLOWER_HUES = ['#F2EED8', '#E8C84A', '#C08BD6'];
 
 function wildflowers(shapes: ShapeSpec[], rng: () => number, count: number): void {
   for (let i = 0; i < count; i++) {

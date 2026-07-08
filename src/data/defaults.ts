@@ -753,6 +753,52 @@ export const DEFAULT_PROPS: PropInstance[] = [
     params: { stop: 1 },
     palette: { primary: '#E8E4D2', secondary: '#C9C6B6', accent: '#B7B4A4' },
   },
+  // Nature decor (lush-outside pass) — clinical-EXEMPT scenery for the outdoor
+  // ground (core/look.ts NATURE_PROP_TEMPLATE_IDS): the saturated living things
+  // the build visibly replaces. Two tree tones so a scattered grove doesn't
+  // repeat one sprite (same reason the lot gets two sedan colours).
+  {
+    id: 'prop-tree',
+    name: 'Tree',
+    templateId: 'tree-canopy',
+    params: { lobes: 7, seed: 3 },
+    palette: { primary: '#4E8A34', secondary: '#356823', accent: '#7FBF4F' },
+  },
+  {
+    id: 'prop-tree-b',
+    name: 'Tree warm',
+    templateId: 'tree-canopy',
+    params: { lobes: 6, seed: 7 },
+    palette: { primary: '#5A9440', secondary: '#3D7028', accent: '#8FCB5D' },
+  },
+  {
+    id: 'prop-tree-sapling',
+    name: 'Sapling',
+    templateId: 'tree-sapling',
+    params: { seed: 5 },
+    palette: { primary: '#63A844', secondary: '#47822E', accent: '#96D468' },
+  },
+  {
+    id: 'prop-bush-cluster',
+    name: 'Bush cluster',
+    templateId: 'bush-cluster',
+    params: { bushes: 3, seed: 2 },
+    palette: { primary: '#3F7A2E', secondary: '#2C5C1F', accent: '#6FB04A' },
+  },
+  {
+    id: 'prop-wildflower-patch',
+    name: 'Wildflower patch',
+    templateId: 'wildflower-patch',
+    params: { density: 2, seed: 6 },
+    palette: { primary: '#4E9A3C', secondary: '#37752A', accent: '#86C65A' },
+  },
+  {
+    id: 'prop-boulder',
+    name: 'Boulder',
+    templateId: 'boulder',
+    params: { size: 76, seed: 4 },
+    palette: { primary: '#8D8A80', secondary: '#66635A', accent: '#B0ACA0' },
+  },
 ];
 
 export const DEFAULT_WALLS: TileInstance[] = [
