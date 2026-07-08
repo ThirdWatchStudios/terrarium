@@ -376,6 +376,22 @@ export const DEFAULT_PROPS: PropInstance[] = [
     palette: { primary: '#2C2E33', secondary: '#4A4E55', accent: '#5BE08A' },
   },
   {
+    id: 'prop-iris-installation-unit',
+    name: 'IRIS installation unit',
+    templateId: 'iris-installation-unit',
+    params: { height: 90 },
+    // QuotaCo sterile: paper-white shell, sage-grey panels; the beacon's green
+    // is a literal in the template so this accent only feeds minor details.
+    palette: { primary: '#E6E4DC', secondary: '#B9BFB7', accent: '#5BE08A' },
+  },
+  {
+    id: 'prop-iris-installation-unit-dormant',
+    name: 'IRIS installation unit (dormant)',
+    templateId: 'iris-installation-unit-dormant',
+    params: { height: 90 },
+    palette: { primary: '#E6E4DC', secondary: '#B9BFB7', accent: '#5BE08A' },
+  },
+  {
     id: 'prop-standing-desk',
     name: 'Standing desk',
     templateId: 'standing-desk',

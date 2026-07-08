@@ -984,6 +984,121 @@ const serverRack: PropTemplate = {
   },
 };
 
+// --- IRIS installation unit ------------------------------------------------
+// The physical seat of IRIS: a server rack + operator console, installed once
+// per office (the founding tutorial IS this unit booting). Twin pattern like
+// the tampered variants, but in reverse: the sim places the DORMANT unit on
+// the bare lot and swaps to the live template as the boot sequence completes.
+// One green beacon is the only living light — a literal hex so it survives
+// both the clinical drain and runtime re-tint (warmth stays in the people).
+
+const IRIS_GREEN = '#5BE08A';
+
+function buildIrisUnit(params: Record<string, number>, live: boolean): ShapeSpec[] {
+  const h = params.height ?? 90;
+  // Server rack, left cell.
+  const rackW = 38;
+  const rackX = CX - 46;
+  const rackTop = GROUND - h;
+  const shapes: ShapeSpec[] = [
+    // cabinet + inner bay
+    { d: rr(rackX, rackTop, rackW, h, 3), fill: '$primary' },
+    { d: rr(rackX + 3, rackTop + 3, rackW - 6, h - 6, 1), fill: '#111214', silhouette: false },
+  ];
+  const units = 5;
+  const bayTop = rackTop + 5;
+  const uh = (h - 10) / units;
+  for (let i = 0; i < units; i++) {
+    const uy = bayTop + i * uh + 1;
+    // faceplate
+    shapes.push({ d: rr(rackX + 5, uy, rackW - 10, uh - 2, 1), fill: '$secondary', silhouette: false });
+    // status LEDs — alive and blinking, or dead
+    const ledY = uy + (uh - 2) / 2;
+    if (live) {
+      shapes.push(
+        { d: circle(rackX + 9, ledY, 1.2), fill: i % 2 === 0 ? IRIS_GREEN : '$accent', silhouette: false },
+        { d: circle(rackX + 13, ledY, 1.2), fill: '$accent', silhouette: false },
+      );
+    } else {
+      shapes.push(
+        { d: circle(rackX + 9, ledY, 1.2), fill: '#2A2D30', silhouette: false },
+        { d: circle(rackX + 13, ledY, 1.2), fill: '#2A2D30', silhouette: false },
+      );
+    }
+    // drive slits
+    shapes.push({ d: `M ${rackX + 19} ${uy + 2} L ${rackX + rackW - 8} ${uy + 2} M ${rackX + 19} ${uy + uh - 4} L ${rackX + rackW - 8} ${uy + uh - 4}`, stroke: '#00000040', strokeWidth: 0.8, silhouette: false });
+  }
+  // The beacon: a small mast on the rack top holding IRIS's one green eye.
+  const mastX = rackX + rackW / 2;
+  shapes.push({ d: rr(mastX - 4, rackTop - 7, 8, 8, 1.5), fill: '$primary' });
+  if (live) {
+    shapes.push(
+      { d: circle(mastX, rackTop - 4, 5.5), fill: `${IRIS_GREEN}33`, silhouette: false },
+      { d: circle(mastX, rackTop - 4, 2.6), fill: IRIS_GREEN, silhouette: false },
+    );
+  } else {
+    // dead lens
+    shapes.push({ d: circle(mastX, rackTop - 4, 2.6), fill: '#3A3E42', silhouette: false });
+  }
+
+  // Operator console, right cell: a standing terminal (screen, keys, vents).
+  const conX = CX;
+  const conW = 42;
+  const conTop = GROUND - 66;
+  shapes.push(
+    // body
+    { d: rr(conX, conTop, conW, GROUND - conTop, 3), fill: '$primary' },
+    // screen bezel + glass
+    { d: rr(conX + 4, conTop + 4, conW - 8, 26, 2), fill: '$secondary', silhouette: false },
+    { d: rr(conX + 6, conTop + 6, conW - 12, 22, 1), fill: live ? '#101814' : '#1A1C1E', silhouette: false },
+  );
+  if (live) {
+    // green terminal readout — IRIS compiling
+    shapes.push(
+      { d: `M ${conX + 9} ${conTop + 10} L ${conX + 26} ${conTop + 10} M ${conX + 9} ${conTop + 15} L ${conX + 32} ${conTop + 15} M ${conX + 9} ${conTop + 20} L ${conX + 21} ${conTop + 20}`, stroke: IRIS_GREEN, strokeWidth: 1.2, opacity: 0.85, silhouette: false },
+      // cursor
+      { d: rr(conX + 23, conTop + 22, 3, 2, 0.5), fill: IRIS_GREEN, opacity: 0.85, silhouette: false },
+    );
+  } else {
+    // blank glass, one faint reflection
+    shapes.push({ d: `M ${conX + 9} ${conTop + 9} L ${conX + 16} ${conTop + 16}`, stroke: '#FFFFFF14', strokeWidth: 2.5, silhouette: false });
+  }
+  // key shelf jutting from the console face
+  shapes.push(
+    { d: `M ${conX + 2} ${GROUND - 26} L ${conX + conW - 2} ${GROUND - 26} L ${conX + conW + 4} ${GROUND - 18} L ${conX - 4} ${GROUND - 18} Z`, fill: '$secondary' },
+    { d: `M ${conX + 2} ${GROUND - 23} L ${conX + conW} ${GROUND - 23} M ${conX + 1} ${GROUND - 20.5} L ${conX + conW + 2} ${GROUND - 20.5}`, stroke: '#00000030', strokeWidth: 1, silhouette: false },
+    // vent slits low on the pedestal
+    { d: `M ${conX + 8} ${GROUND - 10} L ${conX + conW - 8} ${GROUND - 10} M ${conX + 8} ${GROUND - 7} L ${conX + conW - 8} ${GROUND - 7}`, stroke: '#00000030', strokeWidth: 1, silhouette: false },
+  );
+  // floor conduit trunking rack to console — one machine
+  shapes.push({ d: rr(rackX + rackW - 2, GROUND - 5, conX - rackX - rackW + 4, 5, 2), fill: '$secondary', silhouette: false });
+  return shapes;
+}
+
+const irisInstallationUnit: PropTemplate = {
+  id: 'iris-installation-unit',
+  label: 'IRIS installation unit',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 46, ry: 5 },
+  gridFootprint: { w: 2, h: 1 },
+  params: [{ key: 'height', label: 'Rack height', min: 78, max: 98, step: 2, default: 90 }],
+  build(params) {
+    return buildIrisUnit(params, true);
+  },
+};
+
+const irisInstallationUnitDormant: PropTemplate = {
+  id: 'iris-installation-unit-dormant',
+  label: 'IRIS installation unit (dormant)',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 46, ry: 5 },
+  gridFootprint: { w: 2, h: 1 },
+  params: [{ key: 'height', label: 'Rack height', min: 78, max: 98, step: 2, default: 90 }],
+  build(params) {
+    return buildIrisUnit(params, false);
+  },
+};
+
 // --- P1: workstations + lounge seating -----------------------------------------
 
 const standingDesk: PropTemplate = {
@@ -3003,6 +3118,8 @@ export const PROP_TEMPLATES: PropTemplate[] = [
   copier,
   shredder,
   serverRack,
+  irisInstallationUnit,
+  irisInstallationUnitDormant,
   standingDesk,
   waitingBench,
   coffeeTable,
