@@ -25,6 +25,7 @@ import { getIcon } from '../parts/icons';
 import { getPose, type Pose, type PoseTransforms } from '../parts/poses';
 import { PROP_TEMPLATES } from '../props/templates';
 import { FLOOR_TEMPLATES, WALL_TEMPLATES } from '../tiles/templates';
+import { GROUND_OVERLAY_BUILDERS } from '../tiles/groundOverlays';
 
 /**
  * Named attachment points in canvas coordinates, per facing. Moving an anchor
@@ -790,6 +791,23 @@ export function floorTileMarkup(floor: TileInstance): string {
 /** Render a floor tile: flat pattern, no outline pass, seamlessly tileable. */
 export function composeFloorTile(floor: TileInstance, style: StyleSheet, pixelSize?: number): string {
   return svgWrap(floorTileMarkup(floor), pixelSize ?? style.render.baseSize);
+}
+
+/** Render one ground-overlay autotile frame (transition fringe) for RAW
+ *  8-neighbor bits — same blob contract as composeWallTile, but floor-family
+ *  art: no outline pass, transparent background, viewBox clips the ±128 wrap
+ *  copies. A set bit = "encroaching ground on that side" (CONTRACT §3.18). */
+export function composeGroundOverlayTile(
+  overlay: TileInstance,
+  style: StyleSheet,
+  neighbors: number,
+  pixelSize?: number,
+): string {
+  const build = GROUND_OVERLAY_BUILDERS[overlay.templateId];
+  if (!build) return svgWrap('', pixelSize ?? style.render.baseSize);
+  const resolve = makePropResolver(overlay.palette);
+  const markup = build(neighbors).map((s) => emitColorShape(s, resolve)).join('');
+  return svgWrap(markup, pixelSize ?? style.render.baseSize);
 }
 
 // ---------------------------------------------------------------------------

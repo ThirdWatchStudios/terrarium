@@ -253,6 +253,26 @@ describe('default bundle is a complete, sim-importable baseline', () => {
       'a ground surface leaked into interior floors/').toBe(false);
   });
 
+  it('ships the grass-fringe transition overlay on the shared 47-blob contract', async () => {
+    const { paths, json } = await exportPaths();
+    const atlasPath = 'ground-overlays/grass-fringe/atlas@1x.json';
+    expect(paths.has(atlasPath), 'no ground-overlays/ atlas — the edge-transition overlay did not ship').toBe(true);
+    expect(paths.has('ground-overlays/grass-fringe/tileset@1x.png')).toBe(true);
+    const atlas = JSON.parse(json.get(atlasPath)!);
+    expect(atlas.kind).toBe('ground-overlay');
+    // The wall importer's contract marker — the sim slices this tileset with the
+    // exact machinery it uses for walls, so the marker must match verbatim.
+    expect(atlas.meta.autotile).toBe('8-neighbor blob (47)');
+    expect(Object.keys(atlas.frames)).toHaveLength(47);
+    expect(atlas.frames['mask_0']).toBeTruthy();
+    expect(atlas.meta.sorting).toContain('-19000');
+    // The fringe derives its palette from the grass ground instance, so the
+    // fringe always matches the field it bleeds from.
+    const overlay = JSON.parse(json.get('ground-overlays/grass-fringe/overlay.json')!);
+    const grass = JSON.parse(json.get([...paths].find((p) => /^ground\/lawn-grass\/ground\.json$/.test(p))!)!);
+    expect(overlay.palette).toEqual(grass.palette);
+  });
+
   it('ships an authored construction persona the sim spawns the crew from (B1.5 / D4)', async () => {
     const { paths, json } = await exportPaths();
     // The crew rides its OWN folder (decoupled from the office cast under characters/).

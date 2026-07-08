@@ -20,6 +20,7 @@ import {
   composePropStatusBadge,
   composeSocialStateBadge,
   composeWallTile,
+  composeGroundOverlayTile,
   composePortrait,
   layerCellSvg,
   overheadAnchor,
@@ -44,6 +45,7 @@ import { serializeCompany } from './company';
 import { serializeScenarioTemplateLibrary, type ScenarioTemplate } from './scenarioTemplate';
 import { PROP_TEMPLATES } from '../props/templates';
 import { BLOB_CONFIGS, BLOB_TILE_COUNT } from '../tiles/blob';
+import { deriveGroundOverlays } from '../tiles/groundOverlays';
 import { themeUss, themeJson } from '../data/uiPalette';
 import { ICONS, CURSORS } from '../parts/icons';
 import { overlayStyleJson } from './overlayStyle';
@@ -1009,6 +1011,63 @@ export function floorAtlas(floor: TileInstance, style: StyleSheet, scale: number
   };
 }
 
+function groundOverlayTilesetDesc(overlay: TileInstance, style: StyleSheet, scale: number): SheetDesc {
+  const size = style.render.baseSize * scale;
+  const cells: RasterCell[] = [];
+  for (let i = 0; i < BLOB_TILE_COUNT; i++) {
+    cells.push({
+      svg: composeGroundOverlayTile(overlay, style, BLOB_CONFIGS[i], size),
+      dx: (i % 8) * size,
+      dy: Math.floor(i / 8) * size,
+      dw: size,
+      dh: size,
+    });
+  }
+  return { width: size * 8, height: size * 6, pixelScale: renderScale(style), cells };
+}
+
+/**
+ * Ground-edge transition overlay atlas (lush-outside pass phase 3, CONTRACT
+ * §3.18). Same 8x6 / 47-frame layout and `mask_<i>` naming as the wall
+ * tileset — the shared blob contract — so the sim's tileset slicer and
+ * frame-by-index selection are reused verbatim. Semantics differ only in what
+ * a bit MEANS: for a receiving ground cell (dirt/asphalt/sidewalk), a set bit
+ * says "the neighbour on that side is encroaching natural ground", and the
+ * frame shows that ground's fringe bleeding over the seam. Drawn above the
+ * ground layer, below the interior floor (sort band -19000).
+ */
+export function groundOverlayAtlas(overlay: TileInstance, style: StyleSheet, scale: number) {
+  const size = style.render.baseSize * scale;
+  const frames: Record<string, { x: number; y: number; w: number; h: number; name: string }> = {};
+  for (let i = 0; i < BLOB_TILE_COUNT; i++) {
+    frames[`mask_${i}`] = {
+      x: (i % 8) * size,
+      y: Math.floor(i / 8) * size,
+      w: size,
+      h: size,
+      name: `tile_${i}`,
+    };
+  }
+  return {
+    name: overlay.name,
+    id: overlay.id,
+    templateId: overlay.templateId,
+    frameSize: size,
+    scale,
+    kind: 'ground-overlay' as const,
+    bits: { N: 1, E: 2, S: 4, W: 8, NE: 16, SE: 32, SW: 64, NW: 128 },
+    frames,
+    pivot: { x: 0.5, y: 0.5 },
+    meta: {
+      generator: 'sprite-character-creator',
+      autotile: '8-neighbor blob (47)',
+      blobTable: 'blob-index-table.json (shared 256→47 contract; frame mask_<i> = blob index)',
+      maskSemantics: 'bit set = neighbour is encroaching natural ground (grass family); drawn on the receiving cell',
+      sorting: 'ground-overlay-layer (above ground, below floors; sort band -19000)',
+    },
+  };
+}
+
 /**
  * Ground atlas — the DISTINCT ground kind (B1.5 / decision D2). Identical tile
  * geometry to a floor (rendered by the same composeFloorTile), but tagged
@@ -1350,6 +1409,7 @@ export async function exportAll(
     (project.walls?.length ?? 0) * scales +
     (project.floors?.length ?? 0) * scales +
     (project.ground?.length ?? 0) * scales + // distinct ground kind (B1.5 / D2)
+    deriveGroundOverlays(project.ground).length * scales + // ground-edge transition overlays
     scales * 6 + // shared activity/mood/prop-status/social-state/emotion-glyph/attention-puff atlas per scale
     ICONS.length + // one tick per UI icon (its SVG + PNG ladder)
     CURSORS.length; // one tick per cursor (PNG ladder)
@@ -1506,6 +1566,21 @@ export async function exportAll(
       tick(g.name);
     }
     await write(`${dir}/ground.json`, JSON.stringify(g, null, 2));
+  }
+
+  // Ground-edge transition overlays (lush-outside pass phase 3) — code-owned,
+  // DERIVED from the ground set (grass palette → fringe palette, so the
+  // clinical-look natural-ground exemption flows through automatically). Same
+  // 47-blob tileset shape as walls; the sim's fringe pass selects frames by
+  // the shared blob index (CONTRACT §3.18).
+  for (const overlay of deriveGroundOverlays(project.ground)) {
+    const dir = `ground-overlays/${slug(overlay.name)}`;
+    for (const scale of EXPORT_SCALES) {
+      await write(`${dir}/tileset@${scale}x.png`, await png(groundOverlayTilesetDesc(overlay, style, scale)));
+      await write(`${dir}/atlas@${scale}x.json`, JSON.stringify(groundOverlayAtlas(overlay, style, scale), null, 2));
+      tick(overlay.name);
+    }
+    await write(`${dir}/overlay.json`, JSON.stringify(overlay, null, 2));
   }
 
   // Shared activity-badge atlas (one per scale, character-independent). The sim

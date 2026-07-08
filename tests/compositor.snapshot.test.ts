@@ -3,13 +3,15 @@ import { describe, expect, it } from 'vitest';
 import {
   composeCharacter,
   composeFloorTile,
+  composeGroundOverlayTile,
   composeProp,
   composeWallTile,
 } from '../src/core/compositor';
 import type { CharacterRecipe } from '../src/core/types';
 import { CANVAS, FACINGS, MOODS } from '../src/core/types';
 import { PART_LIBRARY } from '../src/parts/library';
-import { BLOB_CONFIGS, BLOB_TILE_COUNT } from '../src/tiles/blob';
+import { BLOB_CONFIGS, BLOB_TILE_COUNT, NB } from '../src/tiles/blob';
+import { deriveGroundOverlays } from '../src/tiles/groundOverlays';
 import {
   DEFAULT_CAST,
   DEFAULT_FLOORS,
@@ -152,6 +154,25 @@ describe('ground', () => {
   for (const g of DEFAULT_GROUND) {
     it(`${g.id}`, async () => {
       await expect(composeFloorTile(g, STYLE, SIZE)).toMatchFileSnapshot(snap(`ground/${g.id}`));
+    });
+  }
+});
+
+// Ground-edge transition overlays (lush-outside pass phase 3) — the derived
+// grass fringe on the shared 47-blob contract. Snapshot representative raw
+// configs: a single edge, two edges meeting, the wrapped corner, all sides.
+describe('ground overlays', () => {
+  const overlay = deriveGroundOverlays(DEFAULT_GROUND)[0];
+  for (const [label, raw] of [
+    ['edge-n', NB.N],
+    ['corner-ne', NB.N | NB.E],
+    ['corner-ne-wrapped', NB.N | NB.E | NB.NE],
+    ['all-edges', NB.N | NB.E | NB.S | NB.W],
+  ] as const) {
+    it(`${overlay.id} ${label}`, async () => {
+      await expect(composeGroundOverlayTile(overlay, STYLE, raw, SIZE)).toMatchFileSnapshot(
+        snap(`ground-overlays/${overlay.id}-${label}`),
+      );
     });
   }
 });
