@@ -59,4 +59,19 @@ describe('project look — a reproducible, non-destructive lens', () => {
     expect(firstFloor(p)).not.toBe(before);
     expect(p.style.outline.color).toBe(CLINICAL_INK);
   });
+
+  it('leaves NATURAL ground vivid while PAVED ground drains (D2 amended — nature stays warm)', () => {
+    const raw = defaultGoldenProject();
+    raw.look = 'clinical';
+    const lensed = projectWithLook(raw);
+    const ground = (p: ProjectState, id: string) => p.ground!.find((g) => g.id === id)!.palette;
+    // Nature is TRUTH: grass / meadow / dirt keep their saturated authored palettes.
+    for (const id of ['ground-grass', 'ground-grass-b', 'ground-meadow', 'ground-dirt']) {
+      expect(ground(lensed, id), `natural ground "${id}" must not drain`).toEqual(ground(raw, id));
+    }
+    // The paved lot is the focus-grouped output and drains with the building.
+    for (const id of ['ground-asphalt', 'ground-sidewalk']) {
+      expect(ground(lensed, id).primary, `paved ground "${id}" must drain`).not.toBe(ground(raw, id).primary);
+    }
+  });
 });

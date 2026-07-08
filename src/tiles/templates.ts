@@ -643,14 +643,62 @@ const lobbyStone: FloorTemplate = {
 };
 
 // ---------------------------------------------------------------------------
-// Outdoor ground (B1.5 "the build site" — the bare parking lot the office is
-// raised onto). Authored with the same flat, seamless tile machinery as the
-// interior floors (they ARE FloorTemplates, so composeFloorTile renders them),
-// but they SHIP as a DISTINCT ground KIND (own export dir + sort band −20000 +
-// clinical-drain treatment — decision D2). Deliberately NO sheen bands or
-// non-tiling accents: ground spans the whole outdoor map, so any per-tile band
-// would print a visible 128-unit grid. Pure seamless speckle/joints only.
+// Outdoor ground (B1.5 "the build site" — the living land the office is raised
+// onto). Authored with the same flat, seamless tile machinery as the interior
+// floors (they ARE FloorTemplates, so composeFloorTile renders them), but they
+// SHIP as a DISTINCT ground KIND (own export dir + sort band −20000 — decision
+// D2). D2 AMENDED: the clinical-drain treatment now applies to PAVED ground
+// only — natural ground is exempt (core/look.ts), staying the saturated, alive
+// thing the building visibly replaces (Article VIII extended: nature stays
+// warm, like people). Deliberately NO sheen bands or non-tiling accents:
+// ground spans the whole outdoor map, so any per-tile band would print a
+// visible 128-unit grid. Pure seamless speckle/joints only. Texture comes in
+// two frequencies: large tonal mottle patches (what survives sim zoom-out) and
+// per-blade/clod detail (what rewards zoom-in).
 // ---------------------------------------------------------------------------
+
+/** Low-frequency tonal patches under the fine detail — at sim zoom the blades
+ *  melt into the base fill, and these patches are what keeps a field from
+ *  reading as one flat swatch. Wrapped ±128 like every edge-near shape. */
+function groundMottle(shapes: ShapeSpec[], rng: () => number, count: number, opacity: number): void {
+  for (let i = 0; i < count; i++) {
+    const x = rng() * 128;
+    const y = rng() * 128;
+    const r = 14 + rng() * 22;
+    const ry = r * (0.55 + rng() * 0.35);
+    const fill = rng() > 0.5 ? '$secondary' : '$accent';
+    for (const dx of [0, -128, 128]) {
+      for (const dy of [0, -128, 128]) {
+        if (x + dx > -40 && x + dx < 168 && y + dy > -40 && y + dy < 168) {
+          shapes.push(flat(ellipse(x + dx, y + dy, r, ry), fill, opacity));
+        }
+      }
+    }
+  }
+}
+
+/** Fixed-hex wildflower hues — detail colors the 3-slot palette doesn't need
+ *  to own (same precedent as the cars' headlight/tail-light hexes). */
+const FLOWER_HUES = ['#F2EED8', '#E8C84A', '#C08BD6'];
+
+function wildflowers(shapes: ShapeSpec[], rng: () => number, count: number): void {
+  for (let i = 0; i < count; i++) {
+    // resolve per-flower props before the wrap loops so edge flowers match across tiles
+    const x = rng() * 128;
+    const y = rng() * 128;
+    const r = 1.1 + rng() * 0.9;
+    const hue = FLOWER_HUES[Math.floor(rng() * FLOWER_HUES.length)];
+    for (const dx of [0, -128, 128]) {
+      for (const dy of [0, -128, 128]) {
+        if (x + dx > -4 && x + dx < 132 && y + dy > -4 && y + dy < 132) {
+          shapes.push(flat(circle(x + dx, y + dy, r), hue, 0.9));
+          // the white daisies get a yellow eye
+          if (hue === FLOWER_HUES[0]) shapes.push(flat(circle(x + dx, y + dy, r * 0.35), FLOWER_HUES[1], 0.9));
+        }
+      }
+    }
+  }
+}
 
 const grass: FloorTemplate = {
   kind: 'floor',
@@ -658,27 +706,81 @@ const grass: FloorTemplate = {
   label: 'Grass',
   params: [
     { key: 'blades', label: 'Blade density', min: 1, max: 3, step: 1, default: 2 },
+    { key: 'flowers', label: 'Wildflowers', min: 0, max: 2, step: 1, default: 1 },
     { key: 'seed', label: 'Pattern seed', min: 1, max: 9, step: 1, default: 5 },
   ],
   build(params) {
     const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
     const rng = mulberry32((params.seed ?? 5) * 22307);
-    const count = (params.blades ?? 2) * 42;
+    groundMottle(shapes, rng, 7, 0.14);
+    const count = (params.blades ?? 2) * 60;
     for (let i = 0; i < count; i++) {
       // resolve per-blade props before the wrap loops so edge blades match across tiles
       const x = rng() * 128;
       const y = rng() * 128;
-      const h = 3 + rng() * 4;
-      const lean = (rng() - 0.5) * 3;
+      const h = 3.5 + rng() * 4.5;
+      const lean = (rng() - 0.5) * 4;
       const fill = rng() > 0.5 ? '$secondary' : '$accent';
+      const op = 0.5 + rng() * 0.25;
       for (const dx of [0, -128, 128]) {
         for (const dy of [0, -128, 128]) {
-          if (x + dx > -4 && x + dx < 132 && y + dy > -6 && y + dy < 132) {
-            shapes.push({ d: `M ${x + dx} ${y + dy} L ${x + dx + lean} ${y + dy - h}`, stroke: fill, strokeWidth: 1.3, opacity: 0.5, silhouette: false });
+          if (x + dx > -5 && x + dx < 133 && y + dy > -9 && y + dy < 137) {
+            shapes.push({ d: `M ${x + dx} ${y + dy} L ${x + dx + lean} ${y + dy - h}`, stroke: fill, strokeWidth: 1.4, opacity: op, silhouette: false });
           }
         }
       }
     }
+    // clover — trios of highlight-green dots
+    for (let i = 0; i < 8; i++) {
+      const x = rng() * 128;
+      const y = rng() * 128;
+      for (const dx of [0, -128, 128]) {
+        for (const dy of [0, -128, 128]) {
+          if (x + dx > -6 && x + dx < 134 && y + dy > -6 && y + dy < 134) {
+            shapes.push(flat(circle(x + dx, y + dy, 1.3), '$accent', 0.55));
+            shapes.push(flat(circle(x + dx + 1.6, y + dy + 1.1, 1.1), '$accent', 0.5));
+            shapes.push(flat(circle(x + dx - 1.4, y + dy + 1.3, 1.1), '$accent', 0.5));
+          }
+        }
+      }
+    }
+    wildflowers(shapes, rng, (params.flowers ?? 1) * 6);
+    return shapes;
+  },
+};
+
+/** Unmown wild growth — taller, denser blades with dry seed heads and a thick
+ *  wildflower scatter. The "what was here before the office" surface. */
+const meadow: FloorTemplate = {
+  kind: 'floor',
+  id: 'meadow',
+  label: 'Meadow',
+  params: [
+    { key: 'flowers', label: 'Wildflowers', min: 0, max: 2, step: 1, default: 2 },
+    { key: 'seed', label: 'Pattern seed', min: 1, max: 9, step: 1, default: 4 },
+  ],
+  build(params) {
+    const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
+    const rng = mulberry32((params.seed ?? 4) * 53629);
+    groundMottle(shapes, rng, 8, 0.16);
+    for (let i = 0; i < 130; i++) {
+      const x = rng() * 128;
+      const y = rng() * 128;
+      const h = 5 + rng() * 6;
+      const lean = (rng() - 0.5) * 6;
+      const fill = rng() > 0.5 ? '$secondary' : '$accent';
+      const op = 0.5 + rng() * 0.25;
+      const seedHead = rng() > 0.72;
+      for (const dx of [0, -128, 128]) {
+        for (const dy of [0, -128, 128]) {
+          if (x + dx > -8 && x + dx < 136 && y + dy > -13 && y + dy < 141) {
+            shapes.push({ d: `M ${x + dx} ${y + dy} L ${x + dx + lean} ${y + dy - h}`, stroke: fill, strokeWidth: 1.5, opacity: op, silhouette: false });
+            if (seedHead) shapes.push(flat(ellipse(x + dx + lean, y + dy - h, 1.4, 2.2), '#D9C87A', 0.8));
+          }
+        }
+      }
+    }
+    wildflowers(shapes, rng, (params.flowers ?? 2) * 8);
     return shapes;
   },
 };
@@ -689,23 +791,56 @@ const dirt: FloorTemplate = {
   label: 'Dirt',
   params: [
     { key: 'clods', label: 'Clods', min: 1, max: 3, step: 1, default: 2 },
+    { key: 'pebbles', label: 'Pebbles', min: 0, max: 2, step: 1, default: 1 },
     { key: 'seed', label: 'Pattern seed', min: 1, max: 9, step: 1, default: 3 },
   ],
   build(params) {
     const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
     const rng = mulberry32((params.seed ?? 3) * 40009);
-    const count = (params.clods ?? 2) * 30;
+    groundMottle(shapes, rng, 6, 0.12);
+    const count = (params.clods ?? 2) * 34;
     for (let i = 0; i < count; i++) {
       const x = rng() * 128;
       const y = rng() * 128;
       const r = 1 + rng() * 3;
       const ry = r * (0.6 + rng() * 0.4);
       const fill = rng() > 0.5 ? '$secondary' : '$accent';
-      const op = 0.22 + rng() * 0.3;
+      const op = 0.28 + rng() * 0.32;
       for (const dx of [0, -128, 128]) {
         for (const dy of [0, -128, 128]) {
           if (x + dx > -6 && x + dx < 134 && y + dy > -6 && y + dy < 134) {
             shapes.push(flat(ellipse(x + dx, y + dy, r, ry), fill, op));
+          }
+        }
+      }
+    }
+    // pebbles — fixed-hex warm grays so stone reads apart from earth
+    const pebbleCount = (params.pebbles ?? 1) * 10;
+    for (let i = 0; i < pebbleCount; i++) {
+      const x = rng() * 128;
+      const y = rng() * 128;
+      const r = 0.9 + rng() * 1.1;
+      const hue = rng() > 0.5 ? '#9C9184' : '#7B7166';
+      for (const dx of [0, -128, 128]) {
+        for (const dy of [0, -128, 128]) {
+          if (x + dx > -4 && x + dx < 132 && y + dy > -4 && y + dy < 132) {
+            shapes.push(flat(circle(x + dx, y + dy, r), hue, 0.75));
+          }
+        }
+      }
+    }
+    // stray roots/twigs — short dark strokes half-buried in the soil
+    for (let i = 0; i < 5; i++) {
+      const x = rng() * 128;
+      const y = rng() * 128;
+      const len = 4 + rng() * 5;
+      const ang = rng() * Math.PI;
+      const ex = Math.cos(ang) * len;
+      const ey = Math.sin(ang) * len;
+      for (const dx of [0, -128, 128]) {
+        for (const dy of [0, -128, 128]) {
+          if (x + dx > -12 && x + dx < 140 && y + dy > -12 && y + dy < 140) {
+            shapes.push({ d: `M ${x + dx} ${y + dy} L ${x + dx + ex} ${y + dy + ey}`, stroke: '$secondary', strokeWidth: 1.3, opacity: 0.55, silhouette: false });
           }
         }
       }
@@ -892,16 +1027,26 @@ export const FLOOR_TEMPLATES: FloorTemplate[] = [
   astroturf,
   // Outdoor ground surfaces (B1.5 — shipped as the distinct ground kind).
   grass,
+  meadow,
   dirt,
   asphalt,
   sidewalk,
 ];
 
+/** Natural ground — EXEMPT from the clinical drain (D2 amended, core/look.ts):
+ *  under the clinical look, nature stays saturated like people do (Article VIII
+ *  extended), so every expansion of the building visibly converts living ground
+ *  into drained plan surface. The contrast is the register, not a filter. */
+export const NATURAL_GROUND_TEMPLATE_IDS = ['grass', 'meadow', 'dirt'] as const;
+
+/** Paved ground — already the focus-grouped output; drains with the building. */
+export const PAVED_GROUND_TEMPLATE_IDS = ['asphalt', 'sidewalk'] as const;
+
 /** Ground-surface template ids — the outdoor floors that ship as the distinct
  *  ground kind (B1.5 / D2), NOT interior floor. The sim imports these as a
  *  separate layer (own sort band −20000). Kept here so the tool has one source
  *  of truth for which FloorTemplates are ground. */
-export const GROUND_TEMPLATE_IDS = ['grass', 'dirt', 'asphalt', 'sidewalk'] as const;
+export const GROUND_TEMPLATE_IDS = [...NATURAL_GROUND_TEMPLATE_IDS, ...PAVED_GROUND_TEMPLATE_IDS] as const;
 
 /** Human-readable label for a blob tile index (UI hover / preview sheets only —
  *  atlas frame names stay the generic `mask_<i>`/`tile_<i>`, D3). */

@@ -349,9 +349,13 @@ function backfillV1(project: ProjectState): void {
       project.floors.push(structuredClone(floor));
     }
   }
+  // Ground SYNCS from the defaults rather than backfilling like floors: it is
+  // code-owned with no editor (build spec §9), so there is nothing user-authored
+  // to clobber, and syncing is how new variants (e.g. ground-grass-b) and
+  // palette refreshes reach previously saved projects.
   for (const g of DEFAULT_GROUND) {
-    if (!project.ground!.some((item) => item.id === g.id || item.templateId === g.templateId)) {
-      project.ground!.push(structuredClone(g));
-    }
+    const at = project.ground!.findIndex((item) => item.id === g.id);
+    if (at >= 0) project.ground![at] = structuredClone(g);
+    else project.ground!.push(structuredClone(g));
   }
 }

@@ -241,7 +241,7 @@ describe('default bundle is a complete, sim-importable baseline', () => {
         .filter((p) => /^ground\/.+\/ground\.json$/.test(p))
         .map((p) => JSON.parse(json.get(p)!).templateId),
     );
-    for (const surface of ['grass', 'asphalt']) {
+    for (const surface of ['grass', 'meadow', 'asphalt']) {
       expect(groundTemplates.has(surface), `ground kind missing surface "${surface}"`).toBe(true);
     }
     const floorTemplates = new Set(
@@ -249,7 +249,7 @@ describe('default bundle is a complete, sim-importable baseline', () => {
         .filter((p) => /^floors\/.+\/floor\.json$/.test(p))
         .map((p) => JSON.parse(json.get(p)!).templateId),
     );
-    expect([...floorTemplates].some((t) => ['grass', 'dirt', 'asphalt', 'sidewalk'].includes(t as string)),
+    expect([...floorTemplates].some((t) => ['grass', 'meadow', 'dirt', 'asphalt', 'sidewalk'].includes(t as string)),
       'a ground surface leaked into interior floors/').toBe(false);
   });
 

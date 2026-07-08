@@ -926,22 +926,44 @@ export const DEFAULT_FLOORS: TileInstance[] = [
  * own sort band (−20000), so the sim draws them under everything and never
  * confuses them with interior floor. Generated-only for now (§9 — not
  * player-paintable), so there's no ground UI; they're a code-owned default the
- * export always ships, lensed by the LOOK like floors (core/look.ts).
+ * export always ships.
+ *
+ * D2 AMENDED (natural-vs-paved register split, core/look.ts): the NATURAL
+ * surfaces (grass / meadow / dirt) are exempt from the clinical drain and stay
+ * lush and saturated — the game is about destroying something beautiful for
+ * something bland, and the ground is the beautiful thing. Multiple grass
+ * variants ship so open fields don't tile into one uniform swatch (same reason
+ * the lot gets two sedan colors). The PAVED surfaces (asphalt / sidewalk) are
+ * the bland thing and drain with the building.
  */
 export const DEFAULT_GROUND: TileInstance[] = [
   {
     id: 'ground-grass',
     name: 'Lawn grass',
     templateId: 'grass',
-    params: { blades: 2, seed: 5 },
-    palette: { primary: '#5C8A3A', secondary: '#3E6B26', accent: '#7DA84E' },
+    params: { blades: 2, flowers: 1, seed: 5 },
+    palette: { primary: '#4E9A3C', secondary: '#37752A', accent: '#86C65A' },
+  },
+  {
+    id: 'ground-grass-b',
+    name: 'Deep grass',
+    templateId: 'grass',
+    params: { blades: 3, flowers: 0, seed: 8 },
+    palette: { primary: '#3F7E33', secondary: '#2C5E23', accent: '#6BAE4C' },
+  },
+  {
+    id: 'ground-meadow',
+    name: 'Wildflower meadow',
+    templateId: 'meadow',
+    params: { flowers: 2, seed: 4 },
+    palette: { primary: '#5E9C40', secondary: '#417831', accent: '#8FC85E' },
   },
   {
     id: 'ground-dirt',
     name: 'Bare dirt',
     templateId: 'dirt',
-    params: { clods: 2, seed: 3 },
-    palette: { primary: '#8A6B47', secondary: '#6E4F30', accent: '#A5865E' },
+    params: { clods: 2, pebbles: 1, seed: 3 },
+    palette: { primary: '#7E5533', secondary: '#5C3D22', accent: '#A97F4F' },
   },
   {
     id: 'ground-asphalt',

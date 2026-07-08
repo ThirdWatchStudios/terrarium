@@ -1,5 +1,6 @@
 import type { ProjectState, StyleSheet } from './types';
 import { DEFAULT_LOOK } from './types';
+import { NATURAL_GROUND_TEMPLATE_IDS } from '../tiles/templates';
 
 /**
  * Project-wide "looks" — coordinated restyles that touch BOTH the style sheet
@@ -105,8 +106,12 @@ export function projectWithLook(project: ProjectState): ProjectState {
 /**
  * Apply the clinical-plan look to the whole project: style sheet + every
  * prop/wall/floor palette. Characters keep their recipes untouched (people
- * stay warm — Article VIII). Idempotent: re-applying converges. MUTATES the
- * argument — callers wanting a non-destructive result use {@link projectWithLook}.
+ * stay warm — Article VIII). NATURAL ground is exempt too (D2 amended): grass,
+ * meadow and dirt keep their saturated authored palettes under the clinical
+ * plan, so the drained building visibly displaces living ground — nature is
+ * TRUTH, like people; only the PAVED surfaces (asphalt / sidewalk) drain.
+ * Idempotent: re-applying converges. MUTATES the argument — callers wanting a
+ * non-destructive result use {@link projectWithLook}.
  */
 export function applyClinicalLook(project: ProjectState): void {
   project.style = clinicalStyle(project.style);
@@ -117,7 +122,9 @@ export function applyClinicalLook(project: ProjectState): void {
       accent: clinicalSurfaceColor(prop.palette.accent),
     };
   }
-  for (const tile of [...(project.walls ?? []), ...(project.floors ?? []), ...(project.ground ?? [])]) {
+  const natural = new Set<string>(NATURAL_GROUND_TEMPLATE_IDS);
+  const pavedGround = (project.ground ?? []).filter((g) => !natural.has(g.templateId));
+  for (const tile of [...(project.walls ?? []), ...(project.floors ?? []), ...pavedGround]) {
     tile.palette = {
       primary: clinicalSurfaceColor(tile.palette.primary),
       secondary: clinicalSurfaceColor(tile.palette.secondary),
