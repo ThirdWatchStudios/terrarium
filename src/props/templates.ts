@@ -1099,6 +1099,36 @@ const irisInstallationUnitDormant: PropTemplate = {
   },
 };
 
+// IRIS fabrication-unit charging dock: a floor bay the idle robot crew return to
+// and power down in when there's nothing to build. A plan-projection pad (renders
+// UNDER the standing unit, so it reads as "docked on the pad"), sterile chassis
+// with the IRIS-green charge ring + corner brackets (literal #5BE08A, matching the
+// installation unit + the units' own optic). Seeded by the sim near the IRIS unit,
+// never player-placed (non-placeable).
+const irisChargingDock: PropTemplate = {
+  id: 'iris-charging-dock',
+  label: 'IRIS charging dock',
+  projection: 'plan',
+  gridFootprint: { w: 1, h: 1 },
+  params: [],
+  build() {
+    const green = '#5BE08A';
+    const c = CX;
+    return [
+      { d: rr(c - 26, c - 26, 52, 52, 7), fill: '$primary' },                          // bay pad
+      { d: rr(c - 20, c - 20, 40, 40, 5), fill: '$secondary', silhouette: false },      // recessed plate
+      { d: circle(c, c, 14), fill: `${green}20`, silhouette: false },                   // charge glow
+      { d: circle(c, c, 14), stroke: green, strokeWidth: 2, silhouette: false },         // charge ring
+      { d: circle(c, c, 5), fill: `${green}55`, silhouette: false },                     // contact core
+      // corner docking brackets
+      { d: `M ${c - 20} ${c - 13} L ${c - 20} ${c - 20} L ${c - 13} ${c - 20}`, stroke: green, strokeWidth: 1.5, silhouette: false },
+      { d: `M ${c + 13} ${c - 20} L ${c + 20} ${c - 20} L ${c + 20} ${c - 13}`, stroke: green, strokeWidth: 1.5, silhouette: false },
+      { d: `M ${c + 20} ${c + 13} L ${c + 20} ${c + 20} L ${c + 13} ${c + 20}`, stroke: green, strokeWidth: 1.5, silhouette: false },
+      { d: `M ${c - 13} ${c + 20} L ${c - 20} ${c + 20} L ${c - 20} ${c + 13}`, stroke: green, strokeWidth: 1.5, silhouette: false },
+    ];
+  },
+};
+
 // --- P1: workstations + lounge seating -----------------------------------------
 
 const standingDesk: PropTemplate = {
@@ -3120,6 +3150,7 @@ export const PROP_TEMPLATES: PropTemplate[] = [
   serverRack,
   irisInstallationUnit,
   irisInstallationUnitDormant,
+  irisChargingDock,
   standingDesk,
   waitingBench,
   coffeeTable,

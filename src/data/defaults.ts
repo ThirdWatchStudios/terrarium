@@ -392,6 +392,14 @@ export const DEFAULT_PROPS: PropInstance[] = [
     palette: { primary: '#E6E4DC', secondary: '#B9BFB7', accent: '#5BE08A' },
   },
   {
+    id: 'prop-iris-charging-dock',
+    name: 'IRIS charging dock',
+    templateId: 'iris-charging-dock',
+    params: {},
+    // Chassis grey pad + IRIS-green charge ring (the green is a literal in the template).
+    palette: { primary: '#B7BDBA', secondary: '#565E5B', accent: '#5BE08A' },
+  },
+  {
     id: 'prop-standing-desk',
     name: 'Standing desk',
     templateId: 'standing-desk',
