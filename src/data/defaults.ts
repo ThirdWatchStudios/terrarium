@@ -1241,7 +1241,8 @@ export const DEFAULT_PROFILES: CharacterProfile[] = buildDefaultProfiles();
 // editable office cast — never seated at a desk, never in the org chart.
 // ---------------------------------------------------------------------------
 
-/** The hi-vis palette: slate work shirt, orange vest, safety-yellow hard hat. */
+/** The hi-vis palette: slate work shirt, orange vest, safety-yellow hard hat.
+ *  Retired from the crew (now IRIS units) but kept as an authorable swatch. */
 export const HI_VIS_PALETTE = {
   skin: '#D9A06B',
   hair: '#3A2A1C',
@@ -1250,18 +1251,30 @@ export const HI_VIS_PALETTE = {
   accent: '#F2C310',
 } as const;
 
+/** IRIS fabrication-unit palette: sterile white/grey chassis + the IRIS green optic.
+ *  skin/hair drive the chassis + limbs; accent is the green (#5BE08A = the console beacon). */
+export const IRIS_UNIT_PALETTE = {
+  skin: '#D7DBD8',        // chassis white — head shell + arms/hands
+  hair: '#D7DBD8',        // unused (hair-none), matched to the chassis
+  outfitPrimary: '#B7BDBA', // chassis body plate
+  outfitSecondary: '#565E5B', // dark panels / visor band
+  accent: '#5BE08A',      // IRIS green
+} as const;
+
+// The crew are IRIS's ROBOTS, not people (they build around the clock, never
+// clock out, hold no desk — which only made sense once they stopped being human).
 export const CONSTRUCTION_CREW: CharacterRecipe[] = [
   {
-    id: 'construction-worker',
-    name: 'Construction Worker',
+    id: 'construction-worker', // sim persona id (ConstructionCrewConfigId) — unchanged
+    name: 'IRIS Fabrication Unit',
     parts: {
       body: 'body-broad',
-      head: 'head-round',
-      hair: 'hair-short',
-      outfit: 'outfit-hi-vis',
-      accessories: ['acc-hard-hat'],
+      head: 'head-fab',
+      hair: 'hair-none',
+      outfit: 'outfit-fab-chassis',
+      accessories: [],
     },
-    palette: { ...HI_VIS_PALETTE },
+    palette: { ...IRIS_UNIT_PALETTE },
   },
 ];
 
@@ -1270,11 +1283,11 @@ function buildConstructionProfiles(): CharacterProfile[] {
     const p = createDefaultProfile(recipe);
     p.identity = {
       ...p.identity,
-      roleTitle: 'Construction Worker',
-      department: '', // not an office employee — the crew builds it, doesn't staff it
+      roleTitle: 'Fabrication Unit',
+      department: '', // not an office employee — IRIS's machine builds it, doesn't staff it
       seniority: 'junior',
       prototypeRole: 'Construction Crew',
-      bio: 'Raises the office the player designs — hi-vis, hard hat, and a punch list.',
+      bio: 'An IRIS-operated fabrication unit — raises the branch the contractor designs. Runs every hour; keeps none.',
     };
     p.personality.ocean = { openness: 45, conscientiousness: 72, extraversion: 50, agreeableness: 60, neuroticism: 32 };
     p.personality.axes = { ambition: 40, integrity: 70, loyalty: 55, discretion: 50 };
