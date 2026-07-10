@@ -279,9 +279,11 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     const recipePath = [...paths].find((p) => /^construction-crew\/.+\/recipe\.json$/.test(p));
     expect(recipePath, 'no construction-crew recipe shipped').toBeTruthy();
     const recipe = JSON.parse(json.get(recipePath!)!);
-    // It wires the hi-vis outfit + hard-hat accessory (the B-T1 parts).
-    expect(recipe.parts.outfit).toBe('outfit-hi-vis');
-    expect(recipe.parts.accessories).toContain('acc-hard-hat');
+    // The crew are IRIS fabrication robots: chassis head + plating, no hair, no hard hat.
+    expect(recipe.parts.head).toBe('head-fab');
+    expect(recipe.parts.outfit).toBe('outfit-fab-chassis');
+    expect(recipe.parts.hair).toBe('hair-none');
+    expect(recipe.parts.accessories).not.toContain('acc-hard-hat');
     // It ships the binder essentials: baked sheet + atlas, the mood overlay atlas,
     // and the re-tintable layer atlas (the NPC composer's input), plus a persona.
     expect([...paths].some((p) => /^construction-crew\/.+\/sheet@1x\.png$/.test(p)), 'no crew sheet').toBe(true);

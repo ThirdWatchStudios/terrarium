@@ -1017,7 +1017,95 @@ const ACCESSORIES: PartDef[] = [
   },
 ];
 
-export const PART_LIBRARY: PartDef[] = [...BODIES, ...HEADS, ...HAIR, ...OUTFITS, ...ACCESSORIES];
+// ---------------------------------------------------------------------------
+// IRIS fabrication unit (the construction crew — robots operated by IRIS, not
+// people). Reuses the warm walk/pose rig (body-broad, so arms + poses attach
+// unchanged) but swaps to a chassis head + plating so the crew reads as IRIS's
+// machines, not staff. The single GREEN OPTIC is a literal (#5BE08A, the IRIS
+// installation unit's beacon hue) so it survives re-tint + the unit-pictogram
+// flattening — you know they're IRIS's by the shared eye.
+// ---------------------------------------------------------------------------
+
+const IRIS_OPTIC = '#5BE08A';
+
+const FAB_PARTS: PartDef[] = [
+  {
+    id: 'head-fab',
+    label: 'Fabrication unit head',
+    slot: 'head',
+    anchor: 'headCenter',
+    noFace: true, // a machine — moods arrive as IRIS claims, never on the head
+    facings: {
+      south: {
+        z: 40,
+        shapes: [
+          { d: rr(-19, -19, 38, 38, 8), fill: '$skin' }, // chassis dome
+          { d: rr(-6, -21, 12, 3, 1), fill: '$outfitSecondary', silhouette: false }, // top vent
+          { d: rr(-19, -7, 38, 13, 4), fill: '$outfitSecondary', silhouette: false }, // visor band
+          { d: circle(0, 0, 5.5), fill: `${IRIS_OPTIC}30`, silhouette: false }, // optic halo
+          { d: circle(0, 0, 3.2), fill: IRIS_OPTIC, silhouette: false }, // green optic
+        ],
+      },
+      east: {
+        z: 40,
+        shapes: [
+          { d: rr(-17, -19, 34, 38, 8), fill: '$skin' },
+          { d: rr(-15, -7, 30, 13, 4), fill: '$outfitSecondary', silhouette: false },
+          { d: circle(9, 0, 5), fill: `${IRIS_OPTIC}30`, silhouette: false },
+          { d: circle(9, 0, 3), fill: IRIS_OPTIC, silhouette: false },
+        ],
+      },
+      north: {
+        z: 40,
+        shapes: [
+          { d: rr(-19, -19, 38, 38, 8), fill: '$skin' },
+          { d: rr(-8, -6, 16, 11, 2), fill: '$outfitSecondary', silhouette: false }, // rear vent panel
+          { d: circle(0, 0, 1.6), fill: IRIS_OPTIC, silhouette: false }, // rear status pip
+        ],
+      },
+    },
+  },
+  {
+    id: 'outfit-fab-chassis',
+    label: 'Fabrication chassis',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: {
+      south: {
+        z: 20,
+        shapes: [
+          { d: rr(-12, -29, 24, 49, 4), fill: '$outfitPrimary', silhouette: false }, // chest plate
+          { d: rr(-12, -29, 5, 13, 2), fill: '$outfitSecondary', silhouette: false }, // L shoulder panel
+          { d: rr(7, -29, 5, 13, 2), fill: '$outfitSecondary', silhouette: false }, // R shoulder panel
+          { d: rr(-12, -2, 24, 5, 1), fill: '$outfitSecondary', silhouette: false }, // vent band
+          { d: `M 0 -22 L 0 20`, stroke: '#00000030', strokeWidth: 1.5, silhouette: false }, // seam
+          { d: circle(0, -17, 4), fill: `${IRIS_OPTIC}30`, silhouette: false }, // core halo
+          { d: circle(0, -17, 2.2), fill: IRIS_OPTIC, silhouette: false }, // IRIS core light
+        ],
+      },
+      north: {
+        z: 20,
+        shapes: [
+          { d: rr(-12, -29, 24, 49, 3), fill: '$outfitPrimary', silhouette: false },
+          { d: rr(-12, -29, 5, 13, 2), fill: '$outfitSecondary', silhouette: false },
+          { d: rr(7, -29, 5, 13, 2), fill: '$outfitSecondary', silhouette: false },
+          { d: rr(-9, -6, 18, 5, 1), fill: '$outfitSecondary', silhouette: false }, // back vent
+        ],
+      },
+      east: {
+        z: 20,
+        shapes: [
+          { d: rr(7, -29, 10, 49, 4), fill: '$outfitPrimary', silhouette: false },
+          { d: rr(7, -29, 5, 13, 2), fill: '$outfitSecondary', silhouette: false },
+          { d: rr(7, -2, 10, 5, 1), fill: '$outfitSecondary', silhouette: false },
+          { d: circle(12, -17, 2), fill: IRIS_OPTIC, silhouette: false },
+        ],
+      },
+    },
+  },
+];
+
+export const PART_LIBRARY: PartDef[] = [...BODIES, ...HEADS, ...HAIR, ...OUTFITS, ...ACCESSORIES, ...FAB_PARTS];
 
 // ---------------------------------------------------------------------------
 // Internal parts — resolvable by id but NOT offered in the authoring pickers.
