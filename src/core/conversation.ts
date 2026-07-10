@@ -92,8 +92,8 @@ export function composeConversation(
   const place = (svg: string, ox: number) => svg.replace('<svg ', `<svg x="${ox}" y="0" `);
   const aSvg = place(composeCharacter(a, project.style, 'east', CANVAS, 'normal', { activity: style.badge }), 0);
   const bSvg = place(composeCharacter(b, project.style, 'west', CANVAS, 'normal', { activity: style.badge }), CANVAS);
-  const aAnchor = overheadAnchor('east');
-  const bAnchor = overheadAnchor('west');
+  const aAnchor = overheadAnchor('east', a);
+  const bAnchor = overheadAnchor('west', b);
   // Attach near each badge's crown so the arc reads as linking the two bubbles.
   const link = conversationLinkMarkup(aAnchor.x, aAnchor.y - 6, CANVAS + bAnchor.x, bAnchor.y - 6, style);
   return (

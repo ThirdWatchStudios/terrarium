@@ -190,6 +190,17 @@ set (decision required):
 
 ≈ 12–15 drawings. North is usually south minus front shading.
 
+> **Assistant-authored silhouette trial (2026-07-09):** five generated
+> candidates now live in `src/parts/bodyArchetypeTrials.ts`, behind a render-only
+> registry that keeps them out of pickers, random generation, and production
+> exports. Run `npx tsx scripts/bodyArchetypePreview.ts` to regenerate the
+> character, flat-silhouette, active-sub-anchor, and rigged vertical-slice sheets
+> under `docs/previews/body-archetypes-*`. The candidate rigs now drive the head
+> stack, portraits, overhead attachments, tee/blazer/lanyard detail, and
+> neutral/point/slump poses while preserving exact global-anchor fallback for
+> legacy bodies. They remain nonselectable candidates until the body set is
+> approved and the rest of the garment/accessory/pose matrix is reviewed.
+
 ### 5. Outfit detail kits (§4b) — body-independent, ~2 facings each
 
 The conforming torso layer is DERIVED from the body silhouette (never drawn).

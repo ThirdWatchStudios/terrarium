@@ -22,6 +22,7 @@ import {
   composeWallTile,
   composeGroundOverlayTile,
   composePortrait,
+  employeePortraitCrop,
   layerCellSvg,
   overheadAnchor,
   poseRigAnchors,
@@ -695,11 +696,11 @@ export function characterAtlas(recipe: CharacterRecipe, style: StyleSheet, scale
      * Normalized attach points (same bottom-left origin as pivot). `aboveHead`
      * is where the sim hangs a *separate* overhead sprite — the shared activity
      * badge (§3.9) or a conversation-link endpoint. Moods bake their emote into
-     * the sheet and don't need this; the badge/link are external and do. Uniform
-     * across characters today, but shipped per-character so it stays correct if
-     * proportions ever diverge.
+     * the sheet and don't need this; the badge/link are external and do. Body-owned
+     * and shipped per character so compact/tall/soft silhouettes keep
+     * their external effects attached to the same authored rig as their sprites.
      */
-    anchors: { aboveHead: normalizedAboveHead() },
+    anchors: { aboveHead: normalizedAboveHead(recipe) },
     meta: {
       generator: 'sprite-character-creator',
       westIsMirroredEast: true,
@@ -708,10 +709,10 @@ export function characterAtlas(recipe: CharacterRecipe, style: StyleSheet, scale
 }
 
 /** aboveHead anchor per facing, normalized bottom-left origin (Unity pivot convention). */
-function normalizedAboveHead(): Record<string, { x: number; y: number }> {
+function normalizedAboveHead(recipe?: CharacterRecipe): Record<string, { x: number; y: number }> {
   const out: Record<string, { x: number; y: number }> = {};
   for (const facing of SHEET_FACINGS) {
-    const a = overheadAnchor(facing);
+    const a = overheadAnchor(facing, recipe);
     out[facing] = { x: a.x / CANVAS, y: (CANVAS - a.y) / CANVAS };
   }
   return out;
@@ -844,7 +845,7 @@ export function posesAtlas(recipe: CharacterRecipe, style: StyleSheet, scale: nu
   // skeleton the arm layers were authored against.
   const anchors: Record<string, Record<string, { x: number; y: number }>> = {};
   for (const facing of SHEET_FACINGS) {
-    const rig = poseRigAnchors(facing);
+    const rig = poseRigAnchors(facing, recipe);
     anchors[facing] = Object.fromEntries(
       Object.entries(rig).map(([name, a]) => [name, { x: a.x / CANVAS, y: (CANVAS - a.y) / CANVAS }]),
     );
@@ -1318,9 +1319,11 @@ export async function employeePortraitPng(recipe: CharacterRecipe, style: StyleS
   canvas.height = out;
   const ctx = canvas.getContext('2d')!;
   ctx.imageSmoothingEnabled = true;
-  // crop the 128-unit design region around head+shoulders, scale to output
+  // Crop the 128-unit design region around this body's head+shoulders, then
+  // scale to output. Legacy bodies still resolve to the exact 24/14/80/80 crop.
   const k = render / 128;
-  ctx.drawImage(img, 24 * k, 14 * k, 80 * k, 80 * k, 0, 0, out, out);
+  const crop = employeePortraitCrop(recipe);
+  ctx.drawImage(img, crop.x * k, crop.y * k, crop.w * k, crop.h * k, 0, 0, out, out);
   return canvasToBlob(canvas);
 }
 

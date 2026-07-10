@@ -1,4 +1,4 @@
-import type { CharacterRecipe, Palette } from './types';
+import type { CharacterRecipe, CharacterRenderRecipe, Palette } from './types';
 
 /**
  * Renderings — register-constitution.md Article VIII (as amended 2026-07-02).
@@ -122,9 +122,14 @@ export const UNIT_PARTS = {
  * Everything downstream (pose sheets, the harness, atlases) composes it like
  * any recipe — conduct is untouched by construction.
  */
-export function unitRecipe(recipe: CharacterRecipe): CharacterRecipe {
+export function unitRecipe(recipe: CharacterRecipe): CharacterRenderRecipe {
+  const renderRecipe = recipe as CharacterRenderRecipe;
   return {
     ...recipe,
+    // The unit drawing replaces the body art, not the identity's proportions.
+    // Keep the warm body's sub-rig so heads, poses, layers and exported anchors
+    // remain aligned across the two renderings.
+    rigBodyId: renderRecipe.rigBodyId ?? recipe.parts.body,
     parts: { ...UNIT_PARTS, accessories: [...UNIT_PARTS.accessories] },
     palette: unitPalette(recipe.palette),
   };

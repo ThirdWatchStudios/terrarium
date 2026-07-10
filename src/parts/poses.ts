@@ -1,4 +1,4 @@
-import type { Facing, ShapeSpec } from '../core/types';
+import type { BodyAnchorPoint, BodyFacingAnchors, Facing, ShapeSpec } from '../core/types';
 import { CURRENT_SCHEMA_VERSION } from '../core/types';
 import { circle } from '../core/geometry';
 
@@ -102,6 +102,102 @@ export interface PoseDef {
 const ARM_W = 11;
 const arm = (d: string): ShapeSpec => ({ d, stroke: '$outfitPrimary', strokeWidth: ARM_W });
 const hand = (x: number, y: number): ShapeSpec => ({ d: circle(x, y, 4.5), fill: '$skin' });
+
+const curveArm = (start: BodyAnchorPoint, control: BodyAnchorPoint, end: BodyAnchorPoint): ShapeSpec =>
+  arm(`M ${start.x} ${start.y} Q ${control.x} ${control.y} ${end.x} ${end.y}`);
+const lineArm = (start: BodyAnchorPoint, end: BodyAnchorPoint): ShapeSpec =>
+  arm(`M ${start.x} ${start.y} L ${end.x} ${end.y}`);
+const clamp = (min: number, max: number, value: number): number => Math.max(min, Math.min(max, value));
+const between = (from: number, to: number, t: number): number => from + (to - from) * t;
+
+/** Representative pose art generated from a body's own shoulder/waist/hip rig. */
+function anchoredNeutral(facing: Facing, body: BodyFacingAnchors): PoseVariant {
+  if (facing === 'east') {
+    const start = body.shoulders.right;
+    const handCenter = { x: start.x + 3, y: body.hip.y };
+    const end = { x: handCenter.x, y: handCenter.y - 3 };
+    const control = { x: start.x + 4, y: (start.y + end.y) / 2 };
+    return { front: [curveArm(start, control, end), hand(handCenter.x, handCenter.y)] };
+  }
+  const leftStart = body.shoulders.left;
+  const rightStart = body.shoulders.right;
+  const leftHand = { x: leftStart.x - 3, y: body.hip.y };
+  const rightHand = { x: rightStart.x + 3, y: body.hip.y };
+  const leftEnd = { x: leftHand.x, y: leftHand.y - 3 };
+  const rightEnd = { x: rightHand.x, y: rightHand.y - 3 };
+  return {
+    front: [
+      curveArm(leftStart, { x: leftEnd.x - 2, y: (leftStart.y + leftEnd.y) / 2 }, leftEnd),
+      hand(leftHand.x, leftHand.y),
+      curveArm(rightStart, { x: rightEnd.x + 2, y: (rightStart.y + rightEnd.y) / 2 }, rightEnd),
+      hand(rightHand.x, rightHand.y),
+    ],
+  };
+}
+
+function anchoredPoint(facing: Facing, body: BodyFacingAnchors): PoseVariant {
+  if (facing === 'east') {
+    const frontStart = body.shoulders.right;
+    const reach = clamp(21, 29, body.hip.y - frontStart.y - 8) + 14;
+    const handCenter = {
+      x: Math.min(55, frontStart.x + reach + 3),
+      y: frontStart.y - 8,
+    };
+    const frontEnd = { x: handCenter.x - 3, y: handCenter.y + 1 };
+    const backStart = body.shoulders.left;
+    const backEnd = { x: backStart.x - 2, y: body.hip.y - 5 };
+    return {
+      front: [lineArm(frontStart, frontEnd), hand(handCenter.x, handCenter.y)],
+      back: [curveArm(backStart, { x: backStart.x - 4, y: (backStart.y + backEnd.y) / 2 }, backEnd)],
+    };
+  }
+  const leftStart = body.shoulders.left;
+  const leftHand = { x: leftStart.x - 3, y: body.hip.y };
+  const leftEnd = { x: leftHand.x, y: leftHand.y - 3 };
+  const rightStart = body.shoulders.right;
+  const reach = clamp(21, 29, body.hip.y - rightStart.y - 8);
+  const rightHand = {
+    x: Math.min(55, rightStart.x + reach + 3),
+    y: rightStart.y - 8,
+  };
+  const rightEnd = { x: rightHand.x - 3, y: rightHand.y + 1 };
+  return {
+    front: [
+      curveArm(leftStart, { x: leftEnd.x - 2, y: (leftStart.y + leftEnd.y) / 2 }, leftEnd),
+      hand(leftHand.x, leftHand.y),
+      lineArm(rightStart, rightEnd),
+      hand(rightHand.x, rightHand.y),
+    ],
+  };
+}
+
+function anchoredSlump(facing: Facing, body: BodyFacingAnchors): PoseVariant {
+  if (facing === 'east') {
+    const start = { x: body.shoulders.right.x - 2, y: body.shoulders.right.y + 4 };
+    const handCenter = { x: body.shoulders.right.x - 6, y: body.hip.y + 2 };
+    const end = { x: handCenter.x, y: handCenter.y - 3 };
+    return {
+      front: [
+        curveArm(start, { x: between(start.x, end.x, 0.55) + 2, y: between(start.y, end.y, 0.586) }, end),
+        hand(handCenter.x, handCenter.y),
+      ],
+    };
+  }
+  const leftStart = { x: body.shoulders.left.x + 2, y: body.shoulders.left.y + 4 };
+  const rightStart = { x: body.shoulders.right.x - 2, y: body.shoulders.right.y + 4 };
+  const leftHand = { x: body.shoulders.left.x + 6, y: body.hip.y + 2 };
+  const rightHand = { x: body.shoulders.right.x - 6, y: body.hip.y + 2 };
+  const leftEnd = { x: leftHand.x, y: leftHand.y - 3 };
+  const rightEnd = { x: rightHand.x, y: rightHand.y - 3 };
+  return {
+    front: [
+      curveArm(leftStart, { x: between(leftStart.x, leftEnd.x, 0.55) - 1, y: between(leftStart.y, leftEnd.y, 0.586) }, leftEnd),
+      hand(leftHand.x, leftHand.y),
+      curveArm(rightStart, { x: between(rightStart.x, rightEnd.x, 0.55) + 1, y: between(rightStart.y, rightEnd.y, 0.586) }, rightEnd),
+      hand(rightHand.x, rightHand.y),
+    ],
+  };
+}
 
 /** Arms hanging at the sides — the base state every beat returns to. */
 const NEUTRAL_SOUTH: PoseVariant = {
@@ -321,6 +417,25 @@ export const POSE_DEFS: Record<Pose, PoseDef> = {
 
 export function getPose(id: string): PoseDef | undefined {
   return POSE_DEFS[id as Pose];
+}
+
+/**
+ * Resolve pose art for the active body. The three proof poses consume body-owned
+ * anchors; every other pose (and every legacy body) retains its existing static
+ * geometry until the archetype set is promoted.
+ */
+export function poseVariantFor(
+  id: string,
+  facing: Facing,
+  bodyAnchors?: BodyFacingAnchors,
+): PoseVariant | undefined {
+  const pose = getPose(id);
+  if (!pose) return undefined;
+  if (!bodyAnchors) return pose.facings[facing];
+  if (id === 'neutral') return anchoredNeutral(facing, bodyAnchors);
+  if (id === 'point') return anchoredPoint(facing, bodyAnchors);
+  if (id === 'slump') return anchoredSlump(facing, bodyAnchors);
+  return pose.facings[facing];
 }
 
 /**

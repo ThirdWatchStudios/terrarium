@@ -1,6 +1,7 @@
-import type { PartDef, Slot } from '../core/types';
+import type { BodyFacingAnchors, Facing, PartDef, PartVariant, Slot } from '../core/types';
 import { rr, circle, ellipse, topCap } from '../core/geometry';
 import { UI_PALETTE } from '../data/uiPalette';
+import { BODY_ARCHETYPE_TRIAL_PARTS } from './bodyArchetypeTrials';
 
 /**
  * Part library. Conventions:
@@ -387,6 +388,155 @@ const HAIR: PartDef[] = [
 // edge is y = -29.
 // ---------------------------------------------------------------------------
 
+const spanCenter = (span: BodyFacingAnchors['waist']) => ({
+  x: (span.left.x + span.right.x) / 2,
+  y: (span.left.y + span.right.y) / 2,
+});
+
+/** The body silhouette itself is the conforming tee torso; this cuts its neck opening. */
+function anchoredTee(facing: Facing, body: BodyFacingAnchors): PartVariant {
+  const n = body.neck;
+  if (facing === 'north') return { z: 20, shapes: [] };
+  if (facing === 'east') {
+    return {
+      z: 20,
+      shapes: [
+        {
+          d: `M ${n.x - 4} ${n.y} Q ${n.x + 1} ${n.y + 5} ${n.x + 6} ${n.y} Z`,
+          fill: '$skin',
+          silhouette: false,
+        },
+      ],
+    };
+  }
+  const shoulderWidth = body.shoulders.right.x - body.shoulders.left.x;
+  const half = Math.max(7, Math.min(10, shoulderWidth * 0.17));
+  return {
+    z: 20,
+    shapes: [
+      {
+        d: `M ${n.x - half} ${n.y} Q ${n.x} ${n.y + 7} ${n.x + half} ${n.y} Z`,
+        fill: '$skin',
+        silhouette: false,
+      },
+    ],
+  };
+}
+
+/** One blazer detail kit placed from the active body's neck/chest/hip/hem anchors. */
+function anchoredBlazer(facing: Facing, body: BodyFacingAnchors): PartVariant {
+  const n = body.neck;
+  const chest = body.chest;
+  const hip = body.hip;
+  if (facing === 'north') {
+    const hem = spanCenter(body.hem);
+    return {
+      z: 20,
+      shapes: [
+        {
+          d: `M ${n.x} ${n.y + 3} L ${hem.x} ${hem.y}`,
+          stroke: '#00000022',
+          strokeWidth: 2,
+          silhouette: false,
+        },
+      ],
+    };
+  }
+  if (facing === 'east') {
+    const span = Math.max(8, Math.min(18, body.waist.right.x - body.shoulders.right.x));
+    const shoulderX = body.shoulders.right.x;
+    const innerX = shoulderX + span * 0.23;
+    const bottomX = shoulderX + span * 0.62;
+    const outerX = shoulderX + span * 0.85;
+    const hem = spanCenter(body.hem);
+    const frontHemX = body.hem.right.x;
+    return {
+      z: 20,
+      shapes: [
+        {
+          d: `M ${innerX} ${n.y + 1} L ${bottomX} ${chest.y - 6} L ${outerX} ${n.y + 1} Z`,
+          fill: '$outfitSecondary',
+          silhouette: false,
+        },
+        {
+          d: `M ${bottomX} ${chest.y - 6} Q ${frontHemX} ${chest.y + 7} ${frontHemX} ${hem.y - 2}`,
+          stroke: '#00000030',
+          strokeWidth: 2,
+          silhouette: false,
+        },
+        { d: circle(frontHemX, chest.y + 5, 1.7), fill: '#0000003D', silhouette: false },
+      ],
+    };
+  }
+  const shoulderWidth = body.shoulders.right.x - body.shoulders.left.x;
+  const half = Math.max(9, Math.min(14, shoulderWidth * 0.21));
+  const hem = spanCenter(body.hem);
+  const apexY = chest.y - 1;
+  const button1Y = chest.y + (hip.y - chest.y) * 0.35;
+  const button2Y = chest.y + (hip.y - chest.y) * 0.75;
+  return {
+    z: 20,
+    shapes: [
+      {
+        d: `M ${n.x - half} ${n.y} L ${chest.x} ${apexY} L ${n.x - 2.5} ${n.y} Z`,
+        fill: '$outfitSecondary',
+        silhouette: false,
+      },
+      {
+        d: `M ${n.x + 2.5} ${n.y} L ${chest.x} ${apexY} L ${n.x + half} ${n.y} Z`,
+        fill: '$outfitSecondary',
+        silhouette: false,
+      },
+      {
+        d: `M ${chest.x} ${apexY + 2} L ${hem.x} ${hem.y}`,
+        stroke: '#00000030',
+        strokeWidth: 2,
+        silhouette: false,
+      },
+      { d: circle(chest.x, button1Y, 1.8), fill: '#00000033', silhouette: false },
+      { d: circle(chest.x, button2Y, 1.8), fill: '#00000033', silhouette: false },
+    ],
+  };
+}
+
+function anchoredLanyard(facing: Facing, body: BodyFacingAnchors): PartVariant {
+  const n = body.neck;
+  const chest = body.chest;
+  if (facing === 'north') {
+    return {
+      z: 30,
+      shapes: [
+        {
+          d: `M ${n.x - 9} ${n.y + 2} Q ${n.x} ${n.y + 8} ${n.x + 9} ${n.y + 2}`,
+          stroke: '$accent',
+          strokeWidth: 2.5,
+          silhouette: false,
+        },
+      ],
+    };
+  }
+  if (facing === 'east') {
+    const top = { x: n.x + 8, y: n.y + 2 };
+    const card = { x: chest.x + 6, y: chest.y - 1 };
+    return {
+      z: 30,
+      shapes: [
+        { d: `M ${top.x} ${top.y} L ${card.x + 5} ${card.y}`, stroke: '$accent', strokeWidth: 2.5, silhouette: false },
+        { d: rr(card.x, card.y, 9, 11, 2), fill: '#F7F4EC', silhouette: false },
+      ],
+    };
+  }
+  const card = { x: chest.x - 7, y: chest.y - 1 };
+  return {
+    z: 30,
+    shapes: [
+      { d: `M ${n.x - 9} ${n.y + 1} L ${chest.x - 4} ${card.y} M ${n.x + 9} ${n.y + 1} L ${chest.x + 4} ${card.y}`, stroke: '$accent', strokeWidth: 2.5, silhouette: false },
+      { d: rr(card.x, card.y, 14, 11, 2), fill: '#F7F4EC', silhouette: false },
+      { d: rr(chest.x - 4.5, card.y + 2.5, 5, 6, 1), fill: '$skin', silhouette: false },
+    ],
+  };
+}
+
 const OUTFITS: PartDef[] = [
   {
     id: 'outfit-tee',
@@ -398,6 +548,7 @@ const OUTFITS: PartDef[] = [
       north: { z: 20, shapes: [] },
       east: { z: 20, shapes: [] },
     },
+    buildVariant: (facing, context) => context.bodyAnchors && anchoredTee(facing, context.bodyAnchors),
   },
   {
     id: 'outfit-blazer',
@@ -422,6 +573,7 @@ const OUTFITS: PartDef[] = [
         shapes: [{ d: `M 9 -28 L 14 -13 L 17 -28 Z`, fill: '$outfitSecondary', silhouette: false }],
       },
     },
+    buildVariant: (facing, context) => context.bodyAnchors && anchoredBlazer(facing, context.bodyAnchors),
   },
   {
     id: 'outfit-polo',
@@ -743,6 +895,7 @@ const ACCESSORIES: PartDef[] = [
         ],
       },
     },
+    buildVariant: (facing, context) => context.bodyAnchors && anchoredLanyard(facing, context.bodyAnchors),
   },
   {
     id: 'acc-mug',
@@ -1161,7 +1314,12 @@ export const INTERNAL_PARTS: PartDef[] = [
   },
 ];
 
-const byId = new Map([...PART_LIBRARY, ...INTERNAL_PARTS].map((p) => [p.id, p]));
+// Trial parts are renderable by explicit id for review scripts/tests, but stay
+// outside PART_LIBRARY so pickers, random generation, and exports cannot select
+// them until a human has curated the archetype set.
+const byId = new Map(
+  [...PART_LIBRARY, ...INTERNAL_PARTS, ...BODY_ARCHETYPE_TRIAL_PARTS].map((p) => [p.id, p]),
+);
 
 export function getPart(id: string): PartDef | undefined {
   return byId.get(id);
