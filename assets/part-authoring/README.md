@@ -16,14 +16,19 @@ The current supported starters are:
 
 - `scaffolds/head/round.{south,east,north}.svg`
 - `scaffolds/hair/bob.{south,east,north}.svg`
+- `scaffolds/outfit/tee.{south,east}.svg` (seeded on `body-balanced`)
 
 They are seeded with the current production geometry, so they support a true
-source/edit/import proof rather than requiring a redraw. Body, outfit, and
-accessory starters wait for their corresponding import adapters.
+source/edit/import proof rather than requiring a redraw. The tee starter shows
+the `body-balanced` reference silhouette plus neck, chest, waist, and hem rig
+guides; only its neckline detail is imported. Body and accessory starters wait
+for their corresponding import adapters.
 
 ## Canonical headless workflow
 
-1. Copy a complete three-facing scaffold set to a working directory.
+1. Copy a complete scaffold set to a working directory (three facings for
+   heads/hair; south and east for the tee, whose north kit is intentionally
+   empty).
 2. Edit only `art/*` and `detail/*` paths. Preserve unique semantic IDs, the
    `0 0 128 128` viewBox, exact sentinel paint, and explicit nonzero fill.
    Head eyes remain literal neutral-ink paths under `detail/*`, after the

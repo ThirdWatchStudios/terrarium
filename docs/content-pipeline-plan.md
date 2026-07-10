@@ -104,20 +104,33 @@ icons), not by upfront design.
    128 grid, anchor markers, body-capsule / head-radius guides, an existing
    part on a named reference layer, and sentinel swatches. Portable ASE, GPL,
    and readable SVG palette companions support optional editors. Implemented
-   for current head/hair intake under `assets/part-authoring` via
-   `npm run parts:scaffolds`; semantic IDs, not editor-only layer state, define
-   what the importer ignores.
+   for current head/hair intake and the south/east tee kit under
+   `assets/part-authoring` via `npm run parts:scaffolds`; semantic IDs, not
+   editor-only layer state, define what the importer ignores.
 4. **Headless intake proof**: derive `hair-bob` sources from the generated
    scaffolds, make a deliberate canonical-SVG detail edit, compile them through
    the importer, and regenerate compositor snapshots. Implemented 2026-07-10:
    the new three-facing parting detail changes only `hair__hair-bob.svg`,
    `janice.svg`, and `janice__moods.svg`. The rendered production-size result
-   and 32/48 px strips are inspected separately from final art-direction
-   approval. The first follow-on promotion uses the same path for `head-round`:
-   a shaped front jaw, directional east profile, stable rear contour, and
-   unchanged ink-eye details. Its bounded compositor surface is the round-head
-   part plus Carl and Linda's facing/mood sheets.
-5. **Provenance**: each imported asset records source
+   and 32/48 px strips were approved and committed in `240ee03`. The first
+   follow-on promotion used the same path for `head-round`: a shaped front jaw,
+   directional east profile, stable rear contour, and unchanged ink-eye
+   details. Its bounded compositor surface was the round-head part plus Carl
+   and Linda's facing/mood sheets; the approved promotion is `9e932eb`.
+5. **Anchored outfit-detail adapter**: `outfit-tee` is the first body-aware
+   intake target. Its south/east SVGs are authored once over `body-balanced`,
+   with the body origin at `(64, 87)` and neck at `(64, 58)`. Every visible
+   path must compile as `detail/*` / `silhouette: false`, so the selected body's
+   `$outfitPrimary` silhouette remains the conforming torso. At build time the
+   importer translates that kit to each production body's neck and emits the
+   five variants in stable archetype order. The runtime overlay replaces only
+   known production detail shapes while preserving the code builder's z-order;
+   legacy bodies, future body IDs, and unauthored north keep the original
+   procedural/static fallback. The adapter is mechanically complete; tee art
+   approval and M1 exit remain open. Componentized Blazer intake—separate
+   lapels, buttons, and pocket with explicit multi-anchor placement—is the next
+   deferred outfit adapter rather than a flat whole-garment shortcut.
+6. **Provenance**: each imported asset records source
    (`authored | generated | curated`) in its generated module, so lints and
    future audits know what's re-generatable. `authored` means deliberate
    canonical repo SVG regardless of authoring tool; `generated` means
@@ -179,6 +192,10 @@ templates per body type). Consequences:
 - `PartDef` grows body-type-aware variants for slots that need them
   (outfits keyed by `(bodyType, facing)` where authored per body; single
   variant + conforming derivation otherwise).
+- **Implemented fitted-detail proof (2026-07-10):** Tee now exercises the
+  single-kit, neck-anchored case end to end. This does not yet solve reusable
+  multi-piece aggregation or torso-frame deformation; Blazer is the bounded
+  follow-up for that explicit adapter.
 
 ## 4. Readability lints (compiler warnings, not scores)
 

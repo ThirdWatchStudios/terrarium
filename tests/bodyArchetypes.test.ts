@@ -275,7 +275,8 @@ describe('production body archetypes', () => {
 
     const layers = characterLayers(tall, DEFAULT_STYLE);
     expect(layers.find((layer) => layer.partId === 'head-soft-square')?.markup.south).toContain('translate(64 39)');
-    expect(layers.find((layer) => layer.key === 'outfit-tee__skin')?.markup.south).toContain('-34');
+    expect(layers.find((layer) => layer.key === 'outfit-tee__outfitSecondary')?.markup.south).toContain('M0-34');
+    expect(layers.find((layer) => layer.key === 'outfit-tee__skin')?.markup.south).toContain('M0-33.3');
     expect(layers.find((layer) => layer.key === 'neck-shadow__literal')?.markup.south).toContain('-27');
   });
 

@@ -10,11 +10,30 @@ export type ImportedPartSourceKind = 'authored' | 'generated' | 'curated';
  * handwritten definition remains authoritative for selection order, label,
  * anchors, z-order, body rig data, and any other runtime behavior.
  */
-export interface ImportedPartOverlay {
+export interface ImportedStaticPartOverlay {
+  readonly kind?: 'static';
   readonly id: string;
   readonly slot: Slot;
   readonly facings: Partial<Record<Facing, readonly ShapeSpec[]>>;
 }
+
+/**
+ * Pre-expanded detail art for body-rig-aware builders.
+ *
+ * Each entry replaces only the builder's detail shapes for one production body
+ * and facing. The original builder still owns z-order and remains the fallback
+ * for legacy, future, or intentionally unauthored variants.
+ */
+export interface ImportedBodyDetailOverlay {
+  readonly kind: 'body-detail';
+  readonly id: string;
+  readonly slot: Slot;
+  readonly bodyVariants: Readonly<
+    Record<string, Partial<Record<Facing, readonly ShapeSpec[]>>>
+  >;
+}
+
+export type ImportedPartOverlay = ImportedStaticPartOverlay | ImportedBodyDetailOverlay;
 
 export interface ImportedPartProvenance {
   readonly id: string;
@@ -22,7 +41,7 @@ export interface ImportedPartProvenance {
   readonly sourceFiles: readonly string[];
 }
 
-export interface ImportedPartArt extends ImportedPartOverlay, ImportedPartProvenance {}
+export type ImportedPartArt = ImportedPartOverlay & ImportedPartProvenance;
 
 function fail(message: string): never {
   throw new Error(`Imported part art: ${message}`);
@@ -53,6 +72,48 @@ export function applyImportedPartArt(
     if (base.slot !== imported.slot) {
       fail(`${imported.id} declares slot ${imported.slot}, expected ${base.slot}`);
     }
+    if (imported.kind === 'body-detail') {
+      if (!base.buildVariant) {
+        fail(`${imported.id} has no buildVariant for a body-detail overlay`);
+      }
+      const buildVariant = base.buildVariant;
+      const bodyIds = Object.keys(imported.bodyVariants);
+      if (bodyIds.length === 0) fail(`${imported.id} contains no body variants`);
+      for (const bodyId of bodyIds) {
+        const variants = imported.bodyVariants[bodyId];
+        if (!variants || !FACINGS.some((facing) => variants[facing] !== undefined)) {
+          fail(`${imported.id}/${bodyId} contains no facing art`);
+        }
+        for (const facing of FACINGS) {
+          const shapes = variants[facing];
+          if (shapes?.length === 0) {
+            fail(`${imported.id}/${bodyId}/${facing} contains no shapes`);
+          }
+          if (shapes?.some((shape) => shape.silhouette !== false)) {
+            fail(`${imported.id}/${bodyId}/${facing} contains non-detail geometry`);
+          }
+        }
+      }
+      result[index] = {
+        ...base,
+        buildVariant: (facing, context) => {
+          const baseVariant = buildVariant(facing, context);
+          const shapes = context.bodyId
+            ? imported.bodyVariants[context.bodyId]?.[facing]
+            : undefined;
+          if (shapes === undefined) return baseVariant;
+          if (!baseVariant) {
+            fail(`${imported.id}/${context.bodyId}/${facing} has no base dynamic variant`);
+          }
+          return {
+            ...baseVariant,
+            shapes: shapes.map((shape) => ({ ...shape })),
+          };
+        },
+      };
+      continue;
+    }
+
     if (base.buildVariant) {
       fail(`${imported.id} uses buildVariant and cannot accept a static-art overlay`);
     }

@@ -10,6 +10,7 @@ import {
 import type { CharacterRecipe } from '../src/core/types';
 import { CANVAS, FACINGS, MOODS } from '../src/core/types';
 import { PART_LIBRARY } from '../src/parts/library';
+import { BODY_ARCHETYPES } from '../src/parts/bodyArchetypes';
 import { BLOB_CONFIGS, BLOB_TILE_COUNT, NB } from '../src/tiles/blob';
 import { deriveGroundOverlays } from '../src/tiles/groundOverlays';
 import {
@@ -117,6 +118,36 @@ describe('parts', () => {
       );
     });
   }
+});
+
+describe('production outfit art', () => {
+  it('outfit-tee — all production bodies and facings with authored head/hair', async () => {
+    const cells = BODY_ARCHETYPES.flatMap((body) => FACINGS_ALL.map((facing) => {
+      const recipe: CharacterRecipe = {
+        id: `tee-${body.id}`,
+        name: body.label,
+        parts: {
+          body: body.id,
+          head: 'head-round',
+          hair: 'hair-bob',
+          outfit: 'outfit-tee',
+          accessories: [],
+        },
+        palette: {
+          skin: '#E8B88A',
+          hair: '#4A3325',
+          outfitPrimary: '#2E4057',
+          outfitSecondary: '#F5F2EA',
+          accent: '#D85A30',
+        },
+      };
+      return composeCharacter(recipe, STYLE, facing, SIZE, 'normal', { badge: false });
+    }));
+
+    await expect(grid(cells, FACINGS_ALL.length)).toMatchFileSnapshot(
+      snap('outfits/outfit-tee__production-bodies'),
+    );
+  });
 });
 
 describe('walls — all 47 blob autotile tiles', () => {

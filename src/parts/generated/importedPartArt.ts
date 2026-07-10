@@ -38,6 +38,63 @@ export const IMPORTED_PART_ART = [
       ],
     },
   },
+  {
+    kind: "body-detail",
+    id: "outfit-tee",
+    slot: "outfit",
+    bodyVariants: {
+      "body-compact": {
+        south: [
+          { d: "M0-24C-4.8-24-9.6-22.5-11.2-19.9-8.9-15.8-5-13.8 0-13.8 5-13.8 8.9-15.8 11.2-19.9 9.6-22.5 4.8-24 0-24Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M0-23.3C-4-23.3-7.6-22-8.8-19.6-6.7-16.5-3.6-15.2 0-15.2 3.6-15.2 6.7-16.5 8.8-19.6 7.6-22 4-23.3 0-23.3Z", fill: "$skin", silhouette: false },
+        ],
+        east: [
+          { d: "M-1-24C-4.8-23.7-7-22-7.3-20-4.4-16.4-0.2-14.7 4.2-15.2 8-15.7 10.4-17.7 11.5-20.5 9.2-22.8 4.1-24.2-1-24Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-0.4-23.8C-3.5-23.5-5.2-22.2-5.4-20.4-3-17.8 0.1-16.7 3.6-17 6.4-17.3 8.3-18.7 9.1-20.6 7.3-22.2 3.3-23.7-0.4-23.8Z", fill: "$skin", silhouette: false },
+        ],
+      },
+      "body-balanced": {
+        south: [
+          { d: "M0-29C-4.8-29-9.6-27.5-11.2-24.9-8.9-20.8-5-18.8 0-18.8 5-18.8 8.9-20.8 11.2-24.9 9.6-27.5 4.8-29 0-29Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M0-28.3C-4-28.3-7.6-27-8.8-24.6-6.7-21.5-3.6-20.2 0-20.2 3.6-20.2 6.7-21.5 8.8-24.6 7.6-27 4-28.3 0-28.3Z", fill: "$skin", silhouette: false },
+        ],
+        east: [
+          { d: "M-1-29C-4.8-28.7-7-27-7.3-25-4.4-21.4-0.2-19.7 4.2-20.2 8-20.7 10.4-22.7 11.5-25.5 9.2-27.8 4.1-29.2-1-29Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-0.4-28.8C-3.5-28.5-5.2-27.2-5.4-25.4-3-22.8 0.1-21.7 3.6-22 6.4-22.3 8.3-23.7 9.1-25.6 7.3-27.2 3.3-28.7-0.4-28.8Z", fill: "$skin", silhouette: false },
+        ],
+      },
+      "body-large-frame": {
+        south: [
+          { d: "M0-30C-4.8-30-9.6-28.5-11.2-25.9-8.9-21.8-5-19.8 0-19.8 5-19.8 8.9-21.8 11.2-25.9 9.6-28.5 4.8-30 0-30Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M0-29.3C-4-29.3-7.6-28-8.8-25.6-6.7-22.5-3.6-21.2 0-21.2 3.6-21.2 6.7-22.5 8.8-25.6 7.6-28 4-29.3 0-29.3Z", fill: "$skin", silhouette: false },
+        ],
+        east: [
+          { d: "M-1-30C-4.8-29.7-7-28-7.3-26-4.4-22.4-0.2-20.7 4.2-21.2 8-21.7 10.4-23.7 11.5-26.5 9.2-28.8 4.1-30.2-1-30Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-0.4-29.8C-3.5-29.5-5.2-28.2-5.4-26.4-3-23.8 0.1-22.7 3.6-23 6.4-23.3 8.3-24.7 9.1-26.6 7.3-28.2 3.3-29.7-0.4-29.8Z", fill: "$skin", silhouette: false },
+        ],
+      },
+      "body-tall": {
+        south: [
+          { d: "M0-34C-4.8-34-9.6-32.5-11.2-29.9-8.9-25.8-5-23.8 0-23.8 5-23.8 8.9-25.8 11.2-29.9 9.6-32.5 4.8-34 0-34Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M0-33.3C-4-33.3-7.6-32-8.8-29.6-6.7-26.5-3.6-25.2 0-25.2 3.6-25.2 6.7-26.5 8.8-29.6 7.6-32 4-33.3 0-33.3Z", fill: "$skin", silhouette: false },
+        ],
+        east: [
+          { d: "M-1-34C-4.8-33.7-7-32-7.3-30-4.4-26.4-0.2-24.7 4.2-25.2 8-25.7 10.4-27.7 11.5-30.5 9.2-32.8 4.1-34.2-1-34Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-0.4-33.8C-3.5-33.5-5.2-32.2-5.4-30.4-3-27.8 0.1-26.7 3.6-27 6.4-27.3 8.3-28.7 9.1-30.6 7.3-32.2 3.3-33.7-0.4-33.8Z", fill: "$skin", silhouette: false },
+        ],
+      },
+      "body-soft": {
+        south: [
+          { d: "M0-28C-4.8-28-9.6-26.5-11.2-23.9-8.9-19.8-5-17.8 0-17.8 5-17.8 8.9-19.8 11.2-23.9 9.6-26.5 4.8-28 0-28Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M0-27.3C-4-27.3-7.6-26-8.8-23.6-6.7-20.5-3.6-19.2 0-19.2 3.6-19.2 6.7-20.5 8.8-23.6 7.6-26 4-27.3 0-27.3Z", fill: "$skin", silhouette: false },
+        ],
+        east: [
+          { d: "M-1-28C-4.8-27.7-7-26-7.3-24-4.4-20.4-0.2-18.7 4.2-19.2 8-19.7 10.4-21.7 11.5-24.5 9.2-26.8 4.1-28.2-1-28Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-0.4-27.8C-3.5-27.5-5.2-26.2-5.4-24.4-3-21.8 0.1-20.7 3.6-21 6.4-21.3 8.3-22.7 9.1-24.6 7.3-26.2 3.3-27.7-0.4-27.8Z", fill: "$skin", silhouette: false },
+        ],
+      },
+    },
+  },
 ] as const satisfies readonly ImportedPartOverlay[];
 
 // Build-time audit data; the browser imports only IMPORTED_PART_ART.
@@ -58,6 +115,14 @@ export const IMPORTED_PART_PROVENANCE = [
       "assets/parts/head/round.east.svg",
       "assets/parts/head/round.north.svg",
       "assets/parts/head/round.south.svg",
+    ],
+  },
+  {
+    id: "outfit-tee",
+    sourceKind: "authored",
+    sourceFiles: [
+      "assets/parts/outfit/tee.east.svg",
+      "assets/parts/outfit/tee.south.svg",
     ],
   },
 ] as const satisfies readonly ImportedPartProvenance[];

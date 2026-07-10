@@ -8,14 +8,16 @@ import { optimize } from 'svgo';
 
 import type { Facing, ShapeSpec } from '../../src/core/types';
 import { FACINGS } from '../../src/core/types';
+import { BODY_ARCHETYPES } from '../../src/parts/bodyArchetypes';
 import type {
+  ImportedBodyDetailOverlay,
   ImportedPartArt,
   ImportedPartSourceKind,
 } from '../../src/parts/importedArt';
 import type { PartImportTarget } from './catalog';
 import { SENTINEL_TO_PALETTE_REF } from './sentinels';
 
-const SUPPORTED_SLOTS = ['head', 'hair'] as const;
+const SUPPORTED_SLOTS = ['head', 'hair', 'outfit'] as const;
 type SupportedSlot = (typeof SUPPORTED_SLOTS)[number];
 
 const SLOT_SET = new Set<string>(SUPPORTED_SLOTS);
@@ -29,6 +31,7 @@ const SHIPPED_OUTLINE_MARGIN = 4;
 export const PART_AUTHORING_ORIGINS: Readonly<Record<SupportedSlot, { x: number; y: number }>> = {
   head: { x: 64, y: 44 },
   hair: { x: 64, y: 44 },
+  outfit: { x: 64, y: 87 },
 };
 
 interface Matrix {
@@ -770,11 +773,20 @@ function validateCatalog(catalog: readonly PartImportTarget[]): Map<string, Part
 function validateTarget(group: MutableImportGroup, target: PartImportTarget | undefined): PartImportTarget {
   if (!target) fail(group.id, 'importer v1 only replaces an existing selectable production part');
   if (target.slot !== group.slot) fail(group.id, `target slot is ${target.slot}, not ${group.slot}`);
-  if (target.buildVariant) fail(group.id, 'body-aware buildVariant art needs a future import adapter');
-
-  const expectedAnchor = 'headCenter';
-  if (target.anchor !== expectedAnchor) {
-    fail(group.id, `target anchor ${target.anchor} is not supported for ${group.slot} imports`);
+  const mode = target.importMode ?? 'static';
+  if (mode === 'anchored-detail') {
+    if (target.slot !== 'outfit' || target.anchor !== 'body' || !target.buildVariant) {
+      fail(group.id, 'anchored-detail targets must be body-anchored dynamic outfits');
+    }
+    if (!target.referenceBodyId || !target.placementAnchor) {
+      fail(group.id, 'anchored-detail targets require a reference body and placement anchor');
+    }
+  } else {
+    if (target.buildVariant) fail(group.id, 'body-aware buildVariant art needs an anchored-detail adapter');
+    const expectedAnchor = 'headCenter';
+    if (target.anchor !== expectedAnchor) {
+      fail(group.id, `target anchor ${target.anchor} is not supported for ${group.slot} imports`);
+    }
   }
 
   const expectedFacings = FACINGS.filter((facing) => target.facings[facing] !== undefined);
@@ -786,6 +798,58 @@ function validateTarget(group: MutableImportGroup, target: PartImportTarget | un
     );
   }
   return target;
+}
+
+function expandAnchoredDetailVariants(
+  source: string,
+  target: PartImportTarget,
+  facings: Partial<Record<Facing, readonly ShapeSpec[]>>,
+): ImportedBodyDetailOverlay['bodyVariants'] {
+  const reference = BODY_ARCHETYPES.find(({ id }) => id === target.referenceBodyId);
+  if (!reference || !target.placementAnchor) {
+    fail(source, 'anchored-detail target has no valid reference body or placement anchor');
+  }
+  for (const facing of FACINGS) {
+    const shapes = facings[facing];
+    if (shapes?.some((shape) => shape.silhouette !== false)) {
+      fail(source, `anchored-detail ${facing} art must contain detail/* shapes only`);
+    }
+  }
+
+  const bodyVariants: Record<string, Partial<Record<Facing, ShapeSpec[]>>> = {};
+  for (const archetype of BODY_ARCHETYPES) {
+    const variants: Partial<Record<Facing, ShapeSpec[]>> = {};
+    for (const facing of FACINGS) {
+      const shapes = facings[facing];
+      if (!shapes) continue;
+      const referencePoint = reference.anchors[facing][target.placementAnchor];
+      const targetPoint = archetype.anchors[facing][target.placementAnchor];
+      const dx = targetPoint.x - referencePoint.x;
+      const dy = targetPoint.y - referencePoint.y;
+      variants[facing] = shapes.map((shape, index) => {
+        const translated = {
+          ...shape,
+          d: svgpath(shape.d).translate(dx, dy).round(PATH_PRECISION).toString(),
+        };
+        const origin = PART_AUTHORING_ORIGINS.outfit;
+        const canvasPath = svgpath(translated.d)
+          .translate(origin.x, origin.y)
+          .round(PATH_PRECISION)
+          .toString();
+        validateBounds(
+          `${source}/${archetype.id}/${facing}/shape-${index + 1}`,
+          canvasPath,
+          translated.fill,
+          translated.stroke,
+          translated.strokeWidth,
+          translated.silhouette !== false,
+        );
+        return translated;
+      });
+    }
+    bodyVariants[archetype.id] = variants;
+  }
+  return bodyVariants;
 }
 
 /** Compile a source tree atomically in memory. No output is written on failure. */
@@ -813,7 +877,7 @@ export async function compilePartDirectory(
 
   const imports: ImportedPartArt[] = [];
   for (const group of [...groups.values()].sort((left, right) => compareText(left.id, right.id))) {
-    validateTarget(group, targets.get(group.id));
+    const target = validateTarget(group, targets.get(group.id));
     const facings: Partial<Record<Facing, ShapeSpec[]>> = {};
     for (const facing of FACINGS) {
       const descriptor = group.files[facing];
@@ -825,16 +889,29 @@ export async function compilePartDirectory(
       });
     }
     validateFacingPaintOrder(group.id, facings);
-    imports.push({
-      id: group.id,
-      slot: group.slot,
-      sourceKind: options.sourceKind ?? 'authored',
+    const provenance = {
+      sourceKind: options.sourceKind ?? 'authored' as const,
       sourceFiles: FACINGS
         .map((facing) => group.files[facing]?.sourcePath)
         .filter((source): source is string => source !== undefined)
         .sort(),
-      facings,
-    });
+    };
+    if (target.importMode === 'anchored-detail') {
+      imports.push({
+        kind: 'body-detail',
+        id: group.id,
+        slot: group.slot,
+        bodyVariants: expandAnchoredDetailVariants(group.id, target, facings),
+        ...provenance,
+      });
+    } else {
+      imports.push({
+        id: group.id,
+        slot: group.slot,
+        facings,
+        ...provenance,
+      });
+    }
   }
   return imports;
 }
@@ -869,6 +946,28 @@ export function emitImportedPartArt(imports: readonly ImportedPartArt[]): string
   lines.push('export const IMPORTED_PART_ART = [');
   for (const imported of imports) {
     lines.push('  {');
+    if (imported.kind === 'body-detail') {
+      lines.push('    kind: "body-detail",');
+      lines.push(`    id: ${quote(imported.id)},`);
+      lines.push(`    slot: ${quote(imported.slot)},`);
+      lines.push('    bodyVariants: {');
+      for (const archetype of BODY_ARCHETYPES) {
+        const variants = imported.bodyVariants[archetype.id];
+        if (!variants) continue;
+        lines.push(`      ${quote(archetype.id)}: {`);
+        for (const facing of FACINGS) {
+          const shapes = variants[facing];
+          if (!shapes) continue;
+          lines.push(`        ${facing}: [`);
+          for (const shape of shapes) lines.push(`          ${emitShape(shape)},`);
+          lines.push('        ],');
+        }
+        lines.push('      },');
+      }
+      lines.push('    },');
+      lines.push('  },');
+      continue;
+    }
     lines.push(`    id: ${quote(imported.id)},`);
     lines.push(`    slot: ${quote(imported.slot)},`);
     lines.push('    facings: {');

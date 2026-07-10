@@ -1,4 +1,8 @@
 import type { Facing, Slot } from '../../src/core/types';
+import type { BodyArchetypeId } from '../../src/parts/bodyArchetypes';
+
+export type PartImportMode = 'static' | 'anchored-detail';
+export type BodyDetailPointAnchor = 'neck';
 
 /** Minimal explicit metadata required before an existing part may accept SVG art. */
 export interface PartImportTarget {
@@ -7,6 +11,9 @@ export interface PartImportTarget {
   readonly anchor: string;
   readonly facings: Partial<Record<Facing, unknown>>;
   readonly buildVariant?: unknown;
+  readonly importMode?: PartImportMode;
+  readonly referenceBodyId?: BodyArchetypeId;
+  readonly placementAnchor?: BodyDetailPointAnchor;
 }
 
 const allFacings = { south: true, east: true, north: true } as const;
@@ -39,4 +46,14 @@ export const PART_IMPORT_TARGETS: readonly PartImportTarget[] = [
   target('hair-long-straight', 'hair'),
   target('hair-coils', 'hair'),
   target('head-fab', 'head'),
+  {
+    id: 'outfit-tee',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: { south: true, east: true },
+    buildVariant: true,
+    importMode: 'anchored-detail',
+    referenceBodyId: 'body-balanced',
+    placementAnchor: 'neck',
+  },
 ];

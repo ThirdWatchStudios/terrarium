@@ -6,9 +6,12 @@ set in memory, and emits `src/parts/generated/importedPartArt.ts` only after
 every file succeeds.
 
 The generated data is an **appearance overlay** on an existing selectable
-production part. Registration replaces matching facing geometry in place, so
-labels, picker order, seeded-generation order, anchors, z-order, body rigs, and
-other runtime metadata remain owned by the handwritten `PartDef`.
+production part. Static head/hair registration replaces matching facing
+geometry in place. The explicit `outfit-tee` adapter instead replaces the
+detail shapes returned by its body-aware builder for known production bodies.
+In both modes labels, picker order, seeded-generation order, anchors, z-order,
+body rigs, and other runtime metadata remain owned by the handwritten
+`PartDef`.
 
 ## Commands
 
@@ -20,11 +23,11 @@ npm run parts:scaffolds # regenerate seeded SVG starters and palette files
 
 `npm run build` begins with `parts:check`; builds never rewrite source files.
 
-The generated authoring assets live under `assets/part-authoring`: six seeded
-head/hair scaffold SVGs plus ASE, GPL, and readable SVG sentinel palette
-companions for optional editors. Their directory README defines the canonical
-editor-agnostic workflow. Layer locking is only an editing convenience;
-semantic IDs determine which groups the importer ignores.
+The generated authoring assets live under `assets/part-authoring`: seeded
+head/hair scaffolds, the south/east tee starters, and ASE, GPL, and readable SVG
+sentinel palette companions for optional editors. Their directory README
+defines the canonical editor-agnostic workflow. Layer locking is only an
+editing convenience; semantic IDs determine which groups the importer ignores.
 
 ## Source convention
 
@@ -34,19 +37,25 @@ Sources live below `assets/parts`:
 assets/parts/<slot>/<slug>.<facing>.svg
 ```
 
-For example, `assets/parts/hair/bob.south.svg` targets `hair-bob`. Filenames
-and directories are lowercase. Authored facings are `south`, `east`, and
-`north`; west is the runtime mirror of east. Once any facing of a part is
-present, the complete facing set already declared by its production `PartDef`
-must be present.
+For example, `assets/parts/hair/bob.south.svg` targets `hair-bob`, while
+`assets/parts/outfit/tee.south.svg` targets `outfit-tee`. Filenames and
+directories are lowercase. Authored facings are `south`, `east`, and `north`;
+west is the runtime mirror of east. Once any facing of a part is present, the
+complete facing set declared by its explicit import target must be present.
+Static head/hair targets currently require all three source facings. Tee
+deliberately requires south and east only; its north detail remains empty.
 
-Importer v1 accepts existing static production targets in these slots:
+The importer currently accepts:
 
 - `head` and `hair`, authored around canvas point `(64, 44)`.
+- `outfit-tee` as an anchored-detail target, authored over `body-balanced`
+  around the body origin `(64, 87)`. Its neck is canvas point `(64, 58)`, and
+  the canonical source set is `tee.south.svg` plus `tee.east.svg`.
 
 The east-facing head placement adjustment remains compositor-owned. The
 compiler always subtracts the stable `(64, 44)` authoring origin after it
-validates geometry in full 128-space.
+validates static head/hair geometry in full 128-space. Outfit geometry instead
+subtracts `(64, 87)`, keeping the canonical source in body-local coordinates.
 
 ## Sentinel palette
 
@@ -130,23 +139,41 @@ provenance. The metadata is not added to `PartDef`, recipes, layer exports, or
 the tool/sim contract.
 
 Unknown, legacy-only, and internal part IDs are rejected. Duplicate imports,
-slot mismatches, missing production variants, and targets with `buildVariant`
-are rejected before the generated file changes.
+slot mismatches, missing production variants, and unadapted targets with
+`buildVariant` are rejected before the generated file changes.
+
+`outfit-tee` is the first explicit exception to the static-overlay rule. Every
+visible tee path must live under `detail` or `detail/*`, so all compiled shapes
+have `silhouette: false`: the selected body remains the conforming
+`$outfitPrimary` torso. The importer treats `body-balanced` as the source
+placement, translates the south/east kit from its neck to each target neck, and
+emits variants in stable order for `body-compact`, `body-balanced`,
+`body-large-frame`, `body-tall`, and `body-soft`. Every translated path is
+paint-bounds-validated again in its target canvas placement. At runtime the
+overlay replaces only those known detail variants and preserves the original
+builder's z-order. Legacy bodies, deliberately unauthored facings, and future
+body IDs continue through the original procedural builder/static fallback.
+
+This is a mechanical intake proof. The authored tee still requires visual
+approval and the remaining per-part Definition of Done checks.
 
 ## Intentionally deferred adapters
 
-- Body-aware outfits: every human outfit currently uses `buildVariant`, so a
-  flat SVG overlay would be accepted but bypassed during production rendering.
+- Componentized multi-piece outfit aggregation and multi-anchor deformation.
+  Tee is one combined neckline kit per authored facing and needs only neck
+  translation. Blazer is the next adapter boundary: lapels, buttons, and pocket
+  must remain separately addressable and require explicit deterministic piece
+  order plus neck/chest/hip/waist placement. Do not collapse that work into one
+  flat per-facing Blazer file.
 - Body art: the public body-archetype records and selectable library currently
   share the same `PartDef` objects. A body overlay must update that single
   source of truth rather than splitting their geometry.
-- Outfit detail-piece aggregation and body-anchor deformation.
 - New part definitions and their labels/insertion order.
 - Accessory anchors, z-order, and hand-attachment roles.
 - Importing the full eleven-point body sub-rig from an anchor layer.
 
 Those need explicit manifests/adapters. The initial headless
 scaffold-to-runtime `hair-bob` proof and the first canonical head promotion
-(`head-round`) are mechanically complete; their visual approvals remain
-separate gates. Expanding intake beyond static head/hair overlays is the next
-adapter boundary.
+(`head-round`) are visually approved and committed. The tee anchored-detail
+mechanics are now complete; its visual approval remains a separate gate, and
+componentized Blazer intake is the next outfit adapter boundary.

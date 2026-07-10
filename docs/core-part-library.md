@@ -16,16 +16,20 @@ full alphabet; the milestones are what "done" means.
 ## Prerequisites (Phase 2 — before drawing anything)
 
 - [x] Importer (`scripts/importParts.ts`) with strict validation
-      (`part-importer.md`; static production head/hair overlays first)
-- [x] Template scaffold SVGs for supported head/hair intake (128 grid,
-      anchors, capsule/head guides, seeded editable art, named reference layer)
-      with semantic IDs for every editable and ignored path
+      (`part-importer.md`; static production head/hair overlays plus the first
+      body-aware tee detail adapter)
+- [x] Template scaffold SVGs for supported head/hair and south/east tee intake
+      (128 grid, anchors, capsule/head guides, seeded editable art, named
+      reference layer) with semantic IDs for every editable and ignored path
 - [x] Sentinel color palette defined and generated as ASE, GPL, and readable
       SVG companions (`npm run parts:scaffolds`); every scaffold also embeds
       the five exact swatches
 - [x] Headless bob intake proof: scaffold → deliberate three-facing SVG
       parting edit → importer → generated overlay → exactly the three expected
       compositor snapshots
+- [x] Anchored-detail mechanics proof: one south/east tee source set on
+      `body-balanced` → deterministic five-body pre-expansion. Visual approval
+      remains part of M1 rather than an importer prerequisite.
 - [x] Semantic SVG conventions compiler-tested: slash IDs, ignored guide /
       reference groups, `detail/*`, exact sentinel colors, and nonzero fill
 
@@ -105,7 +109,7 @@ The visible core of every character is authored.
       sub-anchors
 - [ ] All 6 heads
 - [ ] 3 hairstyles (one per major family)
-- [ ] 2 more outfit detail kits (tee + blazer recommended: the extremes)
+- [ ] Tee visual approval + one more outfit detail kit (Blazer recommended)
 - [ ] Crowd pass + distance pass + stress test
 
 **Exit:** a generated office screenshot reads as hand-crafted art.
@@ -149,21 +153,22 @@ derivative of south.
 
 | Shape | south | east | north |
 |---|---|---|---|
-| round | [ ] | [ ] | [ ] |
+| round | [x] | [x] | [x] |
 | oval | [ ] | [ ] | [ ] |
 | boxy | [ ] | [ ] | [ ] |
 | long | [ ] | [ ] | [ ] |
 | angular | [ ] | [ ] | [ ] |
 | soft-square | [ ] | [ ] | [ ] |
 
-`head-round` now has canonical authored SVG for all three facings. The south
+`head-round` has approved canonical authored SVG for all three facings,
+committed in `9e932eb`. The south
 contour adds a gentle cheek/chin treatment, east owns a readable profile, and
 north remains nearly circular for rear-hair compatibility. Eyes remain
-literal-ink `detail/*` paths owned by the head. Its inventory boxes stay open
-until art-direction approval and the remaining per-part Definition of Done
-checks are complete. The automated 660-cell hair / head-accessory / facing /
-style matrix adds no clipping relative to the stable head control; 15 existing
-high-contrast bun/ponytail top-edge contacts remain separate hair work.
+literal-ink `detail/*` paths owned by the head. Its inventory boxes record the
+approved drawings; broader M1 scene/crowd gates remain open. The automated
+660-cell hair / head-accessory / facing / style matrix adds no clipping
+relative to the stable head control; 15 existing high-contrast bun/ponytail
+top-edge contacts remain separate hair work.
 
 ### 3. Hair — organized as families (design system)
 
@@ -177,7 +182,7 @@ max). `none` needs no art; north matters (hair reads from behind).
 | Short | short | [ ] | [ ] | [ ] |
 | Short | pixie | [ ] | [ ] | [ ] |
 | Short | side-part | [ ] | [ ] | [ ] |
-| Medium | bob | [ ] | [ ] | [ ] |
+| Medium | bob | [x] | [x] | [x] |
 | Medium | curly | [ ] | [ ] | [ ] |
 | Long | long-straight | [ ] | [ ] | [ ] |
 | Long | ponytail | [ ] | [ ] | [ ] |
@@ -186,9 +191,9 @@ max). `none` needs no art; north matters (hair reads from behind).
 | Special | coils | [ ] | [ ] | [ ] |
 | *(future)* | *Short/military, Medium/layered, …* | — | — | — |
 
-`hair-bob` now has canonical authored SVG and a three-facing parting detail;
-its inventory boxes remain open until the visual approval and remaining
-Definition of Done checks are complete.
+`hair-bob` has approved canonical authored SVG and a three-facing parting
+detail, committed in `240ee03`. Its inventory boxes record the approved
+drawings; broader M1 scene/crowd gates remain open.
 
 ### 4. Bodies (§4b) — archetype frames, N × 3 facings
 
@@ -235,11 +240,14 @@ Body types are **archetypes that read from orbit**, not BMI steps. Approved set:
 ### 5. Outfit detail kits (§4b) — body-independent, ~2 facings each
 
 The conforming torso layer is DERIVED from the body silhouette (never drawn).
-Only distinguishing details are drawn, anchored to body sub-anchors. **Author
-each detail piece as its own file** (`blazer.lapels.south.svg`,
-`blazer.buttons.south.svg`) — pieces stay individually addressable so kits can
-later be recombined into new garments without redrawing. North kit only where
-the garment reads from behind.
+Only distinguishing details are drawn, anchored to body sub-anchors. The target
+model authors each reusable detail piece as its own file
+(`blazer.lapels.south.svg`, `blazer.buttons.south.svg`) so pieces can later be
+recombined without redrawing. Tee is the deliberately smaller first adapter:
+its neckline is one combined kit file per authored facing. Componentized
+multi-piece aggregation begins with Blazer rather than being hidden inside a
+flat whole-garment source. North kit exists only where the garment reads from
+behind.
 
 > **Production outfit compatibility (2026-07-10):** every row below has a
 > body-anchor-driven code builder, including blazer pocket and suit notch/
@@ -247,6 +255,17 @@ the garment reads from behind.
 > `body-archetypes-outfits-{south,east,north}.png` and
 > `body-archetypes-outfit-distance.png`. The unchecked cells remain the optional
 > authored-source SVG backlog, not a runtime compatibility gap.
+
+> **Tee anchored-detail intake (mechanically complete, visual approval open):**
+> `tee.south.svg` and `tee.east.svg` are authored over `body-balanced`, whose
+> body origin is `(64, 87)` and neck is `(64, 58)`. The importer requires every
+> visible path to be `detail/*`, then pre-expands that one source set onto the
+> neck of all five production bodies in stable order. The dynamic body remains
+> the conforming torso and owns z-order. Legacy bodies and future body IDs keep
+> the procedural/static fallback. Tee's inventory cells stay open until its
+> render is visually approved and the remaining Definition of Done checks pass.
+> Componentized lapels/buttons/pocket placement for Blazer is the next deferred
+> outfit adapter.
 
 | Garment | Detail pieces | south | east | north |
 |---|---|---|---|---|
