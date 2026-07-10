@@ -95,6 +95,8 @@ export type BodyAnchors = Record<Facing, BodyFacingAnchors>;
 export interface PartBuildContext {
   /** Present when the active body owns a sub-rig; absent for legacy bodies. */
   bodyAnchors?: BodyFacingAnchors;
+  /** Stable resolved body part id for rare body-specific variants such as dresses. */
+  bodyId?: string;
 }
 
 export interface PartDef {
@@ -111,6 +113,11 @@ export interface PartDef {
    * preserving existing parts and imported flat SVG geometry.
    */
   buildVariant?: (facing: Facing, context: PartBuildContext) => PartVariant | undefined;
+  /**
+   * Hand-attached accessories only: held props may be suppressed when a pose
+   * occupies both hands; wrist wear always follows the anatomical right wrist.
+   */
+  handAttachmentRole?: 'held-prop' | 'wrist-worn';
   /**
    * Head parts only: this head has no face, so mood overlays never draw on it
    * (the operational-unit disc — feelings arrive as IRIS claims, never on the

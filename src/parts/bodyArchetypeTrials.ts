@@ -15,9 +15,10 @@ import { ellipse } from '../core/geometry';
  * These parts are renderable through getPart(), but they are deliberately kept
  * out of PART_LIBRARY so the authoring UI, random generation, and production
  * exports cannot select them. Their body-owned rigs now drive the compositor's
- * head stack, portraits, badges, tee/blazer/lanyard details, and the representative
- * neutral/point/slump poses. The remaining garment, accessory, and pose catalog is
- * still a promotion gate rather than silently inheriting unreviewed geometry.
+ * head stack, portraits, badges, ten fitted outfits plus a provisional dress,
+ * all 15 poses, and pose-aware wrist/carry placement. The generated matrix is
+ * machine clean; Dress still needs a later visual pass. The parts remain
+ * nonselectable until explicit promotion.
  */
 
 export type BodyArchetypeTrialId = 'compact' | 'average' | 'large-frame' | 'tall' | 'soft';
@@ -31,7 +32,8 @@ export interface BodyArchetypeTrial {
   label: string;
   intent: string;
   provenance: 'generated';
-  status: 'candidate';
+  /** The silhouette set is approved; production-library promotion still has gates. */
+  status: 'silhouette-approved';
   part: PartDef;
   guides: BodyAnchors;
 }
@@ -185,7 +187,7 @@ export const BODY_ARCHETYPE_TRIALS: BodyArchetypeTrial[] = [
     label: 'Compact',
     intent: 'Short vertical rhythm, grounded stance, and broad readable shoulders.',
     provenance: 'generated',
-    status: 'candidate',
+    status: 'silhouette-approved',
     part: { ...bodyPart('compact', 'Compact', COMPACT_SOUTH, COMPACT_EAST, COMPACT_SOUTH, 18, 13), bodyAnchors: compactGuides },
     guides: compactGuides,
   },
@@ -194,7 +196,7 @@ export const BODY_ARCHETYPE_TRIALS: BodyArchetypeTrial[] = [
     label: 'Balanced',
     intent: 'Neutral control silhouette without treating it as the normative body.',
     provenance: 'generated',
-    status: 'candidate',
+    status: 'silhouette-approved',
     part: { ...bodyPart('average', 'Balanced', AVERAGE_SOUTH, AVERAGE_EAST, AVERAGE_SOUTH, 16, 11), bodyAnchors: averageGuides },
     guides: averageGuides,
   },
@@ -203,7 +205,7 @@ export const BODY_ARCHETYPE_TRIALS: BodyArchetypeTrial[] = [
     label: 'Large-frame',
     intent: 'Width concentrated at the shoulder line, with a strong taper toward the hem.',
     provenance: 'generated',
-    status: 'candidate',
+    status: 'silhouette-approved',
     part: { ...bodyPart('large-frame', 'Large-frame', LARGE_FRAME_SOUTH, LARGE_FRAME_EAST, LARGE_FRAME_SOUTH, 20, 15), bodyAnchors: largeFrameGuides },
     guides: largeFrameGuides,
   },
@@ -212,7 +214,7 @@ export const BODY_ARCHETYPE_TRIALS: BodyArchetypeTrial[] = [
     label: 'Tall',
     intent: 'Long, narrow vertical rhythm rather than a stretched balanced capsule.',
     provenance: 'generated',
-    status: 'candidate',
+    status: 'silhouette-approved',
     part: { ...bodyPart('tall', 'Tall', TALL_SOUTH, TALL_EAST, TALL_SOUTH, 13, 10), bodyAnchors: tallGuides },
     guides: tallGuides,
   },
@@ -221,7 +223,7 @@ export const BODY_ARCHETYPE_TRIALS: BodyArchetypeTrial[] = [
     label: 'Soft',
     intent: 'Sloped shoulders and lower-volume roundness without caricature.',
     provenance: 'generated',
-    status: 'candidate',
+    status: 'silhouette-approved',
     part: { ...bodyPart('soft', 'Soft', SOFT_SOUTH, SOFT_EAST, SOFT_SOUTH, 21, 16), bodyAnchors: softGuides },
     guides: softGuides,
   },

@@ -1,6 +1,7 @@
 import type { CharacterRecipe, Slot, StyleSheet } from './types';
 import { partsForSlot } from '../parts/library';
 import { mulberry32, type Rng } from './random';
+import { normalizeCharacterRecipe, normalizedRiggedAccessories } from './recipe';
 
 /**
  * Office Population Generator core. An employee's appearance is fully determined
@@ -195,7 +196,14 @@ export function generateEmployee(seed: string, profileId: string, style: StyleSh
   // Salt the rng with the profile so a seed means a consistent person within a
   // profile but isn't forced identical across profiles.
   const rng = mulberry32(seedToInt(`${seed}|${profile.id}`));
-  const recipe = generateRecipe(rng, profile, style);
+  const generated = generateRecipe(rng, profile, style);
+  const recipe = {
+    ...generated,
+    parts: {
+      ...generated.parts,
+      accessories: normalizedRiggedAccessories(generated),
+    },
+  };
   const first = FIRST_NAMES[Math.floor(rng() * FIRST_NAMES.length)];
   const last = LAST_NAMES[Math.floor(rng() * LAST_NAMES.length)];
   const displayName = `${first} ${last}`;
@@ -210,12 +218,12 @@ export function generateEmployee(seed: string, profileId: string, style: StyleSh
 
 /** A renderable recipe for an employee (adds a stable id/name). */
 export function employeeRecipe(emp: EmployeeDefinition): CharacterRecipe {
-  return {
+  return normalizeCharacterRecipe({
     id: `emp-${emp.visualSeed}`,
     name: emp.name,
     parts: emp.recipe.parts,
     palette: emp.recipe.palette,
-  };
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -226,14 +234,16 @@ export function employeeRecipe(emp: EmployeeDefinition): CharacterRecipe {
 export function appearanceSignature(emp: EmployeeDefinition): string {
   const p = emp.recipe.parts;
   const c = emp.recipe.palette;
-  return [p.body, p.head, p.hair, p.outfit, [...p.accessories].sort().join('+'),
+  const accessories = normalizedRiggedAccessories(emp.recipe);
+  return [p.body, p.head, p.hair, p.outfit, [...accessories].sort().join('+'),
     c.skin, c.hair, c.outfitPrimary, c.outfitSecondary, c.accent].join('|');
 }
 
 /** Same parts, palette aside — a "near duplicate" (reads as a similar person). */
 function partsSignature(emp: EmployeeDefinition): string {
   const p = emp.recipe.parts;
-  return [p.body, p.head, p.hair, p.outfit, [...p.accessories].sort().join('+')].join('|');
+  const accessories = normalizedRiggedAccessories(emp.recipe);
+  return [p.body, p.head, p.hair, p.outfit, [...accessories].sort().join('+')].join('|');
 }
 
 export interface Population {

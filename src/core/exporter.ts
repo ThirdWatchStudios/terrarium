@@ -54,6 +54,7 @@ import { symbolRegistryJson } from './registry';
 import { POSES, poseCatalogJson } from '../parts/poses';
 import { unitRecipe, unitRenderingSpec } from './renderings';
 import { projectWithLook } from './look';
+import { normalizeCharacterRecipe } from './recipe';
 import { CONSTRUCTION_CREW, CONSTRUCTION_PROFILES } from '../data/defaults';
 
 /** Sheet frame order. West is baked as mirrored east for engine convenience. */
@@ -1339,10 +1340,14 @@ export async function employeePackageZip(
   const zip = new JSZip();
   for (const emp of employees) {
     const recipe = employeeRecipe(emp);
+    const normalizedEmployee = {
+      ...emp,
+      recipe: { parts: recipe.parts, palette: recipe.palette },
+    };
     const dir = zip.folder(`Employee_${emp.visualSeed}`)!;
     dir.file('sprite.png', await employeeSpritePng(recipe, style, scale));
     dir.file('portrait.png', await employeePortraitPng(recipe, style, scale));
-    dir.file('employee.json', JSON.stringify(emp, null, 2));
+    dir.file('employee.json', JSON.stringify(normalizedEmployee, null, 2));
   }
   zip.file(
     'roster.json',
@@ -1397,9 +1402,14 @@ export async function exportAll(
   // Render every asset through the project's LOOK (a non-destructive lens over the
   // authored palettes — see core/look.ts). This is what makes the look reproducible:
   // it re-derives on every export instead of depending on a one-time palette sweep.
-  // project.json below ships the RAW authored project (+ the look flag) so re-import
-  // preserves the editable palettes and never double-applies the look.
-  const project = projectWithLook(rawProject);
+  // project.json below ships the authored project (+ the look flag) after the
+  // same identity normalization used by rendering. Palettes remain raw/editable,
+  // so re-import never double-applies the look.
+  const exportSource = {
+    ...rawProject,
+    characters: rawProject.characters.map(normalizeCharacterRecipe),
+  };
+  const project = projectWithLook(exportSource);
   const { style } = project;
   const scales = EXPORT_SCALES.length;
 
@@ -1660,9 +1670,9 @@ export async function exportAll(
   await write('theme.json', themeJson(style));
 
   onProgress?.(total, total, 'writing');
-  // Ship the RAW authored project (vivid palettes + the look flag) so a re-import
-  // keeps editable colors and re-derives the look rather than double-applying it.
-  await write('project.json', JSON.stringify(rawProject, null, 2));
+  // Ship the identity-normalized authored project (vivid palettes + look flag)
+  // so re-import matches the baked pixels while still re-deriving the look.
+  await write('project.json', JSON.stringify(exportSource, null, 2));
   // The company root (Epic 0 F0.8) — present only for a generated company package.
   // company.json sits at the bundle root with the org-structure / personas /
   // relationships / office-layout / scenarios below it as its children.

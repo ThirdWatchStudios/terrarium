@@ -384,14 +384,41 @@ const HAIR: PartDef[] = [
 ];
 
 // ---------------------------------------------------------------------------
-// Outfits (anchor: body). Drawn over the $outfitPrimary body capsule; body top
-// edge is y = -29.
+// Outfits (anchor: body). Static variants preserve the legacy y=-29 capsule;
+// body-aware builders place production-candidate detail from each active rig.
 // ---------------------------------------------------------------------------
 
 const spanCenter = (span: BodyFacingAnchors['waist']) => ({
   x: (span.left.x + span.right.x) / 2,
   y: (span.left.y + span.right.y) / 2,
 });
+const spanWidth = (span: BodyFacingAnchors['waist']) => Math.abs(span.right.x - span.left.x);
+const mix = (from: number, to: number, t: number) => from + (to - from) * t;
+const clampValue = (min: number, max: number, value: number) => Math.max(min, Math.min(max, value));
+
+/** Conservative torso interior at one y, interpolated through the body's own guides. */
+function bodyInteriorSpan(body: BodyFacingAnchors, y: number, inset = 1) {
+  const shoulderY = spanCenter(body.shoulders).y;
+  const waistY = spanCenter(body.waist).y;
+  const hemY = spanCenter(body.hem).y;
+  let left: number;
+  let right: number;
+  if (y <= shoulderY) {
+    const t = clampValue(0, 1, (y - body.neck.y) / Math.max(1, shoulderY - body.neck.y));
+    left = mix(body.neck.x, body.shoulders.left.x, t);
+    right = mix(body.neck.x, body.shoulders.right.x, t);
+  } else if (y <= waistY) {
+    const t = clampValue(0, 1, (y - shoulderY) / Math.max(1, waistY - shoulderY));
+    left = mix(body.shoulders.left.x, body.waist.left.x, t);
+    right = mix(body.shoulders.right.x, body.waist.right.x, t);
+  } else {
+    const t = clampValue(0, 1, (y - waistY) / Math.max(1, hemY - waistY));
+    left = mix(body.waist.left.x, body.hem.left.x, t);
+    right = mix(body.waist.right.x, body.hem.right.x, t);
+  }
+  const safeInset = Math.min(inset, Math.max(0, (right - left) / 3));
+  return { left: left + safeInset, right: right - safeInset };
+}
 
 /** The body silhouette itself is the conforming tee torso; this cuts its neck opening. */
 function anchoredTee(facing: Facing, body: BodyFacingAnchors): PartVariant {
@@ -443,28 +470,31 @@ function anchoredBlazer(facing: Facing, body: BodyFacingAnchors): PartVariant {
     };
   }
   if (facing === 'east') {
-    const span = Math.max(8, Math.min(18, body.waist.right.x - body.shoulders.right.x));
-    const shoulderX = body.shoulders.right.x;
-    const innerX = shoulderX + span * 0.23;
-    const bottomX = shoulderX + span * 0.62;
-    const outerX = shoulderX + span * 0.85;
+    const collarY = n.y + 4;
+    const apexY = mix(n.y, chest.y, 0.68);
+    const collarSpan = bodyInteriorSpan(body, collarY, 0.5);
+    const bottomX = bodyInteriorSpan(body, apexY, 2).right;
     const hem = spanCenter(body.hem);
-    const frontHemX = body.hem.right.x;
+    const endY = hem.y - 2;
+    const frontHemX = bodyInteriorSpan(body, endY, 3).right;
+    const pocketY = mix(chest.y, hip.y, 0.48);
+    const pocketX = bodyInteriorSpan(body, pocketY, 3).right;
     return {
       z: 20,
       shapes: [
         {
-          d: `M ${innerX} ${n.y + 1} L ${bottomX} ${chest.y - 6} L ${outerX} ${n.y + 1} Z`,
+          d: `M ${collarSpan.left} ${collarY} L ${bottomX} ${apexY} L ${collarSpan.right} ${collarY} Z`,
           fill: '$outfitSecondary',
           silhouette: false,
         },
         {
-          d: `M ${bottomX} ${chest.y - 6} Q ${frontHemX} ${chest.y + 7} ${frontHemX} ${hem.y - 2}`,
+          d: `M ${bottomX} ${apexY} Q ${bodyInteriorSpan(body, chest.y + 7, 3).right} ${chest.y + 7} ${frontHemX} ${endY}`,
           stroke: '#00000030',
           strokeWidth: 2,
           silhouette: false,
         },
-        { d: circle(frontHemX, chest.y + 5, 1.7), fill: '#0000003D', silhouette: false },
+        { d: circle(bodyInteriorSpan(body, chest.y + 5, 3).right, chest.y + 5, 1.7), fill: '#0000003D', silhouette: false },
+        { d: `M ${pocketX - 5} ${pocketY} L ${pocketX} ${pocketY + 1}`, stroke: '#00000030', strokeWidth: 1.6, silhouette: false },
       ],
     };
   }
@@ -474,6 +504,8 @@ function anchoredBlazer(facing: Facing, body: BodyFacingAnchors): PartVariant {
   const apexY = chest.y - 1;
   const button1Y = chest.y + (hip.y - chest.y) * 0.35;
   const button2Y = chest.y + (hip.y - chest.y) * 0.75;
+  const pocketX = mix(chest.x, body.waist.right.x, 0.58);
+  const pocketY = mix(chest.y, hip.y, 0.45);
   return {
     z: 20,
     shapes: [
@@ -495,6 +527,425 @@ function anchoredBlazer(facing: Facing, body: BodyFacingAnchors): PartVariant {
       },
       { d: circle(chest.x, button1Y, 1.8), fill: '#00000033', silhouette: false },
       { d: circle(chest.x, button2Y, 1.8), fill: '#00000033', silhouette: false },
+      { d: `M ${pocketX - 4} ${pocketY} L ${pocketX + 4} ${pocketY}`, stroke: '#00000030', strokeWidth: 1.6, silhouette: false },
+    ],
+  };
+}
+
+/** Anchor-driven polo collar and placket. */
+function anchoredPolo(facing: Facing, body: BodyFacingAnchors): PartVariant {
+  const n = body.neck;
+  const chest = body.chest;
+  const shoulderWidth = spanWidth(body.shoulders);
+  const collarHalf = clampValue(8, 12, shoulderWidth * 0.19);
+  const apexY = mix(n.y, chest.y, 0.64);
+
+  if (facing === 'north') {
+    return {
+      z: 20,
+      shapes: [{ d: rr(n.x - collarHalf, n.y, collarHalf * 2, 5, 2), fill: '$outfitSecondary', silhouette: false }],
+    };
+  }
+  if (facing === 'east') {
+    const collarY = n.y + 4;
+    const collarSpan = bodyInteriorSpan(body, collarY, 0.5);
+    const apexX = bodyInteriorSpan(body, apexY, 2).right;
+    return {
+      z: 20,
+      shapes: [
+        { d: `M ${collarSpan.left} ${collarY} L ${apexX} ${apexY} L ${collarSpan.right} ${collarY} Z`, fill: '$outfitSecondary', silhouette: false },
+        { d: `M ${apexX} ${apexY} L ${bodyInteriorSpan(body, Math.min(chest.y + 2, apexY + 9), 2).right} ${Math.min(chest.y + 2, apexY + 9)}`, stroke: '#00000026', strokeWidth: 2, silhouette: false },
+      ],
+    };
+  }
+  return {
+    z: 20,
+    shapes: [
+      { d: `M ${n.x - collarHalf} ${n.y} L ${chest.x} ${apexY} L ${n.x + collarHalf} ${n.y} Z`, fill: '$outfitSecondary', silhouette: false },
+      { d: `M ${chest.x} ${apexY} L ${chest.x} ${Math.min(chest.y + 2, apexY + 9)}`, stroke: '#00000026', strokeWidth: 2, silhouette: false },
+    ],
+  };
+}
+
+/** Anchor-driven open cardigan trim, center placket, and buttons. */
+function anchoredCardigan(facing: Facing, body: BodyFacingAnchors): PartVariant {
+  if (facing === 'north') return { z: 20, shapes: [] };
+  const n = body.neck;
+  const chest = body.chest;
+  const hip = body.hip;
+  const hem = spanCenter(body.hem);
+  const shoulderWidth = spanWidth(body.shoulders);
+  const vHalf = clampValue(6, 9, shoulderWidth * 0.135);
+  const apexY = mix(n.y, chest.y, 0.5);
+  const button1Y = mix(chest.y, hip.y, 0.15);
+  const button2Y = mix(chest.y, hip.y, 0.65);
+
+  if (facing === 'east') {
+    const collarY = n.y + 4;
+    const collarSpan = bodyInteriorSpan(body, collarY, 0.5);
+    const seamX = bodyInteriorSpan(body, apexY, 2).right;
+    const endY = hem.y - 2;
+    const endX = bodyInteriorSpan(body, endY, 3).right;
+    return {
+      z: 20,
+      shapes: [
+        { d: `M ${collarSpan.left} ${collarY} L ${seamX} ${apexY} L ${collarSpan.right} ${collarY} Z`, fill: '$outfitSecondary', silhouette: false },
+        { d: `M ${seamX} ${apexY} Q ${bodyInteriorSpan(body, button2Y, 3).right} ${button2Y} ${endX} ${endY}`, stroke: '#00000030', strokeWidth: 2.5, silhouette: false },
+        { d: circle(bodyInteriorSpan(body, button1Y, 3).right, button1Y, 1.5), fill: '#00000033', silhouette: false },
+        { d: circle(bodyInteriorSpan(body, button2Y, 3).right, button2Y, 1.5), fill: '#00000033', silhouette: false },
+      ],
+    };
+  }
+  return {
+    z: 20,
+    shapes: [
+      { d: `M ${n.x - vHalf} ${n.y} L ${chest.x} ${apexY} L ${n.x + vHalf} ${n.y} Z`, fill: '$outfitSecondary', silhouette: false },
+      { d: `M ${chest.x} ${apexY} L ${hem.x} ${hem.y}`, stroke: '#00000030', strokeWidth: 2.5, silhouette: false },
+      { d: circle(chest.x - 3, button1Y, 1.6), fill: '#00000033', silhouette: false },
+      { d: circle(chest.x - 3, button2Y, 1.6), fill: '#00000033', silhouette: false },
+    ],
+  };
+}
+
+/** Anchor-driven shirt collar and tie. */
+function anchoredShirtTie(facing: Facing, body: BodyFacingAnchors): PartVariant {
+  const n = body.neck;
+  const chest = body.chest;
+  const hip = body.hip;
+  const shoulderWidth = spanWidth(body.shoulders);
+  const collarHalf = clampValue(9, 13, shoulderWidth * 0.21);
+  const apexY = mix(n.y, chest.y, 0.82);
+  const tieHalf = clampValue(3, 4.5, collarHalf * 0.32);
+  const tieTipY = mix(chest.y, hip.y, 0.15);
+
+  if (facing === 'north') {
+    return {
+      z: 20,
+      shapes: [{ d: rr(n.x - collarHalf, n.y, collarHalf * 2, 4, 2), fill: '$outfitSecondary', silhouette: false }],
+    };
+  }
+  if (facing === 'east') {
+    const collarY = n.y + 4;
+    const collarSpan = bodyInteriorSpan(body, collarY, 0.5);
+    const apexX = bodyInteriorSpan(body, apexY, 2).right;
+    const tieTopY = mix(n.y, chest.y, 0.42);
+    const tieSpan = bodyInteriorSpan(body, tieTopY, 1.5);
+    const knotX = (tieSpan.left + tieSpan.right) / 2;
+    const topHalf = Math.min(tieHalf * 0.55, (tieSpan.right - tieSpan.left) / 2);
+    return {
+      z: 20,
+      shapes: [
+        { d: `M ${collarSpan.left} ${collarY} L ${apexX} ${apexY} L ${collarSpan.right} ${collarY} Z`, fill: '$outfitSecondary', silhouette: false },
+        { d: `M ${knotX - topHalf} ${tieTopY} L ${knotX + topHalf} ${tieTopY} L ${knotX + tieHalf * 0.8} ${tieTipY - 3} L ${knotX} ${tieTipY} L ${knotX - tieHalf * 0.8} ${tieTipY - 3} Z`, fill: '$accent', silhouette: false },
+      ],
+    };
+  }
+  return {
+    z: 20,
+    shapes: [
+      { d: `M ${n.x - collarHalf} ${n.y} L ${chest.x} ${apexY} L ${n.x + collarHalf} ${n.y} Z`, fill: '$outfitSecondary', silhouette: false },
+      { d: `M ${chest.x - tieHalf} ${n.y + 1} L ${chest.x + tieHalf} ${n.y + 1} L ${chest.x + tieHalf * 1.25} ${tieTipY - 4} L ${chest.x} ${tieTipY} L ${chest.x - tieHalf * 1.25} ${tieTipY - 4} Z`, fill: '$accent', silhouette: false },
+    ],
+  };
+}
+
+/** Anchor-driven hood, drawstrings, and pocket seam. */
+function anchoredHoodie(facing: Facing, body: BodyFacingAnchors): PartVariant {
+  const n = body.neck;
+  const chest = body.chest;
+  const shoulderWidth = spanWidth(body.shoulders);
+  const hoodHalf = clampValue(11, 16, shoulderWidth * 0.25);
+  const hoodDepthY = mix(n.y, chest.y, 0.45);
+
+  if (facing === 'north') {
+    return {
+      z: 20,
+      shapes: [
+        { d: `M ${n.x - hoodHalf} ${n.y} Q ${n.x} ${hoodDepthY + 2} ${n.x + hoodHalf} ${n.y} L ${n.x + hoodHalf} ${hoodDepthY} Q ${n.x} ${chest.y - 2} ${n.x - hoodHalf} ${hoodDepthY} Z`, fill: '$outfitSecondary', silhouette: false },
+      ],
+    };
+  }
+  if (facing === 'east') {
+    const run = clampValue(8, 18, body.waist.right.x - body.shoulders.right.x);
+    const outerX = Math.min(body.waist.right.x - 2, body.shoulders.right.x + run * 0.82);
+    const stringX = body.shoulders.right.x + run * 0.5;
+    return {
+      z: 20,
+      shapes: [
+        { d: `M ${n.x + 2} ${n.y} Q ${outerX} ${n.y + 4} ${outerX - 2} ${hoodDepthY} L ${stringX} ${hoodDepthY - 2} Z`, fill: '$outfitSecondary', silhouette: false },
+        { d: `M ${stringX} ${hoodDepthY} L ${stringX + 1} ${chest.y + 2}`, stroke: '$accent', strokeWidth: 1.6, silhouette: false },
+      ],
+    };
+  }
+  const pocketHalf = clampValue(8, 13, spanWidth(body.waist) * 0.2);
+  const pocketY = mix(spanCenter(body.waist).y, body.hip.y, 0.35);
+  return {
+    z: 20,
+    shapes: [
+      { d: `M ${n.x - hoodHalf} ${n.y} Q ${n.x} ${hoodDepthY + 2} ${n.x + hoodHalf} ${n.y} L ${n.x + hoodHalf * 0.7} ${hoodDepthY} Q ${n.x} ${chest.y - 1} ${n.x - hoodHalf * 0.7} ${hoodDepthY} Z`, fill: '$outfitSecondary', silhouette: false },
+      { d: `M ${n.x - 3} ${hoodDepthY} L ${chest.x - 4} ${chest.y + 2} M ${n.x + 3} ${hoodDepthY} L ${chest.x + 4} ${chest.y + 2}`, stroke: '$accent', strokeWidth: 1.6, silhouette: false },
+      { d: circle(chest.x - 4, chest.y + 2, 1.4), fill: '$accent', silhouette: false },
+      { d: circle(chest.x + 4, chest.y + 2, 1.4), fill: '$accent', silhouette: false },
+      { d: `M ${body.hip.x - pocketHalf} ${pocketY} Q ${body.hip.x} ${pocketY + 4} ${body.hip.x + pocketHalf} ${pocketY}`, stroke: '#00000026', strokeWidth: 2, silhouette: false },
+    ],
+  };
+}
+
+/** Formal blazer vocabulary plus an anchored tie and pocket square. */
+function anchoredSuitJacket(facing: Facing, body: BodyFacingAnchors): PartVariant {
+  const base = anchoredBlazer(facing, body);
+  const n = body.neck;
+  const chest = body.chest;
+  const hip = body.hip;
+  const shoulderWidth = spanWidth(body.shoulders);
+  const tieHalf = clampValue(2.6, 4, shoulderWidth * 0.06);
+
+  if (facing === 'north') {
+    const collarHalf = clampValue(10, 15, shoulderWidth * 0.23);
+    return {
+      ...base,
+      shapes: [
+        ...base.shapes,
+        { d: rr(n.x - collarHalf, n.y, collarHalf * 2, 5, 2), fill: '$outfitSecondary', silhouette: false },
+      ],
+    };
+  }
+  if (facing === 'east') {
+    const tieTopY = mix(n.y, chest.y, 0.42);
+    const tieSpan = bodyInteriorSpan(body, tieTopY, 1.5);
+    const tieX = (tieSpan.left + tieSpan.right) / 2;
+    const topHalf = Math.min(tieHalf * 0.6, (tieSpan.right - tieSpan.left) / 2);
+    const tieEndY = mix(chest.y, hip.y, 0.55);
+    const pocketY = chest.y + 5;
+    const pocketX = bodyInteriorSpan(body, pocketY, 3).right;
+    const notchY = mix(n.y, chest.y, 0.5);
+    const notchX = bodyInteriorSpan(body, notchY, 2).right;
+    return {
+      ...base,
+      shapes: [
+        ...base.shapes,
+        { d: `M ${tieX - topHalf} ${tieTopY} L ${tieX + topHalf} ${tieTopY} L ${tieX + tieHalf} ${tieEndY - 3} L ${tieX} ${tieEndY} L ${tieX - tieHalf} ${tieEndY - 3} Z`, fill: '$accent', silhouette: false },
+        { d: `M ${pocketX - 5} ${pocketY} L ${pocketX - 1} ${pocketY - 2} L ${pocketX - 1} ${pocketY + 3} Z`, fill: '$outfitSecondary', silhouette: false },
+        { d: `M ${notchX - 4} ${notchY - 2} L ${notchX - 1} ${notchY} L ${notchX - 3} ${notchY + 2}`, stroke: '$outfitPrimary', strokeWidth: 2.4, silhouette: false },
+      ],
+    };
+  }
+  const tieEndY = mix(chest.y, hip.y, 0.55);
+  const pocketX = mix(chest.x, body.waist.right.x, 0.58);
+  const lapelHalf = clampValue(10, 15, shoulderWidth * 0.23);
+  const notchY = n.y + 5;
+  return {
+    ...base,
+    shapes: [
+      ...base.shapes,
+      { d: `M ${chest.x - tieHalf} ${n.y + 2} L ${chest.x + tieHalf} ${n.y + 2} L ${chest.x + tieHalf * 1.2} ${tieEndY - 4} L ${chest.x} ${tieEndY} L ${chest.x - tieHalf * 1.2} ${tieEndY - 4} Z`, fill: '$accent', silhouette: false },
+      { d: `M ${pocketX - 4} ${chest.y + 5} L ${pocketX + 2} ${chest.y + 2} L ${pocketX + 2} ${chest.y + 8} Z`, fill: '$outfitSecondary', silhouette: false },
+      { d: `M ${n.x - lapelHalf * 0.78} ${notchY - 2} L ${n.x - lapelHalf * 0.48} ${notchY + 1} L ${n.x - lapelHalf * 0.26} ${notchY - 1} M ${n.x + lapelHalf * 0.78} ${notchY - 2} L ${n.x + lapelHalf * 0.48} ${notchY + 1} L ${n.x + lapelHalf * 0.26} ${notchY - 1}`, stroke: '$outfitPrimary', strokeWidth: 2.4, silhouette: false },
+    ],
+  };
+}
+
+// Engineering-complete but visually provisional (2026-07-09 review): retain
+// these variants for fit/rig proof, then revisit Dress in a dedicated art pass.
+const COMPACT_DRESS = { flareScale: 1.08, bottomDrop: 5 };
+const BALANCED_DRESS = { flareScale: 1, bottomDrop: 5 };
+const LARGE_FRAME_DRESS = { flareScale: 1.08, bottomDrop: 5 };
+const TALL_DRESS = { flareScale: 1.15, bottomDrop: 5 };
+const SOFT_DRESS = { flareScale: 1.18, bottomDrop: 5 };
+const DRESS_PROFILES: Record<string, { flareScale: number; bottomDrop: number }> = {
+  'trial-body-compact': COMPACT_DRESS,
+  'body-compact': COMPACT_DRESS,
+  'trial-body-average': BALANCED_DRESS,
+  'body-balanced': BALANCED_DRESS,
+  'trial-body-large-frame': LARGE_FRAME_DRESS,
+  'body-large-frame': LARGE_FRAME_DRESS,
+  'trial-body-tall': TALL_DRESS,
+  'body-tall': TALL_DRESS,
+  'trial-body-soft': SOFT_DRESS,
+  'body-soft': SOFT_DRESS,
+};
+
+/** Body-specific A-line silhouette with anchor-driven neckline and seam art. */
+function anchoredDress(facing: Facing, body: BodyFacingAnchors, bodyId?: string): PartVariant {
+  const profile = DRESS_PROFILES[bodyId ?? ''] ?? BALANCED_DRESS;
+  const waist = spanCenter(body.waist);
+  const hem = spanCenter(body.hem);
+  const waistHalf = spanWidth(body.waist) / 2;
+  const hemHalf = spanWidth(body.hem) / 2;
+  const flareHalf = clampValue(18, 31, Math.max(hemHalf + 3, waistHalf * 0.88) * profile.flareScale);
+  const bottomY = hem.y + profile.bottomDrop;
+  const leftBottom = facing === 'east'
+    ? Math.max(-31, hem.x - flareHalf * 0.78)
+    : hem.x - flareHalf;
+  const rightBottom = facing === 'east'
+    ? Math.min(31, hem.x + flareHalf * 1.08)
+    : hem.x + flareHalf;
+  const shoulderY = spanCenter(body.shoulders).y;
+  const skirt: PartVariant['shapes'][number] = {
+    d: `M ${body.neck.x} ${body.neck.y} Q ${body.shoulders.left.x} ${shoulderY} ${body.waist.left.x} ${waist.y} Q ${leftBottom} ${mix(waist.y, bottomY, 0.55)} ${leftBottom} ${bottomY} Q ${hem.x} ${bottomY + 2} ${rightBottom} ${bottomY} Q ${rightBottom} ${mix(waist.y, bottomY, 0.55)} ${body.waist.right.x} ${waist.y} Q ${body.shoulders.right.x} ${shoulderY} ${body.neck.x} ${body.neck.y} Z`,
+    fill: '$outfitPrimary',
+  };
+  const waistBand: PartVariant['shapes'][number] = {
+    d: `M ${body.waist.left.x} ${waist.y} L ${body.waist.right.x} ${waist.y}`,
+    stroke: '$accent',
+    strokeWidth: 2.5,
+    silhouette: false,
+  };
+
+  if (facing === 'north') {
+    const neckHalf = clampValue(7, 11, spanWidth(body.shoulders) * 0.17);
+    return {
+      z: 20,
+      shapes: [
+        skirt,
+        { d: rr(body.neck.x - neckHalf, body.neck.y, neckHalf * 2, 4, 2), fill: '$outfitSecondary', silhouette: false },
+        waistBand,
+        { d: `M ${hem.x} ${waist.y + 3} L ${hem.x} ${bottomY - 1}`, stroke: '#00000018', strokeWidth: 1.4, silhouette: false },
+      ],
+    };
+  }
+  if (facing === 'east') {
+    const collarY = body.neck.y + 4;
+    const collarSpan = bodyInteriorSpan(body, collarY, 0.5);
+    const necklineY = mix(body.neck.y, body.chest.y, 0.55);
+    return {
+      z: 20,
+      shapes: [
+        skirt,
+        { d: `M ${collarSpan.left} ${collarY} Q ${bodyInteriorSpan(body, necklineY, 1.5).right} ${necklineY} ${collarSpan.right} ${collarY} Z`, fill: '$skin', silhouette: false },
+        waistBand,
+        { d: `M ${hem.x - flareHalf * 0.34} ${waist.y + 3} L ${hem.x - flareHalf * 0.48} ${bottomY - 1} M ${hem.x + flareHalf * 0.34} ${waist.y + 3} L ${hem.x + flareHalf * 0.48} ${bottomY - 1}`, stroke: '#0000001E', strokeWidth: 1.6, silhouette: false },
+      ],
+    };
+  }
+  const neckHalf = clampValue(7, 11, spanWidth(body.shoulders) * 0.17);
+  return {
+    z: 20,
+    shapes: [
+      skirt,
+      { d: `M ${body.neck.x - neckHalf} ${body.neck.y} Q ${body.neck.x} ${mix(body.neck.y, body.chest.y, 0.58)} ${body.neck.x + neckHalf} ${body.neck.y} Z`, fill: '$skin', silhouette: false },
+      waistBand,
+      { d: `M ${hem.x - flareHalf * 0.34} ${waist.y + 3} L ${hem.x - flareHalf * 0.48} ${bottomY - 1} M ${hem.x + flareHalf * 0.34} ${waist.y + 3} L ${hem.x + flareHalf * 0.48} ${bottomY - 1} M ${hem.x} ${waist.y + 2} L ${hem.x} ${bottomY}`, stroke: '#0000001E', strokeWidth: 1.5, silhouette: false },
+    ],
+  };
+}
+
+/** Anchor-driven rolled collar. */
+function anchoredTurtleneck(facing: Facing, body: BodyFacingAnchors): PartVariant {
+  const n = body.neck;
+  const height = clampValue(7, 10, (body.chest.y - n.y) * 0.4);
+  const shoulderWidth = spanWidth(body.shoulders);
+  if (facing === 'east') {
+    const bottomY = n.y + height;
+    const bottomSpan = bodyInteriorSpan(body, bottomY, 0.75);
+    return {
+      z: 20,
+      shapes: [
+        { d: `M ${n.x} ${n.y + 1} Q ${bottomSpan.right} ${n.y + 2} ${bottomSpan.right} ${bottomY} L ${bottomSpan.left} ${bottomY} Q ${bottomSpan.left} ${n.y + 2} ${n.x} ${n.y + 1} Z`, fill: '$outfitSecondary', silhouette: false },
+      ],
+    };
+  }
+  const half = clampValue(6, 9, shoulderWidth * 0.135);
+  return {
+    z: 20,
+    shapes: [
+      { d: rr(n.x - half, n.y, half * 2, height, 4), fill: '$outfitSecondary', silhouette: false },
+      ...(facing === 'south'
+        ? [{ d: `M ${n.x - half} ${n.y + height * 0.7} Q ${n.x} ${n.y + height} ${n.x + half} ${n.y + height * 0.7}`, stroke: '#0000001E', strokeWidth: 1.4, silhouette: false } as PartVariant['shapes'][number]]
+        : []),
+    ],
+  };
+}
+
+/** Anchor-driven sweater vest panel. */
+function anchoredVest(facing: Facing, body: BodyFacingAnchors): PartVariant {
+  const n = body.neck;
+  const chest = body.chest;
+  const bottomY = mix(body.hip.y, spanCenter(body.hem).y, 0.45);
+  const panelHalf = Math.min(spanWidth(body.shoulders) * 0.23, spanWidth(body.waist) * 0.24);
+  const apexY = mix(n.y, chest.y, 0.82);
+
+  if (facing === 'east') {
+    const topY = spanCenter(body.shoulders).y + 2;
+    const top = bodyInteriorSpan(body, topY, 1.5);
+    const bottom = bodyInteriorSpan(body, bottomY, 2.5);
+    const apexX = bodyInteriorSpan(body, apexY, 2).right;
+    return {
+      z: 20,
+      shapes: [
+        { d: `M ${top.left} ${topY} L ${apexX} ${apexY} L ${top.right} ${topY} L ${bottom.right} ${bottomY} L ${bottom.left} ${bottomY} Z`, fill: '$outfitSecondary', silhouette: false },
+        { d: `M ${top.left + 1.5} ${topY} L ${apexX} ${mix(topY, apexY, 0.72)} L ${top.right - 1.5} ${topY} Z`, fill: '$accent', silhouette: false },
+      ],
+    };
+  }
+  if (facing === 'north') {
+    return {
+      z: 20,
+      shapes: [{ d: rr(body.chest.x - panelHalf, n.y, panelHalf * 2, bottomY - n.y, 4), fill: '$outfitSecondary', silhouette: false }],
+    };
+  }
+  return {
+    z: 20,
+    shapes: [
+      { d: `M ${n.x - panelHalf} ${n.y} L ${chest.x} ${apexY} L ${n.x + panelHalf} ${n.y} L ${body.hip.x + panelHalf} ${bottomY} L ${body.hip.x - panelHalf} ${bottomY} Z`, fill: '$outfitSecondary', silhouette: false },
+      { d: `M ${n.x - panelHalf * 0.5} ${n.y} L ${chest.x} ${mix(n.y, apexY, 0.78)} L ${n.x + panelHalf * 0.5} ${n.y} Z`, fill: '$accent', silhouette: false },
+      { d: circle(chest.x, mix(chest.y, body.hip.y, 0.38), 1.5), fill: '#00000030', silhouette: false },
+      { d: circle(chest.x, mix(chest.y, body.hip.y, 0.78), 1.5), fill: '#00000030', silhouette: false },
+    ],
+  };
+}
+
+/** Anchor-driven high-visibility vest and reflective bands. */
+function anchoredHiVis(facing: Facing, body: BodyFacingAnchors): PartVariant {
+  const n = body.neck;
+  const chest = body.chest;
+  const bottomY = mix(body.hip.y, spanCenter(body.hem).y, 0.64);
+  const panelHalf = Math.min(spanWidth(body.shoulders) * 0.23, spanWidth(body.waist) * 0.24);
+  const band = '#E4E8EC';
+
+  if (facing === 'east') {
+    const topY = spanCenter(body.shoulders).y + 2;
+    const top = bodyInteriorSpan(body, topY, 1.5);
+    const bottom = bodyInteriorSpan(body, bottomY, 2.5);
+    const vY = mix(topY, chest.y, 0.55);
+    const band1Y = mix(topY, chest.y, 0.72);
+    const band2Y = mix(chest.y, body.hip.y, 0.55);
+    const band1 = bodyInteriorSpan(body, band1Y, 2.5);
+    const band2 = bodyInteriorSpan(body, band2Y, 2.5);
+    return {
+      z: 20,
+      shapes: [
+        { d: `M ${top.left} ${topY} L ${bottom.left} ${bottomY} L ${bottom.right} ${bottomY} L ${top.right} ${topY} L ${mix(top.left, top.right, 0.64)} ${topY} L ${mix(top.left, top.right, 0.5)} ${vY} L ${mix(top.left, top.right, 0.36)} ${topY} Z`, fill: '$outfitSecondary', silhouette: false },
+        { d: rr(band1.left, band1Y, band1.right - band1.left, 3.5, 0.5), fill: band, silhouette: false },
+        { d: rr(band2.left, band2Y, band2.right - band2.left, 3.5, 0.5), fill: band, silhouette: false },
+      ],
+    };
+  }
+  if (facing === 'north') {
+    const leftX = body.chest.x - panelHalf;
+    const width = panelHalf * 2;
+    return {
+      z: 20,
+      shapes: [
+        { d: rr(leftX, n.y, width, bottomY - n.y, 3), fill: '$outfitSecondary', silhouette: false },
+        { d: rr(leftX + width * 0.16, n.y + 5, 3.5, bottomY - n.y - 9, 0.5), fill: band, silhouette: false },
+        { d: rr(leftX + width * 0.68, n.y + 5, 3.5, bottomY - n.y - 9, 0.5), fill: band, silhouette: false },
+        { d: rr(leftX, mix(chest.y, body.hip.y, 0.25), width, 3.5, 0.5), fill: band, silhouette: false },
+      ],
+    };
+  }
+  const leftX = body.chest.x - panelHalf;
+  const width = panelHalf * 2;
+  const vY = mix(n.y, chest.y, 0.5);
+  return {
+    z: 20,
+    shapes: [
+      { d: `M ${leftX} ${n.y} L ${leftX} ${bottomY} L ${leftX + width} ${bottomY} L ${leftX + width} ${n.y} L ${body.chest.x + panelHalf * 0.34} ${n.y} L ${body.chest.x} ${vY} L ${body.chest.x - panelHalf * 0.34} ${n.y} Z`, fill: '$outfitSecondary', silhouette: false },
+      { d: rr(leftX + width * 0.16, n.y + 5, 3.5, bottomY - n.y - 9, 0.5), fill: band, silhouette: false },
+      { d: rr(leftX + width * 0.68, n.y + 5, 3.5, bottomY - n.y - 9, 0.5), fill: band, silhouette: false },
+      { d: rr(leftX, mix(chest.y, body.hip.y, 0.15), width, 3.5, 0.5), fill: band, silhouette: false },
+      { d: rr(leftX, mix(chest.y, body.hip.y, 0.62), width, 3.5, 0.5), fill: band, silhouette: false },
+      { d: `M ${body.chest.x} ${vY} L ${body.hip.x} ${bottomY}`, stroke: '#00000030', strokeWidth: 1.5, silhouette: false },
     ],
   };
 }
@@ -597,6 +1048,7 @@ const OUTFITS: PartDef[] = [
         shapes: [{ d: `M 8 -29 L 13 -18 L 16 -29 Z`, fill: '$outfitSecondary', silhouette: false }],
       },
     },
+    buildVariant: (facing, context) => context.bodyAnchors && anchoredPolo(facing, context.bodyAnchors),
   },
   {
     id: 'outfit-cardigan',
@@ -619,6 +1071,7 @@ const OUTFITS: PartDef[] = [
         shapes: [{ d: `M 14 -24 L 14 20`, stroke: '#00000030', strokeWidth: 2.5, silhouette: false }],
       },
     },
+    buildVariant: (facing, context) => context.bodyAnchors && anchoredCardigan(facing, context.bodyAnchors),
   },
   {
     id: 'outfit-shirt-tie',
@@ -645,6 +1098,7 @@ const OUTFITS: PartDef[] = [
         ],
       },
     },
+    buildVariant: (facing, context) => context.bodyAnchors && anchoredShirtTie(facing, context.bodyAnchors),
   },
   {
     // Casual: hood draped at the neck, drawstrings, a kangaroo-pocket seam.
@@ -677,6 +1131,7 @@ const OUTFITS: PartDef[] = [
         ],
       },
     },
+    buildVariant: (facing, context) => context.bodyAnchors && anchoredHoodie(facing, context.bodyAnchors),
   },
   {
     // Formal: notched lapels + tie + buttons. Reads dressier than the blazer
@@ -711,10 +1166,11 @@ const OUTFITS: PartDef[] = [
         ],
       },
     },
+    buildVariant: (facing, context) => context.bodyAnchors && anchoredSuitJacket(facing, context.bodyAnchors),
   },
   {
-    // A-line dress: scoop neckline, waist seam, skirt panel seams that imply
-    // a flared skirt while staying inside the body outline.
+    // Legacy fallback dress: detail-only art on the old capsule. Body-owned
+    // rigs use anchoredDress(), whose A-line silhouette expands per body id.
     id: 'outfit-dress',
     label: 'Dress',
     slot: 'outfit',
@@ -746,6 +1202,7 @@ const OUTFITS: PartDef[] = [
         ],
       },
     },
+    buildVariant: (facing, context) => context.bodyAnchors && anchoredDress(facing, context.bodyAnchors, context.bodyId),
   },
   {
     // High rolled collar covering the neck — distinct, minimal silhouette read.
@@ -767,6 +1224,7 @@ const OUTFITS: PartDef[] = [
         shapes: [{ d: rr(5, -29, 12, 9, 4), fill: '$outfitSecondary', silhouette: false }],
       },
     },
+    buildVariant: (facing, context) => context.bodyAnchors && anchoredTurtleneck(facing, context.bodyAnchors),
   },
   {
     // Sweater vest over a collared shirt: V-neck panel + shirt V + buttons.
@@ -793,6 +1251,7 @@ const OUTFITS: PartDef[] = [
         ],
       },
     },
+    buildVariant: (facing, context) => context.bodyAnchors && anchoredVest(facing, context.bodyAnchors),
   },
   {
     // Hi-vis safety vest (B1.5 construction crew). The vest is $outfitSecondary
@@ -838,6 +1297,7 @@ const OUTFITS: PartDef[] = [
         ],
       },
     },
+    buildVariant: (facing, context) => context.bodyAnchors && anchoredHiVis(facing, context.bodyAnchors),
   },
 ];
 
@@ -902,6 +1362,7 @@ const ACCESSORIES: PartDef[] = [
     label: 'Coffee mug',
     slot: 'accessory',
     anchor: 'handRight',
+    handAttachmentRole: 'held-prop',
     facings: {
       south: {
         z: 30,
@@ -1018,6 +1479,7 @@ const ACCESSORIES: PartDef[] = [
     label: 'Watch',
     slot: 'accessory',
     anchor: 'handRight',
+    handAttachmentRole: 'wrist-worn',
     facings: {
       south: {
         z: 31,
@@ -1077,6 +1539,7 @@ const ACCESSORIES: PartDef[] = [
     label: 'Clipboard',
     slot: 'accessory',
     anchor: 'handRight',
+    handAttachmentRole: 'held-prop',
     facings: {
       south: {
         z: 32,
@@ -1109,6 +1572,7 @@ const ACCESSORIES: PartDef[] = [
     label: 'Coffee run',
     slot: 'accessory',
     anchor: 'handRight',
+    handAttachmentRole: 'held-prop',
     facings: {
       south: {
         z: 32,
@@ -1142,6 +1606,7 @@ const ACCESSORIES: PartDef[] = [
     label: 'Stack of papers',
     slot: 'accessory',
     anchor: 'handRight',
+    handAttachmentRole: 'held-prop',
     facings: {
       south: {
         z: 32,
@@ -1314,9 +1779,9 @@ export const INTERNAL_PARTS: PartDef[] = [
   },
 ];
 
-// Trial parts are renderable by explicit id for review scripts/tests, but stay
-// outside PART_LIBRARY so pickers, random generation, and exports cannot select
-// them until a human has curated the archetype set.
+// Silhouette-approved trial parts are renderable by explicit id for proof
+// scripts/tests, but stay outside PART_LIBRARY so pickers, random generation,
+// and ordinary exports cannot select them before the garment promotion gate.
 const byId = new Map(
   [...PART_LIBRARY, ...INTERNAL_PARTS, ...BODY_ARCHETYPE_TRIAL_PARTS].map((p) => [p.id, p]),
 );

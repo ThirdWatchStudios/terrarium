@@ -169,37 +169,42 @@ max). `none` needs no art; north matters (hair reads from behind).
 
 ### 4. Bodies (§4b) — archetype frames, N × 3 facings
 
-Body types are **archetypes that read from orbit**, not BMI steps. Candidate
-set (decision required):
+Body types are **archetypes that read from orbit**, not BMI steps. Approved set:
 
-- [ ] **Decide the body-type set.** Candidates: **compact, average,
-      large-frame, tall, soft** (replaces standard/slim/broad naming).
-      Target 4–5.
-- [ ] Each body drawn with **sub-anchor markers** (neck, shoulders, waist,
+- [x] **Body-type set approved (2026-07-09): compact, balanced,
+      large-frame, tall, soft.** This replaces standard/slim/broad for new work;
+      the legacy ids remain resolvable for existing projects.
+- [x] Each body drawn with **sub-anchor markers** (neck, shoulders, waist,
       hem) on an anchor layer — the importer reads these into the rig. Note:
       `tall` is the proof case for body-owned anchors (its headCenter is
       higher; nothing global can express that).
 
 | Body type | south | east | north |
 |---|---|---|---|
-| compact | [ ] | [ ] | [ ] |
-| average | [ ] | [ ] | [ ] |
-| large-frame | [ ] | [ ] | [ ] |
-| tall | [ ] | [ ] | [ ] |
-| soft (optional) | [ ] | [ ] | [ ] |
+| compact | [x] | [x] | [x] |
+| balanced | [x] | [x] | [x] |
+| large-frame | [x] | [x] | [x] |
+| tall | [x] | [x] | [x] |
+| soft | [x] | [x] | [x] |
 
 ≈ 12–15 drawings. North is usually south minus front shading.
 
-> **Assistant-authored silhouette trial (2026-07-09):** five generated
-> candidates now live in `src/parts/bodyArchetypeTrials.ts`, behind a render-only
-> registry that keeps them out of pickers, random generation, and production
-> exports. Run `npx tsx scripts/bodyArchetypePreview.ts` to regenerate the
+> **Assistant-authored silhouette trial (2026-07-09):** five generated,
+> silhouette-approved trials now live in `src/parts/bodyArchetypeTrials.ts`,
+> behind a render-only registry that keeps them out of pickers, random
+> generation, and ordinary exports unless explicitly referenced. Run
+> `npx tsx scripts/bodyArchetypePreview.ts` to regenerate the
 > character, flat-silhouette, active-sub-anchor, and rigged vertical-slice sheets
-> under `docs/previews/body-archetypes-*`. The candidate rigs now drive the head
-> stack, portraits, overhead attachments, tee/blazer/lanyard detail, and
-> neutral/point/slump poses while preserving exact global-anchor fallback for
-> legacy bodies. They remain nonselectable candidates until the body set is
-> approved and the rest of the garment/accessory/pose matrix is reviewed.
+> under `docs/previews/body-archetypes-*`. The trial rigs now drive the head
+> stack, portraits, overhead attachments, all 11 human outfits, all 15
+> poses, and pose-aware wrist/carry placement while preserving exact fallback
+> for legacy bodies. Watches follow every wrist; each normalized recipe may own
+> one bulky held prop, which renders only when the pose publishes a free carry
+> hand. The generated outfit candidate passes a 9,900-render body/outfit/pose/
+> facing/style matrix plus a strict fitted-paint mask. **Dress remains a
+> provisional visual study and is explicitly deferred for another art pass;**
+> that follow-up does not invalidate the approved body, rig, or fitted-outfit
+> work. The silhouettes remain nonselectable until the explicit promotion step.
 
 ### 5. Outfit detail kits (§4b) — body-independent, ~2 facings each
 
@@ -209,6 +214,13 @@ each detail piece as its own file** (`blazer.lapels.south.svg`,
 `blazer.buttons.south.svg`) — pieces stay individually addressable so kits can
 later be recombined into new garments without redrawing. North kit only where
 the garment reads from behind.
+
+> **Generated alternative ready for review (2026-07-09):** every row below now
+> has a body-anchor-driven code builder, including blazer pocket and suit notch/
+> pocket-square vocabulary. Review sheets are
+> `body-archetypes-outfits-{south,east,north}.png` and
+> `body-archetypes-outfit-distance.png`. The unchecked cells remain the optional
+> authored-source SVG backlog, not a runtime compatibility gap.
 
 | Garment | Detail pieces | south | east | north |
 |---|---|---|---|---|
@@ -232,8 +244,13 @@ The only place the body-count multiplier is paid; kept small on purpose.
 
 | Garment | Matrix | Status |
 |---|---|---|
-| dress | bodies × 3 facings | [ ] per cell — start after bodies final |
+| dress | bodies × 3 facings | structural 5×3 candidate complete; visual refinement deferred |
 | (long coat — only if added) | bodies × 3 | deferred |
+
+> **Dress follow-up (2026-07-09):** retain the current generated variants as
+> engineering proof, but do not treat their shape language as approved final
+> art. Revisit the waist transition, profile read, and high-contrast outline
+> treatment in a dedicated visual pass.
 
 ### 7. Conditional — only if the readability lints flag them
 

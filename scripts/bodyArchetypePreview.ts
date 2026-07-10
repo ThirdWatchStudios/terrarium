@@ -13,8 +13,8 @@ import { Resvg } from '@resvg/resvg-js';
 
 import { composeCharacter } from '../src/core/compositor';
 import type { CharacterRecipe, StyleSheet } from '../src/core/types';
-import type { Pose } from '../src/parts/poses';
-import { DEFAULT_STYLE } from '../src/data/defaults';
+import { POSES, type Pose } from '../src/parts/poses';
+import { DEFAULT_STYLE, DEFAULT_STYLE_PRESETS } from '../src/data/defaults';
 import {
   BODY_ARCHETYPE_TRIALS,
   type BodyArchetypeTrial,
@@ -60,9 +60,11 @@ const BODY_ONLY_STYLE: StyleSheet = {
 
 interface CharacterPreviewOptions {
   bodyOnly?: boolean;
-  outfit?: 'outfit-tee' | 'outfit-blazer';
+  outfit?: string;
   lanyard?: boolean;
+  accessories?: string[];
   pose?: Pose;
+  style?: StyleSheet;
 }
 
 function recipe(trial: BodyArchetypeTrial, options: CharacterPreviewOptions = {}): CharacterRecipe {
@@ -75,7 +77,7 @@ function recipe(trial: BodyArchetypeTrial, options: CharacterPreviewOptions = {}
       head: bodyOnly ? BODY_ONLY_PART : 'head-soft-square',
       hair: bodyOnly ? BODY_ONLY_PART : 'hair-side-part',
       outfit: bodyOnly ? BODY_ONLY_PART : (options.outfit ?? 'outfit-tee'),
-      accessories: bodyOnly || !options.lanyard ? [] : ['acc-lanyard'],
+      accessories: bodyOnly ? [] : (options.accessories ?? (options.lanyard ? ['acc-lanyard'] : [])),
     },
     palette: bodyOnly
       ? { ...PALETTE, outfitPrimary: '#171A1C' }
@@ -95,7 +97,7 @@ function placedCharacter(
   size: number,
   options: CharacterPreviewOptions = {},
 ): string {
-  const style = options.bodyOnly ? BODY_ONLY_STYLE : DEFAULT_STYLE;
+  const style = options.bodyOnly ? BODY_ONLY_STYLE : (options.style ?? DEFAULT_STYLE);
   const svg = composeCharacter(recipe(trial, options), style, facing, CANVAS, 'normal', {
     badge: false,
     pose: options.pose,
@@ -122,7 +124,7 @@ function fullCharacterSheet(): string {
 
   parts.push(`<rect width="${width}" height="${height}" fill="${COLORS.page}"/>`);
   parts.push(text(18, 30, 'Body archetype trial — active body-owned rig', 20, 700));
-  parts.push(text(18, 53, 'Crew tee, head stack, portraits, and attachments now follow each candidate body.', 12, 400, COLORS.muted));
+  parts.push(text(18, 53, 'Crew tee, head stack, portraits, and attachments now follow each silhouette-approved body.', 12, 400, COLORS.muted));
   FACINGS.forEach((facing, i) => {
     parts.push(text(fullStart + i * (fullSize + fullGap) + 44, 78, facing, 11, 600, COLORS.muted));
   });
@@ -236,7 +238,7 @@ function anchorSheet(): string {
   const parts: string[] = [`<rect width="${width}" height="${height}" fill="${COLORS.page}"/>`];
 
   parts.push(text(18, 28, 'Active body-owned sub-anchor rigs', 19, 700));
-  parts.push(text(18, 49, 'These exact anchors now drive heads, garments, attachments, portraits, and representative poses.', 11, 400, COLORS.muted));
+  parts.push(text(18, 49, 'These exact anchors now drive heads, garments, attachments, portraits, and the complete pose catalog.', 11, 400, COLORS.muted));
   const legend = [
     ['head', COLORS.head], ['neck', COLORS.neck], ['shoulders', COLORS.shoulders],
     ['waist', COLORS.waist], ['hem', COLORS.hem], ['chest', COLORS.chest], ['hip', COLORS.hip],
@@ -292,7 +294,7 @@ function riggedSliceSheet(): string {
   const parts: string[] = [`<rect width="${width}" height="${height}" fill="${COLORS.page}"/>`];
 
   parts.push(text(18, 28, 'Rigged vertical slice — tee / blazer / lanyard × neutral / point / slump', 19, 700));
-  parts.push(text(18, 49, 'Every cell is composed by the production renderer from the candidate body’s own anchors.', 11, 400, COLORS.muted));
+  parts.push(text(18, 49, 'Every cell is composed by the production renderer from the trial body’s own anchors.', 11, 400, COLORS.muted));
   RIGGED_COLUMNS.forEach((column, i) => {
     const x = labelWidth + i * stride;
     parts.push(text(x + 16, 75, `${column.facing} · ${column.outfit === 'outfit-tee' ? 'tee' : 'blazer'}`, 10, 650, COLORS.muted));
@@ -305,7 +307,7 @@ function riggedSliceSheet(): string {
     parts.push(text(22, y + 55, trial.label, 16, 700));
     parts.push(text(22, y + 75, 'clean garment compare', 10, 500, COLORS.muted));
     parts.push(text(22, y + 92, 'slump cells add ID', 10, 500, COLORS.muted));
-    parts.push(text(22, y + 109, 'render-only candidate', 10, 500, COLORS.muted));
+    parts.push(text(22, y + 109, 'silhouette approved · promotion pending', 10, 500, COLORS.muted));
     RIGGED_COLUMNS.forEach((column, i) => {
       const x = labelWidth + i * stride;
       parts.push(`<rect x="${x}" y="${y + 10}" width="${panel}" height="${panel}" rx="5" fill="#FFFFFF" stroke="${COLORS.grid}"/>`);
@@ -314,6 +316,221 @@ function riggedSliceSheet(): string {
         lanyard: column.lanyard,
         pose: column.pose,
       }));
+    });
+  });
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+}
+
+const POSE_SHORT: Record<Pose, string> = {
+  neutral: 'neutral',
+  'walk-approach': 'walk →',
+  notice: 'notice',
+  'arms-crossed': 'crossed',
+  'hands-on-hips': 'hips',
+  point: 'point',
+  slump: 'slump',
+  'walk-away': 'walk ←',
+  'lean-in': 'lean in',
+  'glance-back': 'glance',
+  laugh: 'laugh',
+  shrug: 'shrug',
+  recoil: 'recoil',
+  celebrate: 'celebrate',
+  console: 'console',
+};
+
+function poseProofSheet(facing: 'south' | 'east' | 'north'): string {
+  const labelWidth = 178;
+  const panel = 92;
+  const stride = 96;
+  const header = 100;
+  const rowHeight = 104;
+  const width = labelWidth + POSES.length * stride + 14;
+  const height = header + BODY_ARCHETYPE_TRIALS.length * rowHeight;
+  const parts: string[] = [`<rect width="${width}" height="${height}" fill="${COLORS.page}"/>`];
+  parts.push(text(18, 28, `${facing} pose rig — all 15 authored states`, 19, 700));
+  parts.push(text(18, 49, 'Every wrist and arm path is generated from the active body anchors.', 11, 400, COLORS.muted));
+  POSES.forEach((pose, i) => {
+    const x = labelWidth + i * stride + 8;
+    parts.push(`<text x="${x}" y="88" transform="rotate(-36 ${x} 88)" font-family="system-ui, sans-serif" font-size="9" font-weight="600" fill="${COLORS.muted}">${POSE_SHORT[pose]}</text>`);
+  });
+
+  BODY_ARCHETYPE_TRIALS.forEach((trial, row) => {
+    const y = header + row * rowHeight;
+    parts.push(`<rect x="8" y="${y + 2}" width="${width - 16}" height="${rowHeight - 4}" rx="7" fill="${row % 2 === 0 ? COLORS.panel : COLORS.row}"/>`);
+    parts.push(text(20, y + 45, trial.label, 15, 700));
+    parts.push(text(20, y + 63, `${facing} · tee`, 10, 500, COLORS.muted));
+    POSES.forEach((pose, col) => {
+      const x = labelWidth + col * stride;
+      parts.push(`<rect x="${x}" y="${y + 6}" width="${panel}" height="${panel}" rx="4" fill="#FFFFFF" stroke="${COLORS.grid}"/>`);
+      parts.push(placedCharacter(trial, facing, x, y + 6, panel, { outfit: 'outfit-tee', pose }));
+    });
+  });
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+}
+
+const HELD_ACCESSORIES = [
+  ['acc-mug', 'mug'],
+  ['acc-watch', 'watch'],
+  ['acc-clipboard', 'clipboard'],
+  ['acc-coffee-tray', 'coffee tray'],
+  ['acc-paper-stack', 'paper stack'],
+] as const;
+
+function heldProofSheet(facing: 'south' | 'east' | 'north'): string {
+  const labelWidth = 218;
+  const panel = 64;
+  const stride = 68;
+  const header = 106;
+  const rowHeight = 68;
+  const rows = BODY_ARCHETYPE_TRIALS.length * HELD_ACCESSORIES.length;
+  const width = labelWidth + POSES.length * stride + 14;
+  const height = header + rows * rowHeight;
+  const parts: string[] = [`<rect width="${width}" height="${height}" fill="${COLORS.page}"/>`];
+  parts.push(text(18, 28, `${facing} wrist + held-object compatibility`, 19, 700));
+  parts.push(text(18, 49, 'Watch follows every right wrist. Bulky props appear only when a pose has a free carry hand.', 11, 400, COLORS.muted));
+  POSES.forEach((pose, i) => {
+    const x = labelWidth + i * stride + 7;
+    parts.push(`<text x="${x}" y="94" transform="rotate(-36 ${x} 94)" font-family="system-ui, sans-serif" font-size="8" font-weight="600" fill="${COLORS.muted}">${POSE_SHORT[pose]}</text>`);
+  });
+
+  let row = 0;
+  BODY_ARCHETYPE_TRIALS.forEach((trial, bodyIndex) => {
+    HELD_ACCESSORIES.forEach(([accessory, label], accessoryIndex) => {
+      const y = header + row * rowHeight;
+      const fill = bodyIndex % 2 === 0 ? COLORS.panel : COLORS.row;
+      parts.push(`<rect x="8" y="${y + 1}" width="${width - 16}" height="${rowHeight - 2}" fill="${fill}"/>`);
+      if (accessoryIndex === 0) parts.push(text(18, y + 27, trial.label, 13, 700));
+      parts.push(text(108, y + 27, label, 10, 550, COLORS.muted));
+      POSES.forEach((pose, col) => {
+        const x = labelWidth + col * stride;
+        parts.push(`<rect x="${x}" y="${y + 2}" width="${panel}" height="${panel}" rx="3" fill="#FFFFFF" stroke="${COLORS.grid}"/>`);
+        parts.push(placedCharacter(trial, facing, x, y + 2, panel, {
+          outfit: 'outfit-tee',
+          accessories: [accessory],
+          pose,
+        }));
+      });
+      row++;
+    });
+  });
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+}
+
+const HUMAN_OUTFITS = [
+  ['outfit-tee', 'tee'],
+  ['outfit-polo', 'polo'],
+  ['outfit-shirt-tie', 'shirt + tie'],
+  ['outfit-turtleneck', 'turtleneck'],
+  ['outfit-cardigan', 'cardigan'],
+  ['outfit-blazer', 'blazer'],
+  ['outfit-suit-jacket', 'suit'],
+  ['outfit-hoodie', 'hoodie'],
+  ['outfit-vest', 'vest'],
+  ['outfit-hi-vis', 'hi-vis'],
+  ['outfit-dress', 'dress'],
+] as const;
+
+function outfitProofSheet(facing: 'south' | 'east' | 'north'): string {
+  const labelWidth = 178;
+  const panel = 96;
+  const stride = 100;
+  const header = 100;
+  const rowHeight = 108;
+  const width = labelWidth + HUMAN_OUTFITS.length * stride + 14;
+  const height = header + BODY_ARCHETYPE_TRIALS.length * rowHeight;
+  const parts: string[] = [`<rect width="${width}" height="${height}" fill="${COLORS.page}"/>`];
+  parts.push(text(18, 28, `${facing} full outfit fit — 11 human garments`, 19, 700));
+  parts.push(text(18, 49, 'Every collar, seam, panel, band, and hem is generated from the active body rig.', 11, 400, COLORS.muted));
+  HUMAN_OUTFITS.forEach(([, label], i) => {
+    const x = labelWidth + i * stride + 10;
+    parts.push(`<text x="${x}" y="88" transform="rotate(-32 ${x} 88)" font-family="system-ui, sans-serif" font-size="9" font-weight="600" fill="${COLORS.muted}">${label}</text>`);
+  });
+
+  BODY_ARCHETYPE_TRIALS.forEach((trial, row) => {
+    const y = header + row * rowHeight;
+    parts.push(`<rect x="8" y="${y + 2}" width="${width - 16}" height="${rowHeight - 4}" rx="7" fill="${row % 2 === 0 ? COLORS.panel : COLORS.row}"/>`);
+    parts.push(text(20, y + 46, trial.label, 15, 700));
+    parts.push(text(20, y + 64, `${facing} · full catalog`, 10, 500, COLORS.muted));
+    HUMAN_OUTFITS.forEach(([outfit], col) => {
+      const x = labelWidth + col * stride;
+      parts.push(`<rect x="${x}" y="${y + 6}" width="${panel}" height="${panel}" rx="4" fill="#FFFFFF" stroke="${COLORS.grid}"/>`);
+      parts.push(placedCharacter(trial, facing, x, y + 6, panel, { outfit }));
+    });
+  });
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+}
+
+function dressStyleSheet(): string {
+  const facings = ['south', 'east', 'north'] as const;
+  const columns = DEFAULT_STYLE_PRESETS.flatMap((preset) => facings.map((facing) => ({ preset, facing })));
+  const labelWidth = 178;
+  const panel = 104;
+  const stride = 108;
+  const header = 108;
+  const rowHeight = 116;
+  const width = labelWidth + columns.length * stride + 14;
+  const height = header + BODY_ARCHETYPE_TRIALS.length * rowHeight;
+  const parts: string[] = [`<rect width="${width}" height="${height}" fill="${COLORS.page}"/>`];
+  parts.push(text(18, 28, 'Dress silhouette stress — bodies × source facings × styles', 19, 700));
+  parts.push(text(18, 49, 'Dress is the rare silhouette-changing garment; the A-line profile is generated per body id.', 11, 400, COLORS.muted));
+  columns.forEach(({ preset, facing }, i) => {
+    const x = labelWidth + i * stride;
+    parts.push(text(x + 8, 78, preset.name.replace(' readability', ''), 9, 650, COLORS.muted));
+    parts.push(text(x + 34, 94, facing, 9, 500, COLORS.muted));
+  });
+
+  BODY_ARCHETYPE_TRIALS.forEach((trial, row) => {
+    const y = header + row * rowHeight;
+    parts.push(`<rect x="8" y="${y + 2}" width="${width - 16}" height="${rowHeight - 4}" rx="7" fill="${row % 2 === 0 ? COLORS.panel : COLORS.row}"/>`);
+    parts.push(text(20, y + 50, trial.label, 15, 700));
+    parts.push(text(20, y + 68, 'dress · silhouette', 10, 500, COLORS.muted));
+    columns.forEach(({ preset, facing }, col) => {
+      const x = labelWidth + col * stride;
+      parts.push(`<rect x="${x}" y="${y + 6}" width="${panel}" height="${panel}" rx="4" fill="#FFFFFF" stroke="${COLORS.grid}"/>`);
+      parts.push(placedCharacter(trial, facing, x, y + 6, panel, { outfit: 'outfit-dress', style: preset.style }));
+    });
+  });
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+}
+
+function outfitDistanceSheet(): string {
+  const sizes = [64, 48, 32] as const;
+  const labelWidth = 176;
+  const cell = 68;
+  const bodyStride = cell * sizes.length + 10;
+  const header = 106;
+  const rowHeight = 76;
+  const width = labelWidth + BODY_ARCHETYPE_TRIALS.length * bodyStride + 14;
+  const height = header + HUMAN_OUTFITS.length * rowHeight;
+  const parts: string[] = [`<rect width="${width}" height="${height}" fill="${COLORS.page}"/>`];
+  parts.push(text(18, 28, 'Outfit game-scale strip — 64 / 48 / 32 px', 19, 700));
+  parts.push(text(18, 49, 'The full fitted catalog at shrinking raster sizes; fine details may simplify, identities must remain distinct.', 11, 400, COLORS.muted));
+  BODY_ARCHETYPE_TRIALS.forEach((trial, bodyIndex) => {
+    const x = labelWidth + bodyIndex * bodyStride;
+    parts.push(text(x + 48, 77, trial.label, 11, 650, COLORS.muted));
+    sizes.forEach((size, sizeIndex) => parts.push(text(x + sizeIndex * cell + 25, 94, `${size}`, 9, 500, COLORS.muted)));
+  });
+
+  HUMAN_OUTFITS.forEach(([outfit, label], row) => {
+    const y = header + row * rowHeight;
+    parts.push(`<rect x="8" y="${y + 1}" width="${width - 16}" height="${rowHeight - 2}" fill="${row % 2 === 0 ? COLORS.panel : COLORS.row}"/>`);
+    parts.push(text(18, y + 31, label, 12, 650));
+    parts.push(text(18, y + 48, outfit, 9, 450, COLORS.muted));
+    BODY_ARCHETYPE_TRIALS.forEach((trial, bodyIndex) => {
+      const groupX = labelWidth + bodyIndex * bodyStride;
+      sizes.forEach((size, sizeIndex) => {
+        const x = groupX + sizeIndex * cell;
+        const px = x + (cell - size) / 2;
+        const py = y + 4 + (cell - size) / 2;
+        parts.push(`<rect x="${x + 1}" y="${y + 4}" width="${cell - 4}" height="${cell}" rx="3" fill="#FFFFFF" stroke="${COLORS.grid}"/>`);
+        parts.push(placedCharacter(trial, 'south', px, py, size, { outfit }));
+      });
     });
   });
 
@@ -337,10 +554,26 @@ function html(): string {
 </style>
 <main>
   <h1>Body archetype trial</h1>
-  <p class="notice"><strong>Active rig trial, still safely nonselectable.</strong> Body-owned anchors now drive the representative character slice; the candidates remain outside the production library until art review and full-catalog adaptation.</p>
+  <p class="notice"><strong>Body rig and fitted outfits approved; Dress is provisional.</strong> Body-owned anchors drive the full catalog, but Dress is retained as engineering proof and deferred for a dedicated visual pass before its art is considered final.</p>
   <ul>${cards}</ul>
   <h2>Garment, lanyard, and pose proof</h2>
   <img src="body-archetypes-rigged.png" alt="Five body archetypes with body-aware garments, lanyards, and poses">
+  <h2>Complete pose rig — all authored source facings</h2>
+  <img src="body-archetypes-poses-south.png" alt="All body archetypes in all south-facing poses">
+  <img src="body-archetypes-poses-east.png" alt="All body archetypes in all east-facing poses">
+  <img src="body-archetypes-poses-north.png" alt="All body archetypes in all north-facing poses">
+  <h2>Wrist and held-object policy</h2>
+  <img src="body-archetypes-held-south.png" alt="South-facing held-object compatibility matrix">
+  <img src="body-archetypes-held-east.png" alt="East-facing held-object compatibility matrix">
+  <img src="body-archetypes-held-north.png" alt="North-facing held-object compatibility matrix">
+  <h2>Complete outfit fit</h2>
+  <img src="body-archetypes-outfits-south.png" alt="All five body archetypes in all south-facing human outfits">
+  <img src="body-archetypes-outfits-east.png" alt="All five body archetypes in all east-facing human outfits">
+  <img src="body-archetypes-outfits-north.png" alt="All five body archetypes in all north-facing human outfits">
+  <h2>Dress silhouette study — provisional</h2>
+  <img src="body-archetypes-dress-styles.png" alt="Body-specific dress silhouettes across source facings and style presets">
+  <h2>Outfit game-scale strip</h2>
+  <img src="body-archetypes-outfit-distance.png" alt="Every body and outfit at 64, 48, and 32 pixels">
   <h2>Characters through the production compositor</h2>
   <img src="body-archetypes-preview.png" alt="Five body archetypes across facings and distances">
   <h2>Flat silhouettes</h2>
@@ -361,6 +594,17 @@ function main(): void {
 
   const full = fullCharacterSheet();
   writeSvgAndPng(outDir, 'body-archetypes-rigged', riggedSliceSheet());
+  writeSvgAndPng(outDir, 'body-archetypes-poses-south', poseProofSheet('south'));
+  writeSvgAndPng(outDir, 'body-archetypes-poses-east', poseProofSheet('east'));
+  writeSvgAndPng(outDir, 'body-archetypes-poses-north', poseProofSheet('north'));
+  writeSvgAndPng(outDir, 'body-archetypes-held-south', heldProofSheet('south'));
+  writeSvgAndPng(outDir, 'body-archetypes-held-east', heldProofSheet('east'));
+  writeSvgAndPng(outDir, 'body-archetypes-held-north', heldProofSheet('north'));
+  writeSvgAndPng(outDir, 'body-archetypes-outfits-south', outfitProofSheet('south'));
+  writeSvgAndPng(outDir, 'body-archetypes-outfits-east', outfitProofSheet('east'));
+  writeSvgAndPng(outDir, 'body-archetypes-outfits-north', outfitProofSheet('north'));
+  writeSvgAndPng(outDir, 'body-archetypes-dress-styles', dressStyleSheet());
+  writeSvgAndPng(outDir, 'body-archetypes-outfit-distance', outfitDistanceSheet());
   writeSvgAndPng(outDir, 'body-archetypes-preview', full);
   writeFileSync(
     join(outDir, 'body-archetypes-preview@2x.png'),
@@ -370,7 +614,7 @@ function main(): void {
   writeSvgAndPng(outDir, 'body-archetypes-anchors', anchorSheet());
   writeFileSync(join(outDir, 'body-archetypes-preview.html'), html());
 
-  console.log(`wrote body-archetypes-{rigged,preview,silhouettes,anchors}.{svg,png} + preview HTML to ${outDir}`);
+  console.log(`wrote body-archetypes rig, pose, held-object, outfit, dress, distance, silhouette, and anchor proofs to ${outDir}`);
 }
 
 main();

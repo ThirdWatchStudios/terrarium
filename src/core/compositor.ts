@@ -25,7 +25,8 @@ import { SOCIAL_STATE_BADGES, type SocialState } from '../parts/socialStates';
 import { getEmotion, type EmotionMark } from '../parts/emotions';
 import { ATTENTION_PUFF_ART, type AttentionPuff, type AttentionPuffArt } from '../parts/attention';
 import { getIcon } from '../parts/icons';
-import { getPose, poseVariantFor, type Pose, type PoseTransforms } from '../parts/poses';
+import { getPose, poseVariantFor, type Pose, type PoseTransforms, type PoseVariant } from '../parts/poses';
+import { normalizedRiggedAccessories } from './recipe';
 import { PROP_TEMPLATES } from '../props/templates';
 import { FLOOR_TEMPLATES, WALL_TEMPLATES } from '../tiles/templates';
 import { GROUND_OVERLAY_BUILDERS } from '../tiles/groundOverlays';
@@ -76,6 +77,8 @@ interface ResolvedCharacterRig {
   anchors: CanvasAnchors;
   /** Body-local anchors used by dynamic garment and pose builders. */
   bodyAnchors?: BodyFacingAnchors;
+  /** Resolved identity body, including `rigBodyId` for alternate renderings. */
+  bodyId?: string;
 }
 
 const translated = (origin: { x: number; y: number }, local: { x: number; y: number }) => ({
@@ -90,9 +93,8 @@ function resolveCharacterRig(recipe: CharacterRecipe | undefined, facing: Facing
     Object.entries(fallback).map(([name, value]) => [name, { ...value }]),
   ) as CanvasAnchors;
   const renderRecipe = recipe as CharacterRenderRecipe | undefined;
-  const bodyAnchors = recipe
-    ? getPart(renderRecipe?.rigBodyId ?? recipe.parts.body)?.bodyAnchors?.[facing]
-    : undefined;
+  const bodyId = recipe ? (renderRecipe?.rigBodyId ?? recipe.parts.body) : undefined;
+  const bodyAnchors = bodyId ? getPart(bodyId)?.bodyAnchors?.[facing] : undefined;
   if (!bodyAnchors) return { anchors };
 
   const origin = anchors.body;
@@ -103,11 +105,34 @@ function resolveCharacterRig(recipe: CharacterRecipe | undefined, facing: Facing
   anchors.hip = translated(origin, bodyAnchors.hip);
   anchors.shoulderLeft = translated(origin, bodyAnchors.shoulders.left);
   anchors.shoulderRight = translated(origin, bodyAnchors.shoulders.right);
-  return { anchors, bodyAnchors };
+  return { anchors, bodyAnchors, bodyId };
 }
 
-function variantForPart(part: PartDef, facing: Facing, bodyAnchors?: BodyFacingAnchors): PartVariant | undefined {
-  return part.buildVariant?.(facing, { bodyAnchors }) ?? part.facings[facing];
+function variantForPart(part: PartDef, facing: Facing, rig: ResolvedCharacterRig): PartVariant | undefined {
+  return part.buildVariant?.(facing, { bodyAnchors: rig.bodyAnchors, bodyId: rig.bodyId }) ?? part.facings[facing];
+}
+
+function anchorForPart(
+  part: PartDef,
+  rig: ResolvedCharacterRig,
+  poseVariant?: PoseVariant,
+): { x: number; y: number } | undefined {
+  if (part.anchor === 'handRight' && rig.bodyAnchors && poseVariant?.attachments) {
+    const attachments = poseVariant.attachments;
+    if (part.handAttachmentRole === 'held-prop') {
+      const carryHand = attachments.carryHand ?? 'right';
+      if (carryHand === 'none') return undefined;
+      const carryPoint = carryHand === 'left' ? attachments.handLeft : attachments.handRight;
+      return carryPoint ? translated(rig.anchors.body, carryPoint) : undefined;
+    }
+    if (part.handAttachmentRole === 'wrist-worn') {
+      return attachments.handRight ? translated(rig.anchors.body, attachments.handRight) : undefined;
+    }
+    if (attachments.handRight) {
+      return translated(rig.anchors.body, attachments.handRight);
+    }
+  }
+  return rig.anchors[part.anchor];
 }
 
 /** Anchors whose parts belong to the head group (scaled by headScale). */
@@ -182,10 +207,14 @@ function placeParts(
   pose?: Pose,
   rig: ResolvedCharacterRig = resolveCharacterRig(recipe, facing),
 ): PlacedPart[] {
+  const poseVariant = pose ? poseVariantFor(pose, facing, rig.bodyAnchors) : undefined;
+  const attachmentVariant = poseVariant ?? (
+    rig.bodyAnchors ? poseVariantFor('neutral', facing, rig.bodyAnchors) : undefined
+  );
   const ids = [
     recipe.parts.body,
     recipe.parts.outfit,
-    ...recipe.parts.accessories,
+    ...normalizedRiggedAccessories(recipe),
     recipe.parts.head,
     recipe.parts.hair,
   ];
@@ -193,11 +222,13 @@ function placeParts(
   for (const id of ids) {
     const part = getPart(id);
     if (!part) continue;
-    const variant = variantForPart(part, facing, rig.bodyAnchors);
+    const variant = variantForPart(part, facing, rig);
     if (!variant) continue;
+    const anchor = anchorForPart(part, rig, attachmentVariant);
+    if (!anchor) continue;
     placed.push({
       variant,
-      anchor: rig.anchors[part.anchor],
+      anchor,
       group: HEAD_ANCHORS.includes(part.anchor) ? 'head' : 'body',
     });
   }
@@ -232,7 +263,6 @@ function placeParts(
 
   // Pose arm layers (parts/poses.ts) — body-local like the outfit overlays, so
   // they ride the bodyWidth group transform and stay attached to the capsule.
-  const poseVariant = pose ? poseVariantFor(pose, facing, rig.bodyAnchors) : undefined;
   if (poseVariant) {
     if (poseVariant.back && poseVariant.back.length > 0) {
       placed.push({
@@ -703,22 +733,27 @@ interface IdPlaced {
 
 /** Like placeParts but retains part identity and excludes mood/neck-shadow. */
 function placeForLayers(recipe: CharacterRecipe, facing: Facing, rig: ResolvedCharacterRig): IdPlaced[] {
+  const attachmentVariant = rig.bodyAnchors
+    ? poseVariantFor('neutral', facing, rig.bodyAnchors)
+    : undefined;
   const order: Array<{ id: string; slot: string }> = [
     { id: recipe.parts.body, slot: 'body' },
     { id: recipe.parts.outfit, slot: 'outfit' },
-    ...recipe.parts.accessories.map((id) => ({ id, slot: 'accessory' })),
+    ...normalizedRiggedAccessories(recipe).map((id) => ({ id, slot: 'accessory' })),
     { id: recipe.parts.head, slot: 'head' },
     { id: recipe.parts.hair, slot: 'hair' },
   ];
   const out: IdPlaced[] = [];
   for (const { id, slot } of order) {
     const part = getPart(id);
-    const variant = part ? variantForPart(part, facing, rig.bodyAnchors) : undefined;
+    const variant = part ? variantForPart(part, facing, rig) : undefined;
     if (!part || !variant) continue;
+    const anchor = anchorForPart(part, rig, attachmentVariant);
+    if (!anchor) continue;
     out.push({
       partId: id,
       slot,
-      anchor: rig.anchors[part.anchor],
+      anchor,
       group: HEAD_ANCHORS.includes(part.anchor) ? 'head' : 'body',
       variant,
     });

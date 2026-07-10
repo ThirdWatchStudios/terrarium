@@ -1,5 +1,6 @@
 import type { CharacterRecipe, StyleSheet } from './types';
 import { partsForSlot } from '../parts/library';
+import { normalizeCharacterRecipe } from './recipe';
 
 export type Rng = () => number;
 
@@ -43,7 +44,7 @@ export function randomCharacter(style: StyleSheet, rng: Rng = Math.random): Char
     if (!accessories.includes(id)) accessories.push(id);
   }
   counter += 1;
-  return {
+  return normalizeCharacterRecipe({
     id: `char-${Date.now().toString(36)}-${counter}`,
     name: pickWith(rng, FIRST_NAMES),
     parts: {
@@ -60,7 +61,7 @@ export function randomCharacter(style: StyleSheet, rng: Rng = Math.random): Char
       outfitSecondary: pickWith(rng, pools.secondary),
       accent: pickWith(rng, pools.accent),
     },
-  };
+  });
 }
 
 /** Re-roll only the palette of an existing recipe. */
