@@ -13,7 +13,10 @@
     "test:update": "vitest run -u",
     "export": "npm run parts:check && tsx scripts/export.ts",
     "parts:import": "tsx scripts/importParts.ts",
-    "parts:check": "tsx scripts/importParts.ts --check"
+    "parts:import:check": "tsx scripts/importParts.ts --check",
+    "parts:scaffolds": "tsx scripts/generatePartScaffolds.ts",
+    "parts:scaffolds:check": "tsx scripts/generatePartScaffolds.ts --check",
+    "parts:check": "npm run parts:import:check && npm run parts:scaffolds:check"
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",

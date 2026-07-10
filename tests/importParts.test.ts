@@ -149,6 +149,23 @@ describe('strict part SVG compiler', () => {
     )).toThrow(/opacity rounds to zero/);
   });
 
+  it('allows inherited evenodd only when each filled art path overrides to nonzero', () => {
+    const path = '<path fill-rule="nonzero" d="M60 40L68 40 64 48Z" fill="#00FFFF"/>';
+    expect(compilePartSvg(svg(path, 'fill-rule="evenodd"'), {
+      source: 'explicit-winding.svg',
+      slot: 'hair',
+    })).toEqual([{ d: 'M-4-4L4-4 0 4Z', fill: '$hair' }]);
+    expect(() => compilePartSvg(svg(
+      '<path d="M60 40L68 40 64 48Z" fill="#00FFFF"/>',
+      'fill-rule="evenodd"',
+    ), { source: 'inherited-evenodd.svg', slot: 'hair' }))
+      .toThrow(/filled path must resolve the nonzero fill rule/);
+    expect(() => compilePartSvg(svg(path, 'fill-rule="banana"'), {
+      source: 'invalid-fill-rule.svg',
+      slot: 'hair',
+    })).toThrow(/fill-rule declarations must be nonzero or evenodd/);
+  });
+
   it('rejects tint-impure shapes and non-uniform stroked transforms', () => {
     expect(() => compilePartSvg(svg(
       '<path d="M60 40L68 40 64 48Z" fill="#00FFFF" stroke="#111111" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>',
@@ -242,6 +259,7 @@ describe('part source tree and generated registration', () => {
     expect(Object.keys(imports[0].facings)).toEqual(FACINGS);
     expect(emitImportedPartArt(imports)).toBe(emitImportedPartArt(reorderedImports));
     expect(emitImportedPartArt(imports)).not.toContain(root);
+    expect(emitImportedPartArt(imports)).toContain('IMPORTED_PART_PROVENANCE');
     expect(emitImportedPartArt(imports)).toContain('sourceKind: "authored"');
   });
 
@@ -300,6 +318,29 @@ describe('part source tree and generated registration', () => {
     );
     expect(generated).toBe(emitImportedPartArt(imports));
   });
+
+  it('keeps the production bob as a deliberate three-facing authored overlay', async () => {
+    const imports = await compilePartDirectory({
+      inputDir: path.resolve('assets/parts'),
+      sourcePathPrefix: 'assets/parts',
+      catalog: PART_IMPORT_TARGETS,
+    });
+    expect(imports).toHaveLength(1);
+    expect(imports[0]).toMatchObject({
+      id: 'hair-bob',
+      slot: 'hair',
+      sourceKind: 'authored',
+    });
+    for (const facing of FACINGS) {
+      expect(imports[0].facings[facing]).toHaveLength(2);
+      expect(imports[0].facings[facing]?.[0]).toMatchObject({ fill: '$hair' });
+      expect(imports[0].facings[facing]?.[1]).toMatchObject({
+        stroke: '#00000024',
+        strokeWidth: 1.6,
+        silhouette: false,
+      });
+    }
+  });
 });
 
 describe('imported art overlay', () => {
@@ -309,8 +350,6 @@ describe('imported art overlay', () => {
     const result = applyImportedPartArt([head, hair], [{
       id: 'hair-bob',
       slot: 'hair',
-      sourceKind: 'authored',
-      sourceFiles: ['assets/parts/hair/bob.south.svg'],
       facings: { south: [{ d: 'M0 0L2 0 0 2Z', fill: '$hair' }] },
     }]);
 
@@ -329,8 +368,6 @@ describe('imported art overlay', () => {
     const importArt = {
       id: 'hair-bob',
       slot: 'hair' as const,
-      sourceKind: 'authored' as const,
-      sourceFiles: [],
       facings: { south: [{ d: 'M0 0L1 1', stroke: '#000000' }] },
     };
     expect(() => applyImportedPartArt([hair], [importArt, importArt])).toThrow(/duplicate imported id/);
@@ -340,7 +377,7 @@ describe('imported art overlay', () => {
     expect(() => applyImportedPartArt([hair], [importArt])).toThrow(/buildVariant/);
   });
 
-  it('leaves the production library unique while the generated overlay is empty', () => {
+  it('leaves the production library unique after applying generated overlays', () => {
     const ids = PART_LIBRARY.map((part) => part.id);
     expect(new Set(ids).size).toBe(ids.length);
   });

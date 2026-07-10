@@ -13,11 +13,18 @@ other runtime metadata remain owned by the handwritten `PartDef`.
 ## Commands
 
 ```bash
-npm run parts:import  # validate sources and update the committed module
+npm run parts:import  # update imported art, then refresh dependent scaffolds
 npm run parts:check   # validate sources and fail if the module is stale
+npm run parts:scaffolds # regenerate seeded SVG starters and palette files
 ```
 
 `npm run build` begins with `parts:check`; builds never rewrite source files.
+
+The generated authoring assets live under `assets/part-authoring`: six seeded
+head/hair scaffold SVGs plus ASE, GPL, and readable SVG sentinel palette
+companions for optional editors. Their directory README defines the canonical
+editor-agnostic workflow. Layer locking is only an editing convenience;
+semantic IDs determine which groups the importer ignores.
 
 ## Source convention
 
@@ -79,7 +86,9 @@ Facing files must agree on relative bucket order for the same reason.
   linejoins, matching the compositor.
 - Path opacity is supported from `(0, 1]`; group opacity is rejected because a
   flattened `ShapeSpec[]` cannot preserve group compositing.
-- The nonzero fill rule only.
+- Every filled visible path must resolve the nonzero fill rule. An ancestor
+  `evenodd` default is tolerated only when the visible path explicitly
+  overrides it with `fill-rule="nonzero"`.
 
 SVGO runs with an explicit conservative plugin list. Its default preset is not
 used because ID cleanup, group collapse, and path merging would destroy layer
@@ -100,15 +109,19 @@ because `ShapeSpec` has only one scalar stroke width.
   emitted as character art. Those reference groups may be faded or hidden.
 - All IDs must remain unique.
 
-Whether Affinity Designer preserves the slash-based IDs is a hard gate for the
-first real round trip. The importer does not silently infer lost detail
-semantics.
+Slash-based IDs are canonical compiler input and are covered by automated
+fixtures. Any optional editor must preserve them, but editor compatibility is
+an interoperability smoke test rather than a production gate. The importer
+does not silently infer lost detail semantics.
 
 ## Generated registration and provenance
 
 The generated module records repository-relative source paths and a
-`sourceKind` (`authored`, `generated`, or `curated`). That metadata remains
-internal to Terrarium: it is not added to `PartDef`, recipes, layer exports, or
+`sourceKind`: `authored` is deliberate canonical repo SVG regardless of tool,
+`generated` is generator-owned and reproducible, and `curated` is selected and
+frozen generator output. That audit manifest is a separate generated export;
+the browser library imports only geometry, so bundling drops source paths and
+provenance. The metadata is not added to `PartDef`, recipes, layer exports, or
 the tool/sim contract.
 
 Unknown, legacy-only, and internal part IDs are rejected. Duplicate imports,
@@ -127,6 +140,6 @@ are rejected before the generated file changes.
 - Accessory anchors, z-order, and hand-attachment roles.
 - Importing the full eleven-point body sub-rig from an anchor layer.
 
-Those need explicit manifests/adapters. The next proof is scaffolding and a
-`hair-bob` Affinity export/reimport, where only the intended bob snapshots may
-change.
+Those need explicit manifests/adapters. The initial headless
+scaffold-to-runtime `hair-bob` proof is complete; expanding intake beyond
+static head/hair overlays is the next adapter boundary.

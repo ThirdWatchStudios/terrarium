@@ -10,6 +10,14 @@ interface CliOptions {
   output: string;
 }
 
+function defaultInput(root: string): string {
+  return path.join(root, 'assets/parts');
+}
+
+function defaultOutput(root: string): string {
+  return path.join(root, 'src/parts/generated/importedPartArt.ts');
+}
+
 function usage(): string {
   return [
     'Usage: tsx scripts/importParts.ts [--check] [--input <dir>] [--out <file>]',
@@ -23,8 +31,8 @@ function usage(): string {
 function parseArgs(args: string[], root: string): CliOptions {
   const options: CliOptions = {
     check: false,
-    input: path.join(root, 'assets/parts'),
-    output: path.join(root, 'src/parts/generated/importedPartArt.ts'),
+    input: defaultInput(root),
+    output: defaultOutput(root),
   };
   for (let index = 0; index < args.length; index++) {
     const argument = args[index];
@@ -69,14 +77,24 @@ async function main(): Promise<void> {
 
   if (current === expected) {
     process.stdout.write(`Part import unchanged (${imports.length} part${imports.length === 1 ? '' : 's'}).\n`);
-    return;
+  } else {
+    await mkdir(path.dirname(options.output), { recursive: true });
+    const temporary = `${options.output}.tmp-${process.pid}`;
+    await writeFile(temporary, expected, 'utf8');
+    await rename(temporary, options.output);
+    process.stdout.write(`Imported ${imports.length} part${imports.length === 1 ? '' : 's'} into ${path.relative(root, options.output)}.\n`);
   }
 
-  await mkdir(path.dirname(options.output), { recursive: true });
-  const temporary = `${options.output}.tmp-${process.pid}`;
-  await writeFile(temporary, expected, 'utf8');
-  await rename(temporary, options.output);
-  process.stdout.write(`Imported ${imports.length} part${imports.length === 1 ? '' : 's'} into ${path.relative(root, options.output)}.\n`);
+  if (options.input === defaultInput(root) && options.output === defaultOutput(root)) {
+    // Load after the generated module is replaced so the scaffold generator
+    // observes the newly compiled overlay rather than this process's old copy.
+    const { writePartAuthoringAssets, generatedPartAuthoringAssetCount } =
+      await import('./generatePartScaffolds');
+    const result = await writePartAuthoringAssets(root);
+    process.stdout.write(
+      `Generated ${generatedPartAuthoringAssetCount()} part authoring assets (${result.updated} updated, ${result.removed} removed).\n`,
+    );
+  }
 }
 
 main().catch((error: unknown) => {

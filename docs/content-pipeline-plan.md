@@ -1,11 +1,13 @@
 # Content Pipeline — from procedural appearance to compiled identity
 
-Direction + phased plan, written 2026-07-09. Companion to `TOOL_ARCHITECTURE.md`.
-The hand-authored primitives, tracked by milestone: `core-part-library.md`
-(tool decision: Affinity Designer).
-(the engine/content-pack split); this doc covers where assets *come from*, that
-one covers how they're *organized*. Nothing here changes the export contract
-except where explicitly flagged (floor variants).
+Direction + phased plan, written 2026-07-09. Companion to
+`TOOL_ARCHITECTURE.md` (the engine/content-pack split); this doc covers where
+assets *come from*, while that one covers how they're *organized*. The
+deliberately authored primitives are tracked by milestone in
+`core-part-library.md`. Canonical character-part sources are strict SVG: they
+may be written directly, generated and curated, or edited in a compatible
+vector editor. No particular editor is a production dependency. Nothing here
+changes the export contract except where explicitly flagged (floor variants).
 
 ---
 
@@ -42,7 +44,8 @@ badges, LOD machinery, atlases, floor variation (generator + human curation),
 shadows, metadata, randomization, layout.
 
 Two input types, one compiler:
-- **Authored assets** — SVG drawn in an editor, validated on import.
+- **Authored assets** — deliberate, reviewable SVG sources produced directly
+  or with an optional visual editor, then validated on import.
 - **Generator programs** — code that emits candidates a human curates
   (e.g. floor speckle seeds culled in the repeat preview, winners frozen).
 
@@ -99,15 +102,24 @@ icons), not by upfront design.
    acceptable — editor choice stays free.
 3. **Template scaffolds**: tool command exporting per-slot guide SVGs —
    128 grid, anchor markers, body-capsule / head-radius guides, an existing
-   part on a locked reference layer, sentinel swatches (ship a portable `.ase`
-   palette for Affinity; a `.gpl` may remain as an optional companion for
-   Inkscape).
-4. **Round-trip acceptance test**: export an existing hand-written part
-   (hair `bob`), edit in the editor, reimport; snapshot diff shows only the
-   edit.
+   part on a named reference layer, and sentinel swatches. Portable ASE, GPL,
+   and readable SVG palette companions support optional editors. Implemented
+   for current head/hair intake under `assets/part-authoring` via
+   `npm run parts:scaffolds`; semantic IDs, not editor-only layer state, define
+   what the importer ignores.
+4. **Headless intake proof**: derive `hair-bob` sources from the generated
+   scaffolds, make a deliberate canonical-SVG detail edit, compile them through
+   the importer, and regenerate compositor snapshots. Implemented 2026-07-10:
+   the new three-facing parting detail changes only `hair__hair-bob.svg`,
+   `janice.svg`, and `janice__moods.svg`. The rendered production-size result
+   and 32/48 px strips are inspected separately from final art-direction
+   approval.
 5. **Provenance**: each imported asset records source
    (`authored | generated | curated`) in its generated module, so lints and
-   future audits know what's re-generatable.
+   future audits know what's re-generatable. `authored` means deliberate
+   canonical repo SVG regardless of authoring tool; `generated` means
+   generator-owned and reproducible; `curated` means selected and frozen
+   generator output.
 
 ### Phase 3 — Wall bevel piece kit (~1 week; first authoring test)
 

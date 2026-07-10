@@ -10,13 +10,19 @@ export type ImportedPartSourceKind = 'authored' | 'generated' | 'curated';
  * handwritten definition remains authoritative for selection order, label,
  * anchors, z-order, body rig data, and any other runtime behavior.
  */
-export interface ImportedPartArt {
+export interface ImportedPartOverlay {
   readonly id: string;
   readonly slot: Slot;
-  readonly sourceKind: ImportedPartSourceKind;
-  readonly sourceFiles: readonly string[];
   readonly facings: Partial<Record<Facing, readonly ShapeSpec[]>>;
 }
+
+export interface ImportedPartProvenance {
+  readonly id: string;
+  readonly sourceKind: ImportedPartSourceKind;
+  readonly sourceFiles: readonly string[];
+}
+
+export interface ImportedPartArt extends ImportedPartOverlay, ImportedPartProvenance {}
 
 function fail(message: string): never {
   throw new Error(`Imported part art: ${message}`);
@@ -25,7 +31,7 @@ function fail(message: string): never {
 /** Apply imported geometry without changing production picker/RNG order. */
 export function applyImportedPartArt(
   baseParts: readonly PartDef[],
-  importedArt: readonly ImportedPartArt[],
+  importedArt: readonly ImportedPartOverlay[],
 ): PartDef[] {
   const indexes = new Map<string, number>();
   baseParts.forEach((part, index) => {

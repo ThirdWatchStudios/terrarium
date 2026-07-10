@@ -1,7 +1,8 @@
 # Core Part Library — the visual alphabet
 
-The hand-authored primitives of `content-pipeline-plan.md`. Tool: **Affinity
-Designer**. This is a **library**, not a batch of game assets: every head may
+The deliberately authored primitives of `content-pipeline-plan.md`. The
+canonical tool is the strict SVG source contract, not a particular
+application. This is a **library**, not a batch of game assets: every head may
 be worn by hundreds of employees, every hairstyle by thousands of NPCs. The
 ~110 pieces are the alphabet all future employees, offices, and scenarios are
 written with; once it exists, Terrarium goes back to doing what it does best —
@@ -16,23 +17,29 @@ full alphabet; the milestones are what "done" means.
 
 - [x] Importer (`scripts/importParts.ts`) with strict validation
       (`part-importer.md`; static production head/hair overlays first)
-- [ ] Template scaffold SVGs per slot (128 grid, anchors, capsule/head guides,
-      reference part on locked layer) — the Affinity starting documents
-- [ ] Sentinel color palette defined and added as an Affinity document palette
-- [ ] Round-trip proof: export hair `bob` → edit in Affinity → reimport →
-      snapshot diff shows only the edit
-- [ ] Verify which conventions survive Affinity's SVG export (layer names as
-      ids for `detail/*`; if they do not, define and test an explicit alternate
-      detail encoding before importing production art)
+- [x] Template scaffold SVGs for supported head/hair intake (128 grid,
+      anchors, capsule/head guides, seeded editable art, named reference layer)
+      with semantic IDs for every editable and ignored path
+- [x] Sentinel color palette defined and generated as ASE, GPL, and readable
+      SVG companions (`npm run parts:scaffolds`); every scaffold also embeds
+      the five exact swatches
+- [x] Headless bob intake proof: scaffold → deliberate three-facing SVG
+      parting edit → importer → generated overlay → exactly the three expected
+      compositor snapshots
+- [x] Semantic SVG conventions compiler-tested: slash IDs, ignored guide /
+      reference groups, `detail/*`, exact sentinel colors, and nonzero fill
 
-### Affinity setup notes
+Optional visual-editor interoperability is useful, but it is not an M1
+prerequisite and no named editor is a production gate.
 
-- Document: 128×128 px, one part per document (from the scaffold SVG).
+### Canonical SVG authoring notes
+
+- Document: 128×128 px, one part per source (start from a scaffold SVG).
 - Flat fills/strokes only. No layer effects (fx), gradients, or blend modes —
-  the importer hard-rejects them; Affinity rasterizes unsupported properties
-  on SVG export, which the validator also catches.
-- Export: SVG preset with "flatten transforms" enabled and rasterization
-  disabled; confirm exact option names during the round-trip proof.
+  the importer hard-rejects unsupported source features.
+- Supported transforms may remain because the importer bakes them into
+  128-space. Optional editors must preserve semantic IDs, hexadecimal colors,
+  the viewBox, nonzero fill, and vector paths without rasterization.
 - Palette-driven colors use the sentinel hexes only; literal colors only for
   style-neutral detail (per `src/parts/library.ts` conventions). The frozen
   values and exact SVG intake contract live in `part-importer.md`.
@@ -41,7 +48,7 @@ full alphabet; the milestones are what "done" means.
 
 ## Definition of Done (every part)
 
-A part isn't finished when it looks good in Affinity; it's finished when it
+A part isn't finished when its source looks good; it is finished when it
 survives the whole pipeline:
 
 - [ ] Imports cleanly; validator passes
@@ -81,7 +88,7 @@ library as a whole:
 
 Everything flows end-to-end once, before volume work starts.
 
-- [ ] All Prerequisites above
+- [x] All Prerequisites above
 - [ ] Wall bevel kit (all 12 pieces) + assembler + snapshot regen
 - [ ] One head, one hairstyle, one body, one outfit detail kit — each through
       the full Definition of Done
@@ -169,6 +176,10 @@ max). `none` needs no art; north matters (hair reads from behind).
 | Special | balding | [ ] | [ ] | [ ] |
 | Special | coils | [ ] | [ ] | [ ] |
 | *(future)* | *Short/military, Medium/layered, …* | — | — | — |
+
+`hair-bob` now has canonical authored SVG and a three-facing parting detail;
+its inventory boxes remain open until the visual approval and remaining
+Definition of Done checks are complete.
 
 ### 4. Bodies (§4b) — archetype frames, N × 3 facings
 
