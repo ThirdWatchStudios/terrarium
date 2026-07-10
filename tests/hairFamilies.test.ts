@@ -9,10 +9,13 @@ import { BODY_ARCHETYPES } from '../src/parts/bodyArchetypes';
 import { IMPORTED_PART_PROVENANCE } from '../src/parts/generated/importedPartArt';
 import { getPart, partsForSlot } from '../src/parts/library';
 
-const REPRESENTATIVE_HAIRS = [
+const CANONICAL_HAIRS = [
   ['hair-short', 'short', [1, 2, 1]],
   ['hair-bob', 'bob', [2, 2, 2]],
   ['hair-long-straight', 'long-straight', [1, 1, 1]],
+  ['hair-curly', 'curly', [6, 5, 4]],
+  ['hair-ponytail', 'ponytail', [3, 4, 3]],
+  ['hair-coils', 'coils', [1, 1, 1]],
 ] as const;
 
 const HUMAN_HEADS = [
@@ -62,7 +65,7 @@ function hairMask(id: string, facing: Facing): Uint8Array {
   );
 }
 
-describe('representative production hair families', () => {
+describe('canonical production hair families', () => {
   it('keeps exact picker order, canonical provenance, and facing semantics', () => {
     expect(partsForSlot('hair').map(({ id }) => id)).toEqual([
       'hair-none',
@@ -78,7 +81,7 @@ describe('representative production hair families', () => {
       'hair-coils',
     ]);
 
-    for (const [id, slug, counts] of REPRESENTATIVE_HAIRS) {
+    for (const [id, slug, counts] of CANONICAL_HAIRS) {
       const part = getPart(id);
       expect(part?.anchor, id).toBe('headCenter');
       expect(FACINGS.map((facing) => part?.facings[facing]?.shapes.length), id)
@@ -110,7 +113,7 @@ describe('representative production hair families', () => {
     }
   });
 
-  it('renders the 1,080-cell hair, body, head, facing, and style matrix deterministically without clipping', () => {
+  it('renders the 2,160-cell hair, body, head, facing, and style matrix deterministically without clipping', () => {
     let count = 0;
     const nondeterministic: string[] = [];
     const invalidGeometry: string[] = [];
@@ -118,7 +121,7 @@ describe('representative production hair families', () => {
     const outOfCanvasBounds: string[] = [];
 
     for (const preset of DEFAULT_STYLE_PRESETS) {
-      for (const [hair] of REPRESENTATIVE_HAIRS) {
+      for (const [hair] of CANONICAL_HAIRS) {
         for (const body of BODY_ARCHETYPES) {
           for (const head of HUMAN_HEADS) {
             for (const facing of ALL_FACINGS) {
@@ -148,18 +151,18 @@ describe('representative production hair families', () => {
       }
     }
 
-    expect(count).toBe(1080);
+    expect(count).toBe(2160);
     expect(nondeterministic).toEqual([]);
     expect(invalidGeometry).toEqual([]);
     expect(unresolvedPaint).toEqual([]);
     expect(outOfCanvasBounds).toEqual([]);
   });
 
-  it('keeps every representative family pair distinct by at least 64 pixels across 32px source facings', () => {
-    for (let leftIndex = 0; leftIndex < REPRESENTATIVE_HAIRS.length; leftIndex++) {
-      for (let rightIndex = leftIndex + 1; rightIndex < REPRESENTATIVE_HAIRS.length; rightIndex++) {
-        const leftId = REPRESENTATIVE_HAIRS[leftIndex][0];
-        const rightId = REPRESENTATIVE_HAIRS[rightIndex][0];
+  it('keeps every canonical family pair distinct by at least 64 pixels across 32px source facings', () => {
+    for (let leftIndex = 0; leftIndex < CANONICAL_HAIRS.length; leftIndex++) {
+      for (let rightIndex = leftIndex + 1; rightIndex < CANONICAL_HAIRS.length; rightIndex++) {
+        const leftId = CANONICAL_HAIRS[leftIndex][0];
+        const rightId = CANONICAL_HAIRS[rightIndex][0];
         let changed = 0;
         for (const facing of FACINGS) {
           const left = hairMask(leftId, facing);
@@ -171,6 +174,27 @@ describe('representative production hair families', () => {
         expect(changed, `${leftId}/${rightId}`).toBeGreaterThanOrEqual(64);
       }
     }
+  });
+
+  it('keeps Ponytail directional and Coils visibly separate from Curly at 32px', () => {
+    const ponytailSouth = hairMask('hair-ponytail', 'south');
+    const ponytailEast = hairMask('hair-ponytail', 'east');
+    const coilsSouth = hairMask('hair-coils', 'south');
+    const coilsEast = hairMask('hair-coils', 'east');
+    const curlySouth = hairMask('hair-curly', 'south');
+    let ponytailTurnPixels = 0;
+    let coilsTurnPixels = 0;
+    let coilsCurlyPixels = 0;
+
+    for (let pixel = 0; pixel < ponytailSouth.length; pixel++) {
+      if (ponytailSouth[pixel] !== ponytailEast[pixel]) ponytailTurnPixels++;
+      if (coilsSouth[pixel] !== coilsEast[pixel]) coilsTurnPixels++;
+      if (coilsSouth[pixel] !== curlySouth[pixel]) coilsCurlyPixels++;
+    }
+
+    expect(ponytailTurnPixels).toBeGreaterThanOrEqual(48);
+    expect(coilsTurnPixels).toBeGreaterThanOrEqual(16);
+    expect(coilsCurlyPixels).toBeGreaterThanOrEqual(20);
   });
 
   it('keeps the Long straight east profile distinct from its centered south curtain', () => {

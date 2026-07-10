@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium hair-curly south authored art</title>
+  <desc>Current production curly front silhouette with a soft lobed crown.</desc>
+  <g id="art" transform="translate(64 44)">
+    <path id="art/cap" d="M -19.4164878389476 -8 A 21 21 0 0 1 19.4164878389476 -8 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/curl-left" d="M -24 -9 a 9 9 0 1 0 18 0 a 9 9 0 1 0 -18 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/curl-upper-left" d="M -17 -16 a 9 9 0 1 0 18 0 a 9 9 0 1 0 -18 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/curl-center" d="M -9 -18 a 9 9 0 1 0 18 0 a 9 9 0 1 0 -18 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/curl-upper-right" d="M -1 -16 a 9 9 0 1 0 18 0 a 9 9 0 1 0 -18 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/curl-right" d="M 6 -9 a 9 9 0 1 0 18 0 a 9 9 0 1 0 -18 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
+  </g>
+</svg>

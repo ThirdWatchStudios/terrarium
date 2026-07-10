@@ -594,13 +594,13 @@ describe('part source tree and generated registration', () => {
     expect(generated).toBe(emitImportedPartArt(imports));
   });
 
-  it('keeps five bodies, three representative hairs, six human heads, and tee as fifteen deliberate authored overlays', async () => {
+  it('keeps five bodies, six canonical hairs, six human heads, and tee as eighteen deliberate authored overlays', async () => {
     const imports = await compilePartDirectory({
       inputDir: path.resolve('assets/parts'),
       sourcePathPrefix: 'assets/parts',
       catalog: PART_IMPORT_TARGETS,
     });
-    expect(imports).toHaveLength(15);
+    expect(imports).toHaveLength(18);
     expect(imports.map(({ id }) => id)).toEqual([
       'body-balanced',
       'body-compact',
@@ -608,7 +608,10 @@ describe('part source tree and generated registration', () => {
       'body-soft',
       'body-tall',
       'hair-bob',
+      'hair-coils',
+      'hair-curly',
       'hair-long-straight',
+      'hair-ponytail',
       'hair-short',
       'head-angular',
       'head-boxy',
@@ -666,7 +669,10 @@ describe('part source tree and generated registration', () => {
     expect(imports.filter(({ kind }) => kind !== 'body-detail' && kind !== 'body-art').map(({ id }) => id))
       .toEqual([
         'hair-bob',
+        'hair-coils',
+        'hair-curly',
         'hair-long-straight',
+        'hair-ponytail',
         'hair-short',
         'head-angular',
         'head-boxy',
@@ -675,13 +681,16 @@ describe('part source tree and generated registration', () => {
         'head-round',
         'head-soft-square',
       ]);
-    const representativeHairs = [
+    const canonicalHairs = [
       { id: 'hair-short', slug: 'short', counts: [1, 2, 1] },
       { id: 'hair-bob', slug: 'bob', counts: [2, 2, 2] },
       { id: 'hair-long-straight', slug: 'long-straight', counts: [1, 1, 1] },
+      { id: 'hair-curly', slug: 'curly', counts: [6, 5, 4] },
+      { id: 'hair-ponytail', slug: 'ponytail', counts: [3, 4, 3] },
+      { id: 'hair-coils', slug: 'coils', counts: [1, 1, 1] },
     ] as const;
     const exactPathStableHairShapes: string[] = [];
-    for (const { id, slug, counts } of representativeHairs) {
+    for (const { id, slug, counts } of canonicalHairs) {
       const hair = staticImport(imports.find((candidate) => candidate.id === id)!);
       expect(hair).toMatchObject({
         id,
@@ -714,9 +723,9 @@ describe('part source tree and generated registration', () => {
         silhouette: false,
       });
     }
-    expect(exactPathStableHairShapes).toHaveLength(7);
+    expect(exactPathStableHairShapes).toHaveLength(35);
     expect(createHash('sha256').update(exactPathStableHairShapes.join('\n')).digest('hex'))
-      .toBe('d077fa5ca5f887dc9b7a23815e420722d6e3aba223b80a1546b71a0845047920');
+      .toBe('66edc8701b755e355a6f5b6fd716f6ba9c90b29c5ae1a4804edee876c09c43ca');
 
     for (const slug of ['round', 'oval', 'boxy', 'long', 'angular', 'soft-square']) {
       const id = `head-${slug}`;
@@ -976,7 +985,13 @@ describe('imported art overlay', () => {
       expect(production.buildVariant, target.id).toBeUndefined();
     }
     expect(staticTargets.filter(({ preserveLocalPaths }) => preserveLocalPaths).map(({ id }) => id))
-      .toEqual(['hair-short', 'hair-long-straight']);
+      .toEqual([
+        'hair-short',
+        'hair-curly',
+        'hair-ponytail',
+        'hair-long-straight',
+        'hair-coils',
+      ]);
 
     const bodyTargets = PART_IMPORT_TARGETS.filter(({ importMode }) => importMode === 'body-art');
     expect(bodyTargets.map(({ id }) => id)).toEqual(BODY_ARCHETYPES.map(({ id }) => id));

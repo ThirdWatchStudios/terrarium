@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium hair-curly north authored art</title>
+  <desc>Current production curly rear silhouette with full back coverage.</desc>
+  <g id="art" transform="translate(64 44)">
+    <path id="art/cap" d="M -20.12461179749811 6 A 21 21 0 1 1 20.12461179749811 6 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/curl-left" d="M -23 -10 a 9 9 0 1 0 18 0 a 9 9 0 1 0 -18 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/curl-center" d="M -10 -16 a 10 10 0 1 0 20 0 a 10 10 0 1 0 -20 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/curl-right" d="M 5 -10 a 9 9 0 1 0 18 0 a 9 9 0 1 0 -18 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
+  </g>
+</svg>

@@ -27,19 +27,19 @@ are the approved production source of truth. Together with `head-round`, all
 six head families passed the automated compatibility matrices and user visual
 approval on 2026-07-10.
 
-`hair/` contains the approved Bob source plus the representative Short and
-Long straight south/east/north sets. Their target-level byte-stable mode
-validates full canvas geometry while avoiding arc normalization that would
-otherwise change rendered pixels. Short and Long straight south/north preserve
-their prior paths exactly; Long straight east adds the batch's one deliberate
-art change, replacing the front-view curtain with a single rear fall and short
-temple edge. Bob remains
-the Medium-family control; Short and Long straight received visual approval on
-2026-07-10.
+`hair/` contains six complete south/east/north sets: the approved Bob, Short,
+and Long straight foundations plus the Curly, Ponytail, and Coils review batch.
+Their target-level byte-stable mode validates full canvas geometry while
+avoiding arc normalization that would otherwise change rendered pixels. Short
+and Long straight south/north preserve their prior shapes, while Curly
+preserves all three facings; Long straight east, Ponytail, and Coils carry the
+deliberate silhouette refinements. Bob
+remains the Medium-family control; Short and Long straight received visual
+approval on 2026-07-10. Curly, Ponytail, and Coils received visual approval on
+2026-07-10 as well.
 
-The approved body, head, and representative Short/Medium/Long hair foundations
-now live in this source tree. Current production work is the
-Curly/Ponytail/Coils silhouette batch.
+The approved body, head, and six-hair foundations now live in this source tree.
+Current production work is the Bun/Balding/Pixie/Side-part silhouette batch.
 Detail-only Tee/Blazer work and wall bevel/detail authoring resume after that
 hair pass.
 

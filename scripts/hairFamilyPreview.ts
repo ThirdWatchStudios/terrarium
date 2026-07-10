@@ -3,9 +3,9 @@
  *
  *   npx tsx scripts/hairFamilyPreview.ts [outDir]
  *
- * Renders the current compositor geometry for the Short, Bob, and Long straight
- * hairstyle families. This script is deliberately read-only with respect to
- * part sources; all three are approved canonical production silhouettes.
+ * Renders the current compositor geometry for the approved representative
+ * Short/Bob/Long straight and Curly/Ponytail/Coils sets. This script is
+ * deliberately read-only with respect to part sources; all six are approved.
  */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
@@ -33,18 +33,42 @@ const HAIR_STYLES = [
   {
     id: 'hair-short',
     label: 'Short',
+    approved: true,
     status: 'approved canonical production geometry',
     statusShort: 'approved canonical',
   },
   {
     id: 'hair-bob',
     label: 'Bob',
+    approved: true,
     status: 'approved medium-family control',
     statusShort: 'approved control',
   },
   {
     id: 'hair-long-straight',
     label: 'Long straight',
+    approved: true,
+    status: 'approved canonical production geometry',
+    statusShort: 'approved canonical',
+  },
+  {
+    id: 'hair-curly',
+    label: 'Curly',
+    approved: true,
+    status: 'approved canonical production geometry',
+    statusShort: 'approved canonical',
+  },
+  {
+    id: 'hair-ponytail',
+    label: 'Ponytail',
+    approved: true,
+    status: 'approved canonical production geometry',
+    statusShort: 'approved canonical',
+  },
+  {
+    id: 'hair-coils',
+    label: 'Coils',
+    approved: true,
     status: 'approved canonical production geometry',
     statusShort: 'approved canonical',
   },
@@ -129,7 +153,7 @@ function compatibilitySheet(): string {
 
   HAIR_STYLES.forEach((hair, hairIndex) => {
     const x = labelWidth + hairIndex * groupWidth;
-    const statusColor = COLORS.approved;
+    const statusColor = hair.approved ? COLORS.approved : COLORS.pending;
     parts.push(`<rect x="${x + 2}" y="66" width="${groupWidth - 8}" height="52" rx="7" fill="${COLORS.group}"/>`);
     parts.push(text(x + 12, 84, hair.label, 14, 700));
     parts.push(text(x + 12, 101, hair.statusShort, 9, 650, statusColor));
@@ -176,7 +200,7 @@ function distanceSheet(): string {
 
   HAIR_STYLES.forEach((hair, row) => {
     const y = headerHeight + row * rowHeight;
-    const statusColor = COLORS.approved;
+    const statusColor = hair.approved ? COLORS.approved : COLORS.pending;
     parts.push(`<rect x="8" y="${y + 4}" width="${width - 16}" height="${rowHeight - 8}" rx="8" fill="${row % 2 ? COLORS.alternate : COLORS.panel}"/>`);
     parts.push(text(20, y + 45, hair.label, 15, 700));
     parts.push(text(20, y + 64, hair.id, 9, 400, COLORS.muted));
@@ -222,11 +246,11 @@ function html(): string {
 </style>
 <main>
   <h1>Representative production hair-family review</h1>
-  <p class="notice"><span class="approved">Short, Bob, and Long straight are approved canonical production geometry.</span> Long straight east uses a single rear fall and short temple edge so the profile turn remains distinct. All cells come directly from the production compositor; this preview does not alter part sources.</p>
+  <p class="notice"><span class="approved">Short, Bob, Long straight, Curly, Ponytail, and Coils are approved canonical production geometry.</span> Ponytail carries a rearward profile fall, while Coils uses a denser cloud silhouette distinct from Curly. All cells come directly from the production compositor; this preview does not alter part sources.</p>
   <h2>Six-head compatibility across source facings</h2>
-  <img src="hair-families-compatibility.png" alt="Short, Bob, and Long straight hairstyles on all six production heads across south, east, and north facings">
+  <img src="hair-families-compatibility.png" alt="Six production hairstyles on all six production heads across south, east, and north facings">
   <h2>Game-distance readability</h2>
-  <img src="hair-families-distance.png" alt="Short, Bob, and Long straight hairstyles across facings at 128, 64, 48, and 32 pixels">
+  <img src="hair-families-distance.png" alt="Six production hairstyles across facings at 128, 64, 48, and 32 pixels">
 </main>`;
 }
 

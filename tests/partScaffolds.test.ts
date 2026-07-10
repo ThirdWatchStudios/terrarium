@@ -170,9 +170,18 @@ describe('part authoring scaffold generation', () => {
       'assets/part-authoring/scaffolds/hair/bob.east.svg',
       'assets/part-authoring/scaffolds/hair/bob.north.svg',
       'assets/part-authoring/scaffolds/hair/bob.south.svg',
+      'assets/part-authoring/scaffolds/hair/coils.east.svg',
+      'assets/part-authoring/scaffolds/hair/coils.north.svg',
+      'assets/part-authoring/scaffolds/hair/coils.south.svg',
+      'assets/part-authoring/scaffolds/hair/curly.east.svg',
+      'assets/part-authoring/scaffolds/hair/curly.north.svg',
+      'assets/part-authoring/scaffolds/hair/curly.south.svg',
       'assets/part-authoring/scaffolds/hair/long-straight.east.svg',
       'assets/part-authoring/scaffolds/hair/long-straight.north.svg',
       'assets/part-authoring/scaffolds/hair/long-straight.south.svg',
+      'assets/part-authoring/scaffolds/hair/ponytail.east.svg',
+      'assets/part-authoring/scaffolds/hair/ponytail.north.svg',
+      'assets/part-authoring/scaffolds/hair/ponytail.south.svg',
       'assets/part-authoring/scaffolds/hair/short.east.svg',
       'assets/part-authoring/scaffolds/hair/short.north.svg',
       'assets/part-authoring/scaffolds/hair/short.south.svg',
@@ -197,7 +206,7 @@ describe('part authoring scaffold generation', () => {
       'assets/part-authoring/scaffolds/outfit/tee.east.svg',
       'assets/part-authoring/scaffolds/outfit/tee.south.svg',
     ]);
-    expect(first).toHaveLength(47);
+    expect(first).toHaveLength(56);
     expect(first.map(({ bytes }) => bytes)).toEqual(second.map(({ bytes }) => bytes));
     expect(PART_SCAFFOLD_SPECS.map(({ slot, referenceId }) => [slot, referenceId])).toEqual([
       ['body', 'body-compact'],
@@ -213,7 +222,10 @@ describe('part authoring scaffold generation', () => {
       ['head', 'head-soft-square'],
       ['hair', 'hair-short'],
       ['hair', 'hair-bob'],
+      ['hair', 'hair-curly'],
+      ['hair', 'hair-ponytail'],
       ['hair', 'hair-long-straight'],
+      ['hair', 'hair-coils'],
       ['outfit', 'outfit-tee'],
     ]);
   });
@@ -363,17 +375,20 @@ describe('part authoring scaffold generation', () => {
     expect(east).toContain('id="guide/body-capsule/shape-001" d="M59 58');
   });
 
-  it('compiles the nine representative hair documents as three complete overlays', async () => {
+  it('compiles the eighteen canonical hair documents as six complete overlays', async () => {
     const root = await mkdtemp(path.join(tmpdir(), 'terrarium-hair-scaffolds-'));
     temporaryRoots.push(root);
     await mkdir(path.join(root, 'hair'), { recursive: true });
     const assets = generatePartAuthoringAssets();
-    const representativeHairs = [
+    const canonicalHairs = [
       ['hair-short', 'short'],
       ['hair-bob', 'bob'],
       ['hair-long-straight', 'long-straight'],
+      ['hair-curly', 'curly'],
+      ['hair-ponytail', 'ponytail'],
+      ['hair-coils', 'coils'],
     ] as const;
-    for (const [, slug] of representativeHairs) {
+    for (const [, slug] of canonicalHairs) {
       for (const facing of FACINGS) {
         const asset = assets.find(({ path: assetPath }) =>
           assetPath.endsWith(`/hair/${slug}.${facing}.svg`))!;
@@ -387,10 +402,13 @@ describe('part authoring scaffold generation', () => {
     });
     expect(imports.map(({ id }) => id)).toEqual([
       'hair-bob',
+      'hair-coils',
+      'hair-curly',
       'hair-long-straight',
+      'hair-ponytail',
       'hair-short',
     ]);
-    for (const [id, slug] of representativeHairs) {
+    for (const [id, slug] of canonicalHairs) {
       const imported = imports.find((candidate) => candidate.id === id)!;
       expect(Object.keys(imported.facings), id).toEqual(FACINGS);
       expect(imported.sourceFiles, id).toEqual([
@@ -452,7 +470,7 @@ describe('committed part authoring assets', () => {
     const root = await mkdtemp(path.join(tmpdir(), 'terrarium-authoring-assets-'));
     temporaryRoots.push(root);
     const firstWrite = await writePartAuthoringAssets(root);
-    expect(firstWrite.updated).toBe(47);
+    expect(firstWrite.updated).toBe(56);
     expect(firstWrite.removed).toBe(0);
     await expect(checkPartAuthoringAssets(root)).resolves.toBeUndefined();
 

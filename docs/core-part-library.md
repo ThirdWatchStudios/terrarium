@@ -104,9 +104,9 @@ library as a whole:
 Current production order follows visual impact rather than the section order:
 the approved body and six-head source foundations are canonicalized; the
 representative Short/Medium/Long hair family batch is approved, and the next
-silhouette batch is Curly/Ponytail/Coils before detail-only Tee/Blazer work or
-the wall bevel kit. M1 and M2 remain open; this sequencing note does not
-pre-check unrelated milestone gates.
+silhouette batch is Bun/Balding/Pixie/Side-part before detail-only Tee/Blazer
+work or the wall bevel kit. M1 and M2 remain open; this sequencing note does
+not pre-check unrelated milestone gates.
 
 ### M1 — Pipeline proof
 
@@ -217,12 +217,12 @@ max). `none` needs no art; north matters (hair reads from behind).
 | Short | pixie | [ ] | [ ] | [ ] |
 | Short | side-part | [ ] | [ ] | [ ] |
 | Medium | bob | [x] | [x] | [x] |
-| Medium | curly | [ ] | [ ] | [ ] |
+| Medium | curly | [x] | [x] | [x] |
 | Long | long-straight | [x] | [x] | [x] |
-| Long | ponytail | [ ] | [ ] | [ ] |
+| Long | ponytail | [x] | [x] | [x] |
 | Long | bun | [ ] | [ ] | [ ] |
 | Special | balding | [ ] | [ ] | [ ] |
-| Special | coils | [ ] | [ ] | [ ] |
+| Special | coils | [x] | [x] | [x] |
 | *(future)* | *Short/military, Medium/layered, …* | — | — | — |
 
 `hair-bob` has approved canonical authored SVG and a three-facing parting
@@ -240,6 +240,13 @@ profile turn reads distinctly. Run
 compatibility and 128/64/48/32 px distance proofs under
 `docs/previews/hair-families-*`. Their inventory cells record visual approval
 on 2026-07-10; broader M1 scene/crowd gates remain open.
+
+`hair-curly`, `hair-ponytail`, and `hair-coils` now add nine canonical
+south/east/north review sources. Curly preserves the established lobed
+silhouette byte-for-byte. Ponytail adds a hanging tail that stays directional
+at 32 px; Coils uses a denser cloud crown and rear-weighted east profile so it
+does not collapse into Curly. The expanded preview and 2,160-cell matrix are
+the review surface; their inventory cells record visual approval on 2026-07-10.
 
 ### 4. Bodies (§4b) — archetype frames, N × 3 facings
 

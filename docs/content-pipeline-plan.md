@@ -148,7 +148,11 @@ icons), not by upfront design.
    make the profile turn explicit while preserving the open face. Generated
    scaffolds and `npx tsx scripts/hairFamilyPreview.ts` provide the visual
    review surface. Short and Long straight received visual approval on
-   2026-07-10.
+   2026-07-10. Curly, Ponytail, and Coils now add nine more canonical sources:
+   Curly preserves its established lobed geometry, Ponytail gains a hanging
+   tail in all three facings, and Coils gains a denser cloud silhouette that is
+   materially distinct from Curly at 32 px. Their 2,160-cell compatibility
+   matrix and expanded distance proof passed visual approval on 2026-07-10.
 8. **Anchored outfit-detail adapter**: `outfit-tee` is the first body-aware
    intake target. Its south/east SVGs are authored once over `body-balanced`,
    with the body origin at `(64, 87)` and neck at `(64, 58)`. Every visible
@@ -169,11 +173,11 @@ icons), not by upfront design.
    generator-owned and reproducible; `curated` means selected and frozen
    generator output.
 
-The approved body, six-head, and representative Short/Medium/Long hair source
-sets now form the canonical silhouette foundation. Curly/Ponytail/Coils are
-the next silhouette batch before the Phase 3 wall kit or detail-only
-Tee/Blazer work. The phase numbers describe pipeline scope; they do not
-override this visual-impact priority.
+The approved body, six-head, and six-hair source sets now form the canonical
+silhouette foundation. Bun/Balding/Pixie/Side-part are the next silhouette
+batch before the Phase 3 wall kit or detail-only Tee/Blazer work. The phase
+numbers describe pipeline scope; they do not override this visual-impact
+priority.
 
 ### Phase 3 — Wall bevel piece kit (~1 week; first authoring test)
 
@@ -199,10 +203,11 @@ the tweak pain without art.
 1. **LOD flag first**: detail tier on `ShapeSpec`; compositor drops interior
    detail below a threshold export size. Benefits procedural parts too.
 2. Re-author by silhouette priority — the approved five-body and six-head
-   foundations are canonical SVG; Short, Bob, and Long straight are the active
-   representative hair review, followed by outfits (§4b), judged against the
-   zoom strip. Detail-only garment and wall passes wait behind the hair
-   silhouettes. Accessories are last (already glyph-like).
+   foundations are canonical SVG; Short, Bob, Long straight, Curly, Ponytail,
+   and Coils are approved, while Bun, Balding, Pixie, and Side-part are the
+   active hair review. Outfits (§4b) follow, judged against the zoom strip.
+   Detail-only garment and wall passes wait behind the hair silhouettes.
+   Accessories are last (already glyph-like).
    Moods/badges/poses stay procedural.
 3. No flag-day: imported and procedural parts coexist behind `PartDef`.
 
