@@ -1,7 +1,7 @@
 import type { BodyFacingAnchors, Facing, PartDef, PartVariant, Slot } from '../core/types';
 import { rr, circle, ellipse, topCap } from '../core/geometry';
 import { UI_PALETTE } from '../data/uiPalette';
-import { BODY_ARCHETYPE_TRIAL_PARTS } from './bodyArchetypeTrials';
+import { BODY_ARCHETYPE_PARTS } from './bodyArchetypes';
 
 /**
  * Part library. Conventions:
@@ -15,11 +15,11 @@ import { BODY_ARCHETYPE_TRIAL_PARTS } from './bodyArchetypeTrials';
 const INK = UI_PALETTE.ink; // eyes / neutral hardware, deliberately palette-independent
 
 // ---------------------------------------------------------------------------
-// Bodies (anchor: body). Base capsule is filled with $outfitPrimary because in
-// this art style clothing covers the torso, RimWorld-style.
+// Legacy bodies (anchor: body). Kept byte-stable and resolvable for existing
+// recipes, but no longer included in production selection.
 // ---------------------------------------------------------------------------
 
-const BODIES: PartDef[] = [
+const LEGACY_BODY_PARTS: PartDef[] = [
   {
     id: 'body-standard',
     label: 'Standard',
@@ -385,7 +385,7 @@ const HAIR: PartDef[] = [
 
 // ---------------------------------------------------------------------------
 // Outfits (anchor: body). Static variants preserve the legacy y=-29 capsule;
-// body-aware builders place production-candidate detail from each active rig.
+// body-aware builders place production detail from each active rig.
 // ---------------------------------------------------------------------------
 
 const spanCenter = (span: BodyFacingAnchors['waist']) => ({
@@ -396,7 +396,7 @@ const spanWidth = (span: BodyFacingAnchors['waist']) => Math.abs(span.right.x - 
 const mix = (from: number, to: number, t: number) => from + (to - from) * t;
 const clampValue = (min: number, max: number, value: number) => Math.max(min, Math.min(max, value));
 
-/** Conservative torso interior at one y, interpolated through the body's own guides. */
+/** Conservative torso interior at one y, interpolated through the body's own anchors. */
 function bodyInteriorSpan(body: BodyFacingAnchors, y: number, inset = 1) {
   const shoulderY = spanCenter(body.shoulders).y;
   const waistY = spanCenter(body.waist).y;
@@ -745,23 +745,18 @@ function anchoredSuitJacket(facing: Facing, body: BodyFacingAnchors): PartVarian
   };
 }
 
-// Engineering-complete but visually provisional (2026-07-09 review): retain
-// these variants for fit/rig proof, then revisit Dress in a dedicated art pass.
+// Mechanically complete but visually provisional (2026-07-09 review): retain
+// these variants and revisit Dress in a dedicated art pass.
 const COMPACT_DRESS = { flareScale: 1.08, bottomDrop: 5 };
 const BALANCED_DRESS = { flareScale: 1, bottomDrop: 5 };
 const LARGE_FRAME_DRESS = { flareScale: 1.08, bottomDrop: 5 };
 const TALL_DRESS = { flareScale: 1.15, bottomDrop: 5 };
 const SOFT_DRESS = { flareScale: 1.18, bottomDrop: 5 };
 const DRESS_PROFILES: Record<string, { flareScale: number; bottomDrop: number }> = {
-  'trial-body-compact': COMPACT_DRESS,
   'body-compact': COMPACT_DRESS,
-  'trial-body-average': BALANCED_DRESS,
   'body-balanced': BALANCED_DRESS,
-  'trial-body-large-frame': LARGE_FRAME_DRESS,
   'body-large-frame': LARGE_FRAME_DRESS,
-  'trial-body-tall': TALL_DRESS,
   'body-tall': TALL_DRESS,
-  'trial-body-soft': SOFT_DRESS,
   'body-soft': SOFT_DRESS,
 };
 
@@ -1723,7 +1718,7 @@ const FAB_PARTS: PartDef[] = [
   },
 ];
 
-export const PART_LIBRARY: PartDef[] = [...BODIES, ...HEADS, ...HAIR, ...OUTFITS, ...ACCESSORIES, ...FAB_PARTS];
+export const PART_LIBRARY: PartDef[] = [...BODY_ARCHETYPE_PARTS, ...HEADS, ...HAIR, ...OUTFITS, ...ACCESSORIES, ...FAB_PARTS];
 
 // ---------------------------------------------------------------------------
 // Internal parts — resolvable by id but NOT offered in the authoring pickers.
@@ -1779,11 +1774,12 @@ export const INTERNAL_PARTS: PartDef[] = [
   },
 ];
 
-// Silhouette-approved trial parts are renderable by explicit id for proof
-// scripts/tests, but stay outside PART_LIBRARY so pickers, random generation,
-// and ordinary exports cannot select them before the garment promotion gate.
+// Legacy bodies remain resolvable for existing recipes and the unchanged named
+// cast, but stay outside PART_LIBRARY so pickers and generation cannot select
+// them for new characters. Renderer-owned unit parts are likewise resolvable
+// without becoming authoring choices.
 const byId = new Map(
-  [...PART_LIBRARY, ...INTERNAL_PARTS, ...BODY_ARCHETYPE_TRIAL_PARTS].map((p) => [p.id, p]),
+  [...PART_LIBRARY, ...LEGACY_BODY_PARTS, ...INTERNAL_PARTS].map((p) => [p.id, p]),
 );
 
 export function getPart(id: string): PartDef | undefined {

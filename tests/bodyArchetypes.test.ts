@@ -22,17 +22,29 @@ import {
   type ExportSink,
   type Rasterizer,
 } from '../src/core/exporter';
-import { appearanceSignature, type EmployeeDefinition } from '../src/core/employee';
+import { appearanceSignature, generateEmployee, type EmployeeDefinition } from '../src/core/employee';
+import { mulberry32, randomCharacter } from '../src/core/random';
 import { normalizeCharacterRecipe } from '../src/core/recipe';
 import { unitRecipe, unitRenderingSpec } from '../src/core/renderings';
 import type { CharacterRecipe, Facing } from '../src/core/types';
-import { FACINGS } from '../src/core/types';
-import { DEFAULT_STYLE, DEFAULT_STYLE_PRESETS, defaultGoldenProject } from '../src/data/defaults';
-import { BODY_ARCHETYPE_TRIALS } from '../src/parts/bodyArchetypeTrials';
+import { CURRENT_SCHEMA_VERSION, FACINGS } from '../src/core/types';
+import { DEFAULT_CAST, DEFAULT_STYLE, DEFAULT_STYLE_PRESETS, defaultGoldenProject } from '../src/data/defaults';
+import {
+  BODY_ARCHETYPES,
+  BODY_ARCHETYPE_PARTS,
+  type BodyArchetypeId,
+} from '../src/parts/bodyArchetypes';
 import { getPart, partsForSlot } from '../src/parts/library';
 import { getPose, POSES, poseVariantFor, type Pose } from '../src/parts/poses';
 
-const EXPECTED_IDS = ['compact', 'average', 'large-frame', 'tall', 'soft'];
+const EXPECTED_IDS: BodyArchetypeId[] = [
+  'body-compact',
+  'body-balanced',
+  'body-large-frame',
+  'body-tall',
+  'body-soft',
+];
+const LEGACY_IDS = ['body-standard', 'body-slim', 'body-broad'];
 const HUMAN_OUTFITS = [
   'outfit-tee',
   'outfit-polo',
@@ -133,44 +145,82 @@ function outsidePaintCounts(baseCells: RenderCell[], dressedCells: RenderCell[],
   return counts;
 }
 
-describe('body archetype silhouette trials', () => {
-  it('defines the five documented candidates with unique render-only ids', () => {
-    expect(BODY_ARCHETYPE_TRIALS.map((trial) => trial.id)).toEqual(EXPECTED_IDS);
-    expect(new Set(BODY_ARCHETYPE_TRIALS.map((trial) => trial.part.id)).size).toBe(EXPECTED_IDS.length);
-    expect(BODY_ARCHETYPE_TRIALS.every((trial) => trial.provenance === 'generated')).toBe(true);
-    expect(BODY_ARCHETYPE_TRIALS.every((trial) => trial.status === 'silhouette-approved')).toBe(true);
+describe('production body archetypes', () => {
+  it('defines the exact production body order with matching part ids', () => {
+    expect(BODY_ARCHETYPES.map((archetype) => archetype.id)).toEqual(EXPECTED_IDS);
+    expect(BODY_ARCHETYPES.map((archetype) => archetype.part.id)).toEqual(EXPECTED_IDS);
+    expect(BODY_ARCHETYPE_PARTS.map((part) => part.id)).toEqual(EXPECTED_IDS);
+    expect(partsForSlot('body').map((part) => part.id)).toEqual(EXPECTED_IDS);
   });
 
-  it('resolves explicitly through the compositor registry but stays out of production selection', () => {
+  it('resolves production and legacy bodies while selecting only production bodies', () => {
     const selectable = new Set(partsForSlot('body').map((part) => part.id));
-    for (const trial of BODY_ARCHETYPE_TRIALS) {
-      expect(getPart(trial.part.id)).toBe(trial.part);
-      expect(selectable.has(trial.part.id)).toBe(false);
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(getPart(archetype.part.id)).toBe(archetype.part);
+      expect(selectable.has(archetype.part.id)).toBe(true);
+    }
+    for (const legacyId of LEGACY_IDS) {
+      expect(getPart(legacyId)?.slot).toBe('body');
+      expect(selectable.has(legacyId)).toBe(false);
     }
   });
 
+  it('keeps the named default cast on its legacy bodies without migration', () => {
+    expect(DEFAULT_CAST.map(({ id, parts }) => [id, parts.body])).toEqual([
+      ['janice', 'body-standard'],
+      ['carl', 'body-broad'],
+      ['linda', 'body-standard'],
+      ['manager', 'body-broad'],
+    ]);
+    expect(CURRENT_SCHEMA_VERSION).toBe(18);
+  });
+
+  it('keeps seeded random and employee generation deterministic and production-only', () => {
+    const allowed = new Set<string>(EXPECTED_IDS);
+    const randomBodies = new Set<string>();
+    const employeeBodies = new Set<string>();
+
+    for (let seed = 0; seed < 256; seed++) {
+      const firstRandom = randomCharacter(DEFAULT_STYLE, mulberry32(seed));
+      const secondRandom = randomCharacter(DEFAULT_STYLE, mulberry32(seed));
+      expect({ name: firstRandom.name, parts: firstRandom.parts, palette: firstRandom.palette })
+        .toEqual({ name: secondRandom.name, parts: secondRandom.parts, palette: secondRandom.palette });
+      expect(allowed.has(firstRandom.parts.body)).toBe(true);
+      randomBodies.add(firstRandom.parts.body);
+
+      const firstEmployee = generateEmployee(`BODY-${seed}`, 'random', DEFAULT_STYLE);
+      const secondEmployee = generateEmployee(`BODY-${seed}`, 'random', DEFAULT_STYLE);
+      expect(firstEmployee).toEqual(secondEmployee);
+      expect(allowed.has(firstEmployee.recipe.parts.body)).toBe(true);
+      employeeBodies.add(firstEmployee.recipe.parts.body);
+    }
+
+    expect([...randomBodies].sort()).toEqual([...EXPECTED_IDS].sort());
+    expect([...employeeBodies].sort()).toEqual([...EXPECTED_IDS].sort());
+  });
+
   it('authors a nonempty, tintable silhouette for every source facing', () => {
-    for (const trial of BODY_ARCHETYPE_TRIALS) {
+    for (const archetype of BODY_ARCHETYPES) {
       for (const facing of FACINGS) {
-        const variant = trial.part.facings[facing];
-        expect(variant, `${trial.id}/${facing} is missing`).toBeTruthy();
-        expect(variant!.shapes.length, `${trial.id}/${facing} has no geometry`).toBeGreaterThan(0);
-        expect(variant!.shapes[0].fill, `${trial.id}/${facing} base is not tintable`).toBe('$outfitPrimary');
+        const variant = archetype.part.facings[facing];
+        expect(variant, `${archetype.id}/${facing} is missing`).toBeTruthy();
+        expect(variant!.shapes.length, `${archetype.id}/${facing} has no geometry`).toBeGreaterThan(0);
+        expect(variant!.shapes[0].fill, `${archetype.id}/${facing} base is not tintable`).toBe('$outfitPrimary');
         expect(variant!.shapes[0].silhouette).not.toBe(false);
       }
     }
   });
 
-  it('keeps the candidate silhouettes pairwise distinct', () => {
+  it('keeps the production silhouettes pairwise distinct', () => {
     for (const facing of FACINGS) {
-      const paths = BODY_ARCHETYPE_TRIALS.map((trial) => trial.part.facings[facing]!.shapes[0].d);
-      expect(new Set(paths).size, `${facing} silhouettes collapsed together`).toBe(BODY_ARCHETYPE_TRIALS.length);
+      const paths = BODY_ARCHETYPES.map((archetype) => archetype.part.facings[facing]!.shapes[0].d);
+      expect(new Set(paths).size, `${facing} silhouettes collapsed together`).toBe(BODY_ARCHETYPES.length);
     }
   });
 
-  it('records finite, ordered intended body-local guides for every facing', () => {
-    const points = (facing: Facing, trialIndex: number) => {
-      const g = BODY_ARCHETYPE_TRIALS[trialIndex].guides[facing];
+  it('records finite, ordered body-local anchors for every facing', () => {
+    const points = (facing: Facing, archetypeIndex: number) => {
+      const g = BODY_ARCHETYPES[archetypeIndex].anchors[facing];
       return [
         g.headCenter,
         g.aboveHead,
@@ -186,9 +236,9 @@ describe('body archetype silhouette trials', () => {
       ];
     };
 
-    for (let i = 0; i < BODY_ARCHETYPE_TRIALS.length; i++) {
+    for (let i = 0; i < BODY_ARCHETYPES.length; i++) {
       for (const facing of FACINGS) {
-        const guide = BODY_ARCHETYPE_TRIALS[i].guides[facing];
+        const anchors = BODY_ARCHETYPES[i].anchors[facing];
         for (const p of points(facing, i)) {
           expect(Number.isFinite(p.x) && Number.isFinite(p.y)).toBe(true);
           expect(p.x).toBeGreaterThanOrEqual(-48);
@@ -196,27 +246,27 @@ describe('body archetype silhouette trials', () => {
           expect(p.y).toBeGreaterThanOrEqual(-86);
           expect(p.y).toBeLessThanOrEqual(36);
         }
-        expect(guide.aboveHead.y).toBe(guide.headCenter.y - 32);
-        expect(guide.shoulders.left.x).toBeLessThan(guide.shoulders.right.x);
-        expect(guide.waist.left.x).toBeLessThan(guide.waist.right.x);
-        expect(guide.hem.left.x).toBeLessThan(guide.hem.right.x);
+        expect(anchors.aboveHead.y).toBe(anchors.headCenter.y - 32);
+        expect(anchors.shoulders.left.x).toBeLessThan(anchors.shoulders.right.x);
+        expect(anchors.waist.left.x).toBeLessThan(anchors.waist.right.x);
+        expect(anchors.hem.left.x).toBeLessThan(anchors.hem.right.x);
       }
     }
   });
 
-  it('binds every candidate part to its documented body-owned rig', () => {
-    for (const trial of BODY_ARCHETYPE_TRIALS) {
-      expect(trial.part.bodyAnchors).toBe(trial.guides);
-      expect(trial.part.bodyAnchors).toEqual({
-        south: trial.guides.south,
-        east: trial.guides.east,
-        north: trial.guides.north,
+  it('binds every production part to its documented body-owned rig', () => {
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(archetype.part.bodyAnchors).toBe(archetype.anchors);
+      expect(archetype.part.bodyAnchors).toEqual({
+        south: archetype.anchors.south,
+        east: archetype.anchors.east,
+        north: archetype.anchors.north,
       });
     }
   });
 
   it('moves the full head stack, portrait crops, and layers with the active body rig', () => {
-    const tall = recipe('trial-body-tall');
+    const tall = recipe('body-tall');
     const svg = composeCharacter(tall, DEFAULT_STYLE, 'south', 128, 'normal', { badge: false });
     expect(svg).toContain('translate(64 39)');
     expect(svg).toContain('translate(64 53) scale(1)');
@@ -230,7 +280,7 @@ describe('body archetype silhouette trials', () => {
   });
 
   it('exports exact per-body overhead and pose anchors, including the unit rendering', () => {
-    const tall = recipe('trial-body-tall');
+    const tall = recipe('body-tall');
     expect(overheadAnchor('south', tall)).toEqual({ x: 64, y: 7 });
     expect(poseRigAnchors('south', tall)).toEqual({
       shoulderLeft: { x: 41, y: 62 },
@@ -275,16 +325,16 @@ describe('body archetype silhouette trials', () => {
   });
 
   it('attaches a conversation link to each participant body rather than the global fallback', () => {
-    const tall = recipe('trial-body-tall');
-    const compact = recipe('trial-body-compact');
+    const tall = recipe('body-tall');
+    const compact = recipe('body-compact');
     const svg = composeConversation(tall, compact, defaultGoldenProject());
     expect(svg).toContain('M 67 1 Q');
     expect(svg).toContain('189 11');
   });
 
   it('renders deterministically at game-scale facings without missing-token magenta', () => {
-    for (const trial of BODY_ARCHETYPE_TRIALS) {
-      const r = recipe(trial.part.id);
+    for (const archetype of BODY_ARCHETYPES) {
+      const r = recipe(archetype.part.id);
       for (const facing of [...FACINGS, 'west'] as const) {
         const first = composeCharacter(r, DEFAULT_STYLE, facing, 32, 'normal', { badge: false });
         const second = composeCharacter(r, DEFAULT_STYLE, facing, 32, 'normal', { badge: false });
@@ -299,13 +349,13 @@ describe('body archetype silhouette trials', () => {
     const facings = [...FACINGS, 'west'] as const;
     const cells: RenderCell[] = [];
 
-    for (const trial of BODY_ARCHETYPE_TRIALS) {
-      const r = recipe(trial.part.id);
+    for (const archetype of BODY_ARCHETYPES) {
+      const r = recipe(archetype.part.id);
       for (const pose of POSES) {
         for (const facing of facings) {
           const actual: Facing = facing === 'west' ? 'east' : facing;
-          const variant = poseVariantFor(pose, actual, trial.guides[actual]);
-          const label = `${trial.id}/${pose}/${facing}`;
+          const variant = poseVariantFor(pose, actual, archetype.anchors[actual]);
+          const label = `${archetype.id}/${pose}/${facing}`;
           expect(variant?.attachments?.handRight, `${label} has no right wrist`).toBeTruthy();
           expect(variant?.attachments?.carryHand, `${label} has no carry policy`).toMatch(/^(left|right|none)$/);
           const carryHand = variant?.attachments?.carryHand;
@@ -334,18 +384,18 @@ describe('body archetype silhouette trials', () => {
   });
 
   it('keeps representative wrist coordinates and carry policy stable', () => {
-    const large = BODY_ARCHETYPE_TRIALS.find((trial) => trial.id === 'large-frame')!;
-    expect(poseVariantFor('neutral', 'south', large.guides.south)?.attachments).toEqual({
+    const large = BODY_ARCHETYPES.find((archetype) => archetype.id === 'body-large-frame')!;
+    expect(poseVariantFor('neutral', 'south', large.anchors.south)?.attachments).toEqual({
       handLeft: { x: -37, y: 13 },
       handRight: { x: 37, y: 13 },
       carryHand: 'right',
     });
-    expect(poseVariantFor('point', 'south', large.guides.south)?.attachments).toEqual({
+    expect(poseVariantFor('point', 'south', large.anchors.south)?.attachments).toEqual({
       handLeft: { x: -37, y: 13 },
       handRight: { x: 47, y: -29 },
       carryHand: 'none',
     });
-    expect(poseVariantFor('slump', 'south', large.guides.south)?.attachments).toEqual({
+    expect(poseVariantFor('slump', 'south', large.anchors.south)?.attachments).toEqual({
       handLeft: { x: -28, y: 15 },
       handRight: { x: 28, y: 15 },
       carryHand: 'right',
@@ -358,14 +408,14 @@ describe('body archetype silhouette trials', () => {
     const facings = [...FACINGS, 'west'] as const;
     const cells: RenderCell[] = [];
 
-    for (const trial of BODY_ARCHETYPE_TRIALS) {
+    for (const archetype of BODY_ARCHETYPES) {
       for (const accessory of handAccessories) {
-        const withAccessory = recipe(trial.part.id, 'outfit-tee', [accessory]);
-        const withoutAccessory = recipe(trial.part.id);
+        const withAccessory = recipe(archetype.part.id, 'outfit-tee', [accessory]);
+        const withoutAccessory = recipe(archetype.part.id);
         const isWatch = accessory === 'acc-watch';
         for (const pose of POSES) {
           for (const facing of facings) {
-            const label = `${trial.id}/${accessory}/${pose}/${facing}`;
+            const label = `${archetype.id}/${accessory}/${pose}/${facing}`;
             const actual: Facing = facing === 'west' ? 'east' : facing;
             const hasFacing = Boolean(getPart(accessory)?.facings[actual]);
             const svg = composeCharacter(withAccessory, DEFAULT_STYLE, facing, 128, 'normal', { badge: false, pose });
@@ -393,21 +443,21 @@ describe('body archetype silhouette trials', () => {
     for (const preset of DEFAULT_STYLE_PRESETS) {
       const poseCells: RenderCell[] = [];
       const handCells: RenderCell[] = [];
-      for (const trial of BODY_ARCHETYPE_TRIALS) {
+      for (const archetype of BODY_ARCHETYPES) {
         for (const pose of POSES) {
           for (const facing of facings) {
             poseCells.push({
-              label: `${preset.id}/${trial.id}/${pose}/${facing}`,
-              svg: composeCharacter(recipe(trial.part.id), preset.style, facing, 128, 'normal', { badge: false, pose }),
+              label: `${preset.id}/${archetype.id}/${pose}/${facing}`,
+              svg: composeCharacter(recipe(archetype.part.id), preset.style, facing, 128, 'normal', { badge: false, pose }),
             });
           }
         }
         for (const accessory of handAccessories) {
-          const r = recipe(trial.part.id, 'outfit-tee', [accessory]);
+          const r = recipe(archetype.part.id, 'outfit-tee', [accessory]);
           for (const pose of POSES) {
             for (const facing of facings) {
               handCells.push({
-                label: `${preset.id}/${trial.id}/${accessory}/${pose}/${facing}`,
+                label: `${preset.id}/${archetype.id}/${accessory}/${pose}/${facing}`,
                 svg: composeCharacter(r, preset.style, facing, 128, 'normal', { badge: false, pose }),
               });
             }
@@ -422,19 +472,19 @@ describe('body archetype silhouette trials', () => {
   });
 
   it('uses Neutral wrists for base/layer art, limits rigged bodies to one held prop, and preserves legacy behavior', () => {
-    const compactMug = recipe('trial-body-compact', 'outfit-tee', ['acc-mug']);
+    const compactMug = recipe('body-compact', 'outfit-tee', ['acc-mug']);
     expect(composeCharacter(compactMug, DEFAULT_STYLE, 'south', 128, 'normal', { badge: false })).toContain('translate(94 100)');
     expect(characterLayers(compactMug, DEFAULT_STYLE).find((layer) => layer.partId === 'acc-mug')?.markup.south)
       .toContain('translate(94 100)');
 
-    const riggedStack = recipe('trial-body-compact', 'outfit-tee', ['acc-mug', 'acc-watch', 'acc-clipboard']);
-    const riggedAllowed = recipe('trial-body-compact', 'outfit-tee', ['acc-mug', 'acc-watch']);
+    const riggedStack = recipe('body-compact', 'outfit-tee', ['acc-mug', 'acc-watch', 'acc-clipboard']);
+    const riggedAllowed = recipe('body-compact', 'outfit-tee', ['acc-mug', 'acc-watch']);
     expect(normalizeCharacterRecipe(riggedStack).parts.accessories).toEqual(['acc-mug', 'acc-watch']);
     expect(composeCharacter(riggedStack, DEFAULT_STYLE, 'south', 128, 'normal', { badge: false }))
       .toBe(composeCharacter(riggedAllowed, DEFAULT_STYLE, 'south', 128, 'normal', { badge: false }));
 
     const pointWithMug = composeCharacter(compactMug, DEFAULT_STYLE, 'south', 128, 'normal', { badge: false, pose: 'point' });
-    const pointWithoutMug = composeCharacter(recipe('trial-body-compact'), DEFAULT_STYLE, 'south', 128, 'normal', { badge: false, pose: 'point' });
+    const pointWithoutMug = composeCharacter(recipe('body-compact'), DEFAULT_STYLE, 'south', 128, 'normal', { badge: false, pose: 'point' });
     expect(pointWithMug).toBe(pointWithoutMug);
 
     const legacy = recipe('body-standard', 'outfit-tee', ['acc-mug']);
@@ -446,10 +496,10 @@ describe('body archetype silhouette trials', () => {
     expect(normalizeCharacterRecipe(legacyStack)).toBe(legacyStack);
   });
 
-  it('normalizes rigged identity, signatures, and exported recipes to the same effective accessory set', async () => {
-    const stacked = recipe('trial-body-compact', 'outfit-tee', ['acc-mug', 'acc-watch', 'acc-clipboard']);
-    const allowed = recipe('trial-body-compact', 'outfit-tee', ['acc-mug', 'acc-watch']);
-    const reversed = recipe('trial-body-compact', 'outfit-tee', ['acc-clipboard', 'acc-watch', 'acc-mug']);
+  it('round-trips every production body id without leaking private rig metadata', async () => {
+    const stacked = recipe('body-compact', 'outfit-tee', ['acc-mug', 'acc-watch', 'acc-clipboard']);
+    const allowed = recipe('body-compact', 'outfit-tee', ['acc-mug', 'acc-watch']);
+    const reversed = recipe('body-compact', 'outfit-tee', ['acc-clipboard', 'acc-watch', 'acc-mug']);
     const asEmployee = (r: CharacterRecipe): EmployeeDefinition => ({
       visualSeed: 'BODY01',
       profile: 'random',
@@ -464,8 +514,15 @@ describe('body archetype silhouette trials', () => {
       .not.toBe(composeCharacter(allowed, DEFAULT_STYLE, 'south', 128, 'normal', { badge: false }));
 
     const project = defaultGoldenProject();
-    const source = project.characters[0];
-    project.characters[0] = { ...stacked, id: source.id, name: source.name };
+    const productionRecipes = EXPECTED_IDS.map((bodyId, index) => {
+      const generated = index === 0 ? stacked : recipe(bodyId);
+      return {
+        ...generated,
+        id: `production-body-${index}`,
+        name: `Production body ${index}`,
+      };
+    });
+    project.characters.push(...productionRecipes);
     const json = new Map<string, string>();
     const sink: ExportSink = {
       file: (path, data) => {
@@ -475,10 +532,31 @@ describe('body archetype silhouette trials', () => {
     const rasterizer: Rasterizer = { rasterizeSheet: async () => new Uint8Array() };
     await exportAll(project, { sink, rasterizer });
 
-    const expected = ['acc-mug', 'acc-watch'];
-    expect(JSON.parse(json.get('project.json')!).characters[0].parts.accessories).toEqual(expected);
-    expect(JSON.parse(json.get(`characters/${source.id}/recipe.json`)!).parts.accessories).toEqual(expected);
-    expect(JSON.parse(json.get(`character-layers/${source.id}/recipe.json`)!).parts.accessories).toEqual(expected);
+    const projectArtifact = JSON.parse(json.get('project.json')!);
+    for (const [index, source] of productionRecipes.entries()) {
+      const projectRecipe = projectArtifact.characters.find((character: CharacterRecipe) => character.id === source.id);
+      const characterRecipe = JSON.parse(json.get(`characters/${source.id}/recipe.json`)!);
+      const layerRecipe = JSON.parse(json.get(`character-layers/${source.id}/recipe.json`)!);
+      const layerManifest = JSON.parse(json.get(`character-layers/${source.id}/manifest@1x.json`)!);
+
+      expect(projectRecipe.parts.body).toBe(EXPECTED_IDS[index]);
+      expect(characterRecipe.parts.body).toBe(EXPECTED_IDS[index]);
+      expect(layerRecipe.parts.body).toBe(EXPECTED_IDS[index]);
+      expect(layerManifest.layers.some((layer: { partId: string }) => layer.partId === EXPECTED_IDS[index])).toBe(true);
+    }
+
+    const expectedAccessories = ['acc-mug', 'acc-watch'];
+    const compactId = productionRecipes[0].id;
+    expect(projectArtifact.characters.find((character: CharacterRecipe) => character.id === compactId).parts.accessories)
+      .toEqual(expectedAccessories);
+    expect(JSON.parse(json.get(`characters/${compactId}/recipe.json`)!).parts.accessories).toEqual(expectedAccessories);
+    expect(JSON.parse(json.get(`character-layers/${compactId}/recipe.json`)!).parts.accessories).toEqual(expectedAccessories);
+
+    const serializedCharacterArtifacts = [...json.entries()]
+      .filter(([path]) => path === 'project.json' || path.startsWith('characters/') || path.startsWith('character-layers/'))
+      .map(([, data]) => data)
+      .join('\n');
+    expect(serializedCharacterArtifacts).not.toMatch(/rigBodyId|bodyAnchors|buildVariant|handAttachmentRole|"guides"/);
   });
 
   it('pins the complete legacy body, pose, facing, garment, and hand-accessory matrix', () => {
@@ -520,14 +598,14 @@ describe('body archetype silhouette trials', () => {
     const facings = [...FACINGS, 'west'] as const;
     const cells: RenderCell[] = [];
 
-    for (const trial of BODY_ARCHETYPE_TRIALS) {
+    for (const archetype of BODY_ARCHETYPES) {
       for (const outfit of outfits) {
-        const r = recipe(trial.part.id, outfit, ['acc-lanyard']);
+        const r = recipe(archetype.part.id, outfit, ['acc-lanyard']);
         for (const pose of poses) {
           for (const facing of facings) {
             const first = composeCharacter(r, DEFAULT_STYLE, facing, 128, 'normal', { badge: false, pose });
             const second = composeCharacter(r, DEFAULT_STYLE, facing, 128, 'normal', { badge: false, pose });
-            const label = `${trial.id}/${outfit}/${pose}/${facing}`;
+            const label = `${archetype.id}/${outfit}/${pose}/${facing}`;
             expect(first, `${label} is nondeterministic`).toBe(second);
             expect(first, `${label} has invalid geometry`).not.toMatch(/NaN|undefined/);
             expect(first.toUpperCase(), `${label} has an unresolved palette token`).not.toContain('#FF00FF');
@@ -547,35 +625,26 @@ describe('body archetype silhouette trials', () => {
 
     for (const facing of FACINGS) {
       const dressPaths: string[] = [];
-      for (const trial of BODY_ARCHETYPE_TRIALS) {
+      for (const archetype of BODY_ARCHETYPES) {
         for (const outfit of HUMAN_OUTFITS) {
           const variant = getPart(outfit)?.buildVariant?.(facing, {
-            bodyAnchors: trial.guides[facing],
-            bodyId: trial.part.id,
+            bodyAnchors: archetype.anchors[facing],
+            bodyId: archetype.part.id,
           });
-          expect(variant, `${trial.id}/${outfit}/${facing} did not build`).toBeTruthy();
+          expect(variant, `${archetype.id}/${outfit}/${facing} did not build`).toBeTruthy();
           expect(variant?.z).toBe(20);
           const silhouetteShapes = variant?.shapes.filter((shape) => shape.silhouette !== false) ?? [];
           if (outfit === 'outfit-dress') {
-            expect(silhouetteShapes, `${trial.id}/${facing} dress has no silhouette`).toHaveLength(1);
+            expect(silhouetteShapes, `${archetype.id}/${facing} dress has no silhouette`).toHaveLength(1);
             dressPaths.push(silhouetteShapes[0].d);
           } else {
-            expect(silhouetteShapes, `${trial.id}/${outfit}/${facing} unexpectedly alters the body`).toEqual([]);
+            expect(silhouetteShapes, `${archetype.id}/${outfit}/${facing} unexpectedly alters the body`).toEqual([]);
           }
         }
       }
-      expect(new Set(dressPaths).size, `${facing} dress silhouettes are not body-specific`).toBe(BODY_ARCHETYPE_TRIALS.length);
+      expect(new Set(dressPaths).size, `${facing} dress silhouettes are not body-specific`).toBe(BODY_ARCHETYPES.length);
     }
 
-    const finalIds = ['body-compact', 'body-balanced', 'body-large-frame', 'body-tall', 'body-soft'];
-    const dress = getPart('outfit-dress')!;
-    BODY_ARCHETYPE_TRIALS.forEach((trial, index) => {
-      for (const facing of FACINGS) {
-        const trialVariant = dress.buildVariant!(facing, { bodyAnchors: trial.guides[facing], bodyId: trial.part.id });
-        const finalVariant = dress.buildVariant!(facing, { bodyAnchors: trial.guides[facing], bodyId: finalIds[index] });
-        expect(finalVariant, `${finalIds[index]}/${facing} lost its dress profile`).toEqual(trialVariant);
-      }
-    });
   });
 
   it('keeps fitted detail paint inside each body while every dress visibly expands it', () => {
@@ -588,14 +657,14 @@ describe('body archetype silhouette trials', () => {
     const dressCells: RenderCell[] = [];
     const fittedOutfits = HUMAN_OUTFITS.filter((outfit) => outfit !== 'outfit-dress');
 
-    for (const trial of BODY_ARCHETYPE_TRIALS) {
+    for (const archetype of BODY_ARCHETYPES) {
       for (const outfit of fittedOutfits) {
         for (const facing of FACINGS) {
-          const label = `${trial.id}/${outfit}/${facing}`;
-          const bare = recipe(trial.part.id, '__fit-none__');
+          const label = `${archetype.id}/${outfit}/${facing}`;
+          const bare = recipe(archetype.part.id, '__fit-none__');
           bare.parts.head = '__fit-none__';
           bare.parts.hair = '__fit-none__';
-          const dressed = recipe(trial.part.id, outfit);
+          const dressed = recipe(archetype.part.id, outfit);
           dressed.parts.head = '__fit-none__';
           dressed.parts.hair = '__fit-none__';
           baseCells.push({ label, svg: composeCharacter(bare, style, facing, 128, 'normal', { badge: false }) });
@@ -603,11 +672,11 @@ describe('body archetype silhouette trials', () => {
         }
       }
       for (const facing of FACINGS) {
-        const label = `${trial.id}/outfit-dress/${facing}`;
-        const bare = recipe(trial.part.id, '__fit-none__');
+        const label = `${archetype.id}/outfit-dress/${facing}`;
+        const bare = recipe(archetype.part.id, '__fit-none__');
         bare.parts.head = '__fit-none__';
         bare.parts.hair = '__fit-none__';
-        const dressed = recipe(trial.part.id, 'outfit-dress');
+        const dressed = recipe(archetype.part.id, 'outfit-dress');
         dressed.parts.head = '__fit-none__';
         dressed.parts.hair = '__fit-none__';
         dressBaseCells.push({ label, svg: composeCharacter(bare, style, facing, 128, 'normal', { badge: false }) });
@@ -631,12 +700,12 @@ describe('body archetype silhouette trials', () => {
 
     for (const preset of DEFAULT_STYLE_PRESETS) {
       const cells: RenderCell[] = [];
-      for (const trial of BODY_ARCHETYPE_TRIALS) {
+      for (const archetype of BODY_ARCHETYPES) {
         for (const outfit of HUMAN_OUTFITS) {
-          const r = recipe(trial.part.id, outfit, ['acc-lanyard', 'acc-watch']);
+          const r = recipe(archetype.part.id, outfit, ['acc-lanyard', 'acc-watch']);
           for (const pose of POSES) {
             for (const facing of facings) {
-              const label = `${preset.id}/${trial.id}/${outfit}/${pose}/${facing}`;
+              const label = `${preset.id}/${archetype.id}/${outfit}/${pose}/${facing}`;
               const first = composeCharacter(r, preset.style, facing, 64, 'normal', { badge: false, pose });
               const second = composeCharacter(r, preset.style, facing, 64, 'normal', { badge: false, pose });
               expect(first, `${label} is nondeterministic`).toBe(second);
@@ -657,11 +726,11 @@ describe('body archetype silhouette trials', () => {
 
   it('keeps outfit layers compatible with body accessories and pose-time held-prop suppression', () => {
     for (const outfit of ['outfit-blazer', 'outfit-dress']) {
-      const dressed = recipe('trial-body-soft', outfit, ['acc-lanyard', 'acc-watch', 'acc-mug']);
+      const dressed = recipe('body-soft', outfit, ['acc-lanyard', 'acc-watch', 'acc-mug']);
       const neutral = composeCharacter(dressed, DEFAULT_STYLE, 'south', 128, 'normal', { badge: false, pose: 'neutral' });
       const point = composeCharacter(dressed, DEFAULT_STYLE, 'south', 128, 'normal', { badge: false, pose: 'point' });
       const pointWithoutMug = composeCharacter(
-        recipe('trial-body-soft', outfit, ['acc-lanyard', 'acc-watch']),
+        recipe('body-soft', outfit, ['acc-lanyard', 'acc-watch']),
         DEFAULT_STYLE,
         'south',
         128,
