@@ -1,23 +1,35 @@
 # Terrarium
 
-The **scenario seed authoring studio** for **The Water Cooler**. Terrarium authors the
-state of the office at 8:00 AM — employees, departments, office layout, props, visual
-identities, and starting social conditions (relationships, beliefs, knowledge) — and
-exports it as a scenario package the game loads. *The tool creates the terrarium; the
-game creates the stories.* It only authors the starting state — it never scripts
-behavior, dialogue, or outcomes; the simulation owns everything after 8:00 AM.
+The **asset authoring studio** for **The Water Cooler** — since the office-builder
+pivot (sim `docs/design/the-office-builder.md`, 2026-07-05), a QuotaCo branch-building
+game: the player raises an office on a bare lot, staffs it with a manifest of
+carried-over employees, and hits a ratcheting quota while the deep social sim runs as
+ambient life. Terrarium authors and bakes what that game consumes: **visual identity**
+(characters, facility/prop sprites, walls/floors/grounds, UI marks) plus the exported
+behavioral catalogs (personas, behaviors, traits, scenario templates). *Terrarium
+authors + bakes assets; the sim owns all generation, rendering, and simulation.* The
+tool never scripts behavior, dialogue, or outcomes.
+
+> **Direction (2026-07-09):** Terrarium is converging on being the game's *visual
+> identity compiler* — see `docs/content-pipeline-plan.md`. The in-tool Persona and
+> Scenario tabs remain functional but are **feature-frozen**: behavioral authoring
+> migrates to Unity editor tooling over time (sim ADR-0003). The sim-side statement of
+> what Terrarium supplies for the builder is
+> `the-water-cooler/docs/design/terrarium-office-builder-assets.md`.
 
 > The repo, package name (`sprite-character-creator`), GitHub Pages URL, and export
 > `generator` ids keep their original names for compatibility; "Terrarium" is the
 > product brand.
 
-> **Generation boundary (ADR-0001, in the sim repo):** procedural *office generation*
-> lives in the sim now (a new-game seed builds a fresh office at runtime) — Terrarium no
-> longer generates offices. It paints/imports a scene and exports it; the shared
-> office-layout contract is `docs/schema/office-layout.schema.json` in the sim repo.
-> Terrarium keeps only the scene-reading helpers it needs for export (`computeWings`,
-> `computeWingConnectivity`, `computeInteractionAnchors`, `computeOfficeAnchors`,
-> `sceneToLayoutJson`).
+> **Generation boundary (ADR-0001/0003, in the sim repo):** all procedural generation
+> lives in the sim — Terrarium no longer generates offices. Post-pivot, a new game
+> generates a *bare build site* (outdoor ground, parking) plus the *origin company*
+> the carryover employees transfer from; **the player builds the office itself**
+> (free-grid construction, raised by a crew). Terrarium paints/imports scenes only for
+> authoring/preview and exports them; the shared office-layout contract is
+> `docs/schema/office-layout.schema.json` in the sim repo. Terrarium keeps only the
+> scene-reading helpers it needs for export (`computeWings`, `computeWingConnectivity`,
+> `computeInteractionAnchors`, `computeOfficeAnchors`, `sceneToLayoutJson`).
 
 It began as (and still contains) a sprite compositor: generate RimWorld-style office
 characters and props as PNG sprite sheets with a globally tweakable art style.
@@ -117,12 +129,14 @@ https://thirdwatchstudios.github.io/terrarium/
   `placement`, `pivot`, `meta.sorting`, `meta.rotatable`, `meta.wallSlot`).
 
 - **Walls & Floors** — autotiling walls and seamless floor tiles.
-  - Walls (office wall, glass partition, cubicle partition) are 16-piece
-    autotile sets indexed by a 4-bit neighbor mask (N=1, E=2, S=4, W=8): place
-    a wall in the grid, look up its neighbors, pick frame `mask_<n>` from the
-    tileset. Sheets are 4×4, mask = row*4+col; connected arms overdraw the tile
-    edge so outlines stay continuous across tiles. The preview shows a sample
-    room assembled from the set.
+  - Walls (10 styles: office, glass partition, cubicle partition, brick, panel,
+    living, branded, slat, demising, curtain) are **47-piece blob autotile** sets
+    indexed by an 8-bit neighbor mask canonicalized to 47 configs
+    (`src/tiles/blob.ts`, frozen in `blob-index-table.json`, shared with the sim).
+    Sheets are 8×6, frames `mask_<i>` for blob index 0–46; full-cell bodies
+    overhang connected edges so runs stay continuous, with a beveled lit front
+    face (RimWorld shading). Ground-edge transition overlays (grass fringe) ride
+    the same 47-blob contract.
   - Floors (carpet, carpet tiles, wood, linoleum) are single seamless tiles —
     patterns wrap at the edges (speckles and plank seams repeat across the
     boundary). Floors render flat with no outline pass and sit on the
@@ -150,9 +164,12 @@ character-layers/<name>/layers@{1,2,4}x.png # re-tintable part layers (rows) x f
 character-layers/<name>/manifest@{1,2,4}x.json # layer z/tint/mood + frame rects; baked outline layer
 props/<name>/sprite@{1,2,4}x.png
 props/<name>/atlas@{1,2,4}x.json            # projection + placement + pivot
-walls/<name>/tileset@{1,2,4}x.png           # 4x4 sheet, frames keyed mask_0..mask_15
-walls/<name>/atlas@{1,2,4}x.json            # mask bits, frame rects, human names
+walls/<name>/tileset@{1,2,4}x.png           # 8x6 sheet, 47 blob frames keyed mask_0..mask_46
+walls/<name>/atlas@{1,2,4}x.json            # blob bits, frame rects, blob-table ref
 floors/<name>/tile@{1,2,4}x.png             # seamless, tileable: true in atlas
+ground/<id>/tile@{1,2,4}x.png               # outdoor ground kind (sort band -20000); natural ground clinical-exempt
+ground-overlays/<id>/tileset@{1,2,4}x.json  # grass-fringe transitions on the shared 47-blob contract
+facility-catalog.json                       # builder-facing placeable facilities: grid footprints, placement, rotatable
 drives.json                                 # reusable drive catalog (id, label, category, amplifiesNeeds); personas reference by id
 traits.json                                 # reusable trait catalog (id, label, category, biasesReactions); persona traitTags reference by id
 office-layout.json                          # current scene grid, props, spawns, named anchors (rooms + per-agent desks)

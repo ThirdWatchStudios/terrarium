@@ -5,10 +5,15 @@ Guidance for AI coding agents working in the **Terrarium** repository
 
 ## Project Context
 
-- Terrarium is the **scenario seed authoring studio** for The Water Cooler — a TypeScript +
-  Vite app that authors the office's 8:00 AM starting state (employees, departments, office
-  layout, props, visual identities, starting social conditions) and exports a scenario package
-  the game loads. It never scripts behavior; the simulation owns everything after 8:00 AM.
+- Terrarium is the **asset authoring studio** for The Water Cooler — a TypeScript + Vite app
+  that authors and bakes the game's visual identity (characters, facility/prop sprites,
+  walls/floors/grounds, UI marks) plus exported behavioral catalogs (personas, behaviors,
+  traits, scenario templates). Since the sim's **office-builder pivot** (2026-07-05, sim
+  `docs/design/the-office-builder.md`): the game is a QuotaCo branch-builder — bare lot,
+  player-built office, ratcheting quota, social sim as ambient life. Division of labor:
+  *Terrarium authors + bakes assets; the sim owns all generation, rendering, and simulation*
+  (sim ADR-0001/0003). The Persona/Scenario tabs are **feature-frozen** (behavioral authoring
+  migrates to Unity tooling per ADR-0003).
 - Unlike The Water Cooler (where design docs live in a separate `game-design-docs` repo), this
   repo is **self-contained**: the design docs, the decomposed epic/feature/story backlog, **and**
   the implementation all live here.
@@ -18,8 +23,17 @@ Guidance for AI coding agents working in the **Terrarium** repository
     shape changes). Architecture direction: `TOOL_ARCHITECTURE.md`. Roadmap: `ROADMAP.md`.
   - Design notes: `docs/scenario-template-model.md`, `docs/persona-template-model.md`,
     `docs/scenario-library.md`.
-- **Current active backlog: the office-scale work** (`docs/office-scale/`) — making the authored
-  starting state a multi-department organization. Its source of truth and GitHub mirror:
+- **Current active work: builder asset support + the content pipeline.** The sim-side statement
+  of what Terrarium supplies is `the-water-cooler/docs/design/terrarium-office-builder-assets.md`
+  (footprints + `facility-catalog.json` + build-site assets are DONE; open: surveillance
+  apparatus art, IRIS installation unit, QuotaCo-standard facility variants, carryover-character
+  authoring). The art-direction plan is `docs/content-pipeline-plan.md` +
+  `docs/core-part-library.md`.
+- **The office-scale backlog (`docs/office-scale/`, E0–E4) is SUPERSEDED/DEFERRED** — its
+  premises (fog-of-war org reach, "the org pre-exists", company-seed-per-new-game) died with
+  the pivot; see `docs/office-scale/unity-rehoming-disposition.md`. Do not implement E0–E4
+  stories in this repo. Its source of truth and GitHub mirror (retained for the import
+  tooling reference):
 
 ```text
 Source of truth : docs/office-scale/   (overview + work-area docs + epics/)

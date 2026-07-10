@@ -376,7 +376,15 @@ untouched — casting emits a bound scenario that loads identically. Design note
 runtime caster (consuming `scenario-template.json` directly) is a **separate, not-yet-built**
 "Scenario Loading" epic — flagged, not implemented here.
 
-## Office-Scale Authoring — the growing office (own project, DRAFT)
+## Office-Scale Authoring — the growing office (own project, SUPERSEDED)
+
+> **SUPERSEDED 2026-07-09:** the sim's office-builder pivot (2026-07-05/07) killed
+> this section's premises — the org no longer pre-exists (bare lot, player-built
+> office), fog-of-war reach is deferred unbuilt, and scenario casting is demoted to
+> designed probes. See `docs/office-scale/unity-rehoming-disposition.md` (post-pivot
+> fates) and sim ADR-0003. Terrarium's current work: builder asset support
+> (`docs/content-pipeline-plan.md` §5b) + the content pipeline. Original text
+> retained below for history.
 
 The full-game "office-scale" direction makes the authored starting state **bigger and
 structured**: a multi-department organization with an org chart, a populated

@@ -1,5 +1,16 @@
 # Company Generation — Terrarium's new-game seed (the office-scale program)
 
+> **SUPERSEDED (2026-07-09):** this program's premises died with the sim's
+> **office-builder pivot** (2026-07-05/07, sim `docs/design/the-office-builder.md`):
+> the org no longer pre-exists (new game = bare lot, player-built office), fog-of-war
+> org reach (sim E38–41) is deferred unbuilt, and there is no company-seed-per-new-game
+> (single persistent branch; the generator now produces the *origin company* the
+> carryovers transfer from). Separately, sim ADR-0003 moves behavioral identity to the
+> sim/Unity side. See [`unity-rehoming-disposition.md`](unity-rehoming-disposition.md)
+> for the per-epic post-pivot audit. **Do not implement E0–E4 stories in Terrarium.**
+> These docs are retained as design history; any revival happens sim-side against the
+> B5 "long-session depth" problem.
+
 **Status: DRAFT for decomposition.** This is the Terrarium (authoring-studio) program behind
 The Water Cooler's "office-scale" direction. Its spine is **company generation**: a first-class,
 generated **company** — as rich as the personas inside it — whose culture, economy, and history
