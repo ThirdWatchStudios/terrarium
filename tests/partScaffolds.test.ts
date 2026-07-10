@@ -167,9 +167,15 @@ describe('part authoring scaffold generation', () => {
       'assets/part-authoring/scaffolds/body/tall.east.svg',
       'assets/part-authoring/scaffolds/body/tall.north.svg',
       'assets/part-authoring/scaffolds/body/tall.south.svg',
+      'assets/part-authoring/scaffolds/hair/balding.east.svg',
+      'assets/part-authoring/scaffolds/hair/balding.north.svg',
+      'assets/part-authoring/scaffolds/hair/balding.south.svg',
       'assets/part-authoring/scaffolds/hair/bob.east.svg',
       'assets/part-authoring/scaffolds/hair/bob.north.svg',
       'assets/part-authoring/scaffolds/hair/bob.south.svg',
+      'assets/part-authoring/scaffolds/hair/bun.east.svg',
+      'assets/part-authoring/scaffolds/hair/bun.north.svg',
+      'assets/part-authoring/scaffolds/hair/bun.south.svg',
       'assets/part-authoring/scaffolds/hair/coils.east.svg',
       'assets/part-authoring/scaffolds/hair/coils.north.svg',
       'assets/part-authoring/scaffolds/hair/coils.south.svg',
@@ -179,12 +185,18 @@ describe('part authoring scaffold generation', () => {
       'assets/part-authoring/scaffolds/hair/long-straight.east.svg',
       'assets/part-authoring/scaffolds/hair/long-straight.north.svg',
       'assets/part-authoring/scaffolds/hair/long-straight.south.svg',
+      'assets/part-authoring/scaffolds/hair/pixie.east.svg',
+      'assets/part-authoring/scaffolds/hair/pixie.north.svg',
+      'assets/part-authoring/scaffolds/hair/pixie.south.svg',
       'assets/part-authoring/scaffolds/hair/ponytail.east.svg',
       'assets/part-authoring/scaffolds/hair/ponytail.north.svg',
       'assets/part-authoring/scaffolds/hair/ponytail.south.svg',
       'assets/part-authoring/scaffolds/hair/short.east.svg',
       'assets/part-authoring/scaffolds/hair/short.north.svg',
       'assets/part-authoring/scaffolds/hair/short.south.svg',
+      'assets/part-authoring/scaffolds/hair/side-part.east.svg',
+      'assets/part-authoring/scaffolds/hair/side-part.north.svg',
+      'assets/part-authoring/scaffolds/hair/side-part.south.svg',
       'assets/part-authoring/scaffolds/head/angular.east.svg',
       'assets/part-authoring/scaffolds/head/angular.north.svg',
       'assets/part-authoring/scaffolds/head/angular.south.svg',
@@ -206,7 +218,7 @@ describe('part authoring scaffold generation', () => {
       'assets/part-authoring/scaffolds/outfit/tee.east.svg',
       'assets/part-authoring/scaffolds/outfit/tee.south.svg',
     ]);
-    expect(first).toHaveLength(56);
+    expect(first).toHaveLength(68);
     expect(first.map(({ bytes }) => bytes)).toEqual(second.map(({ bytes }) => bytes));
     expect(PART_SCAFFOLD_SPECS.map(({ slot, referenceId }) => [slot, referenceId])).toEqual([
       ['body', 'body-compact'],
@@ -226,6 +238,10 @@ describe('part authoring scaffold generation', () => {
       ['hair', 'hair-ponytail'],
       ['hair', 'hair-long-straight'],
       ['hair', 'hair-coils'],
+      ['hair', 'hair-bun'],
+      ['hair', 'hair-balding'],
+      ['hair', 'hair-pixie'],
+      ['hair', 'hair-side-part'],
       ['outfit', 'outfit-tee'],
     ]);
   });
@@ -375,7 +391,7 @@ describe('part authoring scaffold generation', () => {
     expect(east).toContain('id="guide/body-capsule/shape-001" d="M59 58');
   });
 
-  it('compiles the eighteen canonical hair documents as six complete overlays', async () => {
+  it('compiles the thirty canonical hair documents as ten complete overlays', async () => {
     const root = await mkdtemp(path.join(tmpdir(), 'terrarium-hair-scaffolds-'));
     temporaryRoots.push(root);
     await mkdir(path.join(root, 'hair'), { recursive: true });
@@ -383,9 +399,13 @@ describe('part authoring scaffold generation', () => {
     const canonicalHairs = [
       ['hair-short', 'short'],
       ['hair-bob', 'bob'],
-      ['hair-long-straight', 'long-straight'],
+      ['hair-bun', 'bun'],
       ['hair-curly', 'curly'],
+      ['hair-balding', 'balding'],
+      ['hair-side-part', 'side-part'],
+      ['hair-pixie', 'pixie'],
       ['hair-ponytail', 'ponytail'],
+      ['hair-long-straight', 'long-straight'],
       ['hair-coils', 'coils'],
     ] as const;
     for (const [, slug] of canonicalHairs) {
@@ -401,12 +421,16 @@ describe('part authoring scaffold generation', () => {
       catalog: PART_IMPORT_TARGETS,
     });
     expect(imports.map(({ id }) => id)).toEqual([
+      'hair-balding',
       'hair-bob',
+      'hair-bun',
       'hair-coils',
       'hair-curly',
       'hair-long-straight',
+      'hair-pixie',
       'hair-ponytail',
       'hair-short',
+      'hair-side-part',
     ]);
     for (const [id, slug] of canonicalHairs) {
       const imported = imports.find((candidate) => candidate.id === id)!;
@@ -470,7 +494,7 @@ describe('committed part authoring assets', () => {
     const root = await mkdtemp(path.join(tmpdir(), 'terrarium-authoring-assets-'));
     temporaryRoots.push(root);
     const firstWrite = await writePartAuthoringAssets(root);
-    expect(firstWrite.updated).toBe(56);
+    expect(firstWrite.updated).toBe(68);
     expect(firstWrite.removed).toBe(0);
     await expect(checkPartAuthoringAssets(root)).resolves.toBeUndefined();
 

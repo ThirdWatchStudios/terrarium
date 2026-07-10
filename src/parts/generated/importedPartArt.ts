@@ -93,6 +93,22 @@ export const IMPORTED_PART_ART = [
     },
   },
   {
+    id: "hair-balding",
+    slot: "hair",
+    facings: {
+      south: [
+        { d: "M -22 -5 C -26 -2 -27 7 -22 12 C -18 13 -15 9 -16 4 C -17 0 -18 -3 -22 -5 Z", fill: "$hair" },
+        { d: "M 22 -5 C 26 -2 27 7 22 12 C 18 13 15 9 16 4 C 17 0 18 -3 22 -5 Z", fill: "$hair" },
+      ],
+      east: [
+        { d: "M -21 -6 C -26 -2 -27 9 -21 13 C -15 12 -13 6 -15 1 C -16 -3 -18 -5 -21 -6 Z", fill: "$hair" },
+      ],
+      north: [
+        { d: "M -21 -4 C -14 4 14 4 21 -4 L 21 11 C 10 16 -10 16 -21 11 Z", fill: "$hair" },
+      ],
+    },
+  },
+  {
     id: "hair-bob",
     slot: "hair",
     facings: {
@@ -107,6 +123,25 @@ export const IMPORTED_PART_ART = [
       north: [
         { d: "M-23-4C-23-16.703-12.703-27 0-27 12.703-27 23-16.703 23-4L23 16-23 16Z", fill: "$hair" },
         { d: "M0-25C-4-17-5-6-5 10", stroke: "#00000024", strokeWidth: 1.6, silhouette: false },
+      ],
+    },
+  },
+  {
+    id: "hair-bun",
+    slot: "hair",
+    facings: {
+      south: [
+        { d: "M -19.4164878389476 -8 A 21 21 0 0 1 19.4164878389476 -8 Z", fill: "$hair" },
+        { d: "M -9 -22 a 9 7 0 1 0 18 0 a 9 7 0 1 0 -18 0 Z", fill: "$hair" },
+      ],
+      east: [
+        { d: "M -19.4164878389476 -8 A 21 21 0 0 1 19.4164878389476 -8 Z", fill: "$hair" },
+        { d: "M -17 -9 h 0 a 4 4 0 0 1 4 4 v 7 a 4 4 0 0 1 -4 4 h 0 a 4 4 0 0 1 -4 -4 v -7 a 4 4 0 0 1 4 -4 Z", fill: "$hair" },
+        { d: "M -28 -12 a 8 7 0 1 0 16 0 a 8 7 0 1 0 -16 0 Z", fill: "$hair" },
+      ],
+      north: [
+        { d: "M -20.615528128088304 4 A 21 21 0 1 1 20.615528128088304 4 Z", fill: "$hair" },
+        { d: "M -9 -22 a 9 7 0 1 0 18 0 a 9 7 0 1 0 -18 0 Z", fill: "$hair" },
       ],
     },
   },
@@ -168,6 +203,24 @@ export const IMPORTED_PART_ART = [
     },
   },
   {
+    id: "hair-pixie",
+    slot: "hair",
+    facings: {
+      south: [
+        { d: "M -20.396078054371138 -5 A 21 21 0 0 1 20.396078054371138 -5 Z", fill: "$hair" },
+        { d: "M -18 -4 L -10 3 L -3 -2 L 4 4 L 11 -2 L 19 2 L 18 -8 L -17 -8 Z", fill: "$hair" },
+      ],
+      east: [
+        { d: "M -20.396078054371138 -5 A 21 21 0 0 1 20.396078054371138 -5 Z", fill: "$hair" },
+        { d: "M -16 -7 h 0 a 4 4 0 0 1 4 4 v 7 a 4 4 0 0 1 -4 4 h 0 a 4 4 0 0 1 -4 -4 v -7 a 4 4 0 0 1 4 -4 Z", fill: "$hair" },
+        { d: "M -5 -11 C 5 -12 14 -8 19 -2 L 13 4 L 7 -1 L 1 3 L -4 -2 Z", fill: "$hair" },
+      ],
+      north: [
+        { d: "M -19.4164878389476 8 A 21 21 0 1 1 19.4164878389476 8 Z", fill: "$hair" },
+      ],
+    },
+  },
+  {
     id: "hair-ponytail",
     slot: "hair",
     facings: {
@@ -202,6 +255,27 @@ export const IMPORTED_PART_ART = [
       ],
       north: [
         { d: "M -19.79898987322333 7 A 21 21 0 1 1 19.79898987322333 7 Z", fill: "$hair" },
+      ],
+    },
+  },
+  {
+    id: "hair-side-part",
+    slot: "hair",
+    facings: {
+      south: [
+        { d: "M -19.79898987322333 -7 A 21 21 0 0 1 19.79898987322333 -7 Z", fill: "$hair" },
+        { d: "M -19 -6 C -7 -18 8 -19 20 -7 L 15 1 C 5 -7 -6 -8 -17 1 Z", fill: "$hair" },
+        { d: "M -5 -15 C -3 -8 -2 -2 -2 7", stroke: "#00000024", strokeWidth: 1.6, silhouette: false },
+      ],
+      east: [
+        { d: "M -19.79898987322333 -7 A 21 21 0 0 1 19.79898987322333 -7 Z", fill: "$hair" },
+        { d: "M -17 -8 h 0 a 4 4 0 0 1 4 4 v 8 a 4 4 0 0 1 -4 4 h 0 a 4 4 0 0 1 -4 -4 v -8 a 4 4 0 0 1 4 -4 Z", fill: "$hair" },
+        { d: "M -6 -16 C 6 -16 16 -10 19 -3 L 12 2 C 5 -4 -3 -5 -11 0 Z", fill: "$hair" },
+        { d: "M -5 -15 C -2 -9 -1 -4 -1 1", stroke: "#00000024", strokeWidth: 1.6, silhouette: false },
+      ],
+      north: [
+        { d: "M -20.396078054371138 5 A 21 21 0 1 1 20.396078054371138 5 L 20 13 L -20 13 Z", fill: "$hair" },
+        { d: "M -3 -16 C -5 -8 -5 0 -3 8", stroke: "#00000024", strokeWidth: 1.6, silhouette: false },
       ],
     },
   },
@@ -420,12 +494,30 @@ export const IMPORTED_PART_PROVENANCE = [
     ],
   },
   {
+    id: "hair-balding",
+    sourceKind: "authored",
+    sourceFiles: [
+      "assets/parts/hair/balding.east.svg",
+      "assets/parts/hair/balding.north.svg",
+      "assets/parts/hair/balding.south.svg",
+    ],
+  },
+  {
     id: "hair-bob",
     sourceKind: "authored",
     sourceFiles: [
       "assets/parts/hair/bob.east.svg",
       "assets/parts/hair/bob.north.svg",
       "assets/parts/hair/bob.south.svg",
+    ],
+  },
+  {
+    id: "hair-bun",
+    sourceKind: "authored",
+    sourceFiles: [
+      "assets/parts/hair/bun.east.svg",
+      "assets/parts/hair/bun.north.svg",
+      "assets/parts/hair/bun.south.svg",
     ],
   },
   {
@@ -456,6 +548,15 @@ export const IMPORTED_PART_PROVENANCE = [
     ],
   },
   {
+    id: "hair-pixie",
+    sourceKind: "authored",
+    sourceFiles: [
+      "assets/parts/hair/pixie.east.svg",
+      "assets/parts/hair/pixie.north.svg",
+      "assets/parts/hair/pixie.south.svg",
+    ],
+  },
+  {
     id: "hair-ponytail",
     sourceKind: "authored",
     sourceFiles: [
@@ -471,6 +572,15 @@ export const IMPORTED_PART_PROVENANCE = [
       "assets/parts/hair/short.east.svg",
       "assets/parts/hair/short.north.svg",
       "assets/parts/hair/short.south.svg",
+    ],
+  },
+  {
+    id: "hair-side-part",
+    sourceKind: "authored",
+    sourceFiles: [
+      "assets/parts/hair/side-part.east.svg",
+      "assets/parts/hair/side-part.north.svg",
+      "assets/parts/hair/side-part.south.svg",
     ],
   },
   {

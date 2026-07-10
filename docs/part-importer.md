@@ -26,8 +26,9 @@ npm run parts:scaffolds # regenerate seeded SVG starters and palette files
 
 The generated authoring assets live under `assets/part-authoring`: seeded
 scaffolds for all five production bodies, all six human-head families,
-six canonical hair families (`hair-short`, `hair-bob`, `hair-long-straight`,
-`hair-curly`, `hair-ponytail`, and `hair-coils`), and the south/east tee
+all ten mapped hair families (`hair-short`, `hair-bob`, `hair-bun`,
+`hair-curly`, `hair-balding`, `hair-side-part`, `hair-pixie`,
+`hair-ponytail`, `hair-long-straight`, and `hair-coils`), and the south/east tee
 starters, plus ASE, GPL, and readable SVG sentinel palette companions for
 optional editors. Their directory README defines the canonical editor-agnostic
 workflow. Layer locking is only an editing convenience; semantic IDs determine
@@ -69,12 +70,12 @@ is validated after applying that canvas translation but deliberately preserves
 its established local `d` strings byte-for-byte; visible body paths must remain
 directly under the canonical translation group.
 
-`hair-short`, `hair-long-straight`, `hair-curly`, `hair-ponytail`, and
-`hair-coils` also preserve their canonical local path strings after canvas
-validation. Their arc- and curve-heavy geometry measurably changes under
-generic flattening even at production sizes, so those explicit targets require
-visible paths directly under `translate(64 44)`. Bob retains the normal
-transform-baking path as the approved interoperability control.
+Every current hair target except `hair-bob` also preserves its canonical local
+path strings after canvas validation. Their arc- and curve-heavy geometry
+measurably changes under generic flattening even at production sizes, so those
+explicit targets require visible paths directly under `translate(64 44)`.
+Bob retains the normal transform-baking path as the approved interoperability
+control.
 
 ## Sentinel palette
 
@@ -217,6 +218,6 @@ are approved in the current production batch. The tee anchored-detail mechanics
 are complete; its visual approval remains a separate gate, and componentized
 Blazer intake remains the next outfit adapter boundary. The approved bodies
 also have canonical SVG sources and a shared-identity adapter. The first six
-hair families are approved. The current art-production priority is the
-Bun/Balding/Pixie/Side-part silhouette batch before detail-only Blazer or wall
-work.
+hair families are approved. Bun, Balding, Pixie, and Side-part complete the
+mapped source set, pass automated production review, and received visual
+approval on 2026-07-10. Detail-only Blazer or wall work can now follow.

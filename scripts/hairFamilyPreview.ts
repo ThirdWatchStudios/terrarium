@@ -38,18 +38,25 @@ const HAIR_STYLES = [
     statusShort: 'approved canonical',
   },
   {
+    id: 'hair-pixie',
+    label: 'Pixie',
+    approved: true,
+    status: 'approved canonical production geometry',
+    statusShort: 'approved canonical',
+  },
+  {
+    id: 'hair-side-part',
+    label: 'Side-part',
+    approved: true,
+    status: 'approved canonical production geometry',
+    statusShort: 'approved canonical',
+  },
+  {
     id: 'hair-bob',
     label: 'Bob',
     approved: true,
     status: 'approved medium-family control',
     statusShort: 'approved control',
-  },
-  {
-    id: 'hair-long-straight',
-    label: 'Long straight',
-    approved: true,
-    status: 'approved canonical production geometry',
-    statusShort: 'approved canonical',
   },
   {
     id: 'hair-curly',
@@ -59,8 +66,29 @@ const HAIR_STYLES = [
     statusShort: 'approved canonical',
   },
   {
+    id: 'hair-long-straight',
+    label: 'Long straight',
+    approved: true,
+    status: 'approved canonical production geometry',
+    statusShort: 'approved canonical',
+  },
+  {
     id: 'hair-ponytail',
     label: 'Ponytail',
+    approved: true,
+    status: 'approved canonical production geometry',
+    statusShort: 'approved canonical',
+  },
+  {
+    id: 'hair-bun',
+    label: 'Bun',
+    approved: true,
+    status: 'approved canonical production geometry',
+    statusShort: 'approved canonical',
+  },
+  {
+    id: 'hair-balding',
+    label: 'Balding',
     approved: true,
     status: 'approved canonical production geometry',
     statusShort: 'approved canonical',
@@ -141,39 +169,49 @@ function compatibilitySheet(): string {
   const cellStride = 118;
   const renderSize = 108;
   const groupWidth = FACINGS.length * cellStride;
-  const headerHeight = 126;
+  const titleHeight = 66;
+  const bandHeaderHeight = 58;
   const rowHeight = 118;
-  const width = labelWidth + HAIR_STYLES.length * groupWidth + 14;
-  const height = headerHeight + HEADS.length * rowHeight + 10;
+  const stylesPerBand = 5;
+  const bands = Array.from(
+    { length: Math.ceil(HAIR_STYLES.length / stylesPerBand) },
+    (_, index) => HAIR_STYLES.slice(index * stylesPerBand, (index + 1) * stylesPerBand),
+  );
+  const bandHeight = bandHeaderHeight + HEADS.length * rowHeight + 10;
+  const width = labelWidth + stylesPerBand * groupWidth + 14;
+  const height = titleHeight + bands.length * bandHeight;
   const parts: string[] = [
     `<rect width="${width}" height="${height}" fill="${COLORS.page}"/>`,
     text(18, 30, 'Representative production hair — six-head compatibility', 22, 700),
     text(18, 53, 'Body-balanced · current compositor · all source facings · 108 px review cells', 12, 400, COLORS.muted),
   ];
 
-  HAIR_STYLES.forEach((hair, hairIndex) => {
-    const x = labelWidth + hairIndex * groupWidth;
-    const statusColor = hair.approved ? COLORS.approved : COLORS.pending;
-    parts.push(`<rect x="${x + 2}" y="66" width="${groupWidth - 8}" height="52" rx="7" fill="${COLORS.group}"/>`);
-    parts.push(text(x + 12, 84, hair.label, 14, 700));
-    parts.push(text(x + 12, 101, hair.statusShort, 9, 650, statusColor));
-    FACINGS.forEach((facing, facingIndex) => {
-      parts.push(text(x + facingIndex * cellStride + 42, 116, facing, 9, 600, COLORS.muted, 'text-anchor="middle"'));
-    });
-  });
-
-  HEADS.forEach(([head, label], row) => {
-    const y = headerHeight + row * rowHeight;
-    parts.push(`<rect x="8" y="${y + 2}" width="${width - 16}" height="${rowHeight - 4}" rx="7" fill="${row % 2 ? COLORS.alternate : COLORS.panel}"/>`);
-    parts.push(text(18, y + 44, label, 14, 700));
-    parts.push(text(18, y + 62, head, 9, 400, COLORS.muted));
-
-    HAIR_STYLES.forEach((hair, hairIndex) => {
+  bands.forEach((styles, bandIndex) => {
+    const bandTop = titleHeight + bandIndex * bandHeight;
+    styles.forEach((hair, hairIndex) => {
+      const x = labelWidth + hairIndex * groupWidth;
+      const statusColor = hair.approved ? COLORS.approved : COLORS.pending;
+      parts.push(`<rect x="${x + 2}" y="${bandTop}" width="${groupWidth - 8}" height="52" rx="7" fill="${COLORS.group}"/>`);
+      parts.push(text(x + 12, bandTop + 18, hair.label, 14, 700));
+      parts.push(text(x + 12, bandTop + 35, hair.statusShort, 9, 650, statusColor));
       FACINGS.forEach((facing, facingIndex) => {
-        const x = labelWidth + hairIndex * groupWidth + facingIndex * cellStride;
-        const svg = renderedCharacter(head, hair.id, facing);
-        parts.push(`<rect x="${x + 3}" y="${y + 5}" width="${renderSize + 4}" height="${renderSize + 4}" rx="5" fill="#FFFFFF" stroke="${COLORS.border}"/>`);
-        parts.push(`<g transform="translate(${x + 5} ${y + 7}) scale(${renderSize / CANVAS})">${svgInner(svg)}</g>`);
+        parts.push(text(x + facingIndex * cellStride + 42, bandTop + 50, facing, 9, 600, COLORS.muted, 'text-anchor="middle"'));
+      });
+    });
+
+    HEADS.forEach(([head, label], row) => {
+      const y = bandTop + bandHeaderHeight + row * rowHeight;
+      parts.push(`<rect x="8" y="${y + 2}" width="${width - 16}" height="${rowHeight - 4}" rx="7" fill="${row % 2 ? COLORS.alternate : COLORS.panel}"/>`);
+      parts.push(text(18, y + 44, label, 14, 700));
+      parts.push(text(18, y + 62, head, 9, 400, COLORS.muted));
+
+      styles.forEach((hair, hairIndex) => {
+        FACINGS.forEach((facing, facingIndex) => {
+          const x = labelWidth + hairIndex * groupWidth + facingIndex * cellStride;
+          const svg = renderedCharacter(head, hair.id, facing);
+          parts.push(`<rect x="${x + 3}" y="${y + 5}" width="${renderSize + 4}" height="${renderSize + 4}" rx="5" fill="#FFFFFF" stroke="${COLORS.border}"/>`);
+          parts.push(`<g transform="translate(${x + 5} ${y + 7}) scale(${renderSize / CANVAS})">${svgInner(svg)}</g>`);
+        });
       });
     });
   });
@@ -246,11 +284,11 @@ function html(): string {
 </style>
 <main>
   <h1>Representative production hair-family review</h1>
-  <p class="notice"><span class="approved">Short, Bob, Long straight, Curly, Ponytail, and Coils are approved canonical production geometry.</span> Ponytail carries a rearward profile fall, while Coils uses a denser cloud silhouette distinct from Curly. All cells come directly from the production compositor; this preview does not alter part sources.</p>
+  <p class="notice"><span class="approved">All ten mapped hair families are approved canonical production geometry.</span> Bun is compact and clip-free, Balding uses tapered temple and horseshoe hair, Pixie has a clean swept profile, and Side-part carries its crease through every facing. All cells come directly from the production compositor; this preview does not alter part sources.</p>
   <h2>Six-head compatibility across source facings</h2>
-  <img src="hair-families-compatibility.png" alt="Six production hairstyles on all six production heads across south, east, and north facings">
+  <img src="hair-families-compatibility.png" alt="Ten production hairstyles on all six production heads across south, east, and north facings">
   <h2>Game-distance readability</h2>
-  <img src="hair-families-distance.png" alt="Six production hairstyles across facings at 128, 64, 48, and 32 pixels">
+  <img src="hair-families-distance.png" alt="Ten production hairstyles across facings at 128, 64, 48, and 32 pixels">
 </main>`;
 }
 

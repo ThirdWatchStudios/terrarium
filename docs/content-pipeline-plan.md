@@ -153,6 +153,13 @@ icons), not by upfront design.
    tail in all three facings, and Coils gains a denser cloud silhouette that is
    materially distinct from Curly at 32 px. Their 2,160-cell compatibility
    matrix and expanded distance proof passed visual approval on 2026-07-10.
+   Bun, Balding, Pixie, and Side-part add the final 12 mapped sources. Bun is a
+   compact, clip-free knot distinct from Ponytail; Balding uses tapered temple
+   and rear bands; Pixie owns a cropped irregular fringe; Side-part owns a
+   swept cap and non-silhouette parting crease. The expanded ten-style
+   3,600-cell hair/body/head/facing/style matrix, full head-accessory matrices,
+   and distance proof pass. These final four received visual approval on
+   2026-07-10.
 8. **Anchored outfit-detail adapter**: `outfit-tee` is the first body-aware
    intake target. Its south/east SVGs are authored once over `body-balanced`,
    with the body origin at `(64, 87)` and neck at `(64, 58)`. Every visible
@@ -173,11 +180,10 @@ icons), not by upfront design.
    generator-owned and reproducible; `curated` means selected and frozen
    generator output.
 
-The approved body, six-head, and six-hair source sets now form the canonical
-silhouette foundation. Bun/Balding/Pixie/Side-part are the next silhouette
-batch before the Phase 3 wall kit or detail-only Tee/Blazer work. The phase
-numbers describe pipeline scope; they do not override this visual-impact
-priority.
+The approved body and six-head sets plus all ten approved mapped hair source
+sets now form the canonical silhouette foundation. The Phase 3 wall kit or
+outfit work can follow. The phase numbers describe pipeline scope; they do not
+override visual-impact priority.
 
 ### Phase 3 — Wall bevel piece kit (~1 week; first authoring test)
 
@@ -204,8 +210,9 @@ the tweak pain without art.
    detail below a threshold export size. Benefits procedural parts too.
 2. Re-author by silhouette priority — the approved five-body and six-head
    foundations are canonical SVG; Short, Bob, Long straight, Curly, Ponytail,
-   and Coils are approved, while Bun, Balding, Pixie, and Side-part are the
-   active hair review. Outfits (§4b) follow, judged against the zoom strip.
+   and Coils are approved; Bun, Balding, Pixie, and Side-part completed the
+   approved mapped set on 2026-07-10. Outfits (§4b) follow, judged against the
+   zoom strip.
    Detail-only garment and wall passes wait behind the hair silhouettes.
    Accessories are last (already glyph-like).
    Moods/badges/poses stay procedural.

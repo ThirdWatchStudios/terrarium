@@ -131,10 +131,7 @@ describe('production head-round art', () => {
       }
     }
     expect(cells).toHaveLength(660);
-    const clipped = clippedCells(cells, 48, 20);
-    expect(clipped).toHaveLength(10);
-    expect(clipped.every((label) =>
-      label.startsWith('preset-high-contrast/hair-bun/'))).toBe(true);
+    expect(clippedCells(cells, 48, 20)).toEqual([]);
   });
 
   it('keeps portraits valid at 32/48/96 px across hair and skin palettes', () => {

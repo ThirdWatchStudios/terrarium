@@ -282,15 +282,7 @@ describe('production human head silhouettes', () => {
     expect(unresolvedPaint).toEqual([]);
 
     expect(highContrastCells).toHaveLength(1320);
-    const clipped = clippedCells(highContrastCells, 48, 20);
-    expect(clipped).toHaveLength(60);
-    for (const [head] of HUMAN_HEADS) {
-      expect(clipped.filter((label) => label.includes(`/${head}/`)), head).toHaveLength(10);
-    }
-    expect(clipped.every((label) =>
-      label.startsWith('preset-high-contrast/') &&
-      label.includes('/hair-bun/'),
-    )).toBe(true);
+    expect(clippedCells(highContrastCells, 48, 20)).toEqual([]);
   });
 
   it('renders all 594 head, hair, skin, and portrait-size cells', () => {

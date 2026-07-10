@@ -27,21 +27,24 @@ are the approved production source of truth. Together with `head-round`, all
 six head families passed the automated compatibility matrices and user visual
 approval on 2026-07-10.
 
-`hair/` contains six complete south/east/north sets: the approved Bob, Short,
-and Long straight foundations plus the Curly, Ponytail, and Coils review batch.
+`hair/` contains all ten complete south/east/north sets: the approved Bob,
+Short, Long straight, Curly, Ponytail, and Coils foundations plus the Bun,
+Balding, Pixie, and Side-part review batch.
 Their target-level byte-stable mode validates full canvas geometry while
 avoiding arc normalization that would otherwise change rendered pixels. Short
 and Long straight south/north preserve their prior shapes, while Curly
 preserves all three facings; Long straight east, Ponytail, and Coils carry the
-deliberate silhouette refinements. Bob
-remains the Medium-family control; Short and Long straight received visual
+first deliberate silhouette refinements. Bun is compact and clip-free,
+Balding uses tapered temple and rear bands, Pixie has a cropped irregular
+fringe, and Side-part includes a swept cap and parting crease. Bob remains the
+Medium-family control; Short and Long straight received visual
 approval on 2026-07-10. Curly, Ponytail, and Coils received visual approval on
-2026-07-10 as well.
+2026-07-10 as well. Bun, Balding, Pixie, and Side-part passed automated review
+and received visual approval on 2026-07-10.
 
-The approved body, head, and six-hair foundations now live in this source tree.
-Current production work is the Bun/Balding/Pixie/Side-part silhouette batch.
-Detail-only Tee/Blazer work and wall bevel/detail authoring resume after that
-hair pass.
+The approved body and head foundations plus all ten approved mapped hair
+sources now live in this tree. Detail-only Tee/Blazer work and wall
+bevel/detail authoring follow the completed hair pass.
 
 See `docs/part-importer.md` for the SVG dialect, sentinel palette, validation
 rules, and the deferred componentized multi-piece adapter needed by Blazer.

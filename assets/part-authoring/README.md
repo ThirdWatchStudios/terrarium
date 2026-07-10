@@ -16,7 +16,7 @@ The current supported starters are:
 
 - `scaffolds/body/{compact,balanced,large-frame,tall,soft}.{south,east,north}.svg`
 - `scaffolds/head/{round,oval,boxy,long,angular,soft-square}.{south,east,north}.svg`
-- `scaffolds/hair/{short,bob,long-straight,curly,ponytail,coils}.{south,east,north}.svg`
+- `scaffolds/hair/{short,bob,bun,curly,balding,side-part,pixie,ponytail,long-straight,coils}.{south,east,north}.svg`
 - `scaffolds/outfit/tee.{south,east}.svg` (seeded on `body-balanced`)
 
 They are seeded with the current production geometry, so they support a true
@@ -47,6 +47,12 @@ the established lobed silhouette exactly; Ponytail adds a visible hanging tail
 in every facing, and Coils uses a denser cloud crown that stays distinct from
 Curly at game distance. They received visual approval on 2026-07-10.
 
+Bun, Balding, Pixie, and Side-part add the final 12 mapped hair sources. Bun is
+compact and clip-free rather than a second ponytail; Balding uses tapered
+temple and rear bands; Pixie owns an irregular cropped fringe; Side-part owns a
+swept cap plus a non-silhouette parting crease. They are registered and pass
+the production matrices, and received visual approval on 2026-07-10.
+
 ## Canonical headless workflow
 
 1. Copy a complete scaffold set to a working directory (three facings for
@@ -66,10 +72,9 @@ The gate is whether committed canonical SVG validates, compiles
 deterministically, changes only intended snapshots, and passes visual review —
 not whether a named editor preserves it.
 
-The approved body, head, and six-hair set now have canonical sources.
-Bun/Balding/Pixie/Side-part are the current silhouette batch; detail-only Tee
-refinement, the componentized Blazer adapter, and wall bevel/detail work follow
-the hair pass.
+The approved body and head sets plus all ten mapped hair styles now have
+approved canonical sources. Detail-only Tee refinement, the componentized
+Blazer adapter, and wall bevel/detail work follow the hair pass.
 
 ## Optional visual-editor use
 
@@ -84,6 +89,6 @@ the hair pass.
   transforms normally do not need flattening because the importer bakes them.
   Body art is deliberately stricter: keep each visible path directly beneath
   the canonical `translate(64 87)` art group so its established local path data
-  remains byte-stable. The Short, Long straight, Curly, Ponytail, and Coils
-  sources use the same rule around `translate(64 44)`; edit their path data
+  remains byte-stable. Every current hair source except the Bob interoperability
+  control uses the same rule around `translate(64 44)`; edit its path data
   directly rather than adding another transform.

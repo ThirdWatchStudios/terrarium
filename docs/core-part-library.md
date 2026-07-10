@@ -102,11 +102,10 @@ library as a whole:
 ## Milestones
 
 Current production order follows visual impact rather than the section order:
-the approved body and six-head source foundations are canonicalized; the
-representative Short/Medium/Long hair family batch is approved, and the next
-silhouette batch is Bun/Balding/Pixie/Side-part before detail-only Tee/Blazer
-work or the wall bevel kit. M1 and M2 remain open; this sequencing note does
-not pre-check unrelated milestone gates.
+the approved body and six-head source foundations are canonicalized, and all
+ten mapped hair styles are approved canonical sources. Outfit or wall work can
+follow. M1 and M2 remain open; this sequencing note does not pre-check
+unrelated milestone gates.
 
 ### M1 — Pipeline proof
 
@@ -189,9 +188,8 @@ contour adds a gentle cheek/chin treatment, east owns a readable profile, and
 north remains nearly circular for rear-hair compatibility. Eyes remain
 literal-ink `detail/*` paths owned by the head. Its inventory boxes record the
 approved drawings; broader M1 scene/crowd gates remain open. The automated
-660-cell hair / head-accessory / facing / style matrix adds no clipping
-relative to the stable head control; 15 existing high-contrast bun/ponytail
-top-edge contacts remain separate hair work.
+660-cell hair / head-accessory / facing / style matrix is now strictly
+clip-free, including the lowered production Bun.
 
 The other five IDs have one complete 15-SVG approved production batch:
 south/east/north sources for `head-oval`, `head-boxy`, `head-long`,
@@ -214,14 +212,14 @@ max). `none` needs no art; north matters (hair reads from behind).
 | Family | Style | south | east | north |
 |---|---|---|---|---|
 | Short | short | [x] | [x] | [x] |
-| Short | pixie | [ ] | [ ] | [ ] |
-| Short | side-part | [ ] | [ ] | [ ] |
+| Short | pixie | [x] | [x] | [x] |
+| Short | side-part | [x] | [x] | [x] |
 | Medium | bob | [x] | [x] | [x] |
 | Medium | curly | [x] | [x] | [x] |
 | Long | long-straight | [x] | [x] | [x] |
 | Long | ponytail | [x] | [x] | [x] |
-| Long | bun | [ ] | [ ] | [ ] |
-| Special | balding | [ ] | [ ] | [ ] |
+| Long | bun | [x] | [x] | [x] |
+| Special | balding | [x] | [x] | [x] |
 | Special | coils | [x] | [x] | [x] |
 | *(future)* | *Short/military, Medium/layered, …* | — | — | — |
 
@@ -247,6 +245,15 @@ silhouette byte-for-byte. Ponytail adds a hanging tail that stays directional
 at 32 px; Coils uses a denser cloud crown and rear-weighted east profile so it
 does not collapse into Curly. The expanded preview and 2,160-cell matrix are
 the review surface; their inventory cells record visual approval on 2026-07-10.
+
+`hair-bun`, `hair-balding`, `hair-pixie`, and `hair-side-part` add the final 12
+mapped south/east/north sources. Bun is compact and clip-free rather than a
+second ponytail; Balding uses tapered temple/rear bands; Pixie owns an
+irregular cropped fringe; Side-part owns a swept cap plus a non-silhouette
+parting crease. Their generated scaffolds, four intentional compositor
+goldens, distance proof, 3,600-cell hair compatibility matrix, and full
+head/accessory matrices pass. Their inventory cells record user visual
+approval on 2026-07-10.
 
 ### 4. Bodies (§4b) — archetype frames, N × 3 facings
 

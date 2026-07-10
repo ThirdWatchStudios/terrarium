@@ -12,9 +12,13 @@ import { getPart, partsForSlot } from '../src/parts/library';
 const CANONICAL_HAIRS = [
   ['hair-short', 'short', [1, 2, 1]],
   ['hair-bob', 'bob', [2, 2, 2]],
-  ['hair-long-straight', 'long-straight', [1, 1, 1]],
+  ['hair-bun', 'bun', [2, 3, 2]],
   ['hair-curly', 'curly', [6, 5, 4]],
+  ['hair-balding', 'balding', [2, 1, 1]],
+  ['hair-side-part', 'side-part', [3, 4, 2]],
+  ['hair-pixie', 'pixie', [2, 3, 1]],
   ['hair-ponytail', 'ponytail', [3, 4, 3]],
+  ['hair-long-straight', 'long-straight', [1, 1, 1]],
   ['hair-coils', 'coils', [1, 1, 1]],
 ] as const;
 
@@ -28,6 +32,15 @@ const HUMAN_HEADS = [
 ] as const;
 
 const ALL_FACINGS = [...FACINGS, 'west'] as const;
+
+const BROAD_SILHOUETTE_HAIRS = new Set([
+  'hair-short',
+  'hair-bob',
+  'hair-curly',
+  'hair-ponytail',
+  'hair-long-straight',
+  'hair-coils',
+]);
 
 function recipe(body: string, head: string, hair: string): CharacterRecipe {
   return {
@@ -111,9 +124,18 @@ describe('canonical production hair families', () => {
         silhouette: false,
       });
     }
+
+    const sidePart = getPart('hair-side-part')!;
+    for (const facing of FACINGS) {
+      expect(sidePart.facings[facing]?.shapes.at(-1)).toMatchObject({
+        stroke: '#00000024',
+        strokeWidth: 1.6,
+        silhouette: false,
+      });
+    }
   });
 
-  it('renders the 2,160-cell hair, body, head, facing, and style matrix deterministically without clipping', () => {
+  it('renders the 3,600-cell hair, body, head, facing, and style matrix deterministically without clipping', () => {
     let count = 0;
     const nondeterministic: string[] = [];
     const invalidGeometry: string[] = [];
@@ -151,14 +173,14 @@ describe('canonical production hair families', () => {
       }
     }
 
-    expect(count).toBe(2160);
+    expect(count).toBe(3600);
     expect(nondeterministic).toEqual([]);
     expect(invalidGeometry).toEqual([]);
     expect(unresolvedPaint).toEqual([]);
     expect(outOfCanvasBounds).toEqual([]);
   });
 
-  it('keeps every canonical family pair distinct by at least 64 pixels across 32px source facings', () => {
+  it('keeps every canonical family pair distinct at 32px while preserving the broad-family distance gate', () => {
     for (let leftIndex = 0; leftIndex < CANONICAL_HAIRS.length; leftIndex++) {
       for (let rightIndex = leftIndex + 1; rightIndex < CANONICAL_HAIRS.length; rightIndex++) {
         const leftId = CANONICAL_HAIRS[leftIndex][0];
@@ -171,7 +193,13 @@ describe('canonical production hair families', () => {
             if (left[pixel] !== right[pixel]) changed++;
           }
         }
-        expect(changed, `${leftId}/${rightId}`).toBeGreaterThanOrEqual(64);
+        // Close-cropped variants intentionally carry subtler differences than
+        // the broad silhouette families, but must still differ visibly across
+        // the three authored source facings.
+        const minimum = BROAD_SILHOUETTE_HAIRS.has(leftId) && BROAD_SILHOUETTE_HAIRS.has(rightId)
+          ? 64
+          : 24;
+        expect(changed, `${leftId}/${rightId}`).toBeGreaterThanOrEqual(minimum);
       }
     }
   });

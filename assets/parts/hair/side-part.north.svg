@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium hair-side-part north authored art</title>
+  <desc>Current production side-part rear silhouette with a subtle rear part.</desc>
+  <g id="art" transform="translate(64 44)">
+    <path id="art/silhouette" d="M -20.396078054371138 5 A 21 21 0 1 1 20.396078054371138 5 L 20 13 L -20 13 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="detail/parting" d="M -3 -16 C -5 -8 -5 0 -3 8" fill="none" stroke="#00000024" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
