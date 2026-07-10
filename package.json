@@ -5,19 +5,24 @@
   "type": "module",
   "description": "Terrarium — the scenario seed authoring studio for The Water Cooler (employees, office, and starting social conditions). Package name kept as sprite-character-creator for compatibility.",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "dev": "npm run parts:check && vite",
+    "build": "npm run parts:check && tsc --noEmit && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:update": "vitest run -u",
-    "export": "tsx scripts/export.ts"
+    "export": "npm run parts:check && tsx scripts/export.ts",
+    "parts:import": "tsx scripts/importParts.ts",
+    "parts:check": "tsx scripts/importParts.ts --check"
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",
     "@types/node": "^25.9.3",
     "@types/pngjs": "^6.0.5",
     "pngjs": "^7.0.0",
+    "svgo": "^4.0.1",
+    "svgpath": "^2.6.0",
+    "svgson": "^5.3.1",
     "tsx": "^4.22.4",
     "typescript": "^5.6.0",
     "vite": "^6.0.0",

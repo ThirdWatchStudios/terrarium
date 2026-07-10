@@ -99,8 +99,9 @@ icons), not by upfront design.
    acceptable — editor choice stays free.
 3. **Template scaffolds**: tool command exporting per-slot guide SVGs —
    128 grid, anchor markers, body-capsule / head-radius guides, an existing
-   part on a locked reference layer, sentinel swatches (ship an Inkscape
-   `.gpl` palette).
+   part on a locked reference layer, sentinel swatches (ship a portable `.ase`
+   palette for Affinity; a `.gpl` may remain as an optional companion for
+   Inkscape).
 4. **Round-trip acceptance test**: export an existing hand-written part
    (hair `bob`), edit in the editor, reimport; snapshot diff shows only the
    edit.

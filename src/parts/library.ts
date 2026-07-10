@@ -2,6 +2,8 @@ import type { BodyFacingAnchors, Facing, PartDef, PartVariant, Slot } from '../c
 import { rr, circle, ellipse, topCap } from '../core/geometry';
 import { UI_PALETTE } from '../data/uiPalette';
 import { BODY_ARCHETYPE_PARTS } from './bodyArchetypes';
+import { IMPORTED_PART_ART } from './generated/importedPartArt';
+import { applyImportedPartArt } from './importedArt';
 
 /**
  * Part library. Conventions:
@@ -1718,7 +1720,19 @@ const FAB_PARTS: PartDef[] = [
   },
 ];
 
-export const PART_LIBRARY: PartDef[] = [...BODY_ARCHETYPE_PARTS, ...HEADS, ...HAIR, ...OUTFITS, ...ACCESSORIES, ...FAB_PARTS];
+const BASE_PART_LIBRARY: PartDef[] = [
+  ...BODY_ARCHETYPE_PARTS,
+  ...HEADS,
+  ...HAIR,
+  ...OUTFITS,
+  ...ACCESSORIES,
+  ...FAB_PARTS,
+];
+
+export const PART_LIBRARY: PartDef[] = applyImportedPartArt(
+  BASE_PART_LIBRARY,
+  IMPORTED_PART_ART,
+);
 
 // ---------------------------------------------------------------------------
 // Internal parts — resolvable by id but NOT offered in the authoring pickers.

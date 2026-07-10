@@ -14,14 +14,16 @@ full alphabet; the milestones are what "done" means.
 
 ## Prerequisites (Phase 2 — before drawing anything)
 
-- [ ] Importer (`scripts/importParts.ts`) with strict validation
+- [x] Importer (`scripts/importParts.ts`) with strict validation
+      (`part-importer.md`; static production head/hair overlays first)
 - [ ] Template scaffold SVGs per slot (128 grid, anchors, capsule/head guides,
       reference part on locked layer) — the Affinity starting documents
 - [ ] Sentinel color palette defined and added as an Affinity document palette
 - [ ] Round-trip proof: export hair `bob` → edit in Affinity → reimport →
       snapshot diff shows only the edit
 - [ ] Verify which conventions survive Affinity's SVG export (layer names as
-      ids for `detail/*`; fall back to sentinel-color-only if they don't)
+      ids for `detail/*`; if they do not, define and test an explicit alternate
+      detail encoding before importing production art)
 
 ### Affinity setup notes
 
@@ -32,7 +34,8 @@ full alphabet; the milestones are what "done" means.
 - Export: SVG preset with "flatten transforms" enabled and rasterization
   disabled; confirm exact option names during the round-trip proof.
 - Palette-driven colors use the sentinel hexes only; literal colors only for
-  style-neutral detail (per `src/parts/library.ts` conventions).
+  style-neutral detail (per `src/parts/library.ts` conventions). The frozen
+  values and exact SVG intake contract live in `part-importer.md`.
 
 ---
 
