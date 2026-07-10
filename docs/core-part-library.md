@@ -156,6 +156,15 @@ derivative of south.
 | angular | [ ] | [ ] | [ ] |
 | soft-square | [ ] | [ ] | [ ] |
 
+`head-round` now has canonical authored SVG for all three facings. The south
+contour adds a gentle cheek/chin treatment, east owns a readable profile, and
+north remains nearly circular for rear-hair compatibility. Eyes remain
+literal-ink `detail/*` paths owned by the head. Its inventory boxes stay open
+until art-direction approval and the remaining per-part Definition of Done
+checks are complete. The automated 660-cell hair / head-accessory / facing /
+style matrix adds no clipping relative to the stable head control; 15 existing
+high-contrast bun/ponytail top-edge contacts remain separate hair work.
+
 ### 3. Hair — organized as families (design system)
 
 Families organize the library and guide future expansion; they are **not** a

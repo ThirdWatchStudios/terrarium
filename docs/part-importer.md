@@ -109,6 +109,11 @@ because `ShapeSpec` has only one scalar stroke width.
   emitted as character art. Those reference groups may be faded or hidden.
 - All IDs must remain unique.
 
+Heads own their eyes so placement can vary with the face contour. Eye paths use
+literal neutral ink under `detail/*`; they remain non-silhouette shapes and
+must follow the `$skin` silhouette in paint order. North-facing heads normally
+omit them.
+
 Slash-based IDs are canonical compiler input and are covered by automated
 fixtures. Any optional editor must preserve them, but editor compatibility is
 an interoperability smoke test rather than a production gate. The importer
@@ -141,5 +146,7 @@ are rejected before the generated file changes.
 - Importing the full eleven-point body sub-rig from an anchor layer.
 
 Those need explicit manifests/adapters. The initial headless
-scaffold-to-runtime `hair-bob` proof is complete; expanding intake beyond
-static head/hair overlays is the next adapter boundary.
+scaffold-to-runtime `hair-bob` proof and the first canonical head promotion
+(`head-round`) are mechanically complete; their visual approvals remain
+separate gates. Expanding intake beyond static head/hair overlays is the next
+adapter boundary.

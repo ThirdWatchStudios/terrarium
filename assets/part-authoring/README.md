@@ -26,6 +26,8 @@ accessory starters wait for their corresponding import adapters.
 1. Copy a complete three-facing scaffold set to a working directory.
 2. Edit only `art/*` and `detail/*` paths. Preserve unique semantic IDs, the
    `0 0 128 128` viewBox, exact sentinel paint, and explicit nonzero fill.
+   Head eyes remain literal neutral-ink paths under `detail/*`, after the
+   `$skin` silhouette; north-facing heads normally omit them.
 3. Place all three reviewed sources under
    `assets/parts/<slot>/<slug>.<facing>.svg`.
 4. Run `npm run parts:import`, then `npm run parts:check`.

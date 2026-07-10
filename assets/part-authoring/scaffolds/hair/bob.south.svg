@@ -19,9 +19,9 @@
     <path id="guide/head-radius/path" d="M 43 44 a 21 21 0 1 0 42 0 a 21 21 0 1 0 -42 0 Z" fill="none" stroke="#4F91A8" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
   </g>
   <g id="reference/context-head-round" opacity="0.12" transform="translate(64 44)">
-    <path id="reference/context-head-round/shape-001" d="M -21 0 a 21 21 0 1 0 42 0 a 21 21 0 1 0 -42 0 Z" fill="#66747A" fill-rule="nonzero"/>
-    <path id="reference/context-head-round/shape-002" d="M -10.6 0 a 2.6 2.6 0 1 0 5.2 0 a 2.6 2.6 0 1 0 -5.2 0 Z" fill="#66747A" fill-rule="nonzero"/>
-    <path id="reference/context-head-round/shape-003" d="M 5.4 0 a 2.6 2.6 0 1 0 5.2 0 a 2.6 2.6 0 1 0 -5.2 0 Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/context-head-round/shape-001" d="M0-21C12.7-21 21-12.7 21 0 21 10.8 14.2 18.9 4 21 2 21.4-2 21.4-4 21-14.2 18.9-21 10.8-21 0-21-12.7-12.7-21 0-21Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/context-head-round/shape-002" d="M-10.6 0C-10.6 1.436-9.436 2.6-8 2.6-6.564 2.6-5.4 1.436-5.4 0-5.4-1.436-6.564-2.6-8-2.6-9.436-2.6-10.6-1.436-10.6 0Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/context-head-round/shape-003" d="M5.4 0C5.4 0.929 5.896 1.787 6.7 2.252 7.504 2.716 8.496 2.716 9.3 2.252 10.104 1.787 10.6 0.929 10.6 0 10.6-0.929 10.104-1.787 9.3-2.252 8.496-2.716 7.504-2.716 6.7-2.252 5.896-1.787 5.4-0.929 5.4 0Z" fill="#66747A" fill-rule="nonzero"/>
   </g>
   <g id="reference/hair-bob" opacity="0.22" transform="translate(64 44)">
     <path id="reference/hair-bob/shape-001" d="M-23-4C-23-16.703-12.703-27 0-27 12.703-27 23-16.703 23-4L23 14 12 14 12-2C9.469-6.212 4.914-8.789 0-8.789-4.914-8.789-9.469-6.212-12-2L-12 14-23 14Z" fill="#66747A" fill-rule="nonzero"/>

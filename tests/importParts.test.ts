@@ -319,26 +319,48 @@ describe('part source tree and generated registration', () => {
     expect(generated).toBe(emitImportedPartArt(imports));
   });
 
-  it('keeps the production bob as a deliberate three-facing authored overlay', async () => {
+  it('keeps the production bob and round head as deliberate authored overlays', async () => {
     const imports = await compilePartDirectory({
       inputDir: path.resolve('assets/parts'),
       sourcePathPrefix: 'assets/parts',
       catalog: PART_IMPORT_TARGETS,
     });
-    expect(imports).toHaveLength(1);
-    expect(imports[0]).toMatchObject({
+    expect(imports.map(({ id }) => id)).toEqual(['hair-bob', 'head-round']);
+    const bob = imports[0];
+    expect(bob).toMatchObject({
       id: 'hair-bob',
       slot: 'hair',
       sourceKind: 'authored',
     });
     for (const facing of FACINGS) {
-      expect(imports[0].facings[facing]).toHaveLength(2);
-      expect(imports[0].facings[facing]?.[0]).toMatchObject({ fill: '$hair' });
-      expect(imports[0].facings[facing]?.[1]).toMatchObject({
+      expect(bob.facings[facing]).toHaveLength(2);
+      expect(bob.facings[facing]?.[0]).toMatchObject({ fill: '$hair' });
+      expect(bob.facings[facing]?.[1]).toMatchObject({
         stroke: '#00000024',
         strokeWidth: 1.6,
         silhouette: false,
       });
+    }
+
+    const head = imports[1];
+    expect(head).toMatchObject({
+      id: 'head-round',
+      slot: 'head',
+      sourceKind: 'authored',
+      sourceFiles: [
+        'assets/parts/head/round.east.svg',
+        'assets/parts/head/round.north.svg',
+        'assets/parts/head/round.south.svg',
+      ],
+    });
+    expect(head.facings.south).toHaveLength(3);
+    expect(head.facings.east).toHaveLength(2);
+    expect(head.facings.north).toHaveLength(1);
+    for (const facing of FACINGS) {
+      expect(head.facings[facing]?.[0]).toMatchObject({ fill: '$skin' });
+      for (const eye of head.facings[facing]?.slice(1) ?? []) {
+        expect(eye).toMatchObject({ fill: '#2C2C2A', silhouette: false });
+      }
     }
   });
 });

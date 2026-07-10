@@ -19,7 +19,7 @@
     <path id="guide/head-radius/path" d="M 43 44 a 21 21 0 1 0 42 0 a 21 21 0 1 0 -42 0 Z" fill="none" stroke="#4F91A8" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
   </g>
   <g id="reference/context-head-round" opacity="0.12" transform="translate(64 44)">
-    <path id="reference/context-head-round/shape-001" d="M -21 0 a 21 21 0 1 0 42 0 a 21 21 0 1 0 -42 0 Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/context-head-round/shape-001" d="M0-21C12.7-21 21-12.7 21 0 21 11.8 12.2 21 0 21-12.2 21-21 11.8-21 0-21-12.7-12.7-21 0-21Z" fill="#66747A" fill-rule="nonzero"/>
   </g>
   <g id="reference/hair-bob" opacity="0.22" transform="translate(64 44)">
     <path id="reference/hair-bob/shape-001" d="M-23-4C-23-16.703-12.703-27 0-27 12.703-27 23-16.703 23-4L23 16-23 16Z" fill="#66747A" fill-rule="nonzero"/>

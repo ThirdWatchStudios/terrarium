@@ -113,7 +113,10 @@ icons), not by upfront design.
    the new three-facing parting detail changes only `hair__hair-bob.svg`,
    `janice.svg`, and `janice__moods.svg`. The rendered production-size result
    and 32/48 px strips are inspected separately from final art-direction
-   approval.
+   approval. The first follow-on promotion uses the same path for `head-round`:
+   a shaped front jaw, directional east profile, stable rear contour, and
+   unchanged ink-eye details. Its bounded compositor surface is the round-head
+   part plus Carl and Linda's facing/mood sheets.
 5. **Provenance**: each imported asset records source
    (`authored | generated | curated`) in its generated module, so lints and
    future audits know what's re-generatable. `authored` means deliberate

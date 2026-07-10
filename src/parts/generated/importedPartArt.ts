@@ -20,6 +20,24 @@ export const IMPORTED_PART_ART = [
       ],
     },
   },
+  {
+    id: "head-round",
+    slot: "head",
+    facings: {
+      south: [
+        { d: "M0-21C12.7-21 21-12.7 21 0 21 10.8 14.2 18.9 4 21 2 21.4-2 21.4-4 21-14.2 18.9-21 10.8-21 0-21-12.7-12.7-21 0-21Z", fill: "$skin" },
+        { d: "M-10.6 0C-10.6 1.436-9.436 2.6-8 2.6-6.564 2.6-5.4 1.436-5.4 0-5.4-1.436-6.564-2.6-8-2.6-9.436-2.6-10.6-1.436-10.6 0Z", fill: "#2C2C2A", silhouette: false },
+        { d: "M5.4 0C5.4 0.929 5.896 1.787 6.7 2.252 7.504 2.716 8.496 2.716 9.3 2.252 10.104 1.787 10.6 0.929 10.6 0 10.6-0.929 10.104-1.787 9.3-2.252 8.496-2.716 7.504-2.716 6.7-2.252 5.896-1.787 5.4-0.929 5.4 0Z", fill: "#2C2C2A", silhouette: false },
+      ],
+      east: [
+        { d: "M-1-21C10.8-21 19-13.7 20-4 23-1.5 23 1.5 20 4 20 13 12.8 20.5 1 21-11.7 21-21 12-21 0-21-12-12.7-21-1-21Z", fill: "$skin" },
+        { d: "M8.4 0C8.4 0.929 8.896 1.787 9.7 2.252 10.504 2.716 11.496 2.716 12.3 2.252 13.104 1.787 13.6 0.929 13.6 0 13.6-0.929 13.104-1.787 12.3-2.252 11.496-2.716 10.504-2.716 9.7-2.252 8.896-1.787 8.4-0.929 8.4 0Z", fill: "#2C2C2A", silhouette: false },
+      ],
+      north: [
+        { d: "M0-21C12.7-21 21-12.7 21 0 21 11.8 12.2 21 0 21-12.2 21-21 11.8-21 0-21-12.7-12.7-21 0-21Z", fill: "$skin" },
+      ],
+    },
+  },
 ] as const satisfies readonly ImportedPartOverlay[];
 
 // Build-time audit data; the browser imports only IMPORTED_PART_ART.
@@ -31,6 +49,15 @@ export const IMPORTED_PART_PROVENANCE = [
       "assets/parts/hair/bob.east.svg",
       "assets/parts/hair/bob.north.svg",
       "assets/parts/hair/bob.south.svg",
+    ],
+  },
+  {
+    id: "head-round",
+    sourceKind: "authored",
+    sourceFiles: [
+      "assets/parts/head/round.east.svg",
+      "assets/parts/head/round.north.svg",
+      "assets/parts/head/round.south.svg",
     ],
   },
 ] as const satisfies readonly ImportedPartProvenance[];

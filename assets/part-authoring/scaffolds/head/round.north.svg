@@ -19,10 +19,10 @@
     <path id="guide/head-radius/path" d="M 43 44 a 21 21 0 1 0 42 0 a 21 21 0 1 0 -42 0 Z" fill="none" stroke="#4F91A8" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
   </g>
   <g id="reference/head-round" opacity="0.22" transform="translate(64 44)">
-    <path id="reference/head-round/shape-001" d="M -21 0 a 21 21 0 1 0 42 0 a 21 21 0 1 0 -42 0 Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/head-round/shape-001" d="M0-21C12.7-21 21-12.7 21 0 21 11.8 12.2 21 0 21-12.2 21-21 11.8-21 0-21-12.7-12.7-21 0-21Z" fill="#66747A" fill-rule="nonzero"/>
   </g>
   <g id="art" transform="translate(64 44)">
-    <path id="art/shape-001" d="M -21 0 a 21 21 0 1 0 42 0 a 21 21 0 1 0 -42 0 Z" fill="#FF00FF" fill-rule="nonzero"/>
+    <path id="art/shape-001" d="M0-21C12.7-21 21-12.7 21 0 21 11.8 12.2 21 0 21-12.2 21-21 11.8-21 0-21-12.7-12.7-21 0-21Z" fill="#FF00FF" fill-rule="nonzero"/>
   </g>
   <g id="swatches">
     <path id="swatches/skin" d="M 4 4 H 12 V 12 H 4 Z" fill="#FF00FF" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
