@@ -118,18 +118,20 @@ function shapeSemantics(shape: ShapeSpec): Omit<ShapeSpec, 'd'> {
   return semantics;
 }
 
-function scaffoldIdentity(assetPath: string): { slot: 'head' | 'hair' | 'outfit'; partId: string; facing: Facing } {
-  const match = /\/scaffolds\/(head|hair|outfit)\/([a-z-]+)\.(south|east|north)\.svg$/.exec(assetPath);
+type ScaffoldSlot = 'body' | 'head' | 'hair' | 'outfit';
+
+function scaffoldIdentity(assetPath: string): { slot: ScaffoldSlot; partId: string; facing: Facing } {
+  const match = /\/scaffolds\/(body|head|hair|outfit)\/([a-z-]+)\.(south|east|north)\.svg$/.exec(assetPath);
   if (!match) throw new Error(`Not a scaffold path: ${assetPath}`);
   return {
-    slot: match[1] as 'head' | 'hair' | 'outfit',
+    slot: match[1] as ScaffoldSlot,
     partId: `${match[1]}-${match[2]}`,
     facing: match[3] as Facing,
   };
 }
 
 function seededShapes(
-  slot: 'head' | 'hair' | 'outfit',
+  slot: ScaffoldSlot,
   partId: string,
   facing: Facing,
 ): readonly ShapeSpec[] | undefined {
@@ -143,25 +145,66 @@ function seededShapes(
 }
 
 describe('part authoring scaffold generation', () => {
-  it('generates the exact deterministic head, hair, outfit, and palette file set', () => {
+  it('generates the exact deterministic body, head, hair, outfit, and palette file set', () => {
     const first = generatePartAuthoringAssets();
     const second = generatePartAuthoringAssets();
     expect(first.map(({ path: assetPath }) => assetPath)).toEqual([
       'assets/part-authoring/palettes/terrarium-part-sentinels.ase',
       'assets/part-authoring/palettes/terrarium-part-sentinels.gpl',
       'assets/part-authoring/palettes/terrarium-part-sentinels.svg',
+      'assets/part-authoring/scaffolds/body/balanced.east.svg',
+      'assets/part-authoring/scaffolds/body/balanced.north.svg',
+      'assets/part-authoring/scaffolds/body/balanced.south.svg',
+      'assets/part-authoring/scaffolds/body/compact.east.svg',
+      'assets/part-authoring/scaffolds/body/compact.north.svg',
+      'assets/part-authoring/scaffolds/body/compact.south.svg',
+      'assets/part-authoring/scaffolds/body/large-frame.east.svg',
+      'assets/part-authoring/scaffolds/body/large-frame.north.svg',
+      'assets/part-authoring/scaffolds/body/large-frame.south.svg',
+      'assets/part-authoring/scaffolds/body/soft.east.svg',
+      'assets/part-authoring/scaffolds/body/soft.north.svg',
+      'assets/part-authoring/scaffolds/body/soft.south.svg',
+      'assets/part-authoring/scaffolds/body/tall.east.svg',
+      'assets/part-authoring/scaffolds/body/tall.north.svg',
+      'assets/part-authoring/scaffolds/body/tall.south.svg',
       'assets/part-authoring/scaffolds/hair/bob.east.svg',
       'assets/part-authoring/scaffolds/hair/bob.north.svg',
       'assets/part-authoring/scaffolds/hair/bob.south.svg',
+      'assets/part-authoring/scaffolds/head/angular.east.svg',
+      'assets/part-authoring/scaffolds/head/angular.north.svg',
+      'assets/part-authoring/scaffolds/head/angular.south.svg',
+      'assets/part-authoring/scaffolds/head/boxy.east.svg',
+      'assets/part-authoring/scaffolds/head/boxy.north.svg',
+      'assets/part-authoring/scaffolds/head/boxy.south.svg',
+      'assets/part-authoring/scaffolds/head/long.east.svg',
+      'assets/part-authoring/scaffolds/head/long.north.svg',
+      'assets/part-authoring/scaffolds/head/long.south.svg',
+      'assets/part-authoring/scaffolds/head/oval.east.svg',
+      'assets/part-authoring/scaffolds/head/oval.north.svg',
+      'assets/part-authoring/scaffolds/head/oval.south.svg',
       'assets/part-authoring/scaffolds/head/round.east.svg',
       'assets/part-authoring/scaffolds/head/round.north.svg',
       'assets/part-authoring/scaffolds/head/round.south.svg',
+      'assets/part-authoring/scaffolds/head/soft-square.east.svg',
+      'assets/part-authoring/scaffolds/head/soft-square.north.svg',
+      'assets/part-authoring/scaffolds/head/soft-square.south.svg',
       'assets/part-authoring/scaffolds/outfit/tee.east.svg',
       'assets/part-authoring/scaffolds/outfit/tee.south.svg',
     ]);
+    expect(first).toHaveLength(41);
     expect(first.map(({ bytes }) => bytes)).toEqual(second.map(({ bytes }) => bytes));
     expect(PART_SCAFFOLD_SPECS.map(({ slot, referenceId }) => [slot, referenceId])).toEqual([
+      ['body', 'body-compact'],
+      ['body', 'body-balanced'],
+      ['body', 'body-large-frame'],
+      ['body', 'body-tall'],
+      ['body', 'body-soft'],
       ['head', 'head-round'],
+      ['head', 'head-oval'],
+      ['head', 'head-boxy'],
+      ['head', 'head-long'],
+      ['head', 'head-angular'],
+      ['head', 'head-soft-square'],
       ['hair', 'hair-bob'],
       ['outfit', 'outfit-tee'],
     ]);
@@ -180,7 +223,12 @@ describe('part authoring scaffold generation', () => {
       expect(source).not.toMatch(/<(?:rect|circle|ellipse|line|polyline|polygon|text)\b/);
 
       const { slot: scaffoldSlot, partId, facing } = scaffoldIdentity(asset.path);
-      if (scaffoldSlot === 'outfit') {
+      if (scaffoldSlot === 'body') {
+        expect(source).toContain(`id="reference/${partId}"`);
+        expect(source).toContain('id="guide/head-radius"');
+        expect(source).toContain('id="guide/body-rig"');
+        expect(source).toContain('id="anchors/headCenter"');
+      } else if (scaffoldSlot === 'outfit') {
         expect(source).toContain('id="guide/body-rig"');
         expect(source).toContain('id="reference/body-balanced"');
         expect(source).toContain('id="anchors/neck"');
@@ -194,7 +242,7 @@ describe('part authoring scaffold generation', () => {
       expect(sourceShapes, `${asset.path} source part missing`).toBeTruthy();
       const compiled = compilePartSvg(source, {
         source: asset.path,
-        slot: slot as 'head' | 'hair' | 'outfit',
+        slot: slot as ScaffoldSlot,
       });
       expect(compiled.map(shapeSemantics), asset.path).toEqual(sourceShapes!.map(shapeSemantics));
 
@@ -215,10 +263,49 @@ describe('part authoring scaffold generation', () => {
     }
   });
 
-  it('keeps the six existing head and hair scaffold bytes frozen', () => {
+  it('emits fifteen body starters with the exact eleven typed rig-anchor guides', () => {
+    const bodyAssets = generatePartAuthoringAssets()
+      .filter(({ path: assetPath }) => assetPath.includes('/scaffolds/body/'));
+    expect(bodyAssets).toHaveLength(15);
+
+    const typedRigAnchorIds = [
+      'headCenter',
+      'aboveHead',
+      'neck',
+      'chest',
+      'hip',
+      'shoulders-left',
+      'shoulders-right',
+      'waist-left',
+      'waist-right',
+      'hem-left',
+      'hem-right',
+    ];
+
+    for (const asset of bodyAssets) {
+      const source = asset.bytes.toString('utf8');
+      const anchorIds = [...source.matchAll(/id="anchors\/([^"]+)"/g)]
+        .map((match) => match[1]);
+      expect(anchorIds, asset.path).toEqual(['bodyOrigin', ...typedRigAnchorIds]);
+      expect(source, asset.path).toContain('id="art" transform="translate(64 87)"');
+      expect(source, asset.path).toContain('id="art/silhouette"');
+      expect(source, asset.path).toContain('id="guide/body-rig/axis"');
+      expect(source, asset.path).toContain('id="guide/body-rig/shoulders"');
+      expect(source, asset.path).toContain('id="guide/body-rig/waist"');
+      expect(source, asset.path).toContain('id="guide/body-rig/hem"');
+      if (asset.path.includes('.north.')) {
+        expect(source, asset.path).not.toContain('id="detail/lower-plane"');
+      } else {
+        expect(source, asset.path).toContain('id="detail/lower-plane"');
+      }
+    }
+  });
+
+  it('keeps the previously approved round and bob scaffold bytes frozen', () => {
     const hashes = Object.fromEntries(
       generatePartAuthoringAssets()
-        .filter(({ path: assetPath }) => /\/scaffolds\/(?:head|hair)\//.test(assetPath))
+        .filter(({ path: assetPath }) =>
+          /\/scaffolds\/(?:hair\/bob|head\/round)\./.test(assetPath))
         .map(({ path: assetPath, bytes }) => [assetPath, createHash('sha256').update(bytes).digest('hex')]),
     );
     expect(hashes).toEqual({
@@ -339,7 +426,7 @@ describe('committed part authoring assets', () => {
     const root = await mkdtemp(path.join(tmpdir(), 'terrarium-authoring-assets-'));
     temporaryRoots.push(root);
     const firstWrite = await writePartAuthoringAssets(root);
-    expect(firstWrite.updated).toBe(11);
+    expect(firstWrite.updated).toBe(41);
     expect(firstWrite.removed).toBe(0);
     await expect(checkPartAuthoringAssets(root)).resolves.toBeUndefined();
 

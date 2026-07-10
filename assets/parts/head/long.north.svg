@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium head-long north authored art</title>
+  <desc>Rear elongated contour without front-facing detail.</desc>
+  <g id="art" transform="translate(64 44)">
+    <path id="art/silhouette" d="M 0 -21 C 10 -21 17 -15 18 -5 V 9 C 17 18 10 24 3 25 C 1 25.5 -1 25.5 -3 25 C -10 24 -17 18 -18 9 V -5 C -17 -15 -10 -21 0 -21 Z" fill="#FF00FF" fill-rule="nonzero"/>
+  </g>
+</svg>

@@ -20,7 +20,17 @@ export const PART_AUTHORING_OWNED_DIRS = [
 ] as const;
 
 export const PART_SCAFFOLD_SPECS = [
+  { slot: 'body', referenceId: 'body-compact', slug: 'compact', facings: FACINGS },
+  { slot: 'body', referenceId: 'body-balanced', slug: 'balanced', facings: FACINGS },
+  { slot: 'body', referenceId: 'body-large-frame', slug: 'large-frame', facings: FACINGS },
+  { slot: 'body', referenceId: 'body-tall', slug: 'tall', facings: FACINGS },
+  { slot: 'body', referenceId: 'body-soft', slug: 'soft', facings: FACINGS },
   { slot: 'head', referenceId: 'head-round', slug: 'round', facings: FACINGS },
+  { slot: 'head', referenceId: 'head-oval', slug: 'oval', facings: FACINGS },
+  { slot: 'head', referenceId: 'head-boxy', slug: 'boxy', facings: FACINGS },
+  { slot: 'head', referenceId: 'head-long', slug: 'long', facings: FACINGS },
+  { slot: 'head', referenceId: 'head-angular', slug: 'angular', facings: FACINGS },
+  { slot: 'head', referenceId: 'head-soft-square', slug: 'soft-square', facings: FACINGS },
   { slot: 'hair', referenceId: 'hair-bob', slug: 'bob', facings: FACINGS },
   {
     slot: 'outfit',
@@ -30,7 +40,7 @@ export const PART_SCAFFOLD_SPECS = [
     facings: ['south', 'east'],
   },
 ] as const satisfies readonly {
-  slot: 'head' | 'hair' | 'outfit';
+  slot: 'body' | 'head' | 'hair' | 'outfit';
   referenceId: string;
   referenceBodyId?: BodyArchetypeId;
   slug: string;
@@ -183,6 +193,28 @@ function bodyReferenceGroup(id: BodyArchetypeId, facing: Facing, opacity: number
   ].join('\n');
 }
 
+function activeBodyArt(part: PartDef, facing: Facing): string {
+  const variant = part.facings[facing] ?? fail(`${part.id}/${facing} has no source geometry`);
+  if (variant.shapes.length === 0) fail(`${part.id}/${facing} has no source shapes`);
+  if (variant.shapes[0].silhouette === false) {
+    fail(`${part.id}/${facing} does not begin with its silhouette`);
+  }
+  const origin = PART_AUTHORING_ORIGINS.body;
+  const paths = variant.shapes.map((shape, index) => {
+    const id = index === 0
+      ? 'art/silhouette'
+      : shape.silhouette === false
+        ? index === 1 ? 'detail/lower-plane' : `detail/shape-${String(index + 1).padStart(3, '0')}`
+        : `art/shape-${String(index + 1).padStart(3, '0')}`;
+    return pathElement(id, shape);
+  });
+  return [
+    `  <g id="art" transform="translate(${origin.x} ${origin.y})">`,
+    ...paths,
+    '  </g>',
+  ].join('\n');
+}
+
 function canvasPoint(point: { x: number; y: number }): { x: number; y: number } {
   const origin = PART_AUTHORING_ORIGINS.outfit;
   return { x: origin.x + point.x, y: origin.y + point.y };
@@ -226,6 +258,61 @@ function outfitRigGuides(anchors: BodyFacingAnchors): string {
     pointMarker('anchors/bodyOrigin', { x: 0, y: 0 }, 2.5),
     pointMarker('anchors/neck', anchors.neck),
     pointMarker('anchors/chest', anchors.chest),
+    pointMarker('anchors/waist-left', anchors.waist.left, 2.5),
+    pointMarker('anchors/waist-right', anchors.waist.right, 2.5),
+    pointMarker('anchors/hem-left', anchors.hem.left, 2.5),
+    pointMarker('anchors/hem-right', anchors.hem.right, 2.5),
+    '  </g>',
+  ].join('\n');
+}
+
+function bodyHeadRadiusGuide(anchors: BodyFacingAnchors): string {
+  const headCenter = canvasPoint(anchors.headCenter);
+  return [
+    '  <g id="guide/head-radius">',
+    guidePath(
+      'guide/head-radius/path',
+      circle(headCenter.x, headCenter.y, 21),
+      GUIDE_COLORS.head,
+      0.9,
+      0.8,
+    ),
+    '  </g>',
+  ].join('\n');
+}
+
+function bodyRigGuides(anchors: BodyFacingAnchors): string {
+  const axis = [
+    anchors.aboveHead,
+    anchors.headCenter,
+    anchors.neck,
+    anchors.chest,
+    anchors.hip,
+    {
+      x: (anchors.hem.left.x + anchors.hem.right.x) / 2,
+      y: (anchors.hem.left.y + anchors.hem.right.y) / 2,
+    },
+  ].map(canvasPoint);
+  const axisPath = axis
+    .map((point, index) => `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`)
+    .join(' ');
+
+  return [
+    '  <g id="guide/body-rig">',
+    guidePath('guide/body-rig/axis', axisPath, GUIDE_COLORS.body, 0.8, 0.75),
+    spanGuide('guide/body-rig/shoulders', anchors.shoulders, 0.65),
+    spanGuide('guide/body-rig/waist', anchors.waist),
+    spanGuide('guide/body-rig/hem', anchors.hem),
+    '  </g>',
+    '  <g id="anchors">',
+    pointMarker('anchors/bodyOrigin', { x: 0, y: 0 }, 2.5),
+    pointMarker('anchors/headCenter', anchors.headCenter),
+    pointMarker('anchors/aboveHead', anchors.aboveHead, 2.5),
+    pointMarker('anchors/neck', anchors.neck),
+    pointMarker('anchors/chest', anchors.chest),
+    pointMarker('anchors/hip', anchors.hip),
+    pointMarker('anchors/shoulders-left', anchors.shoulders.left, 2.5),
+    pointMarker('anchors/shoulders-right', anchors.shoulders.right, 2.5),
     pointMarker('anchors/waist-left', anchors.waist.left, 2.5),
     pointMarker('anchors/waist-right', anchors.waist.right, 2.5),
     pointMarker('anchors/hem-left', anchors.hem.left, 2.5),
@@ -307,6 +394,47 @@ function scaffoldSvg(slot: 'head' | 'hair', referenceId: string, facing: Facing)
     '</svg>',
     '',
   ].filter((line) => line !== '').join('\n') + '\n';
+}
+
+function bodyScaffoldSvg(referenceId: BodyArchetypeId, facing: Facing): string {
+  const archetype = BODY_ARCHETYPES.find(({ id }) => id === referenceId)
+    ?? fail(`unknown body reference ${referenceId}`);
+  const part = getPart(referenceId) ?? fail(`unknown reference ${referenceId}`);
+  if (part.slot !== 'body') fail(`${referenceId} is ${part.slot}, not body`);
+  const target = PART_IMPORT_TARGETS.find(({ id }) => id === referenceId);
+  if (!target || target.slot !== 'body') {
+    fail(`${referenceId} is not an allowed body import target`);
+  }
+  if (target.facings[facing] === undefined) {
+    fail(`${referenceId}/${facing} is not an authored target facing`);
+  }
+  const anchors = archetype.anchors[facing];
+
+  return [
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">',
+    `  <title>Terrarium ${referenceId} ${facing} authoring scaffold</title>`,
+    '  <desc>The importer ignores guide, reference, anchor, and swatch groups. Rig guides are generated from TypeScript-owned anchors; edit art/detail paths only.</desc>',
+    '  <path id="reference/canvas-background" d="M 0 0 H 128 V 128 H 0 Z" fill="#FFFEFA" fill-rule="nonzero"/>',
+    '  <g id="guide/grid-minor">',
+    guidePath('guide/grid-minor/path', gridPath(8), GUIDE_COLORS.minor, 0.35),
+    '  </g>',
+    '  <g id="guide/grid-major">',
+    guidePath('guide/grid-major/path', gridPath(16), GUIDE_COLORS.major, 0.6),
+    '  </g>',
+    '  <g id="guide/canvas">',
+    guidePath('guide/canvas/border', 'M 0.5 0.5 H 127.5 V 127.5 H 0.5 Z', GUIDE_COLORS.canvas, 1),
+    guidePath('guide/canvas/outline-safe-area', 'M 4 4 H 124 V 124 H 4 Z', GUIDE_COLORS.safe, 0.8, 0.9),
+    '  </g>',
+    bodyReferenceGroup(referenceId, facing, 0.22),
+    activeBodyArt(part, facing),
+    bodyHeadRadiusGuide(anchors),
+    bodyRigGuides(anchors),
+    '  <g id="swatches">',
+    swatchPaths(),
+    '  </g>',
+    '</svg>',
+    '',
+  ].join('\n');
 }
 
 function outfitScaffoldSvg(
@@ -447,7 +575,9 @@ export function generatePartAuthoringAssets(): GeneratedPartAuthoringAsset[] {
           spec.referenceBodyId ?? fail(`${spec.referenceId} has no reference body`),
           facing,
         )
-        : scaffoldSvg(spec.slot, spec.referenceId, facing);
+        : spec.slot === 'body'
+          ? bodyScaffoldSvg(spec.referenceId, facing)
+          : scaffoldSvg(spec.slot, spec.referenceId, facing);
       assets.push({
         path: `${PART_AUTHORING_SCAFFOLD_DIR}/${spec.slot}/${spec.slug}.${facing}.svg`,
         bytes: Buffer.from(source, 'utf8'),
@@ -472,6 +602,6 @@ export function generatePartAuthoringAssets(): GeneratedPartAuthoringAsset[] {
 }
 
 export function scaffoldSlotForPath(assetPath: string): Slot | undefined {
-  const match = /\/scaffolds\/(head|hair|outfit)\//.exec(assetPath);
+  const match = /\/scaffolds\/(body|head|hair|outfit)\//.exec(assetPath);
   return match?.[1] as Slot | undefined;
 }

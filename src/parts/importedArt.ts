@@ -18,6 +18,22 @@ export interface ImportedStaticPartOverlay {
 }
 
 /**
+ * Complete visible art for one production body.
+ *
+ * Body archetype records and the selectable library deliberately share their
+ * PartDef objects. Applying this overlay therefore updates that existing object
+ * in place instead of creating the split registry identity used by static art.
+ * The handwritten definition remains authoritative for labels, z-order, and
+ * the body-owned rig.
+ */
+export interface ImportedBodyArtOverlay {
+  readonly kind: 'body-art';
+  readonly id: string;
+  readonly slot: 'body';
+  readonly facings: Partial<Record<Facing, readonly ShapeSpec[]>>;
+}
+
+/**
  * Pre-expanded detail art for body-rig-aware builders.
  *
  * Each entry replaces only the builder's detail shapes for one production body
@@ -33,7 +49,10 @@ export interface ImportedBodyDetailOverlay {
   >;
 }
 
-export type ImportedPartOverlay = ImportedStaticPartOverlay | ImportedBodyDetailOverlay;
+export type ImportedPartOverlay =
+  | ImportedStaticPartOverlay
+  | ImportedBodyArtOverlay
+  | ImportedBodyDetailOverlay;
 
 export interface ImportedPartProvenance {
   readonly id: string;
@@ -71,6 +90,41 @@ export function applyImportedPartArt(
     const base = result[index];
     if (base.slot !== imported.slot) {
       fail(`${imported.id} declares slot ${imported.slot}, expected ${base.slot}`);
+    }
+    if (imported.kind === 'body-art') {
+      if (base.slot !== 'body' || base.anchor !== 'body') {
+        fail(`${imported.id} body-art overlays require a body-anchored production part`);
+      }
+      if (base.buildVariant) {
+        fail(`${imported.id} body-art overlays cannot replace buildVariant geometry`);
+      }
+      if (!base.bodyAnchors) {
+        fail(`${imported.id} body-art overlays require a body-owned rig`);
+      }
+
+      const facings = { ...base.facings };
+      for (const facing of FACINGS) {
+        const shapes = imported.facings[facing];
+        if (shapes === undefined) fail(`${imported.id}/${facing} is missing body art`);
+        if (shapes.length === 0) fail(`${imported.id}/${facing} contains no shapes`);
+        if (!shapes.some((shape) => shape.silhouette !== false)) {
+          fail(`${imported.id}/${facing} contains no silhouette geometry`);
+        }
+
+        const baseVariant = base.facings[facing];
+        if (!baseVariant) fail(`${imported.id}/${facing} has no production variant to replace`);
+        facings[facing] = {
+          ...baseVariant,
+          shapes: shapes.map((shape) => ({ ...shape })),
+        };
+      }
+
+      // Preserve the exact object shared by BODY_ARCHETYPES and PART_LIBRARY.
+      // Only its visible facing art changes; bodyAnchors and all other metadata
+      // retain their original identity.
+      base.facings = facings;
+      result[index] = base;
+      continue;
     }
     if (imported.kind === 'body-detail') {
       if (!base.buildVariant) {
@@ -114,6 +168,9 @@ export function applyImportedPartArt(
       continue;
     }
 
+    if (base.slot === 'body') {
+      fail(`${imported.id} body parts require an explicit body-art overlay`);
+    }
     if (base.buildVariant) {
       fail(`${imported.id} uses buildVariant and cannot accept a static-art overlay`);
     }

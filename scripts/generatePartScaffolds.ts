@@ -24,7 +24,7 @@ function usage(): string {
   return [
     'Usage: tsx scripts/generatePartScaffolds.ts [--check] [--root <repo-root>]',
     '',
-    'Generates committed head/hair/outfit SVG scaffolds plus ASE/GPL/SVG sentinel palettes.',
+    'Generates committed body/head/hair/outfit SVG scaffolds plus ASE/GPL/SVG sentinel palettes.',
   ].join('\n');
 }
 

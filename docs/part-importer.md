@@ -7,9 +7,10 @@ every file succeeds.
 
 The generated data is an **appearance overlay** on an existing selectable
 production part. Static head/hair registration replaces matching facing
-geometry in place. The explicit `outfit-tee` adapter instead replaces the
+geometry. The dedicated `body-art` mode updates the already-shared production
+body `PartDef` in place, while the explicit `outfit-tee` adapter replaces the
 detail shapes returned by its body-aware builder for known production bodies.
-In both modes labels, picker order, seeded-generation order, anchors, z-order,
+In every mode labels, picker order, seeded-generation order, anchors, z-order,
 body rigs, and other runtime metadata remain owned by the handwritten
 `PartDef`.
 
@@ -24,7 +25,8 @@ npm run parts:scaffolds # regenerate seeded SVG starters and palette files
 `npm run build` begins with `parts:check`; builds never rewrite source files.
 
 The generated authoring assets live under `assets/part-authoring`: seeded
-head/hair scaffolds, the south/east tee starters, and ASE, GPL, and readable SVG
+scaffolds for all five production bodies, all six human-head families,
+`hair-bob`, and the south/east tee starters, plus ASE, GPL, and readable SVG
 sentinel palette companions for optional editors. Their directory README
 defines the canonical editor-agnostic workflow. Layer locking is only an
 editing convenience; semantic IDs determine which groups the importer ignores.
@@ -37,16 +39,21 @@ Sources live below `assets/parts`:
 assets/parts/<slot>/<slug>.<facing>.svg
 ```
 
-For example, `assets/parts/hair/bob.south.svg` targets `hair-bob`, while
+For example, `assets/parts/body/compact.south.svg` targets `body-compact`,
+`assets/parts/hair/bob.south.svg` targets `hair-bob`, and
 `assets/parts/outfit/tee.south.svg` targets `outfit-tee`. Filenames and
 directories are lowercase. Authored facings are `south`, `east`, and `north`;
 west is the runtime mirror of east. Once any facing of a part is present, the
 complete facing set declared by its explicit import target must be present.
-Static head/hair targets currently require all three source facings. Tee
+Body and static head/hair targets require all three source facings. Tee
 deliberately requires south and east only; its north detail remains empty.
+Putting a valid complete set in this canonical directory makes it compiler
+input; visual acceptance remains a separate Definition of Done gate.
 
 The importer currently accepts:
 
+- `body`, authored around canvas point `(64, 87)`, through the explicit
+  complete-facing `body-art` adapter.
 - `head` and `hair`, authored around canvas point `(64, 44)`.
 - `outfit-tee` as an anchored-detail target, authored over `body-balanced`
   around the body origin `(64, 87)`. Its neck is canvas point `(64, 58)`, and
@@ -54,8 +61,11 @@ The importer currently accepts:
 
 The east-facing head placement adjustment remains compositor-owned. The
 compiler always subtracts the stable `(64, 44)` authoring origin after it
-validates static head/hair geometry in full 128-space. Outfit geometry instead
-subtracts `(64, 87)`, keeping the canonical source in body-local coordinates.
+validates static head/hair geometry in full 128-space. Outfit and body geometry
+use `(64, 87)`, keeping canonical sources in body-local coordinates. Body art
+is validated after applying that canvas translation but deliberately preserves
+its established local `d` strings byte-for-byte; visible body paths must remain
+directly under the canonical translation group.
 
 ## Sentinel palette
 
@@ -90,7 +100,9 @@ Facing files must agree on relative bucket order for the same reason.
   curves before export.
 - Flat fill/stroke paint via presentation attributes or inline style.
 - Nested `matrix`, `translate`, `scale`, `rotate`, `skewX`, and `skewY`
-  transforms. The compiler bakes them into path data.
+  transforms. The compiler bakes them into path data for normal static and
+  anchored-detail imports. Byte-stable body art instead requires the one
+  canonical `translate(64 87)` group and no additional visible-path transform.
 - Stroke width is unitless. Strokes must explicitly use round linecaps and
   linejoins, matching the compositor.
 - Path opacity is supported from `(0, 1]`; group opacity is rejected because a
@@ -123,6 +135,13 @@ literal neutral ink under `detail/*`; they remain non-silhouette shapes and
 must follow the `$skin` silhouette in paint order. North-facing heads normally
 omit them.
 
+The approved human-head production batch is `head-oval`, `head-boxy`, `head-long`,
+`head-angular`, and `head-soft-square`, each with south/east/north sources.
+These 15 canonical sources are registered through the same static overlay as
+`head-round` and passed user visual approval plus the automated distance,
+palette, portrait, hair/accessory, and full compatibility reviews on
+2026-07-10.
+
 Slash-based IDs are canonical compiler input and are covered by automated
 fixtures. Any optional editor must preserve them, but editor compatibility is
 an interoperability smoke test rather than a production gate. The importer
@@ -141,6 +160,19 @@ the tool/sim contract.
 Unknown, legacy-only, and internal part IDs are rejected. Duplicate imports,
 slot mismatches, missing production variants, and unadapted targets with
 `buildVariant` are rejected before the generated file changes.
+
+The five `body-art` targets own the complete visible facing shapes for
+`body-compact`, `body-balanced`, `body-large-frame`, `body-tall`, and
+`body-soft`. South and east contain the `$outfitPrimary` silhouette followed
+by a literal lower-plane detail; north is silhouette-only. Installation mutates
+only the shared production object's facing art and clones each imported shape.
+The exact `PartDef`, `bodyAnchors`, label, intent, z-order, and stable selection
+order are preserved. `body-standard`, `body-slim`, and `body-broad` remain
+resolvable legacy fallbacks and are not import targets.
+
+Generated body scaffolds expose all 11 typed rig points plus `bodyOrigin` as
+ignored guides. This promotion does not infer rig data from SVG; the
+TypeScript-owned anchors remain authoritative.
 
 `outfit-tee` is the first explicit exception to the static-overlay rule. Every
 visible tee path must live under `detail` or `detail/*`, so all compiled shapes
@@ -165,15 +197,16 @@ approval and the remaining per-part Definition of Done checks.
   must remain separately addressable and require explicit deterministic piece
   order plus neck/chest/hip/waist placement. Do not collapse that work into one
   flat per-facing Blazer file.
-- Body art: the public body-archetype records and selectable library currently
-  share the same `PartDef` objects. A body overlay must update that single
-  source of truth rather than splitting their geometry.
 - New part definitions and their labels/insertion order.
 - Accessory anchors, z-order, and hand-attachment roles.
 - Importing the full eleven-point body sub-rig from an anchor layer.
 
 Those need explicit manifests/adapters. The initial headless
 scaffold-to-runtime `hair-bob` proof and the first canonical head promotion
-(`head-round`) are visually approved and committed. The tee anchored-detail
-mechanics are now complete; its visual approval remains a separate gate, and
-componentized Blazer intake is the next outfit adapter boundary.
+(`head-round`) are visually approved and committed. The other five head sources
+are approved in the current production batch. The tee anchored-detail mechanics
+are complete; its visual approval remains a separate gate, and componentized
+Blazer intake remains the next outfit adapter boundary. The approved bodies
+also have canonical SVG sources and a shared-identity adapter. The next
+art-production priority is representative silhouette-bearing hair families
+before detail-only Blazer or wall work.

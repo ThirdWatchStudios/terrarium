@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium head-angular east authored art</title>
+  <desc>Faceted directional profile with an explicit nose plane and pointed chin.</desc>
+  <g id="art" transform="translate(64 44)">
+    <path id="art/silhouette" d="M 0 -21 L 9 -18 L 17 -11 L 20 -6 L 24 -2 V 2 L 20 6 L 18 13 L 8 22 L 1 24 L -10 20 L -18 12 L -21 1 L -19 -10 L -10 -18 Z" fill="#FF00FF" fill-rule="nonzero"/>
+    <path id="detail/eye" d="M 8.4 0 a 2.6 2.6 0 1 0 5.2 0 a 2.6 2.6 0 1 0 -5.2 0 Z" fill="#2C2C2A" fill-rule="nonzero"/>
+  </g>
+</svg>

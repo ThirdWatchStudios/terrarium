@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium body-balanced east authored art</title>
+  <desc>Production Balanced profile silhouette and lower-plane detail.</desc>
+  <g id="art" transform="translate(64 87)">
+    <path id="art/silhouette" d="M 1 -29 C -8 -29 -16 -26 -18 -19 C -20 -10 -18 2 -17 12 C -16 22 -11 27 -3 29 C 4 30 11 29 15 26 C 20 21 20 13 19 6 C 21 -2 22 -11 20 -17 C 18 -25 11 -29 1 -29 Z" fill="#FF0000" fill-rule="nonzero"/>
+    <path id="detail/lower-plane" d="M -11 20 a 11 7 0 1 0 22 0 a 11 7 0 1 0 -22 0 Z" fill="#00000012" fill-rule="nonzero"/>
+  </g>
+</svg>

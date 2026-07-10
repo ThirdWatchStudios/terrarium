@@ -76,7 +76,7 @@ function recipe(archetype: BodyArchetype, options: CharacterPreviewOptions = {})
     name: archetype.label,
     parts: {
       body: archetype.part.id,
-      head: bodyOnly ? BODY_ONLY_PART : 'head-soft-square',
+      head: bodyOnly ? BODY_ONLY_PART : 'head-round',
       hair: bodyOnly ? BODY_ONLY_PART : 'hair-side-part',
       outfit: bodyOnly ? BODY_ONLY_PART : (options.outfit ?? 'outfit-tee'),
       accessories: bodyOnly ? [] : (options.accessories ?? (options.lanyard ? ['acc-lanyard'] : [])),

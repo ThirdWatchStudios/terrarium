@@ -17,7 +17,7 @@ import type {
 import type { PartImportTarget } from './catalog';
 import { SENTINEL_TO_PALETTE_REF } from './sentinels';
 
-const SUPPORTED_SLOTS = ['head', 'hair', 'outfit'] as const;
+const SUPPORTED_SLOTS = ['body', 'head', 'hair', 'outfit'] as const;
 type SupportedSlot = (typeof SUPPORTED_SLOTS)[number];
 
 const SLOT_SET = new Set<string>(SUPPORTED_SLOTS);
@@ -25,10 +25,12 @@ const FACING_SET = new Set<string>(FACINGS);
 const CANVAS_SIZE = 128;
 const PATH_PRECISION = 3;
 const BOUNDS_EPSILON = 0.0001;
+const LOCAL_PATH_TRANSFORM_EPSILON = 1e-12;
 const SHIPPED_OUTLINE_MARGIN = 4;
 
 /** Authored SVGs use a stable canvas origin; east placement offsets stay runtime-owned. */
 export const PART_AUTHORING_ORIGINS: Readonly<Record<SupportedSlot, { x: number; y: number }>> = {
+  body: { x: 64, y: 87 },
   head: { x: 64, y: 44 },
   hair: { x: 64, y: 44 },
   outfit: { x: 64, y: 87 },
@@ -77,6 +79,12 @@ interface MutableImportGroup {
 export interface CompilePartSvgContext {
   source: string;
   slot: SupportedSlot;
+  /**
+   * Keep canonical part-local path syntax after validating its canvas-space
+   * geometry. Body promotion uses this to make source ownership a byte-neutral
+   * change for existing snapshots and generated reference scaffolds.
+   */
+  preserveLocalPaths?: boolean;
 }
 
 export interface CompilePartDirectoryOptions {
@@ -586,10 +594,28 @@ function compilePath(
   validateBounds(context.source, canvasPath, fill, stroke, strokeWidth, !state.detail);
 
   const origin = PART_AUTHORING_ORIGINS[context.slot];
-  const localPath = svgpath(canvasPath)
-    .translate(-origin.x, -origin.y)
-    .round(PATH_PRECISION)
-    .toString();
+  let localPath: string;
+  if (context.preserveLocalPaths) {
+    const transformIsCanonicalTranslation =
+      Math.abs(matrix.a - 1) <= LOCAL_PATH_TRANSFORM_EPSILON &&
+      Math.abs(matrix.b) <= LOCAL_PATH_TRANSFORM_EPSILON &&
+      Math.abs(matrix.c) <= LOCAL_PATH_TRANSFORM_EPSILON &&
+      Math.abs(matrix.d - 1) <= LOCAL_PATH_TRANSFORM_EPSILON &&
+      Math.abs(matrix.e - origin.x) <= LOCAL_PATH_TRANSFORM_EPSILON &&
+      Math.abs(matrix.f - origin.y) <= LOCAL_PATH_TRANSFORM_EPSILON;
+    if (!transformIsCanonicalTranslation) {
+      fail(
+        context.source,
+        `byte-stable ${context.slot} art must keep paths directly under the canonical translate(${origin.x} ${origin.y}) group`,
+      );
+    }
+    localPath = (attrs.d ?? '').trim();
+  } else {
+    localPath = svgpath(canvasPath)
+      .translate(-origin.x, -origin.y)
+      .round(PATH_PRECISION)
+      .toString();
+  }
   const opacity = parseOpacity(context.source, attrs.opacity);
 
   const shape: ShapeSpec = { d: localPath };
@@ -774,7 +800,16 @@ function validateTarget(group: MutableImportGroup, target: PartImportTarget | un
   if (!target) fail(group.id, 'importer v1 only replaces an existing selectable production part');
   if (target.slot !== group.slot) fail(group.id, `target slot is ${target.slot}, not ${group.slot}`);
   const mode = target.importMode ?? 'static';
-  if (mode === 'anchored-detail') {
+  if (mode === 'body-art') {
+    if (
+      target.slot !== 'body' ||
+      target.anchor !== 'body' ||
+      target.buildVariant ||
+      !target.bodyAnchors
+    ) {
+      fail(group.id, 'body-art targets must be body-anchored rigged static parts');
+    }
+  } else if (mode === 'anchored-detail') {
     if (target.slot !== 'outfit' || target.anchor !== 'body' || !target.buildVariant) {
       fail(group.id, 'anchored-detail targets must be body-anchored dynamic outfits');
     }
@@ -886,9 +921,18 @@ export async function compilePartDirectory(
       facings[facing] = compilePartSvg(input, {
         source: descriptor.sourcePath,
         slot: descriptor.slot,
+        preserveLocalPaths: target.importMode === 'body-art',
       });
     }
     validateFacingPaintOrder(group.id, facings);
+    if (target.importMode === 'body-art') {
+      for (const facing of FACINGS) {
+        const shapes = facings[facing];
+        if (!shapes?.some((shape) => shape.silhouette !== false)) {
+          fail(group.id, `body-art ${facing} must contain silhouette geometry`);
+        }
+      }
+    }
     const provenance = {
       sourceKind: options.sourceKind ?? 'authored' as const,
       sourceFiles: FACINGS
@@ -896,7 +940,15 @@ export async function compilePartDirectory(
         .filter((source): source is string => source !== undefined)
         .sort(),
     };
-    if (target.importMode === 'anchored-detail') {
+    if (target.importMode === 'body-art') {
+      imports.push({
+        kind: 'body-art',
+        id: group.id,
+        slot: 'body',
+        facings,
+        ...provenance,
+      });
+    } else if (target.importMode === 'anchored-detail') {
       imports.push({
         kind: 'body-detail',
         id: group.id,
@@ -968,6 +1020,7 @@ export function emitImportedPartArt(imports: readonly ImportedPartArt[]): string
       lines.push('  },');
       continue;
     }
+    if (imported.kind === 'body-art') lines.push('    kind: "body-art",');
     lines.push(`    id: ${quote(imported.id)},`);
     lines.push(`    slot: ${quote(imported.slot)},`);
     lines.push('    facings: {');

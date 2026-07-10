@@ -1,7 +1,7 @@
 import type { Facing, Slot } from '../../src/core/types';
 import type { BodyArchetypeId } from '../../src/parts/bodyArchetypes';
 
-export type PartImportMode = 'static' | 'anchored-detail';
+export type PartImportMode = 'static' | 'body-art' | 'anchored-detail';
 export type BodyDetailPointAnchor = 'neck';
 
 /** Minimal explicit metadata required before an existing part may accept SVG art. */
@@ -11,6 +11,7 @@ export interface PartImportTarget {
   readonly anchor: string;
   readonly facings: Partial<Record<Facing, unknown>>;
   readonly buildVariant?: unknown;
+  readonly bodyAnchors?: unknown;
   readonly importMode?: PartImportMode;
   readonly referenceBodyId?: BodyArchetypeId;
   readonly placementAnchor?: BodyDetailPointAnchor;
@@ -23,12 +24,25 @@ const target = (id: string, slot: 'head' | 'hair'): PartImportTarget => ({
   anchor: 'headCenter',
   facings: allFacings,
 });
+const bodyTarget = (id: BodyArchetypeId): PartImportTarget => ({
+  id,
+  slot: 'body',
+  anchor: 'body',
+  facings: allFacings,
+  bodyAnchors: true,
+  importMode: 'body-art',
+});
 
 /**
  * Explicit v1 allowlist, kept independent of the generated registry so a stale
  * or renamed overlay can always be regenerated. `hair-none` has no art source.
  */
 export const PART_IMPORT_TARGETS: readonly PartImportTarget[] = [
+  bodyTarget('body-compact'),
+  bodyTarget('body-balanced'),
+  bodyTarget('body-large-frame'),
+  bodyTarget('body-tall'),
+  bodyTarget('body-soft'),
   target('head-round', 'head'),
   target('head-oval', 'head'),
   target('head-boxy', 'head'),

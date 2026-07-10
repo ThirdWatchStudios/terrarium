@@ -154,9 +154,13 @@ describe('production body archetypes', () => {
   });
 
   it('resolves production and legacy bodies while selecting only production bodies', () => {
-    const selectable = new Set(partsForSlot('body').map((part) => part.id));
-    for (const archetype of BODY_ARCHETYPES) {
+    const selectableParts = partsForSlot('body');
+    const selectable = new Set(selectableParts.map((part) => part.id));
+    for (const [index, archetype] of BODY_ARCHETYPES.entries()) {
       expect(getPart(archetype.part.id)).toBe(archetype.part);
+      expect(BODY_ARCHETYPE_PARTS[index]).toBe(archetype.part);
+      expect(selectableParts[index]).toBe(archetype.part);
+      expect(archetype.part.bodyAnchors).toBe(archetype.anchors);
       expect(selectable.has(archetype.part.id)).toBe(true);
     }
     for (const legacyId of LEGACY_IDS) {
@@ -179,6 +183,8 @@ describe('production body archetypes', () => {
     const allowed = new Set<string>(EXPECTED_IDS);
     const randomBodies = new Set<string>();
     const employeeBodies = new Set<string>();
+    const randomSequence: string[] = [];
+    const employeeSequence: string[] = [];
 
     for (let seed = 0; seed < 256; seed++) {
       const firstRandom = randomCharacter(DEFAULT_STYLE, mulberry32(seed));
@@ -187,16 +193,22 @@ describe('production body archetypes', () => {
         .toEqual({ name: secondRandom.name, parts: secondRandom.parts, palette: secondRandom.palette });
       expect(allowed.has(firstRandom.parts.body)).toBe(true);
       randomBodies.add(firstRandom.parts.body);
+      randomSequence.push(firstRandom.parts.body);
 
       const firstEmployee = generateEmployee(`BODY-${seed}`, 'random', DEFAULT_STYLE);
       const secondEmployee = generateEmployee(`BODY-${seed}`, 'random', DEFAULT_STYLE);
       expect(firstEmployee).toEqual(secondEmployee);
       expect(allowed.has(firstEmployee.recipe.parts.body)).toBe(true);
       employeeBodies.add(firstEmployee.recipe.parts.body);
+      employeeSequence.push(firstEmployee.recipe.parts.body);
     }
 
     expect([...randomBodies].sort()).toEqual([...EXPECTED_IDS].sort());
     expect([...employeeBodies].sort()).toEqual([...EXPECTED_IDS].sort());
+    expect(createHash('sha256').update(randomSequence.join('\n')).digest('hex'))
+      .toBe('a407def15f4161e7042d571e97aa2527668e32cab1312d4bd1fceed523d332a0');
+    expect(createHash('sha256').update(employeeSequence.join('\n')).digest('hex'))
+      .toBe('c406062a69ed4f107a68d8334cd85444ef368ede8d88077c14d4f9a32cccb47d');
   });
 
   it('authors a nonempty, tintable silhouette for every source facing', () => {
@@ -557,7 +569,9 @@ describe('production body archetypes', () => {
       .filter(([path]) => path === 'project.json' || path.startsWith('characters/') || path.startsWith('character-layers/'))
       .map(([, data]) => data)
       .join('\n');
-    expect(serializedCharacterArtifacts).not.toMatch(/rigBodyId|bodyAnchors|buildVariant|handAttachmentRole|"guides"/);
+    expect(serializedCharacterArtifacts).not.toMatch(
+      /rigBodyId|bodyAnchors|buildVariant|handAttachmentRole|sourceKind|sourceFiles|assets\/parts\/body|"guides"/,
+    );
   });
 
   it('pins the complete legacy body, pose, facing, garment, and hand-accessory matrix', () => {
@@ -576,6 +590,9 @@ describe('production body archetypes', () => {
       for (const [outfitIndex, outfit] of HUMAN_OUTFITS.entries()) {
         const accessories = accessorySets[outfitIndex % accessorySets.length];
         const r = recipe(body, outfit, [...accessories]);
+        // Keep this legacy-body control independent of the remaining authored
+        // head promotions. Round is the already-approved stable head fixture.
+        r.parts.head = 'head-round';
         for (const pose of POSES) {
           for (const facing of facings) {
             const sourceFacing: Facing = facing === 'west' ? 'east' : facing;
@@ -590,7 +607,7 @@ describe('production body archetypes', () => {
     }
 
     expect(count).toBe(1980);
-    expect(digest.digest('hex')).toBe('559fce07e736e0de1075892bb883c3edc927ba5ff755d41e74c1418d6deb2158');
+    expect(digest.digest('hex')).toBe('870140303fd8fb03e66912ae7e97379c84545418eedc593431265c30fb38804e');
   });
 
   it('keeps the original garment vertical slice deterministic and unclipped', () => {

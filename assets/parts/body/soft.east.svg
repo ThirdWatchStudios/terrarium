@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium body-soft east authored art</title>
+  <desc>Production Soft profile silhouette and lower-plane detail.</desc>
+  <g id="art" transform="translate(64 87)">
+    <path id="art/silhouette" d="M 1 -28 C -9 -28 -18 -25 -20 -18 C -23 -9 -21 0 -23 9 C -25 18 -21 26 -13 29 C -5 31 5 30 12 29 C 22 27 28 19 28 10 C 29 1 26 -7 24 -15 C 22 -23 13 -28 1 -28 Z" fill="#FF0000" fill-rule="nonzero"/>
+    <path id="detail/lower-plane" d="M -16 20 a 16 7 0 1 0 32 0 a 16 7 0 1 0 -32 0 Z" fill="#00000012" fill-rule="nonzero"/>
+  </g>
+</svg>

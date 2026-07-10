@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium body-tall south authored art</title>
+  <desc>Production Tall body silhouette and lower-plane detail.</desc>
+  <g id="art" transform="translate(64 87)">
+    <path id="art/silhouette" d="M 0 -34 C -10 -34 -21 -32 -24 -25 C -27 -16 -24 -4 -22 7 C -20 18 -17 26 -9 29 C -3 30 3 30 9 29 C 17 26 20 18 22 7 C 24 -4 27 -16 24 -25 C 21 -32 10 -34 0 -34 Z" fill="#FF0000" fill-rule="nonzero"/>
+    <path id="detail/lower-plane" d="M -13 20 a 13 7 0 1 0 26 0 a 13 7 0 1 0 -26 0 Z" fill="#00000012" fill-rule="nonzero"/>
+  </g>
+</svg>

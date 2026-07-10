@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium head-soft-square north authored art</title>
+  <desc>Rear rounded-square contour without front-facing detail.</desc>
+  <g id="art" transform="translate(64 44)">
+    <path id="art/silhouette" d="M 0 -21 C 9 -21 16 -17 19 -9 V 10 C 19 18 14 22 8 22 H -8 C -14 22 -19 18 -19 10 V -9 C -16 -17 -9 -21 0 -21 Z" fill="#FF00FF" fill-rule="nonzero"/>
+  </g>
+</svg>

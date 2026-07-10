@@ -36,6 +36,14 @@ import {
 const STYLE = DEFAULT_STYLE;
 const SIZE = CANVAS; // fixed so width/height attrs stay stable
 const FACINGS_ALL = [...FACINGS, 'west'] as const;
+const HUMAN_HEAD_IDS = [
+  'head-round',
+  'head-oval',
+  'head-boxy',
+  'head-long',
+  'head-angular',
+  'head-soft-square',
+] as const;
 
 /** Strip a compose function's outer <svg> wrapper, keeping inner design-space markup. */
 function inner(svg: string): string {
@@ -85,7 +93,7 @@ describe('parts', () => {
     name: 'Base',
     parts: {
       body: 'body-standard',
-      head: 'head-oval',
+      head: 'head-round',
       hair: 'hair-short',
       outfit: 'outfit-tee',
       accessories: [],
@@ -146,6 +154,35 @@ describe('production outfit art', () => {
 
     await expect(grid(cells, FACINGS_ALL.length)).toMatchFileSnapshot(
       snap('outfits/outfit-tee__production-bodies'),
+    );
+  });
+});
+
+describe('production head art', () => {
+  it('keeps the six human silhouettes comparable across all facings', async () => {
+    const cells = HUMAN_HEAD_IDS.flatMap((head) => FACINGS_ALL.map((facing) =>
+      composeCharacter({
+        id: `head-proof-${head}`,
+        name: head,
+        parts: {
+          body: 'body-balanced',
+          head,
+          hair: 'hair-none',
+          outfit: 'outfit-tee',
+          accessories: [],
+        },
+        palette: {
+          skin: '#C68B59',
+          hair: '#4A3325',
+          outfitPrimary: '#315A78',
+          outfitSecondary: '#F5F2EA',
+          accent: '#D85A30',
+        },
+      }, STYLE, facing, SIZE, 'normal', { badge: false }),
+    ));
+
+    await expect(grid(cells, FACINGS_ALL.length)).toMatchFileSnapshot(
+      snap('heads/production-head-silhouettes'),
     );
   });
 });

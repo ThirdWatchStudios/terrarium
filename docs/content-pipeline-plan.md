@@ -104,9 +104,11 @@ icons), not by upfront design.
    128 grid, anchor markers, body-capsule / head-radius guides, an existing
    part on a named reference layer, and sentinel swatches. Portable ASE, GPL,
    and readable SVG palette companions support optional editors. Implemented
-   for current head/hair intake and the south/east tee kit under
-   `assets/part-authoring` via `npm run parts:scaffolds`; semantic IDs, not
-   editor-only layer state, define what the importer ignores.
+   for all five production bodies, all six human-head families, `hair-bob`, and
+   the south/east tee kit under `assets/part-authoring` via
+   `npm run parts:scaffolds`; semantic IDs, not editor-only layer state, define
+   what the importer ignores. Body starters show all 11 TypeScript-owned rig
+   points as non-importing guides.
 4. **Headless intake proof**: derive `hair-bob` sources from the generated
    scaffolds, make a deliberate canonical-SVG detail edit, compile them through
    the importer, and regenerate compositor snapshots. Implemented 2026-07-10:
@@ -117,7 +119,26 @@ icons), not by upfront design.
    directional east profile, stable rear contour, and unchanged ink-eye
    details. Its bounded compositor surface was the round-head part plus Carl
    and Linda's facing/mood sheets; the approved promotion is `9e932eb`.
-5. **Anchored outfit-detail adapter**: `outfit-tee` is the first body-aware
+5. **Production body source canonicalization**: the approved
+   `body-compact`, `body-balanced`, `body-large-frame`, `body-tall`, and
+   `body-soft` silhouettes now have 15 canonical south/east/north SVG sources
+   under `assets/parts/body`. A dedicated `body-art` adapter installs their
+   complete visible shapes onto the existing shared production `PartDef`
+   objects in place, preserving stable selection order, exact body-rig identity,
+   z-order, and all runtime metadata. Canvas geometry is strictly validated,
+   while established body-local path strings remain byte-stable. The generated
+   scaffolds expose the full typed rig as ignored context; importing the rig
+   itself remains a later adapter boundary.
+6. **Approved human-head production batch**: `head-oval`, `head-boxy`,
+   `head-long`, `head-angular`, and `head-soft-square` each have canonical
+   south/east/north sources derived through the editor-agnostic scaffold
+   workflow. The 15 SVGs are registered, deterministic, and production-approved
+   through the static-head overlay as of 2026-07-10. Together with `head-round`,
+   they pass the 3,960-cell head/hair/accessory/facing/style matrix and the
+   594-cell palette/portrait matrix. `npx tsx scripts/headSilhouettePreview.ts`
+   regenerates their previous-versus-production distance and hair/accessory
+   compatibility references.
+7. **Anchored outfit-detail adapter**: `outfit-tee` is the first body-aware
    intake target. Its south/east SVGs are authored once over `body-balanced`,
    with the body origin at `(64, 87)` and neck at `(64, 58)`. Every visible
    path must compile as `detail/*` / `silhouette: false`, so the selected body's
@@ -130,12 +151,17 @@ icons), not by upfront design.
    approval and M1 exit remain open. Componentized Blazer intake—separate
    lapels, buttons, and pocket with explicit multi-anchor placement—is the next
    deferred outfit adapter rather than a flat whole-garment shortcut.
-6. **Provenance**: each imported asset records source
+8. **Provenance**: each imported asset records source
    (`authored | generated | curated`) in its generated module, so lints and
    future audits know what's re-generatable. `authored` means deliberate
    canonical repo SVG regardless of authoring tool; `generated` means
    generator-owned and reproducible; `curated` means selected and frozen
    generator output.
+
+The approved body and six-head source sets now form the canonical silhouette
+foundation. Representative hair families are next, before the Phase 3 wall kit
+or detail-only Tee/Blazer work. The phase numbers describe pipeline scope; they
+do not override this visual-impact priority.
 
 ### Phase 3 — Wall bevel piece kit (~1 week; first authoring test)
 
@@ -160,9 +186,11 @@ the tweak pain without art.
 
 1. **LOD flag first**: detail tier on `ShapeSpec`; compositor drops interior
    detail below a threshold export size. Benefits procedural parts too.
-2. Re-author by silhouette priority — heads and hair first, then bodies +
-   outfits (§4b) — judged against the zoom strip. Accessories last (already
-   glyph-like). Moods/badges/poses stay procedural.
+2. Re-author by silhouette priority — the approved five-body and six-head
+   foundations are now canonical SVG; representative hair families come next,
+   followed by outfits (§4b), judged against the zoom strip. Detail-only
+   garment and wall passes wait behind the hair silhouettes. Accessories are
+   last (already glyph-like). Moods/badges/poses stay procedural.
 3. No flag-day: imported and procedural parts coexist behind `PartDef`.
 
 #### 4b. Distinct body types + the three-layer garment model

@@ -16,11 +16,13 @@ full alphabet; the milestones are what "done" means.
 ## Prerequisites (Phase 2 — before drawing anything)
 
 - [x] Importer (`scripts/importParts.ts`) with strict validation
-      (`part-importer.md`; static production head/hair overlays plus the first
-      body-aware tee detail adapter)
-- [x] Template scaffold SVGs for supported head/hair and south/east tee intake
-      (128 grid, anchors, capsule/head guides, seeded editable art, named
-      reference layer) with semantic IDs for every editable and ignored path
+      (`part-importer.md`; shared-identity production body art, static
+      production head/hair overlays, plus the first body-aware tee detail
+      adapter)
+- [x] Template scaffold SVGs for all five production bodies, all six human-head
+      families, supported hair, and south/east tee intake (128 grid, anchors,
+      capsule/head guides, seeded editable art, named reference layer) with
+      semantic IDs for every editable and ignored path
 - [x] Sentinel color palette defined and generated as ASE, GPL, and readable
       SVG companions (`npm run parts:scaffolds`); every scaffold also embeds
       the five exact swatches
@@ -30,11 +32,18 @@ full alphabet; the milestones are what "done" means.
 - [x] Anchored-detail mechanics proof: one south/east tee source set on
       `body-balanced` → deterministic five-body pre-expansion. Visual approval
       remains part of M1 rather than an importer prerequisite.
+- [x] Body-art ownership proof: 15 canonical production SVGs → one in-place
+      shared `PartDef` set with byte-stable visible geometry and unchanged typed
+      rig identities
 - [x] Semantic SVG conventions compiler-tested: slash IDs, ignored guide /
       reference groups, `detail/*`, exact sentinel colors, and nonzero fill
 
 Optional visual-editor interoperability is useful, but it is not an M1
 prerequisite and no named editor is a production gate.
+
+Mechanical readiness and canonical-source status do not normally imply visual
+approval. The five bodies and all six heads have now passed that separate human
+review; later source additions still require both gates.
 
 ### Canonical SVG authoring notes
 
@@ -44,6 +53,10 @@ prerequisite and no named editor is a production gate.
 - Supported transforms may remain because the importer bakes them into
   128-space. Optional editors must preserve semantic IDs, hexadecimal colors,
   the viewBox, nonzero fill, and vector paths without rasterization.
+- Production body paths are the byte-stable exception: keep visible art
+  directly beneath the scaffold's canonical `translate(64 87)` group. The
+  generated 11-point rig and `bodyOrigin` markers are ignored guides, not
+  imported metadata.
 - Palette-driven colors use the sentinel hexes only; literal colors only for
   style-neutral detail (per `src/parts/library.ts` conventions). The frozen
   values and exact SVG intake contract live in `part-importer.md`.
@@ -88,6 +101,12 @@ library as a whole:
 
 ## Milestones
 
+Current production order follows visual impact rather than the section order:
+the approved body and six-head source foundations are canonicalized; move next
+to representative silhouette-bearing hair families before returning to
+detail-only Tee/Blazer work or the wall bevel kit. M1 and M2 remain open; this
+sequencing note does not pre-check unrelated milestone gates.
+
 ### M1 — Pipeline proof
 
 Everything flows end-to-end once, before volume work starts.
@@ -107,7 +126,7 @@ The visible core of every character is authored.
 
 - [x] Body-type set finalized (see Bodies below), all bodies drawn with
       sub-anchors
-- [ ] All 6 heads
+- [x] All 6 heads
 - [ ] 3 hairstyles (one per major family)
 - [ ] Tee visual approval + one more outfit detail kit (Blazer recommended)
 - [ ] Crowd pass + distance pass + stress test
@@ -138,6 +157,9 @@ The visible core of every character is authored.
 Shared across all solid wall styles. Draw over the exported 47-tile reference
 sheet. Fixed light direction — pieces are NOT rotated copies.
 
+This remains an M1 gate, but its art pass is queued behind the next
+silhouette-bearing hair-family pass.
+
 - [ ] Edge faces: north / south (tall lit front) / west / east (4)
 - [ ] Convex corner miters: NW / NE / SW / SE (4)
 - [ ] Concave notches: NW / NE / SW / SE (4)
@@ -154,11 +176,11 @@ derivative of south.
 | Shape | south | east | north |
 |---|---|---|---|
 | round | [x] | [x] | [x] |
-| oval | [ ] | [ ] | [ ] |
-| boxy | [ ] | [ ] | [ ] |
-| long | [ ] | [ ] | [ ] |
-| angular | [ ] | [ ] | [ ] |
-| soft-square | [ ] | [ ] | [ ] |
+| oval | [x] | [x] | [x] |
+| boxy | [x] | [x] | [x] |
+| long | [x] | [x] | [x] |
+| angular | [x] | [x] | [x] |
+| soft-square | [x] | [x] | [x] |
 
 `head-round` has approved canonical authored SVG for all three facings,
 committed in `9e932eb`. The south
@@ -169,6 +191,17 @@ approved drawings; broader M1 scene/crowd gates remain open. The automated
 660-cell hair / head-accessory / facing / style matrix adds no clipping
 relative to the stable head control; 15 existing high-contrast bun/ponytail
 top-edge contacts remain separate hair work.
+
+The other five IDs have one complete 15-SVG approved production batch:
+south/east/north sources for `head-oval`, `head-boxy`, `head-long`,
+`head-angular`, and `head-soft-square`. Their generated scaffolds, importer
+registration, and static overlays are production-ready. User visual approval
+on 2026-07-10 follows the automated silhouette, distance, palette, portrait,
+hair/accessory, and compatibility reviews. Broader M1 scene/crowd gates remain
+library-level work rather than head-source blockers. Run
+`npx tsx scripts/headSilhouettePreview.ts` to regenerate the previous-versus-
+production distance sheet and representative compatibility sheet under
+`docs/previews/head-silhouettes-*`.
 
 ### 3. Hair — organized as families (design system)
 
@@ -202,10 +235,11 @@ Body types are **archetypes that read from orbit**, not BMI steps. Approved set:
 - [x] **Body-type set approved (2026-07-09): compact, balanced,
       large-frame, tall, soft.** This replaces standard/slim/broad for new work;
       the legacy ids remain resolvable for existing projects.
-- [x] Each body drawn with **sub-anchor markers** (neck, shoulders, waist,
-      hem) on an anchor layer — the importer reads these into the rig. Note:
-      `tall` is the proof case for body-owned anchors (its headCenter is
-      higher; nothing global can express that).
+- [x] Each body has a complete typed sub-rig (above-head, head center, neck,
+      shoulders, chest, waist, hip, and hem). Generated scaffolds render all 11
+      points plus `bodyOrigin` on an ignored anchor layer; TypeScript remains
+      authoritative rather than importing those guides. `tall` is the proof
+      case for body-owned anchors because its head center is higher.
 
 | Body type | south | east | north |
 |---|---|---|---|
@@ -236,6 +270,14 @@ Body types are **archetypes that read from orbit**, not BMI steps. Approved set:
 > pinned. **Dress is mechanically complete but visually provisional;** its
 > dedicated art pass does not block the production body, rig, or compatibility
 > work.
+>
+> The same five bodies now own 15 canonical files under `assets/parts/body`.
+> Their complete visible shapes are installed through the explicit `body-art`
+> mode onto the already-shared production objects, so `BODY_ARCHETYPES`,
+> `BODY_ARCHETYPE_PARTS`, `partsForSlot('body')`, and `getPart()` continue to
+> resolve the same identities and rigs. The handwritten definitions remain a
+> safe fallback and the source of labels, intent, order, z-order, and anchors;
+> legacy bodies are untouched.
 
 ### 5. Outfit detail kits (§4b) — body-independent, ~2 facings each
 
@@ -265,7 +307,8 @@ behind.
 > the procedural/static fallback. Tee's inventory cells stay open until its
 > render is visually approved and the remaining Definition of Done checks pass.
 > Componentized lapels/buttons/pocket placement for Blazer is the next deferred
-> outfit adapter.
+> outfit adapter, scheduled after the next silhouette-bearing hair pass rather
+> than ahead of it.
 
 | Garment | Detail pieces | south | east | north |
 |---|---|---|---|---|
