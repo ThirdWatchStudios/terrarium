@@ -27,9 +27,21 @@ are the approved production source of truth. Together with `head-round`, all
 six head families passed the automated compatibility matrices and user visual
 approval on 2026-07-10.
 
-The approved body and head foundations now live in this source tree. Current
-production priority moves to silhouette-bearing hair families. Detail-only
-Tee/Blazer work and wall bevel/detail authoring resume after that hair pass.
+`hair/` contains the approved Bob source plus the representative Short and
+Long straight south/east/north sets. Their target-level byte-stable mode
+validates full canvas geometry while avoiding arc normalization that would
+otherwise change rendered pixels. Short and Long straight south/north preserve
+their prior paths exactly; Long straight east adds the batch's one deliberate
+art change, replacing the front-view curtain with a single rear fall and short
+temple edge. Bob remains
+the Medium-family control; Short and Long straight received visual approval on
+2026-07-10.
+
+The approved body, head, and representative Short/Medium/Long hair foundations
+now live in this source tree. Current production work is the
+Curly/Ponytail/Coils silhouette batch.
+Detail-only Tee/Blazer work and wall bevel/detail authoring resume after that
+hair pass.
 
 See `docs/part-importer.md` for the SVG dialect, sentinel palette, validation
 rules, and the deferred componentized multi-piece adapter needed by Blazer.

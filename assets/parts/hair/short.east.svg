@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium hair-short east authored art</title>
+  <desc>Current production short profile cap with rear coverage.</desc>
+  <g id="art" transform="translate(64 44)">
+    <path id="art/cap" d="M -19.4164878389476 -8 A 21 21 0 0 1 19.4164878389476 -8 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/back" d="M -17 -9 h 0 a 4 4 0 0 1 4 4 v 9 a 4 4 0 0 1 -4 4 h 0 a 4 4 0 0 1 -4 -4 v -9 a 4 4 0 0 1 4 -4 Z" fill="#00FFFF" fill-rule="nonzero"/>
+  </g>
+</svg>

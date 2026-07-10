@@ -102,10 +102,11 @@ library as a whole:
 ## Milestones
 
 Current production order follows visual impact rather than the section order:
-the approved body and six-head source foundations are canonicalized; move next
-to representative silhouette-bearing hair families before returning to
-detail-only Tee/Blazer work or the wall bevel kit. M1 and M2 remain open; this
-sequencing note does not pre-check unrelated milestone gates.
+the approved body and six-head source foundations are canonicalized; the
+representative Short/Medium/Long hair family batch is approved, and the next
+silhouette batch is Curly/Ponytail/Coils before detail-only Tee/Blazer work or
+the wall bevel kit. M1 and M2 remain open; this sequencing note does not
+pre-check unrelated milestone gates.
 
 ### M1 — Pipeline proof
 
@@ -157,8 +158,8 @@ The visible core of every character is authored.
 Shared across all solid wall styles. Draw over the exported 47-tile reference
 sheet. Fixed light direction — pieces are NOT rotated copies.
 
-This remains an M1 gate, but its art pass is queued behind the next
-silhouette-bearing hair-family pass.
+This remains an M1 gate, but its art pass is queued behind the current
+silhouette-bearing hair-family review.
 
 - [ ] Edge faces: north / south (tall lit front) / west / east (4)
 - [ ] Convex corner miters: NW / NE / SW / SE (4)
@@ -212,12 +213,12 @@ max). `none` needs no art; north matters (hair reads from behind).
 
 | Family | Style | south | east | north |
 |---|---|---|---|---|
-| Short | short | [ ] | [ ] | [ ] |
+| Short | short | [x] | [x] | [x] |
 | Short | pixie | [ ] | [ ] | [ ] |
 | Short | side-part | [ ] | [ ] | [ ] |
 | Medium | bob | [x] | [x] | [x] |
 | Medium | curly | [ ] | [ ] | [ ] |
-| Long | long-straight | [ ] | [ ] | [ ] |
+| Long | long-straight | [x] | [x] | [x] |
 | Long | ponytail | [ ] | [ ] | [ ] |
 | Long | bun | [ ] | [ ] | [ ] |
 | Special | balding | [ ] | [ ] | [ ] |
@@ -227,6 +228,18 @@ max). `none` needs no art; north matters (hair reads from behind).
 `hair-bob` has approved canonical authored SVG and a three-facing parting
 detail, committed in `240ee03`. Its inventory boxes record the approved
 drawings; broader M1 scene/crowd gates remain open.
+
+`hair-short` and `hair-long-straight` now have six canonical south/east/north
+sources, with Bob as the Medium-family control. The explicit byte-stable
+targets prevent generic arc normalization from changing pixels while still
+enforcing the full SVG intake contract. Short and the Long straight south/north
+facings preserve their prior silhouettes exactly; Long straight east is the
+one authored refinement, using a single rear fall and short temple edge so the
+profile turn reads distinctly. Run
+`npx tsx scripts/hairFamilyPreview.ts` to regenerate the all-head/facing
+compatibility and 128/64/48/32 px distance proofs under
+`docs/previews/hair-families-*`. Their inventory cells record visual approval
+on 2026-07-10; broader M1 scene/crowd gates remain open.
 
 ### 4. Bodies (§4b) — archetype frames, N × 3 facings
 
@@ -307,8 +320,8 @@ behind.
 > the procedural/static fallback. Tee's inventory cells stay open until its
 > render is visually approved and the remaining Definition of Done checks pass.
 > Componentized lapels/buttons/pocket placement for Blazer is the next deferred
-> outfit adapter, scheduled after the next silhouette-bearing hair pass rather
-> than ahead of it.
+> outfit adapter, scheduled after the current silhouette-bearing hair review
+> rather than ahead of it.
 
 | Garment | Detail pieces | south | east | north |
 |---|---|---|---|---|

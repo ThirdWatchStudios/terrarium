@@ -138,7 +138,18 @@ icons), not by upfront design.
    594-cell palette/portrait matrix. `npx tsx scripts/headSilhouettePreview.ts`
    regenerates their previous-versus-production distance and hair/accessory
    compatibility references.
-7. **Anchored outfit-detail adapter**: `outfit-tee` is the first body-aware
+7. **Representative hair-family source batch**: `hair-short`, the approved
+   `hair-bob` control, and `hair-long-straight` cover the Short, Medium, and
+   Long families. Six new south/east/north Short and Long straight sources own
+   their canonical local paths through explicit byte-stable static targets;
+   canvas, paint, and semantic validation still run normally. All four Short
+   shapes plus Long straight south/north remain exact. The one deliberate art
+   delta is Long straight east, whose single rear fall and short temple edge
+   make the profile turn explicit while preserving the open face. Generated
+   scaffolds and `npx tsx scripts/hairFamilyPreview.ts` provide the visual
+   review surface. Short and Long straight received visual approval on
+   2026-07-10.
+8. **Anchored outfit-detail adapter**: `outfit-tee` is the first body-aware
    intake target. Its south/east SVGs are authored once over `body-balanced`,
    with the body origin at `(64, 87)` and neck at `(64, 58)`. Every visible
    path must compile as `detail/*` / `silhouette: false`, so the selected body's
@@ -151,17 +162,18 @@ icons), not by upfront design.
    approval and M1 exit remain open. Componentized Blazer intake—separate
    lapels, buttons, and pocket with explicit multi-anchor placement—is the next
    deferred outfit adapter rather than a flat whole-garment shortcut.
-8. **Provenance**: each imported asset records source
+9. **Provenance**: each imported asset records source
    (`authored | generated | curated`) in its generated module, so lints and
    future audits know what's re-generatable. `authored` means deliberate
    canonical repo SVG regardless of authoring tool; `generated` means
    generator-owned and reproducible; `curated` means selected and frozen
    generator output.
 
-The approved body and six-head source sets now form the canonical silhouette
-foundation. Representative hair families are next, before the Phase 3 wall kit
-or detail-only Tee/Blazer work. The phase numbers describe pipeline scope; they
-do not override this visual-impact priority.
+The approved body, six-head, and representative Short/Medium/Long hair source
+sets now form the canonical silhouette foundation. Curly/Ponytail/Coils are
+the next silhouette batch before the Phase 3 wall kit or detail-only
+Tee/Blazer work. The phase numbers describe pipeline scope; they do not
+override this visual-impact priority.
 
 ### Phase 3 — Wall bevel piece kit (~1 week; first authoring test)
 
@@ -187,10 +199,11 @@ the tweak pain without art.
 1. **LOD flag first**: detail tier on `ShapeSpec`; compositor drops interior
    detail below a threshold export size. Benefits procedural parts too.
 2. Re-author by silhouette priority — the approved five-body and six-head
-   foundations are now canonical SVG; representative hair families come next,
-   followed by outfits (§4b), judged against the zoom strip. Detail-only
-   garment and wall passes wait behind the hair silhouettes. Accessories are
-   last (already glyph-like). Moods/badges/poses stay procedural.
+   foundations are canonical SVG; Short, Bob, and Long straight are the active
+   representative hair review, followed by outfits (§4b), judged against the
+   zoom strip. Detail-only garment and wall passes wait behind the hair
+   silhouettes. Accessories are last (already glyph-like).
+   Moods/badges/poses stay procedural.
 3. No flag-day: imported and procedural parts coexist behind `PartDef`.
 
 #### 4b. Distinct body types + the three-layer garment model

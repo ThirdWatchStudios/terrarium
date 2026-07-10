@@ -12,6 +12,7 @@ export interface PartImportTarget {
   readonly facings: Partial<Record<Facing, unknown>>;
   readonly buildVariant?: unknown;
   readonly bodyAnchors?: unknown;
+  readonly preserveLocalPaths?: boolean;
   readonly importMode?: PartImportMode;
   readonly referenceBodyId?: BodyArchetypeId;
   readonly placementAnchor?: BodyDetailPointAnchor;
@@ -23,6 +24,10 @@ const target = (id: string, slot: 'head' | 'hair'): PartImportTarget => ({
   slot,
   anchor: 'headCenter',
   facings: allFacings,
+});
+const byteStableTarget = (id: string, slot: 'head' | 'hair'): PartImportTarget => ({
+  ...target(id, slot),
+  preserveLocalPaths: true,
 });
 const bodyTarget = (id: BodyArchetypeId): PartImportTarget => ({
   id,
@@ -49,7 +54,7 @@ export const PART_IMPORT_TARGETS: readonly PartImportTarget[] = [
   target('head-long', 'head'),
   target('head-angular', 'head'),
   target('head-soft-square', 'head'),
-  target('hair-short', 'hair'),
+  byteStableTarget('hair-short', 'hair'),
   target('hair-bob', 'hair'),
   target('hair-bun', 'hair'),
   target('hair-curly', 'hair'),
@@ -57,7 +62,7 @@ export const PART_IMPORT_TARGETS: readonly PartImportTarget[] = [
   target('hair-side-part', 'hair'),
   target('hair-pixie', 'hair'),
   target('hair-ponytail', 'hair'),
-  target('hair-long-straight', 'hair'),
+  byteStableTarget('hair-long-straight', 'hair'),
   target('hair-coils', 'hair'),
   target('head-fab', 'head'),
   {

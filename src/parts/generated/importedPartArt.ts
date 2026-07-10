@@ -111,6 +111,37 @@ export const IMPORTED_PART_ART = [
     },
   },
   {
+    id: "hair-long-straight",
+    slot: "hair",
+    facings: {
+      south: [
+        { d: "M -23 -5 A 23 23 0 0 1 23 -5 L 23 29 L 14 29 L 11 -2 A 12 12 0 0 0 -11 -2 L -14 29 L -23 29 Z", fill: "$hair" },
+      ],
+      east: [
+        { d: "M -22 -5 A 23 23 0 0 1 23 -5 C 23 1 21 6 17 10 L 15 8 C 16 -3 10 -11 1 -12 C -8 -12 -13 -7 -14 1 L -12 30 L -24 30 L -24 7 C -24 1 -23 -3 -22 -5 Z", fill: "$hair" },
+      ],
+      north: [
+        { d: "M -23 -4 A 23 23 0 0 1 23 -4 L 23 31 L -23 31 Z", fill: "$hair" },
+      ],
+    },
+  },
+  {
+    id: "hair-short",
+    slot: "hair",
+    facings: {
+      south: [
+        { d: "M -19.4164878389476 -8 A 21 21 0 0 1 19.4164878389476 -8 Z", fill: "$hair" },
+      ],
+      east: [
+        { d: "M -19.4164878389476 -8 A 21 21 0 0 1 19.4164878389476 -8 Z", fill: "$hair" },
+        { d: "M -17 -9 h 0 a 4 4 0 0 1 4 4 v 9 a 4 4 0 0 1 -4 4 h 0 a 4 4 0 0 1 -4 -4 v -9 a 4 4 0 0 1 4 -4 Z", fill: "$hair" },
+      ],
+      north: [
+        { d: "M -19.79898987322333 7 A 21 21 0 1 1 19.79898987322333 7 Z", fill: "$hair" },
+      ],
+    },
+  },
+  {
     id: "head-angular",
     slot: "head",
     facings: {
@@ -331,6 +362,24 @@ export const IMPORTED_PART_PROVENANCE = [
       "assets/parts/hair/bob.east.svg",
       "assets/parts/hair/bob.north.svg",
       "assets/parts/hair/bob.south.svg",
+    ],
+  },
+  {
+    id: "hair-long-straight",
+    sourceKind: "authored",
+    sourceFiles: [
+      "assets/parts/hair/long-straight.east.svg",
+      "assets/parts/hair/long-straight.north.svg",
+      "assets/parts/hair/long-straight.south.svg",
+    ],
+  },
+  {
+    id: "hair-short",
+    sourceKind: "authored",
+    sourceFiles: [
+      "assets/parts/hair/short.east.svg",
+      "assets/parts/hair/short.north.svg",
+      "assets/parts/hair/short.south.svg",
     ],
   },
   {

@@ -26,10 +26,11 @@ npm run parts:scaffolds # regenerate seeded SVG starters and palette files
 
 The generated authoring assets live under `assets/part-authoring`: seeded
 scaffolds for all five production bodies, all six human-head families,
-`hair-bob`, and the south/east tee starters, plus ASE, GPL, and readable SVG
-sentinel palette companions for optional editors. Their directory README
-defines the canonical editor-agnostic workflow. Layer locking is only an
-editing convenience; semantic IDs determine which groups the importer ignores.
+representative `hair-short`, `hair-bob`, and `hair-long-straight` families, and
+the south/east tee starters, plus ASE, GPL, and readable SVG sentinel palette
+companions for optional editors. Their directory README defines the canonical
+editor-agnostic workflow. Layer locking is only an editing convenience;
+semantic IDs determine which groups the importer ignores.
 
 ## Source convention
 
@@ -66,6 +67,13 @@ use `(64, 87)`, keeping canonical sources in body-local coordinates. Body art
 is validated after applying that canvas translation but deliberately preserves
 its established local `d` strings byte-for-byte; visible body paths must remain
 directly under the canonical translation group.
+
+`hair-short` and `hair-long-straight` also preserve their canonical local path
+strings after canvas validation. Their arc-heavy geometry measurably
+changes under generic flattening even at production sizes, so those explicit
+targets require visible paths directly under `translate(64 44)`. This is a
+targeted migration guarantee; Bob and deliberately re-authored static parts
+retain the normal transform-baking path.
 
 ## Sentinel palette
 
@@ -207,6 +215,6 @@ scaffold-to-runtime `hair-bob` proof and the first canonical head promotion
 are approved in the current production batch. The tee anchored-detail mechanics
 are complete; its visual approval remains a separate gate, and componentized
 Blazer intake remains the next outfit adapter boundary. The approved bodies
-also have canonical SVG sources and a shared-identity adapter. The next
-art-production priority is representative silhouette-bearing hair families
+also have canonical SVG sources and a shared-identity adapter. The current
+art-production priority is the representative Short/Medium/Long hair batch
 before detail-only Blazer or wall work.

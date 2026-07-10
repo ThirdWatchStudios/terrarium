@@ -170,6 +170,12 @@ describe('part authoring scaffold generation', () => {
       'assets/part-authoring/scaffolds/hair/bob.east.svg',
       'assets/part-authoring/scaffolds/hair/bob.north.svg',
       'assets/part-authoring/scaffolds/hair/bob.south.svg',
+      'assets/part-authoring/scaffolds/hair/long-straight.east.svg',
+      'assets/part-authoring/scaffolds/hair/long-straight.north.svg',
+      'assets/part-authoring/scaffolds/hair/long-straight.south.svg',
+      'assets/part-authoring/scaffolds/hair/short.east.svg',
+      'assets/part-authoring/scaffolds/hair/short.north.svg',
+      'assets/part-authoring/scaffolds/hair/short.south.svg',
       'assets/part-authoring/scaffolds/head/angular.east.svg',
       'assets/part-authoring/scaffolds/head/angular.north.svg',
       'assets/part-authoring/scaffolds/head/angular.south.svg',
@@ -191,7 +197,7 @@ describe('part authoring scaffold generation', () => {
       'assets/part-authoring/scaffolds/outfit/tee.east.svg',
       'assets/part-authoring/scaffolds/outfit/tee.south.svg',
     ]);
-    expect(first).toHaveLength(41);
+    expect(first).toHaveLength(47);
     expect(first.map(({ bytes }) => bytes)).toEqual(second.map(({ bytes }) => bytes));
     expect(PART_SCAFFOLD_SPECS.map(({ slot, referenceId }) => [slot, referenceId])).toEqual([
       ['body', 'body-compact'],
@@ -205,7 +211,9 @@ describe('part authoring scaffold generation', () => {
       ['head', 'head-long'],
       ['head', 'head-angular'],
       ['head', 'head-soft-square'],
+      ['hair', 'hair-short'],
       ['hair', 'hair-bob'],
+      ['hair', 'hair-long-straight'],
       ['outfit', 'outfit-tee'],
     ]);
   });
@@ -240,11 +248,15 @@ describe('part authoring scaffold generation', () => {
 
       const sourceShapes = seededShapes(scaffoldSlot, partId, facing);
       expect(sourceShapes, `${asset.path} source part missing`).toBeTruthy();
+      const target = PART_IMPORT_TARGETS.find(({ id }) => id === partId);
+      const preserveLocalPaths = target?.importMode === 'body-art' || target?.preserveLocalPaths === true;
       const compiled = compilePartSvg(source, {
         source: asset.path,
         slot: slot as ScaffoldSlot,
+        preserveLocalPaths,
       });
       expect(compiled.map(shapeSemantics), asset.path).toEqual(sourceShapes!.map(shapeSemantics));
+      if (preserveLocalPaths) expect(compiled, `${asset.path} exact local paths`).toEqual(sourceShapes);
 
       for (const outlined of [false, true]) {
         const origin = PART_AUTHORING_ORIGINS[scaffoldSlot];
@@ -351,28 +363,42 @@ describe('part authoring scaffold generation', () => {
     expect(east).toContain('id="guide/body-capsule/shape-001" d="M59 58');
   });
 
-  it('compiles the three seeded bob documents as one complete overlay', async () => {
-    const root = await mkdtemp(path.join(tmpdir(), 'terrarium-bob-scaffold-'));
+  it('compiles the nine representative hair documents as three complete overlays', async () => {
+    const root = await mkdtemp(path.join(tmpdir(), 'terrarium-hair-scaffolds-'));
     temporaryRoots.push(root);
     await mkdir(path.join(root, 'hair'), { recursive: true });
     const assets = generatePartAuthoringAssets();
-    for (const facing of FACINGS) {
-      const asset = assets.find(({ path: assetPath }) => assetPath.endsWith(`/hair/bob.${facing}.svg`))!;
-      await writeFile(path.join(root, 'hair', `bob.${facing}.svg`), asset.bytes);
+    const representativeHairs = [
+      ['hair-short', 'short'],
+      ['hair-bob', 'bob'],
+      ['hair-long-straight', 'long-straight'],
+    ] as const;
+    for (const [, slug] of representativeHairs) {
+      for (const facing of FACINGS) {
+        const asset = assets.find(({ path: assetPath }) =>
+          assetPath.endsWith(`/hair/${slug}.${facing}.svg`))!;
+        await writeFile(path.join(root, 'hair', `${slug}.${facing}.svg`), asset.bytes);
+      }
     }
     const imports = await compilePartDirectory({
       inputDir: root,
       sourcePathPrefix: 'assets/parts',
       catalog: PART_IMPORT_TARGETS,
     });
-    expect(imports).toHaveLength(1);
-    expect(imports[0].id).toBe('hair-bob');
-    expect(Object.keys(imports[0].facings)).toEqual(FACINGS);
-    expect(imports[0].sourceFiles).toEqual([
-      'assets/parts/hair/bob.east.svg',
-      'assets/parts/hair/bob.north.svg',
-      'assets/parts/hair/bob.south.svg',
+    expect(imports.map(({ id }) => id)).toEqual([
+      'hair-bob',
+      'hair-long-straight',
+      'hair-short',
     ]);
+    for (const [id, slug] of representativeHairs) {
+      const imported = imports.find((candidate) => candidate.id === id)!;
+      expect(Object.keys(imported.facings), id).toEqual(FACINGS);
+      expect(imported.sourceFiles, id).toEqual([
+        `assets/parts/hair/${slug}.east.svg`,
+        `assets/parts/hair/${slug}.north.svg`,
+        `assets/parts/hair/${slug}.south.svg`,
+      ]);
+    }
   });
 });
 
@@ -426,7 +452,7 @@ describe('committed part authoring assets', () => {
     const root = await mkdtemp(path.join(tmpdir(), 'terrarium-authoring-assets-'));
     temporaryRoots.push(root);
     const firstWrite = await writePartAuthoringAssets(root);
-    expect(firstWrite.updated).toBe(41);
+    expect(firstWrite.updated).toBe(47);
     expect(firstWrite.removed).toBe(0);
     await expect(checkPartAuthoringAssets(root)).resolves.toBeUndefined();
 

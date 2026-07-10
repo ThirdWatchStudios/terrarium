@@ -16,7 +16,7 @@ The current supported starters are:
 
 - `scaffolds/body/{compact,balanced,large-frame,tall,soft}.{south,east,north}.svg`
 - `scaffolds/head/{round,oval,boxy,long,angular,soft-square}.{south,east,north}.svg`
-- `scaffolds/hair/bob.{south,east,north}.svg`
+- `scaffolds/hair/{short,bob,long-straight}.{south,east,north}.svg`
 - `scaffolds/outfit/tee.{south,east}.svg` (seeded on `body-balanced`)
 
 They are seeded with the current production geometry, so they support a true
@@ -33,6 +33,14 @@ The oval, boxy, long, angular, and soft-square head families form one complete
 compile through the existing static-head importer and passed the distance,
 palette, portrait, hair/accessory, and full compatibility reviews on
 2026-07-10.
+
+Short, Bob, and Long straight are the representative Short/Medium/Long hair
+families. Bob remains the approved authored control. The Short and Long
+straight starters seed six canonical sources from current production geometry.
+Short and the Long straight south/north facings remain byte-identical; the Long
+straight east source uses a single rear fall and short temple edge so the turn
+reads distinctly while preserving the open profile face.
+Short and Long straight received visual approval on 2026-07-10.
 
 ## Canonical headless workflow
 
@@ -53,9 +61,10 @@ The gate is whether committed canonical SVG validates, compiles
 deterministically, changes only intended snapshots, and passes visual review —
 not whether a named editor preserves it.
 
-The approved body and head sets now have canonical sources. Silhouette work
-moves next to representative hair families; detail-only Tee refinement, the
-componentized Blazer adapter, and wall bevel/detail work follow that pass.
+The approved body, head, and representative Short/Medium/Long hair sets now
+have canonical sources. Curly/Ponytail/Coils are the current silhouette batch;
+detail-only Tee refinement, the componentized Blazer adapter, and wall
+bevel/detail work follow the hair pass.
 
 ## Optional visual-editor use
 
@@ -70,4 +79,6 @@ componentized Blazer adapter, and wall bevel/detail work follow that pass.
   transforms normally do not need flattening because the importer bakes them.
   Body art is deliberately stricter: keep each visible path directly beneath
   the canonical `translate(64 87)` art group so its established local path data
-  remains byte-stable.
+  remains byte-stable. The Short and Long straight migration sources use the
+  same rule around `translate(64 44)`; edit their path data directly rather
+  than adding another transform.

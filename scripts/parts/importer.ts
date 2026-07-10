@@ -81,8 +81,8 @@ export interface CompilePartSvgContext {
   slot: SupportedSlot;
   /**
    * Keep canonical part-local path syntax after validating its canvas-space
-   * geometry. Body promotion uses this to make source ownership a byte-neutral
-   * change for existing snapshots and generated reference scaffolds.
+   * geometry. Body promotion and explicit byte-stable static migration targets
+   * use this to avoid normalization-only render and snapshot drift.
    */
   preserveLocalPaths?: boolean;
 }
@@ -800,6 +800,12 @@ function validateTarget(group: MutableImportGroup, target: PartImportTarget | un
   if (!target) fail(group.id, 'importer v1 only replaces an existing selectable production part');
   if (target.slot !== group.slot) fail(group.id, `target slot is ${target.slot}, not ${group.slot}`);
   const mode = target.importMode ?? 'static';
+  if (
+    target.preserveLocalPaths &&
+    (mode !== 'static' || (target.slot !== 'head' && target.slot !== 'hair'))
+  ) {
+    fail(group.id, 'preserveLocalPaths is supported only for static head/hair targets');
+  }
   if (mode === 'body-art') {
     if (
       target.slot !== 'body' ||
@@ -921,7 +927,7 @@ export async function compilePartDirectory(
       facings[facing] = compilePartSvg(input, {
         source: descriptor.sourcePath,
         slot: descriptor.slot,
-        preserveLocalPaths: target.importMode === 'body-art',
+        preserveLocalPaths: target.importMode === 'body-art' || target.preserveLocalPaths === true,
       });
     }
     validateFacingPaintOrder(group.id, facings);
