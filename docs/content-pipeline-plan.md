@@ -200,6 +200,20 @@ gentlest introduction to hand-authoring, highest tweak-pain relief.
 4. Per-template detail (brick courses, slats) stays procedural for now.
 5. One deliberate snapshot regen; review the 47-tile sheet diff.
 
+Mechanical pilot implemented 2026-07-10: the exact twelve canonical fixed-light
+SVGs live under `assets/walls/bevel`, compile through
+`scripts/importWallBevel.ts`, and assemble from the existing 47-blob topology.
+The first integration is deliberately limited to `office-wall`; the other nine
+wall styles remain byte-identical, including the procedural bevels on the other
+solid styles and the no-bevel Glass/Curtain paths. The Office correction
+intentionally replaces its painted-on rim with a near-black silhouette boundary
+and an inset palette-material body on exposed sides; connected-side overhang,
+cell coverage, and blob topology remain unchanged. `npm run walls:preview`
+produces the focused previous-versus-authored
+source/47-tile/room/palette/distance proof. Broader solid-wall promotion remains
+behind visual approval of that sheet; no export contract or schema change is
+involved.
+
 Fallback if the authored bevel doesn't beat procedural after ~2 days of
 drawing: extract `BEVEL` into a declarative spec + live tweak panel — fixes
 the tweak pain without art.

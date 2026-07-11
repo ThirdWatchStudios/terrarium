@@ -157,13 +157,16 @@ The visible core of every character is authored.
 Shared across all solid wall styles. Draw over the exported 47-tile reference
 sheet. Fixed light direction — pieces are NOT rotated copies.
 
-This remains an M1 gate, but its art pass is queued behind the current
-silhouette-bearing hair-family review.
+The canonical sources, compiler, assembler, focused proof sheet, and intentional
+Office-wall snapshot are mechanically complete. The M1 checkbox remains open
+until the Office pilot receives visual approval and the shared kit is promoted
+to the remaining opaque solid-wall styles. Those styles stay byte-identical in
+the meantime; Glass and Curtain remain intentionally procedural and bevel-free.
 
-- [ ] Edge faces: north / south (tall lit front) / west / east (4)
-- [ ] Convex corner miters: NW / NE / SW / SE (4)
-- [ ] Concave notches: NW / NE / SW / SE (4)
-- [ ] Assembler wired to `configForIndex` + one deliberate snapshot regen
+- [x] Edge faces: north / south (tall lit front) / west / east (4)
+- [x] Convex corner miters: NW / NE / SW / SE (4)
+- [x] Concave notches: NW / NE / SW / SE (4)
+- [x] Assembler wired to `configForIndex` + one deliberate Office snapshot regen
 
 Per-template detail (brick courses, slats, mullions) stays procedural unless
 the 3-tweak rule fires.

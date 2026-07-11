@@ -1,6 +1,7 @@
 import type { FloorTemplate, ShapeSpec, WallTemplate } from '../core/types';
 import { WALL_BITS } from '../core/types';
 import { blobIndex, configForIndex } from './blob';
+import { authoredWallBevel } from './wallBevel';
 import { rr, circle, ellipse } from '../core/geometry';
 import { mulberry32 } from '../core/random';
 
@@ -19,9 +20,11 @@ const SIZE = 128; // design units per cell (walls are full-cell; see wallBody)
 const OVERHANG = 16;
 
 /**
- * The opaque wall BODY for a neighbor mask: a FULL-CELL fill that overhangs the
- * tile edge by OVERHANG on each CONNECTED side and stops flush at the edge on each
- * exposed side. Connected wall cells therefore overlap — their shared outline falls
+ * The opaque wall BODY for a neighbor mask: by default a FULL-CELL fill that
+ * overhangs the tile edge by OVERHANG on each CONNECTED side and stops flush at
+ * each exposed side. Authored boundary layers may pass a small exposed-side
+ * inset while preserving the same connected overhang. Connected wall cells
+ * therefore overlap — their shared outline falls
  * outside the viewBox and clips away, so a wall run reads as one seamless mass —
  * while every exposed side keeps the outline pass as the wall's crisp edge against
  * the open floor. This is the RimWorld / Prison-Architect full-cell wall model that
@@ -29,11 +32,11 @@ const OVERHANG = 16;
  * `thickness` is retained in the signature for callers but no longer sizes the body
  * (templates still use it to scale their own surface detail).
  */
-function wallBody(mask: number, fill: string): ShapeSpec {
-  const x0 = mask & WALL_BITS.W ? -OVERHANG : 0;
-  const y0 = mask & WALL_BITS.N ? -OVERHANG : 0;
-  const x1 = mask & WALL_BITS.E ? SIZE + OVERHANG : SIZE;
-  const y1 = mask & WALL_BITS.S ? SIZE + OVERHANG : SIZE;
+function wallBody(mask: number, fill: string, exposedInset = 0): ShapeSpec {
+  const x0 = mask & WALL_BITS.W ? -OVERHANG : exposedInset;
+  const y0 = mask & WALL_BITS.N ? -OVERHANG : exposedInset;
+  const x1 = mask & WALL_BITS.E ? SIZE + OVERHANG : SIZE - exposedInset;
+  const y1 = mask & WALL_BITS.S ? SIZE + OVERHANG : SIZE - exposedInset;
   // An isolated pillar gets soft corners; any connected cell fills flush so the mass reads solid.
   const radius = mask === 0 ? 6 : 0;
   return { d: rr(x0, y0, x1 - x0, y1 - y0, radius), fill };
@@ -134,6 +137,29 @@ function wallArms(mask: number, _thickness: number, fill: string): ShapeSpec[] {
   return [wallBody(mask, fill), ...wallBevel(mask)];
 }
 
+const AUTHORED_OUTER_EDGE = 2;
+const AUTHORED_MATERIAL_EDGE = 8;
+
+/**
+ * The authored wall contour is real boundary geometry, not black paint laid
+ * over the material. A near-black silhouette base reaches almost to each
+ * exposed cell edge; the palette material begins six units farther inward.
+ * Connected sides retain the original overhang on both layers, so seams clip
+ * exactly as before. Authored face pieces begin at the material boundary.
+ */
+function authoredWallArms(mask: number, fill: string): ShapeSpec[] {
+  return [
+    wallBody(mask, '#000000', AUTHORED_OUTER_EDGE),
+    { ...wallBody(mask, fill, AUTHORED_MATERIAL_EDGE), silhouette: false },
+    ...authoredWallBevel(mask),
+  ];
+}
+
+/** Baseline seam used only by the authored-wall comparison preview and tests. */
+export function buildProceduralOfficeWall(mask: number): ShapeSpec[] {
+  return wallArms(mask, 0, '$primary');
+}
+
 /** The sides of a cell that face open floor (no wall neighbour) — where a wall
  *  shows a visible face. Full-cell "light detail" goes on the face, not the seam,
  *  so connected sides stay flush and wall runs merge seamlessly. */
@@ -166,7 +192,7 @@ const officeWall: WallTemplate = {
   params: [],
   build(mask) {
     // The plain default / building-shell wall: a clean opaque full-cell body.
-    return wallArms(mask, 0, '$primary');
+    return authoredWallArms(mask, '$primary');
   },
 };
 

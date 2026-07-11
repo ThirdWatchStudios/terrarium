@@ -87,6 +87,18 @@ export interface CompilePartSvgContext {
   preserveLocalPaths?: boolean;
 }
 
+/**
+ * Slot-independent strict SVG compilation seam used by other authored asset
+ * families. Character parts continue to call {@link compilePartSvg}; wall kits
+ * use a canvas-space origin without becoming a fake PartDef slot.
+ */
+export interface CompileAuthoredSvgContext {
+  source: string;
+  origin: { x: number; y: number };
+  preserveLocalPaths?: boolean;
+  canonicalTransformLabel?: string;
+}
+
 export interface CompilePartDirectoryOptions {
   inputDir: string;
   sourcePathPrefix: string;
@@ -553,7 +565,7 @@ function validateBounds(
 }
 
 function compilePath(
-  context: CompilePartSvgContext,
+  context: CompileAuthoredSvgContext,
   node: INode,
   state: WalkState,
 ): ShapeSpec {
@@ -593,7 +605,7 @@ function compilePath(
   const canvasPath = flattenPath(context.source, attrs.d ?? '', matrix);
   validateBounds(context.source, canvasPath, fill, stroke, strokeWidth, !state.detail);
 
-  const origin = PART_AUTHORING_ORIGINS[context.slot];
+  const origin = context.origin;
   let localPath: string;
   if (context.preserveLocalPaths) {
     const transformIsCanonicalTranslation =
@@ -606,7 +618,7 @@ function compilePath(
     if (!transformIsCanonicalTranslation) {
       fail(
         context.source,
-        `byte-stable ${context.slot} art must keep paths directly under the canonical translate(${origin.x} ${origin.y}) group`,
+        `byte-stable ${context.canonicalTransformLabel ?? 'authored'} art must keep paths directly under the canonical translate(${origin.x} ${origin.y}) group`,
       );
     }
     localPath = (attrs.d ?? '').trim();
@@ -633,8 +645,8 @@ function compilePath(
   return shape;
 }
 
-/** Compile one strict 128-space SVG into part-local ShapeSpecs. */
-export function compilePartSvg(input: string, context: CompilePartSvgContext): ShapeSpec[] {
+/** Compile one strict 128-space SVG into ShapeSpecs relative to an explicit origin. */
+export function compileAuthoredSvg(input: string, context: CompileAuthoredSvgContext): ShapeSpec[] {
   parseValidatedSvg(context.source, input);
   const root = optimizeSvg(context.source, input);
   const shapes: ShapeSpec[] = [];
@@ -675,6 +687,16 @@ export function compilePartSvg(input: string, context: CompilePartSvgContext): S
   if (shapes.length === 0) fail(context.source, 'document contains no importable paths');
   paintBucketSequence(context.source, shapes);
   return shapes;
+}
+
+/** Compile one strict 128-space SVG into part-local ShapeSpecs. */
+export function compilePartSvg(input: string, context: CompilePartSvgContext): ShapeSpec[] {
+  return compileAuthoredSvg(input, {
+    source: context.source,
+    origin: PART_AUTHORING_ORIGINS[context.slot],
+    preserveLocalPaths: context.preserveLocalPaths,
+    canonicalTransformLabel: context.slot,
+  });
 }
 
 function shapePaintBucket(shape: ShapeSpec): string {

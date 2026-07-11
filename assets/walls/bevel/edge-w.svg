@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium wall bevel west edge</title>
+  <desc>Straight fixed-light west plane between the 16/76 corner sockets.</desc>
+  <g id="detail/edge-w">
+    <path id="detail/edge-w/face" d="M 8 16 H 38 V 76 H 8 Z" fill="#FFFFFF" opacity="0.14"/>
+  </g>
+</svg>

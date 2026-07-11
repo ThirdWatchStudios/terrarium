@@ -28,7 +28,11 @@ import { getIcon } from '../parts/icons';
 import { getPose, poseVariantFor, type Pose, type PoseTransforms, type PoseVariant } from '../parts/poses';
 import { normalizedRiggedAccessories } from './recipe';
 import { PROP_TEMPLATES } from '../props/templates';
-import { FLOOR_TEMPLATES, WALL_TEMPLATES } from '../tiles/templates';
+import {
+  FLOOR_TEMPLATES,
+  WALL_TEMPLATES,
+  buildProceduralOfficeWall,
+} from '../tiles/templates';
 import { GROUND_OVERLAY_BUILDERS } from '../tiles/groundOverlays';
 
 /**
@@ -883,6 +887,15 @@ export function composeWallTile(
   const template = WALL_TEMPLATES.find((t) => t.id === wall.templateId);
   if (!template) return svgWrap('', pixelSize ?? style.render.baseSize);
   const shapes = template.build(neighbors, wall.params, wall.palette);
+  return composeWallShapes(shapes, wall, style, pixelSize);
+}
+
+function composeWallShapes(
+  shapes: ShapeSpec[],
+  wall: TileInstance,
+  style: StyleSheet,
+  pixelSize?: number,
+): string {
   const resolve = makePropResolver(wall.palette);
   const outline =
     style.outline.width > 0
@@ -893,6 +906,19 @@ export function composeWallTile(
       : '';
   const color = shapes.map((s) => emitColorShape(s, resolve)).join('');
   return svgWrap(outline + color, pixelSize ?? style.render.baseSize);
+}
+
+/**
+ * Review-only baseline for the authored Office-wall proof sheet and regression
+ * tests. Production composition always enters through `composeWallTile`.
+ */
+export function composeProceduralOfficeWallTile(
+  wall: TileInstance,
+  style: StyleSheet,
+  neighbors: number,
+  pixelSize?: number,
+): string {
+  return composeWallShapes(buildProceduralOfficeWall(neighbors), wall, style, pixelSize);
 }
 
 /**
