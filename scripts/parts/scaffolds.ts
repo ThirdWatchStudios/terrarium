@@ -31,6 +31,7 @@ export const PART_SCAFFOLD_SPECS = [
   { slot: 'head', referenceId: 'head-long', slug: 'long', facings: FACINGS },
   { slot: 'head', referenceId: 'head-angular', slug: 'angular', facings: FACINGS },
   { slot: 'head', referenceId: 'head-soft-square', slug: 'soft-square', facings: FACINGS },
+  { slot: 'head', referenceId: 'head-fab', slug: 'fab', facings: FACINGS },
   { slot: 'hair', referenceId: 'hair-short', slug: 'short', facings: FACINGS },
   { slot: 'hair', referenceId: 'hair-bob', slug: 'bob', facings: FACINGS },
   { slot: 'hair', referenceId: 'hair-curly', slug: 'curly', facings: FACINGS },

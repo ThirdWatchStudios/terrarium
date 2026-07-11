@@ -594,13 +594,13 @@ describe('part source tree and generated registration', () => {
     expect(generated).toBe(emitImportedPartArt(imports));
   });
 
-  it('keeps five bodies, ten canonical hairs, six human heads, and tee as twenty-two deliberate authored overlays', async () => {
+  it('keeps five bodies, ten canonical hairs, six human heads, one fabrication head, and tee as twenty-three deliberate authored overlays', async () => {
     const imports = await compilePartDirectory({
       inputDir: path.resolve('assets/parts'),
       sourcePathPrefix: 'assets/parts',
       catalog: PART_IMPORT_TARGETS,
     });
-    expect(imports).toHaveLength(22);
+    expect(imports).toHaveLength(23);
     expect(imports.map(({ id }) => id)).toEqual([
       'body-balanced',
       'body-compact',
@@ -619,6 +619,7 @@ describe('part source tree and generated registration', () => {
       'hair-side-part',
       'head-angular',
       'head-boxy',
+      'head-fab',
       'head-long',
       'head-oval',
       'head-round',
@@ -684,6 +685,7 @@ describe('part source tree and generated registration', () => {
         'hair-side-part',
         'head-angular',
         'head-boxy',
+        'head-fab',
         'head-long',
         'head-oval',
         'head-round',
@@ -764,6 +766,31 @@ describe('part source tree and generated registration', () => {
           });
         }
       }
+    }
+
+    const fab = staticImport(imports.find(({ id }) => id === 'head-fab')!);
+    expect(fab).toMatchObject({
+      id: 'head-fab',
+      slot: 'head',
+      sourceKind: 'authored',
+      sourceFiles: [
+        'assets/parts/head/fab.east.svg',
+        'assets/parts/head/fab.north.svg',
+        'assets/parts/head/fab.south.svg',
+      ],
+    });
+    for (const facing of FACINGS) {
+      expect(fab.facings[facing], `head-fab/${facing}`).toHaveLength(5);
+      expect(fab.facings[facing]?.[0], `head-fab/${facing} silhouette`).toMatchObject({
+        fill: '$skin',
+      });
+      expect(fab.facings[facing]?.[0].silhouette, `head-fab/${facing} silhouette role`)
+        .not.toBe(false);
+      for (const detail of fab.facings[facing]?.slice(1) ?? []) {
+        expect(detail.silhouette, `head-fab/${facing} detail role`).toBe(false);
+      }
+      expect(fab.facings[facing]?.some(({ fill }) => fill === '#5BE08A'), `head-fab/${facing} optic`)
+        .toBe(true);
     }
 
     const tee = imports.find(({ id }) => id === 'outfit-tee')!;

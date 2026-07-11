@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>IRIS fabrication unit head — north</title>
+  <desc>Rear chassis service panel with a readable IRIS status tell.</desc>
+  <g id="art" transform="translate(64 44)">
+    <path id="art/chassis" d="M -12 -20 H 12 L 19 -13 V 13 L 13 20 H -13 L -19 13 V -13 Z" fill="#FF00FF" fill-rule="nonzero"/>
+    <path id="detail/top-vent" d="M -6 -21 H 6 V -18 H -6 Z" fill="#00FF00" fill-rule="nonzero"/>
+    <path id="detail/rear-panel" d="M -7 -7 H 7 Q 10 -7 10 -4 V 3 Q 10 6 7 6 H -7 Q -10 6 -10 3 V -4 Q -10 -7 -7 -7 Z" fill="#00FF00" fill-rule="nonzero"/>
+    <path id="detail/status-halo" d="M -4.5 0 A 4.5 4.5 0 1 0 4.5 0 A 4.5 4.5 0 1 0 -4.5 0 Z" fill="#5BE08A" fill-rule="nonzero" opacity="0.13"/>
+    <path id="detail/status" d="M -2.4 0 A 2.4 2.4 0 1 0 2.4 0 A 2.4 2.4 0 1 0 -2.4 0 Z" fill="#5BE08A" fill-rule="nonzero"/>
+  </g>
+</svg>

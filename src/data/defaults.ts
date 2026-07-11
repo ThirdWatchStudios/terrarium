@@ -380,8 +380,9 @@ export const DEFAULT_PROPS: PropInstance[] = [
     name: 'IRIS installation unit',
     templateId: 'iris-installation-unit',
     params: { height: 90 },
-    // QuotaCo sterile: paper-white shell, sage-grey panels; the beacon's green
-    // is a literal in the template so this accent only feeds minor details.
+    // QuotaCo sterile: paper-white shell, sage-grey panels. IRIS green is a
+    // template literal so it remains stable through clinical/runtime re-tints;
+    // the accent is retained as useful exported palette metadata.
     palette: { primary: '#E6E4DC', secondary: '#B9BFB7', accent: '#5BE08A' },
   },
   {
@@ -396,7 +397,7 @@ export const DEFAULT_PROPS: PropInstance[] = [
     name: 'IRIS charging dock',
     templateId: 'iris-charging-dock',
     params: {},
-    // Chassis grey pad + IRIS-green charge ring (the green is a literal in the template).
+    // Chassis grey pad + literal IRIS-green charge status.
     palette: { primary: '#B7BDBA', secondary: '#565E5B', accent: '#5BE08A' },
   },
   {
@@ -1276,7 +1277,7 @@ export const CONSTRUCTION_CREW: CharacterRecipe[] = [
     id: 'construction-worker', // sim persona id (ConstructionCrewConfigId) — unchanged
     name: 'IRIS Fabrication Unit',
     parts: {
-      body: 'body-broad',
+      body: 'body-large-frame',
       head: 'head-fab',
       hair: 'hair-none',
       outfit: 'outfit-fab-chassis',

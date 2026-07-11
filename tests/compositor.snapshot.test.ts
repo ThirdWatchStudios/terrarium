@@ -14,6 +14,7 @@ import { BODY_ARCHETYPES } from '../src/parts/bodyArchetypes';
 import { BLOB_CONFIGS, BLOB_TILE_COUNT, NB } from '../src/tiles/blob';
 import { deriveGroundOverlays } from '../src/tiles/groundOverlays';
 import {
+  CONSTRUCTION_CREW,
   DEFAULT_CAST,
   DEFAULT_FLOORS,
   DEFAULT_GROUND,
@@ -81,6 +82,19 @@ describe('cast', () => {
     it(`${c.id} — all moods (south, with badge)`, async () => {
       const strip = MOODS.map((m) => composeCharacter(c, STYLE, 'south', SIZE, m, { badge: true }));
       await expect(grid(strip, MOODS.length)).toMatchFileSnapshot(snap(`cast/${c.id}__moods`));
+    });
+  }
+});
+
+describe('construction crew', () => {
+  for (const crew of CONSTRUCTION_CREW) {
+    it(`${crew.id} — all facings`, async () => {
+      const strip = FACINGS_ALL.map((facing) =>
+        composeCharacter(crew, STYLE, facing, SIZE, 'normal', { badge: false }),
+      );
+      await expect(grid(strip, FACINGS_ALL.length)).toMatchFileSnapshot(
+        snap(`construction-crew/${crew.id}`),
+      );
     });
   }
 });

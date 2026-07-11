@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>IRIS fabrication unit head — south</title>
+  <desc>Chamfered chassis, dark sensor band, and the shared IRIS optic.</desc>
+  <g id="art" transform="translate(64 44)">
+    <path id="art/chassis" d="M -12 -20 H 12 L 19 -13 V 13 L 13 20 H -13 L -19 13 V -13 Z" fill="#FF00FF" fill-rule="nonzero"/>
+    <path id="detail/top-vent" d="M -6 -21 H 6 V -18 H -6 Z" fill="#00FF00" fill-rule="nonzero"/>
+    <path id="detail/sensor-band" d="M -16 -7 H 16 Q 19 -7 19 -4 V 3 Q 19 6 16 6 H -16 Q -19 6 -19 3 V -4 Q -19 -7 -16 -7 Z" fill="#00FF00" fill-rule="nonzero"/>
+    <path id="detail/optic-halo" d="M -6 0 A 6 6 0 1 0 6 0 A 6 6 0 1 0 -6 0 Z" fill="#5BE08A" fill-rule="nonzero" opacity="0.16"/>
+    <path id="detail/optic" d="M -3.4 0 A 3.4 3.4 0 1 0 3.4 0 A 3.4 3.4 0 1 0 -3.4 0 Z" fill="#5BE08A" fill-rule="nonzero"/>
+  </g>
+</svg>

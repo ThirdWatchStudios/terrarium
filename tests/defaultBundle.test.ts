@@ -280,6 +280,7 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     expect(recipePath, 'no construction-crew recipe shipped').toBeTruthy();
     const recipe = JSON.parse(json.get(recipePath!)!);
     // The crew are IRIS fabrication robots: chassis head + plating, no hair, no hard hat.
+    expect(recipe.parts.body).toBe('body-large-frame');
     expect(recipe.parts.head).toBe('head-fab');
     expect(recipe.parts.outfit).toBe('outfit-fab-chassis');
     expect(recipe.parts.hair).toBe('hair-none');

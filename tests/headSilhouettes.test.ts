@@ -150,10 +150,9 @@ function blankPortraitCells(cells: readonly PortraitCell[]): string[] {
 
 describe('production human head silhouettes', () => {
   it('keeps exact picker order, authored provenance, and facing paint semantics', () => {
-    expect(partsForSlot('head').map(({ id }) => id)).toEqual([
-      ...HUMAN_HEADS.map(([id]) => id),
-      'head-fab',
-    ]);
+    expect(partsForSlot('head').map(({ id }) => id)).toEqual(
+      HUMAN_HEADS.map(([id]) => id),
+    );
 
     for (const [id, slug] of HUMAN_HEADS) {
       const head = getPart(id);

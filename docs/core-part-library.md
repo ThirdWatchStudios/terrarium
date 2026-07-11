@@ -20,9 +20,10 @@ full alphabet; the milestones are what "done" means.
       production head/hair overlays, plus the first body-aware tee detail
       adapter)
 - [x] Template scaffold SVGs for all five production bodies, all six human-head
-      families, supported hair, and south/east tee intake (128 grid, anchors,
-      capsule/head guides, seeded editable art, named reference layer) with
-      semantic IDs for every editable and ignored path
+      families plus the special fabrication-unit head, supported hair, and
+      south/east tee intake (128 grid, anchors, capsule/head guides, seeded
+      editable art, named reference layer) with semantic IDs for every editable
+      and ignored path
 - [x] Sentinel color palette defined and generated as ASE, GPL, and readable
       SVG companions (`npm run parts:scaffolds`); every scaffold also embeds
       the five exact swatches
@@ -207,6 +208,22 @@ library-level work rather than head-source blockers. Run
 production distance sheet and representative compatibility sheet under
 `docs/previews/head-silhouettes-*`.
 
+### 2b. IRIS fabrication unit — special recipe-only parts
+
+- [x] `head-fab`: complete south/east/north canonical SVG sources under
+      `assets/parts/head/fab.*.svg`, with a machine silhouette, no human face,
+      and the IRIS optic as the only green focal point.
+- [x] `outfit-fab-chassis`: body-anchor-driven chassis art on the approved
+      `body-large-frame` production rig.
+
+These two ids are intentionally **resolvable but non-selectable**: the
+`construction-worker` recipe and compositor snapshots resolve them through
+`getPart()`, while `partsForSlot()` filters them out of character pickers and
+random/seeded employee generation. They belong to IRIS's fabrication robot,
+not the human part alphabet. The set is mechanically complete and received a
+shared visual refinement pass on 2026-07-10; its current silhouette/detail
+language remains intentionally iterative rather than frozen final art.
+
 ### 3. Hair — organized as families (design system)
 
 Families organize the library and guide future expansion; they are **not** a
@@ -353,9 +370,8 @@ behind.
 | suit-jacket | lapels, pocket square | [ ] | [ ] | — |
 | hoodie | hood (down), pocket, drawstrings | [ ] | [ ] | [ ] |
 | vest | V, sleeve color split | [ ] | [ ] | — |
-| hi-vis | stripes overlay | [ ] | [ ] | [ ] |
 
-≈ 25 small drawings; lapels/collars/buttons are shared vocabulary across kits
+≈ 22–24 small drawings; lapels/collars/buttons are shared vocabulary across kits
 where they genuinely match.
 
 ### 6. Silhouette-altering garments (§4b) — per body type
@@ -374,7 +390,7 @@ The only place the body-count multiplier is paid; kept small on purpose.
 
 ### 7. Conditional — only if the readability lints flag them
 
-- [ ] glasses (most likely to vanish) · [ ] hard-hat · [ ] headset
+- [ ] glasses (most likely to vanish) · [ ] headset
 - Others: leave procedural.
 
 ---
@@ -386,8 +402,13 @@ templates (Tier 1/2 below); escalate to authored only where signature:
 
 - [ ] Surveillance camera (wall-slot) — Tier 2 candidate (thematic accent art)
 - [ ] Surveillance sensor/monitor — Tier 1/2
-- [ ] IRIS installation unit (server rack) — Tier 2; signature prop, accent
-      layer likely worth authoring
+- [x] IRIS installation unit (rack + console, live/dormant) — mechanically
+      shipped and refined as a Tier-2 signature prop; visual polish remains
+      iterative
+- [x] IRIS charging dock — mechanically shipped as non-placeable plan hardware;
+      visual polish remains iterative
+- [x] IRIS fabrication crew — special `head-fab` + `outfit-fab-chassis` recipe
+      on `body-large-frame`; resolvable-only parts, never general picker options
 - [ ] QuotaCo-standard facility variants — per sim Q5: explicit paired
       templates only for signature facilities; the clinical lens covers
       ambient corporatization

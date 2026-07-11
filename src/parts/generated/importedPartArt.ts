@@ -316,6 +316,33 @@ export const IMPORTED_PART_ART = [
     },
   },
   {
+    id: "head-fab",
+    slot: "head",
+    facings: {
+      south: [
+        { d: "M-12-20H12L19-13V13L13 20H-13L-19 13V-13Z", fill: "$skin" },
+        { d: "M-6-21H6V-18H-6Z", fill: "$outfitSecondary", silhouette: false },
+        { d: "M-16-7H16Q19-7 19-4V3Q19 6 16 6H-16Q-19 6-19 3V-4Q-19-7-16-7Z", fill: "$outfitSecondary", silhouette: false },
+        { d: "M-6 0C-6 3.314-3.314 6 0 6 3.314 6 6 3.314 6 0 6-3.314 3.314-6 0-6-3.314-6-6-3.314-6 0Z", fill: "#5BE08A", opacity: 0.16, silhouette: false },
+        { d: "M-3.4 0C-3.4 1.878-1.878 3.4 0 3.4 1.878 3.4 3.4 1.878 3.4 0 3.4-1.878 1.878-3.4 0-3.4-1.878-3.4-3.4-1.878-3.4 0Z", fill: "#5BE08A", silhouette: false },
+      ],
+      east: [
+        { d: "M-10-20H11L17-13V13L11 20H-10L-17 13V-13Z", fill: "$skin" },
+        { d: "M-5-21H5V-18H-5Z", fill: "$outfitSecondary", silhouette: false },
+        { d: "M-12-7H14Q17-7 17-4V3Q17 6 14 6H-12Q-15 6-15 3V-4Q-15-7-12-7Z", fill: "$outfitSecondary", silhouette: false },
+        { d: "M3.3 0C3.3 3.148 5.852 5.7 9 5.7 12.148 5.7 14.7 3.148 14.7 0 14.7-3.148 12.148-5.7 9-5.7 5.852-5.7 3.3-3.148 3.3 0Z", fill: "#5BE08A", opacity: 0.16, silhouette: false },
+        { d: "M5.8 0C5.8 1.767 7.233 3.2 9 3.2 10.767 3.2 12.2 1.767 12.2 0 12.2-1.767 10.767-3.2 9-3.2 7.233-3.2 5.8-1.767 5.8 0Z", fill: "#5BE08A", silhouette: false },
+      ],
+      north: [
+        { d: "M-12-20H12L19-13V13L13 20H-13L-19 13V-13Z", fill: "$skin" },
+        { d: "M-6-21H6V-18H-6Z", fill: "$outfitSecondary", silhouette: false },
+        { d: "M-7-7H7Q10-7 10-4V3Q10 6 7 6H-7Q-10 6-10 3V-4Q-10-7-7-7Z", fill: "$outfitSecondary", silhouette: false },
+        { d: "M-4.5 0C-4.5 2.485-2.485 4.5 0 4.5 2.485 4.5 4.5 2.485 4.5 0 4.5-2.485 2.485-4.5 0-4.5-2.485-4.5-4.5-2.485-4.5 0Z", fill: "#5BE08A", opacity: 0.13, silhouette: false },
+        { d: "M-2.4 0C-2.4 1.325-1.325 2.4 0 2.4 1.325 2.4 2.4 1.325 2.4 0 2.4-1.325 1.325-2.4 0-2.4-1.325-2.4-2.4-1.325-2.4 0Z", fill: "#5BE08A", silhouette: false },
+      ],
+    },
+  },
+  {
     id: "head-long",
     slot: "head",
     facings: {
@@ -599,6 +626,15 @@ export const IMPORTED_PART_PROVENANCE = [
       "assets/parts/head/boxy.east.svg",
       "assets/parts/head/boxy.north.svg",
       "assets/parts/head/boxy.south.svg",
+    ],
+  },
+  {
+    id: "head-fab",
+    sourceKind: "authored",
+    sourceFiles: [
+      "assets/parts/head/fab.east.svg",
+      "assets/parts/head/fab.north.svg",
+      "assets/parts/head/fab.south.svg",
     ],
   },
   {

@@ -302,19 +302,27 @@ export log.
 ## 5b. Builder asset asks (sim-driven, tracked in the sim repo)
 
 The sim's office-builder pivot (2026-07-05/07) defines what Terrarium supplies;
-source of truth: sim `docs/design/terrarium-office-builder-assets.md`. Status
-as of 2026-07-09:
+source of truth: sim `docs/design/terrarium-office-builder-assets.md`, amended by
+sim `docs/design/iris-installation-unit-and-tutorial.md` for the locked IRIS
+hardware/crew direction. Status as of 2026-07-10:
 
 **Done (code landed):** grid footprints `{w,h}` + sub-cell pivots on
 `PropTemplate`; `facility-catalog.json` export; build-site assets (outdoor
-ground kinds + clinical exemption, cars/parking decals, construction-worker
-character, nature decals, grass-fringe overlays on the 47-blob contract);
+ground kinds + clinical exemption, cars/parking decals, IRIS fabrication-unit
+construction crew + charging dock, nature decals, grass-fringe overlays on the
+47-blob contract); IRIS installation-unit live/dormant facility sprites;
 warm-by-default look with sim-owned runtime drain.
+
+The installation unit, charging dock, and fabrication crew are mechanically
+present under stable ids and received a shared sterile-chassis refinement pass
+on 2026-07-10. Their current art is serviceable rather than frozen final art;
+later silhouette/detail polish is an asset pass, not contract or schema work.
+The locked 2026-07-08 IRIS apparatus command chain supersedes the earlier B1.5
+human construction-worker art proposal: IRIS's construction crew are robots.
 
 **Open:**
 - Surveillance apparatus props (cameras, sensors — QuotaCo "tech you place");
   new templates, B4/B5 timing.
-- IRIS installation unit (server-rack facility sprite).
 - QuotaCo-standard facility variants (sim Q5: mix of explicit paired templates
   for signature facilities + the clinical lens for ambient corporatization).
 - Carryover-character support: the authored-and-likable handful. Visual

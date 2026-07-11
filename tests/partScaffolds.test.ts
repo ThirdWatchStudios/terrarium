@@ -203,6 +203,9 @@ describe('part authoring scaffold generation', () => {
       'assets/part-authoring/scaffolds/head/boxy.east.svg',
       'assets/part-authoring/scaffolds/head/boxy.north.svg',
       'assets/part-authoring/scaffolds/head/boxy.south.svg',
+      'assets/part-authoring/scaffolds/head/fab.east.svg',
+      'assets/part-authoring/scaffolds/head/fab.north.svg',
+      'assets/part-authoring/scaffolds/head/fab.south.svg',
       'assets/part-authoring/scaffolds/head/long.east.svg',
       'assets/part-authoring/scaffolds/head/long.north.svg',
       'assets/part-authoring/scaffolds/head/long.south.svg',
@@ -218,7 +221,7 @@ describe('part authoring scaffold generation', () => {
       'assets/part-authoring/scaffolds/outfit/tee.east.svg',
       'assets/part-authoring/scaffolds/outfit/tee.south.svg',
     ]);
-    expect(first).toHaveLength(68);
+    expect(first).toHaveLength(71);
     expect(first.map(({ bytes }) => bytes)).toEqual(second.map(({ bytes }) => bytes));
     expect(PART_SCAFFOLD_SPECS.map(({ slot, referenceId }) => [slot, referenceId])).toEqual([
       ['body', 'body-compact'],
@@ -232,6 +235,7 @@ describe('part authoring scaffold generation', () => {
       ['head', 'head-long'],
       ['head', 'head-angular'],
       ['head', 'head-soft-square'],
+      ['head', 'head-fab'],
       ['hair', 'hair-short'],
       ['hair', 'hair-bob'],
       ['hair', 'hair-curly'],
@@ -494,7 +498,7 @@ describe('committed part authoring assets', () => {
     const root = await mkdtemp(path.join(tmpdir(), 'terrarium-authoring-assets-'));
     temporaryRoots.push(root);
     const firstWrite = await writePartAuthoringAssets(root);
-    expect(firstWrite.updated).toBe(68);
+    expect(firstWrite.updated).toBe(71);
     expect(firstWrite.removed).toBe(0);
     await expect(checkPartAuthoringAssets(root)).resolves.toBeUndefined();
 

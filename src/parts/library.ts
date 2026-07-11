@@ -1634,14 +1634,80 @@ const ACCESSORIES: PartDef[] = [
 
 // ---------------------------------------------------------------------------
 // IRIS fabrication unit (the construction crew — robots operated by IRIS, not
-// people). Reuses the warm walk/pose rig (body-broad, so arms + poses attach
-// unchanged) but swaps to a chassis head + plating so the crew reads as IRIS's
+// people). Reuses the approved body-large-frame production rig, so arms + poses
+// attach unchanged, but swaps to a chassis head + plating so the crew reads as IRIS's
 // machines, not staff. The single GREEN OPTIC is a literal (#5BE08A, the IRIS
 // installation unit's beacon hue) so it survives re-tint + the unit-pictogram
 // flattening — you know they're IRIS's by the shared eye.
 // ---------------------------------------------------------------------------
 
 const IRIS_OPTIC = '#5BE08A';
+
+/** Body-aware fabrication plating. The approved production body supplies the
+ * mobile silhouette and rig; these broad planes make it read as a machine
+ * without inventing a second pose skeleton. */
+function anchoredFabChassis(facing: Facing, body: BodyFacingAnchors): PartVariant {
+  const n = body.neck;
+  const chest = body.chest;
+  const hip = body.hip;
+  const hem = spanCenter(body.hem);
+  const topY = n.y + 3;
+  const bottomY = hem.y - 2;
+  const top = bodyInteriorSpan(body, topY + 4, 2);
+  const middle = bodyInteriorSpan(body, chest.y, 3);
+  const bottom = bodyInteriorSpan(body, bottomY, 4);
+  const shell = {
+    d: `M ${top.left} ${topY} L ${top.right} ${topY} L ${bottom.right} ${bottomY} L ${bottom.left} ${bottomY} Z`,
+    fill: '$skin',
+    silhouette: false,
+  } as const;
+
+  if (facing === 'east') {
+    const forwardX = middle.right;
+    return {
+      z: 20,
+      shapes: [
+        shell,
+        { d: rr(forwardX - 9, topY + 5, 9, 14, 2), fill: '$outfitSecondary', silhouette: false },
+        { d: rr(forwardX - 10, hip.y - 2, 10, 8, 2), fill: '$outfitSecondary', silhouette: false },
+        { d: `M ${top.right - 2} ${topY + 3} L ${bottom.right - 2} ${bottomY - 2}`, stroke: '#00000030', strokeWidth: 1.7, silhouette: false },
+        { d: circle(forwardX - 3, chest.y, 4.5), fill: `${IRIS_OPTIC}28`, silhouette: false },
+        { d: circle(forwardX - 3, chest.y, 2.5), fill: IRIS_OPTIC, silhouette: false },
+      ],
+    };
+  }
+
+  const shoulderY = spanCenter(body.shoulders).y + 2;
+  const shoulder = bodyInteriorSpan(body, shoulderY, 3);
+  const yokeWidth = clampValue(8, 14, (shoulder.right - shoulder.left) * 0.2);
+  if (facing === 'north') {
+    return {
+      z: 20,
+      shapes: [
+        shell,
+        { d: rr(shoulder.left, shoulderY, yokeWidth, 11, 2), fill: '$outfitSecondary', silhouette: false },
+        { d: rr(shoulder.right - yokeWidth, shoulderY, yokeWidth, 11, 2), fill: '$outfitSecondary', silhouette: false },
+        { d: rr(chest.x - 12, chest.y - 5, 24, 13, 3), fill: '$outfitSecondary', silhouette: false },
+        { d: circle(chest.x, chest.y + 1, 4.2), fill: `${IRIS_OPTIC}20`, silhouette: false },
+        { d: circle(chest.x, chest.y + 1, 2.4), fill: IRIS_OPTIC, silhouette: false },
+        { d: rr(hip.x - 11, hip.y - 2, 22, 7, 2), fill: '$outfitSecondary', silhouette: false },
+      ],
+    };
+  }
+
+  return {
+    z: 20,
+    shapes: [
+      shell,
+      { d: rr(shoulder.left, shoulderY, yokeWidth, 12, 2), fill: '$outfitSecondary', silhouette: false },
+      { d: rr(shoulder.right - yokeWidth, shoulderY, yokeWidth, 12, 2), fill: '$outfitSecondary', silhouette: false },
+      { d: rr(chest.x - 13, hip.y - 3, 26, 8, 2), fill: '$outfitSecondary', silhouette: false },
+      { d: `M ${chest.x} ${topY + 4} L ${hip.x} ${bottomY - 2}`, stroke: '#00000030', strokeWidth: 1.7, silhouette: false },
+      { d: circle(chest.x, chest.y, 5), fill: `${IRIS_OPTIC}28`, silhouette: false },
+      { d: circle(chest.x, chest.y, 2.8), fill: IRIS_OPTIC, silhouette: false },
+    ],
+  };
+}
 
 const FAB_PARTS: PartDef[] = [
   {
@@ -1654,28 +1720,31 @@ const FAB_PARTS: PartDef[] = [
       south: {
         z: 40,
         shapes: [
-          { d: rr(-19, -19, 38, 38, 8), fill: '$skin' }, // chassis dome
-          { d: rr(-6, -21, 12, 3, 1), fill: '$outfitSecondary', silhouette: false }, // top vent
-          { d: rr(-19, -7, 38, 13, 4), fill: '$outfitSecondary', silhouette: false }, // visor band
-          { d: circle(0, 0, 5.5), fill: `${IRIS_OPTIC}30`, silhouette: false }, // optic halo
-          { d: circle(0, 0, 3.2), fill: IRIS_OPTIC, silhouette: false }, // green optic
+          { d: 'M -12 -20 H 12 L 19 -13 V 13 L 13 20 H -13 L -19 13 V -13 Z', fill: '$skin' },
+          { d: rr(-6, -21, 12, 3, 1), fill: '$outfitSecondary', silhouette: false },
+          { d: rr(-19, -7, 38, 13, 3), fill: '$outfitSecondary', silhouette: false },
+          { d: circle(0, 0, 6), fill: `${IRIS_OPTIC}28`, silhouette: false },
+          { d: circle(0, 0, 3.4), fill: IRIS_OPTIC, silhouette: false },
         ],
       },
       east: {
         z: 40,
         shapes: [
-          { d: rr(-17, -19, 34, 38, 8), fill: '$skin' },
-          { d: rr(-15, -7, 30, 13, 4), fill: '$outfitSecondary', silhouette: false },
-          { d: circle(9, 0, 5), fill: `${IRIS_OPTIC}30`, silhouette: false },
-          { d: circle(9, 0, 3), fill: IRIS_OPTIC, silhouette: false },
+          { d: 'M -10 -20 H 11 L 17 -13 V 13 L 11 20 H -10 L -17 13 V -13 Z', fill: '$skin' },
+          { d: rr(-5, -21, 10, 3, 1), fill: '$outfitSecondary', silhouette: false },
+          { d: rr(-15, -7, 32, 13, 3), fill: '$outfitSecondary', silhouette: false },
+          { d: circle(9, 0, 5.7), fill: `${IRIS_OPTIC}28`, silhouette: false },
+          { d: circle(9, 0, 3.2), fill: IRIS_OPTIC, silhouette: false },
         ],
       },
       north: {
         z: 40,
         shapes: [
-          { d: rr(-19, -19, 38, 38, 8), fill: '$skin' },
-          { d: rr(-8, -6, 16, 11, 2), fill: '$outfitSecondary', silhouette: false }, // rear vent panel
-          { d: circle(0, 0, 1.6), fill: IRIS_OPTIC, silhouette: false }, // rear status pip
+          { d: 'M -12 -20 H 12 L 19 -13 V 13 L 13 20 H -13 L -19 13 V -13 Z', fill: '$skin' },
+          { d: rr(-6, -21, 12, 3, 1), fill: '$outfitSecondary', silhouette: false },
+          { d: rr(-10, -7, 20, 13, 3), fill: '$outfitSecondary', silhouette: false },
+          { d: circle(0, 0, 4.5), fill: `${IRIS_OPTIC}20`, silhouette: false },
+          { d: circle(0, 0, 2.4), fill: IRIS_OPTIC, silhouette: false },
         ],
       },
     },
@@ -1717,6 +1786,7 @@ const FAB_PARTS: PartDef[] = [
         ],
       },
     },
+    buildVariant: (facing, context) => context.bodyAnchors && anchoredFabChassis(facing, context.bodyAnchors),
   },
 ];
 
@@ -1733,6 +1803,11 @@ export const PART_LIBRARY: PartDef[] = applyImportedPartArt(
   BASE_PART_LIBRARY,
   IMPORTED_PART_ART,
 );
+
+// Special-purpose fabrication-unit parts stay resolvable for the construction
+// crew recipe and compositor snapshots, but must never leak into employee
+// generation or the ordinary character-authoring pickers.
+const NON_SELECTABLE_PART_IDS = new Set(['head-fab', 'outfit-fab-chassis']);
 
 // ---------------------------------------------------------------------------
 // Internal parts — resolvable by id but NOT offered in the authoring pickers.
@@ -1800,7 +1875,7 @@ export function getPart(id: string): PartDef | undefined {
   return byId.get(id);
 }
 
-/** Authoring pickers only — internal (renderer-owned) parts are excluded. */
+/** Authoring pickers only — internal and special-purpose parts are excluded. */
 export function partsForSlot(slot: Slot): PartDef[] {
-  return PART_LIBRARY.filter((p) => p.slot === slot);
+  return PART_LIBRARY.filter((p) => p.slot === slot && !NON_SELECTABLE_PART_IDS.has(p.id));
 }

@@ -20,7 +20,7 @@ import { store } from '../state';
 import { button, clear, el, labeled, select } from './dom';
 import { exportScaleSelect, listItem, paletteGrid, uid } from './controls';
 import { setPreviewSvg, setScenePreviewSvg } from './renderPreview';
-import { bodyPickerOptions } from './characterPartOptions';
+import { partPickerOptions } from './characterPartOptions';
 
 const PALETTE_LABELS: Record<PaletteToken, string> = {
   skin: 'Skin',
@@ -176,9 +176,7 @@ export function renderCharacterControls(container: HTMLElement): void {
     { label: 'Outfit', slot: 'outfit', get: () => recipe.parts.outfit, set: (v: string) => (recipe.parts.outfit = v) },
   ] as const;
   for (const cfg of slotConfigs) {
-    const options = cfg.slot === 'body'
-      ? bodyPickerOptions(cfg.get())
-      : partsForSlot(cfg.slot).map((p) => ({ value: p.id, label: p.label }));
+    const options = partPickerOptions(cfg.slot, cfg.get());
     container.append(
       labeled(
         cfg.label,
