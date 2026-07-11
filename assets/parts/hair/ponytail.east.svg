@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium hair-ponytail east authored art</title>
+  <desc>Current production ponytail profile with an unmistakable rearward fall.</desc>
+  <g id="art" transform="translate(64 44)">
+    <path id="art/cap" d="M -19.4164878389476 -8 A 21 21 0 0 1 19.4164878389476 -8 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/back" d="M -17 -9 h 0 a 4 4 0 0 1 4 4 v 8 a 4 4 0 0 1 -4 4 h 0 a 4 4 0 0 1 -4 -4 v -8 a 4 4 0 0 1 4 -4 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/tie" d="M -24 -10 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/tail" d="M -21 -14 C -33 -18 -38 -7 -31 1 C -37 10 -32 24 -23 29 C -15 25 -16 14 -22 7 C -16 1 -16 -8 -21 -14 Z" fill="#00FFFF" fill-rule="nonzero"/>
+  </g>
+</svg>

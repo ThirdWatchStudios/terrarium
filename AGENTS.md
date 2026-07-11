@@ -25,8 +25,9 @@ Guidance for AI coding agents working in the **Terrarium** repository
     `docs/scenario-library.md`.
 - **Current active work: builder asset support + the content pipeline.** The sim-side statement
   of what Terrarium supplies is `the-water-cooler/docs/design/terrarium-office-builder-assets.md`
-  (footprints + `facility-catalog.json` + build-site assets are DONE; open: surveillance
-  apparatus art, IRIS installation unit, QuotaCo-standard facility variants, carryover-character
+  (footprints + `facility-catalog.json` + build-site assets + IRIS installation unit,
+  charging dock, and fabrication crew are DONE mechanically and remain visually iterative;
+  open: surveillance apparatus art, QuotaCo-standard facility variants, carryover-character
   authoring). The art-direction plan is `docs/content-pipeline-plan.md` +
   `docs/core-part-library.md`.
 - **The office-scale backlog (`docs/office-scale/`, E0–E4) is SUPERSEDED/DEFERRED** — its

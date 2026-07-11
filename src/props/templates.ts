@@ -993,86 +993,80 @@ const serverRack: PropTemplate = {
 // both the clinical drain and runtime re-tint (warmth stays in the people).
 
 const IRIS_GREEN = '#5BE08A';
+const IRIS_DIAGNOSTIC = '#8C9691';
+const IRIS_DARK = '#202523';
 
 function buildIrisUnit(params: Record<string, number>, live: boolean): ShapeSpec[] {
   const h = params.height ?? 90;
-  // Server rack, left cell.
   const rackW = 38;
   const rackX = CX - 46;
   const rackTop = GROUND - h;
-  const shapes: ShapeSpec[] = [
-    // cabinet + inner bay
+  const conX = CX;
+  const conW = 42;
+  const conTop = GROUND - 68;
+  const mastX = rackX + rackW / 2;
+
+  // Paint in broad strata instead of alternating per rack row. Besides keeping
+  // the apparatus visually quiet, this keeps its re-tintable 2x layer atlas far
+  // below Unity's 8192px texture ceiling.
+  const structure: ShapeSpec[] = [
+    // One shared plinth makes rack + console read as a single installed machine.
+    { d: rr(rackX - 2, GROUND - 8, conX + conW - rackX + 4, 8, 3), fill: '$primary' },
     { d: rr(rackX, rackTop, rackW, h, 3), fill: '$primary' },
-    { d: rr(rackX + 3, rackTop + 3, rackW - 6, h - 6, 1), fill: '#111214', silhouette: false },
+    { d: rr(mastX - 5, rackTop - 8, 10, 9, 2), fill: '$primary' },
+    { d: rr(conX, conTop, conW, GROUND - conTop, 3), fill: '$primary' },
   ];
-  const units = 5;
+  const underlays: ShapeSpec[] = [
+    { d: rr(rackX + 3, rackTop + 3, rackW - 6, h - 7, 1), fill: '#111214', silhouette: false },
+  ];
+  const panels: ShapeSpec[] = [];
+  const details: ShapeSpec[] = [];
+
+  // Four broad bays survive game distance better than the old five-row field.
+  const units = 4;
   const bayTop = rackTop + 5;
   const uh = (h - 10) / units;
   for (let i = 0; i < units; i++) {
     const uy = bayTop + i * uh + 1;
-    // faceplate
-    shapes.push({ d: rr(rackX + 5, uy, rackW - 10, uh - 2, 1), fill: '$secondary', silhouette: false });
-    // status LEDs — alive and blinking, or dead
+    panels.push({ d: rr(rackX + 5, uy, rackW - 10, uh - 2, 1), fill: '$secondary', silhouette: false });
     const ledY = uy + (uh - 2) / 2;
-    if (live) {
-      shapes.push(
-        { d: circle(rackX + 9, ledY, 1.2), fill: i % 2 === 0 ? IRIS_GREEN : '$accent', silhouette: false },
-        { d: circle(rackX + 13, ledY, 1.2), fill: '$accent', silhouette: false },
-      );
-    } else {
-      shapes.push(
-        { d: circle(rackX + 9, ledY, 1.2), fill: '#2A2D30', silhouette: false },
-        { d: circle(rackX + 13, ledY, 1.2), fill: '#2A2D30', silhouette: false },
-      );
-    }
-    // drive slits
-    shapes.push({ d: `M ${rackX + 19} ${uy + 2} L ${rackX + rackW - 8} ${uy + 2} M ${rackX + 19} ${uy + uh - 4} L ${rackX + rackW - 8} ${uy + uh - 4}`, stroke: '#00000040', strokeWidth: 0.8, silhouette: false });
-  }
-  // The beacon: a small mast on the rack top holding IRIS's one green eye.
-  const mastX = rackX + rackW / 2;
-  shapes.push({ d: rr(mastX - 4, rackTop - 7, 8, 8, 1.5), fill: '$primary' });
-  if (live) {
-    shapes.push(
-      { d: circle(mastX, rackTop - 4, 5.5), fill: `${IRIS_GREEN}33`, silhouette: false },
-      { d: circle(mastX, rackTop - 4, 2.6), fill: IRIS_GREEN, silhouette: false },
+    details.push(
+      { d: circle(rackX + 9, ledY, 1.35), fill: live ? IRIS_DIAGNOSTIC : '#2A2D30', silhouette: false },
+      { d: circle(rackX + 13, ledY, 1.35), fill: live && i === 0 ? '#C7D0CB' : '#2A2D30', silhouette: false },
+      { d: `M ${rackX + 19} ${ledY} L ${rackX + rackW - 8} ${ledY}`, stroke: '#00000040', strokeWidth: 1.1, silhouette: false },
     );
-  } else {
-    // dead lens
-    shapes.push({ d: circle(mastX, rackTop - 4, 2.6), fill: '#3A3E42', silhouette: false });
   }
 
-  // Operator console, right cell: a standing terminal (screen, keys, vents).
-  const conX = CX;
-  const conW = 42;
-  const conTop = GROUND - 66;
-  shapes.push(
-    // body
-    { d: rr(conX, conTop, conW, GROUND - conTop, 3), fill: '$primary' },
-    // screen bezel + glass
-    { d: rr(conX + 4, conTop + 4, conW - 8, 26, 2), fill: '$secondary', silhouette: false },
-    { d: rr(conX + 6, conTop + 6, conW - 12, 22, 1), fill: live ? '#101814' : '#1A1C1E', silhouette: false },
-  );
+  // The beacon is the apparatus's one dominant living tell.
   if (live) {
-    // green terminal readout — IRIS compiling
-    shapes.push(
-      { d: `M ${conX + 9} ${conTop + 10} L ${conX + 26} ${conTop + 10} M ${conX + 9} ${conTop + 15} L ${conX + 32} ${conTop + 15} M ${conX + 9} ${conTop + 20} L ${conX + 21} ${conTop + 20}`, stroke: IRIS_GREEN, strokeWidth: 1.2, opacity: 0.85, silhouette: false },
-      // cursor
-      { d: rr(conX + 23, conTop + 22, 3, 2, 0.5), fill: IRIS_GREEN, opacity: 0.85, silhouette: false },
+    details.push(
+      { d: circle(mastX, rackTop - 4, 7), fill: `${IRIS_GREEN}28`, silhouette: false },
+      { d: circle(mastX, rackTop - 4, 3.4), fill: IRIS_GREEN, silhouette: false },
     );
   } else {
-    // blank glass, one faint reflection
-    shapes.push({ d: `M ${conX + 9} ${conTop + 9} L ${conX + 16} ${conTop + 16}`, stroke: '#FFFFFF14', strokeWidth: 2.5, silhouette: false });
+    details.push({ d: circle(mastX, rackTop - 4, 3.4), fill: '#3A3E42', silhouette: false });
   }
-  // key shelf jutting from the console face
-  shapes.push(
-    { d: `M ${conX + 2} ${GROUND - 26} L ${conX + conW - 2} ${GROUND - 26} L ${conX + conW + 4} ${GROUND - 18} L ${conX - 4} ${GROUND - 18} Z`, fill: '$secondary' },
-    { d: `M ${conX + 2} ${GROUND - 23} L ${conX + conW} ${GROUND - 23} M ${conX + 1} ${GROUND - 20.5} L ${conX + conW + 2} ${GROUND - 20.5}`, stroke: '#00000030', strokeWidth: 1, silhouette: false },
-    // vent slits low on the pedestal
-    { d: `M ${conX + 8} ${GROUND - 10} L ${conX + conW - 8} ${GROUND - 10} M ${conX + 8} ${GROUND - 7} L ${conX + conW - 8} ${GROUND - 7}`, stroke: '#00000030', strokeWidth: 1, silhouette: false },
+
+  panels.push(
+    { d: rr(conX + 4, conTop + 4, conW - 8, 26, 2), fill: '$secondary', silhouette: false },
+    // The keyboard shelf is internal equipment, not another outlined object.
+    { d: `M ${conX + 2} ${GROUND - 27} L ${conX + conW - 2} ${GROUND - 27} L ${conX + conW + 3} ${GROUND - 19} L ${conX - 3} ${GROUND - 19} Z`, fill: '$secondary', silhouette: false },
+    { d: rr(rackX + rackW - 2, GROUND - 7, conX - rackX - rackW + 4, 5, 2), fill: '$secondary', silhouette: false },
   );
-  // floor conduit trunking rack to console — one machine
-  shapes.push({ d: rr(rackX + rackW - 2, GROUND - 5, conX - rackX - rackW + 4, 5, 2), fill: '$secondary', silhouette: false });
-  return shapes;
+  details.push({ d: rr(conX + 6, conTop + 6, conW - 12, 22, 1), fill: live ? '#101814' : '#1A1C1E', silhouette: false });
+  if (live) {
+    details.push(
+      { d: `M ${conX + 10} ${conTop + 11} L ${conX + 31} ${conTop + 11} M ${conX + 10} ${conTop + 17} L ${conX + 26} ${conTop + 17}`, stroke: IRIS_GREEN, strokeWidth: 1.6, opacity: 0.78, silhouette: false },
+      { d: rr(conX + 28, conTop + 20, 4, 2.5, 0.5), fill: IRIS_GREEN, opacity: 0.78, silhouette: false },
+    );
+  } else {
+    details.push({ d: `M ${conX + 10} ${conTop + 10} L ${conX + 17} ${conTop + 17}`, stroke: '#FFFFFF14', strokeWidth: 2.5, silhouette: false });
+  }
+  details.push(
+    { d: `M ${conX + 3} ${GROUND - 23} L ${conX + conW} ${GROUND - 23}`, stroke: '#00000030', strokeWidth: 1.2, silhouette: false },
+    { d: `M ${conX + 10} ${GROUND - 10} L ${conX + conW - 10} ${GROUND - 10} M ${conX + 10} ${GROUND - 6} L ${conX + conW - 10} ${GROUND - 6}`, stroke: '#00000030', strokeWidth: 1.2, silhouette: false },
+  );
+  return [...structure, ...underlays, ...panels, ...details];
 }
 
 const irisInstallationUnit: PropTemplate = {
@@ -1102,8 +1096,8 @@ const irisInstallationUnitDormant: PropTemplate = {
 // IRIS fabrication-unit charging dock: a floor bay the idle robot crew return to
 // and power down in when there's nothing to build. A plan-projection pad (renders
 // UNDER the standing unit, so it reads as "docked on the pad"), sterile chassis
-// with the IRIS-green charge ring + corner brackets (literal #5BE08A, matching the
-// installation unit + the units' own optic). Seeded by the sim near the IRIS unit,
+// with a subdued IRIS-green charge ring and physical capture lugs (literal #5BE08A,
+// matching the installation unit + the units' own optic). Seeded by the sim near the IRIS unit,
 // never player-placed (non-placeable).
 const irisChargingDock: PropTemplate = {
   id: 'iris-charging-dock',
@@ -1112,19 +1106,25 @@ const irisChargingDock: PropTemplate = {
   gridFootprint: { w: 1, h: 1 },
   params: [],
   build() {
-    const green = '#5BE08A';
     const c = CX;
     return [
-      { d: rr(c - 26, c - 26, 52, 52, 7), fill: '$primary' },                          // bay pad
-      { d: rr(c - 20, c - 20, 40, 40, 5), fill: '$secondary', silhouette: false },      // recessed plate
-      { d: circle(c, c, 14), fill: `${green}20`, silhouette: false },                   // charge glow
-      { d: circle(c, c, 14), stroke: green, strokeWidth: 2, silhouette: false },         // charge ring
-      { d: circle(c, c, 5), fill: `${green}55`, silhouette: false },                     // contact core
-      // corner docking brackets
-      { d: `M ${c - 20} ${c - 13} L ${c - 20} ${c - 20} L ${c - 13} ${c - 20}`, stroke: green, strokeWidth: 1.5, silhouette: false },
-      { d: `M ${c + 13} ${c - 20} L ${c + 20} ${c - 20} L ${c + 20} ${c - 13}`, stroke: green, strokeWidth: 1.5, silhouette: false },
-      { d: `M ${c + 20} ${c + 13} L ${c + 20} ${c + 20} L ${c + 13} ${c + 20}`, stroke: green, strokeWidth: 1.5, silhouette: false },
-      { d: `M ${c - 13} ${c + 20} L ${c - 20} ${c + 20} L ${c - 20} ${c + 13}`, stroke: green, strokeWidth: 1.5, silhouette: false },
+      { d: rr(c - 28, c - 26, 56, 54, 7), fill: '$primary' },
+      { d: rr(c - 21, c - 19, 42, 38, 5), fill: '$secondary', silhouette: false },
+      // Four metal capture lugs make this floor hardware, not a HUD reticle.
+      { d: rr(c - 23, c - 23, 12, 7, 2), fill: '$secondary', silhouette: false },
+      { d: rr(c + 11, c - 23, 12, 7, 2), fill: '$secondary', silhouette: false },
+      { d: rr(c - 23, c + 14, 12, 7, 2), fill: '$secondary', silhouette: false },
+      { d: rr(c + 11, c + 14, 12, 7, 2), fill: '$secondary', silhouette: false },
+      // A front contact tongue stays readable below a docked unit.
+      { d: rr(c - 13, c + 18, 26, 9, 3), fill: '$secondary', silhouette: false },
+      { d: circle(c, c, 15), fill: `${IRIS_GREEN}12`, silhouette: false },
+      { d: circle(c, c, 15), stroke: IRIS_GREEN, strokeWidth: 1.8, opacity: 0.62, silhouette: false },
+      { d: circle(c, c, 5), fill: IRIS_DARK, silhouette: false },
+      { d: circle(c, c + 22, 2.4), fill: IRIS_GREEN, opacity: 0.82, silhouette: false },
+      { d: circle(c - 17, c - 17, 1.5), fill: '#D9DEDA', silhouette: false },
+      { d: circle(c + 17, c - 17, 1.5), fill: '#D9DEDA', silhouette: false },
+      { d: circle(c - 17, c + 17, 1.5), fill: '#D9DEDA', silhouette: false },
+      { d: circle(c + 17, c + 17, 1.5), fill: '#D9DEDA', silhouette: false },
     ];
   },
 };

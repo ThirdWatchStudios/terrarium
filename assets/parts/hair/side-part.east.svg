@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium hair-side-part east authored art</title>
+  <desc>Current production side-part profile silhouette with a swept front.</desc>
+  <g id="art" transform="translate(64 44)">
+    <path id="art/cap" d="M -19.79898987322333 -7 A 21 21 0 0 1 19.79898987322333 -7 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/back" d="M -17 -8 h 0 a 4 4 0 0 1 4 4 v 8 a 4 4 0 0 1 -4 4 h 0 a 4 4 0 0 1 -4 -4 v -8 a 4 4 0 0 1 4 -4 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/sweep" d="M -6 -16 C 6 -16 16 -10 19 -3 L 12 2 C 5 -4 -3 -5 -11 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="detail/parting" d="M -5 -15 C -2 -9 -1 -4 -1 1" fill="none" stroke="#00000024" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

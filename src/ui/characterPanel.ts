@@ -15,10 +15,12 @@ import {
 } from '../core/exporter';
 import { randomCharacter, rerollPalette } from '../core/random';
 import { partsForSlot } from '../parts/library';
+import { normalizedRiggedAccessories } from '../core/recipe';
 import { store } from '../state';
 import { button, clear, el, labeled, select } from './dom';
 import { exportScaleSelect, listItem, paletteGrid, uid } from './controls';
 import { setPreviewSvg, setScenePreviewSvg } from './renderPreview';
+import { partPickerOptions } from './characterPartOptions';
 
 const PALETTE_LABELS: Record<PaletteToken, string> = {
   skin: 'Skin',
@@ -160,15 +162,26 @@ export function renderCharacterControls(container: HTMLElement): void {
 
   // Part pickers
   const slotConfigs = [
-    { label: 'Body', slot: 'body', get: () => recipe.parts.body, set: (v: string) => (recipe.parts.body = v) },
+    {
+      label: 'Body',
+      slot: 'body',
+      get: () => recipe.parts.body,
+      set: (v: string) => {
+        recipe.parts.body = v;
+        recipe.parts.accessories = normalizedRiggedAccessories(recipe);
+      },
+    },
     { label: 'Head', slot: 'head', get: () => recipe.parts.head, set: (v: string) => (recipe.parts.head = v) },
     { label: 'Hair', slot: 'hair', get: () => recipe.parts.hair, set: (v: string) => (recipe.parts.hair = v) },
     { label: 'Outfit', slot: 'outfit', get: () => recipe.parts.outfit, set: (v: string) => (recipe.parts.outfit = v) },
   ] as const;
   for (const cfg of slotConfigs) {
-    const options = partsForSlot(cfg.slot).map((p) => ({ value: p.id, label: p.label }));
+    const options = partPickerOptions(cfg.slot, cfg.get());
     container.append(
-      labeled(cfg.label, select(options, cfg.get(), (v) => store.mutate(() => cfg.set(v), 'data'))),
+      labeled(
+        cfg.label,
+        select(options, cfg.get(), (v) => store.mutate(() => cfg.set(v), cfg.slot === 'body' ? 'structure' : 'data')),
+      ),
     );
   }
 
@@ -189,6 +202,7 @@ export function renderCharacterControls(container: HTMLElement): void {
               recipe.parts.accessories = on
                 ? [...recipe.parts.accessories, part.id]
                 : recipe.parts.accessories.filter((id) => id !== part.id);
+              recipe.parts.accessories = normalizedRiggedAccessories(recipe);
             }, 'data'),
         }),
         part.label,

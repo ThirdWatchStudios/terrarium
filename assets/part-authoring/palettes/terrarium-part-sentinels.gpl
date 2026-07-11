@@ -1,0 +1,9 @@
+GIMP Palette
+Name: Terrarium character part sentinels
+Columns: 5
+#
+255   0 255  $skin
+  0 255 255  $hair
+255   0   0  $outfitPrimary
+  0 255   0  $outfitSecondary
+  0   0 255  $accent

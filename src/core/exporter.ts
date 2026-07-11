@@ -22,6 +22,7 @@ import {
   composeWallTile,
   composeGroundOverlayTile,
   composePortrait,
+  employeePortraitCrop,
   layerCellSvg,
   overheadAnchor,
   poseRigAnchors,
@@ -53,6 +54,7 @@ import { symbolRegistryJson } from './registry';
 import { POSES, poseCatalogJson } from '../parts/poses';
 import { unitRecipe, unitRenderingSpec } from './renderings';
 import { projectWithLook } from './look';
+import { normalizeCharacterRecipe } from './recipe';
 import { CONSTRUCTION_CREW, CONSTRUCTION_PROFILES } from '../data/defaults';
 
 /** Sheet frame order. West is baked as mirrored east for engine convenience. */
@@ -695,11 +697,11 @@ export function characterAtlas(recipe: CharacterRecipe, style: StyleSheet, scale
      * Normalized attach points (same bottom-left origin as pivot). `aboveHead`
      * is where the sim hangs a *separate* overhead sprite — the shared activity
      * badge (§3.9) or a conversation-link endpoint. Moods bake their emote into
-     * the sheet and don't need this; the badge/link are external and do. Uniform
-     * across characters today, but shipped per-character so it stays correct if
-     * proportions ever diverge.
+     * the sheet and don't need this; the badge/link are external and do. Body-owned
+     * and shipped per character so compact/tall/soft silhouettes keep
+     * their external effects attached to the same authored rig as their sprites.
      */
-    anchors: { aboveHead: normalizedAboveHead() },
+    anchors: { aboveHead: normalizedAboveHead(recipe) },
     meta: {
       generator: 'sprite-character-creator',
       westIsMirroredEast: true,
@@ -708,10 +710,10 @@ export function characterAtlas(recipe: CharacterRecipe, style: StyleSheet, scale
 }
 
 /** aboveHead anchor per facing, normalized bottom-left origin (Unity pivot convention). */
-function normalizedAboveHead(): Record<string, { x: number; y: number }> {
+function normalizedAboveHead(recipe?: CharacterRecipe): Record<string, { x: number; y: number }> {
   const out: Record<string, { x: number; y: number }> = {};
   for (const facing of SHEET_FACINGS) {
-    const a = overheadAnchor(facing);
+    const a = overheadAnchor(facing, recipe);
     out[facing] = { x: a.x / CANVAS, y: (CANVAS - a.y) / CANVAS };
   }
   return out;
@@ -844,7 +846,7 @@ export function posesAtlas(recipe: CharacterRecipe, style: StyleSheet, scale: nu
   // skeleton the arm layers were authored against.
   const anchors: Record<string, Record<string, { x: number; y: number }>> = {};
   for (const facing of SHEET_FACINGS) {
-    const rig = poseRigAnchors(facing);
+    const rig = poseRigAnchors(facing, recipe);
     anchors[facing] = Object.fromEntries(
       Object.entries(rig).map(([name, a]) => [name, { x: a.x / CANVAS, y: (CANVAS - a.y) / CANVAS }]),
     );
@@ -1318,9 +1320,11 @@ export async function employeePortraitPng(recipe: CharacterRecipe, style: StyleS
   canvas.height = out;
   const ctx = canvas.getContext('2d')!;
   ctx.imageSmoothingEnabled = true;
-  // crop the 128-unit design region around head+shoulders, scale to output
+  // Crop the 128-unit design region around this body's head+shoulders, then
+  // scale to output. Legacy bodies still resolve to the exact 24/14/80/80 crop.
   const k = render / 128;
-  ctx.drawImage(img, 24 * k, 14 * k, 80 * k, 80 * k, 0, 0, out, out);
+  const crop = employeePortraitCrop(recipe);
+  ctx.drawImage(img, crop.x * k, crop.y * k, crop.w * k, crop.h * k, 0, 0, out, out);
   return canvasToBlob(canvas);
 }
 
@@ -1336,10 +1340,14 @@ export async function employeePackageZip(
   const zip = new JSZip();
   for (const emp of employees) {
     const recipe = employeeRecipe(emp);
+    const normalizedEmployee = {
+      ...emp,
+      recipe: { parts: recipe.parts, palette: recipe.palette },
+    };
     const dir = zip.folder(`Employee_${emp.visualSeed}`)!;
     dir.file('sprite.png', await employeeSpritePng(recipe, style, scale));
     dir.file('portrait.png', await employeePortraitPng(recipe, style, scale));
-    dir.file('employee.json', JSON.stringify(emp, null, 2));
+    dir.file('employee.json', JSON.stringify(normalizedEmployee, null, 2));
   }
   zip.file(
     'roster.json',
@@ -1394,9 +1402,14 @@ export async function exportAll(
   // Render every asset through the project's LOOK (a non-destructive lens over the
   // authored palettes — see core/look.ts). This is what makes the look reproducible:
   // it re-derives on every export instead of depending on a one-time palette sweep.
-  // project.json below ships the RAW authored project (+ the look flag) so re-import
-  // preserves the editable palettes and never double-applies the look.
-  const project = projectWithLook(rawProject);
+  // project.json below ships the authored project (+ the look flag) after the
+  // same identity normalization used by rendering. Palettes remain raw/editable,
+  // so re-import never double-applies the look.
+  const exportSource = {
+    ...rawProject,
+    characters: rawProject.characters.map(normalizeCharacterRecipe),
+  };
+  const project = projectWithLook(exportSource);
   const { style } = project;
   const scales = EXPORT_SCALES.length;
 
@@ -1657,9 +1670,9 @@ export async function exportAll(
   await write('theme.json', themeJson(style));
 
   onProgress?.(total, total, 'writing');
-  // Ship the RAW authored project (vivid palettes + the look flag) so a re-import
-  // keeps editable colors and re-derives the look rather than double-applying it.
-  await write('project.json', JSON.stringify(rawProject, null, 2));
+  // Ship the identity-normalized authored project (vivid palettes + look flag)
+  // so re-import matches the baked pixels while still re-deriving the look.
+  await write('project.json', JSON.stringify(exportSource, null, 2));
   // The company root (Epic 0 F0.8) — present only for a generated company package.
   // company.json sits at the bundle root with the org-structure / personas /
   // relationships / office-layout / scenarios below it as its children.

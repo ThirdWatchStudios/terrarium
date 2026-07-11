@@ -62,6 +62,43 @@ export interface PartVariant {
   z: number;
 }
 
+/** Body-local point; (0,0) is the body part's anchor on the 128-unit canvas. */
+export interface BodyAnchorPoint {
+  x: number;
+  y: number;
+}
+
+/** A left/right span used by garments and pose art. */
+export interface BodyAnchorSpan {
+  left: BodyAnchorPoint;
+  right: BodyAnchorPoint;
+}
+
+/**
+ * Per-facing sub-rig owned by a body silhouette. These remain body-local so one
+ * body can drive head placement, garment detail, accessories, and pose art
+ * without baking canvas coordinates into each consumer.
+ */
+export interface BodyFacingAnchors {
+  headCenter: BodyAnchorPoint;
+  aboveHead: BodyAnchorPoint;
+  neck: BodyAnchorPoint;
+  chest: BodyAnchorPoint;
+  hip: BodyAnchorPoint;
+  shoulders: BodyAnchorSpan;
+  waist: BodyAnchorSpan;
+  hem: BodyAnchorSpan;
+}
+
+export type BodyAnchors = Record<Facing, BodyFacingAnchors>;
+
+export interface PartBuildContext {
+  /** Present when the active body owns a sub-rig; absent for legacy bodies. */
+  bodyAnchors?: BodyFacingAnchors;
+  /** Stable resolved body part id for rare body-specific variants such as dresses. */
+  bodyId?: string;
+}
+
 export interface PartDef {
   id: string;
   label: string;
@@ -69,6 +106,18 @@ export interface PartDef {
   anchor: AnchorName;
   /** Missing facing = part not drawn from that angle (e.g. lanyard from behind). */
   facings: Partial<Record<Facing, PartVariant>>;
+  /** Body parts only: optional per-facing sub-rig. Legacy bodies use compositor defaults. */
+  bodyAnchors?: BodyAnchors;
+  /**
+   * Optional anchor-aware detail builder. Static `facings` remain the fallback,
+   * preserving existing parts and imported flat SVG geometry.
+   */
+  buildVariant?: (facing: Facing, context: PartBuildContext) => PartVariant | undefined;
+  /**
+   * Hand-attached accessories only: held props may be suppressed when a pose
+   * occupies both hands; wrist wear always follows the anatomical right wrist.
+   */
+  handAttachmentRole?: 'held-prop' | 'wrist-worn';
   /**
    * Head parts only: this head has no face, so mood overlays never draw on it
    * (the operational-unit disc — feelings arrive as IRIS claims, never on the
@@ -89,6 +138,15 @@ export interface CharacterRecipe {
     accessories: string[];
   };
   palette: Palette;
+}
+
+/**
+ * Ephemeral renderer input used by alternate drawings that replace body art but
+ * keep the identity's proportions. It is deliberately separate from the
+ * persisted CharacterRecipe/export contract.
+ */
+export interface CharacterRenderRecipe extends CharacterRecipe {
+  rigBodyId?: string;
 }
 
 export interface PropParamDef {

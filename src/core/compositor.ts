@@ -1,8 +1,11 @@
 import type {
   AnchorName,
+  BodyFacingAnchors,
   CharacterRecipe,
+  CharacterRenderRecipe,
   Facing,
   PaletteToken,
+  PartDef,
   PartVariant,
   PropInstance,
   PropPalette,
@@ -22,9 +25,14 @@ import { SOCIAL_STATE_BADGES, type SocialState } from '../parts/socialStates';
 import { getEmotion, type EmotionMark } from '../parts/emotions';
 import { ATTENTION_PUFF_ART, type AttentionPuff, type AttentionPuffArt } from '../parts/attention';
 import { getIcon } from '../parts/icons';
-import { getPose, type Pose, type PoseTransforms } from '../parts/poses';
+import { getPose, poseVariantFor, type Pose, type PoseTransforms, type PoseVariant } from '../parts/poses';
+import { normalizedRiggedAccessories } from './recipe';
 import { PROP_TEMPLATES } from '../props/templates';
-import { FLOOR_TEMPLATES, WALL_TEMPLATES } from '../tiles/templates';
+import {
+  FLOOR_TEMPLATES,
+  WALL_TEMPLATES,
+  buildProceduralOfficeWall,
+} from '../tiles/templates';
 import { GROUND_OVERLAY_BUILDERS } from '../tiles/groundOverlays';
 
 /**
@@ -66,6 +74,70 @@ const ANCHORS: Record<Facing, Record<AnchorName, { x: number; y: number }>> = {
     hip: { x: 64, y: 100 },
   },
 };
+
+type CanvasAnchors = Record<AnchorName, { x: number; y: number }>;
+
+interface ResolvedCharacterRig {
+  anchors: CanvasAnchors;
+  /** Body-local anchors used by dynamic garment and pose builders. */
+  bodyAnchors?: BodyFacingAnchors;
+  /** Resolved identity body, including `rigBodyId` for alternate renderings. */
+  bodyId?: string;
+}
+
+const translated = (origin: { x: number; y: number }, local: { x: number; y: number }) => ({
+  x: origin.x + local.x,
+  y: origin.y + local.y,
+});
+
+/** Resolve one recipe's body-owned rig, falling back exactly to the legacy table. */
+function resolveCharacterRig(recipe: CharacterRecipe | undefined, facing: Facing): ResolvedCharacterRig {
+  const fallback = ANCHORS[facing];
+  const anchors = Object.fromEntries(
+    Object.entries(fallback).map(([name, value]) => [name, { ...value }]),
+  ) as CanvasAnchors;
+  const renderRecipe = recipe as CharacterRenderRecipe | undefined;
+  const bodyId = recipe ? (renderRecipe?.rigBodyId ?? recipe.parts.body) : undefined;
+  const bodyAnchors = bodyId ? getPart(bodyId)?.bodyAnchors?.[facing] : undefined;
+  if (!bodyAnchors) return { anchors };
+
+  const origin = anchors.body;
+  anchors.neck = translated(origin, bodyAnchors.neck);
+  anchors.headCenter = translated(origin, bodyAnchors.headCenter);
+  anchors.aboveHead = translated(origin, bodyAnchors.aboveHead);
+  anchors.chest = translated(origin, bodyAnchors.chest);
+  anchors.hip = translated(origin, bodyAnchors.hip);
+  anchors.shoulderLeft = translated(origin, bodyAnchors.shoulders.left);
+  anchors.shoulderRight = translated(origin, bodyAnchors.shoulders.right);
+  return { anchors, bodyAnchors, bodyId };
+}
+
+function variantForPart(part: PartDef, facing: Facing, rig: ResolvedCharacterRig): PartVariant | undefined {
+  return part.buildVariant?.(facing, { bodyAnchors: rig.bodyAnchors, bodyId: rig.bodyId }) ?? part.facings[facing];
+}
+
+function anchorForPart(
+  part: PartDef,
+  rig: ResolvedCharacterRig,
+  poseVariant?: PoseVariant,
+): { x: number; y: number } | undefined {
+  if (part.anchor === 'handRight' && rig.bodyAnchors && poseVariant?.attachments) {
+    const attachments = poseVariant.attachments;
+    if (part.handAttachmentRole === 'held-prop') {
+      const carryHand = attachments.carryHand ?? 'right';
+      if (carryHand === 'none') return undefined;
+      const carryPoint = carryHand === 'left' ? attachments.handLeft : attachments.handRight;
+      return carryPoint ? translated(rig.anchors.body, carryPoint) : undefined;
+    }
+    if (part.handAttachmentRole === 'wrist-worn') {
+      return attachments.handRight ? translated(rig.anchors.body, attachments.handRight) : undefined;
+    }
+    if (attachments.handRight) {
+      return translated(rig.anchors.body, attachments.handRight);
+    }
+  }
+  return rig.anchors[part.anchor];
+}
 
 /** Anchors whose parts belong to the head group (scaled by headScale). */
 const HEAD_ANCHORS: AnchorName[] = ['headCenter'];
@@ -132,11 +204,21 @@ const POSE_FRONT_Z = 30;
 /** …and the far arm (east profile) behind the body capsule (z 10). */
 const POSE_BACK_Z = 6;
 
-function placeParts(recipe: CharacterRecipe, facing: Facing, mood: Mood, pose?: Pose): PlacedPart[] {
+function placeParts(
+  recipe: CharacterRecipe,
+  facing: Facing,
+  mood: Mood,
+  pose?: Pose,
+  rig: ResolvedCharacterRig = resolveCharacterRig(recipe, facing),
+): PlacedPart[] {
+  const poseVariant = pose ? poseVariantFor(pose, facing, rig.bodyAnchors) : undefined;
+  const attachmentVariant = poseVariant ?? (
+    rig.bodyAnchors ? poseVariantFor('neutral', facing, rig.bodyAnchors) : undefined
+  );
   const ids = [
     recipe.parts.body,
     recipe.parts.outfit,
-    ...recipe.parts.accessories,
+    ...normalizedRiggedAccessories(recipe),
     recipe.parts.head,
     recipe.parts.hair,
   ];
@@ -144,28 +226,31 @@ function placeParts(recipe: CharacterRecipe, facing: Facing, mood: Mood, pose?: 
   for (const id of ids) {
     const part = getPart(id);
     if (!part) continue;
-    const variant = part.facings[facing];
+    const variant = variantForPart(part, facing, rig);
     if (!variant) continue;
+    const anchor = anchorForPart(part, rig, attachmentVariant);
+    if (!anchor) continue;
     placed.push({
       variant,
-      anchor: ANCHORS[facing][part.anchor],
+      anchor,
       group: HEAD_ANCHORS.includes(part.anchor) ? 'head' : 'body',
     });
   }
   // Soft neck shadow cast by the head onto the chest — automatic for every
   // character, sized per facing, scales with bodyWidth via the body group.
+  const neck = rig.bodyAnchors?.neck ?? { x: 0, y: -29 };
   placed.push({
     variant: {
       shapes: [
         {
-          d: ellipse(0, -22, facing === 'east' ? 9 : 12, 4),
+          d: ellipse(neck.x, neck.y + 7, facing === 'east' ? 9 : 12, 4),
           fill: '#00000018',
           silhouette: false,
         },
       ],
       z: 35,
     },
-    anchor: ANCHORS[facing].body,
+    anchor: rig.anchors.body,
     group: 'body',
   });
 
@@ -175,25 +260,24 @@ function placeParts(recipe: CharacterRecipe, facing: Facing, mood: Mood, pose?: 
   if (moodShapes && moodShapes.length > 0) {
     placed.push({
       variant: { shapes: moodShapes, z: MOOD_Z },
-      anchor: ANCHORS[facing].headCenter,
+      anchor: rig.anchors.headCenter,
       group: 'head',
     });
   }
 
   // Pose arm layers (parts/poses.ts) — body-local like the outfit overlays, so
   // they ride the bodyWidth group transform and stay attached to the capsule.
-  const poseVariant = pose ? getPose(pose)?.facings[facing] : undefined;
   if (poseVariant) {
     if (poseVariant.back && poseVariant.back.length > 0) {
       placed.push({
         variant: { shapes: poseVariant.back, z: POSE_BACK_Z },
-        anchor: ANCHORS[facing].body,
+        anchor: rig.anchors.body,
         group: 'body',
       });
     }
     placed.push({
       variant: { shapes: poseVariant.front, z: POSE_FRONT_Z },
-      anchor: ANCHORS[facing].body,
+      anchor: rig.anchors.body,
       group: 'body',
     });
   }
@@ -204,10 +288,11 @@ function groupTransform(
   group: 'body' | 'head',
   facing: Facing,
   style: StyleSheet,
+  anchors: CanvasAnchors,
   pose?: PoseTransforms,
 ): string {
   if (group === 'head') {
-    const neck = ANCHORS[facing].neck;
+    const neck = anchors.neck;
     const s = style.proportions.headScale;
     // Pose posture (parts/poses.ts): drop toward the chest, tilt around the
     // neck. Group transforms, not art — the lerpable half of a pose.
@@ -218,7 +303,7 @@ function groupTransform(
   const s = style.proportions.bodyWidth;
   // Profile lean around the hip — east/west only (on south/north a rotation
   // reads as a sideways topple, not a lean); the west mirror flips it for free.
-  const hip = ANCHORS[facing].hip;
+  const hip = anchors.hip;
   const lean =
     pose?.bodyLeanDeg && facing === 'east'
       ? `translate(${hip.x} ${hip.y}) rotate(${pose.bodyLeanDeg}) translate(${-hip.x} ${-hip.y}) `
@@ -231,6 +316,7 @@ function renderPlaced(
   facing: Facing,
   style: StyleSheet,
   resolve: ResolveToken,
+  anchors: CanvasAnchors,
   poseTransforms?: PoseTransforms,
 ): string {
   const partMarkup = (p: PlacedPart, emit: (s: ShapeSpec) => string, only?: 'silhouette') => {
@@ -240,7 +326,7 @@ function renderPlaced(
   };
 
   const wrapGroup = (group: 'body' | 'head', inner: string) =>
-    inner ? `<g transform="${groupTransform(group, facing, style, poseTransforms)}">${inner}</g>` : '';
+    inner ? `<g transform="${groupTransform(group, facing, style, anchors, poseTransforms)}">${inner}</g>` : '';
 
   const outlineOn = style.outline.width > 0;
 
@@ -369,9 +455,10 @@ export function composeCharacter(
   opts: { badge?: boolean; activity?: Activity; pose?: Pose } = {},
 ): string {
   const actual: Facing = facing === 'west' ? 'east' : facing;
-  const placed = placeParts(recipe, actual, mood, opts.pose);
+  const rig = resolveCharacterRig(recipe, actual);
+  const placed = placeParts(recipe, actual, mood, opts.pose, rig);
   const poseTransforms = opts.pose ? getPose(opts.pose)?.transforms : undefined;
-  let inner = renderPlaced(placed, actual, style, makeCharacterResolver(recipe), poseTransforms);
+  let inner = renderPlaced(placed, actual, style, makeCharacterResolver(recipe), rig.anchors, poseTransforms);
   if (facing === 'west') {
     inner = `<g transform="translate(${CANVAS} 0) scale(-1 1)">${inner}</g>`;
   }
@@ -382,7 +469,7 @@ export function composeCharacter(
   // the head so they don't overlap (the sim owns final placement at runtime;
   // this is the tool's preview convention).
   if (opts.badge ?? true) {
-    const a = ANCHORS[actual].aboveHead;
+    const a = rig.anchors.aboveHead;
     const ax = facing === 'west' ? CANVAS - a.x : a.x;
     const emote = MOOD_EMOTES[mood];
     const activity = opts.activity && opts.activity !== 'none' ? ACTIVITY_BADGES[opts.activity] : null;
@@ -419,10 +506,17 @@ export function composePortrait(
   pixelSize: number = CANVAS,
   mood: Mood = 'normal',
 ): string {
-  const placed = placeParts(recipe, 'south', mood);
-  const inner = renderPlaced(placed, 'south', style, makeCharacterResolver(recipe));
-  // Bust crop: head (center y 44, r ~21 + hair) and shoulders (body top y 58).
-  const crop = { x: 24, y: 2, w: 80, h: 80 };
+  const rig = resolveCharacterRig(recipe, 'south');
+  const placed = placeParts(recipe, 'south', mood, undefined, rig);
+  const inner = renderPlaced(placed, 'south', style, makeCharacterResolver(recipe), rig.anchors);
+  // Keep the bust crop centered on the active body's head anchor. Legacy bodies
+  // resolve to the original 24/2/80/80 viewBox byte-for-byte.
+  const crop = {
+    x: rig.anchors.headCenter.x - 40,
+    y: rig.anchors.headCenter.y - 42,
+    w: 80,
+    h: 80,
+  };
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${crop.x} ${crop.y} ${crop.w} ${crop.h}" ` +
     `width="${pixelSize}" height="${pixelSize}">` +
@@ -432,24 +526,36 @@ export function composePortrait(
 }
 
 /**
+ * Head-centered crop used by legacy employee-profile PNGs. This is separate
+ * from composePortrait's badge-photo crop, but resolves from the same body rig.
+ */
+export function employeePortraitCrop(recipe?: CharacterRecipe): { x: number; y: number; w: number; h: number } {
+  const head = resolveCharacterRig(recipe, 'south').anchors.headCenter;
+  return { x: head.x - 40, y: head.y - 30, w: 80, h: 80 };
+}
+
+/**
  * The pose rig's attach points (shoulders + hip) per facing, canvas coords —
  * exported in the poses atlas so a runtime compositor (or a future 3D backend)
  * can bind arm layers to the same skeleton the tool authored against. West is
  * the east mirror: x flips and the shoulders swap sides.
  */
-export function poseRigAnchors(facing: Facing | 'west'): Record<'shoulderLeft' | 'shoulderRight' | 'hip', { x: number; y: number }> {
+export function poseRigAnchors(
+  facing: Facing | 'west',
+  recipe?: CharacterRecipe,
+): Record<'shoulderLeft' | 'shoulderRight' | 'hip', { x: number; y: number }> {
   if (facing === 'west') {
-    const east = ANCHORS.east;
+    const east = resolveCharacterRig(recipe, 'east').anchors;
     const flip = (a: { x: number; y: number }) => ({ x: CANVAS - a.x, y: a.y });
     return { shoulderLeft: flip(east.shoulderRight), shoulderRight: flip(east.shoulderLeft), hip: flip(east.hip) };
   }
-  const a = ANCHORS[facing];
+  const a = resolveCharacterRig(recipe, facing).anchors;
   return { shoulderLeft: a.shoulderLeft, shoulderRight: a.shoulderRight, hip: a.hip };
 }
 
-export function overheadAnchor(facing: Facing | 'west'): { x: number; y: number } {
+export function overheadAnchor(facing: Facing | 'west', recipe?: CharacterRecipe): { x: number; y: number } {
   const actual: Facing = facing === 'west' ? 'east' : facing;
-  const a = ANCHORS[actual].aboveHead;
+  const a = resolveCharacterRig(recipe, actual).anchors.aboveHead;
   return { x: facing === 'west' ? CANVAS - a.x : a.x, y: a.y };
 }
 
@@ -630,23 +736,28 @@ interface IdPlaced {
 }
 
 /** Like placeParts but retains part identity and excludes mood/neck-shadow. */
-function placeForLayers(recipe: CharacterRecipe, facing: Facing): IdPlaced[] {
+function placeForLayers(recipe: CharacterRecipe, facing: Facing, rig: ResolvedCharacterRig): IdPlaced[] {
+  const attachmentVariant = rig.bodyAnchors
+    ? poseVariantFor('neutral', facing, rig.bodyAnchors)
+    : undefined;
   const order: Array<{ id: string; slot: string }> = [
     { id: recipe.parts.body, slot: 'body' },
     { id: recipe.parts.outfit, slot: 'outfit' },
-    ...recipe.parts.accessories.map((id) => ({ id, slot: 'accessory' })),
+    ...normalizedRiggedAccessories(recipe).map((id) => ({ id, slot: 'accessory' })),
     { id: recipe.parts.head, slot: 'head' },
     { id: recipe.parts.hair, slot: 'hair' },
   ];
   const out: IdPlaced[] = [];
   for (const { id, slot } of order) {
     const part = getPart(id);
-    const variant = part?.facings[facing];
+    const variant = part ? variantForPart(part, facing, rig) : undefined;
     if (!part || !variant) continue;
+    const anchor = anchorForPart(part, rig, attachmentVariant);
+    if (!anchor) continue;
     out.push({
       partId: id,
       slot,
-      anchor: ANCHORS[facing][part.anchor],
+      anchor,
       group: HEAD_ANCHORS.includes(part.anchor) ? 'head' : 'body',
       variant,
     });
@@ -654,8 +765,15 @@ function placeForLayers(recipe: CharacterRecipe, facing: Facing): IdPlaced[] {
   return out;
 }
 
-function positioned(group: 'body' | 'head', facing: Facing, style: StyleSheet, anchor: { x: number; y: number }, body: string): string {
-  return `<g transform="${groupTransform(group, facing, style)}"><g transform="translate(${anchor.x} ${anchor.y})">${body}</g></g>`;
+function positioned(
+  group: 'body' | 'head',
+  facing: Facing,
+  style: StyleSheet,
+  anchors: CanvasAnchors,
+  anchor: { x: number; y: number },
+  body: string,
+): string {
+  return `<g transform="${groupTransform(group, facing, style, anchors)}"><g transform="translate(${anchor.x} ${anchor.y})">${body}</g></g>`;
 }
 
 /** Decompose a recipe into re-tintable, outline-free part layers. */
@@ -673,14 +791,16 @@ export function characterLayers(recipe: CharacterRecipe, style: StyleSheet): Cha
   };
 
   for (const facing of facings) {
-    const placed = placeForLayers(recipe, facing);
+    const rig = resolveCharacterRig(recipe, facing);
+    const placed = placeForLayers(recipe, facing, rig);
     // neck shadow (literal), painted between body (z10) and outfit (z20)
+    const neck = rig.bodyAnchors?.neck ?? { x: 0, y: -29 };
     placed.splice(1, 0, {
       partId: 'neck-shadow',
       slot: 'body',
-      anchor: ANCHORS[facing].body,
+      anchor: rig.anchors.body,
       group: 'body',
-      variant: { shapes: [{ d: ellipse(0, -22, facing === 'east' ? 9 : 12, 4), fill: '#00000018', silhouette: false }], z: 35 },
+      variant: { shapes: [{ d: ellipse(neck.x, neck.y + 7, facing === 'east' ? 9 : 12, 4), fill: '#00000018', silhouette: false }], z: 35 },
     });
 
     for (const p of placed) {
@@ -700,7 +820,7 @@ export function characterLayers(recipe: CharacterRecipe, style: StyleSheet): Cha
         const tint = bk === 'literal' ? null : (bk as PaletteToken);
         const layer = ensure(`${p.partId}__${bk}`, p.slot, p.partId, p.variant.z, tint, null);
         const emit = tint ? emitMaskShape : (s: ShapeSpec) => emitColorShape(s, identityResolve);
-        layer.markup[facing] = positioned(p.group, facing, style, p.anchor, shapes.map(emit).join(''));
+        layer.markup[facing] = positioned(p.group, facing, style, rig.anchors, p.anchor, shapes.map(emit).join(''));
       }
     }
   }
@@ -711,10 +831,11 @@ export function characterLayers(recipe: CharacterRecipe, style: StyleSheet): Cha
   if (!getPart(recipe.parts.head)?.noFace) {
     for (const mood of MOODS) {
       for (const facing of facings) {
+        const rig = resolveCharacterRig(recipe, facing);
         const shapes = MOOD_OVERLAYS[mood][facing];
         if (!shapes || shapes.length === 0) continue;
         const layer = ensure(`mood-${mood}`, 'mood', mood, MOOD_Z, null, mood);
-        layer.markup[facing] = positioned('head', facing, style, ANCHORS[facing].headCenter, shapes.map((s) => emitColorShape(s, identityResolve)).join(''));
+        layer.markup[facing] = positioned('head', facing, style, rig.anchors, rig.anchors.headCenter, shapes.map((s) => emitColorShape(s, identityResolve)).join(''));
       }
     }
   }
@@ -725,7 +846,8 @@ export function characterLayers(recipe: CharacterRecipe, style: StyleSheet): Cha
   // (mood shapes are silhouette:false), so one outline layer covers every mood.
   if (style.outline.width > 0) {
     for (const facing of facings) {
-      const placed = placeParts(recipe, facing, 'normal');
+      const rig = resolveCharacterRig(recipe, facing);
+      const placed = placeParts(recipe, facing, 'normal', undefined, rig);
       const partOutline = (p: PlacedPart) => {
         const shapes = p.variant.shapes.filter(shapeIsSilhouette);
         if (shapes.length === 0) return '';
@@ -733,7 +855,7 @@ export function characterLayers(recipe: CharacterRecipe, style: StyleSheet): Cha
       };
       const wrap = (group: 'body' | 'head') => {
         const inner = placed.filter((p) => p.group === group).map(partOutline).join('');
-        return inner ? `<g transform="${groupTransform(group, facing, style)}">${inner}</g>` : '';
+        return inner ? `<g transform="${groupTransform(group, facing, style, rig.anchors)}">${inner}</g>` : '';
       };
       const layer = ensure('outline', 'outline', 'outline', -1, null, null);
       layer.markup[facing] = wrap('body') + wrap('head');
@@ -765,6 +887,15 @@ export function composeWallTile(
   const template = WALL_TEMPLATES.find((t) => t.id === wall.templateId);
   if (!template) return svgWrap('', pixelSize ?? style.render.baseSize);
   const shapes = template.build(neighbors, wall.params, wall.palette);
+  return composeWallShapes(shapes, wall, style, pixelSize);
+}
+
+function composeWallShapes(
+  shapes: ShapeSpec[],
+  wall: TileInstance,
+  style: StyleSheet,
+  pixelSize?: number,
+): string {
   const resolve = makePropResolver(wall.palette);
   const outline =
     style.outline.width > 0
@@ -775,6 +906,19 @@ export function composeWallTile(
       : '';
   const color = shapes.map((s) => emitColorShape(s, resolve)).join('');
   return svgWrap(outline + color, pixelSize ?? style.render.baseSize);
+}
+
+/**
+ * Review-only baseline for the authored Office-wall proof sheet and regression
+ * tests. Production composition always enters through `composeWallTile`.
+ */
+export function composeProceduralOfficeWallTile(
+  wall: TileInstance,
+  style: StyleSheet,
+  neighbors: number,
+  pixelSize?: number,
+): string {
+  return composeWallShapes(buildProceduralOfficeWall(neighbors), wall, style, pixelSize);
 }
 
 /**

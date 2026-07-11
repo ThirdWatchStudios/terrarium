@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium hair-bob south authoring scaffold</title>
+  <desc>The importer ignores guide, reference, anchor, and swatch groups. Edit art/detail paths; preserve unique ids, sentinel paint, and nonzero fill.</desc>
+  <path id="reference/canvas-background" d="M 0 0 H 128 V 128 H 0 Z" fill="#FFFEFA" fill-rule="nonzero"/>
+  <g id="guide/grid-minor">
+    <path id="guide/grid-minor/path" d="M 8 0 V 128 M 0 8 H 128 M 16 0 V 128 M 0 16 H 128 M 24 0 V 128 M 0 24 H 128 M 32 0 V 128 M 0 32 H 128 M 40 0 V 128 M 0 40 H 128 M 48 0 V 128 M 0 48 H 128 M 56 0 V 128 M 0 56 H 128 M 64 0 V 128 M 0 64 H 128 M 72 0 V 128 M 0 72 H 128 M 80 0 V 128 M 0 80 H 128 M 88 0 V 128 M 0 88 H 128 M 96 0 V 128 M 0 96 H 128 M 104 0 V 128 M 0 104 H 128 M 112 0 V 128 M 0 112 H 128 M 120 0 V 128 M 0 120 H 128" fill="none" stroke="#DCE2E3" stroke-width="0.35" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="guide/grid-major">
+    <path id="guide/grid-major/path" d="M 16 0 V 128 M 0 16 H 128 M 32 0 V 128 M 0 32 H 128 M 48 0 V 128 M 0 48 H 128 M 64 0 V 128 M 0 64 H 128 M 80 0 V 128 M 0 80 H 128 M 96 0 V 128 M 0 96 H 128 M 112 0 V 128 M 0 112 H 128" fill="none" stroke="#BCC7CA" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="guide/canvas">
+    <path id="guide/canvas/border" d="M 0.5 0.5 H 127.5 V 127.5 H 0.5 Z" fill="none" stroke="#7E898E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="guide/canvas/outline-safe-area" d="M 4 4 H 124 V 124 H 4 Z" fill="none" stroke="#D68B35" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+  </g>
+  <g id="guide/body-capsule">
+    <path id="guide/body-capsule/shape-001" d="M60 58h8a24 24 0 0 1 24 24v10a24 24 0 0 1-24 24h-8a24 24 0 0 1-24-24v-10a24 24 0 0 1 24-24Z" fill="none" stroke="#9C7AB8" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.65"/>
+  </g>
+  <g id="guide/head-radius">
+    <path id="guide/head-radius/path" d="M 43 44 a 21 21 0 1 0 42 0 a 21 21 0 1 0 -42 0 Z" fill="none" stroke="#4F91A8" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+  </g>
+  <g id="reference/context-head-round" opacity="0.12" transform="translate(64 44)">
+    <path id="reference/context-head-round/shape-001" d="M0-21C12.7-21 21-12.7 21 0 21 10.8 14.2 18.9 4 21 2 21.4-2 21.4-4 21-14.2 18.9-21 10.8-21 0-21-12.7-12.7-21 0-21Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/context-head-round/shape-002" d="M-10.6 0C-10.6 1.436-9.436 2.6-8 2.6-6.564 2.6-5.4 1.436-5.4 0-5.4-1.436-6.564-2.6-8-2.6-9.436-2.6-10.6-1.436-10.6 0Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/context-head-round/shape-003" d="M5.4 0C5.4 0.929 5.896 1.787 6.7 2.252 7.504 2.716 8.496 2.716 9.3 2.252 10.104 1.787 10.6 0.929 10.6 0 10.6-0.929 10.104-1.787 9.3-2.252 8.496-2.716 7.504-2.716 6.7-2.252 5.896-1.787 5.4-0.929 5.4 0Z" fill="#66747A" fill-rule="nonzero"/>
+  </g>
+  <g id="reference/hair-bob" opacity="0.22" transform="translate(64 44)">
+    <path id="reference/hair-bob/shape-001" d="M-23-4C-23-16.703-12.703-27 0-27 12.703-27 23-16.703 23-4L23 14 12 14 12-2C9.469-6.212 4.914-8.789 0-8.789-4.914-8.789-9.469-6.212-12-2L-12 14-23 14Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/hair-bob/shape-002" d="M-3-24C-7-18-10-10-11-3" fill="none" stroke="#66747A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="art" transform="translate(64 44)">
+    <path id="art/shape-001" d="M-23-4C-23-16.703-12.703-27 0-27 12.703-27 23-16.703 23-4L23 14 12 14 12-2C9.469-6.212 4.914-8.789 0-8.789-4.914-8.789-9.469-6.212-12-2L-12 14-23 14Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="detail/shape-002" d="M-3-24C-7-18-10-10-11-3" fill="none" stroke="#00000024" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="swatches">
+    <path id="swatches/skin" d="M 4 4 H 12 V 12 H 4 Z" fill="#FF00FF" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="swatches/hair" d="M 4 14 H 12 V 22 H 4 Z" fill="#00FFFF" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="swatches/outfitPrimary" d="M 4 24 H 12 V 32 H 4 Z" fill="#FF0000" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="swatches/outfitSecondary" d="M 4 34 H 12 V 42 H 4 Z" fill="#00FF00" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="swatches/accent" d="M 4 44 H 12 V 52 H 4 Z" fill="#0000FF" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="anchors">
+    <path id="anchors/headCenter" d="M 58 44 H 70 M 64 38 V 50" fill="none" stroke="#C84D6F" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

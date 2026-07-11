@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium wall bevel north edge</title>
+  <desc>Shallow straight north plane between the 38/90 corner sockets.</desc>
+  <g id="detail/edge-n">
+    <path id="detail/edge-n/face" d="M 38 8 H 90 V 16 H 38 Z" fill="#FFFFFF" opacity="0.10"/>
+  </g>
+</svg>

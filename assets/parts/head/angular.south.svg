@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium head-angular south authored art</title>
+  <desc>Faceted crown, cheek planes, and a centered pointed chin.</desc>
+  <g id="art" transform="translate(64 44)">
+    <path id="art/silhouette" d="M 0 -21 L 9 -19 L 17 -12 L 21 -3 L 18 11 L 9 21 L 0 24 L -9 21 L -18 11 L -21 -3 L -17 -12 L -9 -19 Z" fill="#FF00FF" fill-rule="nonzero"/>
+    <path id="detail/eye-left" d="M -10.6 0 a 2.6 2.6 0 1 0 5.2 0 a 2.6 2.6 0 1 0 -5.2 0 Z" fill="#2C2C2A" fill-rule="nonzero"/>
+    <path id="detail/eye-right" d="M 5.4 0 a 2.6 2.6 0 1 0 5.2 0 a 2.6 2.6 0 1 0 -5.2 0 Z" fill="#2C2C2A" fill-rule="nonzero"/>
+  </g>
+</svg>

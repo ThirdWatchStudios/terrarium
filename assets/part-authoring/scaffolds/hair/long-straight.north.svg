@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium hair-long-straight north authoring scaffold</title>
+  <desc>The importer ignores guide, reference, anchor, and swatch groups. Edit art/detail paths; preserve unique ids, sentinel paint, and nonzero fill.</desc>
+  <path id="reference/canvas-background" d="M 0 0 H 128 V 128 H 0 Z" fill="#FFFEFA" fill-rule="nonzero"/>
+  <g id="guide/grid-minor">
+    <path id="guide/grid-minor/path" d="M 8 0 V 128 M 0 8 H 128 M 16 0 V 128 M 0 16 H 128 M 24 0 V 128 M 0 24 H 128 M 32 0 V 128 M 0 32 H 128 M 40 0 V 128 M 0 40 H 128 M 48 0 V 128 M 0 48 H 128 M 56 0 V 128 M 0 56 H 128 M 64 0 V 128 M 0 64 H 128 M 72 0 V 128 M 0 72 H 128 M 80 0 V 128 M 0 80 H 128 M 88 0 V 128 M 0 88 H 128 M 96 0 V 128 M 0 96 H 128 M 104 0 V 128 M 0 104 H 128 M 112 0 V 128 M 0 112 H 128 M 120 0 V 128 M 0 120 H 128" fill="none" stroke="#DCE2E3" stroke-width="0.35" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="guide/grid-major">
+    <path id="guide/grid-major/path" d="M 16 0 V 128 M 0 16 H 128 M 32 0 V 128 M 0 32 H 128 M 48 0 V 128 M 0 48 H 128 M 64 0 V 128 M 0 64 H 128 M 80 0 V 128 M 0 80 H 128 M 96 0 V 128 M 0 96 H 128 M 112 0 V 128 M 0 112 H 128" fill="none" stroke="#BCC7CA" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="guide/canvas">
+    <path id="guide/canvas/border" d="M 0.5 0.5 H 127.5 V 127.5 H 0.5 Z" fill="none" stroke="#7E898E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="guide/canvas/outline-safe-area" d="M 4 4 H 124 V 124 H 4 Z" fill="none" stroke="#D68B35" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+  </g>
+  <g id="guide/body-capsule">
+    <path id="guide/body-capsule/shape-001" d="M60 58h8a24 24 0 0 1 24 24v10a24 24 0 0 1-24 24h-8a24 24 0 0 1-24-24v-10a24 24 0 0 1 24-24Z" fill="none" stroke="#9C7AB8" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.65"/>
+  </g>
+  <g id="guide/head-radius">
+    <path id="guide/head-radius/path" d="M 43 44 a 21 21 0 1 0 42 0 a 21 21 0 1 0 -42 0 Z" fill="none" stroke="#4F91A8" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+  </g>
+  <g id="reference/context-head-round" opacity="0.12" transform="translate(64 44)">
+    <path id="reference/context-head-round/shape-001" d="M0-21C12.7-21 21-12.7 21 0 21 11.8 12.2 21 0 21-12.2 21-21 11.8-21 0-21-12.7-12.7-21 0-21Z" fill="#66747A" fill-rule="nonzero"/>
+  </g>
+  <g id="reference/hair-long-straight" opacity="0.22" transform="translate(64 44)">
+    <path id="reference/hair-long-straight/shape-001" d="M -23 -4 A 23 23 0 0 1 23 -4 L 23 31 L -23 31 Z" fill="#66747A" fill-rule="nonzero"/>
+  </g>
+  <g id="art" transform="translate(64 44)">
+    <path id="art/shape-001" d="M -23 -4 A 23 23 0 0 1 23 -4 L 23 31 L -23 31 Z" fill="#00FFFF" fill-rule="nonzero"/>
+  </g>
+  <g id="swatches">
+    <path id="swatches/skin" d="M 4 4 H 12 V 12 H 4 Z" fill="#FF00FF" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="swatches/hair" d="M 4 14 H 12 V 22 H 4 Z" fill="#00FFFF" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="swatches/outfitPrimary" d="M 4 24 H 12 V 32 H 4 Z" fill="#FF0000" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="swatches/outfitSecondary" d="M 4 34 H 12 V 42 H 4 Z" fill="#00FF00" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="swatches/accent" d="M 4 44 H 12 V 52 H 4 Z" fill="#0000FF" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="anchors">
+    <path id="anchors/headCenter" d="M 58 44 H 70 M 64 38 V 50" fill="none" stroke="#C84D6F" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

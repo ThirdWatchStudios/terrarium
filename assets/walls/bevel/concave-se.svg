@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium wall bevel concave south-east notch</title>
+  <desc>South/east planar inside-corner notch and front-face crease.</desc>
+  <g id="detail/concave-se">
+    <path id="detail/concave-se/south" d="M 128 128 V 76 H 90 Z" fill="#FFFFFF" opacity="0.24"/>
+    <path id="detail/concave-se/east" d="M 128 128 H 90 V 76 Z" fill="#FFFFFF" opacity="0.14"/>
+    <path id="detail/concave-se/crease" d="M 90 75 H 128 V 77 H 90 Z" fill="#000000" opacity="0.12"/>
+  </g>
+</svg>

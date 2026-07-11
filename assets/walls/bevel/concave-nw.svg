@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium wall bevel concave north-west notch</title>
+  <desc>North/west inside-corner planes meeting on a crisp diagonal notch.</desc>
+  <g id="detail/concave-nw">
+    <path id="detail/concave-nw/north" d="M 0 0 V 16 H 38 Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="detail/concave-nw/west" d="M 0 0 H 38 V 16 Z" fill="#FFFFFF" opacity="0.14"/>
+  </g>
+</svg>

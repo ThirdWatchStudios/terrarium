@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium outfit-tee south authoring scaffold on body-balanced</title>
+  <desc>The importer ignores guide, reference, anchor, and swatch groups. Edit detail paths; preserve unique ids, sentinel paint, and nonzero fill.</desc>
+  <path id="reference/canvas-background" d="M 0 0 H 128 V 128 H 0 Z" fill="#FFFEFA" fill-rule="nonzero"/>
+  <g id="guide/grid-minor">
+    <path id="guide/grid-minor/path" d="M 8 0 V 128 M 0 8 H 128 M 16 0 V 128 M 0 16 H 128 M 24 0 V 128 M 0 24 H 128 M 32 0 V 128 M 0 32 H 128 M 40 0 V 128 M 0 40 H 128 M 48 0 V 128 M 0 48 H 128 M 56 0 V 128 M 0 56 H 128 M 64 0 V 128 M 0 64 H 128 M 72 0 V 128 M 0 72 H 128 M 80 0 V 128 M 0 80 H 128 M 88 0 V 128 M 0 88 H 128 M 96 0 V 128 M 0 96 H 128 M 104 0 V 128 M 0 104 H 128 M 112 0 V 128 M 0 112 H 128 M 120 0 V 128 M 0 120 H 128" fill="none" stroke="#DCE2E3" stroke-width="0.35" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="guide/grid-major">
+    <path id="guide/grid-major/path" d="M 16 0 V 128 M 0 16 H 128 M 32 0 V 128 M 0 32 H 128 M 48 0 V 128 M 0 48 H 128 M 64 0 V 128 M 0 64 H 128 M 80 0 V 128 M 0 80 H 128 M 96 0 V 128 M 0 96 H 128 M 112 0 V 128 M 0 112 H 128" fill="none" stroke="#BCC7CA" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="guide/canvas">
+    <path id="guide/canvas/border" d="M 0.5 0.5 H 127.5 V 127.5 H 0.5 Z" fill="none" stroke="#7E898E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="guide/canvas/outline-safe-area" d="M 4 4 H 124 V 124 H 4 Z" fill="none" stroke="#D68B35" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+  </g>
+  <g id="reference/body-balanced" opacity="0.22" transform="translate(64 87)">
+    <path id="reference/body-balanced/shape-001" d="M 0 -29 C -12 -29 -23 -27 -27 -20 C -30 -11 -27 -1 -25 8 C -23 18 -20 26 -11 29 C -4 30 4 30 11 29 C 20 26 23 18 25 8 C 27 -1 30 -11 27 -20 C 23 -27 12 -29 0 -29 Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/body-balanced/shape-002" d="M -16 20 a 16 7 0 1 0 32 0 a 16 7 0 1 0 -32 0 Z" fill="#66747A" fill-rule="nonzero"/>
+  </g>
+  <g id="guide/body-rig">
+    <path id="guide/body-rig/axis" d="M 64 58 L 64 80 L 64 111" fill="none" stroke="#9C7AB8" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.75"/>
+    <path id="guide/body-rig/shoulders" d="M 38 67 L 90 67" fill="none" stroke="#9C7AB8" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.65"/>
+    <path id="guide/body-rig/waist" d="M 39 91 L 89 91" fill="none" stroke="#9C7AB8" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+    <path id="guide/body-rig/hem" d="M 46 111 L 82 111" fill="none" stroke="#9C7AB8" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+  </g>
+  <g id="anchors">
+    <path id="anchors/bodyOrigin" d="M 61.5 87 H 66.5 M 64 84.5 V 89.5" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="anchors/neck" d="M 61 58 H 67 M 64 55 V 61" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="anchors/chest" d="M 61 80 H 67 M 64 77 V 83" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="anchors/waist-left" d="M 36.5 91 H 41.5 M 39 88.5 V 93.5" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="anchors/waist-right" d="M 86.5 91 H 91.5 M 89 88.5 V 93.5" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="anchors/hem-left" d="M 43.5 111 H 48.5 M 46 108.5 V 113.5" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="anchors/hem-right" d="M 79.5 111 H 84.5 M 82 108.5 V 113.5" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="art" transform="translate(64 87)">
+    <path id="detail/neckline/shape-001" d="M0-29C-4.8-29-9.6-27.5-11.2-24.9-8.9-20.8-5-18.8 0-18.8 5-18.8 8.9-20.8 11.2-24.9 9.6-27.5 4.8-29 0-29Z" fill="#00FF00" fill-rule="nonzero"/>
+    <path id="detail/neckline/shape-002" d="M0-28.3C-4-28.3-7.6-27-8.8-24.6-6.7-21.5-3.6-20.2 0-20.2 3.6-20.2 6.7-21.5 8.8-24.6 7.6-27 4-28.3 0-28.3Z" fill="#FF00FF" fill-rule="nonzero"/>
+  </g>
+  <g id="swatches">
+    <path id="swatches/skin" d="M 4 4 H 12 V 12 H 4 Z" fill="#FF00FF" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="swatches/hair" d="M 4 14 H 12 V 22 H 4 Z" fill="#00FFFF" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="swatches/outfitPrimary" d="M 4 24 H 12 V 32 H 4 Z" fill="#FF0000" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="swatches/outfitSecondary" d="M 4 34 H 12 V 42 H 4 Z" fill="#00FF00" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="swatches/accent" d="M 4 44 H 12 V 52 H 4 Z" fill="#0000FF" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

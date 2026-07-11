@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium hair-pixie south authored art</title>
+  <desc>Current production pixie front silhouette with irregular cropped fringe.</desc>
+  <g id="art" transform="translate(64 44)">
+    <path id="art/cap" d="M -20.396078054371138 -5 A 21 21 0 0 1 20.396078054371138 -5 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/fringe" d="M -18 -4 L -10 3 L -3 -2 L 4 4 L 11 -2 L 19 2 L 18 -8 L -17 -8 Z" fill="#00FFFF" fill-rule="nonzero"/>
+  </g>
+</svg>

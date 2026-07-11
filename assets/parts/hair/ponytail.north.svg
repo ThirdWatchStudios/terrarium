@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium hair-ponytail north authored art</title>
+  <desc>Current production ponytail rear silhouette with visible tie and tail.</desc>
+  <g id="art" transform="translate(64 44)">
+    <path id="art/cap" d="M -20.396078054371138 5 A 21 21 0 1 1 20.396078054371138 5 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/tie" d="M 11 -14 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/tail" d="M 17 -18 C 29 -22 36 -12 29 -3 C 35 8 31 23 22 29 C 15 24 17 13 21 6 C 15 0 14 -10 17 -18 Z" fill="#00FFFF" fill-rule="nonzero"/>
+  </g>
+</svg>

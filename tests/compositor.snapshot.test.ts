@@ -10,9 +10,11 @@ import {
 import type { CharacterRecipe } from '../src/core/types';
 import { CANVAS, FACINGS, MOODS } from '../src/core/types';
 import { PART_LIBRARY } from '../src/parts/library';
+import { BODY_ARCHETYPES } from '../src/parts/bodyArchetypes';
 import { BLOB_CONFIGS, BLOB_TILE_COUNT, NB } from '../src/tiles/blob';
 import { deriveGroundOverlays } from '../src/tiles/groundOverlays';
 import {
+  CONSTRUCTION_CREW,
   DEFAULT_CAST,
   DEFAULT_FLOORS,
   DEFAULT_GROUND,
@@ -35,6 +37,14 @@ import {
 const STYLE = DEFAULT_STYLE;
 const SIZE = CANVAS; // fixed so width/height attrs stay stable
 const FACINGS_ALL = [...FACINGS, 'west'] as const;
+const HUMAN_HEAD_IDS = [
+  'head-round',
+  'head-oval',
+  'head-boxy',
+  'head-long',
+  'head-angular',
+  'head-soft-square',
+] as const;
 
 /** Strip a compose function's outer <svg> wrapper, keeping inner design-space markup. */
 function inner(svg: string): string {
@@ -76,6 +86,19 @@ describe('cast', () => {
   }
 });
 
+describe('construction crew', () => {
+  for (const crew of CONSTRUCTION_CREW) {
+    it(`${crew.id} — all facings`, async () => {
+      const strip = FACINGS_ALL.map((facing) =>
+        composeCharacter(crew, STYLE, facing, SIZE, 'normal', { badge: false }),
+      );
+      await expect(grid(strip, FACINGS_ALL.length)).toMatchFileSnapshot(
+        snap(`construction-crew/${crew.id}`),
+      );
+    });
+  }
+});
+
 describe('parts', () => {
   // A neutral recipe; each part is swapped into its slot so the snapshot isolates
   // that part's geometry (against a constant body for context).
@@ -84,7 +107,7 @@ describe('parts', () => {
     name: 'Base',
     parts: {
       body: 'body-standard',
-      head: 'head-oval',
+      head: 'head-round',
       hair: 'hair-short',
       outfit: 'outfit-tee',
       accessories: [],
@@ -117,6 +140,65 @@ describe('parts', () => {
       );
     });
   }
+});
+
+describe('production outfit art', () => {
+  it('outfit-tee — all production bodies and facings with authored head/hair', async () => {
+    const cells = BODY_ARCHETYPES.flatMap((body) => FACINGS_ALL.map((facing) => {
+      const recipe: CharacterRecipe = {
+        id: `tee-${body.id}`,
+        name: body.label,
+        parts: {
+          body: body.id,
+          head: 'head-round',
+          hair: 'hair-bob',
+          outfit: 'outfit-tee',
+          accessories: [],
+        },
+        palette: {
+          skin: '#E8B88A',
+          hair: '#4A3325',
+          outfitPrimary: '#2E4057',
+          outfitSecondary: '#F5F2EA',
+          accent: '#D85A30',
+        },
+      };
+      return composeCharacter(recipe, STYLE, facing, SIZE, 'normal', { badge: false });
+    }));
+
+    await expect(grid(cells, FACINGS_ALL.length)).toMatchFileSnapshot(
+      snap('outfits/outfit-tee__production-bodies'),
+    );
+  });
+});
+
+describe('production head art', () => {
+  it('keeps the six human silhouettes comparable across all facings', async () => {
+    const cells = HUMAN_HEAD_IDS.flatMap((head) => FACINGS_ALL.map((facing) =>
+      composeCharacter({
+        id: `head-proof-${head}`,
+        name: head,
+        parts: {
+          body: 'body-balanced',
+          head,
+          hair: 'hair-none',
+          outfit: 'outfit-tee',
+          accessories: [],
+        },
+        palette: {
+          skin: '#C68B59',
+          hair: '#4A3325',
+          outfitPrimary: '#315A78',
+          outfitSecondary: '#F5F2EA',
+          accent: '#D85A30',
+        },
+      }, STYLE, facing, SIZE, 'normal', { badge: false }),
+    ));
+
+    await expect(grid(cells, FACINGS_ALL.length)).toMatchFileSnapshot(
+      snap('heads/production-head-silhouettes'),
+    );
+  });
 });
 
 describe('walls — all 47 blob autotile tiles', () => {

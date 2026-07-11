@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium wall bevel convex north-east corner</title>
+  <desc>Exclusive north/east planes meeting on a crisp diagonal facet.</desc>
+  <g id="detail/convex-ne">
+    <path id="detail/convex-ne/north" d="M 120 8 H 90 V 16 Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="detail/convex-ne/east" d="M 120 8 V 16 H 90 Z" fill="#FFFFFF" opacity="0.14"/>
+  </g>
+</svg>

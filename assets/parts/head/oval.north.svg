@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium head-oval north authored art</title>
+  <desc>Rear oval contour without front-facing detail.</desc>
+  <g id="art" transform="translate(64 44)">
+    <path id="art/silhouette" d="M 0 -21 C 11 -21 18 -13 19 -2 C 20 10 13 20 4 22 C 1 23 -1 23 -4 22 C -13 20 -20 10 -19 -2 C -18 -13 -11 -21 0 -21 Z" fill="#FF00FF" fill-rule="nonzero"/>
+  </g>
+</svg>

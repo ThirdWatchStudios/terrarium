@@ -1,11 +1,13 @@
 # Content Pipeline — from procedural appearance to compiled identity
 
-Direction + phased plan, written 2026-07-09. Companion to `TOOL_ARCHITECTURE.md`.
-The hand-authored primitives, tracked by milestone: `core-part-library.md`
-(tool decision: Affinity Designer).
-(the engine/content-pack split); this doc covers where assets *come from*, that
-one covers how they're *organized*. Nothing here changes the export contract
-except where explicitly flagged (floor variants).
+Direction + phased plan, written 2026-07-09. Companion to
+`TOOL_ARCHITECTURE.md` (the engine/content-pack split); this doc covers where
+assets *come from*, while that one covers how they're *organized*. The
+deliberately authored primitives are tracked by milestone in
+`core-part-library.md`. Canonical character-part sources are strict SVG: they
+may be written directly, generated and curated, or edited in a compatible
+vector editor. No particular editor is a production dependency. Nothing here
+changes the export contract except where explicitly flagged (floor variants).
 
 ---
 
@@ -42,7 +44,8 @@ badges, LOD machinery, atlases, floor variation (generator + human curation),
 shadows, metadata, randomization, layout.
 
 Two input types, one compiler:
-- **Authored assets** — SVG drawn in an editor, validated on import.
+- **Authored assets** — deliberate, reviewable SVG sources produced directly
+  or with an optional visual editor, then validated on import.
 - **Generator programs** — code that emits candidates a human curates
   (e.g. floor speckle seeds culled in the repeat preview, winners frozen).
 
@@ -99,14 +102,88 @@ icons), not by upfront design.
    acceptable — editor choice stays free.
 3. **Template scaffolds**: tool command exporting per-slot guide SVGs —
    128 grid, anchor markers, body-capsule / head-radius guides, an existing
-   part on a locked reference layer, sentinel swatches (ship an Inkscape
-   `.gpl` palette).
-4. **Round-trip acceptance test**: export an existing hand-written part
-   (hair `bob`), edit in the editor, reimport; snapshot diff shows only the
-   edit.
-5. **Provenance**: each imported asset records source
+   part on a named reference layer, and sentinel swatches. Portable ASE, GPL,
+   and readable SVG palette companions support optional editors. Implemented
+   for all five production bodies, all six human-head families, `hair-bob`, and
+   the south/east tee kit under `assets/part-authoring` via
+   `npm run parts:scaffolds`; semantic IDs, not editor-only layer state, define
+   what the importer ignores. Body starters show all 11 TypeScript-owned rig
+   points as non-importing guides.
+4. **Headless intake proof**: derive `hair-bob` sources from the generated
+   scaffolds, make a deliberate canonical-SVG detail edit, compile them through
+   the importer, and regenerate compositor snapshots. Implemented 2026-07-10:
+   the new three-facing parting detail changes only `hair__hair-bob.svg`,
+   `janice.svg`, and `janice__moods.svg`. The rendered production-size result
+   and 32/48 px strips were approved and committed in `240ee03`. The first
+   follow-on promotion used the same path for `head-round`: a shaped front jaw,
+   directional east profile, stable rear contour, and unchanged ink-eye
+   details. Its bounded compositor surface was the round-head part plus Carl
+   and Linda's facing/mood sheets; the approved promotion is `9e932eb`.
+5. **Production body source canonicalization**: the approved
+   `body-compact`, `body-balanced`, `body-large-frame`, `body-tall`, and
+   `body-soft` silhouettes now have 15 canonical south/east/north SVG sources
+   under `assets/parts/body`. A dedicated `body-art` adapter installs their
+   complete visible shapes onto the existing shared production `PartDef`
+   objects in place, preserving stable selection order, exact body-rig identity,
+   z-order, and all runtime metadata. Canvas geometry is strictly validated,
+   while established body-local path strings remain byte-stable. The generated
+   scaffolds expose the full typed rig as ignored context; importing the rig
+   itself remains a later adapter boundary.
+6. **Approved human-head production batch**: `head-oval`, `head-boxy`,
+   `head-long`, `head-angular`, and `head-soft-square` each have canonical
+   south/east/north sources derived through the editor-agnostic scaffold
+   workflow. The 15 SVGs are registered, deterministic, and production-approved
+   through the static-head overlay as of 2026-07-10. Together with `head-round`,
+   they pass the 3,960-cell head/hair/accessory/facing/style matrix and the
+   594-cell palette/portrait matrix. `npx tsx scripts/headSilhouettePreview.ts`
+   regenerates their previous-versus-production distance and hair/accessory
+   compatibility references.
+7. **Representative hair-family source batch**: `hair-short`, the approved
+   `hair-bob` control, and `hair-long-straight` cover the Short, Medium, and
+   Long families. Six new south/east/north Short and Long straight sources own
+   their canonical local paths through explicit byte-stable static targets;
+   canvas, paint, and semantic validation still run normally. All four Short
+   shapes plus Long straight south/north remain exact. The one deliberate art
+   delta is Long straight east, whose single rear fall and short temple edge
+   make the profile turn explicit while preserving the open face. Generated
+   scaffolds and `npx tsx scripts/hairFamilyPreview.ts` provide the visual
+   review surface. Short and Long straight received visual approval on
+   2026-07-10. Curly, Ponytail, and Coils now add nine more canonical sources:
+   Curly preserves its established lobed geometry, Ponytail gains a hanging
+   tail in all three facings, and Coils gains a denser cloud silhouette that is
+   materially distinct from Curly at 32 px. Their 2,160-cell compatibility
+   matrix and expanded distance proof passed visual approval on 2026-07-10.
+   Bun, Balding, Pixie, and Side-part add the final 12 mapped sources. Bun is a
+   compact, clip-free knot distinct from Ponytail; Balding uses tapered temple
+   and rear bands; Pixie owns a cropped irregular fringe; Side-part owns a
+   swept cap and non-silhouette parting crease. The expanded ten-style
+   3,600-cell hair/body/head/facing/style matrix, full head-accessory matrices,
+   and distance proof pass. These final four received visual approval on
+   2026-07-10.
+8. **Anchored outfit-detail adapter**: `outfit-tee` is the first body-aware
+   intake target. Its south/east SVGs are authored once over `body-balanced`,
+   with the body origin at `(64, 87)` and neck at `(64, 58)`. Every visible
+   path must compile as `detail/*` / `silhouette: false`, so the selected body's
+   `$outfitPrimary` silhouette remains the conforming torso. At build time the
+   importer translates that kit to each production body's neck and emits the
+   five variants in stable archetype order. The runtime overlay replaces only
+   known production detail shapes while preserving the code builder's z-order;
+   legacy bodies, future body IDs, and unauthored north keep the original
+   procedural/static fallback. The adapter is mechanically complete; tee art
+   approval and M1 exit remain open. Componentized Blazer intake—separate
+   lapels, buttons, and pocket with explicit multi-anchor placement—is the next
+   deferred outfit adapter rather than a flat whole-garment shortcut.
+9. **Provenance**: each imported asset records source
    (`authored | generated | curated`) in its generated module, so lints and
-   future audits know what's re-generatable.
+   future audits know what's re-generatable. `authored` means deliberate
+   canonical repo SVG regardless of authoring tool; `generated` means
+   generator-owned and reproducible; `curated` means selected and frozen
+   generator output.
+
+The approved body and six-head sets plus all ten approved mapped hair source
+sets now form the canonical silhouette foundation. The Phase 3 wall kit or
+outfit work can follow. The phase numbers describe pipeline scope; they do not
+override visual-impact priority.
 
 ### Phase 3 — Wall bevel piece kit (~1 week; first authoring test)
 
@@ -123,6 +200,25 @@ gentlest introduction to hand-authoring, highest tweak-pain relief.
 4. Per-template detail (brick courses, slats) stays procedural for now.
 5. One deliberate snapshot regen; review the 47-tile sheet diff.
 
+Mechanical pilot implemented 2026-07-10: the exact twelve canonical fixed-light
+SVGs live under `assets/walls/bevel`, compile through
+`scripts/importWallBevel.ts`, and assemble from the existing 47-blob topology.
+The approved `office-wall` integration replaces its painted-on rim with a near-
+black silhouette boundary and an inset palette-material body on exposed sides.
+The follow-on promotion applies that shared contour and fixed-light face kit to
+all eight opaque wall templates. Their brick, panel, foliage, brand, slat, and
+structural details remain procedural, constrained to the material surface and
+painted below the authored faces. Connected-side overhang, cell coverage, blob
+topology, and export metadata remain unchanged. Glass and Curtain stay byte-
+identical on their procedural no-bevel paths.
+
+`npm run walls:preview` produces the focused previous-versus-authored Office
+source/47-tile/room/palette/distance proof. `npm run walls:materials:preview`
+serially produces the shipped-palette 47-tile and complex-room proofs for all
+eight opaque materials plus `docs/previews/wall-preview-opaque-walls.html`.
+Promotion requires exactly seven additional wall snapshot updates; no export
+contract or schema change is involved.
+
 Fallback if the authored bevel doesn't beat procedural after ~2 days of
 drawing: extract `BEVEL` into a declarative spec + live tweak panel — fixes
 the tweak pain without art.
@@ -131,9 +227,14 @@ the tweak pain without art.
 
 1. **LOD flag first**: detail tier on `ShapeSpec`; compositor drops interior
    detail below a threshold export size. Benefits procedural parts too.
-2. Re-author by silhouette priority — heads and hair first, then bodies +
-   outfits (§4b) — judged against the zoom strip. Accessories last (already
-   glyph-like). Moods/badges/poses stay procedural.
+2. Re-author by silhouette priority — the approved five-body and six-head
+   foundations are canonical SVG; Short, Bob, Long straight, Curly, Ponytail,
+   and Coils are approved; Bun, Balding, Pixie, and Side-part completed the
+   approved mapped set on 2026-07-10. Outfits (§4b) follow, judged against the
+   zoom strip.
+   Detail-only garment and wall passes wait behind the hair silhouettes.
+   Accessories are last (already glyph-like).
+   Moods/badges/poses stay procedural.
 3. No flag-day: imported and procedural parts coexist behind `PartDef`.
 
 #### 4b. Distinct body types + the three-layer garment model
@@ -163,6 +264,10 @@ templates per body type). Consequences:
 - `PartDef` grows body-type-aware variants for slots that need them
   (outfits keyed by `(bodyType, facing)` where authored per body; single
   variant + conforming derivation otherwise).
+- **Implemented fitted-detail proof (2026-07-10):** Tee now exercises the
+  single-kit, neck-anchored case end to end. This does not yet solve reusable
+  multi-piece aggregation or torso-frame deformation; Blazer is the bounded
+  follow-up for that explicit adapter.
 
 ## 4. Readability lints (compiler warnings, not scores)
 
@@ -197,19 +302,27 @@ export log.
 ## 5b. Builder asset asks (sim-driven, tracked in the sim repo)
 
 The sim's office-builder pivot (2026-07-05/07) defines what Terrarium supplies;
-source of truth: sim `docs/design/terrarium-office-builder-assets.md`. Status
-as of 2026-07-09:
+source of truth: sim `docs/design/terrarium-office-builder-assets.md`, amended by
+sim `docs/design/iris-installation-unit-and-tutorial.md` for the locked IRIS
+hardware/crew direction. Status as of 2026-07-10:
 
 **Done (code landed):** grid footprints `{w,h}` + sub-cell pivots on
 `PropTemplate`; `facility-catalog.json` export; build-site assets (outdoor
-ground kinds + clinical exemption, cars/parking decals, construction-worker
-character, nature decals, grass-fringe overlays on the 47-blob contract);
+ground kinds + clinical exemption, cars/parking decals, IRIS fabrication-unit
+construction crew + charging dock, nature decals, grass-fringe overlays on the
+47-blob contract); IRIS installation-unit live/dormant facility sprites;
 warm-by-default look with sim-owned runtime drain.
+
+The installation unit, charging dock, and fabrication crew are mechanically
+present under stable ids and received a shared sterile-chassis refinement pass
+on 2026-07-10. Their current art is serviceable rather than frozen final art;
+later silhouette/detail polish is an asset pass, not contract or schema work.
+The locked 2026-07-08 IRIS apparatus command chain supersedes the earlier B1.5
+human construction-worker art proposal: IRIS's construction crew are robots.
 
 **Open:**
 - Surveillance apparatus props (cameras, sensors — QuotaCo "tech you place");
   new templates, B4/B5 timing.
-- IRIS installation unit (server-rack facility sprite).
 - QuotaCo-standard facility variants (sim Q5: mix of explicit paired templates
   for signature facilities + the clinical lens for ambient corporatization).
 - Carryover-character support: the authored-and-likable handful. Visual
