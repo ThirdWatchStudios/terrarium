@@ -20,6 +20,7 @@
     "walls:import": "tsx scripts/importWallBevel.ts",
     "walls:import:check": "tsx scripts/importWallBevel.ts --check",
     "walls:preview": "tsx scripts/wallBevelPreview.ts",
+    "walls:materials:preview": "tsx scripts/wallTilesetPreview.ts",
     "assets:check": "npm run parts:check && npm run walls:import:check"
   },
   "devDependencies": {

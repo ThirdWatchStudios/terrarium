@@ -2,16 +2,14 @@ import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
+import { Resvg } from '@resvg/resvg-js';
 import { describe, expect, it } from 'vitest';
 
 import {
   compileWallBevelDirectory,
   emitWallBevelRegistry,
 } from '../scripts/walls/importer';
-import {
-  composeProceduralOfficeWallTile,
-  composeWallTile,
-} from '../src/core/compositor';
+import { composeWallRoom, composeWallTile } from '../src/core/compositor';
 import type { ShapeSpec } from '../src/core/types';
 import { DEFAULT_STYLE, DEFAULT_WALLS } from '../src/data/defaults';
 import { BLOB_CONFIGS, NB, blobIndex, configForIndex } from '../src/tiles/blob';
@@ -35,6 +33,19 @@ const EXPECTED_IDS = [
   'concave-nw',
 ] as const;
 
+const OPAQUE_TEMPLATE_IDS = [
+  'office-wall',
+  'cubicle-partition',
+  'brick-wall',
+  'panel-wall',
+  'living-wall',
+  'branded-wall',
+  'slat-wall',
+  'demising-wall',
+] as const;
+
+const TRANSLUCENT_WALL_IDS = ['wall-glass', 'wall-curtain'] as const;
+
 const sourceDirectory = path.resolve(process.cwd(), 'assets/walls/bevel');
 const generatedFile = path.resolve(process.cwd(), 'src/tiles/generated/importedWallBevelArt.ts');
 
@@ -44,6 +55,22 @@ function hash(value: unknown): string {
 
 function silhouette(shapes: readonly ShapeSpec[]): ShapeSpec[] {
   return shapes.filter((shape) => shape.silhouette !== false);
+}
+
+function coveragePixels(shapes: readonly ShapeSpec[]): Uint8Array {
+  const markup = shapes.map((shape) => {
+    const attributes = [`d="${shape.d}"`, `fill="${shape.fill === undefined ? 'none' : '#FFFFFF'}"`];
+    if (shape.stroke !== undefined) {
+      attributes.push('stroke="#FFFFFF"');
+      attributes.push(`stroke-width="${shape.strokeWidth ?? 1.5}"`);
+      attributes.push('stroke-linecap="round" stroke-linejoin="round"');
+    }
+    return `<path ${attributes.join(' ')}/>`;
+  }).join('');
+  return new Resvg(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">${markup}</svg>`,
+    { font: { loadSystemFonts: false } },
+  ).render().pixels;
 }
 
 function expectedPieces(raw: number): readonly string[] {
@@ -123,38 +150,106 @@ describe('wall bevel topology and production isolation', () => {
     }
   });
 
-  it('builds the Office contour from nested boundary geometry, not top-surface paint', () => {
-    const office = WALL_TEMPLATES.find((template) => template.id === 'office-wall');
-    expect(office).toBeDefined();
-    for (let raw = 0; raw < 256; raw++) {
-      const config = configForIndex(blobIndex(raw));
-      const [boundary, material, ...faces] = office!.build(raw, {}, DEFAULT_WALLS[0].palette);
-      const hasExposedEdge = !config.n || !config.e || !config.s || !config.w;
-      expect(boundary.fill, `raw mask ${raw} boundary`).toBe('#000000');
-      expect(boundary.silhouette, `raw mask ${raw} boundary`).not.toBe(false);
-      expect(material.fill, `raw mask ${raw} material`).toBe('$primary');
-      expect(material.silhouette, `raw mask ${raw} material`).toBe(false);
-      expect(boundary.d === material.d, `raw mask ${raw} nested geometry`).toBe(!hasExposedEdge);
-      expect(faces.every((shape) => shape.silhouette === false), `raw mask ${raw} faces`).toBe(true);
+  it('builds every opaque contour from the same nested boundary geometry', () => {
+    const silhouetteHashes = new Set<string>();
+    for (const templateId of OPAQUE_TEMPLATE_IDS) {
+      const template = WALL_TEMPLATES.find((candidate) => candidate.id === templateId);
+      expect(template, templateId).toBeDefined();
+      for (let raw = 0; raw < 256; raw++) {
+        const config = configForIndex(blobIndex(raw));
+        const [boundary, material, ...details] = template!.build(raw, {}, DEFAULT_WALLS[0].palette);
+        const hasExposedEdge = !config.n || !config.e || !config.s || !config.w;
+        expect(boundary.fill, `${templateId} raw ${raw} boundary`).toBe('#000000');
+        expect(boundary.silhouette, `${templateId} raw ${raw} boundary`).not.toBe(false);
+        expect(material.fill, `${templateId} raw ${raw} material`).toBe('$primary');
+        expect(material.silhouette, `${templateId} raw ${raw} material`).toBe(false);
+        expect(boundary.d === material.d, `${templateId} raw ${raw} nested geometry`)
+          .toBe(!hasExposedEdge);
+        expect(details.every((shape) => shape.silhouette === false), `${templateId} raw ${raw} details`)
+          .toBe(true);
+      }
+      silhouetteHashes.add(hash(BLOB_CONFIGS.map((config) =>
+        silhouette(template!.build(config, {}, DEFAULT_WALLS[0].palette)))));
     }
-    expect(hash(BLOB_CONFIGS.map((config) => silhouette(office!.build(config, {}, DEFAULT_WALLS[0].palette)))))
-      .toBe('d05869d6bcba18787b5c8050caa5f33d7d7e89e95740487a0c384ddd62450a44');
+    expect([...silhouetteHashes]).toEqual([
+      'd05869d6bcba18787b5c8050caa5f33d7d7e89e95740487a0c384ddd62450a44',
+    ]);
   });
 
-  it('changes only the Office lighting candidate and keeps the other nine wall renders frozen', () => {
-    const office = DEFAULT_WALLS.find((wall) => wall.id === 'wall-office')!;
-    const changed = BLOB_CONFIGS.filter((config) =>
-      composeWallTile(office, DEFAULT_STYLE, config, 128) !==
-      composeProceduralOfficeWallTile(office, DEFAULT_STYLE, config, 128));
-    expect(changed).toHaveLength(BLOB_CONFIGS.length);
+  it('keeps isolated procedural material detail inside the rounded material body', () => {
+    const bevelCount = authoredWallBevel(0).length;
+    for (const templateId of OPAQUE_TEMPLATE_IDS) {
+      const template = WALL_TEMPLATES.find((candidate) => candidate.id === templateId)!;
+      const shapes = template.build(0, {}, DEFAULT_WALLS[0].palette);
+      const details = shapes.slice(2, shapes.length - bevelCount);
+      if (details.length === 0) continue;
+      const material = coveragePixels([shapes[1]]);
+      const detail = coveragePixels(details);
+      const offenders: Array<{ x: number; y: number; detail: number; material: number }> = [];
+      for (let pixel = 0; pixel < 128 * 128; pixel++) {
+        const alpha = pixel * 4 + 3;
+        if (detail[alpha] > material[alpha] + 4) {
+          offenders.push({
+            x: pixel % 128,
+            y: Math.floor(pixel / 128),
+            detail: detail[alpha],
+            material: material[alpha],
+          });
+        }
+      }
+      expect(offenders.slice(0, 8), `${templateId} detail leaves material: ${JSON.stringify(offenders.slice(0, 8))}`)
+        .toEqual([]);
+    }
+  });
+
+  it('keeps native connected-wall rasters opaque across horizontal and vertical tile seams', () => {
+    for (const templateId of OPAQUE_TEMPLATE_IDS) {
+      const wall = DEFAULT_WALLS.find((candidate) => candidate.templateId === templateId)!;
+      for (const layout of [
+        [[1, 1]],
+        [[1], [1]],
+      ]) {
+        const rendered = new Resvg(composeWallRoom(wall, DEFAULT_STYLE, layout, 128)).render();
+        const vertical = layout[0].length === 2;
+        for (const offset of [20, 64, 108]) {
+          const x = vertical ? 128 : offset;
+          const y = vertical ? offset : 128;
+          const alpha = rendered.pixels[(y * rendered.width + x) * 4 + 3];
+          expect(alpha, `${templateId} ${vertical ? 'vertical' : 'horizontal'} seam at ${offset}`)
+            .toBe(255);
+        }
+      }
+    }
+  });
+
+  it('uses whole-sheet PNGs for the responsive browser proof', async () => {
+    const html = await readFile(
+      path.resolve(process.cwd(), 'docs/previews/wall-preview-opaque-walls.html'),
+      'utf8',
+    );
+    const imageSources = [...html.matchAll(/<img src="([^"]+)"/g)].map((match) => match[1]);
+    expect(imageSources).toEqual(OPAQUE_TEMPLATE_IDS.map((id) => `wall-preview-${id}.png`));
+    expect(html).not.toMatch(/<img[^>]+\.svg/);
+  });
+
+  it('promotes the shared kit to every opaque wall while freezing translucent walls', () => {
+    const authoredPaths = WALL_BEVEL_PIECE_IDS.flatMap((id) =>
+      WALL_BEVEL_ART[id].map((shape) => shape.d));
+    for (const templateId of OPAQUE_TEMPLATE_IDS) {
+      const template = WALL_TEMPLATES.find((candidate) => candidate.id === templateId)!;
+      const paths = new Set(BLOB_CONFIGS.flatMap((config) =>
+        template.build(config, {}, DEFAULT_WALLS[0].palette).map((shape) => shape.d)));
+      for (const path of authoredPaths) expect(paths.has(path), `${templateId}: ${path}`).toBe(true);
+    }
 
     const untouched = DEFAULT_WALLS
-      .filter((wall) => wall.id !== 'wall-office')
+      .filter((wall) => TRANSLUCENT_WALL_IDS.includes(wall.id as typeof TRANSLUCENT_WALL_IDS[number]))
       .map((wall) => ({
         id: wall.id,
         tiles: BLOB_CONFIGS.map((config) => composeWallTile(wall, DEFAULT_STYLE, config, 128)),
       }));
-    expect(hash(untouched)).toBe('291d9cec8e763d8083b82d4d9a697e2955114c444fa2ab803c9891cd6fed9948');
+    expect(untouched.map((wall) => wall.id)).toEqual(TRANSLUCENT_WALL_IDS);
+    expect(hash(untouched)).toBe('42e5042e03884890af5a741f74194f09ba1de369990f6949a9cd613d292e4bfb');
   });
 
   it('keeps glass and curtain on their procedural no-bevel paths', () => {
@@ -163,7 +258,7 @@ describe('wall bevel topology and production isolation', () => {
     );
     for (const id of ['glass-partition', 'curtain-wall']) {
       const template = WALL_TEMPLATES.find((candidate) => candidate.id === id)!;
-      for (const raw of [0, NB.N | NB.E, 0xff]) {
+      for (const raw of BLOB_CONFIGS) {
         expect(template.build(raw, {}, DEFAULT_WALLS[0].palette).some((shape) => authoredPaths.has(shape.d)), id)
           .toBe(false);
       }

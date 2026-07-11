@@ -112,7 +112,7 @@ unrelated milestone gates.
 Everything flows end-to-end once, before volume work starts.
 
 - [x] All Prerequisites above
-- [ ] Wall bevel kit (all 12 pieces) + assembler + snapshot regen
+- [x] Wall bevel kit (all 12 pieces) + all-opaque assembler + snapshot regen
 - [ ] One head, one hairstyle, one body, one outfit detail kit — each through
       the full Definition of Done
 - [ ] First random stress test (procedural + authored parts mixed)
@@ -157,16 +157,18 @@ The visible core of every character is authored.
 Shared across all solid wall styles. Draw over the exported 47-tile reference
 sheet. Fixed light direction — pieces are NOT rotated copies.
 
-The canonical sources, compiler, assembler, focused proof sheet, and intentional
-Office-wall snapshot are mechanically complete. The M1 checkbox remains open
-until the Office pilot receives visual approval and the shared kit is promoted
-to the remaining opaque solid-wall styles. Those styles stay byte-identical in
-the meantime; Glass and Curtain remain intentionally procedural and bevel-free.
+The canonical sources, compiler, assembler, approved Office pilot, and all-
+material proof are complete. The shared kit is applied to all eight opaque wall
+styles; their template-specific material detail remains procedural but bounded
+inside the material surface and below the authored faces. The seven follow-on
+wall snapshots were visually approved on 2026-07-10. Glass and Curtain remain
+intentionally procedural, bevel-free, and byte-identical.
 
 - [x] Edge faces: north / south (tall lit front) / west / east (4)
 - [x] Convex corner miters: NW / NE / SW / SE (4)
 - [x] Concave notches: NW / NE / SW / SE (4)
 - [x] Assembler wired to `configForIndex` + one deliberate Office snapshot regen
+- [x] All-opaque shipped-palette proof + seven deliberate snapshot updates
 
 Per-template detail (brick courses, slats, mullions) stays procedural unless
 the 3-tweak rule fires.

@@ -203,16 +203,21 @@ gentlest introduction to hand-authoring, highest tweak-pain relief.
 Mechanical pilot implemented 2026-07-10: the exact twelve canonical fixed-light
 SVGs live under `assets/walls/bevel`, compile through
 `scripts/importWallBevel.ts`, and assemble from the existing 47-blob topology.
-The first integration is deliberately limited to `office-wall`; the other nine
-wall styles remain byte-identical, including the procedural bevels on the other
-solid styles and the no-bevel Glass/Curtain paths. The Office correction
-intentionally replaces its painted-on rim with a near-black silhouette boundary
-and an inset palette-material body on exposed sides; connected-side overhang,
-cell coverage, and blob topology remain unchanged. `npm run walls:preview`
-produces the focused previous-versus-authored
-source/47-tile/room/palette/distance proof. Broader solid-wall promotion remains
-behind visual approval of that sheet; no export contract or schema change is
-involved.
+The approved `office-wall` integration replaces its painted-on rim with a near-
+black silhouette boundary and an inset palette-material body on exposed sides.
+The follow-on promotion applies that shared contour and fixed-light face kit to
+all eight opaque wall templates. Their brick, panel, foliage, brand, slat, and
+structural details remain procedural, constrained to the material surface and
+painted below the authored faces. Connected-side overhang, cell coverage, blob
+topology, and export metadata remain unchanged. Glass and Curtain stay byte-
+identical on their procedural no-bevel paths.
+
+`npm run walls:preview` produces the focused previous-versus-authored Office
+source/47-tile/room/palette/distance proof. `npm run walls:materials:preview`
+serially produces the shipped-palette 47-tile and complex-room proofs for all
+eight opaque materials plus `docs/previews/wall-preview-opaque-walls.html`.
+Promotion requires exactly seven additional wall snapshot updates; no export
+contract or schema change is involved.
 
 Fallback if the authored bevel doesn't beat procedural after ~2 days of
 drawing: extract `BEVEL` into a declarative spec + live tweak panel — fixes

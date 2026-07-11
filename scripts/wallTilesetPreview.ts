@@ -7,9 +7,10 @@
  * blob's diagonal info exists to fix — against a floor swatch.
  *
  *   npx tsx scripts/wallTilesetPreview.ts [wallId...] [--out DIR]
- *   (default walls: office-wall branded-wall demising-wall; default DIR docs/previews)
+ *   (default: all eight opaque walls; default DIR docs/previews)
  *
- * Writes wall-preview-<id>.png (1.5x) per wall.
+ * Writes one runtime-clipped SVG + 1x PNG per wall and an HTML index. Rendering
+ * stays serial so only one 2444×1320 proof is resident at a time.
  */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
@@ -18,7 +19,7 @@ import { Resvg } from '@resvg/resvg-js';
 import { composeWallTile, composeWallRoom } from '../src/core/compositor';
 import { blobTileLabel } from '../src/tiles/templates';
 import { BLOB_CONFIGS, BLOB_TILE_COUNT } from '../src/tiles/blob';
-import { DEFAULT_STYLE } from '../src/data/defaults';
+import { DEFAULT_STYLE, DEFAULT_WALLS } from '../src/data/defaults';
 import type { TileInstance } from '../src/core/types';
 
 // A COMPLEX room exercising every junction type the 47-blob exists for:
@@ -51,21 +52,28 @@ const T = 128; // design units per tile
 
 // Overridable via --primary/--secondary (hex) to judge other material tones —
 // e.g. RimWorld's dark wood (--primary '#5A4633').
-const PALETTE = {
-  // RimWorld-valued slate: the TOP surface reads dark (you look down onto the
-  // mass) and the white-overlay front face lands near RimWorld's lit stone.
-  primary: '#5E6167',
-  secondary: '#8E9196',
-  accent: '#C6603C',
-};
+const PALETTE_OVERRIDES: Partial<TileInstance['palette']> = {};
 
-const wallInstance = (id: string): TileInstance => ({
-  id: `preview-${id}`,
-  name: id,
-  templateId: id,
-  params: {},
-  palette: { ...PALETTE },
-});
+const DEFAULT_OPAQUE_WALLS = [
+  'office-wall',
+  'cubicle-partition',
+  'brick-wall',
+  'panel-wall',
+  'living-wall',
+  'branded-wall',
+  'slat-wall',
+  'demising-wall',
+] as const;
+
+function wallInstance(id: string): TileInstance {
+  const source = DEFAULT_WALLS.find((candidate) => candidate.id === id || candidate.templateId === id);
+  if (!source) throw new Error(`Unknown shipped wall ${id}`);
+  return {
+    ...source,
+    params: { ...source.params },
+    palette: { ...source.palette, ...PALETTE_OVERRIDES },
+  };
+}
 
 function svgInner(svg: string): string {
   return svg.replace(/^<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '');
@@ -96,7 +104,10 @@ function sheetFor(id: string): string {
   for (let i = 0; i < BLOB_TILE_COUNT; i++) {
     const cx = (i % gridCols) * T;
     const cy = top + Math.floor(i / gridCols) * T;
-    parts.push(`<g transform="translate(${cx} ${cy})">${svgInner(composeWallTile(wall, DEFAULT_STYLE, BLOB_CONFIGS[i], T))}</g>`);
+    parts.push(
+      `<svg x="${cx}" y="${cy}" width="${T}" height="${T}" viewBox="0 0 ${T} ${T}">` +
+      `${svgInner(composeWallTile(wall, DEFAULT_STYLE, BLOB_CONFIGS[i], T))}</svg>`,
+    );
     parts.push(`<text x="${cx + 3}" y="${cy + 14}" font-family="sans-serif" font-size="11" fill="#FFFFFFCC">${i} ${blobTileLabel(i)}</text>`);
   }
   // Right: the complex room on a floor swatch (composeWallRoom computes the
@@ -113,18 +124,41 @@ let outDir = 'docs/previews';
 const ids: string[] = [];
 for (let i = 0; i < args.length; i++) {
   if (args[i] === '--out') outDir = args[++i];
-  else if (args[i] === '--primary') PALETTE.primary = args[++i];
-  else if (args[i] === '--secondary') PALETTE.secondary = args[++i];
+  else if (args[i] === '--primary') PALETTE_OVERRIDES.primary = args[++i];
+  else if (args[i] === '--secondary') PALETTE_OVERRIDES.secondary = args[++i];
   else ids.push(args[i]);
 }
-if (ids.length === 0) ids.push('office-wall', 'branded-wall', 'demising-wall');
+if (ids.length === 0) ids.push(...DEFAULT_OPAQUE_WALLS);
 
 const dir = resolve(process.cwd(), outDir);
 mkdirSync(dir, { recursive: true });
+const indexItems: string[] = [];
 for (const id of ids) {
   const svg = sheetFor(id);
-  const png = new Resvg(svg, { fitTo: { mode: 'zoom', value: 1.5 } }).render().asPng();
-  const file = join(dir, `wall-preview-${id}.png`);
-  writeFileSync(file, png);
-  console.log(`wrote ${file}`);
+  const base = `wall-preview-${id}`;
+  const svgFile = join(dir, `${base}.svg`);
+  const pngFile = join(dir, `${base}.png`);
+  writeFileSync(svgFile, svg);
+  writeFileSync(pngFile, new Resvg(svg).render().asPng());
+  // The SVG intentionally contains one clipped viewport per runtime tile.
+  // Fractionally scaling that nested SVG in a browser independently antialiases
+  // the viewports and creates false hairline seams. Display the already-composed
+  // raster in the review index; retain the SVG as the scalable source/download.
+  indexItems.push(
+    `<figure><figcaption>${id} · <a href="${base}.svg">SVG source</a></figcaption>` +
+    `<img src="${base}.png" loading="lazy" decoding="async" alt="${id} 47-tile and complex-room proof"></figure>`,
+  );
+  console.log(`wrote ${svgFile}`);
+  console.log(`wrote ${pngFile}`);
 }
+
+const indexFile = join(dir, 'wall-preview-opaque-walls.html');
+writeFileSync(
+  indexFile,
+  '<!doctype html><meta charset="utf-8"><title>Opaque wall promotion proof</title>' +
+  '<style>html{background:#222;color:#eee;font-family:sans-serif}body{margin:24px}' +
+  'figure{margin:0 0 32px}figcaption{font-size:20px;margin-bottom:8px}' +
+  'a{color:#9ecbff}img{display:block;max-width:100%;height:auto;background:#fff}</style>' +
+  indexItems.join(''),
+);
+console.log(`wrote ${indexFile}`);
