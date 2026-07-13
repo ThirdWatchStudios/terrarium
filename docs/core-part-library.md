@@ -416,6 +416,39 @@ templates (Tier 1/2 below); escalate to authored only where signature:
 Carryover characters need **no new part class** — they are recipes over this
 alphabet, plus sim-side behavioral authoring (ADR-0003).
 
+### 9. Exterior flora — wild-field starter kit
+
+The first exterior review pass bakes twelve readable wild-flora silhouettes
+plus five field-surface instances. Silhouette families are deliberately
+authored; texture scatter, palette, and seed-level micro-variation stay
+procedural. Mature trees and saplings are tall, front-facing elevation props;
+shrubs and herbaceous patches are low, plan-projected field cover.
+
+| Family | Stable exported ids | Backing template / role | Status |
+|---|---|---|---|
+| Mature trees | `prop-tree`, `prop-tree-b`, `prop-tree-upright`, `prop-tree-conifer` | Elevation `tree-canopy`; broad, spreading/asymmetric, upright, conifer | [x] |
+| Saplings / understory | `prop-tree-sapling`, `prop-tree-sapling-b` | Elevation `tree-sapling`; single-crown and multi-stem reads | [x] |
+| Wild shrubs | `prop-bush-cluster`, `prop-bush-bramble`, `prop-bush-low` | Plan `bush-cluster`; dense, loose/bramble, low-spreading | [x] |
+| Herbaceous patches | `prop-wildflower-patch`, `prop-tall-grass-clump`, `prop-bracken-patch` | Plan `wildflower-patch`, `tall-grass-clump`, `bracken-patch` | [x] |
+| Field ground | `ground-grass`, `ground-grass-b`, `ground-grass-c`, `ground-meadow`, `ground-meadow-b` | Curated generator instances that break large-field cadence | [x] |
+| Rock accent | `prop-boulder` | Existing `boulder`; retained outside the twelve-flora count | [x] |
+
+Stable instance ids are intentional even where several share a template:
+Terrarium owns the generator's parameter/seed range, but Unity receives baked
+sprites. Exporting a curated set gives runtime scatter deterministic variety
+without porting the art generator.
+
+The wild grammar is asymmetrical crowns, broken edges, irregular negative
+space, and uneven clusters. The later landscaped grammar is a separate kit:
+clipped masses, deliberate geometry, repeated rhythm, and explicit bed/edge
+shapes. Do not turn these wild ids into garden forms; add ornamental trees,
+clipped/flowering shrubs, ornamental grass, groundcover, flower beds, connected
+hedges, mulch, and edging under new stable ids after this field kit is approved.
+
+This is additive art inventory only — no payload/schema migration. Unity
+scatter/import-catalog adoption is deferred until visual approval, and these
+non-placeable props remain outside `facility-catalog.json`.
+
 ## Props: three tiers, not two
 
 | Tier | Definition | Examples |
