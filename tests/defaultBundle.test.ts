@@ -236,11 +236,20 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     expect(gm.tileable).toBe(true);
     // The bare-lot surfaces (grass / asphalt / …) are present as ground, and NO
     // ground surface leaked into the interior floors/ folder.
-    const groundTemplates = new Set(
-      [...paths]
-        .filter((p) => /^ground\/.+\/ground\.json$/.test(p))
-        .map((p) => JSON.parse(json.get(p)!).templateId),
-    );
+    const groundRecords = [...paths]
+      .filter((p) => /^ground\/.+\/ground\.json$/.test(p))
+      .map((p) => JSON.parse(json.get(p)!));
+    expect(groundRecords.map(({ id }) => id), 'exported ground inventory/order').toEqual([
+      'ground-grass',
+      'ground-grass-b',
+      'ground-grass-c',
+      'ground-meadow',
+      'ground-meadow-b',
+      'ground-dirt',
+      'ground-asphalt',
+      'ground-sidewalk',
+    ]);
+    const groundTemplates = new Set(groundRecords.map(({ templateId }) => templateId));
     for (const surface of ['grass', 'meadow', 'asphalt']) {
       expect(groundTemplates.has(surface), `ground kind missing surface "${surface}"`).toBe(true);
     }
@@ -251,6 +260,36 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     );
     expect([...floorTemplates].some((t) => ['grass', 'meadow', 'dirt', 'asphalt', 'sidewalk'].includes(t as string)),
       'a ground surface leaked into interior floors/').toBe(false);
+
+    // The empty-field package ships twelve curated flora silhouettes, in the
+    // same stable family order as DEFAULT_PROPS. These are distinct baked
+    // instances even where several share one procedural template.
+    const floraTemplates = new Set([
+      'tree-canopy',
+      'tree-sapling',
+      'bush-cluster',
+      'wildflower-patch',
+      'tall-grass-clump',
+      'bracken-patch',
+    ]);
+    const exportedFlora = [...paths]
+      .filter((p) => /^props\/.+\/prop\.json$/.test(p))
+      .map((p) => JSON.parse(json.get(p)!))
+      .filter(({ templateId }) => floraTemplates.has(templateId));
+    expect(exportedFlora.map(({ id }) => id), 'exported flora inventory/order').toEqual([
+      'prop-tree',
+      'prop-tree-b',
+      'prop-tree-upright',
+      'prop-tree-conifer',
+      'prop-tree-sapling',
+      'prop-tree-sapling-b',
+      'prop-bush-cluster',
+      'prop-bush-bramble',
+      'prop-bush-low',
+      'prop-wildflower-patch',
+      'prop-tall-grass-clump',
+      'prop-bracken-patch',
+    ]);
   });
 
   it('ships the grass-fringe transition overlay on the shared 47-blob contract', async () => {

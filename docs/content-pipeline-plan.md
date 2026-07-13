@@ -304,7 +304,7 @@ export log.
 The sim's office-builder pivot (2026-07-05/07) defines what Terrarium supplies;
 source of truth: sim `docs/design/terrarium-office-builder-assets.md`, amended by
 sim `docs/design/iris-installation-unit-and-tutorial.md` for the locked IRIS
-hardware/crew direction. Status as of 2026-07-10:
+hardware/crew direction. Status as of 2026-07-11:
 
 **Done (code landed):** grid footprints `{w,h}` + sub-cell pivots on
 `PropTemplate`; `facility-catalog.json` export; build-site assets (outdoor
@@ -320,9 +320,51 @@ later silhouette/detail polish is an asset pass, not contract or schema work.
 The locked 2026-07-08 IRIS apparatus command chain supersedes the earlier B1.5
 human construction-worker art proposal: IRIS's construction crew are robots.
 
+**Wild-field flora art slice (2026-07-11):** the outdoor vocabulary now has
+twelve curated flora silhouettes rather than asking palette/seed changes to do
+all of the recognition work:
+
+- Mature trees (elevation/front-facing): `prop-tree`, `prop-tree-b`,
+  `prop-tree-upright`, `prop-tree-conifer`.
+- Saplings/understory (elevation/front-facing): `prop-tree-sapling`,
+  `prop-tree-sapling-b`.
+- Shrubs (plan-projected): `prop-bush-cluster`, `prop-bush-bramble`,
+  `prop-bush-low`.
+- Herbaceous patches (plan-projected): `prop-wildflower-patch`,
+  `prop-tall-grass-clump`, `prop-bracken-patch`.
+- Field surfaces: `ground-grass`, `ground-grass-b`, `ground-grass-c` and
+  `ground-meadow`, `ground-meadow-b`. The existing `ground-dirt`, paved
+  surfaces, and `prop-boulder` remain in the exterior kit.
+
+The art split follows the wall lesson: deliberately author the silhouette
+profiles, but leave small lobe/blade scatter, palette changes, and seed-derived
+micro-variation procedural. Multiple stable ids may use one generator template
+because Unity consumes baked sprites, not Terrarium's live parameter range;
+curated exported instances are therefore the runtime variety contract.
+Trees and saplings must read as tall front-facing actors in the scene — visible
+trunk, crown above the ground pivot, and elevation sorting — while low shrubs,
+flowers, grass, and bracken remain overhead patches that hug the field plane.
+
+The two exterior grammars stay intentionally distinct:
+
+- **Wild:** asymmetrical crowns, broken contours, irregular negative space,
+  uneven clusters, and soft field transitions.
+- **Landscaped (future):** clipped masses, deliberate geometry, repeated
+  rhythm, and visible bed/edge shapes. A later garden starter kit can add the
+  ornamental flowering tree, clipped/flowering shrubs, ornamental grass,
+  groundcover, flower beds, connected hedge, mulch, and edging without
+  weakening the wild-field read.
+
+This slice is mechanically additive: it introduces no payload-shape change,
+migration, or schema bump. Unity scatter/import-catalog adoption remains a
+separate sync after visual approval; non-placeable nature props do not enter
+Terrarium's `facility-catalog.json`.
+
 **Open:**
 - Surveillance apparatus props (cameras, sensors — QuotaCo "tech you place");
   new templates, B4/B5 timing.
+- Landscaped garden starter kit and its bed/hedge vocabulary; keep it visually
+  separate from the wild-field family above.
 - QuotaCo-standard facility variants (sim Q5: mix of explicit paired templates
   for signature facilities + the clinical lens for ambient corporatization).
 - Carryover-character support: the authored-and-likable handful. Visual

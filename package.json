@@ -22,6 +22,7 @@
     "walls:preview": "tsx scripts/wallBevelPreview.ts",
     "walls:materials:preview": "tsx scripts/wallTilesetPreview.ts",
     "iris:preview": "tsx scripts/irisFamilyPreview.ts",
+    "flora:preview": "tsx scripts/floraFieldPreview.ts",
     "assets:check": "npm run parts:check && npm run walls:import:check"
   },
   "devDependencies": {

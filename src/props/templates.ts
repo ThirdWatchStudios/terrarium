@@ -2943,71 +2943,275 @@ const parkingLine: PropTemplate = {
 };
 
 // ---------------------------------------------------------------------------
-// Nature decor (lush-outside pass — D2 amendment). Plan-projected scenery for
-// the outdoor ground: the living things the build replaces. Same mechanics as
-// the cars (multi-cell footprints, NON_PLACEABLE in core/layout.ts, the sim
-// scatters them over the build site), but EXEMPT from the clinical drain
+// Nature decor (lush-outside pass — D2 amendment). Projection follows height:
+// trees/saplings are front-facing elevation art; low flora remains plan art.
+// All are NON_PLACEABLE scenery the sim scatters over the build site,
+// and all are EXEMPT from the clinical drain
 // (NATURE_PROP_TEMPLATE_IDS, core/look.ts) — nature stays saturated on the
 // plan, like people and the natural ground under it.
 // ---------------------------------------------------------------------------
 
-/** Push a seeded organic canopy seen from above: a dark under-canopy blob of
- *  overlapping lobes ($secondary, carries the silhouette/outline), a mid layer
- *  ($primary) shifted toward the light (NW), and small $accent highlight lobes
- *  on top. Shared by the mature tree and the sapling. */
-function canopy(shapes: ShapeSpec[], rng: () => number, lobes: number, spread: number, rMin: number, rMax: number): void {
-  const CXY = 64;
-  // soft baked ground shadow, offset SE (scenery decal — not the style's contact shadow)
-  shapes.push({ d: ellipse(CXY + 5, CXY + 6, spread + rMax * 0.9, (spread + rMax * 0.9) * 0.9), fill: '#00000022', silhouette: false });
-  // resolve every lobe before drawing so the three layers stack on the same skeleton
-  const pts: Array<{ x: number; y: number; r: number }> = [];
+interface FloraPoint {
+  x: number;
+  y: number;
+}
+
+function smoothBlobPath(
+  cx: number,
+  cy: number,
+  rx: number,
+  ry: number,
+  points: number,
+  rng: () => number,
+  jitter = 0.16,
+  rotation = 0,
+): string {
+  const ring: FloraPoint[] = [];
+  for (let i = 0; i < points; i++) {
+    const angle = rotation + (i / points) * Math.PI * 2;
+    const distance = 1 - jitter + rng() * jitter * 2;
+    ring.push({
+      x: cx + Math.cos(angle) * rx * distance,
+      y: cy + Math.sin(angle) * ry * distance,
+    });
+  }
+  const midpoint = (a: FloraPoint, b: FloraPoint): FloraPoint => ({
+    x: (a.x + b.x) / 2,
+    y: (a.y + b.y) / 2,
+  });
+  const start = midpoint(ring[ring.length - 1], ring[0]);
+  let d = `M ${start.x} ${start.y}`;
+  for (let i = 0; i < ring.length; i++) {
+    const next = midpoint(ring[i], ring[(i + 1) % ring.length]);
+    d += ` Q ${ring[i].x} ${ring[i].y} ${next.x} ${next.y}`;
+  }
+  return `${d} Z`;
+}
+
+function starPath(
+  cx: number,
+  cy: number,
+  outer: number,
+  inner: number,
+  points: number,
+  rotation: number,
+  rng?: () => number,
+  jitter = 0,
+): string {
+  const vertices: string[] = [];
+  for (let i = 0; i < points * 2; i++) {
+    const angle = rotation + (i / (points * 2)) * Math.PI * 2;
+    const baseRadius = i % 2 === 0 ? outer : inner;
+    const radius = baseRadius * (1 + ((rng?.() ?? 0.5) - 0.5) * jitter * 2);
+    vertices.push(`${cx + Math.cos(angle) * radius} ${cy + Math.sin(angle) * radius}`);
+  }
+  return `M ${vertices[0]} L ${vertices.slice(1).join(' L ')} Z`;
+}
+
+function pointedLeafPath(startX: number, startY: number, endX: number, endY: number, width: number): string {
+  const dx = endX - startX;
+  const dy = endY - startY;
+  const length = Math.max(1, Math.hypot(dx, dy));
+  const px = (-dy / length) * width;
+  const py = (dx / length) * width;
+  const midX = startX + dx * 0.55;
+  const midY = startY + dy * 0.55;
+  return (
+    `M ${startX} ${startY} ` +
+    `Q ${midX + px} ${midY + py} ${endX} ${endY} ` +
+    `Q ${midX - px} ${midY - py} ${startX} ${startY} Z`
+  );
+}
+
+function treeTrunk(shapes: ShapeSpec[], topY: number, bottomY: number, width: number, lean = 0): void {
+  const topX = CX + lean;
+  shapes.push({
+    d: (
+      `M ${topX - width * 0.38} ${topY} ` +
+      `Q ${CX - width * 0.58} ${(topY + bottomY) / 2} ${CX - width * 0.62} ${bottomY} ` +
+      `L ${CX + width * 0.62} ${bottomY} ` +
+      `Q ${CX + width * 0.52} ${(topY + bottomY) / 2} ${topX + width * 0.38} ${topY} Z`
+    ),
+    fill: '#6F5130',
+  });
+  shapes.push({
+    d: `M ${topX - width * 0.08} ${topY + 3} Q ${CX - width * 0.1} ${(topY + bottomY) / 2} ${CX - width * 0.16} ${bottomY - 3}`,
+    stroke: '#9A7448',
+    strokeWidth: Math.max(1.5, width * 0.18),
+    opacity: 0.76,
+    silhouette: false,
+  });
+}
+
+/** Front-facing/elevation tree crowns. Tall exterior objects follow the same
+ * register as filing cabinets and the IRIS workstation: crown above a visible
+ * trunk, rooted at the shared y=116 ground line. */
+function elevationBroadleaf(shapes: ShapeSpec[], rng: () => number, habit: number, lobes: number): void {
+  const spreading = habit === 1;
+  const upright = habit === 2;
+  const centerX = spreading ? 60 : 64;
+  const centerY = upright ? 48 : spreading ? 47 : 49;
+  const crownRx = upright ? 30 : spreading ? 55 : 47;
+  const crownRy = upright ? 43 : spreading ? 28 : 37;
+  const trunkTop = upright ? 66 : spreading ? 61 : 67;
+  treeTrunk(shapes, trunkTop, GROUND, upright ? 11 : 13, spreading ? -4 : 0);
+  shapes.push(
+    { d: `M ${CX - 2} ${trunkTop + 7} Q ${centerX - crownRx * 0.48} ${centerY + crownRy * 0.16} ${centerX - crownRx * 0.72} ${centerY + crownRy * 0.02}`, stroke: '#6F5130', strokeWidth: 4, silhouette: false },
+    { d: `M ${CX + 2} ${trunkTop + 5} Q ${centerX + crownRx * 0.42} ${centerY + crownRy * 0.18} ${centerX + crownRx * 0.68} ${centerY - crownRy * 0.02}`, stroke: '#6F5130', strokeWidth: 4, silhouette: false },
+  );
+
+  const crown = smoothBlobPath(centerX, centerY, crownRx, crownRy, upright ? 15 : 14, rng, upright ? 0.13 : 0.17, -0.08);
+  shapes.push({ d: crown, fill: '$secondary' });
+  const crownLobes: Array<{ x: number; y: number; rx: number; ry: number }> = [];
   for (let i = 0; i < lobes; i++) {
-    const a = (i / lobes) * Math.PI * 2 + (rng() - 0.5) * 0.7;
-    const d = spread * (0.75 + rng() * 0.5);
-    pts.push({ x: CXY + Math.cos(a) * d, y: CXY + Math.sin(a) * d, r: rMin + rng() * (rMax - rMin) });
+    const across = lobes <= 1 ? 0.5 : i / (lobes - 1);
+    const x = centerX - crownRx * 0.67 + across * crownRx * 1.34 + (rng() - 0.5) * 9;
+    const arch = Math.abs(across - 0.5) * 2;
+    const y = centerY - crownRy * (0.15 + (1 - arch) * 0.22) + (rng() - 0.5) * 9;
+    crownLobes.push({
+      x,
+      y,
+      rx: 12 + rng() * (upright ? 6 : 9),
+      ry: 11 + rng() * (upright ? 9 : 7),
+    });
   }
-  // under-canopy: the dark mass whose union is the tree's outline
-  for (const p of pts) shapes.push({ d: circle(p.x, p.y, p.r), fill: '$secondary' });
-  shapes.push({ d: circle(CXY, CXY, spread + rMin * 0.6), fill: '$secondary' });
-  // mid canopy, shifted toward the light
-  for (const p of pts) shapes.push({ d: circle(p.x - 3, p.y - 4, p.r * 0.82), fill: '$primary', silhouette: false });
-  shapes.push({ d: circle(CXY - 3, CXY - 4, spread + rMin * 0.35), fill: '$primary', silhouette: false });
-  // highlight lobes on the lit side (every other lobe keeps it clumpy, not striped)
-  for (let i = 0; i < pts.length; i += 2) {
-    const p = pts[i];
-    shapes.push({ d: circle(p.x - 6, p.y - 7, p.r * 0.45), fill: '$accent', opacity: 0.85, silhouette: false });
+  for (const lobe of crownLobes) {
+    shapes.push({ d: ellipse(lobe.x, lobe.y, lobe.rx, lobe.ry), fill: '$primary', silhouette: false });
   }
-  shapes.push({ d: circle(CXY - 7, CXY - 8, spread * 0.45), fill: '$accent', opacity: 0.7, silhouette: false });
+  shapes.push({
+    d: smoothBlobPath(centerX - 4, centerY - 6, crownRx * 0.62, crownRy * 0.56, 11, rng, 0.16),
+    fill: '$primary',
+    opacity: 0.82,
+    silhouette: false,
+  });
+  for (let i = 0; i < crownLobes.length; i += 2) {
+    const lobe = crownLobes[i];
+    shapes.push({
+      d: ellipse(lobe.x - 4, lobe.y - 6, lobe.rx * 0.38, lobe.ry * 0.38),
+      fill: '$accent',
+      opacity: 0.78,
+      silhouette: false,
+    });
+  }
+}
+
+function elevationConifer(shapes: ShapeSpec[], rng: () => number): void {
+  treeTrunk(shapes, 76, GROUND, 10);
+  const left = 18 + rng() * 4;
+  const right = 110 - rng() * 4;
+  shapes.push({
+    d: (
+      `M ${CX} 8 ` +
+      `L ${CX + 18} 38 L ${CX + 10} 38 ` +
+      `L ${CX + 31} 64 L ${CX + 20} 64 ` +
+      `L ${right} 92 L ${CX + 10} 86 ` +
+      `L ${CX - 10} 86 L ${left} 92 ` +
+      `L ${CX - 20} 64 L ${CX - 31} 64 ` +
+      `L ${CX - 10} 38 L ${CX - 18} 38 Z`
+    ),
+    fill: '$secondary',
+  });
+  shapes.push({
+    d: 'M 62 17 L 75 40 L 69 40 L 85 61 L 77 61 L 94 82 L 64 76 L 38 83 L 51 61 L 44 61 L 58 40 L 52 40 Z',
+    fill: '$primary',
+    silhouette: false,
+  });
+  shapes.push({
+    d: 'M 58 27 L 68 27 L 62 42 L 74 48 L 61 53 L 72 65 L 55 63 L 49 72 L 45 57 L 52 49 L 48 40 Z',
+    fill: '$accent',
+    opacity: 0.72,
+    silhouette: false,
+  });
 }
 
 const treeCanopy: PropTemplate = {
   id: 'tree-canopy',
   label: 'Tree',
-  projection: 'plan',
-  // a mature canopy shades a 3×3 block
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 42, ry: 6 },
+  // A mature crown shades a 3×3 block even though its sprite is elevation art.
   gridFootprint: { w: 3, h: 3 },
   params: [
+    { key: 'habit', label: 'Crown habit', min: 0, max: 3, step: 1, default: 0 },
     { key: 'lobes', label: 'Lobes', min: 5, max: 9, step: 1, default: 7 },
     { key: 'seed', label: 'Shape seed', min: 1, max: 9, step: 1, default: 3 },
   ],
   build(params) {
     const shapes: ShapeSpec[] = [];
-    const rng = mulberry32((params.seed ?? 3) * 15053);
-    canopy(shapes, rng, params.lobes ?? 7, 22, 15, 23);
+    // Pre-flora-kit saves have no habit field. Preserve the original warm-tree
+    // instance (lobes 6 / seed 7) as the spreading crown instead of silently
+    // collapsing it onto the broad default.
+    const habit = params.habit === undefined
+      ? ((params.lobes ?? 7) === 6 && (params.seed ?? 3) === 7 ? 1 : 0)
+      : Math.round(params.habit);
+    const rng = mulberry32((params.seed ?? 3) * 15053 + habit * 7919);
+    const lobes = params.lobes ?? 7;
+    if (habit === 3) elevationConifer(shapes, rng);
+    else elevationBroadleaf(shapes, rng, habit, habit === 2 ? Math.max(5, lobes - 1) : lobes);
     return shapes;
   },
 };
 
+function elevationMultiStemSapling(shapes: ShapeSpec[], rng: () => number): void {
+  const crowns = [
+    { x: 48, y: 57, rx: 16, ry: 18 },
+    { x: 64, y: 43, rx: 17, ry: 18 },
+    { x: 81, y: 59, rx: 15, ry: 17 },
+  ].map((crown) => ({
+    ...crown,
+    x: crown.x + (rng() - 0.5) * 5,
+    y: crown.y + (rng() - 0.5) * 5,
+  }));
+  shapes.push(
+    { d: `M ${CX - 5} ${GROUND} Q ${CX - 7} 78 ${crowns[0].x} ${crowns[0].y + 8}`, stroke: '#6F5130', strokeWidth: 5, silhouette: true },
+    { d: `M ${CX} ${GROUND} Q ${CX} 72 ${crowns[1].x} ${crowns[1].y + 8}`, stroke: '#6F5130', strokeWidth: 5, silhouette: true },
+    { d: `M ${CX + 5} ${GROUND} Q ${CX + 8} 80 ${crowns[2].x} ${crowns[2].y + 8}`, stroke: '#6F5130', strokeWidth: 5, silhouette: true },
+  );
+  for (const crown of crowns) {
+    shapes.push({ d: ellipse(crown.x, crown.y, crown.rx, crown.ry), fill: '$secondary' });
+  }
+  for (const crown of crowns) {
+    shapes.push({
+      d: ellipse(crown.x - 2.5, crown.y - 3, crown.rx * 0.72, crown.ry * 0.72),
+      fill: '$primary',
+      silhouette: false,
+    });
+  }
+  for (const crown of crowns) {
+    shapes.push({
+      d: ellipse(crown.x - 5, crown.y - 6, crown.rx * 0.34, crown.ry * 0.34),
+      fill: '$accent',
+      opacity: 0.82,
+      silhouette: false,
+    });
+  }
+}
+
 const treeSapling: PropTemplate = {
   id: 'tree-sapling',
   label: 'Sapling',
-  projection: 'plan',
+  projection: 'elevation',
+  footprint: { cx: CX, cy: 117, rx: 25, ry: 4 },
   gridFootprint: { w: 2, h: 2 },
-  params: [{ key: 'seed', label: 'Shape seed', min: 1, max: 9, step: 1, default: 5 }],
+  params: [
+    { key: 'habit', label: 'Growth habit', min: 0, max: 1, step: 1, default: 0 },
+    { key: 'seed', label: 'Shape seed', min: 1, max: 9, step: 1, default: 5 },
+  ],
   build(params) {
     const shapes: ShapeSpec[] = [];
-    const rng = mulberry32((params.seed ?? 5) * 26041);
-    canopy(shapes, rng, 5, 13, 9, 14);
+    const habit = Math.round(params.habit ?? 0);
+    const rng = mulberry32((params.seed ?? 5) * 26041 + habit * 6553);
+    if (habit === 1) {
+      elevationMultiStemSapling(shapes, rng);
+    } else {
+      treeTrunk(shapes, 70, GROUND, 8, -1);
+      shapes.push({ d: smoothBlobPath(CX - 2, 55, 29, 27, 12, rng, 0.18), fill: '$secondary' });
+      shapes.push({ d: smoothBlobPath(CX - 5, 50, 22, 19, 10, rng, 0.16), fill: '$primary', silhouette: false });
+      shapes.push(
+        { d: ellipse(51, 43, 7, 6), fill: '$accent', opacity: 0.78, silhouette: false },
+        { d: ellipse(65, 38, 6, 7), fill: '$accent', opacity: 0.72, silhouette: false },
+      );
+    }
     return shapes;
   },
 };
@@ -3019,30 +3223,58 @@ const bushCluster: PropTemplate = {
   // a low run of shrubs, 2 cells long
   gridFootprint: { w: 2, h: 1 },
   params: [
+    { key: 'habit', label: 'Shrub habit', min: 0, max: 2, step: 1, default: 0 },
     { key: 'bushes', label: 'Bushes', min: 2, max: 4, step: 1, default: 3 },
     { key: 'seed', label: 'Shape seed', min: 1, max: 9, step: 1, default: 2 },
   ],
   build(params) {
-    const rng = mulberry32((params.seed ?? 2) * 33997);
+    const habit = Math.round(params.habit ?? 0);
+    const rng = mulberry32((params.seed ?? 2) * 33997 + habit * 9151);
     const n = params.bushes ?? 3;
-    // resolve all bushes first, then paint layer-by-layer across the whole
-    // cluster (shadows, bases, mids, highlights) — overlapping bushes merge
-    // into one shrub mass, and the re-tintable layer atlas stays at one run
-    // per bucket instead of one per bush (runLayers splits on alternation).
-    const bushes: Array<{ x: number; y: number; r: number }> = [];
-    for (let i = 0; i < n; i++) {
-      bushes.push({
-        // tight spacing so neighbouring bushes overlap into one shrub mass
-        x: 30 + (i / (n - 1 || 1)) * 68 + (rng() - 0.5) * 8,
-        y: 60 + (rng() - 0.5) * 14,
-        r: 15 + rng() * 6,
-      });
-    }
     const shapes: ShapeSpec[] = [];
-    for (const b of bushes) shapes.push({ d: ellipse(b.x + 3, b.y + 4, b.r, b.r * 0.85), fill: '#00000022', silhouette: false });
-    for (const b of bushes) shapes.push({ d: circle(b.x, b.y, b.r), fill: '$secondary' });
-    for (const b of bushes) shapes.push({ d: circle(b.x - 3, b.y - 4, b.r * 0.75), fill: '$primary', silhouette: false });
-    for (const b of bushes) shapes.push({ d: circle(b.x - b.r * 0.35, b.y - b.r * 0.4, b.r * 0.35), fill: '$accent', opacity: 0.8, silhouette: false });
+    if (habit === 1) {
+      const lobes = Array.from({ length: n + 3 }, (_, index) => {
+        const angle = (index / (n + 3)) * Math.PI * 2 + (rng() - 0.5) * 0.7;
+        const distance = 12 + rng() * 22;
+        return {
+          x: CX + Math.cos(angle) * distance * 1.45,
+          y: CX + Math.sin(angle) * distance * 0.72,
+          r: 11 + rng() * 7,
+        };
+      });
+      shapes.push({ d: ellipse(CX + 4, CX + 6, 48, 26), fill: '#00000022', silhouette: false });
+      shapes.push({ d: smoothBlobPath(CX, CX, 39, 20, 12, rng, 0.26), fill: '$secondary' });
+      for (const lobe of lobes) shapes.push({ d: circle(lobe.x, lobe.y, lobe.r), fill: '$secondary' });
+      for (const lobe of lobes) shapes.push({ d: circle(lobe.x - 2, lobe.y - 3, lobe.r * 0.7), fill: '$primary', silhouette: false });
+      for (let i = 0; i < lobes.length; i += 2) {
+        const lobe = lobes[i];
+        shapes.push({ d: circle(lobe.x - 4, lobe.y - 5, lobe.r * 0.3), fill: '$accent', opacity: 0.78, silhouette: false });
+      }
+    } else {
+      const low = habit === 2;
+      const base = smoothBlobPath(CX, CX, low ? 49 : 46, low ? 18 : 23, low ? 14 : 12, rng, low ? 0.24 : 0.2, 0.15);
+      shapes.push({ d: ellipse(CX + 4, CX + 6, low ? 50 : 47, low ? 20 : 25), fill: '#00000022', silhouette: false });
+      shapes.push({ d: base, fill: '$secondary' });
+      const highlights = low ? 5 : Math.max(5, n + 2);
+      if (low) {
+        shapes.push({
+          d: smoothBlobPath(CX - 3, CX - 4, 43, 13, 13, rng, 0.22, 0.2),
+          fill: '$primary',
+          silhouette: false,
+        });
+      } else {
+        for (let i = 0; i < highlights; i++) {
+          const x = 31 + (i / Math.max(1, highlights - 1)) * 66 + (rng() - 0.5) * 8;
+          const y = CX - 3 + (rng() - 0.5) * 20;
+          shapes.push({ d: ellipse(x, y, 12 + rng() * 4, 9 + rng() * 4), fill: '$primary', silhouette: false });
+        }
+      }
+      for (let i = 0; i < highlights; i++) {
+        const x = 32 + (i / Math.max(1, highlights - 1)) * 62 + (rng() - 0.5) * 6;
+        const y = CX - 6 + (rng() - 0.5) * (low ? 10 : 17);
+        shapes.push({ d: ellipse(x, y, low ? 7 : 6, low ? 4.5 : 5), fill: '$accent', opacity: 0.7, silhouette: false });
+      }
+    }
     return shapes;
   },
 };
@@ -3059,27 +3291,136 @@ const wildflowerPatch: PropTemplate = {
   ],
   build(params) {
     const rng = mulberry32((params.seed ?? 6) * 47057);
-    // grouped by bucket in paint order ($secondary tufts, $accent counter-blades,
-    // then the literal-hex flowers) so the layer atlas stays at 3 runs — an
-    // interleaved emit would split into one layer per tuft (runLayers).
     const shapes: ShapeSpec[] = [];
-    const tufts = (params.density ?? 2) * 8;
+    const density = params.density ?? 2;
+    for (const patch of [
+      { x: 47, y: 61, rx: 27, ry: 20 },
+      { x: 74, y: 56, rx: 25, ry: 18 },
+      { x: 67, y: 78, rx: 28, ry: 17 },
+    ]) {
+      shapes.push({
+        d: smoothBlobPath(patch.x, patch.y, patch.rx, patch.ry, 10, rng, 0.28, rng() * 0.4),
+        fill: '$secondary',
+        opacity: 0.17,
+        silhouette: false,
+      });
+    }
+    const tufts = density * 10;
     const blades: Array<{ x: number; y: number; h: number; lean: number }> = [];
     for (let i = 0; i < tufts; i++) {
-      // two rngs averaged → clusters toward the middle, feathered edge
       blades.push({ x: (rng() + rng()) * 64, y: (rng() + rng()) * 64, h: 4 + rng() * 4, lean: (rng() - 0.5) * 5 });
     }
-    for (const b of blades) shapes.push({ d: `M ${b.x} ${b.y} L ${b.x + b.lean} ${b.y - b.h}`, stroke: '$secondary', strokeWidth: 1.5, opacity: 0.7, silhouette: false });
-    for (const b of blades) shapes.push({ d: `M ${b.x + 2} ${b.y} L ${b.x + 2 - b.lean} ${b.y - b.h * 0.8}`, stroke: '$accent', strokeWidth: 1.3, opacity: 0.65, silhouette: false });
-    const flowers = (params.density ?? 2) * 7;
+    for (const blade of blades) {
+      shapes.push({ d: `M ${blade.x} ${blade.y} L ${blade.x + blade.lean} ${blade.y - blade.h}`, stroke: '$primary', strokeWidth: 1.8, opacity: 0.78, silhouette: false });
+    }
+    const flowers = density * 9;
+    const literalFlowers: ShapeSpec[] = [];
     for (let i = 0; i < flowers; i++) {
       const x = (rng() + rng()) * 64;
       const y = (rng() + rng()) * 64;
-      const r = 1.6 + rng() * 1.2;
-      const hue = FLOWER_HUES[Math.floor(rng() * FLOWER_HUES.length)];
-      shapes.push({ d: circle(x, y, r), fill: hue, opacity: 0.95, silhouette: false });
-      if (hue === FLOWER_HUES[0]) shapes.push({ d: circle(x, y, r * 0.4), fill: FLOWER_HUES[1], silhouette: false });
+      const radius = 2.1 + rng() * 1.4;
+      if (i % 3 === 1) {
+        shapes.push({ d: circle(x, y, radius), fill: '$accent', opacity: 0.94, silhouette: false });
+      } else {
+        const hue = i % 3 === 2 ? FLOWER_HUES[1] : (i % 2 === 0 ? FLOWER_HUES[0] : FLOWER_HUES[2]);
+        literalFlowers.push({ d: circle(x, y, radius), fill: hue, opacity: 0.96, silhouette: false });
+      }
     }
+    shapes.push(...literalFlowers);
+    return shapes;
+  },
+};
+
+const tallGrassClump: PropTemplate = {
+  id: 'tall-grass-clump',
+  label: 'Tall grass clump',
+  projection: 'plan',
+  gridFootprint: { w: 1, h: 1 },
+  params: [
+    { key: 'density', label: 'Density', min: 1, max: 3, step: 1, default: 2 },
+    { key: 'seed', label: 'Pattern seed', min: 1, max: 9, step: 1, default: 4 },
+  ],
+  build(params) {
+    const rng = mulberry32((params.seed ?? 4) * 57037);
+    const density = params.density ?? 2;
+    const rotation = -Math.PI / 2 + (rng() - 0.5) * 0.35;
+    const shapes: ShapeSpec[] = [
+      { d: ellipse(CX + 4, CX + 6, 29, 21), fill: '#00000022', silhouette: false },
+      { d: starPath(CX, CX, 31, 17, 9, rotation, rng, 0.24), fill: '$secondary' },
+    ];
+    const blades: Array<{ x: number; y: number; tx: number; ty: number; accent: boolean }> = [];
+    for (let i = 0; i < density * 12; i++) {
+      const angle = rng() * Math.PI * 2;
+      const rootRadius = rng() * 15;
+      const length = 13 + rng() * 15;
+      blades.push({
+        x: CX + Math.cos(angle) * rootRadius,
+        y: CX + Math.sin(angle) * rootRadius * 0.72,
+        tx: CX + Math.cos(angle) * (rootRadius + length),
+        ty: CX + Math.sin(angle) * (rootRadius + length) * 0.72,
+        accent: i % 3 === 0,
+      });
+    }
+    for (const blade of blades.filter(({ accent }) => !accent)) {
+      shapes.push({ d: `M ${blade.x} ${blade.y} Q ${CX} ${CX} ${blade.tx} ${blade.ty}`, stroke: '$primary', strokeWidth: 2.2, opacity: 0.82, silhouette: false });
+    }
+    for (const blade of blades.filter(({ accent }) => accent)) {
+      shapes.push({ d: `M ${blade.x} ${blade.y} Q ${CX} ${CX} ${blade.tx} ${blade.ty}`, stroke: '$accent', strokeWidth: 2, opacity: 0.78, silhouette: false });
+    }
+    for (const blade of blades.filter(({ accent }) => accent).slice(0, 4)) {
+      shapes.push({ d: ellipse(blade.tx, blade.ty, 1.7, 2.8), fill: '#D9C87A', opacity: 0.84, silhouette: false });
+    }
+    return shapes;
+  },
+};
+
+const brackenPatch: PropTemplate = {
+  id: 'bracken-patch',
+  label: 'Bracken patch',
+  projection: 'plan',
+  gridFootprint: { w: 2, h: 1 },
+  params: [
+    { key: 'fronds', label: 'Fronds', min: 4, max: 7, step: 1, default: 6 },
+    { key: 'seed', label: 'Pattern seed', min: 1, max: 9, step: 1, default: 7 },
+  ],
+  build(params) {
+    const rng = mulberry32((params.seed ?? 7) * 64007);
+    const fronds = params.fronds ?? 6;
+    const shapes: ShapeSpec[] = [
+      { d: ellipse(CX + 4, CX + 6, 46, 25), fill: '#00000022', silhouette: false },
+    ];
+    const geometry: Array<{ angle: number; endX: number; endY: number; width: number }> = [];
+    for (let i = 0; i < fronds; i++) {
+      const angle = -Math.PI + (i / Math.max(1, fronds - 1)) * Math.PI * 2 + (rng() - 0.5) * 0.3;
+      const length = 25 + rng() * 13;
+      geometry.push({
+        angle,
+        endX: CX + Math.cos(angle) * length * 1.2,
+        endY: CX + Math.sin(angle) * length * 0.5,
+        width: 6 + rng() * 2.5,
+      });
+    }
+    for (const frond of geometry) {
+      shapes.push({ d: pointedLeafPath(CX, CX, frond.endX, frond.endY, frond.width), fill: '$secondary' });
+    }
+    shapes.push({ d: circle(CX, CX, 8), fill: '$secondary' });
+    const leaflets: ShapeSpec[] = [];
+    const stems: ShapeSpec[] = [];
+    for (const frond of geometry) {
+      stems.push({ d: `M ${CX} ${CX} L ${frond.endX} ${frond.endY}`, stroke: '$accent', strokeWidth: 1.8, opacity: 0.78, silhouette: false });
+      for (let step = 1; step <= 4; step++) {
+        const t = step / 5;
+        const x = CX + (frond.endX - CX) * t;
+        const y = CX + (frond.endY - CX) * t;
+        const px = -Math.sin(frond.angle) * (4.5 - step * 0.35);
+        const py = Math.cos(frond.angle) * (3.2 - step * 0.2);
+        leaflets.push(
+          { d: ellipse(x + px, y + py, 4.4, 2.6), fill: '$primary', silhouette: false },
+          { d: ellipse(x - px, y - py, 4.4, 2.6), fill: '$primary', silhouette: false },
+        );
+      }
+    }
+    shapes.push(...leaflets, ...stems);
     return shapes;
   },
 };
@@ -3119,7 +3460,15 @@ const boulder: PropTemplate = {
 /** Nature decor template ids — EXEMPT from the clinical drain (core/look.ts),
  *  mirroring NATURAL_GROUND_TEMPLATE_IDS: under the clinical look these stay
  *  saturated while the office (and the cars, and the paved lot) drains. */
-export const NATURE_PROP_TEMPLATE_IDS = ['tree-canopy', 'tree-sapling', 'bush-cluster', 'wildflower-patch', 'boulder'] as const;
+export const NATURE_PROP_TEMPLATE_IDS = [
+  'tree-canopy',
+  'tree-sapling',
+  'bush-cluster',
+  'wildflower-patch',
+  'tall-grass-clump',
+  'bracken-patch',
+  'boulder',
+] as const;
 
 export const PROP_TEMPLATES: PropTemplate[] = [
   waterCooler,
@@ -3208,5 +3557,7 @@ export const PROP_TEMPLATES: PropTemplate[] = [
   treeSapling,
   bushCluster,
   wildflowerPatch,
+  tallGrassClump,
+  brackenPatch,
   boulder,
 ];

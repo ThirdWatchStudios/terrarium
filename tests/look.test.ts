@@ -66,7 +66,14 @@ describe('project look — a reproducible, non-destructive lens', () => {
     const lensed = projectWithLook(raw);
     const ground = (p: ProjectState, id: string) => p.ground!.find((g) => g.id === id)!.palette;
     // Nature is TRUTH: grass / meadow / dirt keep their saturated authored palettes.
-    for (const id of ['ground-grass', 'ground-grass-b', 'ground-meadow', 'ground-dirt']) {
+    for (const id of [
+      'ground-grass',
+      'ground-grass-b',
+      'ground-grass-c',
+      'ground-meadow',
+      'ground-meadow-b',
+      'ground-dirt',
+    ]) {
       expect(ground(lensed, id), `natural ground "${id}" must not drain`).toEqual(ground(raw, id));
     }
     // The paved lot is the focus-grouped output and drains with the building.
@@ -81,7 +88,21 @@ describe('project look — a reproducible, non-destructive lens', () => {
     const lensed = projectWithLook(raw);
     const prop = (p: ProjectState, id: string) => p.props.find((x) => x.id === id)!.palette;
     // Trees / bushes / flowers / boulders are nature — TRUTH, exempt like people.
-    for (const id of ['prop-tree', 'prop-tree-b', 'prop-tree-sapling', 'prop-bush-cluster', 'prop-wildflower-patch', 'prop-boulder']) {
+    for (const id of [
+      'prop-tree',
+      'prop-tree-b',
+      'prop-tree-upright',
+      'prop-tree-conifer',
+      'prop-tree-sapling',
+      'prop-tree-sapling-b',
+      'prop-bush-cluster',
+      'prop-bush-bramble',
+      'prop-bush-low',
+      'prop-wildflower-patch',
+      'prop-tall-grass-clump',
+      'prop-bracken-patch',
+      'prop-boulder',
+    ]) {
       expect(prop(lensed, id), `nature prop "${id}" must not drain`).toEqual(prop(raw, id));
     }
     // The cars are the office's world and drain like any other prop.
