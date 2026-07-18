@@ -224,6 +224,23 @@ not the human part alphabet. The set is mechanically complete and received a
 shared visual refinement pass on 2026-07-10; its current silhouette/detail
 language remains intentionally iterative rather than frozen final art.
 
+### 2c. Cafeteria service staff — special recipe-only parts
+
+- [x] `outfit-service-apron`: body-anchor-driven bib apron over a tee; the
+      apron uses `$outfitPrimary` and the tee/sleeve field uses
+      `$outfitSecondary` across every production body and facing.
+- [x] `acc-hairnet`: translucent head-center overlay above the hair layer; its
+      outline/net mesh opts out of silhouette generation so every underlying
+      hairstyle remains readable.
+
+Both ids are resolvable by the code-owned `kitchen-worker` recipe in
+`KITCHEN_STAFF`, but are filtered by `NON_SELECTABLE_PART_IDS` from ordinary
+pickers and random/seeded employee generation. The recipe remains outside
+`DEFAULT_CAST` because cafeteria staff are non-desk occupants. This v1 adds no
+poses or animation frames and does not introduce a new staff export folder;
+the sim-owned campus population lane binds staff when its stable config id is
+ratified.
+
 ### 3. Hair — organized as families (design system)
 
 Families organize the library and guide future expansion; they are **not** a

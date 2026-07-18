@@ -2943,6 +2943,685 @@ const parkingLine: PropTemplate = {
 };
 
 // ---------------------------------------------------------------------------
+// Corporate-campus parking kit (CE-21). Lot markings are flat painted terrain
+// decals (never silhouette-bearing); fixtures and vehicles remain ordinary
+// static props. Cars keep their body shell on $primary for per-instance tinting.
+// ---------------------------------------------------------------------------
+
+const lotMarkingAccessible: PropTemplate = {
+  id: 'lot-marking-accessible',
+  label: 'Accessible-stall marking',
+  projection: 'plan',
+  gridFootprint: { w: 2, h: 2 },
+  params: [],
+  build() {
+    return [
+      { d: circle(62, 32, 8), fill: '$primary', opacity: 0.86, silhouette: false },
+      {
+        d: 'M 60 43 L 56 68 L 75 68 L 87 91',
+        stroke: '$primary',
+        strokeWidth: 7,
+        opacity: 0.86,
+        silhouette: false,
+      },
+      {
+        d: 'M 58 51 L 78 51',
+        stroke: '$primary',
+        strokeWidth: 6,
+        opacity: 0.86,
+        silhouette: false,
+      },
+      {
+        d: 'M 54 61 C 38 65 34 81 43 92 C 52 104 72 101 78 88',
+        stroke: '$primary',
+        strokeWidth: 6,
+        opacity: 0.86,
+        silhouette: false,
+      },
+    ];
+  },
+};
+
+const lotMarkingArrow: PropTemplate = {
+  id: 'lot-marking-arrow',
+  label: 'Lane arrow marking',
+  projection: 'plan',
+  gridFootprint: { w: 2, h: 1 },
+  params: [],
+  build() {
+    return [{
+      d: 'M 18 56 L 77 56 L 77 38 L 112 64 L 77 90 L 77 72 L 18 72 Z',
+      fill: '$primary',
+      opacity: 0.82,
+      silhouette: false,
+    }];
+  },
+};
+
+const lotMarkingReserved: PropTemplate = {
+  id: 'lot-marking-reserved',
+  label: 'Reserved-stall marking',
+  projection: 'plan',
+  gridFootprint: { w: 2, h: 1 },
+  params: [],
+  build() {
+    // Stencil-weight abstract glyph rhythm: readable as official lettering at
+    // campus zoom without baking prose the game would need to localize.
+    const shapes: ShapeSpec[] = [];
+    const glyphs = [
+      [10, 32, 10, 64], [20, 32, 9, 10], [20, 56, 9, 9],
+      [34, 32, 9, 64], [43, 32, 10, 9], [43, 59, 10, 9], [43, 87, 10, 9],
+      [58, 32, 9, 64], [67, 32, 9, 9], [67, 59, 9, 9],
+      [81, 32, 9, 64], [90, 32, 10, 9], [90, 87, 10, 9],
+      [105, 32, 9, 64],
+    ];
+    for (const [x, y, w, h] of glyphs) {
+      shapes.push({ d: rr(x, y, w, h, 1), fill: '$primary', opacity: 0.78, silhouette: false });
+    }
+    return shapes;
+  },
+};
+
+const lotMarkingCrosswalk: PropTemplate = {
+  id: 'lot-marking-crosswalk',
+  label: 'Crosswalk marking',
+  projection: 'plan',
+  gridFootprint: { w: 2, h: 2 },
+  params: [],
+  build() {
+    const shapes: ShapeSpec[] = [
+      { d: rr(0, 17, 128, 5, 1), fill: '$primary', opacity: 0.72, silhouette: false },
+      { d: rr(0, 106, 128, 5, 1), fill: '$primary', opacity: 0.72, silhouette: false },
+    ];
+    for (let x = 9; x < 128; x += 22) {
+      shapes.push({ d: rr(x, 22, 12, 84, 1), fill: '$primary', opacity: 0.78, silhouette: false });
+    }
+    return shapes;
+  },
+};
+
+/** Stable decal family id list for catalog/tests and sim prefix parity. */
+export const LOT_MARKING_TEMPLATE_IDS = [
+  'lot-marking-accessible',
+  'lot-marking-arrow',
+  'lot-marking-reserved',
+  'lot-marking-crosswalk',
+] as const;
+
+const lampPost: PropTemplate = {
+  id: 'lamp-post',
+  label: 'Parking-lot lamp post',
+  projection: 'elevation',
+  gridFootprint: { w: 1, h: 1 },
+  footprint: { cx: CX, cy: 117, rx: 13, ry: 3.5 },
+  params: [],
+  build() {
+    return [
+      { d: ellipse(CX, GROUND + 1, 14, 4), fill: '#00000022', silhouette: false },
+      { d: rr(CX - 11, GROUND - 7, 22, 7, 2), fill: '$secondary' },
+      { d: rr(CX - 4, 28, 8, GROUND - 34, 3), fill: '$primary' },
+      { d: rr(CX - 9, 24, 18, 9, 3), fill: '$secondary' },
+      { d: rr(CX - 27, 16, 54, 13, 5), fill: '$primary' },
+      { d: rr(CX - 21, 26, 42, 6, 2), fill: '$accent', silhouette: false },
+      { d: rr(CX - 15, 27, 30, 3, 1.5), fill: '#FFF4C4', opacity: 0.95, silhouette: false },
+    ];
+  },
+};
+
+const signLot: PropTemplate = {
+  id: 'sign-lot',
+  label: 'Parking-lot sign',
+  projection: 'elevation',
+  gridFootprint: { w: 1, h: 1 },
+  footprint: { cx: CX, cy: 117, rx: 12, ry: 3.5 },
+  params: [{ key: 'variant', label: 'Panel', min: 0, max: 1, step: 1, default: 0 }],
+  build(params) {
+    const compliance = (params.variant ?? 0) >= 1;
+    const shapes: ShapeSpec[] = [
+      { d: ellipse(CX, GROUND + 1, 13, 3.5), fill: '#00000020', silhouette: false },
+      { d: rr(CX - 3, 55, 6, GROUND - 55, 2), fill: '$secondary' },
+      { d: rr(CX - 23, 25, 46, 40, 4), fill: '$primary' },
+      { d: rr(CX - 19, 29, 38, 32, 2), fill: '$accent', silhouette: false },
+    ];
+    if (compliance) {
+      for (let y = 35; y <= 53; y += 6) {
+        const inset = y === 47 ? 6 : 0;
+        shapes.push({
+          d: rr(CX - 14 + inset / 2, y, 28 - inset, 2, 1),
+          fill: '$secondary',
+          opacity: 0.78,
+          silhouette: false,
+        });
+      }
+    } else {
+      shapes.push(
+        { d: rr(CX - 9, 34, 6, 22, 1), fill: '$secondary', silhouette: false },
+        { d: 'M 55 35 L 67 35 C 78 35 79 50 68 51 L 58 51', stroke: '$secondary', strokeWidth: 5, silhouette: false },
+      );
+    }
+    return shapes;
+  },
+};
+
+const carCompact: PropTemplate = {
+  id: 'car-compact',
+  label: 'Compact car',
+  projection: 'plan',
+  gridFootprint: { w: 3, h: 2 },
+  params: [{ key: 'spoiler', label: 'Rear lip', min: 0, max: 1, step: 1, default: 0 }],
+  build(params) {
+    const shapes: ShapeSpec[] = [
+      { d: rr(18, 39, 94, 50, 20), fill: '$primary' },
+      { d: rr(42, 45, 50, 38, 12), fill: '$secondary', silhouette: false },
+      { d: 'M 38 49 L 46 60 L 46 68 L 38 79 Z', fill: '$accent', silhouette: false },
+      { d: 'M 96 49 L 89 60 L 89 68 L 96 79 Z', fill: '$accent', silhouette: false },
+      { d: rr(51, 47, 32, 7, 2), fill: '$accent', silhouette: false },
+      { d: rr(51, 74, 32, 7, 2), fill: '$accent', silhouette: false },
+      { d: rr(107, 47, 4, 9, 1), fill: '#F7F1D8', silhouette: false },
+      { d: rr(107, 72, 4, 9, 1), fill: '#F7F1D8', silhouette: false },
+      { d: rr(19, 48, 4, 8, 1), fill: '#C0392B', silhouette: false },
+      { d: rr(19, 72, 4, 8, 1), fill: '#C0392B', silhouette: false },
+    ];
+    if ((params.spoiler ?? 0) >= 1) {
+      shapes.push({ d: rr(17, 43, 4, 42, 2), fill: '$primary', silhouette: false });
+    }
+    return shapes;
+  },
+};
+
+const bikeRack: PropTemplate = {
+  id: 'bike-rack',
+  label: 'Bike rack',
+  projection: 'plan',
+  gridFootprint: { w: 2, h: 1 },
+  params: [],
+  build() {
+    const shapes: ShapeSpec[] = [
+      { d: rr(17, 55, 94, 18, 7), fill: '$secondary' },
+      { d: rr(21, 59, 86, 10, 5), fill: '$accent', silhouette: false },
+    ];
+    for (const x of [32, 53, 74, 95]) {
+      shapes.push({
+        d: `M ${x - 7} 61 C ${x - 7} 38 ${x + 7} 38 ${x + 7} 61`,
+        stroke: '$primary',
+        strokeWidth: 5,
+      });
+    }
+    return shapes;
+  },
+};
+
+// ---------------------------------------------------------------------------
+// Corporate-campus cafeteria + kitchen kit (CE-22). Static service-line art:
+// no steam, motion frames, or wall-slot stacking. Elevation counters sit against
+// walls but remain ordinary floor props; plan seating rotates with the room.
+// ---------------------------------------------------------------------------
+
+const servingLine: PropTemplate = {
+  id: 'serving-line',
+  label: 'Serving line',
+  projection: 'elevation',
+  gridFootprint: { w: 4, h: 1 },
+  footprint: { cx: CX, cy: 117, rx: 52, ry: 5 },
+  params: [],
+  build() {
+    return [
+      { d: ellipse(CX, GROUND + 1, 54, 5), fill: '#00000020', silhouette: false },
+      // counter body and inset service doors
+      { d: rr(10, 70, 108, 46, 5), fill: '$primary' },
+      { d: rr(18, 82, 42, 27, 3), fill: '$secondary', silhouette: false },
+      { d: rr(68, 82, 42, 27, 3), fill: '$secondary', silhouette: false },
+      // tray rail and counter cap
+      { d: rr(5, 67, 118, 8, 3), fill: '$accent' },
+      { d: rr(3, 76, 122, 4, 2), fill: '$secondary', silhouette: false },
+      // hot wells, deliberately still
+      { d: rr(18, 61, 26, 8, 3), fill: '#34393C', silhouette: false },
+      { d: rr(51, 61, 26, 8, 3), fill: '#34393C', silhouette: false },
+      { d: rr(84, 61, 26, 8, 3), fill: '#34393C', silhouette: false },
+      { d: rr(21, 63, 20, 3, 1.5), fill: '#C78B4A', opacity: 0.78, silhouette: false },
+      { d: rr(54, 63, 20, 3, 1.5), fill: '#8FAF61', opacity: 0.78, silhouette: false },
+      { d: rr(87, 63, 20, 3, 1.5), fill: '#D5C08A', opacity: 0.78, silhouette: false },
+      // sneeze guard: glass first, then certified frame/posts
+      { d: rr(18, 31, 92, 29, 3), fill: '#D9EEF238', stroke: '#D9EEF27A', strokeWidth: 1.4, silhouette: false },
+      { d: rr(17, 28, 94, 5, 2), fill: '$secondary' },
+      { d: rr(20, 31, 4, 34, 2), fill: '$secondary' },
+      { d: rr(104, 31, 4, 34, 2), fill: '$secondary' },
+      { d: 'M 28 36 L 99 36', stroke: '#FFFFFF70', strokeWidth: 1.4, silhouette: false },
+    ];
+  },
+};
+
+const serviceScanner: PropTemplate = {
+  id: 'service-scanner',
+  label: 'Service attendance scanner',
+  projection: 'elevation',
+  gridFootprint: { w: 1, h: 1 },
+  footprint: { cx: CX, cy: 117, rx: 14, ry: 4 },
+  params: [],
+  build() {
+    return [
+      { d: ellipse(CX, GROUND + 1, 15, 4), fill: '#00000020', silhouette: false },
+      { d: rr(CX - 14, 36, 28, 31, 6), fill: '$primary' },
+      { d: rr(CX - 9, 42, 18, 16, 3), fill: '$secondary', silhouette: false },
+      { d: rr(CX - 4, 64, 8, 46, 3), fill: '$primary' },
+      { d: rr(CX - 12, 108, 24, 8, 3), fill: '$secondary' },
+      { d: circle(CX, 50, 7), fill: `${IRIS_GREEN}28`, silhouette: false },
+      { d: circle(CX, 50, 3.5), fill: IRIS_GREEN, silhouette: false },
+      { d: rr(CX - 7, 59, 14, 2.5, 1), fill: IRIS_GREEN, opacity: 0.72, silhouette: false },
+    ];
+  },
+};
+
+const commercialRange: PropTemplate = {
+  id: 'commercial-range',
+  label: 'Commercial range',
+  projection: 'elevation',
+  gridFootprint: { w: 2, h: 1 },
+  footprint: { cx: CX, cy: 117, rx: 41, ry: 5 },
+  params: [],
+  build() {
+    return [
+      { d: ellipse(CX, GROUND + 1, 43, 5), fill: '#00000020', silhouette: false },
+      // integrated extraction hood
+      { d: 'M 22 20 L 106 20 L 99 44 L 29 44 Z', fill: '$secondary' },
+      { d: rr(34, 29, 60, 5, 2), fill: '#00000030', silhouette: false },
+      { d: rr(41, 36, 46, 3, 1.5), fill: '#DDE3E3', opacity: 0.55, silhouette: false },
+      // range/oven block
+      { d: rr(20, 55, 88, 61, 5), fill: '$primary' },
+      { d: rr(25, 58, 78, 13, 3), fill: '$accent' },
+      { d: rr(30, 78, 68, 29, 4), fill: '$secondary', silhouette: false },
+      { d: rr(36, 84, 56, 17, 2), fill: '#242A2D', silhouette: false },
+      { d: rr(45, 76, 38, 3, 1.5), fill: '#111416', opacity: 0.72, silhouette: false },
+      { d: circle(38, 64, 3), fill: '#33383A', silhouette: false },
+      { d: circle(53, 64, 3), fill: '#33383A', silhouette: false },
+      { d: circle(75, 64, 3), fill: '#33383A', silhouette: false },
+      { d: circle(90, 64, 3), fill: '#33383A', silhouette: false },
+    ];
+  },
+};
+
+const prepTable: PropTemplate = {
+  id: 'prep-table',
+  label: 'Kitchen prep table',
+  projection: 'plan',
+  gridFootprint: { w: 2, h: 1 },
+  params: [],
+  build() {
+    return [
+      { d: rr(12, 35, 104, 58, 7), fill: '$primary' },
+      { d: rr(17, 40, 94, 48, 5), fill: '$secondary', silhouette: false },
+      { d: rr(23, 48, 34, 26, 3), fill: '#B78854', silhouette: false },
+      { d: ellipse(87, 62, 15, 12), fill: '#485057', silhouette: false },
+      { d: ellipse(87, 62, 10, 7), fill: '#CBD1D2', silhouette: false },
+      { d: 'M 30 52 L 50 69 M 48 51 L 31 70', stroke: '#EEE9DB', strokeWidth: 2, opacity: 0.72, silhouette: false },
+      { d: rr(19, 83, 90, 5, 2), fill: '$accent', opacity: 0.7, silhouette: false },
+    ];
+  },
+};
+
+const dishReturn: PropTemplate = {
+  id: 'dish-return',
+  label: 'Dish return',
+  projection: 'elevation',
+  gridFootprint: { w: 2, h: 1 },
+  footprint: { cx: CX, cy: 117, rx: 42, ry: 5 },
+  params: [],
+  build() {
+    return [
+      { d: ellipse(CX, GROUND + 1, 44, 5), fill: '#00000020', silhouette: false },
+      { d: rr(17, 39, 94, 77, 5), fill: '$primary' },
+      { d: rr(25, 48, 78, 31, 4), fill: '#22272A', silhouette: false },
+      { d: rr(29, 52, 70, 5, 2), fill: '$accent', opacity: 0.75, silhouette: false },
+      { d: rr(24, 85, 80, 24, 3), fill: '$secondary', silhouette: false },
+      { d: rr(32, 90, 64, 3, 1.5), fill: '#111416', opacity: 0.5, silhouette: false },
+      { d: rr(32, 98, 64, 3, 1.5), fill: '#111416', opacity: 0.5, silhouette: false },
+      { d: ellipse(43, 70, 12, 5), fill: '#E2DED3', silhouette: false },
+      { d: ellipse(66, 69, 12, 5), fill: '#D8D3C8', silhouette: false },
+      { d: ellipse(89, 70, 12, 5), fill: '#E2DED3', silhouette: false },
+    ];
+  },
+};
+
+const walkInFront: PropTemplate = {
+  id: 'walk-in-front',
+  label: 'Walk-in cooler front',
+  projection: 'elevation',
+  gridFootprint: { w: 2, h: 1 },
+  footprint: { cx: CX, cy: 117, rx: 42, ry: 5 },
+  params: [],
+  build() {
+    return [
+      { d: ellipse(CX, GROUND + 1, 44, 5), fill: '#00000020', silhouette: false },
+      { d: rr(18, 15, 92, 101, 5), fill: '$secondary' },
+      { d: rr(26, 22, 76, 94, 3), fill: '$primary' },
+      { d: rr(32, 28, 64, 20, 3), fill: '$accent', opacity: 0.65, silhouette: false },
+      { d: rr(80, 57, 7, 31, 3), fill: '#343A3D', silhouette: false },
+      { d: rr(83, 60, 8, 25, 3), fill: '#BFC6C6', silhouette: false },
+      { d: circle(91, 95, 3), fill: '#5C6970', silhouette: false },
+      { d: 'M 30 107 L 98 107', stroke: '#00000024', strokeWidth: 2, silhouette: false },
+    ];
+  },
+};
+
+const diningCarrel: PropTemplate = {
+  id: 'dining-carrel',
+  label: 'Solitary dining carrel',
+  projection: 'plan',
+  gridFootprint: { w: 1, h: 1 },
+  params: [],
+  build() {
+    return [
+      // privacy wing and small meal surface
+      { d: rr(24, 20, 80, 10, 4), fill: '$secondary' },
+      { d: rr(20, 20, 10, 72, 4), fill: '$secondary' },
+      { d: rr(98, 20, 10, 72, 4), fill: '$secondary' },
+      { d: rr(30, 29, 68, 45, 5), fill: '$primary' },
+      { d: rr(38, 36, 52, 31, 4), fill: '$accent', silhouette: false },
+      // single seat, carefully separated from the table
+      { d: rr(43, 84, 42, 24, 10), fill: '$primary' },
+      { d: rr(49, 89, 30, 14, 7), fill: '$secondary', silhouette: false },
+    ];
+  },
+};
+
+const cafeteriaTable: PropTemplate = {
+  id: 'cafeteria-table',
+  label: 'Communal cafeteria table',
+  projection: 'plan',
+  gridFootprint: { w: 4, h: 2 },
+  params: [],
+  build() {
+    return [
+      // warm long table, attached benches on both sides
+      { d: rr(12, 44, 104, 40, 10), fill: '$primary' },
+      { d: rr(19, 49, 90, 30, 7), fill: '$accent', opacity: 0.55, silhouette: false },
+      { d: rr(17, 19, 94, 17, 7), fill: '$secondary' },
+      { d: rr(17, 92, 94, 17, 7), fill: '$secondary' },
+      { d: rr(27, 32, 8, 12, 3), fill: '$secondary', silhouette: false },
+      { d: rr(93, 32, 8, 12, 3), fill: '$secondary', silhouette: false },
+      { d: rr(27, 84, 8, 12, 3), fill: '$secondary', silhouette: false },
+      { d: rr(93, 84, 8, 12, 3), fill: '$secondary', silhouette: false },
+      { d: circle(43, 63, 5), fill: '#E5E0D5', silhouette: false },
+      { d: circle(84, 63, 5), fill: '#E5E0D5', silhouette: false },
+    ];
+  },
+};
+
+const trayStack: PropTemplate = {
+  id: 'tray-stack',
+  label: 'Tray stack',
+  projection: 'plan',
+  gridFootprint: { w: 1, h: 1 },
+  params: [],
+  build() {
+    return [
+      { d: rr(29, 35, 70, 58, 9), fill: '$secondary' },
+      { d: rr(33, 31, 70, 58, 9), fill: '$primary' },
+      { d: rr(37, 27, 70, 58, 9), fill: '$accent' },
+      { d: rr(44, 34, 56, 44, 7), fill: '#00000018', silhouette: false },
+      { d: rr(49, 39, 46, 34, 6), stroke: '#FFFFFF66', strokeWidth: 2, silhouette: false },
+    ];
+  },
+};
+
+// ---------------------------------------------------------------------------
+// Corporate-campus quad, pond, and reflection-garden kit (CE-23/24).
+// Ground-detail sprites are static, flat plan decals; the five furnishings are
+// ordinary props except reeds, which the sim scatters as living shoreline decor.
+// ---------------------------------------------------------------------------
+
+function rakeArcTemplate(
+  id: 'ground-detail-rake-arc-a' | 'ground-detail-rake-arc-b' | 'ground-detail-rake-arc-c',
+  label: string,
+  paths: string[],
+): PropTemplate {
+  return {
+    id,
+    label,
+    projection: 'plan',
+    gridFootprint: { w: 1, h: 1 },
+    params: [],
+    build() {
+      return paths.flatMap((d, index): ShapeSpec[] => [
+        {
+          d,
+          stroke: '#7C797238',
+          strokeWidth: 4.2,
+          opacity: 0.58,
+          silhouette: false,
+        },
+        {
+          d,
+          stroke: index % 2 === 0 ? '$primary' : '$secondary',
+          strokeWidth: 1.7,
+          opacity: 0.82,
+          silhouette: false,
+        },
+      ]);
+    },
+  };
+}
+
+const groundDetailRakeArcA = rakeArcTemplate(
+  'ground-detail-rake-arc-a',
+  'Raked gravel arcs A',
+  [
+    'M 24 105 A 80 80 0 0 1 104 25',
+    'M 35 108 A 73 73 0 0 1 108 35',
+    'M 48 111 A 63 63 0 0 1 111 48',
+    'M 61 112 A 51 51 0 0 1 112 61',
+  ],
+);
+
+const groundDetailRakeArcB = rakeArcTemplate(
+  'ground-detail-rake-arc-b',
+  'Raked gravel arcs B',
+  [
+    'M 18 31 A 79 79 0 0 0 97 110',
+    'M 18 44 A 66 66 0 0 0 84 110',
+    'M 18 57 A 53 53 0 0 0 71 110',
+    'M 18 70 A 40 40 0 0 0 58 110',
+  ],
+);
+
+const groundDetailRakeArcC = rakeArcTemplate(
+  'ground-detail-rake-arc-c',
+  'Raked gravel arcs C',
+  [
+    'M 13 79 Q 64 29 115 79',
+    'M 13 89 Q 64 39 115 89',
+    'M 13 99 Q 64 49 115 99',
+    'M 19 108 Q 64 65 109 108',
+  ],
+);
+
+const groundDetailLilypadA: PropTemplate = {
+  id: 'ground-detail-lilypad-a',
+  label: 'Lily pads A',
+  projection: 'plan',
+  gridFootprint: { w: 1, h: 1 },
+  params: [],
+  build() {
+    return [
+      { d: 'M 32 70 A 27 21 0 1 1 65 50 L 52 68 Z', fill: '$primary', silhouette: false },
+      { d: 'M 53 68 L 65 50', stroke: '$accent', strokeWidth: 1.7, opacity: 0.65, silhouette: false },
+      { d: 'M 73 83 A 19 14 0 1 1 94 69 L 84 82 Z', fill: '$secondary', silhouette: false },
+      { d: 'M 84 82 L 94 69', stroke: '$accent', strokeWidth: 1.4, opacity: 0.58, silhouette: false },
+      { d: ellipse(44, 55, 10, 4), fill: '#FFFFFF20', silhouette: false },
+    ];
+  },
+};
+
+const groundDetailLilypadB: PropTemplate = {
+  id: 'ground-detail-lilypad-b',
+  label: 'Lily pads B',
+  projection: 'plan',
+  gridFootprint: { w: 1, h: 1 },
+  params: [],
+  build() {
+    return [
+      { d: 'M 58 45 A 24 18 0 1 1 81 61 L 66 61 Z', fill: '$secondary', silhouette: false },
+      { d: 'M 66 61 L 81 61', stroke: '$accent', strokeWidth: 1.5, opacity: 0.62, silhouette: false },
+      { d: 'M 35 87 A 17 13 0 1 1 55 77 L 47 88 Z', fill: '$primary', silhouette: false },
+      { d: 'M 47 88 L 55 77', stroke: '$accent', strokeWidth: 1.3, opacity: 0.58, silhouette: false },
+      { d: 'M 79 93 A 14 11 0 1 1 94 84 L 88 94 Z', fill: '$primary', opacity: 0.86, silhouette: false },
+      { d: ellipse(71, 49, 8, 3), fill: '#FFFFFF20', silhouette: false },
+    ];
+  },
+};
+
+const groundDetailSteppingStoneA: PropTemplate = {
+  id: 'ground-detail-stepping-stone-a',
+  label: 'Stepping stones A',
+  projection: 'plan',
+  gridFootprint: { w: 1, h: 1 },
+  params: [],
+  build() {
+    return [
+      { d: ellipse(36, 88, 19, 12), fill: '#00000018', silhouette: false },
+      { d: 'M 19 83 Q 25 70 41 72 Q 57 74 56 88 Q 51 101 34 101 Q 18 98 19 83 Z', fill: '$primary', silhouette: false },
+      { d: ellipse(33, 80, 10, 4), fill: '$accent', opacity: 0.65, silhouette: false },
+      { d: ellipse(83, 51, 21, 13), fill: '#00000018', silhouette: false },
+      { d: 'M 64 47 Q 70 33 88 35 Q 106 38 104 53 Q 98 66 80 65 Q 63 62 64 47 Z', fill: '$secondary', silhouette: false },
+      { d: ellipse(79, 43, 11, 4), fill: '$accent', opacity: 0.58, silhouette: false },
+    ];
+  },
+};
+
+const groundDetailSteppingStoneB: PropTemplate = {
+  id: 'ground-detail-stepping-stone-b',
+  label: 'Stepping stones B',
+  projection: 'plan',
+  gridFootprint: { w: 1, h: 1 },
+  params: [],
+  build() {
+    return [
+      { d: ellipse(43, 48, 17, 11), fill: '#00000018', silhouette: false },
+      { d: 'M 28 44 Q 34 33 47 35 Q 62 38 60 51 Q 55 61 40 60 Q 27 57 28 44 Z', fill: '$secondary', silhouette: false },
+      { d: ellipse(40, 41, 8, 3), fill: '$accent', opacity: 0.6, silhouette: false },
+      { d: ellipse(84, 84, 23, 14), fill: '#00000018', silhouette: false },
+      { d: 'M 64 80 Q 69 66 87 67 Q 106 70 106 84 Q 101 99 81 99 Q 63 95 64 80 Z', fill: '$primary', silhouette: false },
+      { d: ellipse(80, 76, 12, 4), fill: '$accent', opacity: 0.62, silhouette: false },
+    ];
+  },
+};
+
+const parkBench: PropTemplate = {
+  id: 'park-bench',
+  label: 'Outdoor park bench',
+  projection: 'elevation',
+  gridFootprint: { w: 2, h: 1 },
+  footprint: { cx: CX, cy: 117, rx: 44, ry: 5 },
+  params: [],
+  build() {
+    return [
+      { d: ellipse(CX, GROUND + 1, 46, 5), fill: '#00000020', silhouette: false },
+      { d: rr(18, 50, 92, 10, 4), fill: '$primary' },
+      { d: rr(18, 63, 92, 9, 4), fill: '$primary' },
+      { d: rr(18, 76, 92, 12, 4), fill: '$accent' },
+      { d: 'M 26 53 L 102 53 M 26 66 L 102 66 M 26 81 L 102 81', stroke: '#FFFFFF25', strokeWidth: 1.5, silhouette: false },
+      { d: rr(24, 87, 10, 27, 3), fill: '$secondary' },
+      { d: rr(94, 87, 10, 27, 3), fill: '$secondary' },
+      { d: rr(20, 111, 19, 6, 2), fill: '#A7A39A' },
+      { d: rr(89, 111, 19, 6, 2), fill: '#A7A39A' },
+      { d: 'M 30 50 L 30 88 M 98 50 L 98 88', stroke: '$secondary', strokeWidth: 4 },
+    ];
+  },
+};
+
+const picnicTable: PropTemplate = {
+  id: 'picnic-table',
+  label: 'Campus picnic table',
+  projection: 'plan',
+  gridFootprint: { w: 3, h: 2 },
+  params: [],
+  build() {
+    return [
+      { d: rr(14, 22, 100, 20, 6), fill: '$secondary' },
+      { d: rr(14, 86, 100, 20, 6), fill: '$secondary' },
+      { d: rr(23, 43, 82, 42, 7), fill: '$primary' },
+      { d: 'M 37 46 L 37 82 M 54 46 L 54 82 M 72 46 L 72 82 M 90 46 L 90 82', stroke: '#FFFFFF24', strokeWidth: 1.5, silhouette: false },
+      { d: rr(30, 38, 8, 8, 3), fill: '$accent', silhouette: false },
+      { d: rr(90, 38, 8, 8, 3), fill: '$accent', silhouette: false },
+      { d: rr(30, 82, 8, 8, 3), fill: '$accent', silhouette: false },
+      { d: rr(90, 82, 8, 8, 3), fill: '$accent', silhouette: false },
+    ];
+  },
+};
+
+const stoneLantern: PropTemplate = {
+  id: 'stone-lantern',
+  label: 'Stone garden lantern',
+  projection: 'elevation',
+  gridFootprint: { w: 1, h: 1 },
+  footprint: { cx: CX, cy: 117, rx: 22, ry: 5 },
+  params: [],
+  build() {
+    return [
+      { d: ellipse(CX, GROUND + 1, 24, 5), fill: '#00000020', silhouette: false },
+      { d: rr(45, 107, 38, 10, 3), fill: '$secondary' },
+      { d: 'M 54 68 L 74 68 L 79 108 L 49 108 Z', fill: '$primary' },
+      { d: rr(43, 47, 42, 25, 4), fill: '$secondary' },
+      { d: rr(51, 52, 26, 15, 3), fill: '#242A28', silhouette: false },
+      { d: circle(CX, 59, 7), fill: '#FFE3A255', silhouette: false },
+      { d: circle(CX, 59, 3.5), fill: '#FFE5A8', silhouette: false },
+      { d: 'M 38 47 L 51 33 L 77 33 L 90 47 Z', fill: '$primary' },
+      { d: rr(56, 26, 16, 9, 3), fill: '$secondary' },
+      { d: circle(CX, 24, 5), fill: '$primary' },
+    ];
+  },
+};
+
+const boulderArrangement: PropTemplate = {
+  id: 'boulder-arrangement',
+  label: 'Placed boulder arrangement',
+  projection: 'plan',
+  gridFootprint: { w: 2, h: 1 },
+  params: [],
+  build() {
+    return [
+      { d: ellipse(52, 76, 35, 14), fill: '#00000018', silhouette: false },
+      { d: 'M 18 72 Q 21 47 45 43 Q 71 43 78 68 Q 74 91 46 94 Q 22 92 18 72 Z', fill: '$primary' },
+      { d: 'M 28 64 Q 37 49 57 52 Q 65 56 68 66 Q 48 60 28 72 Z', fill: '$accent', opacity: 0.68, silhouette: false },
+      { d: ellipse(92, 84, 24, 11), fill: '#00000018', silhouette: false },
+      { d: 'M 72 82 Q 77 61 96 61 Q 114 66 112 84 Q 108 99 89 100 Q 72 97 72 82 Z', fill: '$secondary' },
+      { d: ellipse(92, 72, 12, 5), fill: '$accent', opacity: 0.6, silhouette: false },
+      { d: ellipse(90, 43, 11, 7), fill: '$secondary' },
+      { d: ellipse(87, 40, 5, 2.5), fill: '$accent', opacity: 0.58, silhouette: false },
+    ];
+  },
+};
+
+const reedsCluster: PropTemplate = {
+  id: 'reeds-cluster',
+  label: 'Shoreline reeds cluster',
+  projection: 'elevation',
+  gridFootprint: { w: 1, h: 1 },
+  footprint: { cx: CX, cy: 117, rx: 26, ry: 4 },
+  params: [],
+  build() {
+    const stems = [
+      [38, 91, 35], [47, 103, 45], [55, 90, 31], [63, 105, 40],
+      [72, 93, 34], [81, 105, 49], [89, 94, 38],
+    ];
+    const shapes: ShapeSpec[] = [
+      { d: ellipse(CX, GROUND + 1, 28, 4), fill: '#00000018', silhouette: false },
+      { d: ellipse(CX, 108, 26, 10), fill: '$secondary' },
+      { d: 'M 57 108 Q 51 94 48 88 Q 61 96 63 108 Z', fill: '$secondary', silhouette: false },
+    ];
+    for (const [x, bottom, top] of stems) {
+      shapes.push({ d: `M ${x} ${bottom} Q ${x - 2} ${(bottom + top) / 2} ${x + 1} ${top}`, stroke: '$primary', strokeWidth: 3 });
+    }
+    shapes.push(
+      { d: 'M 49 101 Q 40 87 35 78 Q 48 83 54 98 Z', fill: '$primary' },
+      { d: 'M 68 103 Q 77 87 86 80 Q 82 96 73 107 Z', fill: '$primary' },
+    );
+    for (const [x, , top] of stems) shapes.push({ d: rr(x - 2, top - 7, 6, 13, 3), fill: '$accent' });
+    return shapes;
+  },
+};
+
+// ---------------------------------------------------------------------------
 // Nature decor (lush-outside pass — D2 amendment). Projection follows height:
 // trees/saplings are front-facing elevation art; low flora remains plan art.
 // All are NON_PLACEABLE scenery the sim scatters over the build site,
@@ -3706,6 +4385,19 @@ export const GROUND_DETAIL_TEMPLATE_IDS = [
   'ground-detail-twig-a',
 ] as const;
 
+/** Quad/pond ground-detail decals. They keep the simulation-recognized
+ *  `ground-detail-` prefix but remain separate from the wild nature family:
+ *  the sim scatters them over authored gravel, pond, or desire-line cells. */
+export const QUAD_GROUND_DETAIL_TEMPLATE_IDS = [
+  'ground-detail-rake-arc-a',
+  'ground-detail-rake-arc-b',
+  'ground-detail-rake-arc-c',
+  'ground-detail-lilypad-a',
+  'ground-detail-lilypad-b',
+  'ground-detail-stepping-stone-a',
+  'ground-detail-stepping-stone-b',
+] as const;
+
 /** Nature decor template ids — EXEMPT from the clinical drain (core/look.ts),
  *  mirroring NATURAL_GROUND_TEMPLATE_IDS: under the clinical look these stay
  *  saturated while the office (and the cars, and the paved lot) drains. */
@@ -3717,6 +4409,7 @@ export const NATURE_PROP_TEMPLATE_IDS = [
   'tall-grass-clump',
   'bracken-patch',
   'boulder',
+  'reeds-cluster',
   ...GROUND_DETAIL_TEMPLATE_IDS,
 ] as const;
 
@@ -3802,6 +4495,38 @@ export const PROP_TEMPLATES: PropTemplate[] = [
   car,
   carSuv,
   parkingLine,
+  // Corporate-campus parking kit (CE-21).
+  lotMarkingAccessible,
+  lotMarkingArrow,
+  lotMarkingReserved,
+  lotMarkingCrosswalk,
+  lampPost,
+  signLot,
+  carCompact,
+  bikeRack,
+  // Corporate-campus cafeteria + kitchen kit (CE-22).
+  servingLine,
+  serviceScanner,
+  commercialRange,
+  prepTable,
+  dishReturn,
+  walkInFront,
+  diningCarrel,
+  cafeteriaTable,
+  trayStack,
+  // Corporate-campus quad, pond, and reflection-garden kit (CE-23/24).
+  groundDetailRakeArcA,
+  groundDetailRakeArcB,
+  groundDetailRakeArcC,
+  groundDetailLilypadA,
+  groundDetailLilypadB,
+  groundDetailSteppingStoneA,
+  groundDetailSteppingStoneB,
+  parkBench,
+  picnicTable,
+  stoneLantern,
+  boulderArrangement,
+  reedsCluster,
   // Nature decor (lush-outside pass) — clinical-exempt exterior scenery.
   treeCanopy,
   treeSapling,

@@ -73,11 +73,12 @@ describe('project look — a reproducible, non-destructive lens', () => {
       'ground-meadow',
       'ground-meadow-b',
       'ground-dirt',
+      'ground-pond-water',
     ]) {
       expect(ground(lensed, id), `natural ground "${id}" must not drain`).toEqual(ground(raw, id));
     }
     // The paved lot is the focus-grouped output and drains with the building.
-    for (const id of ['ground-asphalt', 'ground-sidewalk']) {
+    for (const id of ['ground-asphalt', 'ground-sidewalk', 'ground-gravel']) {
       expect(ground(lensed, id).primary, `paved ground "${id}" must drain`).not.toBe(ground(raw, id).primary);
     }
   });
@@ -102,6 +103,7 @@ describe('project look — a reproducible, non-destructive lens', () => {
       'prop-tall-grass-clump',
       'prop-bracken-patch',
       'prop-boulder',
+      'prop-reeds-cluster',
     ]) {
       expect(prop(lensed, id), `nature prop "${id}" must not drain`).toEqual(prop(raw, id));
     }

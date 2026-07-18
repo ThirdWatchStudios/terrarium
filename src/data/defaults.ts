@@ -778,6 +778,224 @@ export const DEFAULT_PROPS: PropInstance[] = [
     params: { stop: 1 },
     palette: { primary: '#E8E4D2', secondary: '#C9C6B6', accent: '#B7B4A4' },
   },
+  // Corporate-campus parking kit (CE-21). Painted markings share one worn
+  // pale-off-white register; the compact car keeps its body on $primary so the
+  // exported layer manifest can recolor it per spawned instance.
+  {
+    id: 'prop-lot-marking-accessible',
+    name: 'Accessible-stall marking',
+    templateId: 'lot-marking-accessible',
+    params: {},
+    palette: { primary: '#E4E0CF', secondary: '#E4E0CF', accent: '#E4E0CF' },
+  },
+  {
+    id: 'prop-lot-marking-arrow',
+    name: 'Lane arrow marking',
+    templateId: 'lot-marking-arrow',
+    params: {},
+    palette: { primary: '#E4E0CF', secondary: '#E4E0CF', accent: '#E4E0CF' },
+  },
+  {
+    id: 'prop-lot-marking-reserved',
+    name: 'Reserved-stall marking',
+    templateId: 'lot-marking-reserved',
+    params: {},
+    palette: { primary: '#E4E0CF', secondary: '#E4E0CF', accent: '#E4E0CF' },
+  },
+  {
+    id: 'prop-lot-marking-crosswalk',
+    name: 'Crosswalk marking',
+    templateId: 'lot-marking-crosswalk',
+    params: {},
+    palette: { primary: '#E4E0CF', secondary: '#E4E0CF', accent: '#E4E0CF' },
+  },
+  {
+    id: 'prop-lamp-post',
+    name: 'Parking-lot lamp post',
+    templateId: 'lamp-post',
+    params: {},
+    palette: { primary: '#3D444A', secondary: '#252B30', accent: '#D8D3C4' },
+  },
+  {
+    id: 'prop-sign-lot-parking',
+    name: 'Parking sign',
+    templateId: 'sign-lot',
+    params: { variant: 0 },
+    palette: { primary: '#4B5963', secondary: '#F0EEE4', accent: '#315A78' },
+  },
+  {
+    id: 'prop-sign-lot-compliance',
+    name: 'Parking compliance placard',
+    templateId: 'sign-lot',
+    params: { variant: 1 },
+    palette: { primary: '#4B5963', secondary: '#343C42', accent: '#E9E7DE' },
+  },
+  {
+    id: 'prop-car-compact',
+    name: 'Compact car',
+    templateId: 'car-compact',
+    params: { spoiler: 0 },
+    palette: { primary: '#B08A32', secondary: '#72591F', accent: '#BCD2E0' },
+  },
+  {
+    id: 'prop-bike-rack',
+    name: 'Bike rack',
+    templateId: 'bike-rack',
+    params: {},
+    palette: { primary: '#8B9296', secondary: '#4E555A', accent: '#BCC1C3' },
+  },
+  // Corporate-campus cafeteria + kitchen kit (CE-22). These are all normal
+  // placeable interior props and therefore follow the building's clinical drain.
+  {
+    id: 'prop-serving-line',
+    name: 'Serving line',
+    templateId: 'serving-line',
+    params: {},
+    palette: { primary: '#AEB5B5', secondary: '#5A6265', accent: '#D8D1BC' },
+  },
+  {
+    id: 'prop-service-scanner',
+    name: 'Service attendance scanner',
+    templateId: 'service-scanner',
+    params: {},
+    palette: { primary: '#D7DBD8', secondary: '#565E5B', accent: '#B7BDBA' },
+  },
+  {
+    id: 'prop-commercial-range',
+    name: 'Commercial range',
+    templateId: 'commercial-range',
+    params: {},
+    palette: { primary: '#9EA5A7', secondary: '#5B6366', accent: '#C8CFD0' },
+  },
+  {
+    id: 'prop-prep-table',
+    name: 'Kitchen prep table',
+    templateId: 'prep-table',
+    params: {},
+    palette: { primary: '#A8B0B2', secondary: '#D3D8D8', accent: '#697276' },
+  },
+  {
+    id: 'prop-dish-return',
+    name: 'Dish return',
+    templateId: 'dish-return',
+    params: {},
+    palette: { primary: '#7C8588', secondary: '#AEB6B7', accent: '#D8D1BC' },
+  },
+  {
+    id: 'prop-walk-in-front',
+    name: 'Walk-in cooler front',
+    templateId: 'walk-in-front',
+    params: {},
+    palette: { primary: '#D0D5D5', secondary: '#747C7F', accent: '#AAB8C0' },
+  },
+  {
+    id: 'prop-dining-carrel',
+    name: 'Solitary dining carrel',
+    templateId: 'dining-carrel',
+    params: {},
+    palette: { primary: '#AAB0B2', secondary: '#5C6367', accent: '#D9D6CB' },
+  },
+  {
+    id: 'prop-cafeteria-table',
+    name: 'Communal cafeteria table',
+    templateId: 'cafeteria-table',
+    params: {},
+    palette: { primary: '#8B6040', secondary: '#57402F', accent: '#C08A58' },
+  },
+  {
+    id: 'prop-tray-stack',
+    name: 'Tray stack',
+    templateId: 'tray-stack',
+    params: {},
+    palette: { primary: '#AAB2B4', secondary: '#717A7E', accent: '#D0D6D7' },
+  },
+  // Corporate-campus quad, pond, and reflection-garden kit (CE-23/24).
+  // Ground-detail decals are sim-scattered texture marks, not facilities; the
+  // four furnishings remain placeable, while reeds join living nature decor.
+  {
+    id: 'prop-ground-detail-rake-arc-a',
+    name: 'Raked gravel arcs A',
+    templateId: 'ground-detail-rake-arc-a',
+    params: {},
+    palette: { primary: '#E9E5DA', secondary: '#AAA69D', accent: '#F5F1E7' },
+  },
+  {
+    id: 'prop-ground-detail-rake-arc-b',
+    name: 'Raked gravel arcs B',
+    templateId: 'ground-detail-rake-arc-b',
+    params: {},
+    palette: { primary: '#E9E5DA', secondary: '#AAA69D', accent: '#F5F1E7' },
+  },
+  {
+    id: 'prop-ground-detail-rake-arc-c',
+    name: 'Raked gravel arcs C',
+    templateId: 'ground-detail-rake-arc-c',
+    params: {},
+    palette: { primary: '#E9E5DA', secondary: '#AAA69D', accent: '#F5F1E7' },
+  },
+  {
+    id: 'prop-ground-detail-lilypad-a',
+    name: 'Lily pads A',
+    templateId: 'ground-detail-lilypad-a',
+    params: {},
+    palette: { primary: '#4E8A55', secondary: '#376B46', accent: '#86B879' },
+  },
+  {
+    id: 'prop-ground-detail-lilypad-b',
+    name: 'Lily pads B',
+    templateId: 'ground-detail-lilypad-b',
+    params: {},
+    palette: { primary: '#568F5B', secondary: '#3A7049', accent: '#90BE7C' },
+  },
+  {
+    id: 'prop-ground-detail-stepping-stone-a',
+    name: 'Stepping stones A',
+    templateId: 'ground-detail-stepping-stone-a',
+    params: {},
+    palette: { primary: '#8C8B84', secondary: '#74766F', accent: '#B7B5AC' },
+  },
+  {
+    id: 'prop-ground-detail-stepping-stone-b',
+    name: 'Stepping stones B',
+    templateId: 'ground-detail-stepping-stone-b',
+    params: {},
+    palette: { primary: '#85867F', secondary: '#70726C', accent: '#B0AFA7' },
+  },
+  {
+    id: 'prop-park-bench',
+    name: 'Outdoor park bench',
+    templateId: 'park-bench',
+    params: {},
+    palette: { primary: '#8B5D3D', secondary: '#565B59', accent: '#B47A50' },
+  },
+  {
+    id: 'prop-picnic-table',
+    name: 'Campus picnic table',
+    templateId: 'picnic-table',
+    params: {},
+    palette: { primary: '#88613F', secondary: '#5B4634', accent: '#B78355' },
+  },
+  {
+    id: 'prop-stone-lantern',
+    name: 'Stone garden lantern',
+    templateId: 'stone-lantern',
+    params: {},
+    palette: { primary: '#8B8E87', secondary: '#666B66', accent: '#B8BAB0' },
+  },
+  {
+    id: 'prop-boulder-arrangement',
+    name: 'Placed boulder arrangement',
+    templateId: 'boulder-arrangement',
+    params: {},
+    palette: { primary: '#777C76', secondary: '#626861', accent: '#A9ADA4' },
+  },
+  {
+    id: 'prop-reeds-cluster',
+    name: 'Shoreline reeds cluster',
+    templateId: 'reeds-cluster',
+    params: {},
+    palette: { primary: '#4F7D42', secondary: '#365E35', accent: '#8A7041' },
+  },
   // Nature decor (lush-outside pass) — clinical-EXEMPT scenery for the outdoor
   // ground (core/look.ts NATURE_PROP_TEMPLATE_IDS): the saturated living things
   // the build visibly replaces. Curated tree, sapling, shrub, and herbaceous
@@ -1105,9 +1323,9 @@ export const DEFAULT_FLOORS: TileInstance[] = [
  * Outdoor ground surfaces (B1.5 "the build site"). These ship as the DISTINCT
  * ground KIND (decision D2): their own `ground/` export folder, own atlas kind,
  * own sort band (−20000), so the sim draws them under everything and never
- * confuses them with interior floor. Generated-only for now (§9 — not
- * player-paintable), so there's no ground UI; they're a code-owned default the
- * export always ships.
+ * confuses them with interior floor. Terrarium has no ground editor or ground
+ * facility payload; these are code-owned defaults the export always ships, and
+ * the sim binds the campus build tools that make selected ground player-painted.
  *
  * D2 AMENDED (natural-vs-paved register split, core/look.ts): the NATURAL
  * surfaces (grass / meadow / dirt) are exempt from the clinical drain and stay
@@ -1115,7 +1333,8 @@ export const DEFAULT_FLOORS: TileInstance[] = [
  * something bland, and the ground is the beautiful thing. Multiple grass
  * variants ship so open fields don't tile into one uniform swatch (same reason
  * the lot gets two sedan colors). The PAVED surfaces (asphalt / sidewalk) are
- * the bland thing and drain with the building.
+ * the bland thing and drain with the building. CE-23 adds certified gravel to
+ * that paved set; CE-24 adds ornamental pond water as a separate exempt family.
  */
 export const DEFAULT_GROUND: TileInstance[] = [
   {
@@ -1173,6 +1392,20 @@ export const DEFAULT_GROUND: TileInstance[] = [
     templateId: 'sidewalk',
     params: { slab: 64 },
     palette: { primary: '#B8B7B0', secondary: '#9C9B94', accent: '#8A8982' },
+  },
+  {
+    id: 'ground-gravel',
+    name: 'Zen-garden gravel',
+    templateId: 'gravel',
+    params: { grain: 2, seed: 6 },
+    palette: { primary: '#D6D2C7', secondary: '#B7B3AA', accent: '#EEEAE0' },
+  },
+  {
+    id: 'ground-pond-water',
+    name: 'Still pond water',
+    templateId: 'pond-water',
+    params: { ripples: 2, seed: 4 },
+    palette: { primary: '#1F6770', secondary: '#174D55', accent: '#6FAAB0' },
   },
 ];
 
@@ -1430,6 +1663,36 @@ function buildConstructionProfiles(): CharacterProfile[] {
 }
 
 export const CONSTRUCTION_PROFILES: CharacterProfile[] = buildConstructionProfiles();
+
+// ---------------------------------------------------------------------------
+// Cafeteria staff (CE-22). A code-owned human recipe using the service-only
+// apron + hairnet parts. Kept out of DEFAULT_CAST so kitchen staff are never
+// treated as desk occupants. Unlike construction-worker, no new top-level
+// export folder is introduced here: the sim-side staff binding is still owned
+// by the campus population lane, while this stable recipe proves/resolves the
+// authored parts without changing the current export schema.
+// ---------------------------------------------------------------------------
+
+export const KITCHEN_STAFF: CharacterRecipe[] = [
+  {
+    id: 'kitchen-worker',
+    name: 'Kitchen Staff',
+    parts: {
+      body: 'body-balanced',
+      head: 'head-round',
+      hair: 'hair-bun',
+      outfit: 'outfit-service-apron',
+      accessories: ['acc-hairnet'],
+    },
+    palette: {
+      skin: '#B97850',
+      hair: '#3A2A22',
+      outfitPrimary: '#526B67',
+      outfitSecondary: '#E8E4D9',
+      accent: '#C69B52',
+    },
+  },
+];
 
 // ---------------------------------------------------------------------------
 // Default scenarios — Experiment 001 ("The Promotion Rumor") authored as the

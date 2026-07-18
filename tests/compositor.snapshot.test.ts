@@ -21,6 +21,7 @@ import {
   DEFAULT_PROPS,
   DEFAULT_STYLE,
   DEFAULT_WALLS,
+  KITCHEN_STAFF,
 } from '../src/data/defaults';
 
 /**
@@ -94,6 +95,19 @@ describe('construction crew', () => {
       );
       await expect(grid(strip, FACINGS_ALL.length)).toMatchFileSnapshot(
         snap(`construction-crew/${crew.id}`),
+      );
+    });
+  }
+});
+
+describe('kitchen staff', () => {
+  for (const staff of KITCHEN_STAFF) {
+    it(`${staff.id} — all facings`, async () => {
+      const strip = FACINGS_ALL.map((facing) =>
+        composeCharacter(staff, STYLE, facing, SIZE, 'normal', { badge: false }),
+      );
+      await expect(grid(strip, FACINGS_ALL.length)).toMatchFileSnapshot(
+        snap(`kitchen-staff/${staff.id}`),
       );
     });
   }
@@ -244,17 +258,18 @@ describe('ground', () => {
 // grass fringe on the shared 47-blob contract. Snapshot representative raw
 // configs: a single edge, two edges meeting, the wrapped corner, all sides.
 describe('ground overlays', () => {
-  const overlay = deriveGroundOverlays(DEFAULT_GROUND)[0];
-  for (const [label, raw] of [
-    ['edge-n', NB.N],
-    ['corner-ne', NB.N | NB.E],
-    ['corner-ne-wrapped', NB.N | NB.E | NB.NE],
-    ['all-edges', NB.N | NB.E | NB.S | NB.W],
-  ] as const) {
-    it(`${overlay.id} ${label}`, async () => {
-      await expect(composeGroundOverlayTile(overlay, STYLE, raw, SIZE)).toMatchFileSnapshot(
-        snap(`ground-overlays/${overlay.id}-${label}`),
-      );
-    });
+  for (const overlay of deriveGroundOverlays(DEFAULT_GROUND)) {
+    for (const [label, raw] of [
+      ['edge-n', NB.N],
+      ['corner-ne', NB.N | NB.E],
+      ['corner-ne-wrapped', NB.N | NB.E | NB.NE],
+      ['all-edges', NB.N | NB.E | NB.S | NB.W],
+    ] as const) {
+      it(`${overlay.id} ${label}`, async () => {
+        await expect(composeGroundOverlayTile(overlay, STYLE, raw, SIZE)).toMatchFileSnapshot(
+          snap(`ground-overlays/${overlay.id}-${label}`),
+        );
+      });
+    }
   }
 });

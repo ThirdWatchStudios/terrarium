@@ -983,6 +983,83 @@ const sidewalk: FloorTemplate = {
   },
 };
 
+/** Still ornamental pond water — one calm, seamless tile for v1. The highlights
+ * are baked static arcs; topology comes from the grid + pond-shore overlay, not
+ * from a multi-cell prop or animation frames. */
+const pondWater: FloorTemplate = {
+  kind: 'floor',
+  id: 'pond-water',
+  label: 'Pond water',
+  params: [
+    { key: 'ripples', label: 'Static ripple detail', min: 1, max: 3, step: 1, default: 2 },
+    { key: 'seed', label: 'Pattern seed', min: 1, max: 9, step: 1, default: 4 },
+  ],
+  build(params) {
+    const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
+    const rng = mulberry32((params.seed ?? 4) * 81131);
+    groundMottle(shapes, rng, 4, 0.06);
+    const count = (params.ripples ?? 2) * 8;
+    for (let i = 0; i < count; i++) {
+      const x = rng() * 128;
+      const y = rng() * 128;
+      const rx = 5 + rng() * 11;
+      const rise = 1.4 + rng() * 2.4;
+      for (const dx of [0, -128, 128]) {
+        for (const dy of [0, -128, 128]) {
+          const cx = x + dx;
+          const cy = y + dy;
+          if (cx + rx < -2 || cx - rx > 130 || cy < -4 || cy > 132) continue;
+          shapes.push({
+            d: `M ${cx - rx} ${cy} Q ${cx} ${cy - rise} ${cx + rx} ${cy}`,
+            stroke: i % 3 === 0 ? '$secondary' : '$accent',
+            strokeWidth: i % 3 === 0 ? 1.2 : 1.5,
+            opacity: i % 3 === 0 ? 0.24 : 0.34,
+            silhouette: false,
+          });
+        }
+      }
+    }
+    return shapes;
+  },
+};
+
+/** Certified zen-garden gravel: fine, light, seamless mineral texture. The
+ * large rake composition is supplied by flat ground-detail arc decals. */
+const gravel: FloorTemplate = {
+  kind: 'floor',
+  id: 'gravel',
+  label: 'Zen gravel',
+  params: [
+    { key: 'grain', label: 'Fine grain', min: 1, max: 3, step: 1, default: 2 },
+    { key: 'seed', label: 'Pattern seed', min: 1, max: 9, step: 1, default: 6 },
+  ],
+  build(params) {
+    const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
+    const rng = mulberry32((params.seed ?? 6) * 84523);
+    const count = (params.grain ?? 2) * 70;
+    for (let i = 0; i < count; i++) {
+      const x = rng() * 128;
+      const y = rng() * 128;
+      const r = 0.45 + rng() * 0.85;
+      const fill = rng() > 0.45 ? '$secondary' : '$accent';
+      const opacity = 0.25 + rng() * 0.22;
+      for (const dx of [0, -128, 128]) {
+        for (const dy of [0, -128, 128]) {
+          const cx = x + dx;
+          const cy = y + dy;
+          if (cx < -2 || cx > 130 || cy < -2 || cy > 130) continue;
+          shapes.push(flat(circle(cx, cy, r), fill, opacity));
+        }
+      }
+    }
+    // restrained parallel comb lines that wrap exactly at the tile edges
+    for (let y = 12; y < 128; y += 16) {
+      shapes.push({ d: `M 0 ${y} Q 32 ${y - 1.5} 64 ${y} T 128 ${y}`, stroke: '$secondary', strokeWidth: 0.8, opacity: 0.15, silhouette: false });
+    }
+    return shapes;
+  },
+};
+
 // --- Added floors (prop-variety-gap-analysis.md §4) ----------------------------
 
 /** Smooth industrial concrete — the clinical/institutional surface. Faint
@@ -1105,6 +1182,8 @@ export const FLOOR_TEMPLATES: FloorTemplate[] = [
   dirt,
   asphalt,
   sidewalk,
+  gravel,
+  pondWater,
 ];
 
 /** Natural ground — EXEMPT from the clinical drain (D2 amended, core/look.ts):
@@ -1114,13 +1193,20 @@ export const FLOOR_TEMPLATES: FloorTemplate[] = [
 export const NATURAL_GROUND_TEMPLATE_IDS = ['grass', 'meadow', 'dirt'] as const;
 
 /** Paved ground — already the focus-grouped output; drains with the building. */
-export const PAVED_GROUND_TEMPLATE_IDS = ['asphalt', 'sidewalk'] as const;
+export const PAVED_GROUND_TEMPLATE_IDS = ['asphalt', 'sidewalk', 'gravel'] as const;
+
+/** Ornamental water ground — exempt from the clinical drain like natural ground. */
+export const WATER_TEMPLATE_IDS = ['pond-water'] as const;
 
 /** Ground-surface template ids — the outdoor floors that ship as the distinct
  *  ground kind (B1.5 / D2), NOT interior floor. The sim imports these as a
  *  separate layer (own sort band −20000). Kept here so the tool has one source
  *  of truth for which FloorTemplates are ground. */
-export const GROUND_TEMPLATE_IDS = [...NATURAL_GROUND_TEMPLATE_IDS, ...PAVED_GROUND_TEMPLATE_IDS] as const;
+export const GROUND_TEMPLATE_IDS = [
+  ...NATURAL_GROUND_TEMPLATE_IDS,
+  ...PAVED_GROUND_TEMPLATE_IDS,
+  ...WATER_TEMPLATE_IDS,
+] as const;
 
 /** Human-readable label for a blob tile index (UI hover / preview sheets only —
  *  atlas frame names stay the generic `mask_<i>`/`tile_<i>`, D3). */
