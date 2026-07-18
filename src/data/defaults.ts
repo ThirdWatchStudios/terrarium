@@ -873,6 +873,67 @@ export const DEFAULT_PROPS: PropInstance[] = [
     params: { size: 76, seed: 4 },
     palette: { primary: '#8D8A80', secondary: '#66635A', accent: '#B0ACA0' },
   },
+  // Ground-detail scatter decals (wild-field pass) — the dense sub-tile texture
+  // layer under the flora: tufts, sprigs, pebbles, a twig. One baked instance
+  // per `ground-detail-*` template (the sim pattern-matches that prefix and
+  // scatters these nearly everywhere over the natural ground). Clinical-exempt
+  // like the rest of the nature family.
+  {
+    id: 'prop-ground-detail-grass-tuft-a',
+    name: 'Ground detail grass tuft A',
+    templateId: 'ground-detail-grass-tuft-a',
+    params: { seed: 3 },
+    palette: { primary: '#7FB554', secondary: '#456D32', accent: '#B5A65A' },
+  },
+  {
+    id: 'prop-ground-detail-grass-tuft-b',
+    name: 'Ground detail grass tuft B',
+    templateId: 'ground-detail-grass-tuft-b',
+    params: { seed: 6 },
+    palette: { primary: '#73AB4B', secondary: '#3F6B2E', accent: '#A8B060' },
+  },
+  {
+    id: 'prop-ground-detail-grass-tuft-c',
+    name: 'Ground detail grass tuft C',
+    templateId: 'ground-detail-grass-tuft-c',
+    params: { seed: 8 },
+    palette: { primary: '#8ABC60', secondary: '#4C7536', accent: '#BDAF66' },
+  },
+  {
+    id: 'prop-ground-detail-flower-sprig-a',
+    name: 'Ground detail flower sprig A',
+    templateId: 'ground-detail-flower-sprig-a',
+    params: { seed: 4 },
+    palette: { primary: '#66A94A', secondary: '#37752A', accent: '#D9C87A' },
+  },
+  {
+    id: 'prop-ground-detail-flower-sprig-b',
+    name: 'Ground detail flower sprig B',
+    templateId: 'ground-detail-flower-sprig-b',
+    params: { seed: 7 },
+    palette: { primary: '#6FAF52', secondary: '#396F30', accent: '#B792CC' },
+  },
+  {
+    id: 'prop-ground-detail-pebble-a',
+    name: 'Ground detail pebble A',
+    templateId: 'ground-detail-pebble-a',
+    params: { seed: 2 },
+    palette: { primary: '#8D8A80', secondary: '#66635A', accent: '#B0ACA0' },
+  },
+  {
+    id: 'prop-ground-detail-pebble-b',
+    name: 'Ground detail pebble B',
+    templateId: 'ground-detail-pebble-b',
+    params: { seed: 5 },
+    palette: { primary: '#928B7E', secondary: '#6A6156', accent: '#B6AC9C' },
+  },
+  {
+    id: 'prop-ground-detail-twig-a',
+    name: 'Ground detail twig A',
+    templateId: 'ground-detail-twig-a',
+    params: { seed: 3 },
+    palette: { primary: '#7A5B38', secondary: '#59422A', accent: '#9C7B4E' },
+  },
 ];
 
 export const DEFAULT_WALLS: TileInstance[] = [
