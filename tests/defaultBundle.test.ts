@@ -403,6 +403,42 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     }
   });
 
+  it('exports the CE-22 cafeteria kit through existing prop/catalog paths only', async () => {
+    const { paths, json } = await exportPaths();
+    const required = new Set([
+      'serving-line',
+      'service-scanner',
+      'commercial-range',
+      'prep-table',
+      'dish-return',
+      'walk-in-front',
+      'dining-carrel',
+      'cafeteria-table',
+      'tray-stack',
+    ]);
+    const exported = [...paths]
+      .filter((path) => /^props\/.+\/prop\.json$/.test(path))
+      .map((path) => JSON.parse(json.get(path)!))
+      .filter(({ templateId }) => required.has(templateId));
+    expect(new Set(exported.map(({ templateId }) => templateId))).toEqual(required);
+    for (const prop of exported) {
+      const dir = [...paths].find((path) =>
+        /^props\/.+\/prop\.json$/.test(path) && JSON.parse(json.get(path)!).id === prop.id,
+      )!.slice(0, -'/prop.json'.length);
+      expect(paths.has(`${dir}/layers-manifest@4x.json`), `${prop.templateId} lost its layer manifest`).toBe(true);
+    }
+
+    const catalog = JSON.parse(json.get('facility-catalog.json')!);
+    expect(catalog.facilities.find(({ propId }: { propId: string }) => propId === 'service-scanner'))
+      .toMatchObject({
+        kind: 'AnchoredFacility',
+        isInteractionAnchor: true,
+        interactionType: 'service_scanner',
+      });
+    expect([...paths].some((path) => path.startsWith('kitchen-staff/')),
+      'CE-22 must not invent an unratified staff export folder').toBe(false);
+  });
+
   it('keeps every layer atlas within the browser canvas max dimension', async () => {
     // The in-app export rasterizes via a <canvas>, which caps each dimension at
     // ~16384px (Chrome). A pathological layer sheet (one tall column) once blew

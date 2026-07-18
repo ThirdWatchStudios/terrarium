@@ -3152,6 +3152,219 @@ const bikeRack: PropTemplate = {
 };
 
 // ---------------------------------------------------------------------------
+// Corporate-campus cafeteria + kitchen kit (CE-22). Static service-line art:
+// no steam, motion frames, or wall-slot stacking. Elevation counters sit against
+// walls but remain ordinary floor props; plan seating rotates with the room.
+// ---------------------------------------------------------------------------
+
+const servingLine: PropTemplate = {
+  id: 'serving-line',
+  label: 'Serving line',
+  projection: 'elevation',
+  gridFootprint: { w: 4, h: 1 },
+  footprint: { cx: CX, cy: 117, rx: 52, ry: 5 },
+  params: [],
+  build() {
+    return [
+      { d: ellipse(CX, GROUND + 1, 54, 5), fill: '#00000020', silhouette: false },
+      // counter body and inset service doors
+      { d: rr(10, 70, 108, 46, 5), fill: '$primary' },
+      { d: rr(18, 82, 42, 27, 3), fill: '$secondary', silhouette: false },
+      { d: rr(68, 82, 42, 27, 3), fill: '$secondary', silhouette: false },
+      // tray rail and counter cap
+      { d: rr(5, 67, 118, 8, 3), fill: '$accent' },
+      { d: rr(3, 76, 122, 4, 2), fill: '$secondary', silhouette: false },
+      // hot wells, deliberately still
+      { d: rr(18, 61, 26, 8, 3), fill: '#34393C', silhouette: false },
+      { d: rr(51, 61, 26, 8, 3), fill: '#34393C', silhouette: false },
+      { d: rr(84, 61, 26, 8, 3), fill: '#34393C', silhouette: false },
+      { d: rr(21, 63, 20, 3, 1.5), fill: '#C78B4A', opacity: 0.78, silhouette: false },
+      { d: rr(54, 63, 20, 3, 1.5), fill: '#8FAF61', opacity: 0.78, silhouette: false },
+      { d: rr(87, 63, 20, 3, 1.5), fill: '#D5C08A', opacity: 0.78, silhouette: false },
+      // sneeze guard: glass first, then certified frame/posts
+      { d: rr(18, 31, 92, 29, 3), fill: '#D9EEF238', stroke: '#D9EEF27A', strokeWidth: 1.4, silhouette: false },
+      { d: rr(17, 28, 94, 5, 2), fill: '$secondary' },
+      { d: rr(20, 31, 4, 34, 2), fill: '$secondary' },
+      { d: rr(104, 31, 4, 34, 2), fill: '$secondary' },
+      { d: 'M 28 36 L 99 36', stroke: '#FFFFFF70', strokeWidth: 1.4, silhouette: false },
+    ];
+  },
+};
+
+const serviceScanner: PropTemplate = {
+  id: 'service-scanner',
+  label: 'Service attendance scanner',
+  projection: 'elevation',
+  gridFootprint: { w: 1, h: 1 },
+  footprint: { cx: CX, cy: 117, rx: 14, ry: 4 },
+  params: [],
+  build() {
+    return [
+      { d: ellipse(CX, GROUND + 1, 15, 4), fill: '#00000020', silhouette: false },
+      { d: rr(CX - 14, 36, 28, 31, 6), fill: '$primary' },
+      { d: rr(CX - 9, 42, 18, 16, 3), fill: '$secondary', silhouette: false },
+      { d: rr(CX - 4, 64, 8, 46, 3), fill: '$primary' },
+      { d: rr(CX - 12, 108, 24, 8, 3), fill: '$secondary' },
+      { d: circle(CX, 50, 7), fill: `${IRIS_GREEN}28`, silhouette: false },
+      { d: circle(CX, 50, 3.5), fill: IRIS_GREEN, silhouette: false },
+      { d: rr(CX - 7, 59, 14, 2.5, 1), fill: IRIS_GREEN, opacity: 0.72, silhouette: false },
+    ];
+  },
+};
+
+const commercialRange: PropTemplate = {
+  id: 'commercial-range',
+  label: 'Commercial range',
+  projection: 'elevation',
+  gridFootprint: { w: 2, h: 1 },
+  footprint: { cx: CX, cy: 117, rx: 41, ry: 5 },
+  params: [],
+  build() {
+    return [
+      { d: ellipse(CX, GROUND + 1, 43, 5), fill: '#00000020', silhouette: false },
+      // integrated extraction hood
+      { d: 'M 22 20 L 106 20 L 99 44 L 29 44 Z', fill: '$secondary' },
+      { d: rr(34, 29, 60, 5, 2), fill: '#00000030', silhouette: false },
+      { d: rr(41, 36, 46, 3, 1.5), fill: '#DDE3E3', opacity: 0.55, silhouette: false },
+      // range/oven block
+      { d: rr(20, 55, 88, 61, 5), fill: '$primary' },
+      { d: rr(25, 58, 78, 13, 3), fill: '$accent' },
+      { d: rr(30, 78, 68, 29, 4), fill: '$secondary', silhouette: false },
+      { d: rr(36, 84, 56, 17, 2), fill: '#242A2D', silhouette: false },
+      { d: rr(45, 76, 38, 3, 1.5), fill: '#111416', opacity: 0.72, silhouette: false },
+      { d: circle(38, 64, 3), fill: '#33383A', silhouette: false },
+      { d: circle(53, 64, 3), fill: '#33383A', silhouette: false },
+      { d: circle(75, 64, 3), fill: '#33383A', silhouette: false },
+      { d: circle(90, 64, 3), fill: '#33383A', silhouette: false },
+    ];
+  },
+};
+
+const prepTable: PropTemplate = {
+  id: 'prep-table',
+  label: 'Kitchen prep table',
+  projection: 'plan',
+  gridFootprint: { w: 2, h: 1 },
+  params: [],
+  build() {
+    return [
+      { d: rr(12, 35, 104, 58, 7), fill: '$primary' },
+      { d: rr(17, 40, 94, 48, 5), fill: '$secondary', silhouette: false },
+      { d: rr(23, 48, 34, 26, 3), fill: '#B78854', silhouette: false },
+      { d: ellipse(87, 62, 15, 12), fill: '#485057', silhouette: false },
+      { d: ellipse(87, 62, 10, 7), fill: '#CBD1D2', silhouette: false },
+      { d: 'M 30 52 L 50 69 M 48 51 L 31 70', stroke: '#EEE9DB', strokeWidth: 2, opacity: 0.72, silhouette: false },
+      { d: rr(19, 83, 90, 5, 2), fill: '$accent', opacity: 0.7, silhouette: false },
+    ];
+  },
+};
+
+const dishReturn: PropTemplate = {
+  id: 'dish-return',
+  label: 'Dish return',
+  projection: 'elevation',
+  gridFootprint: { w: 2, h: 1 },
+  footprint: { cx: CX, cy: 117, rx: 42, ry: 5 },
+  params: [],
+  build() {
+    return [
+      { d: ellipse(CX, GROUND + 1, 44, 5), fill: '#00000020', silhouette: false },
+      { d: rr(17, 39, 94, 77, 5), fill: '$primary' },
+      { d: rr(25, 48, 78, 31, 4), fill: '#22272A', silhouette: false },
+      { d: rr(29, 52, 70, 5, 2), fill: '$accent', opacity: 0.75, silhouette: false },
+      { d: rr(24, 85, 80, 24, 3), fill: '$secondary', silhouette: false },
+      { d: rr(32, 90, 64, 3, 1.5), fill: '#111416', opacity: 0.5, silhouette: false },
+      { d: rr(32, 98, 64, 3, 1.5), fill: '#111416', opacity: 0.5, silhouette: false },
+      { d: ellipse(43, 70, 12, 5), fill: '#E2DED3', silhouette: false },
+      { d: ellipse(66, 69, 12, 5), fill: '#D8D3C8', silhouette: false },
+      { d: ellipse(89, 70, 12, 5), fill: '#E2DED3', silhouette: false },
+    ];
+  },
+};
+
+const walkInFront: PropTemplate = {
+  id: 'walk-in-front',
+  label: 'Walk-in cooler front',
+  projection: 'elevation',
+  gridFootprint: { w: 2, h: 1 },
+  footprint: { cx: CX, cy: 117, rx: 42, ry: 5 },
+  params: [],
+  build() {
+    return [
+      { d: ellipse(CX, GROUND + 1, 44, 5), fill: '#00000020', silhouette: false },
+      { d: rr(18, 15, 92, 101, 5), fill: '$secondary' },
+      { d: rr(26, 22, 76, 94, 3), fill: '$primary' },
+      { d: rr(32, 28, 64, 20, 3), fill: '$accent', opacity: 0.65, silhouette: false },
+      { d: rr(80, 57, 7, 31, 3), fill: '#343A3D', silhouette: false },
+      { d: rr(83, 60, 8, 25, 3), fill: '#BFC6C6', silhouette: false },
+      { d: circle(91, 95, 3), fill: '#5C6970', silhouette: false },
+      { d: 'M 30 107 L 98 107', stroke: '#00000024', strokeWidth: 2, silhouette: false },
+    ];
+  },
+};
+
+const diningCarrel: PropTemplate = {
+  id: 'dining-carrel',
+  label: 'Solitary dining carrel',
+  projection: 'plan',
+  gridFootprint: { w: 1, h: 1 },
+  params: [],
+  build() {
+    return [
+      // privacy wing and small meal surface
+      { d: rr(24, 20, 80, 10, 4), fill: '$secondary' },
+      { d: rr(20, 20, 10, 72, 4), fill: '$secondary' },
+      { d: rr(98, 20, 10, 72, 4), fill: '$secondary' },
+      { d: rr(30, 29, 68, 45, 5), fill: '$primary' },
+      { d: rr(38, 36, 52, 31, 4), fill: '$accent', silhouette: false },
+      // single seat, carefully separated from the table
+      { d: rr(43, 84, 42, 24, 10), fill: '$primary' },
+      { d: rr(49, 89, 30, 14, 7), fill: '$secondary', silhouette: false },
+    ];
+  },
+};
+
+const cafeteriaTable: PropTemplate = {
+  id: 'cafeteria-table',
+  label: 'Communal cafeteria table',
+  projection: 'plan',
+  gridFootprint: { w: 4, h: 2 },
+  params: [],
+  build() {
+    return [
+      // warm long table, attached benches on both sides
+      { d: rr(12, 44, 104, 40, 10), fill: '$primary' },
+      { d: rr(19, 49, 90, 30, 7), fill: '$accent', opacity: 0.55, silhouette: false },
+      { d: rr(17, 19, 94, 17, 7), fill: '$secondary' },
+      { d: rr(17, 92, 94, 17, 7), fill: '$secondary' },
+      { d: rr(27, 32, 8, 12, 3), fill: '$secondary', silhouette: false },
+      { d: rr(93, 32, 8, 12, 3), fill: '$secondary', silhouette: false },
+      { d: rr(27, 84, 8, 12, 3), fill: '$secondary', silhouette: false },
+      { d: rr(93, 84, 8, 12, 3), fill: '$secondary', silhouette: false },
+      { d: circle(43, 63, 5), fill: '#E5E0D5', silhouette: false },
+      { d: circle(84, 63, 5), fill: '#E5E0D5', silhouette: false },
+    ];
+  },
+};
+
+const trayStack: PropTemplate = {
+  id: 'tray-stack',
+  label: 'Tray stack',
+  projection: 'plan',
+  gridFootprint: { w: 1, h: 1 },
+  params: [],
+  build() {
+    return [
+      { d: rr(29, 35, 70, 58, 9), fill: '$secondary' },
+      { d: rr(33, 31, 70, 58, 9), fill: '$primary' },
+      { d: rr(37, 27, 70, 58, 9), fill: '$accent' },
+      { d: rr(44, 34, 56, 44, 7), fill: '#00000018', silhouette: false },
+      { d: rr(49, 39, 46, 34, 6), stroke: '#FFFFFF66', strokeWidth: 2, silhouette: false },
+    ];
+  },
+};
+
+// ---------------------------------------------------------------------------
 // Nature decor (lush-outside pass — D2 amendment). Projection follows height:
 // trees/saplings are front-facing elevation art; low flora remains plan art.
 // All are NON_PLACEABLE scenery the sim scatters over the build site,
@@ -4020,6 +4233,16 @@ export const PROP_TEMPLATES: PropTemplate[] = [
   signLot,
   carCompact,
   bikeRack,
+  // Corporate-campus cafeteria + kitchen kit (CE-22).
+  servingLine,
+  serviceScanner,
+  commercialRange,
+  prepTable,
+  dishReturn,
+  walkInFront,
+  diningCarrel,
+  cafeteriaTable,
+  trayStack,
   // Nature decor (lush-outside pass) — clinical-exempt exterior scenery.
   treeCanopy,
   treeSapling,

@@ -1790,6 +1790,127 @@ const FAB_PARTS: PartDef[] = [
   },
 ];
 
+// ---------------------------------------------------------------------------
+// Cafeteria service staff (CE-22). Human recipe-only parts: a body-aware apron
+// over a tee and a translucent hairnet that preserves every hair silhouette.
+// They remain resolvable for the code-owned staff recipe but are not ordinary
+// player/randomizer choices in v1.
+// ---------------------------------------------------------------------------
+
+function anchoredServiceApron(facing: Facing, body: BodyFacingAnchors): PartVariant {
+  const neck = body.neck;
+  const chest = body.chest;
+  const hip = body.hip;
+  const hem = spanCenter(body.hem);
+  const shoulderY = spanCenter(body.shoulders).y + 3;
+  const upper = bodyInteriorSpan(body, shoulderY, 2);
+  const waist = bodyInteriorSpan(body, body.waist.left.y, 3);
+  const bottom = bodyInteriorSpan(body, hem.y - 2, 4);
+
+  if (facing === 'east') {
+    const frontX = bodyInteriorSpan(body, chest.y, 3).right;
+    return {
+      z: 20,
+      shapes: [
+        // tee body/sleeve register beneath the apron
+        { d: `M ${upper.left} ${shoulderY} L ${upper.right} ${shoulderY} L ${waist.right} ${hip.y} L ${waist.left} ${hip.y} Z`, fill: '$outfitSecondary', silhouette: false },
+        // bib + lower apron on the visible front plane
+        { d: `M ${neck.x + 1} ${neck.y + 4} L ${frontX} ${chest.y - 2} L ${bottom.right} ${hem.y - 2} L ${hip.x - 2} ${hem.y - 2} L ${hip.x - 3} ${chest.y - 2} Z`, fill: '$outfitPrimary', silhouette: false },
+        { d: `M ${neck.x + 1} ${neck.y + 3} L ${frontX - 1} ${chest.y - 2}`, stroke: '$outfitPrimary', strokeWidth: 3, silhouette: false },
+        { d: rr(frontX - 10, hip.y - 3, 9, 9, 2), fill: '$outfitSecondary', silhouette: false },
+        { d: `M ${waist.left} ${hip.y - 5} L ${waist.right} ${hip.y - 5}`, stroke: '#0000002E', strokeWidth: 1.6, silhouette: false },
+      ],
+    };
+  }
+
+  const bibHalf = Math.max(7, Math.min(12, (upper.right - upper.left) * 0.22));
+  if (facing === 'north') {
+    return {
+      z: 20,
+      shapes: [
+        { d: `M ${upper.left} ${shoulderY} L ${upper.right} ${shoulderY} L ${waist.right} ${hip.y} L ${waist.left} ${hip.y} Z`, fill: '$outfitSecondary', silhouette: false },
+        { d: `M ${neck.x - bibHalf} ${neck.y + 4} Q ${neck.x} ${chest.y - 3} ${neck.x + bibHalf} ${neck.y + 4}`, stroke: '$outfitPrimary', strokeWidth: 3.2, silhouette: false },
+        { d: `M ${waist.left + 2} ${hip.y - 4} L ${waist.right - 2} ${hip.y - 4}`, stroke: '$outfitPrimary', strokeWidth: 3, silhouette: false },
+      ],
+    };
+  }
+
+  return {
+    z: 20,
+    shapes: [
+      // tee torso and sleeve field
+      { d: `M ${upper.left} ${shoulderY} L ${upper.right} ${shoulderY} L ${waist.right} ${hip.y} L ${waist.left} ${hip.y} Z`, fill: '$outfitSecondary', silhouette: false },
+      // apron bib and skirt
+      { d: `M ${chest.x - bibHalf} ${chest.y - 8} L ${chest.x + bibHalf} ${chest.y - 8} L ${bottom.right} ${hem.y - 2} L ${bottom.left} ${hem.y - 2} Z`, fill: '$outfitPrimary', silhouette: false },
+      { d: `M ${neck.x - 7} ${neck.y + 3} L ${chest.x - bibHalf + 2} ${chest.y - 8} M ${neck.x + 7} ${neck.y + 3} L ${chest.x + bibHalf - 2} ${chest.y - 8}`, stroke: '$outfitPrimary', strokeWidth: 3, silhouette: false },
+      { d: rr(chest.x - 9, hip.y - 1, 18, 11, 3), fill: '$outfitSecondary', silhouette: false },
+      { d: `M ${waist.left + 1} ${hip.y - 5} L ${waist.right - 1} ${hip.y - 5}`, stroke: '#0000002E', strokeWidth: 1.6, silhouette: false },
+    ],
+  };
+}
+
+const SERVICE_PARTS: PartDef[] = [
+  {
+    id: 'outfit-service-apron',
+    label: 'Service apron',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: {
+      south: {
+        z: 20,
+        shapes: [
+          { d: rr(-24, -25, 48, 37, 15), fill: '$outfitSecondary', silhouette: false },
+          { d: rr(-13, -18, 26, 43, 5), fill: '$outfitPrimary', silhouette: false },
+        ],
+      },
+      east: {
+        z: 20,
+        shapes: [
+          { d: rr(-18, -25, 36, 37, 13), fill: '$outfitSecondary', silhouette: false },
+          { d: rr(0, -18, 14, 43, 5), fill: '$outfitPrimary', silhouette: false },
+        ],
+      },
+      north: {
+        z: 20,
+        shapes: [{ d: rr(-24, -25, 48, 37, 15), fill: '$outfitSecondary', silhouette: false }],
+      },
+    },
+    buildVariant: (facing, context) => context.bodyAnchors && anchoredServiceApron(facing, context.bodyAnchors),
+  },
+  {
+    id: 'acc-hairnet',
+    label: 'Hairnet',
+    slot: 'accessory',
+    anchor: 'headCenter',
+    facings: {
+      south: {
+        z: 60,
+        shapes: [
+          { d: 'M -25 2 C -24 -22 -12 -31 0 -31 C 13 -31 24 -21 25 2 C 15 -3 -15 -3 -25 2 Z', fill: '#DDEBEA24', stroke: '#EEF5F2B8', strokeWidth: 1.8, silhouette: false },
+          { d: 'M -18 -13 Q 0 -22 18 -13 M -21 -5 Q 0 -14 21 -5', stroke: '#EEF5F278', strokeWidth: 1.1, silhouette: false },
+          { d: 'M -12 -25 L -8 -4 M 0 -30 L 0 -3 M 12 -25 L 8 -4', stroke: '#EEF5F25C', strokeWidth: 1, silhouette: false },
+        ],
+      },
+      east: {
+        z: 60,
+        shapes: [
+          { d: 'M -23 3 C -22 -21 -10 -30 2 -30 C 15 -30 24 -20 24 3 C 12 -2 -12 -2 -23 3 Z', fill: '#DDEBEA24', stroke: '#EEF5F2B8', strokeWidth: 1.8, silhouette: false },
+          { d: 'M -16 -13 Q 2 -22 19 -12 M -20 -4 Q 2 -13 21 -4', stroke: '#EEF5F278', strokeWidth: 1.1, silhouette: false },
+          { d: 'M -8 -25 L -5 -3 M 5 -28 L 7 -3', stroke: '#EEF5F25C', strokeWidth: 1, silhouette: false },
+        ],
+      },
+      north: {
+        z: 60,
+        shapes: [
+          { d: 'M -25 4 C -24 -21 -12 -31 0 -31 C 13 -31 24 -21 25 4 C 14 -1 -14 -1 -25 4 Z', fill: '#DDEBEA24', stroke: '#EEF5F2B8', strokeWidth: 1.8, silhouette: false },
+          { d: 'M -19 -13 Q 0 -23 19 -13 M -22 -4 Q 0 -14 22 -4', stroke: '#EEF5F278', strokeWidth: 1.1, silhouette: false },
+          { d: 'M -12 -25 L -8 -2 M 0 -30 L 0 -1 M 12 -25 L 8 -2', stroke: '#EEF5F25C', strokeWidth: 1, silhouette: false },
+        ],
+      },
+    },
+  },
+];
+
 const BASE_PART_LIBRARY: PartDef[] = [
   ...BODY_ARCHETYPE_PARTS,
   ...HEADS,
@@ -1797,6 +1918,7 @@ const BASE_PART_LIBRARY: PartDef[] = [
   ...OUTFITS,
   ...ACCESSORIES,
   ...FAB_PARTS,
+  ...SERVICE_PARTS,
 ];
 
 export const PART_LIBRARY: PartDef[] = applyImportedPartArt(
@@ -1807,7 +1929,12 @@ export const PART_LIBRARY: PartDef[] = applyImportedPartArt(
 // Special-purpose fabrication-unit parts stay resolvable for the construction
 // crew recipe and compositor snapshots, but must never leak into employee
 // generation or the ordinary character-authoring pickers.
-const NON_SELECTABLE_PART_IDS = new Set(['head-fab', 'outfit-fab-chassis']);
+const NON_SELECTABLE_PART_IDS = new Set([
+  'head-fab',
+  'outfit-fab-chassis',
+  'outfit-service-apron',
+  'acc-hairnet',
+]);
 
 // ---------------------------------------------------------------------------
 // Internal parts — resolvable by id but NOT offered in the authoring pickers.

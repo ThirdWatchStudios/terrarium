@@ -21,6 +21,7 @@ import {
   DEFAULT_PROPS,
   DEFAULT_STYLE,
   DEFAULT_WALLS,
+  KITCHEN_STAFF,
 } from '../src/data/defaults';
 
 /**
@@ -94,6 +95,19 @@ describe('construction crew', () => {
       );
       await expect(grid(strip, FACINGS_ALL.length)).toMatchFileSnapshot(
         snap(`construction-crew/${crew.id}`),
+      );
+    });
+  }
+});
+
+describe('kitchen staff', () => {
+  for (const staff of KITCHEN_STAFF) {
+    it(`${staff.id} — all facings`, async () => {
+      const strip = FACINGS_ALL.map((facing) =>
+        composeCharacter(staff, STYLE, facing, SIZE, 'normal', { badge: false }),
+      );
+      await expect(grid(strip, FACINGS_ALL.length)).toMatchFileSnapshot(
+        snap(`kitchen-staff/${staff.id}`),
       );
     });
   }

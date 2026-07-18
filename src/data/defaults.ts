@@ -844,6 +844,71 @@ export const DEFAULT_PROPS: PropInstance[] = [
     params: {},
     palette: { primary: '#8B9296', secondary: '#4E555A', accent: '#BCC1C3' },
   },
+  // Corporate-campus cafeteria + kitchen kit (CE-22). These are all normal
+  // placeable interior props and therefore follow the building's clinical drain.
+  {
+    id: 'prop-serving-line',
+    name: 'Serving line',
+    templateId: 'serving-line',
+    params: {},
+    palette: { primary: '#AEB5B5', secondary: '#5A6265', accent: '#D8D1BC' },
+  },
+  {
+    id: 'prop-service-scanner',
+    name: 'Service attendance scanner',
+    templateId: 'service-scanner',
+    params: {},
+    palette: { primary: '#D7DBD8', secondary: '#565E5B', accent: '#B7BDBA' },
+  },
+  {
+    id: 'prop-commercial-range',
+    name: 'Commercial range',
+    templateId: 'commercial-range',
+    params: {},
+    palette: { primary: '#9EA5A7', secondary: '#5B6366', accent: '#C8CFD0' },
+  },
+  {
+    id: 'prop-prep-table',
+    name: 'Kitchen prep table',
+    templateId: 'prep-table',
+    params: {},
+    palette: { primary: '#A8B0B2', secondary: '#D3D8D8', accent: '#697276' },
+  },
+  {
+    id: 'prop-dish-return',
+    name: 'Dish return',
+    templateId: 'dish-return',
+    params: {},
+    palette: { primary: '#7C8588', secondary: '#AEB6B7', accent: '#D8D1BC' },
+  },
+  {
+    id: 'prop-walk-in-front',
+    name: 'Walk-in cooler front',
+    templateId: 'walk-in-front',
+    params: {},
+    palette: { primary: '#D0D5D5', secondary: '#747C7F', accent: '#AAB8C0' },
+  },
+  {
+    id: 'prop-dining-carrel',
+    name: 'Solitary dining carrel',
+    templateId: 'dining-carrel',
+    params: {},
+    palette: { primary: '#AAB0B2', secondary: '#5C6367', accent: '#D9D6CB' },
+  },
+  {
+    id: 'prop-cafeteria-table',
+    name: 'Communal cafeteria table',
+    templateId: 'cafeteria-table',
+    params: {},
+    palette: { primary: '#8B6040', secondary: '#57402F', accent: '#C08A58' },
+  },
+  {
+    id: 'prop-tray-stack',
+    name: 'Tray stack',
+    templateId: 'tray-stack',
+    params: {},
+    palette: { primary: '#AAB2B4', secondary: '#717A7E', accent: '#D0D6D7' },
+  },
   // Nature decor (lush-outside pass) — clinical-EXEMPT scenery for the outdoor
   // ground (core/look.ts NATURE_PROP_TEMPLATE_IDS): the saturated living things
   // the build visibly replaces. Curated tree, sapling, shrub, and herbaceous
@@ -1496,6 +1561,36 @@ function buildConstructionProfiles(): CharacterProfile[] {
 }
 
 export const CONSTRUCTION_PROFILES: CharacterProfile[] = buildConstructionProfiles();
+
+// ---------------------------------------------------------------------------
+// Cafeteria staff (CE-22). A code-owned human recipe using the service-only
+// apron + hairnet parts. Kept out of DEFAULT_CAST so kitchen staff are never
+// treated as desk occupants. Unlike construction-worker, no new top-level
+// export folder is introduced here: the sim-side staff binding is still owned
+// by the campus population lane, while this stable recipe proves/resolves the
+// authored parts without changing the current export schema.
+// ---------------------------------------------------------------------------
+
+export const KITCHEN_STAFF: CharacterRecipe[] = [
+  {
+    id: 'kitchen-worker',
+    name: 'Kitchen Staff',
+    parts: {
+      body: 'body-balanced',
+      head: 'head-round',
+      hair: 'hair-bun',
+      outfit: 'outfit-service-apron',
+      accessories: ['acc-hairnet'],
+    },
+    palette: {
+      skin: '#B97850',
+      hair: '#3A2A22',
+      outfitPrimary: '#526B67',
+      outfitSecondary: '#E8E4D9',
+      accent: '#C69B52',
+    },
+  },
+];
 
 // ---------------------------------------------------------------------------
 // Default scenarios — Experiment 001 ("The Promotion Rumor") authored as the
