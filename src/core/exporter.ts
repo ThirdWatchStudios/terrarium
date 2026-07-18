@@ -1052,7 +1052,9 @@ export function groundOverlayAtlas(overlay: TileInstance, style: StyleSheet, sca
   }
   const maskSemantics = overlay.templateId === 'curb-edge'
     ? 'bit set = neighbour is natural ground; drawn on the paved receiving cell'
-    : 'bit set = neighbour is encroaching natural ground (grass family); drawn on the receiving cell';
+    : overlay.templateId === 'pond-shore'
+      ? 'bit set = neighbour is non-water ground; drawn on the pond-water receiving cell'
+      : 'bit set = neighbour is encroaching natural ground (grass family); drawn on the receiving cell';
   return {
     name: overlay.name,
     id: overlay.id,

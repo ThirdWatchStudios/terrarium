@@ -1,6 +1,6 @@
 import type { ProjectState, StyleSheet } from './types';
 import { DEFAULT_LOOK } from './types';
-import { NATURAL_GROUND_TEMPLATE_IDS } from '../tiles/templates';
+import { NATURAL_GROUND_TEMPLATE_IDS, WATER_TEMPLATE_IDS } from '../tiles/templates';
 import { NATURE_PROP_TEMPLATE_IDS } from '../props/templates';
 
 /**
@@ -108,8 +108,8 @@ export function projectWithLook(project: ProjectState): ProjectState {
  * Apply the clinical-plan look to the whole project: style sheet + every
  * prop/wall/floor palette. Characters keep their recipes untouched (people
  * stay warm — Article VIII). NATURE is exempt too (D2 amended): natural ground
- * (grass / meadow / dirt) and the nature decor props (trees / bushes / flowers
- * / boulders) keep their saturated authored palettes under the clinical plan,
+ * (grass / meadow / dirt), ornamental water, and the nature decor props (trees /
+ * bushes / flowers / boulders / reeds) keep their saturated authored palettes,
  * so the drained building visibly displaces living ground — nature is TRUTH,
  * like people; the PAVED surfaces and the cars drain with the office.
  * Idempotent: re-applying converges. MUTATES the argument — callers wanting a
@@ -126,8 +126,11 @@ export function applyClinicalLook(project: ProjectState): void {
       accent: clinicalSurfaceColor(prop.palette.accent),
     };
   }
-  const natural = new Set<string>(NATURAL_GROUND_TEMPLATE_IDS);
-  const pavedGround = (project.ground ?? []).filter((g) => !natural.has(g.templateId));
+  const exemptGround = new Set<string>([
+    ...NATURAL_GROUND_TEMPLATE_IDS,
+    ...WATER_TEMPLATE_IDS,
+  ]);
+  const pavedGround = (project.ground ?? []).filter((g) => !exemptGround.has(g.templateId));
   for (const tile of [...(project.walls ?? []), ...(project.floors ?? []), ...pavedGround]) {
     tile.palette = {
       primary: clinicalSurfaceColor(tile.palette.primary),

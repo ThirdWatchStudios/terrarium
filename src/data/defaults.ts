@@ -909,6 +909,93 @@ export const DEFAULT_PROPS: PropInstance[] = [
     params: {},
     palette: { primary: '#AAB2B4', secondary: '#717A7E', accent: '#D0D6D7' },
   },
+  // Corporate-campus quad, pond, and reflection-garden kit (CE-23/24).
+  // Ground-detail decals are sim-scattered texture marks, not facilities; the
+  // four furnishings remain placeable, while reeds join living nature decor.
+  {
+    id: 'prop-ground-detail-rake-arc-a',
+    name: 'Raked gravel arcs A',
+    templateId: 'ground-detail-rake-arc-a',
+    params: {},
+    palette: { primary: '#E9E5DA', secondary: '#AAA69D', accent: '#F5F1E7' },
+  },
+  {
+    id: 'prop-ground-detail-rake-arc-b',
+    name: 'Raked gravel arcs B',
+    templateId: 'ground-detail-rake-arc-b',
+    params: {},
+    palette: { primary: '#E9E5DA', secondary: '#AAA69D', accent: '#F5F1E7' },
+  },
+  {
+    id: 'prop-ground-detail-rake-arc-c',
+    name: 'Raked gravel arcs C',
+    templateId: 'ground-detail-rake-arc-c',
+    params: {},
+    palette: { primary: '#E9E5DA', secondary: '#AAA69D', accent: '#F5F1E7' },
+  },
+  {
+    id: 'prop-ground-detail-lilypad-a',
+    name: 'Lily pads A',
+    templateId: 'ground-detail-lilypad-a',
+    params: {},
+    palette: { primary: '#4E8A55', secondary: '#376B46', accent: '#86B879' },
+  },
+  {
+    id: 'prop-ground-detail-lilypad-b',
+    name: 'Lily pads B',
+    templateId: 'ground-detail-lilypad-b',
+    params: {},
+    palette: { primary: '#568F5B', secondary: '#3A7049', accent: '#90BE7C' },
+  },
+  {
+    id: 'prop-ground-detail-stepping-stone-a',
+    name: 'Stepping stones A',
+    templateId: 'ground-detail-stepping-stone-a',
+    params: {},
+    palette: { primary: '#8C8B84', secondary: '#74766F', accent: '#B7B5AC' },
+  },
+  {
+    id: 'prop-ground-detail-stepping-stone-b',
+    name: 'Stepping stones B',
+    templateId: 'ground-detail-stepping-stone-b',
+    params: {},
+    palette: { primary: '#85867F', secondary: '#70726C', accent: '#B0AFA7' },
+  },
+  {
+    id: 'prop-park-bench',
+    name: 'Outdoor park bench',
+    templateId: 'park-bench',
+    params: {},
+    palette: { primary: '#8B5D3D', secondary: '#565B59', accent: '#B47A50' },
+  },
+  {
+    id: 'prop-picnic-table',
+    name: 'Campus picnic table',
+    templateId: 'picnic-table',
+    params: {},
+    palette: { primary: '#88613F', secondary: '#5B4634', accent: '#B78355' },
+  },
+  {
+    id: 'prop-stone-lantern',
+    name: 'Stone garden lantern',
+    templateId: 'stone-lantern',
+    params: {},
+    palette: { primary: '#8B8E87', secondary: '#666B66', accent: '#B8BAB0' },
+  },
+  {
+    id: 'prop-boulder-arrangement',
+    name: 'Placed boulder arrangement',
+    templateId: 'boulder-arrangement',
+    params: {},
+    palette: { primary: '#777C76', secondary: '#626861', accent: '#A9ADA4' },
+  },
+  {
+    id: 'prop-reeds-cluster',
+    name: 'Shoreline reeds cluster',
+    templateId: 'reeds-cluster',
+    params: {},
+    palette: { primary: '#4F7D42', secondary: '#365E35', accent: '#8A7041' },
+  },
   // Nature decor (lush-outside pass) — clinical-EXEMPT scenery for the outdoor
   // ground (core/look.ts NATURE_PROP_TEMPLATE_IDS): the saturated living things
   // the build visibly replaces. Curated tree, sapling, shrub, and herbaceous
@@ -1236,9 +1323,9 @@ export const DEFAULT_FLOORS: TileInstance[] = [
  * Outdoor ground surfaces (B1.5 "the build site"). These ship as the DISTINCT
  * ground KIND (decision D2): their own `ground/` export folder, own atlas kind,
  * own sort band (−20000), so the sim draws them under everything and never
- * confuses them with interior floor. Generated-only for now (§9 — not
- * player-paintable), so there's no ground UI; they're a code-owned default the
- * export always ships.
+ * confuses them with interior floor. Terrarium has no ground editor or ground
+ * facility payload; these are code-owned defaults the export always ships, and
+ * the sim binds the campus build tools that make selected ground player-painted.
  *
  * D2 AMENDED (natural-vs-paved register split, core/look.ts): the NATURAL
  * surfaces (grass / meadow / dirt) are exempt from the clinical drain and stay
@@ -1246,7 +1333,8 @@ export const DEFAULT_FLOORS: TileInstance[] = [
  * something bland, and the ground is the beautiful thing. Multiple grass
  * variants ship so open fields don't tile into one uniform swatch (same reason
  * the lot gets two sedan colors). The PAVED surfaces (asphalt / sidewalk) are
- * the bland thing and drain with the building.
+ * the bland thing and drain with the building. CE-23 adds certified gravel to
+ * that paved set; CE-24 adds ornamental pond water as a separate exempt family.
  */
 export const DEFAULT_GROUND: TileInstance[] = [
   {
@@ -1304,6 +1392,20 @@ export const DEFAULT_GROUND: TileInstance[] = [
     templateId: 'sidewalk',
     params: { slab: 64 },
     palette: { primary: '#B8B7B0', secondary: '#9C9B94', accent: '#8A8982' },
+  },
+  {
+    id: 'ground-gravel',
+    name: 'Zen-garden gravel',
+    templateId: 'gravel',
+    params: { grain: 2, seed: 6 },
+    palette: { primary: '#D6D2C7', secondary: '#B7B3AA', accent: '#EEEAE0' },
+  },
+  {
+    id: 'ground-pond-water',
+    name: 'Still pond water',
+    templateId: 'pond-water',
+    params: { ripples: 2, seed: 4 },
+    palette: { primary: '#1F6770', secondary: '#174D55', accent: '#6FAAB0' },
   },
 ];
 

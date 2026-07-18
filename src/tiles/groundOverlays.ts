@@ -172,6 +172,55 @@ function curbBand(edge: 'n' | 'e' | 's' | 'w'): ShapeSpec[] {
   ];
 }
 
+function shoreDepthAt(x: number): number {
+  return 12 + 2.2 * Math.sin((x * Math.PI * 2) / 64 + 0.4) + 1.1 * Math.sin((x * Math.PI * 2) / 32);
+}
+
+/** A soft earthen bank drawn inward from the edge of a pond-water receiver. */
+function pondShoreBand(edge: 'n' | 'e' | 's' | 'w'): ShapeSpec[] {
+  const xf = EDGE_XFORMS[edge];
+  const boundary: Pt[] = [];
+  const inner: Pt[] = [];
+  for (let x = 0; x <= SIZE; x += STEP) {
+    const depth = shoreDepthAt(x);
+    boundary.push([x, depth]);
+    inner.push([x, Math.max(2, depth - 4)]);
+  }
+  const fill: Pt[] = [[0, 0], [SIZE, 0], ...[...boundary].reverse()];
+  const shapes: ShapeSpec[] = [
+    { d: pathFrom(fill.map(xf), true), fill: '$primary', silhouette: false },
+    {
+      d: pathFrom(inner.map(xf), false),
+      stroke: '$accent',
+      strokeWidth: 1.4,
+      opacity: 0.42,
+      silhouette: false,
+    },
+    {
+      d: pathFrom(boundary.map(xf), false),
+      stroke: '$secondary',
+      strokeWidth: 2.2,
+      opacity: 0.62,
+      silhouette: false,
+    },
+  ];
+
+  const rng = mulberry32(93251);
+  for (let i = 0; i < 7; i++) {
+    const x = 6 + rng() * (SIZE - 12);
+    const y = 3 + rng() * Math.max(2, shoreDepthAt(x) - 7);
+    const r = 0.8 + rng() * 1.3;
+    const [cx, cy] = xf([x, y]);
+    shapes.push({
+      d: `M ${fmt(cx - r)} ${fmt(cy)} a ${fmt(r)} ${fmt(r * 0.72)} 0 1 0 ${fmt(r * 2)} 0 a ${fmt(r)} ${fmt(r * 0.72)} 0 1 0 ${fmt(-r * 2)} 0 Z`,
+      fill: i % 2 === 0 ? '$secondary' : '$accent',
+      opacity: 0.58,
+      silhouette: false,
+    });
+  }
+  return shapes;
+}
+
 /** Build one grass-fringe frame for RAW 8-neighbor bits (tiles/blob.ts NB
  *  layout). A set edge bit = "encroaching ground on that side" → band along
  *  that edge. Corner bits ignored (see the header comment). */
@@ -196,9 +245,21 @@ export function buildCurbEdge(neighbors: number): ShapeSpec[] {
   return shapes;
 }
 
+/** Build a pond-shore frame. A set cardinal bit means the pond-water receiver
+ * has non-water ground on that side; diagonal differences remain art-equivalent. */
+export function buildPondShore(neighbors: number): ShapeSpec[] {
+  const shapes: ShapeSpec[] = [];
+  if (neighbors & NB.N) shapes.push(...pondShoreBand('n'));
+  if (neighbors & NB.E) shapes.push(...pondShoreBand('e'));
+  if (neighbors & NB.S) shapes.push(...pondShoreBand('s'));
+  if (neighbors & NB.W) shapes.push(...pondShoreBand('w'));
+  return shapes;
+}
+
 export const GROUND_OVERLAY_BUILDERS: Record<string, (neighbors: number) => ShapeSpec[]> = {
   'grass-fringe': buildGrassFringe,
   'curb-edge': buildCurbEdge,
+  'pond-shore': buildPondShore,
 };
 
 /**
@@ -212,6 +273,8 @@ export function deriveGroundOverlays(ground: TileInstance[] | undefined): TileIn
   const grass = (ground ?? []).find((g) => g.templateId === 'grass');
   const sidewalk = (ground ?? []).find((g) => g.templateId === 'sidewalk');
   const paved = sidewalk ?? (ground ?? []).find((g) => g.templateId === 'asphalt');
+  const pond = (ground ?? []).find((g) => g.templateId === 'pond-water');
+  const dirt = (ground ?? []).find((g) => g.templateId === 'dirt');
   const overlays: TileInstance[] = [];
   if (grass) {
     overlays.push({
@@ -233,6 +296,17 @@ export function deriveGroundOverlays(ground: TileInstance[] | undefined): TileIn
       palette: sidewalk
         ? { ...sidewalk.palette }
         : { primary: '#C8C6BD', secondary: '#555A5D', accent: '#F1EFE8' },
+    });
+  }
+  if (pond) {
+    overlays.push({
+      id: 'overlay-pond-shore',
+      name: 'Pond shore',
+      templateId: 'pond-shore',
+      params: {},
+      palette: dirt
+        ? { ...dirt.palette }
+        : { primary: '#806044', secondary: '#55412E', accent: '#B08B60' },
     });
   }
   return overlays;

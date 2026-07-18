@@ -33,7 +33,7 @@ describe('campus Bundle 1 — parking (CE-21)', () => {
     expect(buildCurbEdge(NB.N | NB.E | NB.S | NB.W)).toHaveLength(16);
 
     const overlays = deriveGroundOverlays(defaultGoldenProject().ground);
-    expect(overlays.map(({ templateId }) => templateId)).toEqual(['grass-fringe', 'curb-edge']);
+    expect(overlays.map(({ templateId }) => templateId)).toEqual(['grass-fringe', 'curb-edge', 'pond-shore']);
     expect(overlays.find(({ templateId }) => templateId === 'curb-edge')).toMatchObject({
       id: 'overlay-curb-edge',
       name: 'Curb edge',
