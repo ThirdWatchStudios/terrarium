@@ -3457,6 +3457,255 @@ const boulder: PropTemplate = {
   },
 };
 
+// ---------------------------------------------------------------------------
+// Ground-detail decals (wild-field pass — D2 amendment). The dense sub-tile
+// scatter layer under the flora: tiny tufts, sprigs, pebbles, and a twig the
+// sim strews nearly everywhere over the natural ground. Each variant is its
+// OWN template id — the sim pattern-matches the `ground-detail-` prefix and
+// consumes baked per-variant silhouettes, never generator controls. All are
+// plan-projected 1×1 decals on the wildflower-patch convention: every shape
+// silhouette:false (no compositor outline), no ground shadow, and the drawn
+// element covers only ~30–60% of the cell so a dense scatter reads as ground
+// texture, not objects. Variants shift anchor + rotation so tiling can't
+// read as a repeat.
+// ---------------------------------------------------------------------------
+
+interface GroundDetailTuftRoot {
+  x: number;
+  y: number;
+  blades: number;
+  reach: number;
+  rotation: number;
+}
+
+function groundDetailTuft(
+  id: string,
+  label: string,
+  seedDefault: number,
+  seedSalt: number,
+  roots: GroundDetailTuftRoot[],
+): PropTemplate {
+  return {
+    id,
+    label,
+    projection: 'plan',
+    gridFootprint: { w: 1, h: 1 },
+    params: [{ key: 'seed', label: 'Pattern seed', min: 1, max: 9, step: 1, default: seedDefault }],
+    build(params) {
+      const rng = mulberry32((params.seed ?? seedDefault) * seedSalt);
+      const shapes: ShapeSpec[] = [];
+      for (const root of roots) {
+        for (let i = 0; i < root.blades; i++) {
+          const angle = root.rotation + (i / root.blades) * Math.PI * 2 + (rng() - 0.5) * 0.55;
+          const rootRadius = 1.5 + rng() * 3;
+          const length = root.reach * (0.65 + rng() * 0.5);
+          const sx = root.x + Math.cos(angle) * rootRadius;
+          const sy = root.y + Math.sin(angle) * rootRadius * 0.72;
+          const tx = root.x + Math.cos(angle) * (rootRadius + length);
+          const ty = root.y + Math.sin(angle) * (rootRadius + length) * 0.72;
+          shapes.push({
+            d: `M ${sx} ${sy} Q ${root.x} ${root.y} ${tx} ${ty}`,
+            stroke: i % 3 === 0 ? '$accent' : '$primary',
+            strokeWidth: i % 3 === 0 ? 2.6 : 3.1,
+            opacity: 0.88,
+            silhouette: false,
+          });
+        }
+        shapes.push({ d: ellipse(root.x, root.y, 3, 2.2), fill: '$secondary', opacity: 0.55, silhouette: false });
+      }
+      return shapes;
+    },
+  };
+}
+
+const groundDetailGrassTuftA = groundDetailTuft('ground-detail-grass-tuft-a', 'Grass tuft A', 3, 68111, [
+  { x: CX, y: CX, blades: 7, reach: 17, rotation: 0.4 },
+]);
+
+const groundDetailGrassTuftB = groundDetailTuft('ground-detail-grass-tuft-b', 'Grass tuft B', 6, 68113, [
+  { x: 52, y: 74, blades: 5, reach: 20, rotation: 2.1 },
+]);
+
+const groundDetailGrassTuftC = groundDetailTuft('ground-detail-grass-tuft-c', 'Grass tuft C', 8, 68117, [
+  { x: 46, y: 50, blades: 4, reach: 13, rotation: 1.2 },
+  { x: 80, y: 79, blades: 4, reach: 12, rotation: 4.3 },
+]);
+
+interface GroundDetailSprigStem {
+  x: number;
+  y: number;
+  tx: number;
+  ty: number;
+  /** flower-head fill: a palette token or a literal FLOWER_HUES entry. */
+  head: string;
+  headRadius: number;
+}
+
+function groundDetailFlowerSprig(
+  id: string,
+  label: string,
+  seedDefault: number,
+  seedSalt: number,
+  root: FloraPoint,
+  stems: GroundDetailSprigStem[],
+): PropTemplate {
+  return {
+    id,
+    label,
+    projection: 'plan',
+    gridFootprint: { w: 1, h: 1 },
+    params: [{ key: 'seed', label: 'Pattern seed', min: 1, max: 9, step: 1, default: seedDefault }],
+    build(params) {
+      const rng = mulberry32((params.seed ?? seedDefault) * seedSalt);
+      const shapes: ShapeSpec[] = [];
+      // leaf blades first, so heads read on top
+      for (let i = 0; i < 3; i++) {
+        const angle = rng() * Math.PI * 2;
+        const length = 6 + rng() * 5;
+        shapes.push({
+          d: `M ${root.x} ${root.y} L ${root.x + Math.cos(angle) * length} ${root.y + Math.sin(angle) * length * 0.72}`,
+          stroke: '$primary',
+          strokeWidth: 2.6,
+          opacity: 0.85,
+          silhouette: false,
+        });
+      }
+      for (const stem of stems) {
+        const jx = stem.tx + (rng() - 0.5) * 3;
+        const jy = stem.ty + (rng() - 0.5) * 3;
+        shapes.push({
+          d: `M ${root.x} ${root.y} Q ${(root.x + jx) / 2 + (rng() - 0.5) * 4} ${(root.y + jy) / 2} ${jx} ${jy}`,
+          stroke: '$primary',
+          strokeWidth: 2.2,
+          opacity: 0.9,
+          silhouette: false,
+        });
+        shapes.push({ d: circle(jx, jy, stem.headRadius * 1.15), fill: stem.head, opacity: 0.95, silhouette: false });
+        shapes.push({ d: circle(jx, jy, stem.headRadius * 0.42), fill: '$secondary', opacity: 0.55, silhouette: false });
+      }
+      return shapes;
+    },
+  };
+}
+
+// Restrained heads only: the muted wildflower creams/lilacs plus the palette's
+// straw accent — never hot reds/ambers (amber is reserved for capture cues).
+const groundDetailFlowerSprigA = groundDetailFlowerSprig(
+  'ground-detail-flower-sprig-a',
+  'Flower sprig A',
+  4,
+  71119,
+  { x: 58, y: 70 },
+  [
+    { x: 58, y: 70, tx: 47, ty: 56, head: FLOWER_HUES[0], headRadius: 3.2 },
+    { x: 58, y: 70, tx: 66, ty: 52, head: '$accent', headRadius: 2.8 },
+    { x: 58, y: 70, tx: 72, ty: 74, head: FLOWER_HUES[2], headRadius: 2.6 },
+  ],
+);
+
+const groundDetailFlowerSprigB = groundDetailFlowerSprig(
+  'ground-detail-flower-sprig-b',
+  'Flower sprig B',
+  7,
+  71129,
+  { x: 72, y: 55 },
+  [
+    { x: 72, y: 55, tx: 84, ty: 66, head: FLOWER_HUES[2], headRadius: 3 },
+    { x: 72, y: 55, tx: 60, ty: 44, head: FLOWER_HUES[0], headRadius: 2.5 },
+  ],
+);
+
+interface GroundDetailStone {
+  x: number;
+  y: number;
+  r: number;
+  /** horizontal stretch — 1 is round, >1 elongates the stone. */
+  stretch: number;
+}
+
+function groundDetailPebble(
+  id: string,
+  label: string,
+  seedDefault: number,
+  seedSalt: number,
+  stones: GroundDetailStone[],
+): PropTemplate {
+  return {
+    id,
+    label,
+    projection: 'plan',
+    gridFootprint: { w: 1, h: 1 },
+    params: [{ key: 'seed', label: 'Shape seed', min: 1, max: 9, step: 1, default: seedDefault }],
+    build(params) {
+      const rng = mulberry32((params.seed ?? seedDefault) * seedSalt);
+      const shapes: ShapeSpec[] = [];
+      for (const stone of stones) {
+        // mini-boulder outcrop: jittered radial polygon, soft y-squash
+        const pts: string[] = [];
+        const n = 6;
+        for (let i = 0; i < n; i++) {
+          const a = (i / n) * Math.PI * 2;
+          const d = stone.r * (0.78 + rng() * 0.3);
+          pts.push(`${stone.x + Math.cos(a) * d * stone.stretch} ${stone.y + Math.sin(a) * d * 0.85}`);
+        }
+        shapes.push({ d: ellipse(stone.x + 1.5, stone.y + 1.5, stone.r * stone.stretch, stone.r * 0.8), fill: '#00000018', silhouette: false });
+        shapes.push({ d: `M ${pts[0]} L ${pts.slice(1).join(' L ')} Z`, fill: '$primary', silhouette: false });
+        shapes.push({ d: ellipse(stone.x - stone.r * 0.25, stone.y - stone.r * 0.3, stone.r * 0.42 * stone.stretch, stone.r * 0.3), fill: '$accent', opacity: 0.8, silhouette: false });
+        shapes.push({ d: ellipse(stone.x + stone.r * 0.22, stone.y + stone.r * 0.28, stone.r * 0.38 * stone.stretch, stone.r * 0.24), fill: '$secondary', opacity: 0.7, silhouette: false });
+      }
+      return shapes;
+    },
+  };
+}
+
+const groundDetailPebbleA = groundDetailPebble('ground-detail-pebble-a', 'Pebble scatter A', 2, 74093, [
+  { x: 55, y: 62, r: 7, stretch: 1 },
+  { x: 70, y: 70, r: 5.5, stretch: 1.1 },
+  { x: 63, y: 76, r: 4.2, stretch: 1 },
+]);
+
+const groundDetailPebbleB = groundDetailPebble('ground-detail-pebble-b', 'Pebble scatter B', 5, 74099, [
+  { x: 72, y: 55, r: 8, stretch: 1.35 },
+  { x: 49, y: 74, r: 5, stretch: 1 },
+]);
+
+const groundDetailTwigA: PropTemplate = {
+  id: 'ground-detail-twig-a',
+  label: 'Fallen twig',
+  projection: 'plan',
+  gridFootprint: { w: 1, h: 1 },
+  params: [{ key: 'seed', label: 'Shape seed', min: 1, max: 9, step: 1, default: 3 }],
+  build(params) {
+    const rng = mulberry32((params.seed ?? 3) * 77003);
+    const bend = (rng() - 0.5) * 10;
+    const shapes: ShapeSpec[] = [
+      // main stem, lying diagonally with a slight bow
+      { d: `M 42 79 Q ${64 + bend} ${60 + bend * 0.4} 86 51`, stroke: '$secondary', strokeWidth: 3.6, opacity: 0.9, silhouette: false },
+      { d: `M 42 79 Q ${64 + bend} ${60 + bend * 0.4} 86 51`, stroke: '$primary', strokeWidth: 2.4, opacity: 0.95, silhouette: false },
+      // fork branch + a broken stub
+      { d: `M ${62 + bend * 0.5} ${64 + bend * 0.2} L ${72 + (rng() - 0.5) * 4} ${74 + (rng() - 0.5) * 4}`, stroke: '$primary', strokeWidth: 2, opacity: 0.9, silhouette: false },
+      { d: `M 52 73 L ${47 + (rng() - 0.5) * 3} ${66 + (rng() - 0.5) * 3}`, stroke: '$primary', strokeWidth: 1.8, opacity: 0.85, silhouette: false },
+      // snapped-end highlight
+      { d: circle(86, 51, 1.6), fill: '$accent', opacity: 0.9, silhouette: false },
+    ];
+    return shapes;
+  },
+};
+
+/** Ground-detail decal template ids — the wild-field scatter layer. The sim
+ *  pattern-matches this `ground-detail-` prefix; every id here is a baked
+ *  1×1 plan decal variant (no generator controls cross the boundary). */
+export const GROUND_DETAIL_TEMPLATE_IDS = [
+  'ground-detail-grass-tuft-a',
+  'ground-detail-grass-tuft-b',
+  'ground-detail-grass-tuft-c',
+  'ground-detail-flower-sprig-a',
+  'ground-detail-flower-sprig-b',
+  'ground-detail-pebble-a',
+  'ground-detail-pebble-b',
+  'ground-detail-twig-a',
+] as const;
+
 /** Nature decor template ids — EXEMPT from the clinical drain (core/look.ts),
  *  mirroring NATURAL_GROUND_TEMPLATE_IDS: under the clinical look these stay
  *  saturated while the office (and the cars, and the paved lot) drains. */
@@ -3468,6 +3717,7 @@ export const NATURE_PROP_TEMPLATE_IDS = [
   'tall-grass-clump',
   'bracken-patch',
   'boulder',
+  ...GROUND_DETAIL_TEMPLATE_IDS,
 ] as const;
 
 export const PROP_TEMPLATES: PropTemplate[] = [
@@ -3560,4 +3810,13 @@ export const PROP_TEMPLATES: PropTemplate[] = [
   tallGrassClump,
   brackenPatch,
   boulder,
+  // Ground-detail scatter decals (wild-field pass) — sub-tile texture variants.
+  groundDetailGrassTuftA,
+  groundDetailGrassTuftB,
+  groundDetailGrassTuftC,
+  groundDetailFlowerSprigA,
+  groundDetailFlowerSprigB,
+  groundDetailPebbleA,
+  groundDetailPebbleB,
+  groundDetailTwigA,
 ];
