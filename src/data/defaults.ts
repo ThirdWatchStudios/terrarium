@@ -778,6 +778,72 @@ export const DEFAULT_PROPS: PropInstance[] = [
     params: { stop: 1 },
     palette: { primary: '#E8E4D2', secondary: '#C9C6B6', accent: '#B7B4A4' },
   },
+  // Corporate-campus parking kit (CE-21). Painted markings share one worn
+  // pale-off-white register; the compact car keeps its body on $primary so the
+  // exported layer manifest can recolor it per spawned instance.
+  {
+    id: 'prop-lot-marking-accessible',
+    name: 'Accessible-stall marking',
+    templateId: 'lot-marking-accessible',
+    params: {},
+    palette: { primary: '#E4E0CF', secondary: '#E4E0CF', accent: '#E4E0CF' },
+  },
+  {
+    id: 'prop-lot-marking-arrow',
+    name: 'Lane arrow marking',
+    templateId: 'lot-marking-arrow',
+    params: {},
+    palette: { primary: '#E4E0CF', secondary: '#E4E0CF', accent: '#E4E0CF' },
+  },
+  {
+    id: 'prop-lot-marking-reserved',
+    name: 'Reserved-stall marking',
+    templateId: 'lot-marking-reserved',
+    params: {},
+    palette: { primary: '#E4E0CF', secondary: '#E4E0CF', accent: '#E4E0CF' },
+  },
+  {
+    id: 'prop-lot-marking-crosswalk',
+    name: 'Crosswalk marking',
+    templateId: 'lot-marking-crosswalk',
+    params: {},
+    palette: { primary: '#E4E0CF', secondary: '#E4E0CF', accent: '#E4E0CF' },
+  },
+  {
+    id: 'prop-lamp-post',
+    name: 'Parking-lot lamp post',
+    templateId: 'lamp-post',
+    params: {},
+    palette: { primary: '#3D444A', secondary: '#252B30', accent: '#D8D3C4' },
+  },
+  {
+    id: 'prop-sign-lot-parking',
+    name: 'Parking sign',
+    templateId: 'sign-lot',
+    params: { variant: 0 },
+    palette: { primary: '#4B5963', secondary: '#F0EEE4', accent: '#315A78' },
+  },
+  {
+    id: 'prop-sign-lot-compliance',
+    name: 'Parking compliance placard',
+    templateId: 'sign-lot',
+    params: { variant: 1 },
+    palette: { primary: '#4B5963', secondary: '#343C42', accent: '#E9E7DE' },
+  },
+  {
+    id: 'prop-car-compact',
+    name: 'Compact car',
+    templateId: 'car-compact',
+    params: { spoiler: 0 },
+    palette: { primary: '#B08A32', secondary: '#72591F', accent: '#BCD2E0' },
+  },
+  {
+    id: 'prop-bike-rack',
+    name: 'Bike rack',
+    templateId: 'bike-rack',
+    params: {},
+    palette: { primary: '#8B9296', secondary: '#4E555A', accent: '#BCC1C3' },
+  },
   // Nature decor (lush-outside pass) — clinical-EXEMPT scenery for the outdoor
   // ground (core/look.ts NATURE_PROP_TEMPLATE_IDS): the saturated living things
   // the build visibly replaces. Curated tree, sapling, shrub, and herbaceous

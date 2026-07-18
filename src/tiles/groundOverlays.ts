@@ -137,6 +137,41 @@ function fringeBand(edge: 'n' | 'e' | 's' | 'w'): ShapeSpec[] {
   return shapes;
 }
 
+/** One poured-concrete curb band on the paved (receiving) cell. The geometry is
+ * fixed and edge-aligned, so adjoining curb tiles meet without visible seams. */
+function curbBand(edge: 'n' | 'e' | 's' | 'w'): ShapeSpec[] {
+  const xf = EDGE_XFORMS[edge];
+  const map = (pts: Pt[]) => pts.map(xf);
+  const band = map([[0, 0], [SIZE, 0], [SIZE, 10], [0, 10]]);
+  const highlight = map([[0, 2], [SIZE, 2]]);
+  const gutter = map([[0, 11.5], [SIZE, 11.5]]);
+  const joint = map([[64, 1], [64, 9]]);
+  return [
+    { d: pathFrom(band, true), fill: '$primary', silhouette: false },
+    {
+      d: pathFrom(highlight, false),
+      stroke: '$accent',
+      strokeWidth: 1.4,
+      opacity: 0.55,
+      silhouette: false,
+    },
+    {
+      d: pathFrom(gutter, false),
+      stroke: '$secondary',
+      strokeWidth: 2.2,
+      opacity: 0.58,
+      silhouette: false,
+    },
+    {
+      d: pathFrom(joint, false),
+      stroke: '$secondary',
+      strokeWidth: 1,
+      opacity: 0.35,
+      silhouette: false,
+    },
+  ];
+}
+
 /** Build one grass-fringe frame for RAW 8-neighbor bits (tiles/blob.ts NB
  *  layout). A set edge bit = "encroaching ground on that side" → band along
  *  that edge. Corner bits ignored (see the header comment). */
@@ -149,8 +184,21 @@ export function buildGrassFringe(neighbors: number): ShapeSpec[] {
   return shapes;
 }
 
+/** Build one curb-edge frame for the shared RAW 8-neighbor blob bits. A set
+ * cardinal bit means natural ground borders that side of the paved receiver.
+ * Diagonal bits remain art-equivalent, preserving the 47-frame contract. */
+export function buildCurbEdge(neighbors: number): ShapeSpec[] {
+  const shapes: ShapeSpec[] = [];
+  if (neighbors & NB.N) shapes.push(...curbBand('n'));
+  if (neighbors & NB.E) shapes.push(...curbBand('e'));
+  if (neighbors & NB.S) shapes.push(...curbBand('s'));
+  if (neighbors & NB.W) shapes.push(...curbBand('w'));
+  return shapes;
+}
+
 export const GROUND_OVERLAY_BUILDERS: Record<string, (neighbors: number) => ShapeSpec[]> = {
   'grass-fringe': buildGrassFringe,
+  'curb-edge': buildCurbEdge,
 };
 
 /**
@@ -162,14 +210,30 @@ export const GROUND_OVERLAY_BUILDERS: Record<string, (neighbors: number) => Shap
  */
 export function deriveGroundOverlays(ground: TileInstance[] | undefined): TileInstance[] {
   const grass = (ground ?? []).find((g) => g.templateId === 'grass');
-  if (!grass) return [];
-  return [
-    {
+  const sidewalk = (ground ?? []).find((g) => g.templateId === 'sidewalk');
+  const paved = sidewalk ?? (ground ?? []).find((g) => g.templateId === 'asphalt');
+  const overlays: TileInstance[] = [];
+  if (grass) {
+    overlays.push({
       id: 'overlay-grass-fringe',
       name: 'Grass fringe',
       templateId: 'grass-fringe',
       params: {},
       palette: { ...grass.palette },
-    },
-  ];
+    });
+  }
+  if (paved) {
+    // Prefer the authored sidewalk concrete palette. An asphalt-only project
+    // still receives a clean neutral curb rather than a dark asphalt-colored lip.
+    overlays.push({
+      id: 'overlay-curb-edge',
+      name: 'Curb edge',
+      templateId: 'curb-edge',
+      params: {},
+      palette: sidewalk
+        ? { ...sidewalk.palette }
+        : { primary: '#C8C6BD', secondary: '#555A5D', accent: '#F1EFE8' },
+    });
+  }
+  return overlays;
 }

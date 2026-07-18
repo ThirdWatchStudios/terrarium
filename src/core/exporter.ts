@@ -1050,6 +1050,9 @@ export function groundOverlayAtlas(overlay: TileInstance, style: StyleSheet, sca
       name: `tile_${i}`,
     };
   }
+  const maskSemantics = overlay.templateId === 'curb-edge'
+    ? 'bit set = neighbour is natural ground; drawn on the paved receiving cell'
+    : 'bit set = neighbour is encroaching natural ground (grass family); drawn on the receiving cell';
   return {
     name: overlay.name,
     id: overlay.id,
@@ -1064,7 +1067,7 @@ export function groundOverlayAtlas(overlay: TileInstance, style: StyleSheet, sca
       generator: 'sprite-character-creator',
       autotile: '8-neighbor blob (47)',
       blobTable: 'blob-index-table.json (shared 256→47 contract; frame mask_<i> = blob index)',
-      maskSemantics: 'bit set = neighbour is encroaching natural ground (grass family); drawn on the receiving cell',
+      maskSemantics,
       sorting: 'ground-overlay-layer (above ground, below floors; sort band -19000)',
     },
   };

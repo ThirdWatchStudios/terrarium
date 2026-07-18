@@ -292,7 +292,7 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     ]);
   });
 
-  it('ships the grass-fringe transition overlay on the shared 47-blob contract', async () => {
+  it('ships grass-fringe and curb-edge on the shared 47-blob contract', async () => {
     const { paths, json } = await exportPaths();
     const atlasPath = 'ground-overlays/grass-fringe/atlas@1x.json';
     expect(paths.has(atlasPath), 'no ground-overlays/ atlas — the edge-transition overlay did not ship').toBe(true);
@@ -310,6 +310,17 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     const overlay = JSON.parse(json.get('ground-overlays/grass-fringe/overlay.json')!);
     const grass = JSON.parse(json.get([...paths].find((p) => /^ground\/lawn-grass\/ground\.json$/.test(p))!)!);
     expect(overlay.palette).toEqual(grass.palette);
+
+    const curbAtlasPath = 'ground-overlays/curb-edge/atlas@1x.json';
+    expect(paths.has(curbAtlasPath), 'curb-edge overlay did not ship').toBe(true);
+    expect(paths.has('ground-overlays/curb-edge/tileset@1x.png')).toBe(true);
+    const curbAtlas = JSON.parse(json.get(curbAtlasPath)!);
+    expect(curbAtlas.meta.autotile).toBe('8-neighbor blob (47)');
+    expect(Object.keys(curbAtlas.frames)).toHaveLength(47);
+    expect(curbAtlas.meta.maskSemantics).toContain('paved receiving cell');
+    const curb = JSON.parse(json.get('ground-overlays/curb-edge/overlay.json')!);
+    const sidewalk = JSON.parse(json.get([...paths].find((p) => /^ground\/concrete-sidewalk\/ground\.json$/.test(p))!)!);
+    expect(curb.palette).toEqual(sidewalk.palette);
   });
 
   it('ships an authored construction persona the sim spawns the crew from (B1.5 / D4)', async () => {
@@ -372,6 +383,24 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     expect(fm.kind).toBe('floor-layers');
     expect(fm.tileable).toBe(true);
     expect(fm.layers.some((l: { tint: unknown }) => l.tint === 'primary'), 'floor has no recolorable primary base').toBe(true);
+  });
+
+  it('exports a $primary re-tint body layer for every parking-lot car', async () => {
+    const { paths, json } = await exportPaths();
+    for (const templateId of ['car', 'car-suv', 'car-compact']) {
+      const propPath = [...paths].find((path) => {
+        if (!/^props\/.+\/prop\.json$/.test(path)) return false;
+        return JSON.parse(json.get(path)!).templateId === templateId;
+      });
+      expect(propPath, `${templateId} did not export`).toBeTruthy();
+      const dir = propPath!.slice(0, -'/prop.json'.length);
+      const manifest = JSON.parse(json.get(`${dir}/layers-manifest@4x.json`)!);
+      expect(manifest.layers.some((layer: { tint: unknown }) => layer.tint === 'primary'),
+        `${templateId} export lost its $primary body layer`).toBe(true);
+      const frames = Object.values(manifest.frames) as Array<{ x: number; y: number; w: number; h: number }>;
+      expect(Math.max(...frames.map(({ x, w }) => x + w)), `${templateId} layer width`).toBeLessThanOrEqual(8192);
+      expect(Math.max(...frames.map(({ y, h }) => y + h)), `${templateId} layer height`).toBeLessThanOrEqual(8192);
+    }
   });
 
   it('keeps every layer atlas within the browser canvas max dimension', async () => {

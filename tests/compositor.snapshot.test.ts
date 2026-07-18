@@ -244,17 +244,18 @@ describe('ground', () => {
 // grass fringe on the shared 47-blob contract. Snapshot representative raw
 // configs: a single edge, two edges meeting, the wrapped corner, all sides.
 describe('ground overlays', () => {
-  const overlay = deriveGroundOverlays(DEFAULT_GROUND)[0];
-  for (const [label, raw] of [
-    ['edge-n', NB.N],
-    ['corner-ne', NB.N | NB.E],
-    ['corner-ne-wrapped', NB.N | NB.E | NB.NE],
-    ['all-edges', NB.N | NB.E | NB.S | NB.W],
-  ] as const) {
-    it(`${overlay.id} ${label}`, async () => {
-      await expect(composeGroundOverlayTile(overlay, STYLE, raw, SIZE)).toMatchFileSnapshot(
-        snap(`ground-overlays/${overlay.id}-${label}`),
-      );
-    });
+  for (const overlay of deriveGroundOverlays(DEFAULT_GROUND)) {
+    for (const [label, raw] of [
+      ['edge-n', NB.N],
+      ['corner-ne', NB.N | NB.E],
+      ['corner-ne-wrapped', NB.N | NB.E | NB.NE],
+      ['all-edges', NB.N | NB.E | NB.S | NB.W],
+    ] as const) {
+      it(`${overlay.id} ${label}`, async () => {
+        await expect(composeGroundOverlayTile(overlay, STYLE, raw, SIZE)).toMatchFileSnapshot(
+          snap(`ground-overlays/${overlay.id}-${label}`),
+        );
+      });
+    }
   }
 });

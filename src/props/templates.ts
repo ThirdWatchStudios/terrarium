@@ -2943,6 +2943,215 @@ const parkingLine: PropTemplate = {
 };
 
 // ---------------------------------------------------------------------------
+// Corporate-campus parking kit (CE-21). Lot markings are flat painted terrain
+// decals (never silhouette-bearing); fixtures and vehicles remain ordinary
+// static props. Cars keep their body shell on $primary for per-instance tinting.
+// ---------------------------------------------------------------------------
+
+const lotMarkingAccessible: PropTemplate = {
+  id: 'lot-marking-accessible',
+  label: 'Accessible-stall marking',
+  projection: 'plan',
+  gridFootprint: { w: 2, h: 2 },
+  params: [],
+  build() {
+    return [
+      { d: circle(62, 32, 8), fill: '$primary', opacity: 0.86, silhouette: false },
+      {
+        d: 'M 60 43 L 56 68 L 75 68 L 87 91',
+        stroke: '$primary',
+        strokeWidth: 7,
+        opacity: 0.86,
+        silhouette: false,
+      },
+      {
+        d: 'M 58 51 L 78 51',
+        stroke: '$primary',
+        strokeWidth: 6,
+        opacity: 0.86,
+        silhouette: false,
+      },
+      {
+        d: 'M 54 61 C 38 65 34 81 43 92 C 52 104 72 101 78 88',
+        stroke: '$primary',
+        strokeWidth: 6,
+        opacity: 0.86,
+        silhouette: false,
+      },
+    ];
+  },
+};
+
+const lotMarkingArrow: PropTemplate = {
+  id: 'lot-marking-arrow',
+  label: 'Lane arrow marking',
+  projection: 'plan',
+  gridFootprint: { w: 2, h: 1 },
+  params: [],
+  build() {
+    return [{
+      d: 'M 18 56 L 77 56 L 77 38 L 112 64 L 77 90 L 77 72 L 18 72 Z',
+      fill: '$primary',
+      opacity: 0.82,
+      silhouette: false,
+    }];
+  },
+};
+
+const lotMarkingReserved: PropTemplate = {
+  id: 'lot-marking-reserved',
+  label: 'Reserved-stall marking',
+  projection: 'plan',
+  gridFootprint: { w: 2, h: 1 },
+  params: [],
+  build() {
+    // Stencil-weight abstract glyph rhythm: readable as official lettering at
+    // campus zoom without baking prose the game would need to localize.
+    const shapes: ShapeSpec[] = [];
+    const glyphs = [
+      [10, 32, 10, 64], [20, 32, 9, 10], [20, 56, 9, 9],
+      [34, 32, 9, 64], [43, 32, 10, 9], [43, 59, 10, 9], [43, 87, 10, 9],
+      [58, 32, 9, 64], [67, 32, 9, 9], [67, 59, 9, 9],
+      [81, 32, 9, 64], [90, 32, 10, 9], [90, 87, 10, 9],
+      [105, 32, 9, 64],
+    ];
+    for (const [x, y, w, h] of glyphs) {
+      shapes.push({ d: rr(x, y, w, h, 1), fill: '$primary', opacity: 0.78, silhouette: false });
+    }
+    return shapes;
+  },
+};
+
+const lotMarkingCrosswalk: PropTemplate = {
+  id: 'lot-marking-crosswalk',
+  label: 'Crosswalk marking',
+  projection: 'plan',
+  gridFootprint: { w: 2, h: 2 },
+  params: [],
+  build() {
+    const shapes: ShapeSpec[] = [
+      { d: rr(0, 17, 128, 5, 1), fill: '$primary', opacity: 0.72, silhouette: false },
+      { d: rr(0, 106, 128, 5, 1), fill: '$primary', opacity: 0.72, silhouette: false },
+    ];
+    for (let x = 9; x < 128; x += 22) {
+      shapes.push({ d: rr(x, 22, 12, 84, 1), fill: '$primary', opacity: 0.78, silhouette: false });
+    }
+    return shapes;
+  },
+};
+
+/** Stable decal family id list for catalog/tests and sim prefix parity. */
+export const LOT_MARKING_TEMPLATE_IDS = [
+  'lot-marking-accessible',
+  'lot-marking-arrow',
+  'lot-marking-reserved',
+  'lot-marking-crosswalk',
+] as const;
+
+const lampPost: PropTemplate = {
+  id: 'lamp-post',
+  label: 'Parking-lot lamp post',
+  projection: 'elevation',
+  gridFootprint: { w: 1, h: 1 },
+  footprint: { cx: CX, cy: 117, rx: 13, ry: 3.5 },
+  params: [],
+  build() {
+    return [
+      { d: ellipse(CX, GROUND + 1, 14, 4), fill: '#00000022', silhouette: false },
+      { d: rr(CX - 11, GROUND - 7, 22, 7, 2), fill: '$secondary' },
+      { d: rr(CX - 4, 28, 8, GROUND - 34, 3), fill: '$primary' },
+      { d: rr(CX - 9, 24, 18, 9, 3), fill: '$secondary' },
+      { d: rr(CX - 27, 16, 54, 13, 5), fill: '$primary' },
+      { d: rr(CX - 21, 26, 42, 6, 2), fill: '$accent', silhouette: false },
+      { d: rr(CX - 15, 27, 30, 3, 1.5), fill: '#FFF4C4', opacity: 0.95, silhouette: false },
+    ];
+  },
+};
+
+const signLot: PropTemplate = {
+  id: 'sign-lot',
+  label: 'Parking-lot sign',
+  projection: 'elevation',
+  gridFootprint: { w: 1, h: 1 },
+  footprint: { cx: CX, cy: 117, rx: 12, ry: 3.5 },
+  params: [{ key: 'variant', label: 'Panel', min: 0, max: 1, step: 1, default: 0 }],
+  build(params) {
+    const compliance = (params.variant ?? 0) >= 1;
+    const shapes: ShapeSpec[] = [
+      { d: ellipse(CX, GROUND + 1, 13, 3.5), fill: '#00000020', silhouette: false },
+      { d: rr(CX - 3, 55, 6, GROUND - 55, 2), fill: '$secondary' },
+      { d: rr(CX - 23, 25, 46, 40, 4), fill: '$primary' },
+      { d: rr(CX - 19, 29, 38, 32, 2), fill: '$accent', silhouette: false },
+    ];
+    if (compliance) {
+      for (let y = 35; y <= 53; y += 6) {
+        const inset = y === 47 ? 6 : 0;
+        shapes.push({
+          d: rr(CX - 14 + inset / 2, y, 28 - inset, 2, 1),
+          fill: '$secondary',
+          opacity: 0.78,
+          silhouette: false,
+        });
+      }
+    } else {
+      shapes.push(
+        { d: rr(CX - 9, 34, 6, 22, 1), fill: '$secondary', silhouette: false },
+        { d: 'M 55 35 L 67 35 C 78 35 79 50 68 51 L 58 51', stroke: '$secondary', strokeWidth: 5, silhouette: false },
+      );
+    }
+    return shapes;
+  },
+};
+
+const carCompact: PropTemplate = {
+  id: 'car-compact',
+  label: 'Compact car',
+  projection: 'plan',
+  gridFootprint: { w: 3, h: 2 },
+  params: [{ key: 'spoiler', label: 'Rear lip', min: 0, max: 1, step: 1, default: 0 }],
+  build(params) {
+    const shapes: ShapeSpec[] = [
+      { d: rr(18, 39, 94, 50, 20), fill: '$primary' },
+      { d: rr(42, 45, 50, 38, 12), fill: '$secondary', silhouette: false },
+      { d: 'M 38 49 L 46 60 L 46 68 L 38 79 Z', fill: '$accent', silhouette: false },
+      { d: 'M 96 49 L 89 60 L 89 68 L 96 79 Z', fill: '$accent', silhouette: false },
+      { d: rr(51, 47, 32, 7, 2), fill: '$accent', silhouette: false },
+      { d: rr(51, 74, 32, 7, 2), fill: '$accent', silhouette: false },
+      { d: rr(107, 47, 4, 9, 1), fill: '#F7F1D8', silhouette: false },
+      { d: rr(107, 72, 4, 9, 1), fill: '#F7F1D8', silhouette: false },
+      { d: rr(19, 48, 4, 8, 1), fill: '#C0392B', silhouette: false },
+      { d: rr(19, 72, 4, 8, 1), fill: '#C0392B', silhouette: false },
+    ];
+    if ((params.spoiler ?? 0) >= 1) {
+      shapes.push({ d: rr(17, 43, 4, 42, 2), fill: '$primary', silhouette: false });
+    }
+    return shapes;
+  },
+};
+
+const bikeRack: PropTemplate = {
+  id: 'bike-rack',
+  label: 'Bike rack',
+  projection: 'plan',
+  gridFootprint: { w: 2, h: 1 },
+  params: [],
+  build() {
+    const shapes: ShapeSpec[] = [
+      { d: rr(17, 55, 94, 18, 7), fill: '$secondary' },
+      { d: rr(21, 59, 86, 10, 5), fill: '$accent', silhouette: false },
+    ];
+    for (const x of [32, 53, 74, 95]) {
+      shapes.push({
+        d: `M ${x - 7} 61 C ${x - 7} 38 ${x + 7} 38 ${x + 7} 61`,
+        stroke: '$primary',
+        strokeWidth: 5,
+      });
+    }
+    return shapes;
+  },
+};
+
+// ---------------------------------------------------------------------------
 // Nature decor (lush-outside pass — D2 amendment). Projection follows height:
 // trees/saplings are front-facing elevation art; low flora remains plan art.
 // All are NON_PLACEABLE scenery the sim scatters over the build site,
@@ -3802,6 +4011,15 @@ export const PROP_TEMPLATES: PropTemplate[] = [
   car,
   carSuv,
   parkingLine,
+  // Corporate-campus parking kit (CE-21).
+  lotMarkingAccessible,
+  lotMarkingArrow,
+  lotMarkingReserved,
+  lotMarkingCrosswalk,
+  lampPost,
+  signLot,
+  carCompact,
+  bikeRack,
   // Nature decor (lush-outside pass) — clinical-exempt exterior scenery.
   treeCanopy,
   treeSapling,
