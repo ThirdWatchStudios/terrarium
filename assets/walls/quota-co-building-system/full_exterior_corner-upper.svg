@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>QuotaCo Building System full exterior corner upper</title>
+  <desc>Optional full-height upper shell turning through the split-B exterior corner.</desc>
+  <g id="detail/upper">
+    <path id="upper-horizontal-contour" d="M 0 56 H 128 V 99 H 0 Z" fill="#252A28"/>
+    <path id="upper-horizontal-shell" d="M 0 58 H 128 V 97 H 0 Z" fill="#D9D0B9"/>
+    <path id="upper-horizontal-cap" d="M 0 58 H 128 V 66 H 0 Z" fill="#FFFFFF" opacity="0.20"/>
+    <path id="upper-horizontal-shade" d="M 0 66 H 128 V 95 H 0 Z" fill="#000000" opacity="0.08"/>
+    <path id="upper-horizontal-seam" d="M 1 66 H 127 M 1 96 H 127" fill="none" stroke="#252A28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.38"/>
+    <path id="upper-vertical-contour" d="M 56 0 H 99 V 128 H 56 Z" fill="#252A28"/>
+    <path id="upper-vertical-shell" d="M 58 0 H 97 V 128 H 58 Z" fill="#D9D0B9"/>
+    <path id="upper-vertical-cap" d="M 58 0 H 66 V 128 H 58 Z" fill="#FFFFFF" opacity="0.20"/>
+    <path id="upper-vertical-shade" d="M 66 0 H 95 V 128 H 66 Z" fill="#000000" opacity="0.08"/>
+    <path id="upper-vertical-seam" d="M 66 1 V 127 M 96 1 V 127" fill="none" stroke="#252A28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.38"/>
+    <path id="upper-corner-socket" d="M 65 58 H 91 A 7 7 0 0 1 98 65 V 91 A 7 7 0 0 1 91 98 H 65 A 7 7 0 0 1 58 91 V 65 A 7 7 0 0 1 65 58 Z" fill="#D9D0B9"/>
+    <path id="upper-corner-service-seam" d="M 67 67 L 93 93" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.28"/>
+  </g>
+</svg>

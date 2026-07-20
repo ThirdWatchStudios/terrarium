@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <g id="detail/state">
+    <path id="contour" fill="#252A28" d="M56 0h43v110a9 9 0 0 1-9 9H65a9 9 0 0 1-9-9Z"/>
+    <path id="shell" fill="#D9D0B9" d="M58 0h39v109a7 7 0 0 1-7 7H65a7 7 0 0 1-7-7Z"/>
+    <path id="cap-light" fill="#FFFFFF" opacity="0.20" d="M58 0h8v115h-8Z"/>
+    <path id="face-shade" fill="#000000" opacity="0.08" d="M66 0h29v114H66Z"/>
+    <path id="service-seam" fill="none" stroke="#252A28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.28" d="M66 1v110"/>
+    <path id="base-seam" fill="none" stroke="#252A28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.62" d="M96 1v110"/>
+    <path id="transition-return" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.28" d="M105 105l9 9"/>
+  </g>
+</svg>

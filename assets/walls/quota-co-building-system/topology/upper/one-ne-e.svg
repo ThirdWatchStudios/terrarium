@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <g id="detail/upper">
+    <path id="contour" fill="#252A28" d="M87 0h12v68H87Z"/>
+    <path id="shell" fill="#D9D0B9" d="M87 0h10v68H87Z"/>
+    <path id="face-shade" fill="#000000" opacity="0.08" d="M87 0h8v68h-8Z"/>
+    <path id="base-seam" fill="none" stroke="#252A28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.62" d="M96 1v66"/>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>QuotaCo Building System full north straight base</title>
+  <desc>Finished connected low structural base for the split-B full north wall.</desc>
+  <g id="detail/base">
+    <path id="base-contour" d="M 0 94 H 128 V 120 H 0 Z" fill="#252A28"/>
+    <path id="base-field" d="M 0 96 H 128 V 118 H 0 Z" fill="#294B3C"/>
+    <path id="base-cap-light" d="M 0 96 H 128 V 104 H 0 Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="base-teal-band" d="M 0 105 H 128 V 110 H 0 Z" fill="#4E7D79" opacity="0.90"/>
+    <path id="base-service-seam" d="M .75 104 H 127.25" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="base-fastener-left" d="M 15 111.5 A 1.5 1.5 0 1 1 15 114.5 A 1.5 1.5 0 1 1 15 111.5 Z" fill="#979A91"/>
+    <path id="base-fastener-right" d="M 113 111.5 A 1.5 1.5 0 1 1 113 114.5 A 1.5 1.5 0 1 1 113 111.5 Z" fill="#979A91"/>
+  </g>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <g id="detail/state">
+    <path id="left-outline" fill="#252A28" d="M0 94h19a9 9 0 0 1 9 9v8a9 9 0 0 1-9 9H0Z"/>
+    <path id="left-field" fill="#294B3C" d="M0 96h18a7 7 0 0 1 7 7v8a7 7 0 0 1-7 7H0Z"/>
+    <path id="left-cap" fill="#FFFFFF" opacity="0.10" d="M0 96h24v8H0Z"/>
+    <path id="left-teal" fill="#4E7D79" d="M0 105h23v5H0Z"/>
+    <path id="right-outline" fill="#252A28" d="M100 94h28v26h-28Z"/>
+    <path id="right-field" fill="#294B3C" d="M103 96h25v22h-25Z"/>
+    <path id="right-cap" fill="#FFFFFF" opacity="0.10" d="M104 96h24v8h-24Z"/>
+    <path id="right-teal" fill="#4E7D79" d="M104 105h24v5h-24Z"/>
+    <path id="threshold-outline" fill="#252A28" d="M26 110h76a4 4 0 0 1 4 4v2a4 4 0 0 1-4 4H26a4 4 0 0 1-4-4v-2a4 4 0 0 1 4-4Z"/>
+    <path id="threshold" fill="#4E7D79" d="M27 113h74a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H27a2 2 0 0 1-2-2v-1a2 2 0 0 1 2-2Z"/>
+  </g>
+</svg>

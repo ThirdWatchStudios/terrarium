@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <g id="detail/state">
+    <path id="left-outline" fill="#252A28" d="M0 56h19a9 9 0 0 1 9 9v25a9 9 0 0 1-9 9H0Z"/>
+    <path id="left-shell" fill="#D9D0B9" d="M0 58h18a7 7 0 0 1 7 7v25a7 7 0 0 1-7 7H0Z"/>
+    <path id="left-cap" fill="#FFFFFF" opacity="0.18" d="M0 58h24v8H0Z"/>
+    <path id="left-shade" fill="#000000" opacity="0.10" d="M0 66h23v29H0Z"/>
+    <path id="right-outline" fill="#252A28" d="M100 56h28v43h-28Z"/>
+    <path id="right-shell" fill="#D9D0B9" d="M103 58h25v39h-25Z"/>
+    <path id="right-cap" fill="#FFFFFF" opacity="0.18" d="M104 58h24v8h-24Z"/>
+    <path id="right-shade" fill="#000000" opacity="0.10" d="M104 66h24v29h-24Z"/>
+    <path id="left-jamb-outline" fill="#252A28" d="M22 61h8a4 4 0 0 1 4 4v39H18V65a4 4 0 0 1 4-4Z"/>
+    <path id="left-jamb" fill="#D9D0B9" d="M23 64h5a3 3 0 0 1 3 3v35H21V67a3 3 0 0 1 2-3Z"/>
+    <path id="right-jamb-outline" fill="#252A28" d="M98 61h8a4 4 0 0 1 4 4v39H94V65a4 4 0 0 1 4-4Z"/>
+    <path id="right-jamb" fill="#D9D0B9" d="M99 64h5a3 3 0 0 1 3 3v35H97V67a3 3 0 0 1 2-3Z"/>
+  </g>
+</svg>

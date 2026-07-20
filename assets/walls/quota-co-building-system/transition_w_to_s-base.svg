@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>QuotaCo Building System west-to-south transition base</title>
+  <desc>Finished low structural base carrying a west run into the low south profile.</desc>
+  <g id="detail/base">
+    <path id="base-vertical-contour" d="M 94 0 H 120 V 110 A 9 9 0 0 1 111 119 H 103 A 9 9 0 0 1 94 110 Z" fill="#252A28"/>
+    <path id="base-vertical-field" d="M 96 0 H 118 V 109 A 7 7 0 0 1 111 116 H 103 A 7 7 0 0 1 96 109 Z" fill="#294B3C"/>
+    <path id="base-vertical-cap" d="M 96 0 H 104 V 115 H 96 Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="base-vertical-teal" d="M 105 0 H 110 V 114 H 105 Z" fill="#4E7D79" opacity="0.90"/>
+    <path id="base-vertical-seam" d="M 104 .75 V 111" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="base-south-contour" d="M 94 94 H 128 V 120 H 94 Z" fill="#252A28"/>
+    <path id="base-south-field" d="M 94 96 H 128 V 118 H 94 Z" fill="#294B3C"/>
+    <path id="base-south-cap" d="M 94 96 H 128 V 104 H 94 Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="base-south-teal" d="M 94 105 H 128 V 110 H 94 Z" fill="#4E7D79" opacity="0.90"/>
+    <path id="base-south-seam" d="M 94 104 H 127.25" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="base-transition-socket" d="M 101 96 H 113 A 5 5 0 0 1 118 101 V 113 A 5 5 0 0 1 113 118 H 101 A 5 5 0 0 1 96 113 V 101 A 5 5 0 0 1 101 96 Z" fill="#294B3C"/>
+    <path id="base-fastener-top" d="M 113 13.5 A 1.5 1.5 0 1 1 113 16.5 A 1.5 1.5 0 1 1 113 13.5 Z" fill="#979A91"/>
+  </g>
+</svg>

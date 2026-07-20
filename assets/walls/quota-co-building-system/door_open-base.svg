@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <g id="detail/base">
+    <path id="left-outline" fill="#252A28" d="M0 94h19a9 9 0 0 1 9 9v8a9 9 0 0 1-9 9H0Z"/>
+    <path id="left-material" fill="#294B3C" d="M0 96h18a7 7 0 0 1 7 7v8a7 7 0 0 1-7 7H0Z"/>
+    <path id="left-cap-light" fill="#FFFFFF" opacity="0.18" d="M0 96h17a7 7 0 0 1 7 7v1H0Z"/>
+    <path id="left-cap-accent" fill="#4E7D79" d="M0 105h23v5H0Z"/>
+    <path id="left-service-seam" fill="none" stroke="#252A28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M1 112h18"/>
+    <path id="right-outline" fill="#252A28" d="M100 94h28v26h-28Z"/>
+    <path id="right-material" fill="#294B3C" d="M103 96h25v22h-25Z"/>
+    <path id="right-cap-light" fill="#FFFFFF" opacity="0.18" d="M104 96h24v8h-24Z"/>
+    <path id="right-cap-accent" fill="#4E7D79" d="M104 105h24v5h-24Z"/>
+    <path id="right-service-seam" fill="none" stroke="#252A28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M109 112h18"/>
+    <path id="threshold-outline" fill="#252A28" d="M26 110h76a4 4 0 0 1 4 4v2a4 4 0 0 1-4 4H26a4 4 0 0 1-4-4v-2a4 4 0 0 1 4-4Z"/>
+    <path id="threshold-inset" fill="#4E7D79" d="M27 113h74a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H27a2 2 0 0 1-2-2v-1a2 2 0 0 1 2-2Z"/>
+    <path id="left-fastener" fill="#979A91" d="M18 111a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+    <path id="right-fastener" fill="#979A91" d="M116 111a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+  </g>
+</svg>

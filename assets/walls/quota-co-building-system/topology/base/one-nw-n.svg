@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <g id="detail/base">
+    <path id="contour" fill="#252A28" d="M0 94h102v13H0Z"/>
+    <path id="field" fill="#294B3C" d="M0 96h102v11H0Z"/>
+    <path id="cap-light" fill="#FFFFFF" opacity="0.10" d="M0 96h102v8H0Z"/>
+    <path id="service-seam" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45" d="M.75 104h100.5"/>
+  </g>
+</svg>

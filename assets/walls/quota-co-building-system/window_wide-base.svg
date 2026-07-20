@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <g id="detail/base">
+    <path id="base-outline" fill="#252A28" d="M0 94h128v26H0Z"/>
+    <path id="base-material" fill="#294B3C" d="M0 96h128v22H0Z"/>
+    <path id="cap-light" fill="#FFFFFF" opacity="0.18" d="M0 96h128v8H0Z"/>
+    <path id="cap-accent" fill="#4E7D79" d="M0 105h128v5H0Z"/>
+    <path id="service-seam" fill="none" stroke="#252A28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M1 112h126"/>
+    <path id="left-fastener" fill="#979A91" d="M18 111a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+    <path id="right-fastener" fill="#979A91" d="M116 111a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+  </g>
+</svg>

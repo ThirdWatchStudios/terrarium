@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <g id="detail/state">
+    <path id="outline" fill="#252A28" d="M0 56h128v43H0Z"/>
+    <path id="shell" fill="#D9D0B9" d="M0 58h128v39H0Z"/>
+    <path id="cap-light" fill="#FFFFFF" opacity="0.18" d="M0 58h128v8H0Z"/>
+    <path id="face-shade" fill="#000000" opacity="0.10" d="M0 66h128v29H0Z"/>
+    <path id="recess" fill="#252A28" d="M24 65h80a7 7 0 0 1 7 7v20a7 7 0 0 1-7 7H24a7 7 0 0 1-7-7V72a7 7 0 0 1 7-7Z"/>
+    <path id="glass" fill="#83A9A6" d="M26 69h76a5 5 0 0 1 5 5v16a5 5 0 0 1-5 5H26a5 5 0 0 1-5-5V74a5 5 0 0 1 5-5Z"/>
+    <path id="vertical-mullion" fill="#D9D0B9" d="M61 69h6v26h-6Z"/>
+    <path id="horizontal-mullion" fill="#D9D0B9" d="M21 80h86v5H21Z"/>
+    <path id="sill" fill="#D9D0B9" d="M17 97h94a3 3 0 0 1 3 3v2a3 3 0 0 1-3 3H17a3 3 0 0 1-3-3v-2a3 3 0 0 1 3-3Z"/>
+  </g>
+</svg>
