@@ -1,19 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
   <title>QuotaCo Building System full exterior corner base</title>
-  <desc>Finished low structural base turning through the split-B exterior corner.</desc>
+  <desc>Finished low structural base turning the exterior corner: the east column rises full-height behind the upper shoulder, the south arm miters into it, deep green fields over the charcoal plinth.</desc>
   <g id="detail/base">
-    <path id="base-horizontal-contour" d="M 0 94 H 128 V 120 H 0 Z" fill="#252A28"/>
-    <path id="base-horizontal-field" d="M 0 96 H 128 V 118 H 0 Z" fill="#294B3C"/>
-    <path id="base-horizontal-cap" d="M 0 96 H 128 V 104 H 0 Z" fill="#FFFFFF" opacity="0.10"/>
-    <path id="base-horizontal-teal" d="M 0 105 H 128 V 110 H 0 Z" fill="#4E7D79" opacity="0.90"/>
-    <path id="base-horizontal-seam" d="M .75 104 H 127.25" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
-    <path id="base-vertical-contour" d="M 94 0 H 120 V 128 H 94 Z" fill="#252A28"/>
-    <path id="base-vertical-field" d="M 96 0 H 118 V 128 H 96 Z" fill="#294B3C"/>
-    <path id="base-vertical-cap" d="M 96 0 H 104 V 128 H 96 Z" fill="#FFFFFF" opacity="0.10"/>
-    <path id="base-vertical-teal" d="M 105 0 H 110 V 128 H 105 Z" fill="#4E7D79" opacity="0.90"/>
-    <path id="base-vertical-seam" d="M 104 .75 V 127.25" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
-    <path id="base-corner-socket" d="M 101 96 H 113 A 5 5 0 0 1 118 101 V 113 A 5 5 0 0 1 113 118 H 101 A 5 5 0 0 1 96 113 V 101 A 5 5 0 0 1 101 96 Z" fill="#294B3C"/>
+    <path id="base-contour" d="M 0 94 H 94 V 62 H 114 A 6 6 0 0 1 120 68 V 128 H 94 V 120 H 0 Z" fill="#252A28"/>
+    <path id="base-field" d="M 0 96 H 96 V 64 H 112 A 5 5 0 0 1 117 69 V 128 H 96 V 117 H 0 Z" fill="#294B3C"/>
+    <path id="base-cap-light" d="M 0 96 H 104 V 104 H 0 Z M 96 64 H 111 V 68 H 104 V 128 H 96 Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="base-service-seam" d="M .75 104 H 92 M 104 70 V 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="base-miter-seam" d="M 97 117 L 117 97" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
     <path id="base-fastener-left" d="M 15 111.5 A 1.5 1.5 0 1 1 15 114.5 A 1.5 1.5 0 1 1 15 111.5 Z" fill="#979A91"/>
-    <path id="base-fastener-top" d="M 113 13.5 A 1.5 1.5 0 1 1 113 16.5 A 1.5 1.5 0 1 1 113 13.5 Z" fill="#979A91"/>
+    <path id="base-fastener-column" d="M 113 78.5 A 1.5 1.5 0 1 1 113 81.5 A 1.5 1.5 0 1 1 113 78.5 Z" fill="#979A91"/>
   </g>
 </svg>

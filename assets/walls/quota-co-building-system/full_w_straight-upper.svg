@@ -1,12 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
   <title>QuotaCo Building System full west straight upper</title>
-  <desc>Optional full-height cream upper shell for the split-B west straight.</desc>
+  <desc>Full-height cream upper shell for the split-B west straight, golden family constants rotated to the vertical run.</desc>
   <g id="detail/upper">
-    <path id="upper-contour" d="M 56 0 H 99 V 128 H 56 Z" fill="#252A28"/>
+    <path id="upper-contour" d="M 56 0 H 98 V 128 H 56 Z" fill="#252A28"/>
     <path id="upper-shell" d="M 58 0 H 97 V 128 H 58 Z" fill="#D9D0B9"/>
-    <path id="upper-cap-light" d="M 58 0 H 66 V 128 H 58 Z" fill="#FFFFFF" opacity="0.20"/>
-    <path id="upper-face-shade" d="M 66 0 H 95 V 128 H 66 Z" fill="#000000" opacity="0.08"/>
-    <path id="upper-service-seam" d="M 66 1 V 127" fill="none" stroke="#252A28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.28"/>
-    <path id="upper-base-seam" d="M 96 1 V 127" fill="none" stroke="#252A28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.62"/>
+    <path id="upper-cap-light" d="M 58 0 H 64 V 128 H 58 Z" fill="#FFFFFF" opacity="0.20"/>
+    <path id="upper-face-shade" d="M 64 0 H 89 V 128 H 64 Z" fill="#000000" opacity="0.08"/>
+    <path id="upper-coral-band" d="M 89 0 H 97 V 128 H 89 Z" fill="#B65F4D"/>
+    <path id="upper-band-light" d="M 89 0 H 90.5 V 128 H 89 Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="upper-service-seam" d="M 64 1 V 127" fill="none" stroke="#252A28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.28"/>
+    <path id="upper-module-seam" d="M 64 64 H 96" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.28"/>
+    <path id="upper-band-seam" d="M 89 1 V 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="upper-base-seam" d="M 96 1 V 127" fill="none" stroke="#252A28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
   </g>
 </svg>
