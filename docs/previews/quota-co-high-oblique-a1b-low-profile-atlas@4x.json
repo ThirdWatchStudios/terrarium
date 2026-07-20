@@ -1,0 +1,159 @@
+{
+  "version": 0,
+  "status": "corrective-source-proof",
+  "contract": false,
+  "name": "QuotaCo A1b low-profile corrective mini-strip",
+  "scale": 4,
+  "canvas": 128,
+  "frameSize": 512,
+  "padding": 32,
+  "columns": 3,
+  "rows": 2,
+  "width": 1728,
+  "height": 1152,
+  "pivot": {
+    "x": 0.5,
+    "y": 0.5
+  },
+  "ruler": {
+    "outerStart": 82,
+    "innerStart": 84,
+    "topPlaneEnd": 92,
+    "copingEnd": 100,
+    "innerEnd": 118,
+    "outerEnd": 120,
+    "outerProfile": 38,
+    "materialProfile": 34
+  },
+  "frames": {
+    "a1b_low_corrected_s": {
+      "x": 32,
+      "y": 32,
+      "w": 512,
+      "h": 512,
+      "kind": "low",
+      "sourceIds": [
+        "low-s-straight"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/low-profile-correction/low-s-straight.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_low_corrected_e": {
+      "x": 608,
+      "y": 32,
+      "w": 512,
+      "h": 512,
+      "kind": "low",
+      "sourceIds": [
+        "low-e-straight"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/low-profile-correction/low-e-straight.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_low_corrected_se_corner": {
+      "x": 1184,
+      "y": 32,
+      "w": 512,
+      "h": 512,
+      "kind": "low",
+      "sourceIds": [
+        "low-se-corner"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/low-profile-correction/low-se-corner.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_low_corrected_transition_base": {
+      "x": 32,
+      "y": 608,
+      "w": 512,
+      "h": 512,
+      "kind": "transition-base",
+      "sourceIds": [
+        "transition-n-to-e-base"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/low-profile-correction/transition-n-to-e-base.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_low_corrected_transition_upper": {
+      "x": 608,
+      "y": 608,
+      "w": 512,
+      "h": 512,
+      "kind": "transition-upper",
+      "sourceIds": [
+        "transition-n-to-e-upper"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/low-profile-correction/transition-n-to-e-upper.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_low_corrected_transition_composed": {
+      "x": 1184,
+      "y": 608,
+      "w": 512,
+      "h": 512,
+      "kind": "composed",
+      "sourceIds": [
+        "transition-n-to-e-base",
+        "transition-n-to-e-upper"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/low-profile-correction/transition-n-to-e-base.svg",
+        "assets/walls/quota-co-building-system/low-profile-correction/transition-n-to-e-upper.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    }
+  },
+  "meta": {
+    "generator": "terrarium-a1b-low-profile-correction",
+    "sourceCount": 5,
+    "frameCount": 6,
+    "rejectedControlPreserved": true,
+    "completeBlobFamily": false,
+    "transparentPadding": true,
+    "temporaryFrameIds": true,
+    "productionRegistration": false,
+    "schemaChange": false,
+    "directionalCastShadow": false,
+    "note": "Corrective mini-strip only. Approve the finished low-wall silhouette before propagating it through the existing 47-blob topology."
+  }
+}

@@ -1,0 +1,3378 @@
+{
+  "version": 0,
+  "status": "proof-only",
+  "contract": false,
+  "name": "QuotaCo high-oblique A1b topology component proof",
+  "scale": 1,
+  "canvas": 128,
+  "frameSize": 128,
+  "padding": 8,
+  "columns": 11,
+  "rows": 10,
+  "width": 1584,
+  "height": 1440,
+  "pivot": {
+    "x": 0.5,
+    "y": 0.5
+  },
+  "frames": {
+    "a1b_component_base_00": {
+      "x": 8,
+      "y": 8,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 0,
+      "canonicalMask": 0,
+      "roleIds": [
+        "edge-n",
+        "edge-e",
+        "edge-s",
+        "edge-w",
+        "convex-ne",
+        "convex-se",
+        "convex-sw",
+        "convex-nw"
+      ],
+      "sourceIds": [
+        "base/edge-n",
+        "base/edge-e",
+        "base/edge-s",
+        "base/edge-w",
+        "base/convex-ne",
+        "base/convex-se",
+        "base/convex-sw",
+        "base/convex-nw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/base/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/base/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/base/convex-ne.svg",
+        "assets/walls/quota-co-building-system/topology/base/convex-se.svg",
+        "assets/walls/quota-co-building-system/topology/base/convex-sw.svg",
+        "assets/walls/quota-co-building-system/topology/base/convex-nw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_01": {
+      "x": 152,
+      "y": 8,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 1,
+      "canonicalMask": 1,
+      "roleIds": [
+        "edge-e",
+        "edge-s",
+        "edge-w",
+        "convex-se",
+        "convex-sw",
+        "one-ne-e",
+        "one-nw-w"
+      ],
+      "sourceIds": [
+        "base/edge-e",
+        "base/edge-s",
+        "base/edge-w",
+        "base/convex-se",
+        "base/convex-sw",
+        "base/one-ne-e",
+        "base/one-nw-w"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/base/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/base/convex-se.svg",
+        "assets/walls/quota-co-building-system/topology/base/convex-sw.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-ne-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-nw-w.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_02": {
+      "x": 296,
+      "y": 8,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 2,
+      "canonicalMask": 2,
+      "roleIds": [
+        "edge-n",
+        "edge-s",
+        "edge-w",
+        "convex-sw",
+        "convex-nw",
+        "one-ne-n",
+        "one-se-s"
+      ],
+      "sourceIds": [
+        "base/edge-n",
+        "base/edge-s",
+        "base/edge-w",
+        "base/convex-sw",
+        "base/convex-nw",
+        "base/one-ne-n",
+        "base/one-se-s"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/base/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/base/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/base/convex-sw.svg",
+        "assets/walls/quota-co-building-system/topology/base/convex-nw.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-ne-n.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-se-s.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_03": {
+      "x": 440,
+      "y": 8,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 3,
+      "canonicalMask": 3,
+      "roleIds": [
+        "edge-s",
+        "edge-w",
+        "convex-sw",
+        "concave-ne",
+        "one-se-s",
+        "one-nw-w"
+      ],
+      "sourceIds": [
+        "base/edge-s",
+        "base/edge-w",
+        "base/convex-sw",
+        "base/concave-ne",
+        "base/one-se-s",
+        "base/one-nw-w"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/base/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/base/convex-sw.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-se-s.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-nw-w.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_04": {
+      "x": 584,
+      "y": 8,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 4,
+      "canonicalMask": 4,
+      "roleIds": [
+        "edge-n",
+        "edge-e",
+        "edge-w",
+        "convex-ne",
+        "convex-nw",
+        "one-se-e",
+        "one-sw-w"
+      ],
+      "sourceIds": [
+        "base/edge-n",
+        "base/edge-e",
+        "base/edge-w",
+        "base/convex-ne",
+        "base/convex-nw",
+        "base/one-se-e",
+        "base/one-sw-w"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/base/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/base/convex-ne.svg",
+        "assets/walls/quota-co-building-system/topology/base/convex-nw.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-se-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-sw-w.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_05": {
+      "x": 728,
+      "y": 8,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 5,
+      "canonicalMask": 5,
+      "roleIds": [
+        "edge-e",
+        "edge-w",
+        "one-ne-e",
+        "one-se-e",
+        "one-sw-w",
+        "one-nw-w"
+      ],
+      "sourceIds": [
+        "base/edge-e",
+        "base/edge-w",
+        "base/one-ne-e",
+        "base/one-se-e",
+        "base/one-sw-w",
+        "base/one-nw-w"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-ne-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-se-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-sw-w.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-nw-w.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_06": {
+      "x": 872,
+      "y": 8,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 6,
+      "canonicalMask": 6,
+      "roleIds": [
+        "edge-n",
+        "edge-w",
+        "convex-nw",
+        "concave-se",
+        "one-ne-n",
+        "one-sw-w"
+      ],
+      "sourceIds": [
+        "base/edge-n",
+        "base/edge-w",
+        "base/convex-nw",
+        "base/concave-se",
+        "base/one-ne-n",
+        "base/one-sw-w"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/base/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/base/convex-nw.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-se.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-ne-n.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-sw-w.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_07": {
+      "x": 1016,
+      "y": 8,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 7,
+      "canonicalMask": 7,
+      "roleIds": [
+        "edge-w",
+        "concave-ne",
+        "concave-se",
+        "one-sw-w",
+        "one-nw-w"
+      ],
+      "sourceIds": [
+        "base/edge-w",
+        "base/concave-ne",
+        "base/concave-se",
+        "base/one-sw-w",
+        "base/one-nw-w"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-se.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-sw-w.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-nw-w.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_08": {
+      "x": 1160,
+      "y": 8,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 8,
+      "canonicalMask": 8,
+      "roleIds": [
+        "edge-n",
+        "edge-e",
+        "edge-s",
+        "convex-ne",
+        "convex-se",
+        "one-sw-s",
+        "one-nw-n"
+      ],
+      "sourceIds": [
+        "base/edge-n",
+        "base/edge-e",
+        "base/edge-s",
+        "base/convex-ne",
+        "base/convex-se",
+        "base/one-sw-s",
+        "base/one-nw-n"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/base/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/base/convex-ne.svg",
+        "assets/walls/quota-co-building-system/topology/base/convex-se.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-sw-s.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-nw-n.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_09": {
+      "x": 1304,
+      "y": 8,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 9,
+      "canonicalMask": 9,
+      "roleIds": [
+        "edge-e",
+        "edge-s",
+        "convex-se",
+        "concave-nw",
+        "one-ne-e",
+        "one-sw-s"
+      ],
+      "sourceIds": [
+        "base/edge-e",
+        "base/edge-s",
+        "base/convex-se",
+        "base/concave-nw",
+        "base/one-ne-e",
+        "base/one-sw-s"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/base/convex-se.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-nw.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-ne-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-sw-s.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_10": {
+      "x": 1448,
+      "y": 8,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 10,
+      "canonicalMask": 10,
+      "roleIds": [
+        "edge-n",
+        "edge-s",
+        "one-ne-n",
+        "one-se-s",
+        "one-sw-s",
+        "one-nw-n"
+      ],
+      "sourceIds": [
+        "base/edge-n",
+        "base/edge-s",
+        "base/one-ne-n",
+        "base/one-se-s",
+        "base/one-sw-s",
+        "base/one-nw-n"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/base/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-ne-n.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-se-s.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-sw-s.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-nw-n.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_11": {
+      "x": 8,
+      "y": 152,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 11,
+      "canonicalMask": 11,
+      "roleIds": [
+        "edge-s",
+        "concave-ne",
+        "concave-nw",
+        "one-se-s",
+        "one-sw-s"
+      ],
+      "sourceIds": [
+        "base/edge-s",
+        "base/concave-ne",
+        "base/concave-nw",
+        "base/one-se-s",
+        "base/one-sw-s"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-nw.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-se-s.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-sw-s.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_12": {
+      "x": 152,
+      "y": 152,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 12,
+      "canonicalMask": 12,
+      "roleIds": [
+        "edge-n",
+        "edge-e",
+        "convex-ne",
+        "concave-sw",
+        "one-se-e",
+        "one-nw-n"
+      ],
+      "sourceIds": [
+        "base/edge-n",
+        "base/edge-e",
+        "base/convex-ne",
+        "base/concave-sw",
+        "base/one-se-e",
+        "base/one-nw-n"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/base/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/convex-ne.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-sw.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-se-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-nw-n.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_13": {
+      "x": 296,
+      "y": 152,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 13,
+      "canonicalMask": 13,
+      "roleIds": [
+        "edge-e",
+        "concave-sw",
+        "concave-nw",
+        "one-ne-e",
+        "one-se-e"
+      ],
+      "sourceIds": [
+        "base/edge-e",
+        "base/concave-sw",
+        "base/concave-nw",
+        "base/one-ne-e",
+        "base/one-se-e"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-sw.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-nw.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-ne-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-se-e.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_14": {
+      "x": 440,
+      "y": 152,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 14,
+      "canonicalMask": 14,
+      "roleIds": [
+        "edge-n",
+        "concave-se",
+        "concave-sw",
+        "one-ne-n",
+        "one-nw-n"
+      ],
+      "sourceIds": [
+        "base/edge-n",
+        "base/concave-se",
+        "base/concave-sw",
+        "base/one-ne-n",
+        "base/one-nw-n"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-se.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-sw.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-ne-n.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-nw-n.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_15": {
+      "x": 584,
+      "y": 152,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 15,
+      "canonicalMask": 15,
+      "roleIds": [
+        "concave-ne",
+        "concave-se",
+        "concave-sw",
+        "concave-nw"
+      ],
+      "sourceIds": [
+        "base/concave-ne",
+        "base/concave-se",
+        "base/concave-sw",
+        "base/concave-nw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-se.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-sw.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-nw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_16": {
+      "x": 728,
+      "y": 152,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 16,
+      "canonicalMask": 19,
+      "roleIds": [
+        "edge-s",
+        "edge-w",
+        "convex-sw",
+        "one-se-s",
+        "one-nw-w"
+      ],
+      "sourceIds": [
+        "base/edge-s",
+        "base/edge-w",
+        "base/convex-sw",
+        "base/one-se-s",
+        "base/one-nw-w"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/base/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/base/convex-sw.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-se-s.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-nw-w.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_17": {
+      "x": 872,
+      "y": 152,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 17,
+      "canonicalMask": 23,
+      "roleIds": [
+        "edge-w",
+        "concave-se",
+        "one-sw-w",
+        "one-nw-w"
+      ],
+      "sourceIds": [
+        "base/edge-w",
+        "base/concave-se",
+        "base/one-sw-w",
+        "base/one-nw-w"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-se.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-sw-w.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-nw-w.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_18": {
+      "x": 1016,
+      "y": 152,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 18,
+      "canonicalMask": 27,
+      "roleIds": [
+        "edge-s",
+        "concave-nw",
+        "one-se-s",
+        "one-sw-s"
+      ],
+      "sourceIds": [
+        "base/edge-s",
+        "base/concave-nw",
+        "base/one-se-s",
+        "base/one-sw-s"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-nw.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-se-s.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-sw-s.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_19": {
+      "x": 1160,
+      "y": 152,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 19,
+      "canonicalMask": 31,
+      "roleIds": [
+        "concave-se",
+        "concave-sw",
+        "concave-nw"
+      ],
+      "sourceIds": [
+        "base/concave-se",
+        "base/concave-sw",
+        "base/concave-nw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/concave-se.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-sw.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-nw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_20": {
+      "x": 1304,
+      "y": 152,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 20,
+      "canonicalMask": 38,
+      "roleIds": [
+        "edge-n",
+        "edge-w",
+        "convex-nw",
+        "one-ne-n",
+        "one-sw-w"
+      ],
+      "sourceIds": [
+        "base/edge-n",
+        "base/edge-w",
+        "base/convex-nw",
+        "base/one-ne-n",
+        "base/one-sw-w"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/base/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/base/convex-nw.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-ne-n.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-sw-w.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_21": {
+      "x": 1448,
+      "y": 152,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 21,
+      "canonicalMask": 39,
+      "roleIds": [
+        "edge-w",
+        "concave-ne",
+        "one-sw-w",
+        "one-nw-w"
+      ],
+      "sourceIds": [
+        "base/edge-w",
+        "base/concave-ne",
+        "base/one-sw-w",
+        "base/one-nw-w"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-sw-w.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-nw-w.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_22": {
+      "x": 8,
+      "y": 296,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 22,
+      "canonicalMask": 46,
+      "roleIds": [
+        "edge-n",
+        "concave-sw",
+        "one-ne-n",
+        "one-nw-n"
+      ],
+      "sourceIds": [
+        "base/edge-n",
+        "base/concave-sw",
+        "base/one-ne-n",
+        "base/one-nw-n"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-sw.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-ne-n.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-nw-n.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_23": {
+      "x": 152,
+      "y": 296,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 23,
+      "canonicalMask": 47,
+      "roleIds": [
+        "concave-ne",
+        "concave-sw",
+        "concave-nw"
+      ],
+      "sourceIds": [
+        "base/concave-ne",
+        "base/concave-sw",
+        "base/concave-nw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-sw.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-nw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_24": {
+      "x": 296,
+      "y": 296,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 24,
+      "canonicalMask": 55,
+      "roleIds": [
+        "edge-w",
+        "one-sw-w",
+        "one-nw-w"
+      ],
+      "sourceIds": [
+        "base/edge-w",
+        "base/one-sw-w",
+        "base/one-nw-w"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-sw-w.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-nw-w.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_25": {
+      "x": 440,
+      "y": 296,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 25,
+      "canonicalMask": 63,
+      "roleIds": [
+        "concave-sw",
+        "concave-nw"
+      ],
+      "sourceIds": [
+        "base/concave-sw",
+        "base/concave-nw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/concave-sw.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-nw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_26": {
+      "x": 584,
+      "y": 296,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 26,
+      "canonicalMask": 76,
+      "roleIds": [
+        "edge-n",
+        "edge-e",
+        "convex-ne",
+        "one-se-e",
+        "one-nw-n"
+      ],
+      "sourceIds": [
+        "base/edge-n",
+        "base/edge-e",
+        "base/convex-ne",
+        "base/one-se-e",
+        "base/one-nw-n"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/base/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/convex-ne.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-se-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-nw-n.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_27": {
+      "x": 728,
+      "y": 296,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 27,
+      "canonicalMask": 77,
+      "roleIds": [
+        "edge-e",
+        "concave-nw",
+        "one-ne-e",
+        "one-se-e"
+      ],
+      "sourceIds": [
+        "base/edge-e",
+        "base/concave-nw",
+        "base/one-ne-e",
+        "base/one-se-e"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-nw.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-ne-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-se-e.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_28": {
+      "x": 872,
+      "y": 296,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 28,
+      "canonicalMask": 78,
+      "roleIds": [
+        "edge-n",
+        "concave-se",
+        "one-ne-n",
+        "one-nw-n"
+      ],
+      "sourceIds": [
+        "base/edge-n",
+        "base/concave-se",
+        "base/one-ne-n",
+        "base/one-nw-n"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-se.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-ne-n.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-nw-n.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_29": {
+      "x": 1016,
+      "y": 296,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 29,
+      "canonicalMask": 79,
+      "roleIds": [
+        "concave-ne",
+        "concave-se",
+        "concave-nw"
+      ],
+      "sourceIds": [
+        "base/concave-ne",
+        "base/concave-se",
+        "base/concave-nw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-se.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-nw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_30": {
+      "x": 1160,
+      "y": 296,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 30,
+      "canonicalMask": 95,
+      "roleIds": [
+        "concave-se",
+        "concave-nw"
+      ],
+      "sourceIds": [
+        "base/concave-se",
+        "base/concave-nw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/concave-se.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-nw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_31": {
+      "x": 1304,
+      "y": 296,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 31,
+      "canonicalMask": 110,
+      "roleIds": [
+        "edge-n",
+        "one-ne-n",
+        "one-nw-n"
+      ],
+      "sourceIds": [
+        "base/edge-n",
+        "base/one-ne-n",
+        "base/one-nw-n"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-ne-n.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-nw-n.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_32": {
+      "x": 1448,
+      "y": 296,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 32,
+      "canonicalMask": 111,
+      "roleIds": [
+        "concave-ne",
+        "concave-nw"
+      ],
+      "sourceIds": [
+        "base/concave-ne",
+        "base/concave-nw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-nw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_33": {
+      "x": 8,
+      "y": 440,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 33,
+      "canonicalMask": 127,
+      "roleIds": [
+        "concave-nw"
+      ],
+      "sourceIds": [
+        "base/concave-nw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/concave-nw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_34": {
+      "x": 152,
+      "y": 440,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 34,
+      "canonicalMask": 137,
+      "roleIds": [
+        "edge-e",
+        "edge-s",
+        "convex-se",
+        "one-ne-e",
+        "one-sw-s"
+      ],
+      "sourceIds": [
+        "base/edge-e",
+        "base/edge-s",
+        "base/convex-se",
+        "base/one-ne-e",
+        "base/one-sw-s"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/base/convex-se.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-ne-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-sw-s.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_35": {
+      "x": 296,
+      "y": 440,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 35,
+      "canonicalMask": 139,
+      "roleIds": [
+        "edge-s",
+        "concave-ne",
+        "one-se-s",
+        "one-sw-s"
+      ],
+      "sourceIds": [
+        "base/edge-s",
+        "base/concave-ne",
+        "base/one-se-s",
+        "base/one-sw-s"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-se-s.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-sw-s.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_36": {
+      "x": 440,
+      "y": 440,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 36,
+      "canonicalMask": 141,
+      "roleIds": [
+        "edge-e",
+        "concave-sw",
+        "one-ne-e",
+        "one-se-e"
+      ],
+      "sourceIds": [
+        "base/edge-e",
+        "base/concave-sw",
+        "base/one-ne-e",
+        "base/one-se-e"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-sw.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-ne-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-se-e.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_37": {
+      "x": 584,
+      "y": 440,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 37,
+      "canonicalMask": 143,
+      "roleIds": [
+        "concave-ne",
+        "concave-se",
+        "concave-sw"
+      ],
+      "sourceIds": [
+        "base/concave-ne",
+        "base/concave-se",
+        "base/concave-sw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-se.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-sw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_38": {
+      "x": 728,
+      "y": 440,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 38,
+      "canonicalMask": 155,
+      "roleIds": [
+        "edge-s",
+        "one-se-s",
+        "one-sw-s"
+      ],
+      "sourceIds": [
+        "base/edge-s",
+        "base/one-se-s",
+        "base/one-sw-s"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-se-s.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-sw-s.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_39": {
+      "x": 872,
+      "y": 440,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 39,
+      "canonicalMask": 159,
+      "roleIds": [
+        "concave-se",
+        "concave-sw"
+      ],
+      "sourceIds": [
+        "base/concave-se",
+        "base/concave-sw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/concave-se.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-sw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_40": {
+      "x": 1016,
+      "y": 440,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 40,
+      "canonicalMask": 175,
+      "roleIds": [
+        "concave-ne",
+        "concave-sw"
+      ],
+      "sourceIds": [
+        "base/concave-ne",
+        "base/concave-sw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-sw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_41": {
+      "x": 1160,
+      "y": 440,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 41,
+      "canonicalMask": 191,
+      "roleIds": [
+        "concave-sw"
+      ],
+      "sourceIds": [
+        "base/concave-sw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/concave-sw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_42": {
+      "x": 1304,
+      "y": 440,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 42,
+      "canonicalMask": 205,
+      "roleIds": [
+        "edge-e",
+        "one-ne-e",
+        "one-se-e"
+      ],
+      "sourceIds": [
+        "base/edge-e",
+        "base/one-ne-e",
+        "base/one-se-e"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-ne-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-se-e.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_43": {
+      "x": 1448,
+      "y": 440,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 43,
+      "canonicalMask": 207,
+      "roleIds": [
+        "concave-ne",
+        "concave-se"
+      ],
+      "sourceIds": [
+        "base/concave-ne",
+        "base/concave-se"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-se.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_44": {
+      "x": 8,
+      "y": 584,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 44,
+      "canonicalMask": 223,
+      "roleIds": [
+        "concave-se"
+      ],
+      "sourceIds": [
+        "base/concave-se"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/concave-se.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_45": {
+      "x": 152,
+      "y": 584,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 45,
+      "canonicalMask": 239,
+      "roleIds": [
+        "concave-ne"
+      ],
+      "sourceIds": [
+        "base/concave-ne"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/base/concave-ne.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_base_46": {
+      "x": 296,
+      "y": 584,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "base",
+      "blobIndex": 46,
+      "canonicalMask": 255,
+      "roleIds": [],
+      "sourceIds": [],
+      "sourceFiles": [],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_00": {
+      "x": 440,
+      "y": 584,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 0,
+      "canonicalMask": 0,
+      "roleIds": [
+        "edge-n",
+        "edge-e",
+        "edge-s",
+        "edge-w",
+        "convex-ne",
+        "convex-se",
+        "convex-sw",
+        "convex-nw"
+      ],
+      "sourceIds": [
+        "upper/edge-n",
+        "upper/edge-e",
+        "upper/edge-s",
+        "upper/edge-w",
+        "upper/convex-ne",
+        "upper/convex-se",
+        "upper/convex-sw",
+        "upper/convex-nw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/upper/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/upper/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/upper/convex-ne.svg",
+        "assets/walls/quota-co-building-system/topology/upper/convex-se.svg",
+        "assets/walls/quota-co-building-system/topology/upper/convex-sw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/convex-nw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_01": {
+      "x": 584,
+      "y": 584,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 1,
+      "canonicalMask": 1,
+      "roleIds": [
+        "edge-e",
+        "edge-s",
+        "edge-w",
+        "convex-se",
+        "convex-sw",
+        "one-ne-e",
+        "one-nw-w"
+      ],
+      "sourceIds": [
+        "upper/edge-e",
+        "upper/edge-s",
+        "upper/edge-w",
+        "upper/convex-se",
+        "upper/convex-sw",
+        "upper/one-ne-e",
+        "upper/one-nw-w"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/upper/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/upper/convex-se.svg",
+        "assets/walls/quota-co-building-system/topology/upper/convex-sw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-ne-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-nw-w.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_02": {
+      "x": 728,
+      "y": 584,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 2,
+      "canonicalMask": 2,
+      "roleIds": [
+        "edge-n",
+        "edge-s",
+        "edge-w",
+        "convex-sw",
+        "convex-nw",
+        "one-ne-n",
+        "one-se-s"
+      ],
+      "sourceIds": [
+        "upper/edge-n",
+        "upper/edge-s",
+        "upper/edge-w",
+        "upper/convex-sw",
+        "upper/convex-nw",
+        "upper/one-ne-n",
+        "upper/one-se-s"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/upper/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/upper/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/upper/convex-sw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/convex-nw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-ne-n.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-se-s.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_03": {
+      "x": 872,
+      "y": 584,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 3,
+      "canonicalMask": 3,
+      "roleIds": [
+        "edge-s",
+        "edge-w",
+        "convex-sw",
+        "concave-ne",
+        "one-se-s",
+        "one-nw-w"
+      ],
+      "sourceIds": [
+        "upper/edge-s",
+        "upper/edge-w",
+        "upper/convex-sw",
+        "upper/concave-ne",
+        "upper/one-se-s",
+        "upper/one-nw-w"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/upper/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/upper/convex-sw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-se-s.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-nw-w.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_04": {
+      "x": 1016,
+      "y": 584,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 4,
+      "canonicalMask": 4,
+      "roleIds": [
+        "edge-n",
+        "edge-e",
+        "edge-w",
+        "convex-ne",
+        "convex-nw",
+        "one-se-e",
+        "one-sw-w"
+      ],
+      "sourceIds": [
+        "upper/edge-n",
+        "upper/edge-e",
+        "upper/edge-w",
+        "upper/convex-ne",
+        "upper/convex-nw",
+        "upper/one-se-e",
+        "upper/one-sw-w"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/upper/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/upper/convex-ne.svg",
+        "assets/walls/quota-co-building-system/topology/upper/convex-nw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-se-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-sw-w.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_05": {
+      "x": 1160,
+      "y": 584,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 5,
+      "canonicalMask": 5,
+      "roleIds": [
+        "edge-e",
+        "edge-w",
+        "one-ne-e",
+        "one-se-e",
+        "one-sw-w",
+        "one-nw-w"
+      ],
+      "sourceIds": [
+        "upper/edge-e",
+        "upper/edge-w",
+        "upper/one-ne-e",
+        "upper/one-se-e",
+        "upper/one-sw-w",
+        "upper/one-nw-w"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-ne-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-se-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-sw-w.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-nw-w.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_06": {
+      "x": 1304,
+      "y": 584,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 6,
+      "canonicalMask": 6,
+      "roleIds": [
+        "edge-n",
+        "edge-w",
+        "convex-nw",
+        "concave-se",
+        "one-ne-n",
+        "one-sw-w"
+      ],
+      "sourceIds": [
+        "upper/edge-n",
+        "upper/edge-w",
+        "upper/convex-nw",
+        "upper/concave-se",
+        "upper/one-ne-n",
+        "upper/one-sw-w"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/upper/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/upper/convex-nw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-se.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-ne-n.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-sw-w.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_07": {
+      "x": 1448,
+      "y": 584,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 7,
+      "canonicalMask": 7,
+      "roleIds": [
+        "edge-w",
+        "concave-ne",
+        "concave-se",
+        "one-sw-w",
+        "one-nw-w"
+      ],
+      "sourceIds": [
+        "upper/edge-w",
+        "upper/concave-ne",
+        "upper/concave-se",
+        "upper/one-sw-w",
+        "upper/one-nw-w"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-se.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-sw-w.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-nw-w.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_08": {
+      "x": 8,
+      "y": 728,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 8,
+      "canonicalMask": 8,
+      "roleIds": [
+        "edge-n",
+        "edge-e",
+        "edge-s",
+        "convex-ne",
+        "convex-se",
+        "one-sw-s",
+        "one-nw-n"
+      ],
+      "sourceIds": [
+        "upper/edge-n",
+        "upper/edge-e",
+        "upper/edge-s",
+        "upper/convex-ne",
+        "upper/convex-se",
+        "upper/one-sw-s",
+        "upper/one-nw-n"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/upper/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/upper/convex-ne.svg",
+        "assets/walls/quota-co-building-system/topology/upper/convex-se.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-sw-s.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-nw-n.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_09": {
+      "x": 152,
+      "y": 728,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 9,
+      "canonicalMask": 9,
+      "roleIds": [
+        "edge-e",
+        "edge-s",
+        "convex-se",
+        "concave-nw",
+        "one-ne-e",
+        "one-sw-s"
+      ],
+      "sourceIds": [
+        "upper/edge-e",
+        "upper/edge-s",
+        "upper/convex-se",
+        "upper/concave-nw",
+        "upper/one-ne-e",
+        "upper/one-sw-s"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/upper/convex-se.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-nw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-ne-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-sw-s.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_10": {
+      "x": 296,
+      "y": 728,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 10,
+      "canonicalMask": 10,
+      "roleIds": [
+        "edge-n",
+        "edge-s",
+        "one-ne-n",
+        "one-se-s",
+        "one-sw-s",
+        "one-nw-n"
+      ],
+      "sourceIds": [
+        "upper/edge-n",
+        "upper/edge-s",
+        "upper/one-ne-n",
+        "upper/one-se-s",
+        "upper/one-sw-s",
+        "upper/one-nw-n"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/upper/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-ne-n.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-se-s.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-sw-s.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-nw-n.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_11": {
+      "x": 440,
+      "y": 728,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 11,
+      "canonicalMask": 11,
+      "roleIds": [
+        "edge-s",
+        "concave-ne",
+        "concave-nw",
+        "one-se-s",
+        "one-sw-s"
+      ],
+      "sourceIds": [
+        "upper/edge-s",
+        "upper/concave-ne",
+        "upper/concave-nw",
+        "upper/one-se-s",
+        "upper/one-sw-s"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-nw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-se-s.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-sw-s.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_12": {
+      "x": 584,
+      "y": 728,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 12,
+      "canonicalMask": 12,
+      "roleIds": [
+        "edge-n",
+        "edge-e",
+        "convex-ne",
+        "concave-sw",
+        "one-se-e",
+        "one-nw-n"
+      ],
+      "sourceIds": [
+        "upper/edge-n",
+        "upper/edge-e",
+        "upper/convex-ne",
+        "upper/concave-sw",
+        "upper/one-se-e",
+        "upper/one-nw-n"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/upper/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/convex-ne.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-sw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-se-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-nw-n.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_13": {
+      "x": 728,
+      "y": 728,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 13,
+      "canonicalMask": 13,
+      "roleIds": [
+        "edge-e",
+        "concave-sw",
+        "concave-nw",
+        "one-ne-e",
+        "one-se-e"
+      ],
+      "sourceIds": [
+        "upper/edge-e",
+        "upper/concave-sw",
+        "upper/concave-nw",
+        "upper/one-ne-e",
+        "upper/one-se-e"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-sw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-nw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-ne-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-se-e.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_14": {
+      "x": 872,
+      "y": 728,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 14,
+      "canonicalMask": 14,
+      "roleIds": [
+        "edge-n",
+        "concave-se",
+        "concave-sw",
+        "one-ne-n",
+        "one-nw-n"
+      ],
+      "sourceIds": [
+        "upper/edge-n",
+        "upper/concave-se",
+        "upper/concave-sw",
+        "upper/one-ne-n",
+        "upper/one-nw-n"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-se.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-sw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-ne-n.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-nw-n.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_15": {
+      "x": 1016,
+      "y": 728,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 15,
+      "canonicalMask": 15,
+      "roleIds": [
+        "concave-ne",
+        "concave-se",
+        "concave-sw",
+        "concave-nw"
+      ],
+      "sourceIds": [
+        "upper/concave-ne",
+        "upper/concave-se",
+        "upper/concave-sw",
+        "upper/concave-nw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-se.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-sw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-nw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_16": {
+      "x": 1160,
+      "y": 728,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 16,
+      "canonicalMask": 19,
+      "roleIds": [
+        "edge-s",
+        "edge-w",
+        "convex-sw",
+        "one-se-s",
+        "one-nw-w"
+      ],
+      "sourceIds": [
+        "upper/edge-s",
+        "upper/edge-w",
+        "upper/convex-sw",
+        "upper/one-se-s",
+        "upper/one-nw-w"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/upper/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/upper/convex-sw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-se-s.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-nw-w.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_17": {
+      "x": 1304,
+      "y": 728,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 17,
+      "canonicalMask": 23,
+      "roleIds": [
+        "edge-w",
+        "concave-se",
+        "one-sw-w",
+        "one-nw-w"
+      ],
+      "sourceIds": [
+        "upper/edge-w",
+        "upper/concave-se",
+        "upper/one-sw-w",
+        "upper/one-nw-w"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-se.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-sw-w.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-nw-w.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_18": {
+      "x": 1448,
+      "y": 728,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 18,
+      "canonicalMask": 27,
+      "roleIds": [
+        "edge-s",
+        "concave-nw",
+        "one-se-s",
+        "one-sw-s"
+      ],
+      "sourceIds": [
+        "upper/edge-s",
+        "upper/concave-nw",
+        "upper/one-se-s",
+        "upper/one-sw-s"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-nw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-se-s.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-sw-s.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_19": {
+      "x": 8,
+      "y": 872,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 19,
+      "canonicalMask": 31,
+      "roleIds": [
+        "concave-se",
+        "concave-sw",
+        "concave-nw"
+      ],
+      "sourceIds": [
+        "upper/concave-se",
+        "upper/concave-sw",
+        "upper/concave-nw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/concave-se.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-sw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-nw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_20": {
+      "x": 152,
+      "y": 872,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 20,
+      "canonicalMask": 38,
+      "roleIds": [
+        "edge-n",
+        "edge-w",
+        "convex-nw",
+        "one-ne-n",
+        "one-sw-w"
+      ],
+      "sourceIds": [
+        "upper/edge-n",
+        "upper/edge-w",
+        "upper/convex-nw",
+        "upper/one-ne-n",
+        "upper/one-sw-w"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/upper/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/upper/convex-nw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-ne-n.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-sw-w.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_21": {
+      "x": 296,
+      "y": 872,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 21,
+      "canonicalMask": 39,
+      "roleIds": [
+        "edge-w",
+        "concave-ne",
+        "one-sw-w",
+        "one-nw-w"
+      ],
+      "sourceIds": [
+        "upper/edge-w",
+        "upper/concave-ne",
+        "upper/one-sw-w",
+        "upper/one-nw-w"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-sw-w.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-nw-w.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_22": {
+      "x": 440,
+      "y": 872,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 22,
+      "canonicalMask": 46,
+      "roleIds": [
+        "edge-n",
+        "concave-sw",
+        "one-ne-n",
+        "one-nw-n"
+      ],
+      "sourceIds": [
+        "upper/edge-n",
+        "upper/concave-sw",
+        "upper/one-ne-n",
+        "upper/one-nw-n"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-sw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-ne-n.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-nw-n.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_23": {
+      "x": 584,
+      "y": 872,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 23,
+      "canonicalMask": 47,
+      "roleIds": [
+        "concave-ne",
+        "concave-sw",
+        "concave-nw"
+      ],
+      "sourceIds": [
+        "upper/concave-ne",
+        "upper/concave-sw",
+        "upper/concave-nw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-sw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-nw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_24": {
+      "x": 728,
+      "y": 872,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 24,
+      "canonicalMask": 55,
+      "roleIds": [
+        "edge-w",
+        "one-sw-w",
+        "one-nw-w"
+      ],
+      "sourceIds": [
+        "upper/edge-w",
+        "upper/one-sw-w",
+        "upper/one-nw-w"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-sw-w.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-nw-w.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_25": {
+      "x": 872,
+      "y": 872,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 25,
+      "canonicalMask": 63,
+      "roleIds": [
+        "concave-sw",
+        "concave-nw"
+      ],
+      "sourceIds": [
+        "upper/concave-sw",
+        "upper/concave-nw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/concave-sw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-nw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_26": {
+      "x": 1016,
+      "y": 872,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 26,
+      "canonicalMask": 76,
+      "roleIds": [
+        "edge-n",
+        "edge-e",
+        "convex-ne",
+        "one-se-e",
+        "one-nw-n"
+      ],
+      "sourceIds": [
+        "upper/edge-n",
+        "upper/edge-e",
+        "upper/convex-ne",
+        "upper/one-se-e",
+        "upper/one-nw-n"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/upper/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/convex-ne.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-se-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-nw-n.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_27": {
+      "x": 1160,
+      "y": 872,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 27,
+      "canonicalMask": 77,
+      "roleIds": [
+        "edge-e",
+        "concave-nw",
+        "one-ne-e",
+        "one-se-e"
+      ],
+      "sourceIds": [
+        "upper/edge-e",
+        "upper/concave-nw",
+        "upper/one-ne-e",
+        "upper/one-se-e"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-nw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-ne-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-se-e.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_28": {
+      "x": 1304,
+      "y": 872,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 28,
+      "canonicalMask": 78,
+      "roleIds": [
+        "edge-n",
+        "concave-se",
+        "one-ne-n",
+        "one-nw-n"
+      ],
+      "sourceIds": [
+        "upper/edge-n",
+        "upper/concave-se",
+        "upper/one-ne-n",
+        "upper/one-nw-n"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-se.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-ne-n.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-nw-n.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_29": {
+      "x": 1448,
+      "y": 872,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 29,
+      "canonicalMask": 79,
+      "roleIds": [
+        "concave-ne",
+        "concave-se",
+        "concave-nw"
+      ],
+      "sourceIds": [
+        "upper/concave-ne",
+        "upper/concave-se",
+        "upper/concave-nw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-se.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-nw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_30": {
+      "x": 8,
+      "y": 1016,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 30,
+      "canonicalMask": 95,
+      "roleIds": [
+        "concave-se",
+        "concave-nw"
+      ],
+      "sourceIds": [
+        "upper/concave-se",
+        "upper/concave-nw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/concave-se.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-nw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_31": {
+      "x": 152,
+      "y": 1016,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 31,
+      "canonicalMask": 110,
+      "roleIds": [
+        "edge-n",
+        "one-ne-n",
+        "one-nw-n"
+      ],
+      "sourceIds": [
+        "upper/edge-n",
+        "upper/one-ne-n",
+        "upper/one-nw-n"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-ne-n.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-nw-n.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_32": {
+      "x": 296,
+      "y": 1016,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 32,
+      "canonicalMask": 111,
+      "roleIds": [
+        "concave-ne",
+        "concave-nw"
+      ],
+      "sourceIds": [
+        "upper/concave-ne",
+        "upper/concave-nw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-nw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_33": {
+      "x": 440,
+      "y": 1016,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 33,
+      "canonicalMask": 127,
+      "roleIds": [
+        "concave-nw"
+      ],
+      "sourceIds": [
+        "upper/concave-nw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/concave-nw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_34": {
+      "x": 584,
+      "y": 1016,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 34,
+      "canonicalMask": 137,
+      "roleIds": [
+        "edge-e",
+        "edge-s",
+        "convex-se",
+        "one-ne-e",
+        "one-sw-s"
+      ],
+      "sourceIds": [
+        "upper/edge-e",
+        "upper/edge-s",
+        "upper/convex-se",
+        "upper/one-ne-e",
+        "upper/one-sw-s"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/upper/convex-se.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-ne-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-sw-s.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_35": {
+      "x": 728,
+      "y": 1016,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 35,
+      "canonicalMask": 139,
+      "roleIds": [
+        "edge-s",
+        "concave-ne",
+        "one-se-s",
+        "one-sw-s"
+      ],
+      "sourceIds": [
+        "upper/edge-s",
+        "upper/concave-ne",
+        "upper/one-se-s",
+        "upper/one-sw-s"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-se-s.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-sw-s.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_36": {
+      "x": 872,
+      "y": 1016,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 36,
+      "canonicalMask": 141,
+      "roleIds": [
+        "edge-e",
+        "concave-sw",
+        "one-ne-e",
+        "one-se-e"
+      ],
+      "sourceIds": [
+        "upper/edge-e",
+        "upper/concave-sw",
+        "upper/one-ne-e",
+        "upper/one-se-e"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-sw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-ne-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-se-e.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_37": {
+      "x": 1016,
+      "y": 1016,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 37,
+      "canonicalMask": 143,
+      "roleIds": [
+        "concave-ne",
+        "concave-se",
+        "concave-sw"
+      ],
+      "sourceIds": [
+        "upper/concave-ne",
+        "upper/concave-se",
+        "upper/concave-sw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-se.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-sw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_38": {
+      "x": 1160,
+      "y": 1016,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 38,
+      "canonicalMask": 155,
+      "roleIds": [
+        "edge-s",
+        "one-se-s",
+        "one-sw-s"
+      ],
+      "sourceIds": [
+        "upper/edge-s",
+        "upper/one-se-s",
+        "upper/one-sw-s"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-se-s.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-sw-s.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_39": {
+      "x": 1304,
+      "y": 1016,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 39,
+      "canonicalMask": 159,
+      "roleIds": [
+        "concave-se",
+        "concave-sw"
+      ],
+      "sourceIds": [
+        "upper/concave-se",
+        "upper/concave-sw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/concave-se.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-sw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_40": {
+      "x": 1448,
+      "y": 1016,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 40,
+      "canonicalMask": 175,
+      "roleIds": [
+        "concave-ne",
+        "concave-sw"
+      ],
+      "sourceIds": [
+        "upper/concave-ne",
+        "upper/concave-sw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-sw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_41": {
+      "x": 8,
+      "y": 1160,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 41,
+      "canonicalMask": 191,
+      "roleIds": [
+        "concave-sw"
+      ],
+      "sourceIds": [
+        "upper/concave-sw"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/concave-sw.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_42": {
+      "x": 152,
+      "y": 1160,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 42,
+      "canonicalMask": 205,
+      "roleIds": [
+        "edge-e",
+        "one-ne-e",
+        "one-se-e"
+      ],
+      "sourceIds": [
+        "upper/edge-e",
+        "upper/one-ne-e",
+        "upper/one-se-e"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-ne-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-se-e.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_43": {
+      "x": 296,
+      "y": 1160,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 43,
+      "canonicalMask": 207,
+      "roleIds": [
+        "concave-ne",
+        "concave-se"
+      ],
+      "sourceIds": [
+        "upper/concave-ne",
+        "upper/concave-se"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-se.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_44": {
+      "x": 440,
+      "y": 1160,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 44,
+      "canonicalMask": 223,
+      "roleIds": [
+        "concave-se"
+      ],
+      "sourceIds": [
+        "upper/concave-se"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/concave-se.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_45": {
+      "x": 584,
+      "y": 1160,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 45,
+      "canonicalMask": 239,
+      "roleIds": [
+        "concave-ne"
+      ],
+      "sourceIds": [
+        "upper/concave-ne"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/upper/concave-ne.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_upper_46": {
+      "x": 728,
+      "y": 1160,
+      "w": 128,
+      "h": 128,
+      "kind": "topology",
+      "bank": "upper",
+      "blobIndex": 46,
+      "canonicalMask": 255,
+      "roleIds": [],
+      "sourceIds": [],
+      "sourceFiles": [],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_state_profile-n-to-e-upper": {
+      "x": 872,
+      "y": 1160,
+      "w": 128,
+      "h": 128,
+      "kind": "state",
+      "bank": "state",
+      "roleIds": [],
+      "stateId": "profile-n-to-e-upper",
+      "sourceIds": [
+        "state/profile-n-to-e-upper"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/state/profile-n-to-e-upper.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_state_profile-w-to-s-upper": {
+      "x": 1016,
+      "y": 1160,
+      "w": 128,
+      "h": 128,
+      "kind": "state",
+      "bank": "state",
+      "roleIds": [],
+      "stateId": "profile-w-to-s-upper",
+      "sourceIds": [
+        "state/profile-w-to-s-upper"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/state/profile-w-to-s-upper.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_state_door-base": {
+      "x": 1160,
+      "y": 1160,
+      "w": 128,
+      "h": 128,
+      "kind": "state",
+      "bank": "state",
+      "roleIds": [],
+      "stateId": "door-base",
+      "sourceIds": [
+        "state/door-base"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/state/door-base.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_state_door-upper-frame": {
+      "x": 1304,
+      "y": 1160,
+      "w": 128,
+      "h": 128,
+      "kind": "state",
+      "bank": "state",
+      "roleIds": [],
+      "stateId": "door-upper-frame",
+      "sourceIds": [
+        "state/door-upper-frame"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/state/door-upper-frame.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_state_door-leaf-closed": {
+      "x": 1448,
+      "y": 1160,
+      "w": 128,
+      "h": 128,
+      "kind": "state",
+      "bank": "state",
+      "roleIds": [],
+      "stateId": "door-leaf-closed",
+      "sourceIds": [
+        "state/door-leaf-closed"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/state/door-leaf-closed.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_state_door-leaf-open": {
+      "x": 8,
+      "y": 1304,
+      "w": 128,
+      "h": 128,
+      "kind": "state",
+      "bank": "state",
+      "roleIds": [],
+      "stateId": "door-leaf-open",
+      "sourceIds": [
+        "state/door-leaf-open"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/state/door-leaf-open.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    },
+    "a1b_component_state_window-wide-upper": {
+      "x": 152,
+      "y": 1304,
+      "w": 128,
+      "h": 128,
+      "kind": "state",
+      "bank": "state",
+      "roleIds": [],
+      "stateId": "window-wide-upper",
+      "sourceIds": [
+        "state/window-wide-upper"
+      ],
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/topology/state/window-wide-upper.svg"
+      ],
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      }
+    }
+  },
+  "meta": {
+    "generator": "terrarium-a1b-topology-proof",
+    "componentCount": 101,
+    "baseCount": 47,
+    "upperCount": 47,
+    "stateCount": 7,
+    "completeBlobFamily": true,
+    "transparentPadding": true,
+    "temporaryFrameIds": true,
+    "productionRegistration": false,
+    "schemaChange": false,
+    "directionalCastShadow": false,
+    "note": "Intermediate authored-piece evidence only. Components are not production frames or an export contract."
+  }
+}

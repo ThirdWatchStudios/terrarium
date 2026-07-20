@@ -9,6 +9,13 @@ may be written directly, generated and curated, or edited in a compatible
 vector editor. No particular editor is a production dependency. Nothing here
 changes the export contract except where explicitly flagged (floor variants).
 
+> **Current Water Cooler art-direction amendment (owner-locked 2026-07-19):** the next environment proof is
+> [QuotaCo high-oblique geometry](quota-co-high-oblique-geometry-ask.md): a transparent production-scale
+> floor/full-wall/low-wall/opening/junction sheet, followed only after approval by a minimum four-facing prop
+> family and isolated Unity golden room. This preserves the content-pipeline reframe and 47-blob substrate but
+> supersedes any assumption that the current strict plan presentation is the final environmental style. It does
+> not pull character phases, gameplay features, or a full catalog redraw into the geometry proof.
+
 ---
 
 ## 1. The reframe

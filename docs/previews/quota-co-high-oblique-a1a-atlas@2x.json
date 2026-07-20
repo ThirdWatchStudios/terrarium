@@ -1,0 +1,416 @@
+{
+  "version": 0,
+  "status": "proof-only",
+  "contract": false,
+  "name": "QuotaCo high-oblique A1a A/B geometry proof",
+  "scale": 2,
+  "canvas": 128,
+  "frameSize": 256,
+  "padding": 16,
+  "columns": 8,
+  "rows": 4,
+  "width": 2304,
+  "height": 1152,
+  "pivot": {
+    "x": 0.5,
+    "y": 0.5
+  },
+  "frames": {
+    "shared_floor_flat": {
+      "x": 16,
+      "y": 16,
+      "w": 256,
+      "h": 256,
+      "label": "Flat floor",
+      "construction": "shared",
+      "layers": [
+        "floor"
+      ]
+    },
+    "shared_floor_transition_straight": {
+      "x": 304,
+      "y": 16,
+      "w": 256,
+      "h": 256,
+      "label": "Floor transition — straight",
+      "construction": "shared",
+      "layers": [
+        "floor"
+      ]
+    },
+    "shared_floor_transition_corner": {
+      "x": 592,
+      "y": 16,
+      "w": 256,
+      "h": 256,
+      "label": "Floor transition — corner",
+      "construction": "shared",
+      "layers": [
+        "floor"
+      ]
+    },
+    "shared_floor_threshold": {
+      "x": 880,
+      "y": 16,
+      "w": 256,
+      "h": 256,
+      "label": "Doorway threshold",
+      "construction": "shared",
+      "layers": [
+        "floor"
+      ]
+    },
+    "shared_low_s_straight": {
+      "x": 1168,
+      "y": 16,
+      "w": 256,
+      "h": 256,
+      "label": "Low south wall — straight",
+      "construction": "shared",
+      "layers": [
+        "base"
+      ]
+    },
+    "shared_low_e_straight": {
+      "x": 1456,
+      "y": 16,
+      "w": 256,
+      "h": 256,
+      "label": "Low east wall — straight",
+      "construction": "shared",
+      "layers": [
+        "base"
+      ]
+    },
+    "shared_low_corner": {
+      "x": 1744,
+      "y": 16,
+      "w": 256,
+      "h": 256,
+      "label": "Low wall — corner",
+      "construction": "shared",
+      "layers": [
+        "base"
+      ]
+    },
+    "shared_low_terminus": {
+      "x": 2032,
+      "y": 16,
+      "w": 256,
+      "h": 256,
+      "label": "Low wall — terminus",
+      "construction": "shared",
+      "layers": [
+        "base"
+      ]
+    },
+    "shared_partition_straight": {
+      "x": 16,
+      "y": 304,
+      "w": 256,
+      "h": 256,
+      "label": "Internal partition — straight",
+      "construction": "shared",
+      "layers": [
+        "base"
+      ]
+    },
+    "shared_partition_corner": {
+      "x": 304,
+      "y": 304,
+      "w": 256,
+      "h": 256,
+      "label": "Internal partition — corner",
+      "construction": "shared",
+      "layers": [
+        "base"
+      ]
+    },
+    "shared_structure_junction": {
+      "x": 592,
+      "y": 304,
+      "w": 256,
+      "h": 256,
+      "label": "Service-chase T-junction",
+      "construction": "shared",
+      "layers": [
+        "base",
+        "upper",
+        "opening",
+        "literal"
+      ]
+    },
+    "a_full_n_straight": {
+      "x": 880,
+      "y": 304,
+      "w": 256,
+      "h": 256,
+      "label": "Full north wall — straight",
+      "construction": "a-monolithic",
+      "comparisonStem": "full_n_straight",
+      "layers": [
+        "monolith"
+      ]
+    },
+    "a_full_w_straight": {
+      "x": 1168,
+      "y": 304,
+      "w": 256,
+      "h": 256,
+      "label": "Full west wall — straight",
+      "construction": "a-monolithic",
+      "comparisonStem": "full_w_straight",
+      "layers": [
+        "monolith"
+      ]
+    },
+    "a_full_exterior_corner": {
+      "x": 1456,
+      "y": 304,
+      "w": 256,
+      "h": 256,
+      "label": "Full wall — exterior corner",
+      "construction": "a-monolithic",
+      "comparisonStem": "full_exterior_corner",
+      "layers": [
+        "monolith",
+        "literal"
+      ]
+    },
+    "a_full_terminus": {
+      "x": 1744,
+      "y": 304,
+      "w": 256,
+      "h": 256,
+      "label": "Full wall — terminus",
+      "construction": "a-monolithic",
+      "comparisonStem": "full_terminus",
+      "layers": [
+        "monolith"
+      ]
+    },
+    "a_transition_n_to_e": {
+      "x": 2032,
+      "y": 304,
+      "w": 256,
+      "h": 256,
+      "label": "Full north → low east",
+      "construction": "a-monolithic",
+      "comparisonStem": "transition_n_to_e",
+      "layers": [
+        "monolith",
+        "literal"
+      ]
+    },
+    "a_transition_w_to_s": {
+      "x": 16,
+      "y": 592,
+      "w": 256,
+      "h": 256,
+      "label": "Full west → low south",
+      "construction": "a-monolithic",
+      "comparisonStem": "transition_w_to_s",
+      "layers": [
+        "monolith",
+        "literal"
+      ]
+    },
+    "a_door_closed": {
+      "x": 304,
+      "y": 592,
+      "w": 256,
+      "h": 256,
+      "label": "Directional door — closed",
+      "construction": "a-monolithic",
+      "comparisonStem": "door_closed",
+      "layers": [
+        "monolith",
+        "opening",
+        "literal"
+      ]
+    },
+    "a_door_open": {
+      "x": 592,
+      "y": 592,
+      "w": 256,
+      "h": 256,
+      "label": "Directional door — open",
+      "construction": "a-monolithic",
+      "comparisonStem": "door_open",
+      "layers": [
+        "monolith",
+        "opening",
+        "literal"
+      ]
+    },
+    "a_window_wide": {
+      "x": 880,
+      "y": 592,
+      "w": 256,
+      "h": 256,
+      "label": "Full wall — wide window",
+      "construction": "a-monolithic",
+      "comparisonStem": "window_wide",
+      "layers": [
+        "monolith",
+        "opening",
+        "literal"
+      ]
+    },
+    "b_full_n_straight": {
+      "x": 1168,
+      "y": 592,
+      "w": 256,
+      "h": 256,
+      "label": "Full north wall — straight",
+      "construction": "b-split",
+      "comparisonStem": "full_n_straight",
+      "layers": [
+        "base",
+        "upper"
+      ]
+    },
+    "b_full_w_straight": {
+      "x": 1456,
+      "y": 592,
+      "w": 256,
+      "h": 256,
+      "label": "Full west wall — straight",
+      "construction": "b-split",
+      "comparisonStem": "full_w_straight",
+      "layers": [
+        "base",
+        "upper"
+      ]
+    },
+    "b_full_exterior_corner": {
+      "x": 1744,
+      "y": 592,
+      "w": 256,
+      "h": 256,
+      "label": "Full wall — exterior corner",
+      "construction": "b-split",
+      "comparisonStem": "full_exterior_corner",
+      "layers": [
+        "base",
+        "upper",
+        "literal"
+      ]
+    },
+    "b_full_terminus": {
+      "x": 2032,
+      "y": 592,
+      "w": 256,
+      "h": 256,
+      "label": "Full wall — terminus",
+      "construction": "b-split",
+      "comparisonStem": "full_terminus",
+      "layers": [
+        "base",
+        "upper"
+      ]
+    },
+    "b_transition_n_to_e": {
+      "x": 16,
+      "y": 880,
+      "w": 256,
+      "h": 256,
+      "label": "Full north → low east",
+      "construction": "b-split",
+      "comparisonStem": "transition_n_to_e",
+      "layers": [
+        "base",
+        "upper",
+        "literal"
+      ]
+    },
+    "b_transition_w_to_s": {
+      "x": 304,
+      "y": 880,
+      "w": 256,
+      "h": 256,
+      "label": "Full west → low south",
+      "construction": "b-split",
+      "comparisonStem": "transition_w_to_s",
+      "layers": [
+        "base",
+        "upper",
+        "literal"
+      ]
+    },
+    "b_door_closed": {
+      "x": 592,
+      "y": 880,
+      "w": 256,
+      "h": 256,
+      "label": "Directional door — closed",
+      "construction": "b-split",
+      "comparisonStem": "door_closed",
+      "layers": [
+        "base",
+        "upper",
+        "opening",
+        "literal"
+      ]
+    },
+    "b_door_open": {
+      "x": 880,
+      "y": 880,
+      "w": 256,
+      "h": 256,
+      "label": "Directional door — open",
+      "construction": "b-split",
+      "comparisonStem": "door_open",
+      "layers": [
+        "base",
+        "upper",
+        "opening",
+        "literal"
+      ]
+    },
+    "b_window_wide": {
+      "x": 1168,
+      "y": 880,
+      "w": 256,
+      "h": 256,
+      "label": "Full wall — wide window",
+      "construction": "b-split",
+      "comparisonStem": "window_wide",
+      "layers": [
+        "base",
+        "upper",
+        "opening",
+        "literal"
+      ]
+    }
+  },
+  "palette": {
+    "floor": "#AAA38F",
+    "floorAlternate": "#B9B19B",
+    "cream": "#D9D0B9",
+    "green": "#294B3C",
+    "teal": "#4E7D79",
+    "coral": "#B65F4D",
+    "charcoal": "#252A28",
+    "glass": "#83A9A6",
+    "metal": "#979A91"
+  },
+  "ruler": {
+    "lowProfile": 22,
+    "fullProfile": 60,
+    "capPlane": 8,
+    "outline": 2,
+    "serviceSeam": 2,
+    "shellRadius": 9,
+    "doorwayClear": 88,
+    "floorSeam": 2,
+    "floorInlay": 7
+  },
+  "meta": {
+    "generator": "terrarium-proof-renderer",
+    "temporaryFrameIds": true,
+    "productionRegistration": false,
+    "directionalCastShadow": false,
+    "note": "A1a visual evidence only. Do not consume as the production wall or facility contract."
+  }
+}
