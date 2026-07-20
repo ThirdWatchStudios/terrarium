@@ -15,6 +15,12 @@ changes the export contract except where explicitly flagged (floor variants).
 > family and isolated Unity golden room. This preserves the content-pipeline reframe and 47-blob substrate but
 > supersedes any assumption that the current strict plan presentation is the final environmental style. It does
 > not pull character phases, gameplay features, or a full catalog redraw into the geometry proof.
+> The 2026-07-20 connected-room review rejected independently finished base/upper wall halves. A later review
+> found that the unified-envelope correction still collapsed profile height and directional plane treatment:
+> north/south runs must read flat/front-on, east/west runs flatter-from-above, and their joints must mediate
+> those authored cross-sections rather than enforce transpose identity. The current pass is preserved only as
+> an unaccepted working proof. It remains isolated from production templates, topology propagation, schema,
+> and Unity until the revised directional envelope receives owner acceptance.
 
 ---
 

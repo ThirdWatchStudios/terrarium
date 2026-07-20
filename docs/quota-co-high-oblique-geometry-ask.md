@@ -28,6 +28,11 @@ work as actual sprites.
 ## 2. Locked visual contract
 
 - Fixed orthographic high-oblique presentation; no perspective and no diamond/isometric grid.
+- **Owner clarification, 2026-07-20: wall profile height and directional plane treatment are separate
+  axes.** Horizontal east-west runs on the north/south room edges must read visibly flat/front-on, with
+  only a narrow top reveal. Vertical north-south runs on the east/west room edges must expose the broader,
+  flatter-from-above top/side plane. Do not transpose one axis to manufacture the other; compatible sockets
+  may share occupancy and band endpoints while their visible cross-sections remain intentionally different.
 - Shallow south/front and east/side faces are drawn into the art.
 - Floors remain visibly flat on the walkable plane—never raised product plinths.
 - North and west room edges may carry full-height walls.
@@ -64,6 +69,13 @@ Try the wall as two visual concerns—a connected low structural base plus an op
 may preserve the 47-blob topology while giving Unity a clean cutaway seam. Treat this as a pilot hypothesis, not
 a permanent contract. If it creates visible double seams, impossible corners, or too many profile states, show
 that failure on the review sheet and keep the simpler authored-frame alternative.
+
+**Owner decision, 2026-07-20:** the independently finished base plus optional upper failed this gate: in a
+connected room its duplicate cap and lower outline read as one manufactured piece sitting on another. Keep the
+two source files only as a technical paint split when their composed pixels form one continuous wall envelope.
+Root full-wall bases are lower-face/plinth ingredients, not standalone low walls; dedicated low-profile frames
+own the exposed low construction. No topology propagation is authorized until the revised composed envelope is
+reviewed at 240/90/40 px and in the room context.
 
 ### A1a review artifact
 
@@ -115,7 +127,8 @@ Reject or revise the sheet if any of these fail:
 The geometry proof should make these questions concrete:
 
 - Is a profile/facing field sufficient, or do full and low shells need distinct stable template IDs?
-- Can a common low base plus optional upper shell cover the topology without state explosion?
+- Can the technical base/upper paint split preserve one composed envelope across the topology without
+  reintroducing visible joins or creating a state explosion?
 - Which coordinate is the grid pivot for each opening/profile family?
 - Which visual bounds must Unity know for picking or occlusion diagnostics, if any?
 - Can existing `plan | elevation` assets remain untouched while high-oblique dimensional frames opt into a new

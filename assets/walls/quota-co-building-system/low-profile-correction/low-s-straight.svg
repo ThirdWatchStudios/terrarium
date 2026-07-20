@@ -3,12 +3,13 @@
     <path id="outer-contour" fill="#252A28" d="M0 82H128V120H0Z"/>
     <path id="cream-coping" fill="#D9D0B9" d="M0 84H128V100H0Z"/>
     <path id="top-plane-light" fill="#FFFFFF" opacity="0.18" d="M0 84H128V92H0Z"/>
-    <path id="coping-face-shade" fill="#000000" opacity="0.07" d="M0 92H128V100H0Z"/>
+    <path id="coping-face-shade" fill="#000000" opacity="0.08" d="M0 92H128V100H0Z"/>
     <path id="green-face" fill="#294B3C" d="M0 100H128V118H0Z"/>
-    <path id="teal-service-band" fill="#4E7D79" opacity="0.88" d="M0 104H128V109H0Z"/>
+    <path id="face-shade" fill="#000000" opacity="0.08" d="M0 109H128V118H0Z"/>
+    <path id="teal-service-band" fill="#4E7D79" opacity="0.84" d="M0 104H128V109H0Z"/>
     <path id="inner-lip" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.55" d="M1 100H127"/>
     <path id="panel-seams" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.22" d="M42 101V117M86 101V117"/>
     <path id="fasteners" fill="#979A91" d="M16.5 113a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM114.5 113a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
-    <path id="toe-light" fill="#FFFFFF" opacity="0.06" d="M0 116H128V118H0Z"/>
+    <path id="toe-light" fill="#FFFFFF" opacity="0.10" d="M0 116H128V118H0Z"/>
   </g>
 </svg>

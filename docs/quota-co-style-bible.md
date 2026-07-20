@@ -1,8 +1,9 @@
 # QuotaCo catalog style bible — the authoring grammar
 
-> **Status:** working reference for hand-authoring reps, derived 2026-07-20 from a mechanical tally of the
-> 70 working-tree SVG masters in `assets/walls/quota-co-building-system/` (HEAD `e79c6be`, kit uncommitted)
-> plus the written contracts. It teaches the grammar; it does not create authority. When this page and an
+> **Status:** working reference for hand-authoring reps, derived 2026-07-20 from an initial mechanical tally
+> of the SVG masters in `assets/walls/quota-co-building-system/`, then amended by the unified-envelope pass.
+> Counts below describe that baseline snapshot and must be re-tallied after owner acceptance. This page
+> teaches the grammar; it does not create authority. When this page and an
 > authority disagree, the authority wins:
 > [sim art direction](../../The-Water-Cooler/docs/design/quota-co-high-oblique-art-direction.md) ·
 > [geometry ask](quota-co-high-oblique-geometry-ask.md) · [kit README](../assets/walls/quota-co-building-system/README.md).
@@ -19,8 +20,15 @@ expanding the grammar.
 
 - Every master is a strict `viewBox="0 0 128 128"` (70/70 in the tally). One canvas = one grid cell.
 - Fixed high-oblique / top-down-plus: rectangular, screen-aligned, no vanishing point, no diamond grid.
-- Vertical profiles (kit law): **low structural base tops out at the 22-unit profile; full shells extend to
-  the 60-unit profile.** Draw the base first; the upper composites over it at the same centered pivot.
+- Directional plane law (owner clarification, 2026-07-20): horizontal east-west runs on the **north and
+  south** room edges read visibly flat/front-on and expose only a narrow top reveal; vertical north-south
+  runs on the **east and west** room edges expose the broader, flatter-from-above top/side plane. This axis
+  treatment is independent of whether the wall uses the full or low profile. Author both cross-sections;
+  transpose identity is not a valid geometry or material-mask gate.
+- Vertical profiles (kit law): exposed low walls occupy the **38-unit outer profile (`82..120`)**; full
+  walls occupy one **64-unit outer envelope (`56..120`)**. `base` and `upper` are technical paint passes,
+  not two finished products: draw base first, then upper at the same centered pivot, and judge only their
+  composed silhouette. A root full-wall base is never a substitute for a dedicated low-wall frame.
 - Shallow **south (front) and east (side) faces** are authored into the sprite. Tops read lightest, vertical
   faces step darker, recesses darkest — that is a *material cue*, not a sun.
 - **Never rotate a directional frame to manufacture another facing.** Facings are authored, or the asset's
@@ -124,7 +132,9 @@ in §§1–5.
   side-shade`; the newer, larger topology kit says `contour / shell / field / face-shade` (plus `band`,
   `fastener`, `socket`, `facet`, `coping`). **Use the topology-generation vocabulary for new work**; do not
   mass-rename the pilot without a reviewed pass.
-- One stem = `<stem>-base.svg` + optional `<stem>-upper.svg`, same pivot, base drawn first.
+- One stem = `<stem>-base.svg` + its declared `<stem>-upper.svg`, same pivot, base drawn first. On full/profile
+  stems the pair must be complementary: no independently finished cap, outline, or shelf may survive their
+  internal handoff.
 
 ## 8. Hard prohibitions (most are machine-enforced)
 
@@ -142,8 +152,9 @@ be automated.
 3. Paint only with §2 swatches; shade only with §4 steps.
 4. Keep `npm run style:watch` running (§10) — every save re-validates through the real importer and
    re-renders base/upper/composed plus the distance proof, on light and dark ground — and the
-   **room-context mock** at the top of the bench page: the masters tiled as one room (full N/W walls,
-   door, both transitions, low E/S sills), because tiling truth only shows composed. Saves under
+   **composed envelope gate** and **room-context mock** at the top of the bench page: first the structural
+   3x3 without opening content, then the room with a door (full N/W walls, both transitions, low E/S sills),
+   because tiling truth only shows composed. Saves under
    `low-profile-correction/` re-render the mock too.
 5. Gate each batch on the real contact sheet; compare against the felt target weekly; keep the rejects
    with a one-line reason each.

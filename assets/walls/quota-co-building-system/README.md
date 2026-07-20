@@ -1,10 +1,17 @@
 # QuotaCo Building System — authored B pilot
 
-This directory is the editable SVG authority for the approved split-B geometry
+This directory is the editable SVG authority for the A1 technical-split geometry
 pilot from `docs/quota-co-high-oblique-geometry-ask.md`. It contains only the
-nine approved comparison cases, each divided into a connected low `base` and an
-optional `upper` component. The base is drawn first; the upper is composited at
-the same centered grid pivot.
+nine approved comparison cases, each divided into `base` and `upper` source
+components. The base is drawn first; the upper is composited at the same centered
+grid pivot. The composed frame—not either component alone—is the visual product.
+
+The original independently finished low-base-plus-optional-upper construction was
+rejected on 2026-07-20 because its duplicate caps and contours read as one wall
+placed on another. The files remain split only where their paths can contribute
+complementary surfaces to one continuous wall envelope. Root `base` components
+are lower-face/plinth ingredients, not standalone low walls; the dedicated
+`low-profile-correction/` frames own the exposed low-wall construction.
 
 These files are source art, not a production wall family. They are deliberately
 not registered in `WALL_TEMPLATES`, the exporter, the facility catalog, or the
@@ -33,8 +40,12 @@ overdraw. Do not rotate a directional frame to manufacture another facing.
 ## Art contract
 
 - fixed orthographic high-oblique/top-down-plus over the rectangular grid;
-- low structural base at the approved 22-unit profile;
-- full upper shell extending to the approved 60-unit profile;
+- horizontal north/south room-edge runs read flat/front-on with a narrow top reveal;
+- vertical east/west room-edge runs expose the broader, flatter-from-above top/side plane;
+- directional plane treatment is independent of full/low profile height, so one axis must not be
+  manufactured by transposing the other;
+- exposed low walls use the 38-unit outer profile (`82..120`);
+- full walls use one continuous 64-unit outer envelope (`56..120`);
 - north/west full cases and south/east low transitions are explicitly authored;
 - open thresholds remain flat and visually walkable;
 - no raised floor plinth and no baked directional cast shadow;
@@ -45,6 +56,17 @@ overdraw. Do not rotate a directional frame to manufacture another facing.
 - restrained coral hardware `#B65F4D`;
 - functional metal `#979A91`.
 
+For every composed full/profile frame:
+
+- only the exterior silhouette receives the strong charcoal contour;
+- no base cap-light, service seam, or upper bottom outline may survive at the
+  internal `base`/`upper` handoff;
+- coral meets the lower green face as a material boundary, not as a second ledge;
+- a full-to-low upper stops at the profile change while the base/coping continues
+  through the outgoing low-wall socket; and
+- compatible edge occupancy and band endpoints remain continuous across authored
+  N/E and W/S junction pairs, while each axis retains its distinct plane geometry.
+
 All visible paths live under `detail/*` groups because the charcoal contour is
 authored explicitly and every component must compile without gaining a second
 automatic silhouette. White/black opacity layers are neutral face cues only.
@@ -52,5 +74,5 @@ Terrarium owns this source art and any later palette-mask evidence. Unity owns
 composition, cutaways, sorting application, lighting, and production acceptance.
 
 Do not expand this directory to the complete 47-blob/profile/opening family until
-the authored-B source gate is reviewed. Do not derive a contract or schema change
-from these source files alone.
+the unified-envelope gate is owner-reviewed. Do not derive a contract or schema
+change from these source files alone.

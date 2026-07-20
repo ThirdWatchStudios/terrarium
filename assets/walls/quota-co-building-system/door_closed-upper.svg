@@ -17,7 +17,6 @@
     <path id="pylon-left-band" d="M 0 89 H 20 V 97 H 0 Z" fill="#B65F4D"/>
     <path id="pylon-left-band-light" d="M 0 89 H 20 V 90.5 H 0 Z" fill="#FFFFFF" opacity="0.10"/>
     <path id="pylon-left-band-seam" d="M 1 89 H 18" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
-    <path id="pylon-left-base-seam" d="M 1 96 H 18" fill="none" stroke="#252A28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
     <path id="pylon-left-green" d="M 0 97 H 20 V 117 H 0 Z" fill="#294B3C"/>
     <path id="pylon-left-reveal-light" d="M 21 62 H 21.5 a 4.5 4.5 0 0 1 4.5 4.5 V 117 H 21 Z" fill="#FFFFFF" opacity="0.10"/>
     <path id="pylon-left-divider-seam" d="M 20.75 62 V 116" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
@@ -28,7 +27,6 @@
     <path id="pylon-right-band" d="M 107.5 89 H 128 V 97 H 107.5 Z" fill="#B65F4D"/>
     <path id="pylon-right-band-light" d="M 107.5 89 H 128 V 90.5 H 107.5 Z" fill="#FFFFFF" opacity="0.10"/>
     <path id="pylon-right-band-seam" d="M 110 89 H 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
-    <path id="pylon-right-base-seam" d="M 110 96 H 127" fill="none" stroke="#252A28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
     <path id="pylon-right-green" d="M 107.5 97 H 128 V 117 H 107.5 Z" fill="#294B3C"/>
     <path id="pylon-right-reveal-light" d="M 102 66.5 a 4.5 4.5 0 0 1 4.5 -4.5 H 107 V 117 H 102 Z" fill="#FFFFFF" opacity="0.10"/>
     <path id="pylon-right-divider-seam" d="M 107.25 62 V 116" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>

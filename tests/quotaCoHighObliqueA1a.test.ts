@@ -365,13 +365,13 @@ describe('QuotaCo high-oblique A1b authored B source family', () => {
     }
   });
 
-  it('grounds each full-to-low upper through the hidden profile swap', async () => {
+  it('grounds each composed full-to-low frame while the upper stops at the profile handoff', async () => {
     const frames = buildA1bAuthoredFrames(await compileAuthoredB());
     const northToEast = frames.find(
-      ({ stem, kind }) => stem === 'transition_n_to_e' && kind === 'upper',
+      ({ stem, kind }) => stem === 'transition_n_to_e' && kind === 'composed',
     )!;
     const westToSouth = frames.find(
-      ({ stem, kind }) => stem === 'transition_w_to_s' && kind === 'upper',
+      ({ stem, kind }) => stem === 'transition_w_to_s' && kind === 'composed',
     )!;
     const northToEastRaster = raster(a1aFrameSvg(northToEast));
     const westToSouthRaster = raster(a1aFrameSvg(westToSouth));
@@ -548,9 +548,9 @@ describe('QuotaCo high-oblique A1b authored B source family', () => {
       }
     }
 
-    // Teal remains legal for future utility fields, but the recrafted root wall
-    // family intentionally uses cream/green product fields plus literal coral.
-    expect([...usedTokens].sort()).toEqual(['cream', 'green']);
+    // The integrated transitions carry the low wall utility band through their
+    // exposed egress instead of covering it with a separately finished pylon.
+    expect([...usedTokens].sort()).toEqual(['cream', 'green', 'teal']);
   });
 
   it('compiles and composes without mutating production registrations or wall masks', async () => {

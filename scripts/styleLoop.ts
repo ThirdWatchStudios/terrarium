@@ -8,9 +8,9 @@
  * Every save re-validates the masters through the real A1b importer and
  * re-renders one card per stem: base / upper / composed plus the composed
  * frame at the close / normal / far review sizes on light and dark ground.
- * A room-context mock (real masters tiled as one room: full N/W walls, door,
- * both transitions, low E/S sills) renders every pass and sits at the top of
- * the bench page; saves under low-profile-correction/ re-render it too.
+ * A composed envelope gate and a room-context mock render every pass and sit
+ * above the component cards. Saves under low-profile-correction/ re-render
+ * both composition views too.
  * Output is disposable (.style-loop/ is gitignored and kept outside Vite's
  * cleared dist/ build directory); docs/previews remains the
  * reviewed contact-sheet authority via the existing preview scripts.
@@ -45,6 +45,20 @@ const CARD_RENDER_SCALE = 2;
 const PANEL = '#F6F1E5';
 const INK = '#252A28';
 const MUTED = '#606A64';
+
+// The distraction-free envelope gate: one closed 3x3 wall section assembled
+// only from the structural masters under review. The empty centre cell exposes
+// the walkable floor; every base is painted before every upper.
+const ENVELOPE_GATE_CELLS: ReadonlyArray<readonly [number, number, string, string | null]> = [
+  [0, 0, 'full_exterior_corner-base.svg', 'full_exterior_corner-upper.svg'],
+  [1, 0, 'full_n_straight-base.svg', 'full_n_straight-upper.svg'],
+  [2, 0, 'transition_n_to_e-base.svg', 'transition_n_to_e-upper.svg'],
+  [0, 1, 'full_w_straight-base.svg', 'full_w_straight-upper.svg'],
+  [2, 1, 'low-profile-correction/low-e-straight.svg', null],
+  [0, 2, 'transition_w_to_s-base.svg', 'transition_w_to_s-upper.svg'],
+  [1, 2, 'low-profile-correction/low-s-straight.svg', null],
+  [2, 2, 'low-profile-correction/low-se-corner.svg', null],
+];
 
 // The room-context mock: real masters tiled the way the game composes a room.
 // Full N wall + door + NE transition across the top, full W wall down the
@@ -185,21 +199,26 @@ function benchPage(): string {
     '#status{font-size:13px;margin-bottom:14px;color:#83a9a6}#status.bad{color:#e0836e;white-space:pre-wrap}' +
     'main{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:14px}' +
     'figure{margin:0}img{width:100%;height:auto;display:block;border-radius:10px}' +
-    'figure.room{max-width:768px}</style>' +
+    'figure.gate,figure.room{max-width:768px}</style>' +
     '<h1>QuotaCo Building System — live workbench</h1>' +
     '<div id="status">waiting for first render…</div>' +
+    '<h2>envelope gate — composed structural shell, no opening content</h2>' +
+    '<figure class="gate" data-stem="envelope-gate"><img src="envelope-gate.png" alt="composed wall envelope gate"></figure>' +
     '<h2>room context — masters tiled as the game composes them</h2>' +
     '<figure class="room" data-stem="room-context-mock"><img src="room-context-mock.png" alt="room context mock"></figure>' +
     '<h2>per-stem cards — compiled through the importer</h2>' +
     `<main>${cards}</main>` +
-    '<script>let stamp="",roomStamp="";async function tick(){try{' +
+    '<script>let stamp="",gateStamp="",roomStamp="";async function tick(){try{' +
     'const s=await(await fetch("status.json",{cache:"no-store"})).json();' +
     'const el=document.getElementById("status");' +
     'if(!s.ok){el.textContent=`IMPORT FAILED\\n${s.error}`;el.className="bad";}' +
+    'else if(s.contextError){el.textContent=`COMPOSITION IMPORT FAILED\\n${s.contextError}`;el.className="bad";}' +
     'else if(s.roomError){el.textContent=`ROOM IMPORT FAILED\\n${s.roomError}`;el.className="bad";}' +
     'else{el.textContent=`ok · ${s.frames} frames · ${s.durationMs}ms · ${s.renderedAt}`;el.className="";}' +
     'if(s.ok&&s.renderedAt!==stamp){stamp=s.renderedAt;' +
     'for(const f of document.querySelectorAll("main figure"))f.querySelector("img").src=`${f.dataset.stem}.png?t=${Date.now()}`;}' +
+    'if(s.gateRenderedAt&&s.gateRenderedAt!==gateStamp){gateStamp=s.gateRenderedAt;' +
+    'const f=document.querySelector("figure.gate");f.querySelector("img").src=`${f.dataset.stem}.png?t=${Date.now()}`;}' +
     'if(s.roomRenderedAt&&s.roomRenderedAt!==roomStamp){roomStamp=s.roomRenderedAt;' +
     'const f=document.querySelector("figure.room");f.querySelector("img").src=`${f.dataset.stem}.png?t=${Date.now()}`;}' +
     '}catch{}setTimeout(tick,700)}tick()</script>'
@@ -226,6 +245,7 @@ async function render(
     }).render().asPng();
     await writeFile(path.join(options.output, `${stem}.png`), png);
   }
+  await renderEnvelopeGate(options);
   await renderRoomMock(options);
   const renderedAt = new Date().toISOString();
   const status = {
@@ -233,6 +253,7 @@ async function render(
     frames: frames.length,
     durationMs: Date.now() - started,
     renderedAt,
+    gateRenderedAt: renderedAt,
     roomRenderedAt: renderedAt,
   };
   await writeFile(path.join(options.output, 'status.json'), `${JSON.stringify(status)}\n`, 'utf8');
@@ -246,18 +267,25 @@ const stripSvgShell = (svg: string): string =>
 const roomCell = (content: string, col: number, row: number): string =>
   `<svg x="${col * 128}" y="${row * 128}" width="128" height="128" viewBox="0 0 128 128">${content}</svg>`;
 
-async function renderRoomMock(options: CliOptions): Promise<void> {
+async function renderCompositionMock(
+  options: CliOptions,
+  cells: ReadonlyArray<readonly [number, number, string, string | null]>,
+  outputName: string,
+  showGrid: boolean,
+): Promise<void> {
   const basePass: string[] = [];
   const upperPass: string[] = [];
-  for (const [col, row, baseFile, upperFile] of ROOM_CELLS) {
+  for (const [col, row, baseFile, upperFile] of cells) {
     basePass.push(roomCell(stripSvgShell(await readFile(path.join(options.input, baseFile), 'utf8')), col, row));
     if (upperFile) {
       upperPass.push(roomCell(stripSvgShell(await readFile(path.join(options.input, upperFile), 'utf8')), col, row));
     }
   }
-  const gridLines = [1, 2]
-    .map((i) => `<path d="M ${i * 128} 0 V 384 M 0 ${i * 128} H 384" stroke="${INK}" stroke-width="1"/>`)
-    .join('');
+  const gridLines = showGrid
+    ? [1, 2]
+      .map((i) => `<path d="M ${i * 128} 0 V 384 M 0 ${i * 128} H 384" stroke="${INK}" stroke-width="1"/>`)
+      .join('')
+    : '';
   const svg =
     `<svg xmlns="http://www.w3.org/2000/svg" width="384" height="384" viewBox="0 0 384 384">` +
     `<rect width="384" height="384" fill="${A1A_PALETTE.floor}"/>` +
@@ -266,10 +294,18 @@ async function renderRoomMock(options: CliOptions): Promise<void> {
     upperPass.join('') +
     `</svg>`;
   const png = new Resvg(svg, { fitTo: { mode: 'width', value: 768 } }).render().asPng();
-  await writeFile(path.join(options.output, 'room-context-mock.png'), png);
+  await writeFile(path.join(options.output, outputName), png);
 }
 
-async function renderRoomMockSafely(options: CliOptions, root: string): Promise<void> {
+async function renderEnvelopeGate(options: CliOptions): Promise<void> {
+  await renderCompositionMock(options, ENVELOPE_GATE_CELLS, 'envelope-gate.png', false);
+}
+
+async function renderRoomMock(options: CliOptions): Promise<void> {
+  await renderCompositionMock(options, ROOM_CELLS, 'room-context-mock.png', true);
+}
+
+async function renderContextMocksSafely(options: CliOptions, root: string): Promise<void> {
   try {
     await mkdir(options.output, { recursive: true });
     const correctionDir = path.join(options.input, 'low-profile-correction');
@@ -277,13 +313,17 @@ async function renderRoomMockSafely(options: CliOptions, root: string): Promise<
       inputDir: correctionDir,
       sourcePathPrefix: path.relative(root, correctionDir).replaceAll(path.sep, '/'),
     });
+    await renderEnvelopeGate(options);
     await renderRoomMock(options);
     const statusPath = path.join(options.output, 'status.json');
     const status = JSON.parse(await readFile(statusPath, 'utf8')) as Record<string, unknown>;
+    delete status.contextError;
     delete status.roomError;
-    status.roomRenderedAt = new Date().toISOString();
+    const renderedAt = new Date().toISOString();
+    status.gateRenderedAt = renderedAt;
+    status.roomRenderedAt = renderedAt;
     await writeFile(statusPath, `${JSON.stringify(status)}\n`, 'utf8');
-    process.stdout.write('room mock re-rendered\n');
+    process.stdout.write('composition mocks re-rendered\n');
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : String(error);
     const statusPath = path.join(options.output, 'status.json');
@@ -293,11 +333,13 @@ async function renderRoomMockSafely(options: CliOptions, root: string): Promise<
     } catch {
       // The initial render normally creates status.json before the watcher starts.
     }
-    status.roomError = message;
-    status.roomRenderedAt = new Date().toISOString();
+    status.contextError = message;
+    const renderedAt = new Date().toISOString();
+    status.gateRenderedAt = renderedAt;
+    status.roomRenderedAt = renderedAt;
     await writeFile(statusPath, `${JSON.stringify(status)}\n`, 'utf8');
-    const kind = error instanceof A1bLowCorrectionImportError ? 'room import contract' : 'room render';
-    process.stdout.write(`✗ ${kind} error — last good room kept\n${message}\n`);
+    const kind = error instanceof A1bLowCorrectionImportError ? 'composition import contract' : 'composition render';
+    process.stdout.write(`✗ ${kind} error — last good mocks kept\n${message}\n`);
   }
 }
 
@@ -387,7 +429,7 @@ async function main(): Promise<void> {
 
         roomRenderPending = false;
         process.stdout.write(`${lastRoomFile} changed — re-rendering room mock…\n`);
-        await renderRoomMockSafely(options, root);
+        await renderContextMocksSafely(options, root);
       }
     } finally {
       renderInProgress = false;

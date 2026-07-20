@@ -1,16 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
   <title>QuotaCo Building System full wall wide window upper</title>
-  <desc>Full-height cream upper shell with wide blinded window over the catalog coral chair-rail, split-B family constants.</desc>
+  <desc>Full-height cream window face meeting the lower green face without a second cap, ledge, or interior silhouette.</desc>
   <g id="detail/upper">
     <path id="upper-contour" d="M 0 56 H 128 V 98 H 0 Z" fill="#252A28"/>
-    <path id="upper-shell" d="M 0 58 H 128 V 97 H 0 Z" fill="#D9D0B9"/>
+    <path id="upper-shell" d="M 0 58 H 128 V 98 H 0 Z" fill="#D9D0B9"/>
     <path id="upper-cap-light" d="M 0 58 H 128 V 64 H 0 Z" fill="#FFFFFF" opacity="0.20"/>
     <path id="upper-face-shade" d="M 0 64 H 128 V 89 H 0 Z" fill="#000000" opacity="0.08"/>
-    <path id="upper-coral-band" d="M 0 89 H 128 V 97 H 0 Z" fill="#B65F4D"/>
+    <path id="upper-coral-band" d="M 0 89 H 128 V 98 H 0 Z" fill="#B65F4D"/>
     <path id="upper-band-light" d="M 0 89 H 128 V 90.5 H 0 Z" fill="#FFFFFF" opacity="0.10"/>
     <path id="upper-service-seam" d="M 1 64 H 127" fill="none" stroke="#252A28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.28"/>
     <path id="upper-band-seam" d="M 1 89 H 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
-    <path id="upper-base-seam" d="M 1 96 H 127" fill="none" stroke="#252A28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
     <path id="window-contour" d="M 18 63 H 110 a 8 8 0 0 1 8 8 v 29 a 8 8 0 0 1 -8 8 H 18 a 8 8 0 0 1 -8 -8 V 71 a 8 8 0 0 1 8 -8 Z" fill="#252A28"/>
     <path id="window-frame" d="M 18 65 H 110 a 6 6 0 0 1 6 6 v 29 a 6 6 0 0 1 -6 6 H 18 a 6 6 0 0 1 -6 -6 V 71 a 6 6 0 0 1 6 -6 Z" fill="#D9D0B9"/>
     <path id="window-frame-light" d="M 18 65 H 110 V 67.5 H 18 Z" fill="#FFFFFF" opacity="0.20"/>

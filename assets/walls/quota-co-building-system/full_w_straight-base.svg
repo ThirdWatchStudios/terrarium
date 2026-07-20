@@ -1,11 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
   <title>QuotaCo Building System full west straight base</title>
-  <desc>Finished connected low structural base for the split-B full west wall, deep green field over the charcoal plinth.</desc>
+  <desc>Lower green face and floor-contact plinth for the full west wall; the composed upper owns the exposed top plane.</desc>
   <g id="detail/base">
     <path id="base-contour" d="M 94 0 H 120 V 128 H 94 Z" fill="#252A28"/>
     <path id="base-field" d="M 96 0 H 117 V 128 H 96 Z" fill="#294B3C"/>
-    <path id="base-cap-light" d="M 96 0 H 104 V 128 H 96 Z" fill="#FFFFFF" opacity="0.10"/>
-    <path id="base-service-seam" d="M 104 .75 V 127.25" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
     <path id="base-module-seam" d="M 97 64 H 116" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
     <path id="base-fastener-top" d="M 113 13.5 A 1.5 1.5 0 1 1 113 16.5 A 1.5 1.5 0 1 1 113 13.5 Z" fill="#979A91"/>
     <path id="base-fastener-bottom" d="M 113 111.5 A 1.5 1.5 0 1 1 113 114.5 A 1.5 1.5 0 1 1 113 111.5 Z" fill="#979A91"/>
