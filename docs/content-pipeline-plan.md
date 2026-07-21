@@ -36,6 +36,13 @@ changes the export contract except where explicitly flagged (floor variants).
 > low-south/east and full-to-low artifacts remain historical comparisons and may only inform a separately
 > approved partition family. This decision still changes no production template, topology, exporter, schema,
 > or Unity contract.
+> **Current gate result and next authorization, 2026-07-21:** the accepted equal-height sources pass as a 3×8
+> perimeter around a 1×6 clear aisle at 90 and 40 px per cell. That owner acceptance closes the corridor
+> composition gate. Next, build a proof-only ledger for the existing canonical `mask_0` through `mask_46`
+> connectivity cases and a disposable synthetic complete-family contact proof. The ledger may classify direct
+> reuse, approved mirror/derivation, synthetic assembly, and unresolved authored needs; it may not propagate
+> sources or change production registration, frame identities, export/`CONTRACT.md`, schema, committed atlases,
+> Unity assets, or `production.unity`.
 
 ---
 

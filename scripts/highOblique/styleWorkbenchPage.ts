@@ -1,3 +1,5 @@
+import { EQUAL_HEIGHT_CORRIDOR_GATE } from './equalHeightCorridorGate';
+
 export type CurrentWorkbenchBoardState = 'accepted' | 'review';
 
 export interface CurrentWorkbenchBoard {
@@ -14,6 +16,36 @@ interface ArchivedWorkbenchBoard {
   readonly refreshGroup: 'focus' | 'proofs' | 'gate' | 'room' | 'ladder';
   readonly alt: string;
 }
+
+export interface AcceptedSystemGate {
+  readonly stem: string;
+  readonly state: 'accepted';
+  readonly title: string;
+  readonly summary: string;
+  readonly alt: string;
+}
+
+export interface NextSystemGate {
+  readonly state: 'next';
+  readonly title: string;
+  readonly summary: string;
+}
+
+/** Owner-accepted composition proof, kept separate from wall-piece acceptance. */
+export const ACCEPTED_SYSTEM_GATE: AcceptedSystemGate = {
+  stem: EQUAL_HEIGHT_CORRIDOR_GATE.stem,
+  state: 'accepted',
+  title: '3×8 narrow-corridor closure',
+  summary: 'Accepted equal-height enclosure baseline at 90 and 40 pixels per cell.',
+  alt: 'accepted equal-height wall family narrow-corridor closure gate',
+};
+
+/** The next proof-layer decision; this does not authorize production propagation. */
+export const NEXT_SYSTEM_GATE: NextSystemGate = {
+  state: 'next',
+  title: '47-mask mapping ledger',
+  summary: 'Map existing connectivity masks to accepted source reuse and facing rules before a synthetic atlas or production registration.',
+};
 
 /**
  * The current owner-accepted equal-height direction sheets.
@@ -120,6 +152,19 @@ const archivedBoard = (board: ArchivedWorkbenchBoard): string => (
   '</figure></article>'
 );
 
+const acceptedSystemGate = (): string => (
+  '<section class="current-section system-accepted" aria-labelledby="accepted-system-title">' +
+  '<header class="section-copy"><h2 id="accepted-system-title">Accepted system proof</h2>' +
+  '<p>This is the approved enclosure baseline for the next proof-only topology mapping step.</p></header>' +
+  '<article class="board" data-state="system-accepted" data-gate="accepted">' +
+  '<header class="board-copy"><span class="badge">Accepted · System gate</span>' +
+  `<h3>${escapeHtml(ACCEPTED_SYSTEM_GATE.title)}</h3>` +
+  `<p>${escapeHtml(ACCEPTED_SYSTEM_GATE.summary)}</p></header>` +
+  `<figure data-stem="${ACCEPTED_SYSTEM_GATE.stem}" data-refresh="corridor">` +
+  `<img src="${ACCEPTED_SYSTEM_GATE.stem}.png" alt="${escapeHtml(ACCEPTED_SYSTEM_GATE.alt)}">` +
+  '</figure></article></section>'
+);
+
 export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): string {
   const reviewManifest = CURRENT_WORKBENCH_BOARDS.filter((board) => board.state === 'review');
   const acceptedManifest = CURRENT_WORKBENCH_BOARDS.filter((board) => board.state === 'accepted');
@@ -129,7 +174,13 @@ export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): st
   const acceptedNames = acceptedManifest.map((board) => board.title).join(' · ');
   const reviewStatus = reviewManifest.length > 0
     ? `<div class="status-card review"><span>Review next · ${reviewManifest.length} pieces</span><strong>${escapeHtml(reviewNames)}</strong><p>These remain active proposals and are not yet in the accepted working set.</p></div>`
-    : '<div class="status-card next"><span>Next system gate</span><strong>Equal-height room · Corridor · Autotiling joins</strong><p>No individual wall piece is awaiting approval. The next proof should exercise the accepted set together.</p></div>';
+    : '';
+  const nextSystemGateStatus = '<div class="status-card next"><span>Next system gate · Proof only</span>' +
+    `<strong>${escapeHtml(NEXT_SYSTEM_GATE.title)}</strong>` +
+    `<p>${escapeHtml(NEXT_SYSTEM_GATE.summary)}</p></div>`;
+  const acceptedSystemGateStatus = '<div class="status-card accepted"><span>Accepted system proof</span>' +
+    `<strong>${escapeHtml(ACCEPTED_SYSTEM_GATE.title)}</strong>` +
+    '<p>The equal-height family reads as one enclosure at short and long extremes.</p></div>';
   const reviewSection = reviewManifest.length > 0
     ? '<section class="current-section review" aria-labelledby="review-title"><header class="section-copy"><h2 id="review-title">Review next</h2><p>The unresolved pieces currently in play.</p></header>' + reviewBoards + '</section>'
     : '';
@@ -151,10 +202,10 @@ export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): st
     '#status{font-size:13px;margin:14px 0 22px;color:var(--teal)}#status.bad,#archive-status.bad{color:var(--coral);white-space:pre-wrap}' +
     '.kit-status{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:16px;margin-bottom:28px}' +
     '.kit-status>h2{margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em;font-size:12px;color:var(--muted)}' +
-    '.status-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.status-card{border-radius:10px;padding:12px 14px;background:var(--panel2)}' +
+    '.status-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.status-card{border-radius:10px;padding:12px 14px;background:var(--panel2)}' +
     '.status-card span,.badge{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.status-card strong{display:block;margin:6px 0 3px;font-size:14px}.status-card p{font-size:12px;line-height:1.4;color:var(--muted)}' +
-    '.status-card.review span,.board[data-state="review"] .badge{color:var(--coral)}.status-card.next span{color:var(--teal)}.status-card.accepted span,.board[data-state="accepted"] .badge{color:var(--green)}' +
-    '.current-section{margin:34px 0}.section-copy{border-left:3px solid var(--line);padding-left:12px;margin-bottom:14px}.current-section.review .section-copy{border-color:var(--coral)}.current-section.accepted .section-copy{border-color:var(--green)}' +
+    '.status-card.review span,.board[data-state="review"] .badge{color:var(--coral)}.status-card.next span{color:var(--teal)}.status-card.accepted span,.board[data-state="accepted"] .badge,.board[data-state="system-accepted"] .badge{color:var(--green)}' +
+    '.current-section{margin:34px 0}.section-copy{border-left:3px solid var(--line);padding-left:12px;margin-bottom:14px}.current-section.review .section-copy{border-color:var(--coral)}.current-section.accepted .section-copy,.current-section.system-accepted .section-copy{border-color:var(--green)}' +
     '.section-copy p{color:var(--muted);font-size:13px;margin-top:4px}.board{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin:0 0 18px}' +
     '.board-copy{margin:0 2px 12px}.board-copy p{color:var(--muted);font-size:13px;line-height:1.45}figure{margin:0}img{display:block;width:100%;height:auto;border-radius:10px}' +
     'details{border-top:1px solid var(--line);margin-top:26px;padding-top:14px}summary{cursor:pointer;color:var(--muted);font-size:13px;font-weight:700;list-style-position:outside}' +
@@ -164,14 +215,17 @@ export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): st
     '@media(max-width:700px){body{padding:18px 12px 48px}.status-grid{grid-template-columns:1fr}.archive-grid,.diagnostic-grid{grid-template-columns:1fr}.board{padding:8px}.current-section{margin:26px 0}}' +
     '</style>' +
     '<header><h1>QuotaCo Building System — current wall workbench</h1>' +
-    '<p class="lede">The open page contains the current owner-accepted equal-height wall direction and the next system-level proof gate. Older low-profile evidence and technical diagnostics are separated below.</p></header>' +
+    '<p class="lede">The open page contains the owner-accepted equal-height wall direction, its accepted enclosure proof, and the next proof-only mapping gate. Older low-profile evidence and technical diagnostics are separated below.</p></header>' +
     '<div id="status">waiting for first render…</div>' +
     '<section class="kit-status" aria-labelledby="kit-status-title"><h2 id="kit-status-title">Current direction status — equal-height structural walls</h2>' +
     '<div class="status-grid">' +
+    nextSystemGateStatus +
+    acceptedSystemGateStatus +
     reviewStatus +
     `<div class="status-card accepted"><span>Accepted working set · ${acceptedManifest.length} pieces</span><strong>${escapeHtml(acceptedNames)}</strong><p>These are the current owner-approved working contracts.</p></div>` +
     '</div></section>' +
     '<main id="current-equal-height-wall-system">' +
+    acceptedSystemGate() +
     reviewSection +
     '<section class="current-section accepted" aria-labelledby="accepted-title"><header class="section-copy"><h2 id="accepted-title">Accepted working set</h2><p>Approved direction references; keep these as the comparison baseline.</p></header>' +
     acceptedBoards + '</section></main>' +
@@ -187,7 +241,7 @@ export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): st
     'else if(s.roomError){status.textContent=`CURRENT ROOM RENDER FAILED\\n${s.roomError}`;status.className="bad";}' +
     'else{status.textContent=`current proofs ok · ${s.frames} frames validated · ${s.durationMs}ms · ${s.renderedAt}`;status.className="";}' +
     'const archiveStatus=document.getElementById("archive-status");if(s.proofsError){archiveStatus.textContent=`ARCHIVED CROSS-SECTION RENDER FAILED\\n${s.proofsError}`;archiveStatus.className="bad";}else{archiveStatus.textContent="";archiveStatus.className="";}' +
-    'const groups={root:s.renderedAt,focus:s.focusRenderedAt,gate:s.gateRenderedAt,proofs:s.proofsRenderedAt,room:s.roomRenderedAt,ladder:s.ladderRenderedAt};' +
+    'const groups={root:s.renderedAt,focus:s.focusRenderedAt,corridor:s.corridorRenderedAt,gate:s.gateRenderedAt,proofs:s.proofsRenderedAt,room:s.roomRenderedAt,ladder:s.ladderRenderedAt};' +
     'for(const [group,next] of Object.entries(groups)){if(next&&stamps[group]!==next){stamps[group]=next;for(const figure of document.querySelectorAll(`[data-refresh="${group}"]`)){const image=figure.querySelector("img");if(image)image.src=`${figure.dataset.stem}.png?t=${Date.now()}`;}}}' +
     '}catch(error){const status=document.getElementById("status");status.textContent=`WORKBENCH STATUS UNAVAILABLE\\n${error instanceof Error?error.message:String(error)}`;status.className="bad";}setTimeout(tick,700)}tick()</script>'
   );

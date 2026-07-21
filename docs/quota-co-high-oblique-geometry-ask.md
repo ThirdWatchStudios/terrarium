@@ -1,6 +1,6 @@
 # QuotaCo High-Oblique Geometry — Production Art Ask
 
-**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** all five current equal-height wall decisions accepted; room/corridor/autotiling gate next
+**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** equal-height wall set and 3×8 corridor closure accepted; proof-only 47-mask mapping ledger next
 
 Canonical direction lives in the sim repository:
 
@@ -11,8 +11,9 @@ The-Water-Cooler/docs/design/quota-co-high-oblique-art-migration-plan.md
 
 The owner has committed to a fixed **high-oblique / top-down-plus** office in which the manufactured building,
 furniture, machines, amenities, and campus fixtures read as coordinated QuotaCo catalog products. The initial
-building-geometry ask is now approved at the five-piece directional level. The next proof composes those accepted
-pieces at room, corridor, and autotiling joins; prop-catalog and export-contract changes remain separate work.
+building-geometry ask is now approved at the five-piece directional level and in the accepted 3×8 narrow-corridor
+closure. The next authorized step is a proof-only ledger and synthetic contact proof mapping those accepted
+contracts onto the existing 47-mask connectivity table; prop-catalog and production changes remain separate work.
 
 ---
 
@@ -58,6 +59,11 @@ work as actual sprites.
   around `x=64`. The derived facing suppresses `base-boundary-seam` and `upper-boundary-seam`; the adjoining
   south cell owns the remaining service tick. Full-east-to-southeast and full-south-to-southeast sockets are
   pixel-identical, and the south frontage retains foreground ownership. Production delivery remains deferred.
+- **Accepted corridor closure, 2026-07-21:** the 3×8 perimeter around a 1×6 clear aisle passes at 90 and 40 px
+  per cell. Its 18 occupied cells use only the accepted north/south reuse, west source, east and northeast
+  mirrors, northwest source, promoted southwest source, and seam-filtered southeast derivation. The one-cell
+  north/south bodies remain visible, the six-cell west/east runs do not drift, and all four turns read as one
+  equal-height manufactured enclosure. No low-profile source or new art/frame identity participates.
 - Shallow south/front and east/side faces are drawn into the art.
 - Floors remain visibly flat on the walkable plane—never raised product plinths.
 - North, south, east, and west ordinary room edges all use the full-height structural envelope. Agents cannot
@@ -107,6 +113,10 @@ equal-height art contracts. Southeast is a derived facing rather than a duplicat
 remain proof-layer art contracts rather than production registration. Retain the former low/profile files and
 review results without treating them as the current production direction.
 
+**Corridor owner decision, 2026-07-21:** the accepted sources also pass together as a 3×8 equal-height
+perimeter around a 1×6 walkable aisle at both 90 and 40 px per cell. This closes the current composition gate;
+the next decision surface is the proof-only 47-mask mapping ledger described below.
+
 ### A1a review artifact
 
 Produce both:
@@ -118,25 +128,28 @@ Produce both:
 The labeled sheet is presentation only. The actual atlas must have transparent padding and no card frames,
 background panel, floor plinth, or concept-art cast shadows.
 
-## 4. A1b — complete connected family, only after A1a approval
+## 4. A1b — proof-only 47-mask mapping ledger
 
-After the equal-height straight and corner treatment is approved, extend the chosen construction through the
-existing 47-blob wall topology and required opening/junction states. Reuse the promoted north/south source and
-the eventually approved west/east relationship where the current blob compiler permits; do not create a
-second connectivity system or ordinary-wall profile state.
+The accepted corridor authorizes a mapping exercise, not propagation. Build a ledger over the existing canonical
+`mask_0` through `mask_46` order. For every mask, record its existing connectivity case and the intended
+equal-height source reuse, approved mirror/derivation, synthetic assembly rule, or unresolved authored-geometry
+obligation. Preserve the current raw-256-to-47 mapping and make gaps visible rather than inventing a second
+connectivity system or silently promoting placeholder art.
 
-Required exported evidence:
+Required ledger and synthetic-proof evidence:
 
-- deterministic frame IDs;
-- declared facing/corner/opening state completeness for the one full-height ordinary-wall family;
-- transparent bounds and consistent grid pivots;
-- palette-token masks separate from literal outline, recess, fastener, glass, and hardware detail;
-- no duplicated or missing topology frames;
-- a generated complete-family contact sheet at real export resolution.
+- each canonical `mask_<i>` appears exactly once in unchanged index order;
+- each row names connectivity, source provenance, transform/derivation, and resolution status;
+- direct reuse, approved mirror/derivation, synthetic assembly, and unresolved authored needs remain distinct;
+- a generated complete-family contact proof exercises the ledger at review scale without becoming an export;
+- the proof reports duplicated, missing, discontinuous, or ambiguous joins instead of hiding them; and
+- openings, state variants, and palette-token masks remain separately identified rather than implied by the
+  connectivity ledger.
 
-This stage may propose metadata needed to identify facing/state. It does not permanently add fields.
-Record the smallest backward-compatible shape the real frames require, then review it with the Unity consumer
-before changing `CONTRACT.md` or schema versions.
+This authorization is limited to the ledger, validation, and disposable synthetic proof pixels. It does not
+authorize edits to production topology sources, template/catalog registration, frame identities, exporter or
+`CONTRACT.md`, schema versions, committed production atlases, Unity assets, or `production.unity`. Any of those
+requires a separate owner decision after the mapping proof is reviewed.
 
 ## 5. Readability gates
 
@@ -181,6 +194,7 @@ The later prop pilot—not floor tiles—settles the southern ground-contact sor
 
 ## 8. Handoff
 
-Owner approval of the A1 transparent contact sheet unlocks the minimum product-family prop pilot. Approval of
-both unlocks the isolated Unity golden room through the real exporter/importer. Nothing in this ask authorizes a
-change to `production.unity`.
+Owner acceptance of the 3×8 corridor closure unlocks only the proof-only 47-mask mapping ledger and its
+synthetic contact proof. Production propagation/registration, export and schema work, the product-family prop
+pilot, and the isolated Unity golden room remain separately gated. Nothing in this ask authorizes a change to
+Unity or `production.unity`.

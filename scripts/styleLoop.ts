@@ -8,9 +8,10 @@
  * Every save re-validates the masters through the real A1b importer and
  * re-renders one card per stem: base / upper / composed plus the composed
  * frame at the close / normal / far review sizes on light and dark ground.
- * The open page is a current-state decision surface: unresolved equal-height
- * direction proofs first, accepted working contracts second. Historical mixed-
- * profile gates and compiler cards remain available in closed disclosures.
+ * The open page is a current-state decision surface: the accepted equal-height
+ * enclosure proof first, accepted working contracts second, and the next proof-
+ * only gate named in the status rail. Historical mixed-profile gates and
+ * compiler cards remain available in closed disclosures.
  * Saves under low-profile-correction/ still re-render comparison evidence used
  * inside the current proof sheets.
  * Output is disposable (.style-loop/ is gitignored and kept outside Vite's
@@ -39,6 +40,10 @@ import {
   PROMOTED_SOUTH_WALL_REUSE,
   type EqualHeightWallTransform,
 } from './highOblique/equalHeightWallDirection';
+import {
+  EQUAL_HEIGHT_CORRIDOR_GATE,
+  type EqualHeightCorridorCell,
+} from './highOblique/equalHeightCorridorGate';
 import {
   A1B_AUTHORED_STEMS,
   a1bAuthoredAtlasDescriptor,
@@ -270,6 +275,90 @@ const PROMOTED_SOUTHEAST_ROOM_CELLS: ReadonlyArray<CompositionCell> = [
   ],
 ];
 
+const corridorCompositionCell = (cell: EqualHeightCorridorCell): CompositionCell => [
+  cell.col,
+  cell.row,
+  cell.derivation === 'accepted-southeast-seam-filter'
+    ? SOUTHEAST_WORKBENCH_BASE_FILE
+    : cell.baseFile,
+  cell.derivation === 'accepted-southeast-seam-filter'
+    ? SOUTHEAST_WORKBENCH_UPPER_FILE
+    : cell.upperFile,
+  cell.transform,
+];
+
+const EQUAL_HEIGHT_CORRIDOR_CELLS: ReadonlyArray<CompositionCell> =
+  EQUAL_HEIGHT_CORRIDOR_GATE.cells.map(corridorCompositionCell);
+
+type CorridorJoin = 'northwest' | 'northeast' | 'southwest' | 'southeast';
+
+function corridorGateCell(
+  role: EqualHeightCorridorCell['role'],
+  row?: number,
+): EqualHeightCorridorCell {
+  const cell = EQUAL_HEIGHT_CORRIDOR_GATE.cells.find(
+    (candidate) => candidate.role === role && (row === undefined || candidate.row === row),
+  );
+  if (!cell) throw new Error(`Missing ${role} cell in equal-height corridor gate`);
+  return cell;
+}
+
+function corridorJoinCells(join: CorridorJoin): ReadonlyArray<CompositionCell> {
+  const configurations: Readonly<Record<CorridorJoin, {
+    readonly colOffset: number;
+    readonly rowOffset: number;
+    readonly cells: readonly EqualHeightCorridorCell[];
+  }>> = {
+    northwest: {
+      colOffset: 0,
+      rowOffset: 0,
+      cells: [
+        corridorGateCell('northwest-corner'),
+        corridorGateCell('north-wall'),
+        corridorGateCell('west-wall', 1),
+      ],
+    },
+    northeast: {
+      colOffset: 1,
+      rowOffset: 0,
+      cells: [
+        corridorGateCell('north-wall'),
+        corridorGateCell('northeast-corner'),
+        corridorGateCell('east-wall', 1),
+      ],
+    },
+    southwest: {
+      colOffset: 0,
+      rowOffset: 6,
+      cells: [
+        corridorGateCell('west-wall', 6),
+        corridorGateCell('southwest-corner'),
+        corridorGateCell('south-wall'),
+      ],
+    },
+    southeast: {
+      colOffset: 1,
+      rowOffset: 6,
+      cells: [
+        corridorGateCell('east-wall', 6),
+        corridorGateCell('south-wall'),
+        corridorGateCell('southeast-corner'),
+      ],
+    },
+  };
+  const configuration = configurations[join];
+  return configuration.cells.map((cell) => {
+    const composition = corridorCompositionCell(cell);
+    return [
+      composition[0] - configuration.colOffset,
+      composition[1] - configuration.rowOffset,
+      composition[2],
+      composition[3],
+      composition[4],
+    ];
+  });
+}
+
 const TRANSITION_W_TO_S_CELL: ReadonlyArray<CompositionCell> = [
   [0, 0, LEGACY_LOW_SOUTHWEST_BASE_FILE, LEGACY_LOW_SOUTHWEST_UPPER_FILE],
 ];
@@ -453,6 +542,7 @@ async function render(
   await renderFullHeightNortheastProof(options);
   await renderFullHeightSouthwestProof(options);
   await renderFullHeightSoutheastProof(options);
+  await renderEqualHeightCorridorGate(options);
   await renderLowSoutheastCornerFocus(options, root);
   const renderedAt = new Date().toISOString();
   const status = {
@@ -464,6 +554,7 @@ async function render(
     roomRenderedAt: renderedAt,
     ladderRenderedAt: renderedAt,
     focusRenderedAt: renderedAt,
+    corridorRenderedAt: renderedAt,
   };
   await writeFile(path.join(options.output, 'status.json'), `${JSON.stringify(status)}\n`, 'utf8');
   await writeFile(path.join(options.output, 'index.html'), benchPage(), 'utf8');
@@ -521,6 +612,7 @@ async function compositionWindow(
   height: number,
   fileOverrides: CompositionFileOverrides = {},
   cropViewBox?: string,
+  showGrid = true,
 ): Promise<string> {
   const basePass: string[] = [];
   const upperPass: string[] = [];
@@ -544,7 +636,9 @@ async function compositionWindow(
     `<svg x="${x}" y="${y}" width="${width}" height="${height}" ` +
     `viewBox="${cropViewBox ?? `0 0 ${columns * 128} ${rows * 128}`}" preserveAspectRatio="none">` +
     `<rect width="${columns * 128}" height="${rows * 128}" fill="${A1A_PALETTE.floor}"/>` +
-    `<g fill="none" stroke="${INK}" stroke-width="1" opacity="0.14">${gridLines}</g>` +
+    (showGrid
+      ? `<g fill="none" stroke="${INK}" stroke-width="1" opacity="0.14">${gridLines}</g>`
+      : '') +
     basePass.join('') +
     upperPass.join('') +
     '</svg>'
@@ -1502,6 +1596,120 @@ async function renderFullHeightSoutheastProof(options: CliOptions): Promise<void
   await writeFile(path.join(options.output, 'full-height-southeast-proof.png'), png);
 }
 
+async function renderEqualHeightCorridorGate(options: CliOptions): Promise<void> {
+  const width = 1600;
+  const height = 1120;
+  const panelFill = '#ECE5D5';
+  const panel = (x: number, y: number, w: number, h: number): string =>
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="14" fill="${panelFill}" ` +
+    `stroke="${INK}" stroke-width="1.5" opacity="0.96"/>`;
+  const fileOverrides = await southeastReviewFileOverrides(options);
+  const parts: string[] = [
+    `<rect width="${width}" height="${height}" rx="18" fill="${PANEL}"/>`,
+    text(24, 34, 'EQUAL-HEIGHT WALL KIT — ACCEPTED 3×8 NARROW-CORRIDOR GATE', 21, 800),
+    text(24, 58, 'Accepted source reuse only · one-cell aisle · short horizontal runs · long vertical runs', 12, 600, MUTED),
+    panel(20, 76, 560, 1024),
+    panel(600, 76, 980, 400),
+    panel(600, 496, 980, 604),
+    text(44, 108, '90 PX / CELL — ACCEPTED ENCLOSURE', 14, 800),
+    text(44, 132, 'All four turns, one-cell north/south bodies, and six-cell west/east runs.', 11, 600, MUTED),
+    text(300, 928, '1-CELL CLEAR AISLE · N/S = 1 BODY CELL · W/E = 6 BODY CELLS', 11, 800, A1A_PALETTE.green, 'middle'),
+    text(44, 968, '• one uninterrupted outer contour; no corner reads as an end cap', 11, 650, MUTED),
+    text(44, 996, '• cream / coral / green / plinth registers turn through every join', 11, 650, MUTED),
+    text(44, 1024, '• short horizontal bodies remain visible between their elbows', 11, 650, MUTED),
+    text(44, 1052, '• long vertical runs stay parallel without cumulative drift', 11, 650, MUTED),
+    text(624, 108, '40 PX / CELL — ACCEPTED SILHOUETTE', 14, 800),
+    text(624, 132, 'The complete enclosure must survive at maximum-useful distance.', 11, 600, MUTED),
+    text(800, 174, 'ONE ENCLOSURE, NOT FOUR STRIPS', 12, 800, A1A_PALETTE.green),
+    text(800, 214, '• equal west / east perceived mass', 11, 650, MUTED),
+    text(800, 244, '• open aisle remains unmistakable', 11, 650, MUTED),
+    text(800, 274, '• north / south bodies are not swallowed', 11, 650, MUTED),
+    text(800, 304, '• material hierarchy survives without labels', 11, 650, MUTED),
+    text(800, 350, 'Service detail may soften here; silhouette and', 11, 600, MUTED),
+    text(800, 372, 'directional mass may not.', 11, 600, MUTED),
+    text(624, 528, 'FOUR TURNS — ONE CONTINUOUS ENVELOPE', 14, 800),
+    text(624, 552, 'Each crop includes both adjoining straight cells; dashed guides mark tile boundaries.', 11, 600, MUTED),
+    text(730, 584, 'NW · NORTH → WEST', 10, 800, MUTED, 'middle'),
+    text(965, 584, 'NE · NORTH → EAST', 10, 800, MUTED, 'middle'),
+    text(1200, 584, 'SW · WEST → SOUTH', 10, 800, MUTED, 'middle'),
+    text(1435, 584, 'SE · EAST → SOUTH', 10, 800, MUTED, 'middle'),
+    text(624, 838, 'ACCEPTED SYSTEM CONTRACT', 12, 800, A1A_PALETTE.green),
+    text(624, 872, '• every socket closes with no alpha gap or doubled dark seam', 11, 650, MUTED),
+    text(624, 902, '• material bands visibly turn; they do not merely touch at the boundary', 11, 650, MUTED),
+    text(624, 932, '• south frontage owns both lower heels; side planes stop behind it', 11, 650, MUTED),
+    text(1080, 872, '• repeated service seams appear once per owner cell', 11, 650, MUTED),
+    text(1080, 902, '• mirrored southeast adds no duplicate service tick', 11, 650, MUTED),
+    text(1080, 932, '• no low-profile source or new frame identity is present', 11, 650, MUTED),
+    text(624, 1000, 'ACCEPTED — NEXT', 11, 800, MUTED),
+    text(624, 1028, '47-mask mapping ledger and synthetic proof — not production registration.', 12, 750, A1A_PALETTE.green),
+  ];
+
+  parts.push(
+    await compositionWindow(
+      options,
+      EQUAL_HEIGHT_CORRIDOR_CELLS,
+      EQUAL_HEIGHT_CORRIDOR_GATE.columns,
+      EQUAL_HEIGHT_CORRIDOR_GATE.rows,
+      165,
+      180,
+      270,
+      720,
+      fileOverrides,
+      undefined,
+      false,
+    ),
+  );
+  parts.push(
+    await compositionWindow(
+      options,
+      EQUAL_HEIGHT_CORRIDOR_CELLS,
+      EQUAL_HEIGHT_CORRIDOR_GATE.columns,
+      EQUAL_HEIGHT_CORRIDOR_GATE.rows,
+      650,
+      140,
+      120,
+      320,
+      fileOverrides,
+      undefined,
+      false,
+    ),
+  );
+
+  const joins: ReadonlyArray<readonly [CorridorJoin, number]> = [
+    ['northwest', 630],
+    ['northeast', 865],
+    ['southwest', 1100],
+    ['southeast', 1335],
+  ];
+  for (const [join, x] of joins) {
+    parts.push(
+      await compositionWindow(
+        options,
+        corridorJoinCells(join),
+        2,
+        2,
+        x,
+        600,
+        200,
+        200,
+        fileOverrides,
+      ),
+    );
+    parts.push(
+      `<path d="M${x + 100} 600V800 M${x} 700H${x + 200}" fill="none" ` +
+      `stroke="${A1A_PALETTE.coral}" stroke-width="2" stroke-dasharray="7 6" opacity="0.75"/>`,
+    );
+  }
+
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" ` +
+    `viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+  const png = new Resvg(svg, {
+    fitTo: { mode: 'width', value: width * CARD_RENDER_SCALE },
+  }).render().asPng();
+  await writeFile(path.join(options.output, `${EQUAL_HEIGHT_CORRIDOR_GATE.stem}.png`), png);
+}
+
 async function renderLowSoutheastCornerFocus(options: CliOptions, root: string): Promise<void> {
   const width = 1600;
   const height = 1280;
@@ -1949,6 +2157,7 @@ async function renderContextMocksSafely(options: CliOptions, root: string): Prom
     await renderFullHeightNortheastProof(options);
     await renderFullHeightSouthwestProof(options);
     await renderFullHeightSoutheastProof(options);
+    await renderEqualHeightCorridorGate(options);
     await renderLowSoutheastCornerFocus(options, root);
     const statusPath = path.join(options.output, 'status.json');
     const status = JSON.parse(await readFile(statusPath, 'utf8')) as Record<string, unknown>;
@@ -1959,6 +2168,7 @@ async function renderContextMocksSafely(options: CliOptions, root: string): Prom
     status.roomRenderedAt = renderedAt;
     status.ladderRenderedAt = renderedAt;
     status.focusRenderedAt = renderedAt;
+    status.corridorRenderedAt = renderedAt;
     await writeFile(statusPath, `${JSON.stringify(status)}\n`, 'utf8');
     process.stdout.write('composition mocks re-rendered\n');
   } catch (error: unknown) {

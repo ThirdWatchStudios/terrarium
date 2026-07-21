@@ -20,6 +20,15 @@ contracts that remain unregistered. Low-wall art is no longer an ordinary
 perimeter/cutaway family and may only return as a separately approved
 internal-partition product.
 
+**Accepted composition gate (owner approval, 2026-07-21):** these contracts pass
+together as a 3×8 equal-height perimeter around a 1×6 clear aisle at 90 and
+40 px per cell. The 18 occupied cells use accepted sources/reuse only; the
+one-cell horizontal bodies remain legible, six-cell side runs remain parallel,
+and all four corners close as one enclosure. The next authorized task is a
+proof-only ledger mapping the existing canonical `mask_0` through `mask_46`
+cases to direct reuse, approved derivation, synthetic assembly, or an explicit
+unresolved geometry need, followed by a disposable synthetic contact proof.
+
 The original independently finished low-base-plus-optional-upper construction was
 rejected on 2026-07-20 because its duplicate caps and contours read as one wall
 placed on another. The files remain split only where their paths can contribute
@@ -106,10 +115,11 @@ automatic silhouette. White/black opacity layers are neutral face cues only.
 Terrarium owns this source art and any later palette-mask evidence. Unity owns
 composition, cutaways, sorting application, lighting, and production acceptance.
 
-Do not expand this directory to the complete 47-blob/opening family until separately authorized after the
-complete equal-height envelope review. The earlier low-east, low-southeast, and southwest full-to-low
+Do not expand this directory into a complete 47-blob/opening source family. Corridor acceptance authorizes only
+the 47-mask mapping ledger, validation, and disposable synthetic proof; it does not authorize authored topology
+propagation or production files. The earlier low-east, low-southeast, and southwest full-to-low
 checkpoint remains historical directional evidence, but its low perimeter profiles and height-step corner
 are superseded for ordinary walls. South, east, northeast, southwest, and southeast are owner-accepted
 equal-height art decisions; their source reuse and mirrors remain unregistered. The southeast decision adds
-no source stem or production transform. Do not derive a topology, registration, exporter, schema, or Unity
-change from these source files alone.
+no source stem or production transform. Production registration, frame identity, exporter, `CONTRACT.md`,
+schema, committed atlas, and Unity changes remain deferred pending a separate owner decision.

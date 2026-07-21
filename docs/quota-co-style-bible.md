@@ -23,6 +23,13 @@
 > mirror/reuse contracts that remain unregistered. The measured 38-unit low family is retained below as legacy A/B evidence and is not the
 > current perimeter/cutaway target.
 
+> **Current system-gate amendment (owner approval, 2026-07-21):** the accepted sources close a 3×8 equal-height
+> perimeter around a 1×6 clear aisle at 90 and 40 px per cell. All four turns, one-cell horizontal bodies, and
+> six-cell side runs read as one manufactured enclosure without low-profile art or a new frame identity. The
+> next authorized artifact is a proof-only ledger over canonical `mask_0` through `mask_46` plus a disposable
+> synthetic contact proof. This permits mapping and validation only; production topology, registration, export,
+> `CONTRACT.md`, schema, committed atlases, and Unity remain deferred.
+
 The point of this page: the QuotaCo look is not a talent bar, it is a **closed grammar** — nine paints, two
 line weights, four shading steps, eight radii, one projection recipe. An author who obeys the grammar produces
 catalog-legitimate art on week one; taste then develops by judging results at gameplay distance, not by
@@ -70,6 +77,10 @@ expanding the grammar.
   X mirror around `x=64`. Suppress only `base-boundary-seam` and `upper-boundary-seam`; the adjoining south
   cell owns the single service tick. Preserve the exact full-east and full-south sockets and the south-owned
   foreground heel. This is an accepted derived art contract, not a duplicate source or production transform.
+- Accepted corridor law (owner acceptance, 2026-07-21): a 3×8 perimeter around a 1×6 clear aisle must remain
+  one continuous equal-height enclosure at both 90 and 40 px per cell. The north/south body runs are one cell,
+  west/east body runs are six cells, and every join uses only the accepted source/reuse/derivation contracts.
+  This is the minimum composition regression gate for any later 47-mask synthetic proof.
 - Vertical profiles (current kit law): ordinary walls occupy one **64-unit outer profile**.
   `base` and `upper` are technical paint passes, not two finished products: draw base first, then upper at
   the same centered pivot, and judge only their composed silhouette. The former **38-unit outer profile
@@ -201,11 +212,10 @@ be automated.
 3. Paint only with §2 swatches; shade only with §4 steps.
 4. Keep `npm run style:watch` running (§10) — every save re-validates through the real importer and
    re-renders base/upper/composed plus the distance proof, on light and dark ground. The open bench page is a
-   **current-state decision surface**: unresolved equal-height pieces appear under `Review next`, and the
-   owner-approved comparison baseline appears under `Accepted working set`. Earlier low-profile comparisons,
-   mixed-profile room/envelope gates, and importer cards remain available only in closed, explicitly archived
-   disclosures. They must never read as the current target. Saves under `low-profile-correction/` still
-   re-render the labeled comparison evidence inside the current proof sheets.
+   **current-state decision surface**: the accepted 3×8 corridor is the system-composition baseline, accepted
+   pieces remain the comparison set, and the proof-only 47-mask ledger is the next task. Earlier low-profile
+   comparisons, mixed-profile room/envelope gates, and importer cards remain available only in closed,
+   explicitly archived disclosures. They must never read as the current target.
 5. Gate every wall batch against the five-sheet primary wall target and the real contact sheet; use the golden
    room for whole-room feel. Keep rejects with a one-line reason each.
 

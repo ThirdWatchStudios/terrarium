@@ -26,8 +26,13 @@ import {
 } from '../scripts/highOblique/a1aProof';
 import {
   derivePromotedSoutheastSourcePair,
+  PROMOTED_EAST_WALL_REUSE,
+  PROMOTED_NORTHEAST_CORNER,
   PROMOTED_SOUTHEAST_CORNER,
+  PROMOTED_SOUTHWEST_CORNER,
+  PROMOTED_SOUTH_WALL_REUSE,
 } from '../scripts/highOblique/equalHeightWallDirection';
+import { EQUAL_HEIGHT_CORRIDOR_GATE } from '../scripts/highOblique/equalHeightCorridorGate';
 
 const ROOT_SOURCE_PREFIX = 'assets/walls/quota-co-building-system';
 const ROOT_SOURCE_DIRECTORY = path.resolve(process.cwd(), ROOT_SOURCE_PREFIX);
@@ -648,6 +653,180 @@ describe('QuotaCo unified wall-envelope visual contract', () => {
         { mirrorX: true, southeastDerivation: true },
       ).pixels,
     );
+  });
+});
+
+describe('QuotaCo equal-height narrow-corridor closure gate', () => {
+  it('declares the exact 3x8 perimeter around a 1x6 clear aisle', () => {
+    expect(EQUAL_HEIGHT_CORRIDOR_GATE).toMatchObject({
+      stem: 'equal-height-corridor-gate',
+      columns: 3,
+      rows: 8,
+      clearSpan: { col: 1, row: 1, columns: 1, rows: 6 },
+      reviewCellSizes: [90, 40],
+      status: 'owner-accepted-system-gate',
+      productionRegistration: false,
+    });
+    expect(EQUAL_HEIGHT_CORRIDOR_GATE.cells).toHaveLength(18);
+
+    const occupied = EQUAL_HEIGHT_CORRIDOR_GATE.cells
+      .map(({ col, row }) => `${col},${row}`)
+      .sort();
+    const expectedPerimeter = [
+      ...Array.from({ length: 3 }, (_, col) => `${col},0`),
+      ...Array.from({ length: 6 }, (_, index) => `0,${index + 1}`),
+      ...Array.from({ length: 6 }, (_, index) => `2,${index + 1}`),
+      ...Array.from({ length: 3 }, (_, col) => `${col},7`),
+    ].sort();
+    expect(occupied).toEqual(expectedPerimeter);
+
+    const clearCells = Array.from({ length: 6 }, (_, index) => `1,${index + 1}`);
+    expect(clearCells.every((coordinate) => !occupied.includes(coordinate))).toBe(true);
+    expect(
+      EQUAL_HEIGHT_CORRIDOR_GATE.cells.reduce<Record<string, number>>((counts, cell) => {
+        counts[cell.role] = (counts[cell.role] ?? 0) + 1;
+        return counts;
+      }, {}),
+    ).toEqual({
+      'northwest-corner': 1,
+      'north-wall': 1,
+      'northeast-corner': 1,
+      'west-wall': 6,
+      'east-wall': 6,
+      'southwest-corner': 1,
+      'south-wall': 1,
+      'southeast-corner': 1,
+    });
+  });
+
+  it('uses only the accepted source-reuse contracts without a low profile or new identity', () => {
+    const byRole = new Map(
+      EQUAL_HEIGHT_CORRIDOR_GATE.cells.map((cell) => [cell.role, cell] as const),
+    );
+
+    expect(byRole.get('northwest-corner')).toMatchObject({
+      baseFile: 'full_exterior_corner-base.svg',
+      upperFile: 'full_exterior_corner-upper.svg',
+      transform: 'none',
+      derivation: 'none',
+    });
+    expect(byRole.get('north-wall')).toMatchObject({
+      baseFile: PROMOTED_SOUTH_WALL_REUSE.baseFile,
+      upperFile: PROMOTED_SOUTH_WALL_REUSE.upperFile,
+      transform: PROMOTED_SOUTH_WALL_REUSE.transform,
+      derivation: 'none',
+    });
+    expect(byRole.get('northeast-corner')).toMatchObject({
+      baseFile: PROMOTED_NORTHEAST_CORNER.baseFile,
+      upperFile: PROMOTED_NORTHEAST_CORNER.upperFile,
+      transform: PROMOTED_NORTHEAST_CORNER.transform,
+      derivation: 'none',
+    });
+    expect(byRole.get('west-wall')).toMatchObject({
+      baseFile: 'full_w_straight-base.svg',
+      upperFile: 'full_w_straight-upper.svg',
+      transform: 'none',
+      derivation: 'none',
+    });
+    expect(byRole.get('east-wall')).toMatchObject({
+      baseFile: PROMOTED_EAST_WALL_REUSE.baseFile,
+      upperFile: PROMOTED_EAST_WALL_REUSE.upperFile,
+      transform: PROMOTED_EAST_WALL_REUSE.transform,
+      derivation: 'none',
+    });
+    expect(byRole.get('southwest-corner')).toMatchObject({
+      baseFile: PROMOTED_SOUTHWEST_CORNER.baseFile,
+      upperFile: PROMOTED_SOUTHWEST_CORNER.upperFile,
+      transform: PROMOTED_SOUTHWEST_CORNER.transform,
+      derivation: 'none',
+    });
+    expect(byRole.get('south-wall')).toMatchObject({
+      baseFile: PROMOTED_SOUTH_WALL_REUSE.baseFile,
+      upperFile: PROMOTED_SOUTH_WALL_REUSE.upperFile,
+      transform: PROMOTED_SOUTH_WALL_REUSE.transform,
+      derivation: 'none',
+    });
+    expect(byRole.get('southeast-corner')).toMatchObject({
+      baseFile: PROMOTED_SOUTHEAST_CORNER.baseFile,
+      upperFile: PROMOTED_SOUTHEAST_CORNER.upperFile,
+      transform: PROMOTED_SOUTHEAST_CORNER.transform,
+      derivation: 'accepted-southeast-seam-filter',
+    });
+
+    expect(new Set(EQUAL_HEIGHT_CORRIDOR_GATE.cells.map(({ baseFile }) => baseFile))).toEqual(
+      new Set([
+        'full_exterior_corner-base.svg',
+        'full_n_straight-base.svg',
+        'full_w_straight-base.svg',
+        'transition_w_to_s-base.svg',
+      ]),
+    );
+    for (const cell of EQUAL_HEIGHT_CORRIDOR_GATE.cells) {
+      expect(cell.baseFile).not.toContain('low-profile-correction');
+      expect(cell.upperFile).not.toContain('low-profile-correction');
+      expect(cell.baseFile).not.toMatch(/full_[se]_straight|transition_e_to_s/);
+      expect(cell.upperFile).not.toMatch(/full_[se]_straight|transition_e_to_s/);
+    }
+  });
+
+  it('keeps repeated side bodies and every accepted turn pixel-continuous', () => {
+    const northSouth = rasterSourcePair(
+      PROMOTED_SOUTH_WALL_REUSE.baseFile,
+      PROMOTED_SOUTH_WALL_REUSE.upperFile,
+    );
+    const west = rasterSourcePair('full_w_straight-base.svg', 'full_w_straight-upper.svg');
+    const east = rasterSourcePair(
+      PROMOTED_EAST_WALL_REUSE.baseFile,
+      PROMOTED_EAST_WALL_REUSE.upperFile,
+      { mirrorX: true },
+    );
+    const northwest = rasterSourcePair(
+      'full_exterior_corner-base.svg',
+      'full_exterior_corner-upper.svg',
+    );
+    const northeast = rasterSourcePair(
+      PROMOTED_NORTHEAST_CORNER.baseFile,
+      PROMOTED_NORTHEAST_CORNER.upperFile,
+      { mirrorX: true },
+    );
+    const southwest = rasterSourcePair(
+      PROMOTED_SOUTHWEST_CORNER.baseFile,
+      PROMOTED_SOUTHWEST_CORNER.upperFile,
+    );
+    const southeast = rasterSourcePair(
+      PROMOTED_SOUTHEAST_CORNER.baseFile,
+      PROMOTED_SOUTHEAST_CORNER.upperFile,
+      { mirrorX: true, southeastDerivation: true },
+    );
+
+    const joins: ReadonlyArray<readonly [string, Raster, Edge, Raster, Edge]> = [
+      ['northwest -> north', northwest, 'e', northSouth, 'w'],
+      ['northwest -> west', northwest, 's', west, 'n'],
+      ['north -> northeast', northSouth, 'e', northeast, 'w'],
+      ['northeast -> east', northeast, 's', east, 'n'],
+      ['west repeat', west, 's', west, 'n'],
+      ['east repeat', east, 's', east, 'n'],
+      ['west -> southwest', west, 's', southwest, 'n'],
+      ['southwest -> south', southwest, 'e', northSouth, 'w'],
+      ['east -> southeast', east, 's', southeast, 'n'],
+      ['south -> southeast', northSouth, 'e', southeast, 'w'],
+    ];
+
+    for (const [label, first, firstEdge, second, secondEdge] of joins) {
+      expect(
+        edgeAlphaMismatchCount(first, firstEdge, second, secondEdge),
+        `${label} occupancy`,
+      ).toBe(0);
+      expect(
+        edgeMaxChannelDelta(first, firstEdge, second, secondEdge),
+        `${label} pixels`,
+      ).toBeLessThanOrEqual(1);
+    }
+
+    expect(edgeMaxChannelDelta(west, 's', west, 'n'), 'west six-cell repeated socket').toBe(0);
+    expect(edgeMaxChannelDelta(east, 's', east, 'n'), 'east six-cell repeated socket').toBe(0);
+    expect(edgeMaxChannelDelta(east, 's', southeast, 'n'), 'east to derived southeast').toBe(0);
+    expect(edgeMaxChannelDelta(northSouth, 'e', southeast, 'w'), 'south to derived southeast').toBe(0);
   });
 });
 
