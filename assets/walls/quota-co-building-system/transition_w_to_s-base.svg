@@ -1,20 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
   <title>QuotaCo Building System west-to-south transition base</title>
-  <desc>Green lower faces for the full-height southwest turn — the shaded west green dives behind the standing south wall whose lit green face runs from the west silhouette through the terminus — and the complete low south section beyond the drop.</desc>
+  <desc>One nested molded shell for the southwest full-to-low corner, with restrained outside and inside elbows and exact full-west and low-south sockets.</desc>
   <g id="detail/base">
-    <path id="base-contour" d="M 103 0 H 120 V 58 H 103 Z M 56 95 H 112 V 120 H 56 Z M 110 82 H 128 V 120 H 110 Z" fill="#252A28"/>
-    <path id="base-west-green" d="M 105 0 H 117 V 56 H 105 Z" fill="#294B3C"/>
-    <path id="base-west-green-shade" d="M 105 0 H 117 V 56 H 105 Z" fill="#000000" opacity="0.12"/>
-    <path id="base-south-green" d="M 58 97 H 110 V 117 H 58 Z" fill="#294B3C"/>
-    <path id="base-end-green-shade" d="M 104 97 H 110 V 117 H 104 Z" fill="#000000" opacity="0.12"/>
-    <path id="base-low-cream" d="M 112 84 H 128 V 99 H 112 Z" fill="#D9D0B9"/>
-    <path id="base-low-reveal-light" d="M 112 84 H 128 V 88 H 112 Z" fill="#FFFFFF" opacity="0.30"/>
-    <path id="base-low-coral" d="M 112 99 H 128 V 107 H 112 Z" fill="#B65F4D"/>
-    <path id="base-low-band-light" d="M 112 99 H 128 V 100.5 H 112 Z" fill="#FFFFFF" opacity="0.10"/>
-    <path id="base-low-green" d="M 112 107 H 128 V 117 H 112 Z" fill="#294B3C"/>
-    <path id="base-low-arris-seam" d="M 113 88 H 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
-    <path id="base-low-band-seam" d="M 113 107 H 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
-    <path id="base-contact-shade" d="M 58 120 H 128 V 123.5 H 58 Z M 120 0 H 123.5 V 56 H 120 Z" fill="#000000" opacity="0.12"/>
-    <path id="base-fasteners" d="M 111 13.5 A 1.5 1.5 0 1 1 111 16.5 A 1.5 1.5 0 1 1 111 13.5 Z M 80 110.5 A 1.5 1.5 0 1 1 80 113.5 A 1.5 1.5 0 1 1 80 110.5 Z" fill="#979A91"/>
+    <path id="base-contour" d="M 56 0 V 110 A 10 10 0 0 0 66 120 H 128 V 82 H 127 A 3 3 0 0 0 124 79 L 120 75 V 0 Z" fill="#252A28"/>
+    <path id="base-shell" d="M 58 0 V 110 A 8 8 0 0 0 66 118 H 128 V 84 H 127 A 2 2 0 0 0 125 82 L 120 77 V 0 Z" fill="#D9D0B9"/>
+    <path id="base-contact-shade" d="M 120 0 H 123.5 V 82 H 120 Z M 66 120 H 128 V 123.5 H 66 Z" fill="#000000" opacity="0.12"/>
   </g>
 </svg>

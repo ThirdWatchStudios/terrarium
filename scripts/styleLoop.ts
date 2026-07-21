@@ -84,8 +84,8 @@ const ROOM_CELLS: ReadonlyArray<readonly [number, number, string, string | null]
 
 type CompositionCell = readonly [number, number, string, string | null];
 
-const TRANSITION_N_TO_E_CELL: ReadonlyArray<CompositionCell> = [
-  [0, 0, 'transition_n_to_e-base.svg', 'transition_n_to_e-upper.svg'],
+const TRANSITION_W_TO_S_CELL: ReadonlyArray<CompositionCell> = [
+  [0, 0, 'transition_w_to_s-base.svg', 'transition_w_to_s-upper.svg'],
 ];
 
 // A minimum closed room deliberately made only from junction pieces. It makes
@@ -249,8 +249,8 @@ function benchPage(): string {
     'figure.length-ladder{max-width:1100px}</style>' +
     '<h1>QuotaCo Building System — live workbench</h1>' +
     '<div id="status">waiting for first render…</div>' +
-    '<h2>active one-piece review — northeast full-to-low transition</h2>' +
-    '<figure class="transition-focus" data-stem="transition-n-to-e-focus"><img src="transition-n-to-e-focus.png" alt="northeast transition reference comparison and installed length proofs"></figure>' +
+    '<h2>active one-piece review — southwest full-to-low transition</h2>' +
+    '<figure class="transition-focus" data-stem="transition-w-to-s-focus"><img src="transition-w-to-s-focus.png" alt="southwest transition reference comparison and installed length proofs"></figure>' +
     '<h2>cross-section proofs — directional plane law candidates</h2>' +
     '<figure class="proofs" data-stem="cross-section-proofs"><img src="cross-section-proofs.png" alt="cross-section proofs"></figure>' +
     '<h2>envelope gate — composed structural shell, no opening content</h2>' +
@@ -308,7 +308,7 @@ async function render(
   await renderEnvelopeGate(options);
   await renderRoomMock(options);
   await renderLengthLadder(options);
-  await renderTransitionNorthEastFocus(options, root);
+  await renderTransitionWestSouthFocus(options, root);
   const renderedAt = new Date().toISOString();
   const status = {
     ok: true,
@@ -391,24 +391,24 @@ function terminusRunCells(bodyLength: number): CompositionCell[] {
   ];
 }
 
-function transitionNorthEastInstalledCells(length: number): CompositionCell[] {
+function transitionWestSouthInstalledCells(length: number): CompositionCell[] {
   return [
     ...straightRunCells(
       length,
-      'full_n_straight-base.svg',
-      'full_n_straight-upper.svg',
-      false,
+      'full_w_straight-base.svg',
+      'full_w_straight-upper.svg',
+      true,
     ),
-    [length, 0, 'transition_n_to_e-base.svg', 'transition_n_to_e-upper.svg'],
+    [0, length, 'transition_w_to_s-base.svg', 'transition_w_to_s-upper.svg'],
     ...Array.from(
       { length },
       (_, index) =>
-        [length, index + 1, 'low-profile-correction/low-e-straight.svg', null] as CompositionCell,
+        [index + 1, length, 'low-profile-correction/low-s-straight.svg', null] as CompositionCell,
     ),
   ];
 }
 
-async function renderTransitionNorthEastFocus(options: CliOptions, root: string): Promise<void> {
+async function renderTransitionWestSouthFocus(options: CliOptions, root: string): Promise<void> {
   const width = 1600;
   const height = 1100;
   const panelFill = '#ECE5D5';
@@ -435,8 +435,8 @@ async function renderTransitionNorthEastFocus(options: CliOptions, root: string)
 
   const parts: string[] = [
     `<rect width="${width}" height="${height}" rx="18" fill="${PANEL}"/>`,
-    text(24, 34, 'NORTHEAST FULL-TO-LOW TRANSITION — ONE-PIECE REVIEW', 21, 800),
-    text(24, 58, 'Only transition_n_to_e is changing; full-north and low-east straights are fixed socket controls.', 12, 600, MUTED),
+    text(24, 34, 'SOUTHWEST FULL-TO-LOW TRANSITION — ONE-PIECE REVIEW', 21, 800),
+    text(24, 58, 'Only transition_w_to_s is changing; full-west and low-south straights are fixed socket controls.', 12, 600, MUTED),
     panel(20, 76, 380, 500),
     panel(420, 76, 420, 500),
     panel(860, 76, 720, 500),
@@ -445,9 +445,9 @@ async function renderTransitionNorthEastFocus(options: CliOptions, root: string)
     text(40, 108, 'OWNER-APPROVED CARDINAL TARGET', 14, 800),
     text(440, 108, 'OWNER-APPROVED STEP VOCABULARY', 14, 800),
     text(880, 108, 'CURRENT PROPOSAL — ISOLATED', 14, 800),
-    referenceCrop(cornerReference, 50, 122, 320, 430, '420 520 325 480'),
+    referenceCrop(cornerReference, 50, 122, 320, 430, '790 520 325 480'),
     referenceCrop(moduleReference, 445, 128, 370, 400, '410 675 340 349'),
-    text(40, 560, 'Use silhouette, broad east plane, and restrained junction—not source pixels.', 10, 600, MUTED),
+    text(40, 560, 'Use silhouette, broad west plane, and restrained junction—not source pixels.', 10, 600, MUTED),
     text(440, 560, 'Use the molded height change; do not copy the pictured orientation literally.', 10, 600, MUTED),
     text(1218, 176, 'Review sizes', 12, 750),
     text(1218, 202, '240 px: construction', 11, 600, MUTED),
@@ -457,22 +457,22 @@ async function renderTransitionNorthEastFocus(options: CliOptions, root: string)
     text(1218, 326, '• one molded L', 11, 600, MUTED),
     text(1218, 350, '• no terminal capsule', 11, 600, MUTED),
     text(1218, 374, '• no applied corner box', 11, 600, MUTED),
-    text(1218, 398, '• broad east top plane', 11, 600, MUTED),
+    text(1218, 398, '• broad west top plane', 11, 600, MUTED),
     text(1218, 422, '• exact neighbour sockets', 11, 600, MUTED),
     text(40, 628, 'MINIMUM INSTALLED RUN', 14, 800),
-    text(40, 650, '1 full-north cell + corner + 1 low-east cell', 11, 600, MUTED),
+    text(40, 650, '1 full-west cell + corner + 1 low-south cell', 11, 600, MUTED),
     text(830, 628, 'LONGER INSTALLED RUN', 14, 800),
-    text(830, 650, '3 full-north cells + corner + 3 low-east cells', 11, 600, MUTED),
+    text(830, 650, '3 full-west cells + corner + 3 low-south cells', 11, 600, MUTED),
     text(40, 1054, 'Gate: the same corner must remain intentional when the room is compact.', 11, 650, MUTED),
     text(830, 1054, 'Gate: the corner must finish the runs without becoming a decorative endpoint.', 11, 650, MUTED),
   ];
-  parts.push(await compositionWindow(options, TRANSITION_N_TO_E_CELL, 1, 1, 890, 132, 300, 300));
-  parts.push(await compositionWindow(options, TRANSITION_N_TO_E_CELL, 1, 1, 1228, 446, 90, 90));
-  parts.push(await compositionWindow(options, TRANSITION_N_TO_E_CELL, 1, 1, 1340, 471, 40, 40));
+  parts.push(await compositionWindow(options, TRANSITION_W_TO_S_CELL, 1, 1, 910, 148, 240, 240));
+  parts.push(await compositionWindow(options, TRANSITION_W_TO_S_CELL, 1, 1, 1228, 446, 90, 90));
+  parts.push(await compositionWindow(options, TRANSITION_W_TO_S_CELL, 1, 1, 1340, 471, 40, 40));
   parts.push(
     await compositionWindow(
       options,
-      transitionNorthEastInstalledCells(1),
+      transitionWestSouthInstalledCells(1),
       2,
       2,
       220,
@@ -484,7 +484,7 @@ async function renderTransitionNorthEastFocus(options: CliOptions, root: string)
   parts.push(
     await compositionWindow(
       options,
-      transitionNorthEastInstalledCells(3),
+      transitionWestSouthInstalledCells(3),
       4,
       4,
       1010,
@@ -500,7 +500,7 @@ async function renderTransitionNorthEastFocus(options: CliOptions, root: string)
   const png = new Resvg(svg, {
     fitTo: { mode: 'width', value: width * CARD_RENDER_SCALE },
   }).render().asPng();
-  await writeFile(path.join(options.output, 'transition-n-to-e-focus.png'), png);
+  await writeFile(path.join(options.output, 'transition-w-to-s-focus.png'), png);
 }
 
 async function renderLengthLadder(options: CliOptions): Promise<void> {
@@ -707,7 +707,7 @@ async function renderContextMocksSafely(options: CliOptions, root: string): Prom
     await renderEnvelopeGate(options);
     await renderRoomMock(options);
     await renderLengthLadder(options);
-    await renderTransitionNorthEastFocus(options, root);
+    await renderTransitionWestSouthFocus(options, root);
     const statusPath = path.join(options.output, 'status.json');
     const status = JSON.parse(await readFile(statusPath, 'utf8')) as Record<string, unknown>;
     delete status.contextError;
