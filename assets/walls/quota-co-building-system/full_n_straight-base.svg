@@ -1,12 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
   <title>QuotaCo Building System full north straight base</title>
-  <desc>Lower green face, floor-contact plinth, and contact shade for the flat front-on north wall; the composed upper owns the reveal, face, and coral band.</desc>
+  <desc>Broad lower green fascia, compact floor-contact plinth, and a quiet boundary service seam for the flat front-on north wall; the composed upper owns the reveal and thin coral register.</desc>
   <g id="detail/base">
     <path id="base-contour" d="M 0 95 H 128 V 120 H 0 Z" fill="#252A28"/>
     <path id="base-field" d="M 0 97 H 128 V 117 H 0 Z" fill="#294B3C"/>
     <path id="base-contact-shade" d="M 0 120 H 128 V 123.5 H 0 Z" fill="#000000" opacity="0.12"/>
-    <path id="base-module-seam" d="M 64 98 V 116" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
-    <path id="base-fastener-left" d="M 15 105 A 1.5 1.5 0 1 1 15 108 A 1.5 1.5 0 1 1 15 105 Z" fill="#979A91"/>
-    <path id="base-fastener-right" d="M 113 105 A 1.5 1.5 0 1 1 113 108 A 1.5 1.5 0 1 1 113 105 Z" fill="#979A91"/>
+    <path id="base-boundary-seam" d="M 126 98 V 116" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
   </g>
 </svg>

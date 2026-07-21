@@ -1,16 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
   <g id="detail/low">
     <path id="outer-contour" fill="#252A28" d="M82 0H120V128H82Z"/>
-    <path id="cream-shell" fill="#D9D0B9" d="M84 0H107V128H84Z"/>
+    <path id="cream-shell" fill="#D9D0B9" d="M84 0H106V128H84Z"/>
     <path id="top-plane-light" fill="#FFFFFF" opacity="0.18" d="M84 0H102V128H84Z"/>
     <path id="coping-lip" fill="#FFFFFF" opacity="0.30" d="M102 0H103.5V128H102Z"/>
-    <path id="coral-band" fill="#B65F4D" d="M107 0H112V128H107Z"/>
-    <path id="green-face" fill="#294B3C" d="M112 0H117V128H112Z"/>
+    <path id="coral-band" fill="#B65F4D" d="M106 0H110V128H106Z"/>
+    <path id="green-face" fill="#294B3C" d="M110 0H117V128H110Z"/>
     <path id="face-shade" fill="#000000" opacity="0.12" d="M103.5 0H117V128H103.5Z"/>
     <path id="contact-shade" fill="#000000" opacity="0.12" d="M120 0H123.5V128H120Z"/>
     <path id="arris-seam" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45" d="M103.5 1V127"/>
-    <path id="band-seam" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35" d="M112 1V127"/>
-    <path id="module-seam" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.28" d="M85 64H116"/>
-    <path id="fasteners" fill="#979A91" d="M116 15a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM116 113a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
+    <path id="band-seam" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35" d="M110 1V127"/>
+    <path id="boundary-seam" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18" d="M85 126H116"/>
   </g>
 </svg>

@@ -8,9 +8,9 @@
  * Every save re-validates the masters through the real A1b importer and
  * re-renders one card per stem: base / upper / composed plus the composed
  * frame at the close / normal / far review sizes on light and dark ground.
- * A composed envelope gate and a room-context mock render every pass and sit
- * above the component cards. Saves under low-profile-correction/ re-render
- * both composition views too.
+ * A composed envelope gate, room-context mock, and short/long length ladder
+ * render every pass and sit above the component cards. Saves under
+ * low-profile-correction/ re-render all three composition views too.
  * Output is disposable (.style-loop/ is gitignored and kept outside Vite's
  * cleared dist/ build directory); docs/previews remains the
  * reviewed contact-sheet authority via the existing preview scripts.
@@ -81,6 +81,43 @@ const ROOM_CELLS: ReadonlyArray<readonly [number, number, string, string | null]
   [1, 2, 'low-profile-correction/low-s-straight.svg', null],
   [2, 2, 'low-profile-correction/low-se-corner.svg', null],
 ];
+
+type CompositionCell = readonly [number, number, string, string | null];
+
+const TRANSITION_N_TO_E_CELL: ReadonlyArray<CompositionCell> = [
+  [0, 0, 'transition_n_to_e-base.svg', 'transition_n_to_e-upper.svg'],
+];
+
+// A minimum closed room deliberately made only from junction pieces. It makes
+// oversized corner and transition silhouettes impossible to hide behind long
+// straight runs.
+const COMPACT_CORNER_ROOM_CELLS: ReadonlyArray<CompositionCell> = [
+  [0, 0, 'full_exterior_corner-base.svg', 'full_exterior_corner-upper.svg'],
+  [1, 0, 'transition_n_to_e-base.svg', 'transition_n_to_e-upper.svg'],
+  [0, 1, 'transition_w_to_s-base.svg', 'transition_w_to_s-upper.svg'],
+  [1, 1, 'low-profile-correction/low-se-corner.svg', null],
+];
+
+// A one-cell-clear corridor: four repeated full/low side-wall bodies bracketed
+// by the current authored corners and full-to-low transitions.
+const NARROW_CORRIDOR_CELLS: ReadonlyArray<CompositionCell> = [
+  [0, 0, 'full_exterior_corner-base.svg', 'full_exterior_corner-upper.svg'],
+  [1, 0, 'full_n_straight-base.svg', 'full_n_straight-upper.svg'],
+  [2, 0, 'transition_n_to_e-base.svg', 'transition_n_to_e-upper.svg'],
+  [0, 1, 'full_w_straight-base.svg', 'full_w_straight-upper.svg'],
+  [2, 1, 'low-profile-correction/low-e-straight.svg', null],
+  [0, 2, 'full_w_straight-base.svg', 'full_w_straight-upper.svg'],
+  [2, 2, 'low-profile-correction/low-e-straight.svg', null],
+  [0, 3, 'full_w_straight-base.svg', 'full_w_straight-upper.svg'],
+  [2, 3, 'low-profile-correction/low-e-straight.svg', null],
+  [0, 4, 'full_w_straight-base.svg', 'full_w_straight-upper.svg'],
+  [2, 4, 'low-profile-correction/low-e-straight.svg', null],
+  [0, 5, 'transition_w_to_s-base.svg', 'transition_w_to_s-upper.svg'],
+  [1, 5, 'low-profile-correction/low-s-straight.svg', null],
+  [2, 5, 'low-profile-correction/low-se-corner.svg', null],
+];
+
+const LENGTH_LADDER_RUNS = [1, 2, 3, 6] as const;
 
 interface CliOptions {
   readonly input: string;
@@ -207,18 +244,24 @@ function benchPage(): string {
     '#status{font-size:13px;margin-bottom:14px;color:#83a9a6}#status.bad{color:#e0836e;white-space:pre-wrap}' +
     'main{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:14px}' +
     'figure{margin:0}img{width:100%;height:auto;display:block;border-radius:10px}' +
-    'figure.gate,figure.room{max-width:768px}figure.proofs{max-width:900px}</style>' +
+    'figure.gate,figure.room{max-width:768px}figure.proofs{max-width:900px}' +
+    'figure.transition-focus{max-width:1200px}' +
+    'figure.length-ladder{max-width:1100px}</style>' +
     '<h1>QuotaCo Building System — live workbench</h1>' +
     '<div id="status">waiting for first render…</div>' +
+    '<h2>active one-piece review — northeast full-to-low transition</h2>' +
+    '<figure class="transition-focus" data-stem="transition-n-to-e-focus"><img src="transition-n-to-e-focus.png" alt="northeast transition reference comparison and installed length proofs"></figure>' +
     '<h2>cross-section proofs — directional plane law candidates</h2>' +
     '<figure class="proofs" data-stem="cross-section-proofs"><img src="cross-section-proofs.png" alt="cross-section proofs"></figure>' +
     '<h2>envelope gate — composed structural shell, no opening content</h2>' +
     '<figure class="gate" data-stem="envelope-gate"><img src="envelope-gate.png" alt="composed wall envelope gate"></figure>' +
     '<h2>room context — masters tiled as the game composes them</h2>' +
     '<figure class="room" data-stem="room-context-mock"><img src="room-context-mock.png" alt="room context mock"></figure>' +
+    '<h2>length ladder — short and long composition gate</h2>' +
+    '<figure class="length-ladder" data-stem="length-ladder"><img src="length-ladder.png" alt="one, two, three, and six cell wall runs with compact room and corridor proofs"></figure>' +
     '<h2>per-stem cards — compiled through the importer</h2>' +
     `<main>${cards}</main>` +
-    '<script>let stamp="",gateStamp="",roomStamp="",proofsStamp="";async function tick(){try{' +
+    '<script>let stamp="",focusStamp="",gateStamp="",roomStamp="",ladderStamp="",proofsStamp="";async function tick(){try{' +
     'const s=await(await fetch("status.json",{cache:"no-store"})).json();' +
     'const el=document.getElementById("status");' +
     'if(!s.ok){el.textContent=`IMPORT FAILED\\n${s.error}`;el.className="bad";}' +
@@ -228,12 +271,16 @@ function benchPage(): string {
     'else{el.textContent=`ok · ${s.frames} frames · ${s.durationMs}ms · ${s.renderedAt}`;el.className="";}' +
     'if(s.ok&&s.renderedAt!==stamp){stamp=s.renderedAt;' +
     'for(const f of document.querySelectorAll("main figure"))f.querySelector("img").src=`${f.dataset.stem}.png?t=${Date.now()}`;}' +
+    'if(s.focusRenderedAt&&s.focusRenderedAt!==focusStamp){focusStamp=s.focusRenderedAt;' +
+    'const f=document.querySelector("figure.transition-focus");f.querySelector("img").src=`${f.dataset.stem}.png?t=${Date.now()}`;}' +
     'if(s.gateRenderedAt&&s.gateRenderedAt!==gateStamp){gateStamp=s.gateRenderedAt;' +
     'const f=document.querySelector("figure.gate");f.querySelector("img").src=`${f.dataset.stem}.png?t=${Date.now()}`;}' +
     'if(s.proofsRenderedAt&&s.proofsRenderedAt!==proofsStamp){proofsStamp=s.proofsRenderedAt;' +
     'const p=document.querySelector("figure.proofs");p.querySelector("img").src=`${p.dataset.stem}.png?t=${Date.now()}`;}' +
     'if(s.roomRenderedAt&&s.roomRenderedAt!==roomStamp){roomStamp=s.roomRenderedAt;' +
     'const f=document.querySelector("figure.room");f.querySelector("img").src=`${f.dataset.stem}.png?t=${Date.now()}`;}' +
+    'if(s.ladderRenderedAt&&s.ladderRenderedAt!==ladderStamp){ladderStamp=s.ladderRenderedAt;' +
+    'const f=document.querySelector("figure.length-ladder");f.querySelector("img").src=`${f.dataset.stem}.png?t=${Date.now()}`;}' +
     '}catch{}setTimeout(tick,700)}tick()</script>'
   );
 }
@@ -260,6 +307,8 @@ async function render(
   }
   await renderEnvelopeGate(options);
   await renderRoomMock(options);
+  await renderLengthLadder(options);
+  await renderTransitionNorthEastFocus(options, root);
   const renderedAt = new Date().toISOString();
   const status = {
     ok: true,
@@ -268,6 +317,8 @@ async function render(
     renderedAt,
     gateRenderedAt: renderedAt,
     roomRenderedAt: renderedAt,
+    ladderRenderedAt: renderedAt,
+    focusRenderedAt: renderedAt,
   };
   await writeFile(path.join(options.output, 'status.json'), `${JSON.stringify(status)}\n`, 'utf8');
   await writeFile(path.join(options.output, 'index.html'), benchPage(), 'utf8');
@@ -280,9 +331,271 @@ const stripSvgShell = (svg: string): string =>
 const roomCell = (content: string, col: number, row: number): string =>
   `<svg x="${col * 128}" y="${row * 128}" width="128" height="128" viewBox="0 0 128 128">${content}</svg>`;
 
+async function compositionWindow(
+  options: CliOptions,
+  cells: ReadonlyArray<CompositionCell>,
+  columns: number,
+  rows: number,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+): Promise<string> {
+  const basePass: string[] = [];
+  const upperPass: string[] = [];
+  for (const [col, row, baseFile, upperFile] of cells) {
+    basePass.push(roomCell(stripSvgShell(await readFile(path.join(options.input, baseFile), 'utf8')), col, row));
+    if (upperFile) {
+      upperPass.push(roomCell(stripSvgShell(await readFile(path.join(options.input, upperFile), 'utf8')), col, row));
+    }
+  }
+  const gridLines = [
+    ...Array.from({ length: Math.max(0, columns - 1) }, (_, index) =>
+      `<path d="M ${(index + 1) * 128} 0 V ${rows * 128}"/>`,
+    ),
+    ...Array.from({ length: Math.max(0, rows - 1) }, (_, index) =>
+      `<path d="M 0 ${(index + 1) * 128} H ${columns * 128}"/>`,
+    ),
+  ].join('');
+  return (
+    `<svg x="${x}" y="${y}" width="${width}" height="${height}" ` +
+    `viewBox="0 0 ${columns * 128} ${rows * 128}" preserveAspectRatio="none">` +
+    `<rect width="${columns * 128}" height="${rows * 128}" fill="${A1A_PALETTE.floor}"/>` +
+    `<g fill="none" stroke="${INK}" stroke-width="1" opacity="0.14">${gridLines}</g>` +
+    basePass.join('') +
+    upperPass.join('') +
+    '</svg>'
+  );
+}
+
+function straightRunCells(
+  length: number,
+  baseFile: string,
+  upperFile: string,
+  vertical: boolean,
+): CompositionCell[] {
+  return Array.from({ length }, (_, index) =>
+    [vertical ? 0 : index, vertical ? index : 0, baseFile, upperFile] as CompositionCell,
+  );
+}
+
+function terminusRunCells(bodyLength: number): CompositionCell[] {
+  return [
+    ...straightRunCells(
+      bodyLength,
+      'full_n_straight-base.svg',
+      'full_n_straight-upper.svg',
+      false,
+    ),
+    [bodyLength, 0, 'full_terminus-base.svg', 'full_terminus-upper.svg'],
+  ];
+}
+
+function transitionNorthEastInstalledCells(length: number): CompositionCell[] {
+  return [
+    ...straightRunCells(
+      length,
+      'full_n_straight-base.svg',
+      'full_n_straight-upper.svg',
+      false,
+    ),
+    [length, 0, 'transition_n_to_e-base.svg', 'transition_n_to_e-upper.svg'],
+    ...Array.from(
+      { length },
+      (_, index) =>
+        [length, index + 1, 'low-profile-correction/low-e-straight.svg', null] as CompositionCell,
+    ),
+  ];
+}
+
+async function renderTransitionNorthEastFocus(options: CliOptions, root: string): Promise<void> {
+  const width = 1600;
+  const height = 1100;
+  const panelFill = '#ECE5D5';
+  const panel = (x: number, y: number, w: number, h: number): string =>
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="14" fill="${panelFill}" ` +
+    `stroke="${INK}" stroke-width="1.5" opacity="0.96"/>`;
+  const referenceDir = path.join(root, 'docs', 'reference');
+  const cornerReference = `data:image/png;base64,${Buffer.from(
+    await readFile(path.join(referenceDir, 'quota-co-wall-corners-and-ends-study.png')),
+  ).toString('base64')}`;
+  const moduleReference = `data:image/png;base64,${Buffer.from(
+    await readFile(path.join(referenceDir, 'quota-co-wall-module-family-study.png')),
+  ).toString('base64')}`;
+  const referenceCrop = (
+    href: string,
+    x: number,
+    y: number,
+    width_: number,
+    height_: number,
+    viewBox: string,
+  ): string =>
+    `<svg x="${x}" y="${y}" width="${width_}" height="${height_}" viewBox="${viewBox}" ` +
+    `preserveAspectRatio="xMidYMid meet"><image width="1536" height="1024" href="${href}"/></svg>`;
+
+  const parts: string[] = [
+    `<rect width="${width}" height="${height}" rx="18" fill="${PANEL}"/>`,
+    text(24, 34, 'NORTHEAST FULL-TO-LOW TRANSITION — ONE-PIECE REVIEW', 21, 800),
+    text(24, 58, 'Only transition_n_to_e is changing; full-north and low-east straights are fixed socket controls.', 12, 600, MUTED),
+    panel(20, 76, 380, 500),
+    panel(420, 76, 420, 500),
+    panel(860, 76, 720, 500),
+    panel(20, 596, 770, 480),
+    panel(810, 596, 770, 480),
+    text(40, 108, 'OWNER-APPROVED CARDINAL TARGET', 14, 800),
+    text(440, 108, 'OWNER-APPROVED STEP VOCABULARY', 14, 800),
+    text(880, 108, 'CURRENT PROPOSAL — ISOLATED', 14, 800),
+    referenceCrop(cornerReference, 50, 122, 320, 430, '420 520 325 480'),
+    referenceCrop(moduleReference, 445, 128, 370, 400, '410 675 340 349'),
+    text(40, 560, 'Use silhouette, broad east plane, and restrained junction—not source pixels.', 10, 600, MUTED),
+    text(440, 560, 'Use the molded height change; do not copy the pictured orientation literally.', 10, 600, MUTED),
+    text(1218, 176, 'Review sizes', 12, 750),
+    text(1218, 202, '240 px: construction', 11, 600, MUTED),
+    text(1218, 226, '90 px: gameplay read', 11, 600, MUTED),
+    text(1218, 250, '40 px: silhouette', 11, 600, MUTED),
+    text(1218, 300, 'Must read as:', 12, 750),
+    text(1218, 326, '• one molded L', 11, 600, MUTED),
+    text(1218, 350, '• no terminal capsule', 11, 600, MUTED),
+    text(1218, 374, '• no applied corner box', 11, 600, MUTED),
+    text(1218, 398, '• broad east top plane', 11, 600, MUTED),
+    text(1218, 422, '• exact neighbour sockets', 11, 600, MUTED),
+    text(40, 628, 'MINIMUM INSTALLED RUN', 14, 800),
+    text(40, 650, '1 full-north cell + corner + 1 low-east cell', 11, 600, MUTED),
+    text(830, 628, 'LONGER INSTALLED RUN', 14, 800),
+    text(830, 650, '3 full-north cells + corner + 3 low-east cells', 11, 600, MUTED),
+    text(40, 1054, 'Gate: the same corner must remain intentional when the room is compact.', 11, 650, MUTED),
+    text(830, 1054, 'Gate: the corner must finish the runs without becoming a decorative endpoint.', 11, 650, MUTED),
+  ];
+  parts.push(await compositionWindow(options, TRANSITION_N_TO_E_CELL, 1, 1, 890, 132, 300, 300));
+  parts.push(await compositionWindow(options, TRANSITION_N_TO_E_CELL, 1, 1, 1228, 446, 90, 90));
+  parts.push(await compositionWindow(options, TRANSITION_N_TO_E_CELL, 1, 1, 1340, 471, 40, 40));
+  parts.push(
+    await compositionWindow(
+      options,
+      transitionNorthEastInstalledCells(1),
+      2,
+      2,
+      220,
+      666,
+      370,
+      370,
+    ),
+  );
+  parts.push(
+    await compositionWindow(
+      options,
+      transitionNorthEastInstalledCells(3),
+      4,
+      4,
+      1010,
+      666,
+      370,
+      370,
+    ),
+  );
+
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" ` +
+    `viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+  const png = new Resvg(svg, {
+    fitTo: { mode: 'width', value: width * CARD_RENDER_SCALE },
+  }).render().asPng();
+  await writeFile(path.join(options.output, 'transition-n-to-e-focus.png'), png);
+}
+
+async function renderLengthLadder(options: CliOptions): Promise<void> {
+  const width = 1400;
+  const height = 1200;
+  const panelFill = '#ECE5D5';
+  const panel = (x: number, y: number, w: number, h: number): string =>
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="14" fill="${panelFill}" ` +
+    `stroke="${INK}" stroke-width="1.5" opacity="0.96"/>`;
+  const parts: string[] = [
+    `<rect width="${width}" height="${height}" rx="18" fill="${PANEL}"/>`,
+    text(24, 34, 'working wall composition length ladder', 21, 800),
+    text(24, 56, 'Uncommitted body, corner, and terminus proposal; high-to-low transitions remain comparison controls.', 12, 500, MUTED),
+    panel(20, 76, 780, 550),
+    panel(820, 76, 560, 550),
+    panel(20, 646, 560, 530),
+    panel(600, 646, 780, 530),
+    text(40, 108, 'FULL NORTH BODY — 1 / 2 / 3 / 6 CELLS', 15, 800),
+    text(840, 108, 'FULL WEST BODY — 1 / 2 / 3 / 6 CELLS', 15, 800),
+  ];
+
+  for (const [index, length] of LENGTH_LADDER_RUNS.entries()) {
+    const top = 126 + index * 117;
+    parts.push(text(68, top + 57, `${length}`, 18, 800, INK, 'middle'));
+    parts.push(
+      await compositionWindow(
+        options,
+        straightRunCells(length, 'full_n_straight-base.svg', 'full_n_straight-upper.svg', false),
+        length,
+        1,
+        100,
+        top,
+        length * 100,
+        100,
+      ),
+    );
+  }
+  parts.push(text(40, 608, 'Gate: the body must remain legible at one cell and quiet at six.', 11, 650, MUTED));
+
+  const westXs = [856, 968, 1080, 1210];
+  for (const [index, length] of LENGTH_LADDER_RUNS.entries()) {
+    const left = westXs[index];
+    parts.push(text(left + 37, 130, `${length}`, 18, 800, INK, 'middle'));
+    parts.push(
+      await compositionWindow(
+        options,
+        straightRunCells(length, 'full_w_straight-base.svg', 'full_w_straight-upper.svg', true),
+        1,
+        length,
+        left,
+        142,
+        74,
+        length * 74,
+      ),
+    );
+  }
+  parts.push(text(840, 608, 'Same cross-section, judged without a terminus hiding repetition.', 11, 650, MUTED));
+
+  parts.push(text(40, 680, 'COMPACT CORNER ROOM', 15, 800));
+  parts.push(text(40, 704, '2×2 minimum enclosure · junction geometry only', 11, 600, MUTED));
+  parts.push(await compositionWindow(options, COMPACT_CORNER_ROOM_CELLS, 2, 2, 130, 732, 340, 340));
+  parts.push(text(40, 1104, 'Gate: corners may finish the room, but must not become the room.', 11, 650, MUTED));
+  parts.push(text(40, 1127, 'This deliberately gives oversized elbows nowhere to hide.', 11, 500, MUTED));
+
+  parts.push(text(620, 680, 'NARROW CORRIDOR', 15, 800));
+  parts.push(text(620, 704, '1-cell clear span · four repeated side-wall cells', 11, 600, MUTED));
+  parts.push(await compositionWindow(options, NARROW_CORRIDOR_CELLS, 3, 6, 640, 724, 216, 432));
+  parts.push(text(900, 770, 'Must preserve:', 13, 800));
+  parts.push(text(900, 798, '• a readable one-cell aisle', 12, 600, MUTED));
+  parts.push(text(900, 824, '• quiet service-seam repetition', 12, 600, MUTED));
+  parts.push(text(900, 850, '• distinct full-west and low-east profiles', 12, 600, MUTED));
+  parts.push(text(900, 876, '• compact transitions at both ends', 12, 600, MUTED));
+  parts.push(text(900, 934, 'Failure is visible here before a large room can disguise it.', 11, 650, MUTED));
+  parts.push(text(900, 972, 'COMPACT END — 1 / 3 BODY CELLS', 12, 800));
+  parts.push(text(884, 1028, '1', 13, 800, INK, 'middle'));
+  parts.push(
+    await compositionWindow(options, terminusRunCells(1), 2, 1, 900, 984, 180, 90),
+  );
+  parts.push(text(884, 1128, '3', 13, 800, INK, 'middle'));
+  parts.push(
+    await compositionWindow(options, terminusRunCells(3), 4, 1, 900, 1080, 360, 90),
+  );
+
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" ` +
+    `viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+  const png = new Resvg(svg, {
+    fitTo: { mode: 'width', value: width * CARD_RENDER_SCALE },
+  }).render().asPng();
+  await writeFile(path.join(options.output, 'length-ladder.png'), png);
+}
+
 async function renderCompositionMock(
   options: CliOptions,
-  cells: ReadonlyArray<readonly [number, number, string, string | null]>,
+  cells: ReadonlyArray<CompositionCell>,
   outputName: string,
   showGrid: boolean,
 ): Promise<void> {
@@ -393,6 +706,8 @@ async function renderContextMocksSafely(options: CliOptions, root: string): Prom
     });
     await renderEnvelopeGate(options);
     await renderRoomMock(options);
+    await renderLengthLadder(options);
+    await renderTransitionNorthEastFocus(options, root);
     const statusPath = path.join(options.output, 'status.json');
     const status = JSON.parse(await readFile(statusPath, 'utf8')) as Record<string, unknown>;
     delete status.contextError;
@@ -400,6 +715,8 @@ async function renderContextMocksSafely(options: CliOptions, root: string): Prom
     const renderedAt = new Date().toISOString();
     status.gateRenderedAt = renderedAt;
     status.roomRenderedAt = renderedAt;
+    status.ladderRenderedAt = renderedAt;
+    status.focusRenderedAt = renderedAt;
     await writeFile(statusPath, `${JSON.stringify(status)}\n`, 'utf8');
     process.stdout.write('composition mocks re-rendered\n');
   } catch (error: unknown) {
@@ -415,6 +732,7 @@ async function renderContextMocksSafely(options: CliOptions, root: string): Prom
     const renderedAt = new Date().toISOString();
     status.gateRenderedAt = renderedAt;
     status.roomRenderedAt = renderedAt;
+    status.ladderRenderedAt = renderedAt;
     await writeFile(statusPath, `${JSON.stringify(status)}\n`, 'utf8');
     const kind = error instanceof A1bLowCorrectionImportError ? 'composition import contract' : 'composition render';
     process.stdout.write(`✗ ${kind} error — last good mocks kept\n${message}\n`);
