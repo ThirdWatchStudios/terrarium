@@ -12,21 +12,21 @@
     <path id="door-mode-lens" d="M 62 59 H 66 a 1.25 1.25 0 0 1 0 2.5 H 62 a 1.25 1.25 0 0 1 0 -2.5 Z" fill="#B65F4D"/>
     <path id="pylon-left-contour" d="M 0 56 H 20 a 8 8 0 0 1 8 8 V 120 H 0 Z" fill="#252A28"/>
     <path id="pylon-left-face" d="M 0 58 H 20 a 6 6 0 0 1 6 6 V 117 H 0 Z" fill="#D9D0B9"/>
-    <path id="pylon-left-cap-light" d="M 0 58 H 20 V 64 H 0 Z" fill="#FFFFFF" opacity="0.20"/>
-    <path id="pylon-left-service-seam" d="M 1 64 H 18" fill="none" stroke="#252A28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.28"/>
-    <path id="pylon-left-band" d="M 0 89 H 20 V 97 H 0 Z" fill="#B65F4D"/>
-    <path id="pylon-left-band-light" d="M 0 89 H 20 V 90.5 H 0 Z" fill="#FFFFFF" opacity="0.10"/>
-    <path id="pylon-left-band-seam" d="M 1 89 H 18" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="pylon-left-cap-light" d="M 0 58 H 20 V 63 H 0 Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="pylon-left-service-seam" d="M 1 63 H 18" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="pylon-left-band" d="M 0 85 H 20 V 97 H 0 Z" fill="#B65F4D"/>
+    <path id="pylon-left-band-light" d="M 0 85 H 20 V 86.5 H 0 Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="pylon-left-band-seam" d="M 1 97 H 18" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
     <path id="pylon-left-green" d="M 0 97 H 20 V 117 H 0 Z" fill="#294B3C"/>
     <path id="pylon-left-reveal-light" d="M 21 62 H 21.5 a 4.5 4.5 0 0 1 4.5 4.5 V 117 H 21 Z" fill="#FFFFFF" opacity="0.10"/>
     <path id="pylon-left-divider-seam" d="M 20.75 62 V 116" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
     <path id="pylon-right-contour" d="M 108 56 H 128 V 120 H 100 V 64 a 8 8 0 0 1 8 -8 Z" fill="#252A28"/>
     <path id="pylon-right-face" d="M 108 58 H 128 V 117 H 102 V 64 a 6 6 0 0 1 6 -6 Z" fill="#D9D0B9"/>
-    <path id="pylon-right-cap-light" d="M 107.5 58 H 128 V 64 H 107.5 Z" fill="#FFFFFF" opacity="0.20"/>
-    <path id="pylon-right-service-seam" d="M 110 64 H 127" fill="none" stroke="#252A28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.28"/>
-    <path id="pylon-right-band" d="M 107.5 89 H 128 V 97 H 107.5 Z" fill="#B65F4D"/>
-    <path id="pylon-right-band-light" d="M 107.5 89 H 128 V 90.5 H 107.5 Z" fill="#FFFFFF" opacity="0.10"/>
-    <path id="pylon-right-band-seam" d="M 110 89 H 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="pylon-right-cap-light" d="M 107.5 58 H 128 V 63 H 107.5 Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="pylon-right-service-seam" d="M 110 63 H 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="pylon-right-band" d="M 107.5 85 H 128 V 97 H 107.5 Z" fill="#B65F4D"/>
+    <path id="pylon-right-band-light" d="M 107.5 85 H 128 V 86.5 H 107.5 Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="pylon-right-band-seam" d="M 110 97 H 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
     <path id="pylon-right-green" d="M 107.5 97 H 128 V 117 H 107.5 Z" fill="#294B3C"/>
     <path id="pylon-right-reveal-light" d="M 102 66.5 a 4.5 4.5 0 0 1 4.5 -4.5 H 107 V 117 H 102 Z" fill="#FFFFFF" opacity="0.10"/>
     <path id="pylon-right-divider-seam" d="M 107.25 62 V 116" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>

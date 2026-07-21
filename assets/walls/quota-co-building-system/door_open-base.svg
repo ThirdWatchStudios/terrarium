@@ -12,7 +12,8 @@
     <path id="mat-front" d="M 30 112 H 97.5 V 117 H 30 Z" fill="#979A91"/>
     <path id="mat-front-shade" d="M 30 112 H 97.5 V 117 H 30 Z" fill="#000000" opacity="0.10"/>
     <path id="mat-lip-seam" d="M 31 112 H 96.5" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
-    <path id="base-fastener-left" d="M 15 111.5 A 1.5 1.5 0 1 1 15 114.5 A 1.5 1.5 0 1 1 15 111.5 Z" fill="#979A91"/>
-    <path id="base-fastener-right" d="M 113 111.5 A 1.5 1.5 0 1 1 113 114.5 A 1.5 1.5 0 1 1 113 111.5 Z" fill="#979A91"/>
+    <path id="base-contact-shade" d="M 0 120 H 28 V 123.5 H 0 Z M 100 120 H 128 V 123.5 H 100 Z" fill="#000000" opacity="0.12"/>
+    <path id="base-fastener-left" d="M 15 105 A 1.5 1.5 0 1 1 15 108 A 1.5 1.5 0 1 1 15 105 Z" fill="#979A91"/>
+    <path id="base-fastener-right" d="M 113 105 A 1.5 1.5 0 1 1 113 108 A 1.5 1.5 0 1 1 113 105 Z" fill="#979A91"/>
   </g>
 </svg>
