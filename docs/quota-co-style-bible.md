@@ -9,6 +9,12 @@
 > [geometry ask](quota-co-high-oblique-geometry-ask.md) · [kit README](../assets/walls/quota-co-building-system/README.md).
 > Re-derive the numbers any time by re-running the tally (method in §10).
 
+> **Required wall reference:** before editing a wall master, open the five owner-approved targeted sheets in
+> [`docs/reference/`](reference/README.md). The cardinal corners-and-ends sheet identifies the asset; the
+> long-run orthographic and directional-profile sheets govern projection; the module-family and long-run
+> continuity sheets govern vocabulary and seam rhythm. This numeric grammar constrains the drawing but does
+> not replace comparing it to those images.
+
 The point of this page: the QuotaCo look is not a talent bar, it is a **closed grammar** — nine paints, two
 line weights, four shading steps, eight radii, one projection recipe. An author who obeys the grammar produces
 catalog-legitimate art on week one; taste then develops by judging results at gameplay distance, not by
@@ -49,13 +55,15 @@ Tally result: **zero off-palette fills in 70 files.** Keep it that way — the i
 | Oxidized teal | `#4E7D79` | utility fields and bands | 33 |
 | Metal | `#979A91` | functional detail only — never the dominant field | 29 |
 | Glass | `#83A9A6` | glazing | 4 |
-| Coral / rust | `#B65F4D` | hardware accents — deliberately scarce | 4 |
+| Coral / rust | `#B65F4D` | thin Building System wall collar; restrained hardware accents | 4 |
 | White overlay | `#FFFFFF` @ fixed opacities | top/cap light cue | 57 |
 | Black overlay | `#000000` @ fixed opacities | face/side shade cue | 39 |
 
-Scarcity is part of the meaning: coral appearing four times in seventy files is what keeps it reading as
-"hardware you can touch." Floors add `#AAA38F` / `#B9B19B` from the proof palette. **Amber and rose are
-runtime-reserved signals (capture / emotion) and never appear in authored art.**
+The four-use coral count is a historical tally of the pre-target source family, not a scarcity target for the
+Building System. The approved wall sheets reserve a thin continuous coral/rust collar across compatible full
+and low modules; props and controls still use coral sparingly as tactile hardware. Floors add `#AAA38F` /
+`#B9B19B` from the proof palette. **Amber and rose are runtime-reserved signals (capture / emotion) and never
+appear in authored art.**
 
 ## 3. Line grammar
 
@@ -156,8 +164,8 @@ be automated.
    3x3 without opening content, then the room with a door (full N/W walls, both transitions, low E/S sills),
    because tiling truth only shows composed. Saves under
    `low-profile-correction/` re-render the mock too.
-5. Gate each batch on the real contact sheet; compare against the felt target weekly; keep the rejects
-   with a one-line reason each.
+5. Gate every wall batch against the five-sheet primary wall target and the real contact sheet; use the golden
+   room for whole-room feel. Keep rejects with a one-line reason each.
 
 ## 10. Provenance and regeneration
 

@@ -13,6 +13,11 @@ complementary surfaces to one continuous wall envelope. Root `base` components
 are lower-face/plinth ingredients, not standalone low walls; the dedicated
 `low-profile-correction/` frames own the exposed low-wall construction.
 
+Before editing a master, open the five owner-approved targeted wall sheets listed in
+`docs/reference/README.md`. The corners-and-ends sheet is the cardinal orientation map; the
+high-oblique/directional sheets govern surface exposure; the module-family and long-run sheets govern required
+pieces and continuity. The current SVG is not a substitute reference for a visually rejected result.
+
 These files are source art, not a production wall family. They are deliberately
 not registered in `WALL_TEMPLATES`, the exporter, the facility catalog, or the
 47-blob atlas. They do not define new frame ids, projection values, metadata,

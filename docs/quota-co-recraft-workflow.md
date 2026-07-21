@@ -17,11 +17,13 @@ on the live workbench and committed individually with its design rationale.
 1. **Pick the piece from the room mock.** The composed room at the top of the bench page is the
    issue-finding surface — tiling truth only shows composed. Anything the owner can point at in that
    image becomes a one-piece pass.
-2. **Read before drawing:** the piece's current masters, the reference panels
-   (`docs/reference/quota-co-office-geometry-study.png`, `-golden-room.png`), the bible's constants, and
-   any already-solved construction that transfers (see ledger below). When a sub-kit covers the same
-   ground (e.g. `low-profile-correction/`), treat its **geometry** as authoritative even where its
-   grammar is stale.
+2. **Read before drawing:** the piece's current masters, the five-sheet primary wall target listed in
+   `docs/reference/README.md`, the broad geometry and golden-room references, the bible's constants, and any
+   already-solved construction that transfers (see ledger below). Start with
+   `quota-co-wall-corners-and-ends-study.png` to verify the cardinal asset, then use the long-run orthographic
+   and directional-profile sheets for projection. When a sub-kit covers the same ground (e.g.
+   `low-profile-correction/`), treat its **geometry** as authoritative only where it agrees with this newer
+   owner-approved target.
 3. **Recraft in grammar.** Nine paints only, seam registers 0.28/0.35/0.45/0.62, overlay ladder,
    concentric radii with the r4–5 legibility floor, semantic ids, topology-generation vocabulary,
    shading as overlays never tints (recolor law). Edit masters with the file tools, not shell scripts —
@@ -54,18 +56,16 @@ on the live workbench and committed individually with its design rationale.
   framing, only leaves differ. Ring paths need opposite-winding hole subpaths.
 - **Terminus** (d400a61): the end cap is a **monolithic post to the ground** (never stacked
   base/upper lobes — the "capital B" failure); band wraps the lit end face behind a divider seam.
-- **Corner** (current pass rejected): the NW-seat's exact-transpose diagonal produces a neat tile but not a
-  convincing turn between the flat/front-on horizontal plane and the flatter-from-above vertical plane.
-  Preserve the absence of a second cap or inner outline; redesign the turn with authored, non-transposed
-  plane mediation. ⚠ Never naive-mirror or transpose a corner to manufacture another facing.
-- **Transitions** (current pass rejected; ae7b155 and the later pylon treatment also superseded): the high r9
-  body ends at the profile change and steps directly into the low r12 shoulder. The base owns the continuous
-  green/coping route; the upper stops before the outgoing low arm instead of covering it with a grounded
-  pylon. Preserve socket occupancy and continuous material endpoints, but N→E and W→S are no longer
-  exact-transpose partners: each junction must mediate its two authored directional planes. Coral needs one
-  deliberate termination/wrap and the teal register must not form a diagrammatic crossing. A full-width pylon
-  over the low wall, a floating capsule, a square cream tab/reveal, or a separately outlined elbow are all
-  rejected constructions.
+- **Corners:** the five-sheet target supersedes attempts to infer a corner from the room diagram. Use its
+  cardinal orientation map first. Each turn is a tight, continuous molded wall carrying the same cap, band,
+  body, and plinth around the joint; no oversized elbow, applied box, panel, or blanket patch. Preserve one cap
+  and one outer silhouette while authoring the directional plane change. ⚠ Never naive-mirror or transpose a
+  corner to manufacture another facing.
+- **Transitions:** the targeted module-family sheet explicitly restores dedicated **height-step** and
+  **step-corner** pieces as required product vocabulary. This does not revive the rejected full-width pylon or
+  floating capsule. The approved unit is integrated into the wall envelope, occupies only the junction, closes
+  the profile change cleanly, and continues cap/band/body/plinth into both connected runs. Preserve socket
+  occupancy and authored directional planes; N→E and W→S are not exact-transpose partners.
 - **Depth rules:** near-plane features shift down (E-W) or east (N-S); an engaged element that continues
   the wall's bands at the same heights will camouflage — separate by plane values (shaded wall behind,
   clean face, 0.10-lit reveal) or by construction, not by outlines.
@@ -151,6 +151,12 @@ the old symmetric low registers and needs re-tallying with the style bible after
 
 ### Measured reference constants (step-1 measurement pass, 2026-07-20)
 
+> **Historical measurement record — not the current visual target.** These values were measured from the two
+> older broad references before the owner restored the five targeted wall sheets on 2026-07-20. Wherever this
+> section differs from `docs/reference/README.md`—especially low-wall coral, band proportions, corner identity,
+> or transition construction—the five-sheet set wins. Re-measure an accepted master cross-section before
+> turning any value below into a production lock or test gate.
+
 Measured from crops of `docs/reference/quota-co-office-geometry-study.png` (row 2 col 1 full wall front-on,
 row 3 low walls, row 3 col 4 high-meets-low) and `-golden-room.png` (north-wall slice, west edge, south low
 edge). Proportions are of the wall's visible screen height:
@@ -162,8 +168,9 @@ edge). Proportions are of the wall's visible screen height:
   version.)
 - **Golden-room west wall:** coping/top plane dominant; the face stack compresses to slivers — coral and the
   dark register read as lines, not fields.
-- **Low walls (both references):** broad cream coping wrapping both arrises ≈40–50% of visible height, green
-  face below, **no coral on low straights**, charcoal plinth. (Door/terminus surrounds keep their banding.)
+- **Historical low-wall reading (superseded):** the two broad references suggested broad cream coping over a
+  green face with no coral on low straights. The newer targeted sheets instead require a thin continuous coral
+  collar across compatible full and low modules.
 
 Proposed 128-canvas constants (full envelope 56..120, low 82..120; y for horizontal pieces, x for vertical):
 
@@ -177,9 +184,9 @@ Proposed 128-canvas constants (full envelope 56..120, low 82..120; y for horizon
 | green face | 97..116 (19u) | 105..116 (11u) |
 | plinth | 116..120 | 116..120 |
 
-Low-wall derivation: horizontal low = coping 82..96, green 96..116; vertical low = coping 82..108, green
-sliver 108..116; coral omitted on low straights per the references (teal service register decision stays
-deferred to the junction redesign).
+Historical low-wall derivation: horizontal low = coping 82..96, green 96..116; vertical low = coping 82..108,
+green sliver 108..116. Its omitted coral register is superseded and must not be copied into current masters;
+the targeted sheets require that collar to continue through the low family.
 
 Depth overlays (added after the first owner pass — the unshaded vertical stack read flat): the coping lip is
 always white 0.30 (the horizontal's whole 5u reveal; a 1.5u arris line on the vertical, with the broad plane
