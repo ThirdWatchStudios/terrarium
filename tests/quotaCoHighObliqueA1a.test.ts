@@ -130,43 +130,6 @@ function raster(svg: string): Raster {
   return { width: rendered.width, height: rendered.height, pixels: rendered.pixels };
 }
 
-function transposeMaxChannelDelta(rendered: Raster): number {
-  expect(rendered.width).toBe(rendered.height);
-  let maxDelta = 0;
-  for (let y = 0; y < rendered.height; y++) {
-    for (let x = y + 1; x < rendered.width; x++) {
-      const first = (y * rendered.width + x) * 4;
-      const transposed = (x * rendered.width + y) * 4;
-      for (let channel = 0; channel < 4; channel++) {
-        maxDelta = Math.max(
-          maxDelta,
-          Math.abs(rendered.pixels[first + channel] - rendered.pixels[transposed + channel]),
-        );
-      }
-    }
-  }
-  return maxDelta;
-}
-
-function transposePairMaxChannelDelta(first: Raster, second: Raster): number {
-  expect(first.width).toBe(second.height);
-  expect(first.height).toBe(second.width);
-  let maxDelta = 0;
-  for (let y = 0; y < first.height; y++) {
-    for (let x = 0; x < first.width; x++) {
-      const firstIndex = (y * first.width + x) * 4;
-      const secondIndex = (x * second.width + y) * 4;
-      for (let channel = 0; channel < 4; channel++) {
-        maxDelta = Math.max(
-          maxDelta,
-          Math.abs(first.pixels[firstIndex + channel] - second.pixels[secondIndex + channel]),
-        );
-      }
-    }
-  }
-  return maxDelta;
-}
-
 function alphaAt(rendered: Raster, x: number, y: number): number {
   return rendered.pixels[(y * rendered.width + x) * 4 + 3];
 }
@@ -339,29 +302,21 @@ describe('QuotaCo high-oblique A1b authored B source family', () => {
     }
   });
 
-  it('keeps every northwest-corner layer transpose-symmetric through raster antialiasing', async () => {
-    const frames = buildA1bAuthoredFrames(await compileAuthoredB())
-      .filter(({ stem }) => stem === 'full_exterior_corner');
-    expect(frames.map(({ kind }) => kind)).toEqual(['base', 'upper', 'composed']);
-    for (const frame of frames) {
-      expect(transposeMaxChannelDelta(raster(a1aFrameSvg(frame))), frame.id).toBeLessThanOrEqual(1);
-    }
-  });
-
-  it('keeps both full-to-low transition orientations paired through raster antialiasing', async () => {
+  // Owner correction 2026-07-20: corner and transitions are authored turns
+  // between two distinct axis treatments, so raster transpose identity is no
+  // longer a valid contract. The directional geometry gates live in
+  // quotaCoHighObliqueEnvelope.test.ts; this suite keeps the frame structure.
+  it('keeps corner and transition stems composing base, upper, and composed frames', async () => {
     const frames = buildA1bAuthoredFrames(await compileAuthoredB());
-    const northToEast = frames.filter(({ stem }) => stem === 'transition_n_to_e');
-    const westToSouth = frames.filter(({ stem }) => stem === 'transition_w_to_s');
-    expect(northToEast.map(({ kind }) => kind)).toEqual(['base', 'upper', 'composed']);
-    expect(westToSouth.map(({ kind }) => kind)).toEqual(['base', 'upper', 'composed']);
-    for (let index = 0; index < northToEast.length; index++) {
+    for (const stem of [
+      'full_exterior_corner',
+      'transition_n_to_e',
+      'transition_w_to_s',
+    ] as const) {
       expect(
-        transposePairMaxChannelDelta(
-          raster(a1aFrameSvg(northToEast[index])),
-          raster(a1aFrameSvg(westToSouth[index])),
-        ),
-        `${northToEast[index].kind} transition pair`,
-      ).toBeLessThanOrEqual(2);
+        frames.filter((frame) => frame.stem === stem).map(({ kind }) => kind),
+        `${stem} frame kinds`,
+      ).toEqual(['base', 'upper', 'composed']);
     }
   });
 
@@ -421,10 +376,12 @@ describe('QuotaCo high-oblique A1b authored B source family', () => {
     expect(northIngressDelta, 'full north to north/east ingress').toBeLessThanOrEqual(4);
     expect(westIngressDelta, 'full west to west/south ingress').toBeLessThanOrEqual(4);
 
+    // Solid occupancy only: the translucent 0.12 contact shade may overhang
+    // the 38-unit band onto the floor without extending the wall contract.
     const northEgress = Array.from({ length: A1B_CANVAS }, (_, x) => x)
-      .filter((x) => alphaAt(northToEast, x, A1B_CANVAS - 1) > 0);
+      .filter((x) => alphaAt(northToEast, x, A1B_CANVAS - 1) >= 128);
     const westEgress = Array.from({ length: A1B_CANVAS }, (_, y) => y)
-      .filter((y) => alphaAt(westToSouth, A1B_CANVAS - 1, y) > 0);
+      .filter((y) => alphaAt(westToSouth, A1B_CANVAS - 1, y) >= 128);
     expect(northEgress).toEqual(Array.from({ length: 38 }, (_, index) => index + 82));
     expect(westEgress).toEqual(Array.from({ length: 38 }, (_, index) => index + 82));
   });
@@ -548,9 +505,10 @@ describe('QuotaCo high-oblique A1b authored B source family', () => {
       }
     }
 
-    // The integrated transitions carry the low wall utility band through their
-    // exposed egress instead of covering it with a separately finished pylon.
-    expect([...usedTokens].sort()).toEqual(['cream', 'green', 'teal']);
+    // Owner-blessed directional treatments 2026-07-20: the reference shows no
+    // teal on low straights, so the root family paints cream/green product
+    // fields plus literal coral; the teal service register is retired here.
+    expect([...usedTokens].sort()).toEqual(['cream', 'green']);
   });
 
   it('compiles and composes without mutating production registrations or wall masks', async () => {

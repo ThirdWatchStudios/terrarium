@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import path from 'node:path';
 
 import { Resvg } from '@resvg/resvg-js';
@@ -28,6 +29,10 @@ const ROOT_SOURCE_PREFIX = 'assets/walls/quota-co-building-system';
 const ROOT_SOURCE_DIRECTORY = path.resolve(process.cwd(), ROOT_SOURCE_PREFIX);
 const LOW_SOURCE_PREFIX = `${ROOT_SOURCE_PREFIX}/low-profile-correction`;
 const LOW_SOURCE_DIRECTORY = path.resolve(process.cwd(), LOW_SOURCE_PREFIX);
+const PROOFS_SOURCE_DIRECTORY = path.resolve(
+  process.cwd(),
+  'assets/walls/quota-co-building-system-proofs',
+);
 
 type Edge = 'n' | 'e' | 's' | 'w';
 type Axis = 'row' | 'column';
@@ -57,14 +62,6 @@ const MATERIAL_RGB: Readonly<Record<Material, readonly [number, number, number]>
   teal: rgb(A1A_PALETTE.teal),
   coral: rgb(A1A_PALETTE.coral),
   charcoal: rgb(A1A_PALETTE.charcoal),
-};
-
-const MATERIAL_PAINT: Readonly<Record<Material, string>> = {
-  cream: '$cream',
-  green: '$green',
-  teal: '$teal',
-  coral: A1A_PALETTE.coral,
-  charcoal: A1A_PALETTE.charcoal,
 };
 
 function rgb(hex: string): readonly [number, number, number] {
@@ -230,44 +227,33 @@ function broadCharcoalLines(
   return lines;
 }
 
-function transposeMaskMismatchCount(
-  first: Raster,
-  second: Raster,
-  mask: 'alpha' | Material,
-): number {
-  expect([first.width, first.height]).toEqual([second.height, second.width]);
-  let mismatches = 0;
-  for (let y = 0; y < first.height; y += 1) {
-    for (let x = 0; x < first.width; x += 1) {
-      const firstValue = mask === 'alpha'
-        ? alphaAt(first, x, y) >= 128
-        : materialAt(first, x, y) === mask;
-      const secondValue = mask === 'alpha'
-        ? alphaAt(second, y, x) >= 128
-        : materialAt(second, y, x) === mask;
-      if (firstValue !== secondValue) mismatches += 1;
-    }
-  }
-  return mismatches;
+function isLitCream(rendered: Raster, x: number, y: number): boolean {
+  const index = pixelIndex(rendered, x, y);
+  if (rendered.pixels[index + 3] < 128) return false;
+  if (materialAt(rendered, x, y) !== 'cream') return false;
+  const cream = MATERIAL_RGB.cream;
+  return (
+    rendered.pixels[index] >= cream[0] + 5 &&
+    rendered.pixels[index + 1] >= cream[1] + 5 &&
+    rendered.pixels[index + 2] >= cream[2] + 5
+  );
 }
 
-function materialMaskFrame(frame: FrameLike, material: Material): FrameLike {
-  const paint = MATERIAL_PAINT[material];
-  const shapes = frame.shapes.flatMap((shape): A1aShape[] => {
-    const fillMatches = shape.fill === paint;
-    const strokeMatches = shape.stroke === paint;
-    if (!fillMatches && !strokeMatches) return [];
-    return [{
-      d: shape.d,
-      layer: shape.layer,
-      silhouette: false,
-      ...(fillMatches ? { fill: '#FFFFFF' } : {}),
-      ...(strokeMatches
-        ? { stroke: '#FFFFFF', strokeWidth: shape.strokeWidth ?? 1.5 }
-        : {}),
-    }];
-  });
-  return { id: `${frame.id}-${material}-mask`, shapes };
+// Walk inward from the outer silhouette edge: past transparency, past the
+// charcoal outline, then measure the contiguous white-lit cream run — the
+// visible top plane (or reveal) depth of the treatment.
+function litCreamRunDepth(rendered: Raster, edge: 'n' | 'w', offset: number): number {
+  const at = (position: number): readonly [number, number] =>
+    edge === 'n' ? [offset, position] : [position, offset];
+  let position = 0;
+  while (position < A1A_CANVAS && alphaAt(rendered, ...at(position)) < 128) position += 1;
+  while (position < A1A_CANVAS && materialAt(rendered, ...at(position)) === 'charcoal') position += 1;
+  let depth = 0;
+  while (position < A1A_CANVAS && isLitCream(rendered, ...at(position))) {
+    depth += 1;
+    position += 1;
+  }
+  return depth;
 }
 
 function authoredFrame(
@@ -408,44 +394,19 @@ describe('QuotaCo unified wall-envelope visual contract', () => {
     ).toBe(0);
   });
 
-  it('keeps paired facings transpose-identical in silhouette and material masks', () => {
-    const pairs: ReadonlyArray<readonly [string, FrameLike, FrameLike]> = [
-      [
-        'full straight',
-        authoredFrame(authoredFrames, 'full_n_straight'),
-        authoredFrame(authoredFrames, 'full_w_straight'),
-      ],
-      [
-        'profile transition',
-        authoredFrame(authoredFrames, 'transition_n_to_e'),
-        authoredFrame(authoredFrames, 'transition_w_to_s'),
-      ],
-      [
-        'low straight',
-        lowFrame(low, 'a1b_low_corrected_s'),
-        lowFrame(low, 'a1b_low_corrected_e'),
-      ],
-    ];
-    const masks = ['alpha', 'cream', 'green', 'teal', 'coral', 'charcoal'] as const;
+  it('keeps the exterior corner sockets continuous with both straight neighbours', () => {
+    const corner = rasterFrame(authoredFrame(authoredFrames, 'full_exterior_corner'));
+    const fullNorth = rasterFrame(authoredFrame(authoredFrames, 'full_n_straight'));
+    const fullWest = rasterFrame(authoredFrame(authoredFrames, 'full_w_straight'));
 
-    for (const [label, firstFrame, secondFrame] of pairs) {
-      const first = rasterFrame(firstFrame);
-      const second = rasterFrame(secondFrame);
-      for (const mask of masks) {
-        const firstMask = mask === 'alpha'
-          ? first
-          : rasterFrame(materialMaskFrame(firstFrame, mask));
-        const secondMask = mask === 'alpha'
-          ? second
-          : rasterFrame(materialMaskFrame(secondFrame, mask));
-        expect(
-          transposeMaskMismatchCount(firstMask, secondMask, 'alpha'),
-          `${label} ${mask} mask`,
-          // Resvg may choose the adjacent coverage pixel at one or two arc cusps;
-          // a larger disagreement is authored geometry drift, not antialiasing.
-        ).toBeLessThanOrEqual(2);
-      }
-    }
+    expect(
+      edgeMaxChannelDelta(corner, 'e', fullNorth, 'w'),
+      'corner east edge -> full north west edge',
+    ).toBeLessThanOrEqual(1);
+    expect(
+      edgeMaxChannelDelta(corner, 's', fullWest, 'n'),
+      'corner south edge -> full west north edge',
+    ).toBeLessThanOrEqual(1);
   });
 
   it('recompiles the focused envelope evidence to byte-identical rasters', async () => {
@@ -470,5 +431,85 @@ describe('QuotaCo unified wall-envelope visual contract', () => {
         `${id} repeated raster`,
       ).toEqual(rasterFrame(lowFrame(low, id)).pixels);
     }
+  });
+});
+
+// Owner correction 2026-07-20: profile height and directional plane treatment
+// are separate axes. These gates encode the measured reference constants from
+// docs/quota-co-recraft-workflow.md and run against the cross-section proofs
+// in assets/walls/quota-co-building-system-proofs/; they re-point to the kit
+// masters when the blessed treatments are applied to the straights.
+describe('QuotaCo directional cross-section law', () => {
+  function rasterProof(name: string): Raster {
+    const svg = readFileSync(path.join(PROOFS_SOURCE_DIRECTORY, name), 'utf8');
+    const rendered = new Resvg(svg, { font: { loadSystemFonts: false } }).render();
+    return { width: rendered.width, height: rendered.height, pixels: rendered.pixels };
+  }
+
+  let horizontal: Raster;
+  let vertical: Raster;
+
+  beforeAll(() => {
+    horizontal = rasterProof('proof-horizontal-frontal.svg');
+    vertical = rasterProof('proof-vertical-topplane.svg');
+  });
+
+  it('keeps the horizontal treatment flat and front-on with only a narrow lit reveal', () => {
+    for (const offset of [16, 32, 100]) {
+      const depth = litCreamRunDepth(horizontal, 'n', offset);
+      expect(depth, `horizontal reveal depth at x=${offset}`).toBeGreaterThanOrEqual(3);
+      expect(depth, `horizontal reveal depth at x=${offset}`).toBeLessThanOrEqual(8);
+    }
+  });
+
+  it('gives the vertical treatment the broad flatter-from-above top plane', () => {
+    for (const offset of [16, 32, 100]) {
+      expect(
+        litCreamRunDepth(vertical, 'w', offset),
+        `vertical top-plane depth at y=${offset}`,
+      ).toBeGreaterThanOrEqual(28);
+    }
+  });
+
+  it('separates the two axis treatments by at least the 3x plane ratio', () => {
+    expect(
+      litCreamRunDepth(vertical, 'w', 32),
+      'vertical top plane vs horizontal reveal',
+    ).toBeGreaterThanOrEqual(3 * litCreamRunDepth(horizontal, 'n', 32));
+  });
+
+  it('holds the directional law on the applied straight masters', () => {
+    const fullNorth = rasterFrame(authoredFrame(authoredFrames, 'full_n_straight'));
+    const fullWest = rasterFrame(authoredFrame(authoredFrames, 'full_w_straight'));
+    const lowSouth = rasterFrame(lowFrame(low, 'a1b_low_corrected_s'));
+    const lowEast = rasterFrame(lowFrame(low, 'a1b_low_corrected_e'));
+
+    const northReveal = litCreamRunDepth(fullNorth, 'n', 32);
+    const westPlane = litCreamRunDepth(fullWest, 'w', 32);
+    expect(northReveal, 'full north reveal depth').toBeGreaterThanOrEqual(3);
+    expect(northReveal, 'full north reveal depth').toBeLessThanOrEqual(8);
+    expect(westPlane, 'full west top-plane depth').toBeGreaterThanOrEqual(28);
+    expect(westPlane, 'axis plane ratio').toBeGreaterThanOrEqual(3 * northReveal);
+
+    const southReveal = litCreamRunDepth(lowSouth, 'n', 32);
+    const eastCoping = litCreamRunDepth(lowEast, 'w', 32);
+    expect(southReveal, 'low south reveal depth').toBeGreaterThanOrEqual(3);
+    expect(southReveal, 'low south reveal depth').toBeLessThanOrEqual(8);
+    expect(eastCoping, 'low east coping depth').toBeGreaterThanOrEqual(16);
+  });
+
+  it('keeps one material system in the same order on both treatments', () => {
+    expect(materialAt(horizontal, 32, 74), 'horizontal face field').toBe('cream');
+    expect(isLitCream(horizontal, 32, 74), 'horizontal face field is not top-lit').toBe(false);
+    expect(materialAt(horizontal, 32, 91), 'horizontal coral band').toBe('coral');
+    expect(materialAt(horizontal, 32, 107), 'horizontal green face').toBe('green');
+    expect(materialAt(horizontal, 32, 118), 'horizontal plinth').toBe('charcoal');
+
+    expect(materialAt(vertical, 75, 32), 'vertical top plane').toBe('cream');
+    expect(isLitCream(vertical, 75, 32), 'vertical top plane is top-lit').toBe(true);
+    expect(materialAt(vertical, 94, 32), 'vertical face sliver').toBe('cream');
+    expect(materialAt(vertical, 101, 32), 'vertical coral band').toBe('coral');
+    expect(materialAt(vertical, 111, 32), 'vertical green face').toBe('green');
+    expect(materialAt(vertical, 118, 32), 'vertical plinth').toBe('charcoal');
   });
 });
