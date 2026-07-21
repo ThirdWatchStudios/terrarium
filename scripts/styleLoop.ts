@@ -141,6 +141,10 @@ const SAME_ORDER_EAST_PROFILE_OVERRIDE: CompositionFileOverrides = {
   'transition_n_to_e-upper.svg': SAME_ORDER_TRANSITION_N_TO_E_UPPER,
 };
 
+const TRANSITION_W_TO_S_CELL: ReadonlyArray<CompositionCell> = [
+  [0, 0, 'transition_w_to_s-base.svg', 'transition_w_to_s-upper.svg'],
+];
+
 // A minimum closed room deliberately made only from junction pieces. It makes
 // oversized corner and transition silhouettes impossible to hide behind long
 // straight runs.
@@ -302,8 +306,8 @@ function benchPage(): string {
     'figure.length-ladder{max-width:1100px}</style>' +
     '<h1>QuotaCo Building System — live workbench</h1>' +
     '<div id="status">waiting for first render…</div>' +
-    '<h2>accepted one-piece checkpoint — low southeast outer corner</h2>' +
-    '<figure class="transition-focus" data-stem="low-se-corner-focus"><img src="low-se-corner-focus.png" alt="low southeast corner reference and installed proofs"></figure>' +
+    '<h2>accepted one-piece checkpoint — southwest full-to-low transition</h2>' +
+    '<figure class="transition-focus" data-stem="transition-w-to-s-focus"><img src="transition-w-to-s-focus.png" alt="accepted southwest full-to-low transition and installed proofs"></figure>' +
     '<h2>cross-section controls — directional plane law</h2>' +
     '<figure class="proofs" data-stem="cross-section-proofs"><img src="cross-section-proofs.png" alt="cross-section proofs"></figure>' +
     '<h2>envelope gate — composed structural shell, no opening content</h2>' +
@@ -361,6 +365,7 @@ async function render(
   await renderEnvelopeGate(options);
   await renderRoomMock(options);
   await renderLengthLadder(options);
+  await renderTransitionWestSouthFocus(options, root);
   await renderEastFacingMirrorProof(options, root);
   await renderLowSoutheastCornerFocus(options, root);
   const renderedAt = new Date().toISOString();
@@ -449,6 +454,23 @@ function terminusRunCells(bodyLength: number): CompositionCell[] {
   ];
 }
 
+function transitionWestSouthInstalledCells(length: number): CompositionCell[] {
+  return [
+    ...straightRunCells(
+      length,
+      'full_w_straight-base.svg',
+      'full_w_straight-upper.svg',
+      true,
+    ),
+    [0, length, 'transition_w_to_s-base.svg', 'transition_w_to_s-upper.svg'],
+    ...Array.from(
+      { length },
+      (_, index) =>
+        [index + 1, length, 'low-profile-correction/low-s-straight.svg', null] as CompositionCell,
+    ),
+  ];
+}
+
 function compactCornerHeaderCells(): CompositionCell[] {
   return [
     [0, 0, 'full_exterior_corner-base.svg', 'full_exterior_corner-upper.svg'],
@@ -501,6 +523,154 @@ function longLowSoutheastInstalledCells(): CompositionCell[] {
     [2, 3, 'low-profile-correction/low-s-straight.svg', null],
     [3, 3, 'low-profile-correction/low-se-corner.svg', null],
   ];
+}
+
+async function renderTransitionWestSouthFocus(options: CliOptions, root: string): Promise<void> {
+  const width = 1600;
+  const height = 1380;
+  const panelFill = '#ECE5D5';
+  const panel = (x: number, y: number, w: number, h: number): string =>
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="14" fill="${panelFill}" ` +
+    `stroke="${INK}" stroke-width="1.5" opacity="0.96"/>`;
+  const cornerReference = `data:image/png;base64,${Buffer.from(
+    await readFile(path.join(root, 'docs', 'reference', 'quota-co-wall-corners-and-ends-study.png')),
+  ).toString('base64')}`;
+  const referenceCrop = (
+    href: string,
+    x: number,
+    y: number,
+    width_: number,
+    height_: number,
+    viewBox: string,
+  ): string =>
+    `<svg x="${x}" y="${y}" width="${width_}" height="${height_}" viewBox="${viewBox}" ` +
+    `preserveAspectRatio="xMidYMid meet"><image width="1536" height="1024" href="${href}"/></svg>`;
+  const transitionBaseCell: ReadonlyArray<CompositionCell> = [
+    [0, 0, 'transition_w_to_s-base.svg', null],
+  ];
+  const transitionUpperCell: ReadonlyArray<CompositionCell> = [
+    [0, 0, 'transition_w_to_s-upper.svg', null],
+  ];
+  const westSocketCells: ReadonlyArray<CompositionCell> = [
+    [0, 0, 'full_w_straight-base.svg', 'full_w_straight-upper.svg'],
+    [0, 1, 'transition_w_to_s-base.svg', 'transition_w_to_s-upper.svg'],
+  ];
+  const southSocketCells: ReadonlyArray<CompositionCell> = [
+    [0, 0, 'transition_w_to_s-base.svg', 'transition_w_to_s-upper.svg'],
+    [1, 0, 'low-profile-correction/low-s-straight.svg', null],
+  ];
+
+  const parts: string[] = [
+    `<rect width="${width}" height="${height}" rx="18" fill="${PANEL}"/>`,
+    text(24, 34, 'SOUTHWEST FULL-TO-LOW TRANSITION — PROMOTED CHECKPOINT', 21, 800),
+    text(24, 58, 'Promoted source. Low-SE ownership applied to the height step: the south front wraps the heel; the west top ends behind it.', 12, 600, MUTED),
+    panel(20, 76, 350, 340),
+    panel(390, 76, 330, 340),
+    panel(740, 76, 840, 340),
+    panel(20, 436, 760, 360),
+    panel(800, 436, 780, 360),
+    panel(20, 816, 770, 540),
+    panel(810, 816, 770, 540),
+    text(40, 108, 'OWNER-APPROVED SOUTHWEST TARGET', 14, 800),
+    text(40, 130, 'Broad west mass; shallow south wall enters from its side.', 11, 600, MUTED),
+    referenceCrop(cornerReference, 45, 138, 300, 238, '780 520 325 480'),
+    text(40, 397, 'Use the ownership and catalog weight—not the generated pixels.', 10, 600, MUTED),
+    text(410, 108, 'PROMOTED SOURCE — COMPOSED', 14, 800),
+    text(410, 130, 'Canonical composed source at construction scale.', 11, 600, MUTED),
+    text(410, 390, 'molded turn  ·  wrapped foreground stack  ·  continuous sockets', 10, 700, A1A_PALETTE.green),
+    text(760, 108, 'CANONICAL CONSTRUCTION — PROMOTED SOURCE', 14, 800),
+    text(760, 130, 'Base and upper remain separate paint passes; judge the composed source.', 11, 600, MUTED),
+    text(845, 330, 'BASE', 10, 750, MUTED, 'middle'),
+    text(1015, 330, 'UPPER', 10, 750, MUTED, 'middle'),
+    text(1250, 390, 'COMPOSED', 10, 750, MUTED, 'middle'),
+    text(1450, 158, '90 px', 10, 700, MUTED, 'middle'),
+    text(1530, 246, '40 px', 10, 700, MUTED, 'middle'),
+    text(760, 405, 'South cream / coral / green repaint the complete foreground heel after the west plane terminates.', 10, 700, A1A_PALETTE.green),
+    text(40, 468, 'FULL-WEST INGRESS — ENLARGED SOCKET', 14, 800),
+    text(40, 490, 'Fixed full-west above; promoted transition below. The horizontal guide is the tile boundary.', 11, 600, MUTED),
+    text(390, 555, 'WEST OWNS', 11, 800),
+    text(390, 579, '• the 64-unit vertical mass', 11, 600, MUTED),
+    text(390, 603, '• broad cream plane', 11, 600, MUTED),
+    text(390, 627, '• narrow side shade', 11, 600, MUTED),
+    text(390, 675, 'The shaft ends behind the south coping.', 11, 750, A1A_PALETTE.green),
+    text(820, 468, 'LOW-SOUTH EGRESS — ENLARGED SOCKET', 14, 800),
+    text(820, 490, 'Promoted transition left; fixed low-south right. The vertical guide is the tile boundary.', 11, 600, MUTED),
+    text(820, 745, 'Gate: cream / coral / green / plinth hand off without a shelf, patch, or side-face overpaint.', 11, 700),
+    text(40, 848, 'MINIMUM INSTALLED TURN', 14, 800),
+    text(40, 870, 'One-cell arms: the corner-unit gate.', 11, 600, MUTED),
+    text(830, 848, 'LONG INSTALLED TURN', 14, 800),
+    text(830, 870, 'Three-cell arms: the repetition gate.', 11, 600, MUTED),
+    text(40, 1332, 'The height change must read immediately without becoming a terminal capsule.', 11, 650, MUTED),
+    text(830, 1332, 'The transition must disappear into the catalog rhythm once the runs grow.', 11, 650, MUTED),
+  ];
+  parts.push(
+    await compositionWindow(
+      options, TRANSITION_W_TO_S_CELL, 1, 1, 435, 145, 240, 240,
+    ),
+  );
+  parts.push(
+    await compositionWindow(
+      options, transitionBaseCell, 1, 1, 770, 155, 150, 150,
+    ),
+  );
+  parts.push(
+    await compositionWindow(
+      options, transitionUpperCell, 1, 1, 940, 155, 150, 150,
+    ),
+  );
+  parts.push(
+    await compositionWindow(
+      options, TRANSITION_W_TO_S_CELL, 1, 1, 1115, 125, 270, 270,
+    ),
+  );
+  parts.push(
+    await compositionWindow(
+      options, TRANSITION_W_TO_S_CELL, 1, 1, 1405, 175, 90, 90,
+    ),
+  );
+  parts.push(
+    await compositionWindow(
+      options, TRANSITION_W_TO_S_CELL, 1, 1, 1510, 260, 40, 40,
+    ),
+  );
+  parts.push(
+    await compositionWindow(
+      options, westSocketCells, 1, 2, 80, 515, 280, 260,
+      {}, '64 96 64 64',
+    ),
+  );
+  parts.push(
+    `<path d="M64 645H376" fill="none" stroke="${A1A_PALETTE.coral}" ` +
+    'stroke-width="2" stroke-dasharray="6 5" opacity="0.75"/>',
+  );
+  parts.push(
+    await compositionWindow(
+      options, southSocketCells, 2, 1, 850, 530, 680, 170,
+      {}, '0 64 256 64',
+    ),
+  );
+  parts.push(
+    `<path d="M1190 515V720" fill="none" stroke="${A1A_PALETTE.coral}" ` +
+    'stroke-width="2" stroke-dasharray="6 5" opacity="0.75"/>',
+  );
+  parts.push(
+    await compositionWindow(
+      options, transitionWestSouthInstalledCells(1), 2, 2, 245, 925, 320, 320,
+    ),
+  );
+  parts.push(
+    await compositionWindow(
+      options, transitionWestSouthInstalledCells(3), 4, 4, 1035, 925, 320, 320,
+    ),
+  );
+
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" ` +
+    `viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+  const png = new Resvg(svg, {
+    fitTo: { mode: 'width', value: width * CARD_RENDER_SCALE },
+  }).render().asPng();
+  await writeFile(path.join(options.output, 'transition-w-to-s-focus.png'), png);
 }
 
 async function renderEastFacingMirrorProof(options: CliOptions, root: string): Promise<void> {
@@ -959,6 +1129,7 @@ async function renderContextMocksSafely(options: CliOptions, root: string): Prom
     await renderEnvelopeGate(options);
     await renderRoomMock(options);
     await renderLengthLadder(options);
+    await renderTransitionWestSouthFocus(options, root);
     await renderEastFacingMirrorProof(options, root);
     await renderLowSoutheastCornerFocus(options, root);
     const statusPath = path.join(options.output, 'status.json');

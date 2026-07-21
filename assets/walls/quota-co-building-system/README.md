@@ -82,7 +82,7 @@ Terrarium owns this source art and any later palette-mask evidence. Unity owns
 composition, cutaways, sorting application, lighting, and production acceptance.
 
 Do not expand this directory to the complete 47-blob/profile/opening family until separately authorized after
-the complete envelope review. The northwest, northeast, low-east, and low-southeast directional source
-checkpoint is accepted. The low-southeast corner keeps the south cream/coral/green stack in front through the
-outer heel while the east coping terminates behind it. Do not derive a contract or schema change from these
-source files alone.
+the complete envelope review. The northwest, northeast, low-east, low-southeast, and southwest full-to-low
+directional source checkpoint is accepted. The south cream/coral/green stack owns the foreground heel at both
+southern turns: the low-southeast east coping and the southwest full-west plane terminate behind the shallow
+south coping. Do not derive a contract or schema change from these source files alone.

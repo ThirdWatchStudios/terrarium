@@ -131,13 +131,17 @@ On restart, keep the pass bounded to A1 wall geometry:
    intentional high-to-low transitions.
 
 **Approved directional checkpoint (2026-07-21):** the northwest full/full corner, northeast full-to-low
-turn, low-east straight, and low-southeast corner now establish the accepted side-wall rule. The east cross-section is a local,
+turn, low-east straight, low-southeast corner, and southwest full-to-low turn now establish the accepted
+side-wall rule. The east cross-section is a local,
 reanchored X-mirror inside `82..120` around `x=101`: its coral/green fascia and contact shadow face the room,
 while its cream plane faces outward. This is not permission to flip a whole tile or synthesize the facing at
 runtime. The northeast and repeated east run passed the compact header and long-drop review at gameplay
 distance. The low-southeast corner passed isolated, one-cell, and long-run review with the south-facing
 cream/coral/green stack wrapping the foreground heel and the east coping terminating behind the shallow south
-top. Contact-shadow polish is explicitly deferred.
+top. The southwest transition passed isolated construction, full-west ingress, low-south egress, one-cell,
+and long-run review by applying the same ownership rule at the height step: the broad west plane terminates
+behind the shallow south coping and the rounded south stack owns the foreground heel. Contact-shadow polish
+is explicitly deferred.
 
 **Still isolated after directional source acceptance:** `topology/` and `state/`; official preview
 regeneration; template/catalog registration; exporter, `CONTRACT.md`, or schema changes; prop pilots; Unity;
@@ -156,7 +160,8 @@ corner turns with the profile drop on the run past the corner** (matching the go
 room-side stack terminates against the standing wall's inner outline, the top surface flows through the turn,
 the exterior stack wraps in below the outer arc, and a terminus end face steps down onto the low section.
 Committed piecewise through the corner rebuild. The 2026-07-21 checkpoint supersedes this progress snapshot;
-the previously residual low-southeast corner is now accepted at source level, with propagation still isolated.
+the previously residual low-southeast corner and southwest transition are now accepted at source level, with
+propagation still isolated.
 
 ### Measured reference constants (step-1 measurement pass, 2026-07-20)
 

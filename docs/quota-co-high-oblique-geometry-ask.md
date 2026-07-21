@@ -38,6 +38,10 @@ work as actual sprites.
   broad cream plane must face outward. For the 38-unit low-east profile, mirror the cross-section locally
   around `x=101` while preserving the `82..120` structural socket; never flip the whole cell or defer this
   facing correction to Unity.
+- **Owner approval, 2026-07-21: the south-facing stack owns both foreground heels.** At the low-southeast
+  outer turn and the southwest full-to-low height step, the adjoining east/west top terminates behind the
+  shallow south coping. The south cream/coral/green stack wraps the heel; a side-wall top or fascia may not
+  overpaint the south front.
 - Shallow south/front and east/side faces are drawn into the art.
 - Floors remain visibly flat on the walkable plane—never raised product plinths.
 - North and west room edges may carry full-height walls.

@@ -41,6 +41,10 @@ expanding the grammar.
   cream top and arris mediate the directional planes. The south cream/coral/green stack owns the complete
   foreground heel, while the east shaft terminates behind the shallow south coping. Never let the east top or
   fascia overpaint the south front.
+- Southwest transition ownership law (owner acceptance, 2026-07-21): at the full west-to-low south height
+  step, the broad west plane and its coral/green shaft terminate behind the shallow south coping. The south
+  cream/coral/green stack repaints and rounds through the complete foreground heel. Never extend the west top
+  or fascia across the south front.
 - Vertical profiles (kit law): exposed low walls occupy the **38-unit outer profile (`82..120`)**; full
   walls occupy one **64-unit outer envelope (`56..120`)**. `base` and `upper` are technical paint passes,
   not two finished products: draw base first, then upper at the same centered pivot, and judge only their

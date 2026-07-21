@@ -445,6 +445,34 @@ describe('QuotaCo unified wall-envelope visual contract', () => {
     }
   });
 
+  it('keeps the south-facing material stack in front through the southwest height-step heel', () => {
+    const transition = rasterFrame(authoredFrame(authoredFrames, 'transition_w_to_s'));
+    const lowSouth = rasterFrame(lowFrame(low, 'a1b_low_corrected_s'));
+    const registers = [92, 100, 108] as const;
+
+    for (const x of [64, 72, 80, 96, 112]) {
+      for (const y of registers) {
+        expect(
+          materialAt(transition, x, y),
+          `southwest transition ownership at (${x}, ${y})`,
+        ).toBe(materialAt(lowSouth, 32, y));
+      }
+    }
+
+    // The inner foreground span must carry the actual low-south paint, not a
+    // lightened west-top overlay that merely still classifies as cream.
+    for (const x of [72, 80, 96, 112]) {
+      for (const y of registers) {
+        const transitionIndex = pixelIndex(transition, x, y);
+        const lowSouthIndex = pixelIndex(lowSouth, 32, y);
+        expect(
+          Array.from(transition.pixels.subarray(transitionIndex, transitionIndex + 4)),
+          `southwest transition foreground pixel at (${x}, ${y})`,
+        ).toEqual(Array.from(lowSouth.pixels.subarray(lowSouthIndex, lowSouthIndex + 4)));
+      }
+    }
+  });
+
   it('recompiles the focused envelope evidence to byte-identical rasters', async () => {
     const repeated = await loadFamilies();
     const repeatedAuthoredFrames = buildA1bAuthoredFrames(repeated.authored.components);
