@@ -377,11 +377,9 @@ describe('QuotaCo unified wall-envelope visual contract', () => {
     ).toBeLessThanOrEqual(1);
   });
 
-  it('hands each transition to the real low wall with matching occupancy and material registers', () => {
+  it('keeps the legacy north/east turn joined to the real low-east wall', () => {
     const northToEast = rasterFrame(authoredFrame(authoredFrames, 'transition_n_to_e'));
     const lowEast = rasterFrame(lowFrame(low, 'a1b_low_corrected_e'));
-    const westToSouth = rasterFrame(authoredFrame(authoredFrames, 'transition_w_to_s'));
-    const lowSouth = rasterFrame(lowFrame(low, 'a1b_low_corrected_s'));
 
     expect(
       edgeAlphaMismatchCount(northToEast, 's', lowEast, 'n'),
@@ -391,14 +389,23 @@ describe('QuotaCo unified wall-envelope visual contract', () => {
       edgeMaterialMismatchCount(northToEast, 's', lowEast, 'n'),
       'north-to-east south edge -> low-east north edge material ownership',
     ).toBe(0);
+  });
+
+  it('joins the promoted southwest corner exactly to full west and full south', () => {
+    const corner = rasterFrame(authoredFrame(authoredFrames, 'transition_w_to_s'));
+    const fullWest = rasterFrame(authoredFrame(authoredFrames, 'full_w_straight'));
+    const fullSouth = rasterFrame(authoredFrame(authoredFrames, 'full_n_straight'));
+
     expect(
-      edgeAlphaMismatchCount(westToSouth, 'e', lowSouth, 'w'),
-      'west-to-south east edge -> low-south west edge occupancy',
-    ).toBe(0);
+      edgeMaxChannelDelta(fullWest, 's', corner, 'n'),
+      'full-west south edge -> southwest north edge',
+    ).toBeLessThanOrEqual(1);
     expect(
-      edgeMaterialMismatchCount(westToSouth, 'e', lowSouth, 'w'),
-      'west-to-south east edge -> low-south west edge material ownership',
-    ).toBe(0);
+      edgeMaxChannelDelta(corner, 'e', fullSouth, 'w'),
+      'southwest east edge -> promoted full-south west edge',
+    ).toBeLessThanOrEqual(1);
+    expect(edgeAlphaMismatchCount(fullWest, 's', corner, 'n')).toBe(0);
+    expect(edgeAlphaMismatchCount(corner, 'e', fullSouth, 'w')).toBe(0);
   });
 
   it('keeps the exterior corner sockets continuous with both straight neighbours', () => {
@@ -445,30 +452,37 @@ describe('QuotaCo unified wall-envelope visual contract', () => {
     }
   });
 
-  it('keeps the south-facing material stack in front through the southwest height-step heel', () => {
-    const transition = rasterFrame(authoredFrame(authoredFrames, 'transition_w_to_s'));
-    const lowSouth = rasterFrame(lowFrame(low, 'a1b_low_corrected_s'));
-    const registers = [92, 100, 108] as const;
+  it('keeps the full south-facing material stack in front through the southwest heel', () => {
+    const corner = rasterFrame(authoredFrame(authoredFrames, 'transition_w_to_s'));
+    const fullSouth = rasterFrame(authoredFrame(authoredFrames, 'full_n_straight'));
+    const registers = [90, 100, 108] as const;
+
+    // The curved arris legitimately crosses the cream reveal near x=96; test
+    // the uninterrupted reveal on both sides of that local construction seam.
+    for (const x of [64, 72, 80, 112]) {
+      expect(materialAt(corner, x, 60), `southwest cream wrap at x=${x}`)
+        .toBe(materialAt(fullSouth, 32, 60));
+    }
 
     for (const x of [64, 72, 80, 96, 112]) {
       for (const y of registers) {
         expect(
-          materialAt(transition, x, y),
-          `southwest transition ownership at (${x}, ${y})`,
-        ).toBe(materialAt(lowSouth, 32, y));
+          materialAt(corner, x, y),
+          `southwest full-height ownership at (${x}, ${y})`,
+        ).toBe(materialAt(fullSouth, 32, y));
       }
     }
 
-    // The inner foreground span must carry the actual low-south paint, not a
-    // lightened west-top overlay that merely still classifies as cream.
+    // The foreground span must carry the exact promoted south paint, not a
+    // west-side overlay that only happens to classify as the same material.
     for (const x of [72, 80, 96, 112]) {
       for (const y of registers) {
-        const transitionIndex = pixelIndex(transition, x, y);
-        const lowSouthIndex = pixelIndex(lowSouth, 32, y);
+        const cornerIndex = pixelIndex(corner, x, y);
+        const fullSouthIndex = pixelIndex(fullSouth, 32, y);
         expect(
-          Array.from(transition.pixels.subarray(transitionIndex, transitionIndex + 4)),
-          `southwest transition foreground pixel at (${x}, ${y})`,
-        ).toEqual(Array.from(lowSouth.pixels.subarray(lowSouthIndex, lowSouthIndex + 4)));
+          Array.from(corner.pixels.subarray(cornerIndex, cornerIndex + 4)),
+          `southwest full-height foreground pixel at (${x}, ${y})`,
+        ).toEqual(Array.from(fullSouth.pixels.subarray(fullSouthIndex, fullSouthIndex + 4)));
       }
     }
   });

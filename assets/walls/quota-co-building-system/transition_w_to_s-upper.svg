@@ -1,21 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
-  <title>QuotaCo Building System west-to-south transition upper</title>
-  <desc>A single molded QuotaCo southwest step corner: the broad west plane terminates behind the shallow low-south coping while the south cream, coral, green, and plinth stack wraps the foreground heel without a terminal capsule, patch, or applied corner box.</desc>
+  <title>QuotaCo Building System full-height southwest corner upper</title>
+  <desc>One molded equal-height southwest upper: west planes terminate behind a full-height south frontage whose cream, coral, green, and plinth stack owns the foreground heel.</desc>
   <g id="detail/upper">
-    <path id="upper-west-plane-light" d="M58 0H90.5V76A12 12 0 0 0 102.5 88H58Z" fill="#FFFFFF" opacity="0.18"/>
-    <path id="upper-west-coping-lip" d="M90.5 0H92V76H90.5Z" fill="#FFFFFF" opacity="0.30"/>
-    <path id="upper-west-coral-turn" d="M97 0H102V89A8 8 0 0 0 110 97H128V102H110A13 13 0 0 1 97 89Z" fill="#B65F4D"/>
-    <path id="upper-west-green-turn" d="M102 0H117V96A6 6 0 0 0 123 102H128V117H123A21 21 0 0 1 102 96Z" fill="#294B3C"/>
-    <path id="upper-west-face-shade" d="M92 0H117V82H102V84H92Z" fill="#000000" opacity="0.12"/>
-    <path id="upper-west-plinth" d="M117 0H120V82H117Z" fill="#252A28"/>
-    <path id="upper-south-cream-wrap" d="M58 84H128V97H58Z" fill="#D9D0B9"/>
-    <path id="upper-south-reveal-light" d="M58 84H128V88H62A4 4 0 0 1 58 84Z" fill="#FFFFFF" opacity="0.30"/>
-    <path id="upper-south-coral-wrap" d="M58 97H128V102H63A5 5 0 0 1 58 97Z" fill="#B65F4D"/>
-    <path id="upper-south-band-light" d="M58 97H128V98.5H59.5A1.5 1.5 0 0 1 58 97Z" fill="#FFFFFF" opacity="0.10"/>
-    <path id="upper-south-green-wrap" d="M58 102H128V117H66A8 8 0 0 1 58 109Z" fill="#294B3C"/>
+    <path id="upper-contour" d="M56 0H105V46A10 10 0 0 0 115 56H128V97H66A10 10 0 0 1 56 87Z" fill="#252A28"/>
+    <path id="upper-shell" d="M58 0H103V48A10 10 0 0 0 113 58H128V97H68A10 10 0 0 1 58 87Z" fill="#D9D0B9"/>
+    <path id="upper-west-plane-light" d="M58 0H90.5V51A12 12 0 0 0 102.5 63H58Z" fill="#FFFFFF" opacity="0.18"/>
+    <path id="upper-west-arris-lip" d="M90.5 0H92V51H90.5Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="upper-west-coral" d="M97 0H102V88H97Z" fill="#B65F4D"/>
+    <path id="upper-west-green" d="M102 0H117V94H102Z" fill="#294B3C"/>
+    <path id="upper-west-face-shade" d="M92 0H117V58H92Z" fill="#000000" opacity="0.12"/>
+    <path id="upper-west-plinth" d="M117 0H120V58H117Z" fill="#252A28"/>
+    <path id="upper-south-cream-wrap" d="M58 58H128V97H58Z" fill="#D9D0B9"/>
+    <path id="upper-south-reveal-light" d="M58 58H128V63H58Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="upper-south-coral-wrap" d="M58 88H128V94H58Z" fill="#B65F4D"/>
+    <path id="upper-south-band-light" d="M58 88H128V89.5H58Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="upper-south-green-wrap" d="M58 94H128V117H66A8 8 0 0 1 58 109Z" fill="#294B3C"/>
     <path id="upper-south-plinth" d="M66 117H128V120H66Z" fill="#252A28"/>
-    <path id="upper-arris-seam" d="M92 1V76A12 12 0 0 0 104 88H127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
-    <path id="upper-west-band-seam" d="M102 1V83" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
-    <path id="upper-south-band-seam" d="M63 102H127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+    <path id="upper-arris-seam" d="M92 1V51A12 12 0 0 0 104 63H127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="upper-west-band-seam" d="M102 1V57" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+    <path id="upper-south-band-seam" d="M58 94H127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+    <path id="upper-boundary-seam" d="M126 64V96 M126 98V116" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
   </g>
 </svg>

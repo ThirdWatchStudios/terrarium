@@ -1,8 +1,16 @@
 # A1b low-profile corrective source strip
 
-This source-only directory holds the owner-accepted directional low-wall
-correction without regenerating or registering the complete 47-blob family. The
-files are editable art authority for a deliberately small corrective strip:
+> **Legacy comparison status (superseded for ordinary walls by owner approval, 2026-07-21):** these
+> low-south, low-east, low-southeast, and transition sources remain intact as deterministic A/B evidence.
+> They are not the current ordinary structural-wall or perimeter/cutaway target. Ordinary walls now use the
+> full 64-unit profile on every edge, with south reusing the exact full-north pair and east still awaiting
+> review of a full-west whole-cell mirror. Do not delete these sources until the replacement equal-height
+> enclosure is accepted; only a separately approved internal-partition catalog may revive a low profile.
+
+This source-only directory preserves the previously owner-accepted directional
+low-wall correction without regenerating or registering the complete 47-blob
+family. The files are editable historical evidence for a deliberately small
+corrective strip:
 
 - `low-s-straight.svg`
 - `low-e-straight.svg`
@@ -13,9 +21,10 @@ files are editable art authority for a deliberately small corrective strip:
 Every source uses a strict `0 0 128 128` canvas. Low/base art lives under
 `detail/low`; the optional transition extension lives under `detail/upper`.
 South and east are separately authored fixed-light views, not rotated exports.
-Acceptance covers these source silhouettes and their composed visual read; it
-does not authorize topology propagation, production registration, export, schema,
-or Unity changes.
+Their prior acceptance covers these source silhouettes and their composed visual
+read only; it neither overrides the promoted equal-height ordinary-wall decision
+nor authorizes topology propagation, production registration, export, schema, or
+Unity changes.
 
 ## Corrective ruler
 
@@ -36,8 +45,8 @@ The corrective low wall is a finished cutaway product with directional rulers:
 - southeast ownership: the south cream/coral/green stack paints the foreground
   heel, the east shaft ends behind the shallow south coping, and only the cream
   top/arris bridges the directional turn;
-- connected north and west sockets remain exact. No whole-cell rotation or
-  transpose is permitted.
+- connected north and west sockets remain exact. Within this legacy low strip,
+  no whole-cell rotation or transpose is permitted.
 
 The existing full upper ends near `99`, allowing it to overlap the cream coping
 without leaving a second visible cap. The transition pair preserves that tested

@@ -1,6 +1,6 @@
 # QuotaCo High-Oblique Geometry — Production Art Ask
 
-**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** directional A1 source geometry accepted; propagation pending
+**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** equal-height structural-wall correction in progress; south and southwest promoted, southeast next
 
 Canonical direction lives in the sim repository:
 
@@ -28,25 +28,33 @@ work as actual sprites.
 ## 2. Locked visual contract
 
 - Fixed orthographic high-oblique presentation; no perspective and no diamond/isometric grid.
+- **Owner approval, 2026-07-21: every ordinary structural wall occupies its complete non-walkable cell with
+  the same full 64-unit profile.** North and south use the exact `full_n_straight` base/upper source pair at
+  the same centered pivot; south requires no transform, duplicated SVG, or new frame identity. The intended
+  east is a whole-cell X-mirror of the accepted full-west pair around `x=64`; east and northeast remain
+  unregistered reviewed proposals. The promoted `transition_w_to_s` pair is the equal-height southwest
+  corner, preserving exact full-west and shared full-north/south sockets. Low/cutaway perimeter walls are
+  superseded; a low wall may only return as a separately approved internal-partition catalog product.
 - **Owner clarification, 2026-07-20: wall profile height and directional plane treatment are separate
   axes.** Horizontal east-west runs on the north/south room edges must read visibly flat/front-on, with
   only a narrow top reveal. Vertical north-south runs on the east/west room edges must expose the broader,
   flatter-from-above top/side plane. Do not transpose one axis to manufacture the other; compatible sockets
   may share occupancy and band endpoints while their visible cross-sections remain intentionally different.
-- **Owner approval, 2026-07-21: opposite room edges also require opposite authored handedness.** West and
-  east use the same vertical plane depth, but the fascia/contact side must face inward on each edge and the
-  broad cream plane must face outward. For the 38-unit low-east profile, mirror the cross-section locally
-  around `x=101` while preserving the `82..120` structural socket; never flip the whole cell or defer this
-  facing correction to Unity.
-- **Owner approval, 2026-07-21: the south-facing stack owns both foreground heels.** At the low-southeast
+- **Legacy low-east checkpoint, 2026-07-21:** the prior 38-unit east source used a local mirror around
+  `x=101` inside its `82..120` socket. Preserve that result as comparison evidence only; it does not constrain
+  the pending full-height east whole-cell mirror or authorize a runtime transform.
+- **Legacy southern-corner checkpoint, 2026-07-21:** at the former low-southeast
   outer turn and the southwest full-to-low height step, the adjoining east/west top terminates behind the
   shallow south coping. The south cream/coral/green stack wraps the heel; a side-wall top or fascia may not
-  overpaint the south front.
+  overpaint the south front. Carry that wrap/ownership lesson into the new equal-height corners, but do not
+  retain the low profile or height step as ordinary perimeter vocabulary.
+- **Promoted southwest checkpoint, 2026-07-21:** the canonical `transition_w_to_s` pair is now an
+  equal-height full-west-to-full-south molded corner. The south cream/coral/green/plinth stack repaints the
+  foreground heel after the west planes terminate, and both 64-unit sockets remain pixel-continuous.
 - Shallow south/front and east/side faces are drawn into the art.
 - Floors remain visibly flat on the walkable plane—never raised product plinths.
-- North and west room edges may carry full-height walls.
-- South uses a permanent low sill/cutaway profile; east uses a low profile where practical and leaves any
-  conditional fade behavior to Unity.
+- North, south, east, and west ordinary room edges all use the full-height structural envelope. Agents cannot
+  occupy the wall cell, so no low sill/cutaway is needed to preserve play visibility.
 - Selectric-era administrative industrial design: substantial molded shells, generous radii, deep recesses,
   stepped bases, thick tactile hardware, visible service seams, and one clear silhouette before detail.
 - Core palette: aged cream shells, deep green bases, oxidized teal fields, restrained coral/rust product
@@ -66,12 +74,11 @@ scales. The first review sheet contains only enough pieces to settle depth, heig
 |---|---|
 | Flat floor | base field plus one modular seam/inlay treatment |
 | Floor transition | straight, corner, and doorway threshold |
-| Full wall | north straight, west straight, exterior corner, terminus |
-| Low wall | south straight, east straight, corner, terminus |
-| Profile transition | full-to-low in both useful directions |
+| Ordinary structural wall | north/south shared horizontal straight; west straight; proposed mirrored east; equal-height corners and termini |
+| Optional low partition | deferred separate catalog family; legacy low sources are comparison evidence only |
 | Door | one closed and one open state in a directional opening |
-| Window | one wide opening in a full wall; one low-profile directional case if materially different |
-| Internal partition | low straight and corner |
+| Window | one wide opening in a full wall; directional cases only where materially different |
+| Internal partition | out of the ordinary-wall family unless separately approved |
 | Structure | one T-junction/column or service-chase junction |
 
 Try the wall as two visual concerns—a connected low structural base plus an optional upper shell—because that
@@ -86,6 +93,11 @@ Root full-wall bases are lower-face/plinth ingredients, not standalone low walls
 own the exposed low construction. No topology propagation is authorized until the revised composed envelope is
 reviewed at 240/90/40 px and in the room context.
 
+**Superseding owner decision, 2026-07-21:** exposed low construction is no longer part of the ordinary
+structural-wall proof. Promote exact north-source reuse for south, evaluate the proposed full-west whole-cell
+mirror for east, then rebuild corners as full-height joins. Retain the former low/profile files and review
+results without treating them as the current production direction.
+
 ### A1a review artifact
 
 Produce both:
@@ -99,20 +111,21 @@ background panel, floor plinth, or concept-art cast shadows.
 
 ## 4. A1b — complete connected family, only after A1a approval
 
-After the proportions/profile treatment is approved, extend the chosen construction through the existing
-47-blob wall topology and the required full/low/opening transitions. Reuse shared authored face pieces where the
-current blob compiler permits; do not create a second connectivity system.
+After the equal-height straight and corner treatment is approved, extend the chosen construction through the
+existing 47-blob wall topology and required opening/junction states. Reuse the promoted north/south source and
+the eventually approved west/east relationship where the current blob compiler permits; do not create a
+second connectivity system or ordinary-wall profile state.
 
 Required exported evidence:
 
 - deterministic frame IDs;
-- declared full/low/profile/opening state completeness;
+- declared facing/corner/opening state completeness for the one full-height ordinary-wall family;
 - transparent bounds and consistent grid pivots;
 - palette-token masks separate from literal outline, recess, fastener, glass, and hardware detail;
 - no duplicated or missing topology frames;
 - a generated complete-family contact sheet at real export resolution.
 
-This stage may propose metadata needed to identify profile/facing/state. It does not permanently add fields.
+This stage may propose metadata needed to identify facing/state. It does not permanently add fields.
 Record the smallest backward-compatible shape the real frames require, then review it with the Unity consumer
 before changing `CONTRACT.md` or schema versions.
 
@@ -122,8 +135,10 @@ Reject or revise the sheet if any of these fail:
 
 - a floor reads as raised or blocks the perceived walkable plane;
 - full walls do not feel substantial at normal zoom;
-- low walls hide the feet or interaction target of an employee standing immediately behind them;
-- full-to-low transitions look like broken/missing art rather than designed catalog pieces;
+- one-, two-, three-, and six-cell ordinary-wall runs change apparent height or expose broken seams;
+- a compact room, narrow corridor, or corner-plus-straight composition reads as overlapping strips instead of
+  one manufactured enclosure;
+- the proposed full-height east mirror changes the pivot, 64-unit envelope, or connected-run sockets;
 - doorway state or walkable cell is ambiguous;
 - continuous cream/green/teal product bands jump or misalign across compatible frames;
 - corners require rotating a fixed-light/high-oblique image into an invalid view;
@@ -135,10 +150,11 @@ Reject or revise the sheet if any of these fail:
 
 The geometry proof should make these questions concrete:
 
-- Is a profile/facing field sufficient, or do full and low shells need distinct stable template IDs?
+- Can north/south exact source reuse and the proposed west/east mirror be represented without duplicate frame
+  identities or a new ordinary-wall profile field?
 - Can the technical base/upper paint split preserve one composed envelope across the topology without
   reintroducing visible joins or creating a state explosion?
-- Which coordinate is the grid pivot for each opening/profile family?
+- Which coordinate is the grid pivot for each opening/facing family?
 - Which visual bounds must Unity know for picking or occlusion diagnostics, if any?
 - Can existing `plan | elevation` assets remain untouched while high-oblique dimensional frames opt into a new
   cardinal-facing lookup?

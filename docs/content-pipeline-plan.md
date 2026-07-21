@@ -11,7 +11,7 @@ changes the export contract except where explicitly flagged (floor variants).
 
 > **Current Water Cooler art-direction amendment (owner-locked 2026-07-19):** the next environment proof is
 > [QuotaCo high-oblique geometry](quota-co-high-oblique-geometry-ask.md): a transparent production-scale
-> floor/full-wall/low-wall/opening/junction sheet, followed only after approval by a minimum four-facing prop
+> floor/equal-height-structural-wall/opening/junction sheet, followed only after approval by a minimum four-facing prop
 > family and isolated Unity golden room. This preserves the content-pipeline reframe and 47-blob substrate but
 > supersedes any assumption that the current strict plan presentation is the final environmental style. It does
 > not pull character phases, gameplay features, or a full catalog redraw into the geometry proof.
@@ -26,6 +26,14 @@ changes the export contract except where explicitly flagged (floor variants).
 > step: its broad west plane terminates behind the shallow south coping while the south stack wraps the complete
 > foreground heel. The accepted source checkpoint remains isolated from production templates, topology
 > propagation, schema, and Unity until that migration receives separate approval.
+> **Latest owner decision, 2026-07-21:** ordinary structural wall cells now use one full 64-unit profile on
+> every room edge. South is promoted as exact reuse of the full-north base/upper sources with no transform,
+> duplicate SVG, or new identity. The equal-height southwest molded corner is now promoted in the existing
+> `transition_w_to_s` source pair; its south frontage owns the foreground heel. East and northeast remain
+> unregistered reviewed mirror proposals, and southeast is the next bounded corner proof. The former
+> low-south/east and full-to-low artifacts remain historical comparisons and may only inform a separately
+> approved partition family. This decision still changes no production template, topology, exporter, schema,
+> or Unity contract.
 
 ---
 

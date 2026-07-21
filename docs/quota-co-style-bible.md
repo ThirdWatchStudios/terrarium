@@ -15,6 +15,12 @@
 > continuity sheets govern vocabulary and seam rhythm. This numeric grammar constrains the drawing but does
 > not replace comparing it to those images.
 
+> **Current ordinary-wall amendment (owner approval, 2026-07-21):** ordinary structural walls use the full
+> 64-unit profile on every room edge. South is exact source reuse of the `full_n_straight` base/upper pair,
+> without a transform or duplicated SVG. The `transition_w_to_s` pair is the promoted equal-height southwest
+> corner. East and northeast remain unregistered mirror proposals; southeast is next. The measured 38-unit
+> low family is retained below as legacy A/B evidence and is not the current perimeter/cutaway target.
+
 The point of this page: the QuotaCo look is not a talent bar, it is a **closed grammar** — nine paints, two
 line weights, four shading steps, eight radii, one projection recipe. An author who obeys the grammar produces
 catalog-legitimate art on week one; taste then develops by judging results at gameplay distance, not by
@@ -26,33 +32,43 @@ expanding the grammar.
 
 - Every master is a strict `viewBox="0 0 128 128"` (70/70 in the tally). One canvas = one grid cell.
 - Fixed high-oblique / top-down-plus: rectangular, screen-aligned, no vanishing point, no diamond grid.
+- Equal-height ordinary-wall law (owner approval, 2026-07-21): every placed ordinary structural wall uses a
+  **64-unit outer profile** and fully occupies its non-walkable cell. North/south and the west source span
+  `56..120` on their profile axis; the pending whole-cell east mirror maps X to `8..72` while preserving that
+  64-unit size. North and south share the exact `full_n_straight` base/upper source pair at the same centered
+  pivot; south introduces no transform, duplicate SVG, or additional frame identity. A 38-unit wall may only
+  return as a separately approved internal-partition catalog family.
 - Directional plane law (owner clarification, 2026-07-20): horizontal east-west runs on the **north and
   south** room edges read visibly flat/front-on and expose only a narrow top reveal; vertical north-south
   runs on the **east and west** room edges expose the broader, flatter-from-above top/side plane. This axis
-  treatment is independent of whether the wall uses the full or low profile. Author both cross-sections;
-  transpose identity is not a valid geometry or material-mask gate.
-- Opposing-facing law (owner approval, 2026-07-21): west and east share the vertical treatment's plane
-  depth, but reverse its local cross-section handedness. Coral/green fascia and the contact shadow face the
-  room; the broad cream plane recedes toward the exterior. The low-east master is a reanchored X-mirror
-  **inside its existing `82..120` structural socket around `x=101` (`x′ = 202 − x`)**. Never flip the whole
-  128-unit cell or use a runtime transform to manufacture the facing; either would move the socket or change
-  the tile's cardinal role.
-- Low-southeast ownership law (owner acceptance, 2026-07-21): at the low east-to-south outer turn, only the
-  cream top and arris mediate the directional planes. The south cream/coral/green stack owns the complete
-  foreground heel, while the east shaft terminates behind the shallow south coping. Never let the east top or
-  fascia overpaint the south front.
-- Southwest transition ownership law (owner acceptance, 2026-07-21): at the full west-to-low south height
-  step, the broad west plane and its coral/green shaft terminate behind the shallow south coping. The south
-  cream/coral/green stack repaints and rounds through the complete foreground heel. Never extend the west top
-  or fascia across the south front.
-- Vertical profiles (kit law): exposed low walls occupy the **38-unit outer profile (`82..120`)**; full
-  walls occupy one **64-unit outer envelope (`56..120`)**. `base` and `upper` are technical paint passes,
-  not two finished products: draw base first, then upper at the same centered pivot, and judge only their
-  composed silhouette. A root full-wall base is never a substitute for a dedicated low-wall frame.
+  treatment remains distinct even though every ordinary wall now shares one full-height profile; transpose
+  identity is not a valid horizontal-versus-vertical geometry gate.
+- East-facing proposal (not yet promoted, 2026-07-21): east is intended to reuse the full-west base/upper
+  pair through a whole-cell mirror around `x=64` (`x′ = 128 − x`) while preserving the centered pivot and
+  64-unit occupancy. Do not register a new source, runtime transform, or production facing until the visual
+  proof is accepted. The former low-east local mirror around `x=101` is retained only as legacy evidence.
+- Legacy low-southeast ownership law (owner acceptance at the prior low-profile checkpoint, 2026-07-21): at
+  the low east-to-south outer turn, only the cream top and arris mediate the directional planes. The south
+  cream/coral/green stack owns the complete foreground heel, while the east shaft terminates behind the
+  shallow south coping. Never let the east top or fascia overpaint the south front. Preserve this as
+  corner-construction evidence, not the current ordinary perimeter contract.
+- Legacy southwest transition ownership law (owner acceptance at the prior low-profile checkpoint,
+  2026-07-21): at the full west-to-low south height step, the broad west plane and its coral/green shaft
+  terminate behind the shallow south coping. The south cream/coral/green stack repaints and rounds through
+  the complete foreground heel. Never extend the west top or fascia across the south front. Preserve this as
+  transition evidence only; equal-height ordinary corners supersede the height step.
+- Promoted southwest law (owner acceptance, 2026-07-21): the canonical `transition_w_to_s` pair now joins
+  full west to full south. Its inner elbow uses concentric molded radii, its exact 64-unit sockets match both
+  masters, and the full south frontage owns the foreground heel after the west shade terminates behind it.
+- Vertical profiles (current kit law): ordinary walls occupy one **64-unit outer profile**.
+  `base` and `upper` are technical paint passes, not two finished products: draw base first, then upper at
+  the same centered pivot, and judge only their composed silhouette. The former **38-unit outer profile
+  (`82..120`)** remains measured legacy evidence for a possible future partition family.
 - Shallow **south (front) and east (side) faces** are authored into the sprite. Tops read lightest, vertical
   faces step darker, recesses darkest — that is a *material cue*, not a sun.
-- **Never rotate a directional frame to manufacture another facing.** Facings are authored, or the asset's
-  allowed rotations are narrowed.
+- **Never rotate a directional frame to manufacture another facing.** A source-reuse mirror is allowed only
+  when the facing contract explicitly approves it; the proposed full-height east mirror has not crossed that
+  gate yet.
 - Paths may meet the canvas edge only as intentional connected-wall seams.
 - Draw on integer or half-unit coordinates. The existing masters are almost entirely `h`/`v` runs plus
   quarter-circle arcs — if you are sculpting freeform béziers, you are probably off-style.
@@ -74,8 +90,9 @@ Tally result: **zero off-palette fills in 70 files.** Keep it that way — the i
 | Black overlay | `#000000` @ fixed opacities | face/side shade cue | 39 |
 
 The four-use coral count is a historical tally of the pre-target source family, not a scarcity target for the
-Building System. The approved wall sheets reserve a thin continuous coral/rust collar across compatible full
-and low modules; props and controls still use coral sparingly as tactile hardware. Floors add `#AAA38F` /
+Building System. The approved wall sheets reserve a thin continuous coral/rust collar across compatible
+ordinary modules (and the retained legacy low comparisons); props and controls still use coral sparingly as
+tactile hardware. Floors add `#AAA38F` /
 `#B9B19B` from the proof palette. **Amber and rose are runtime-reserved signals (capture / emotion) and never
 appear in authored art.**
 
@@ -174,10 +191,11 @@ be automated.
 3. Paint only with §2 swatches; shade only with §4 steps.
 4. Keep `npm run style:watch` running (§10) — every save re-validates through the real importer and
    re-renders base/upper/composed plus the distance proof, on light and dark ground — and the
-   **composed envelope gate** and **room-context mock** at the top of the bench page: first the structural
-   3x3 without opening content, then the room with a door (full N/W walls, both transitions, low E/S sills),
-   because tiling truth only shows composed. Saves under
-   `low-profile-correction/` re-render the mock too.
+   **composed envelope gate** and **room-context mock** at the top of the bench page. The primary control uses
+   the promoted full-height north/south source reuse and southwest corner; the east/northeast mirror proofs
+   remain visible beside their sources, with southeast explicitly pending. Keep the earlier low E/S room as a labeled
+   A/B comparison, because tiling truth only shows composed. Saves under `low-profile-correction/` re-render
+   that legacy comparison too.
 5. Gate every wall batch against the five-sheet primary wall target and the real contact sheet; use the golden
    room for whole-room feel. Keep rejects with a one-line reason each.
 

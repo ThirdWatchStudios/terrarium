@@ -53,6 +53,10 @@ import {
   a1bAuthoredFrameMarkup,
   buildA1bAuthoredFrames,
 } from '../scripts/highOblique/a1bAuthoredProof';
+import {
+  PROMOTED_SOUTH_WALL_REUSE,
+  PROMOTED_SOUTHWEST_CORNER,
+} from '../scripts/highOblique/equalHeightWallDirection';
 
 const EXPECTED_SHARED = [
   'shared_floor_flat',
@@ -179,6 +183,37 @@ function productionSignature(): string {
 }
 
 describe('QuotaCo high-oblique A1b authored B source family', () => {
+  it('promotes south as exact full-north source reuse without another authored stem', () => {
+    expect(PROMOTED_SOUTH_WALL_REUSE).toMatchObject({
+      role: 'south',
+      sourceStem: 'full_n_straight',
+      baseFile: 'full_n_straight-base.svg',
+      upperFile: 'full_n_straight-upper.svg',
+      transform: 'none',
+      outerProfile: { start: 56, end: 120 },
+      pivot: { x: 0.5, y: 0.5 },
+      status: 'owner-accepted-working-contract',
+      productionRegistration: false,
+    });
+    expect(PROMOTED_SOUTH_WALL_REUSE.outerProfile.end - PROMOTED_SOUTH_WALL_REUSE.outerProfile.start)
+      .toBe(64);
+    expect(A1B_AUTHORED_STEMS).not.toContain('full_s_straight');
+  });
+
+  it('promotes the equal-height southwest corner without production registration', () => {
+    expect(PROMOTED_SOUTHWEST_CORNER).toEqual({
+      role: 'southwest-corner',
+      sourceStem: 'transition_w_to_s',
+      baseFile: 'transition_w_to_s-base.svg',
+      upperFile: 'transition_w_to_s-upper.svg',
+      transform: 'none',
+      pivot: { x: 0.5, y: 0.5 },
+      status: 'owner-accepted-working-contract',
+      productionRegistration: false,
+    });
+    expect(A1B_AUTHORED_STEMS.filter((stem) => stem === 'transition_w_to_s')).toHaveLength(1);
+  });
+
   it('makes the checked-in 18-file source inventory authoritative and deterministic', async () => {
     expect(A1B_AUTHORED_B_COMPONENTS).toEqual(['base', 'upper']);
     expect(A1B_AUTHORED_B_COMPONENT_IDS).toEqual(EXPECTED_AUTHORED_B_COMPONENTS.map(({ id }) => id));
@@ -320,7 +355,7 @@ describe('QuotaCo high-oblique A1b authored B source family', () => {
     }
   });
 
-  it('grounds each composed full-to-low frame while the upper stops at the profile handoff', async () => {
+  it('grounds each composed turn without exposing the base/upper paint split', async () => {
     const frames = buildA1bAuthoredFrames(await compileAuthoredB());
     const northToEast = frames.find(
       ({ stem, kind }) => stem === 'transition_n_to_e' && kind === 'composed',
@@ -336,7 +371,7 @@ describe('QuotaCo high-oblique A1b authored B source family', () => {
     expect(alphaAt(westToSouthRaster, 118, 110)).toBeGreaterThan(0);
   });
 
-  it('preserves the full-wall ingress and 38-unit low-wall egress at each transition edge', async () => {
+  it('preserves full ingress while north/east stays low and southwest exits full height', async () => {
     const frames = buildA1bAuthoredFrames(await compileAuthoredB());
     const frame = (stem: (typeof EXPECTED_STEMS)[number]) => {
       const source = frames.find(
@@ -351,11 +386,14 @@ describe('QuotaCo high-oblique A1b authored B source family', () => {
 
     let northIngressDelta = 0;
     let westIngressDelta = 0;
+    let southEgressDelta = 0;
     for (let offset = 0; offset < A1B_CANVAS; offset++) {
       const fullNorthIndex = (offset * fullNorth.width + (fullNorth.width - 1)) * 4;
       const northToEastIndex = offset * northToEast.width * 4;
       const fullWestIndex = ((fullWest.height - 1) * fullWest.width + offset) * 4;
       const westToSouthIndex = offset * 4;
+      const promotedSouthIndex = offset * fullNorth.width * 4;
+      const southwestExitIndex = (offset * westToSouth.width + (westToSouth.width - 1)) * 4;
       for (let channel = 0; channel < 4; channel++) {
         northIngressDelta = Math.max(
           northIngressDelta,
@@ -371,19 +409,28 @@ describe('QuotaCo high-oblique A1b authored B source family', () => {
             westToSouth.pixels[westToSouthIndex + channel],
           ),
         );
+        southEgressDelta = Math.max(
+          southEgressDelta,
+          Math.abs(
+            fullNorth.pixels[promotedSouthIndex + channel] -
+            westToSouth.pixels[southwestExitIndex + channel],
+          ),
+        );
       }
     }
     expect(northIngressDelta, 'full north to north/east ingress').toBeLessThanOrEqual(4);
     expect(westIngressDelta, 'full west to west/south ingress').toBeLessThanOrEqual(4);
+    expect(southEgressDelta, 'west/south east edge to promoted full-south west edge')
+      .toBeLessThanOrEqual(4);
 
-    // Solid occupancy only: the translucent 0.12 contact shade may overhang
-    // the 38-unit band onto the floor without extending the wall contract.
+    // Solid occupancy only: translucent contact shade may overhang the
+    // structural band without extending either profile contract.
     const northEgress = Array.from({ length: A1B_CANVAS }, (_, x) => x)
       .filter((x) => alphaAt(northToEast, x, A1B_CANVAS - 1) >= 128);
-    const westEgress = Array.from({ length: A1B_CANVAS }, (_, y) => y)
+    const southwestEgress = Array.from({ length: A1B_CANVAS }, (_, y) => y)
       .filter((y) => alphaAt(westToSouth, A1B_CANVAS - 1, y) >= 128);
     expect(northEgress).toEqual(Array.from({ length: 38 }, (_, index) => index + 82));
-    expect(westEgress).toEqual(Array.from({ length: 38 }, (_, index) => index + 82));
+    expect(southwestEgress).toEqual(Array.from({ length: 64 }, (_, index) => index + 56));
   });
 
   it('packs a transparent 27-frame 6x5 authored atlas at every export scale', async () => {

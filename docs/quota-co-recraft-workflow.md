@@ -92,7 +92,7 @@ on the live workbench and committed individually with its design rationale.
   `topology/` and `state/`; (3) regenerate the official `docs/previews` sheets for the migration A-gate;
   (4) export the remaining campus-interior reference image.
 
-### Deferred correction lock — restart here
+### Historical deferred correction lock — superseded, retained for the handoff record
 
 **Owner observation:** “north and south walls should be visibly flat, whereas east and west walls should be
 flatter from the top.” The reference room separates two independent axes that the current pass collapsed:
@@ -108,7 +108,7 @@ reveal and outboard green low arm read as separate pieces; W→S carries the cor
 The NW diagonal seam does not convincingly turn between directional planes, and the low SE teal crossing
 advertises the tile diagram instead of one molded perimeter.
 
-**Pause state:** preserve the uncommitted working tree on branch `codex/campus-art-bundles` above checkpoint
+**Historical pause state:** preserve the uncommitted working tree on branch `codex/campus-art-bundles` above checkpoint
 `9453532`. Do not clean, revert, promote, or regenerate official baselines. Automated/importer checks passed
 for the previous mechanical contract; they do not override this owner visual rejection.
 
@@ -130,9 +130,9 @@ On restart, keep the pass bounded to A1 wall geometry:
    perimeter—not four joined strips—to survive at 90 and 40 px with exactly one visible cap/coping system and
    intentional high-to-low transitions.
 
-**Approved directional checkpoint (2026-07-21):** the northwest full/full corner, northeast full-to-low
-turn, low-east straight, low-southeast corner, and southwest full-to-low turn now establish the accepted
-side-wall rule. The east cross-section is a local,
+**Historical directional checkpoint (accepted before the equal-height correction, 2026-07-21):** the
+northwest full/full corner, northeast full-to-low turn, low-east straight, low-southeast corner, and southwest
+full-to-low turn established the then-accepted side-wall rule. The east cross-section is a local,
 reanchored X-mirror inside `82..120` around `x=101`: its coral/green fascia and contact shadow face the room,
 while its cream plane faces outward. This is not permission to flip a whole tile or synthesize the facing at
 runtime. The northeast and repeated east run passed the compact header and long-drop review at gameplay
@@ -143,7 +143,17 @@ and long-run review by applying the same ownership rule at the height step: the 
 behind the shallow south coping and the rounded south stack owns the foreground heel. Contact-shadow polish
 is explicitly deferred.
 
-**Still isolated after directional source acceptance:** `topology/` and `state/`; official preview
+**Promoted equal-height south and southwest checkpoint (owner approval, 2026-07-21):** the ordinary structural-wall
+contract now uses one full 64-unit profile on every room edge. South reuses the exact
+`full_n_straight-base.svg` and `full_n_straight-upper.svg` sources at the same centered pivot, with no
+transform, duplicate south SVG, or new frame identity. The polished `transition_w_to_s` base/upper pair now
+owns the equal-height southwest corner: its west shaft terminates behind the full south frontage, whose
+cream/coral/green/plinth stack wraps the foreground heel. East and northeast remain unregistered reviewed
+mirror proposals; southeast is the next bounded proof. Former low/full-to-low geometry survives in history
+and labeled comparison evidence, not as the current ordinary perimeter target. Do not propagate any of this
+into topology, state, registration, exporter, schema, or Unity without separate authorization.
+
+**Still isolated after equal-height southwest promotion:** `topology/` and `state/`; official preview
 regeneration; template/catalog registration; exporter, `CONTRACT.md`, or schema changes; prop pilots; Unity;
 and `production.unity` remain locked until separately requested.
 

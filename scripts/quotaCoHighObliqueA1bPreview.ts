@@ -44,7 +44,7 @@ const STEM_LABELS: Readonly<Record<A1bAuthoredStem, string>> = {
   full_exterior_corner: 'Full wall — exterior corner',
   full_terminus: 'Full wall — terminus',
   transition_n_to_e: 'Full north → low east',
-  transition_w_to_s: 'Full west → low south',
+  transition_w_to_s: 'Full west → full south (promoted SW)',
   door_closed: 'Directional door — closed',
   door_open: 'Directional door — open',
   window_wide: 'Full wall — wide window',

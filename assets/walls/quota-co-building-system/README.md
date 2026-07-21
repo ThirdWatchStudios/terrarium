@@ -6,12 +6,24 @@ nine approved comparison cases, each divided into `base` and `upper` source
 components. The base is drawn first; the upper is composited at the same centered
 grid pivot. The composed frame—not either component alone—is the visual product.
 
+**Promoted ordinary-wall decision (owner approval, 2026-07-21):** every placed
+ordinary structural wall occupies the full 64-unit outer profile in its cell.
+South is the exact `full_n_straight-base.svg` +
+`full_n_straight-upper.svg` composed source, with the same centered pivot and no
+transform, duplicated south SVG, or new frame identity. The equal-height
+southwest corner is the promoted `transition_w_to_s` pair: it keeps the existing
+stem id while replacing the former low exit. The intended east and northeast
+mirrors remain unregistered visual proposals; southeast is the next corner
+proof. Low-wall art is no longer an ordinary perimeter/cutaway family and may
+only return as a separately approved internal-partition product.
+
 The original independently finished low-base-plus-optional-upper construction was
 rejected on 2026-07-20 because its duplicate caps and contours read as one wall
 placed on another. The files remain split only where their paths can contribute
 complementary surfaces to one continuous wall envelope. Root `base` components
 are lower-face/plinth ingredients, not standalone low walls; the dedicated
-`low-profile-correction/` frames own the exposed low-wall construction.
+`low-profile-correction/` frames preserve the former exposed-low construction as
+deterministic comparison evidence, not the current ordinary-wall target.
 
 Before editing a master, open the five owner-approved targeted wall sheets listed in
 `docs/reference/README.md`. The corners-and-ends sheet is the cardinal orientation map; the
@@ -33,7 +45,7 @@ Each stem has one `-base.svg` and one `-upper.svg` source:
 - `full_exterior_corner`
 - `full_terminus`
 - `transition_n_to_e`
-- `transition_w_to_s`
+- `transition_w_to_s` — promoted equal-height southwest corner
 - `door_closed`
 - `door_open`
 - `window_wide`
@@ -45,16 +57,21 @@ overdraw. Do not rotate a directional frame to manufacture another facing.
 ## Art contract
 
 - fixed orthographic high-oblique/top-down-plus over the rectangular grid;
+- every ordinary structural wall cell uses one continuous 64-unit profile: the
+  accepted north/south and west source spans run `56..120`, while the pending
+  whole-cell east mirror maps its X span to `8..72` without changing its size;
 - horizontal north/south room-edge runs read flat/front-on with a narrow top reveal;
 - vertical east/west room-edge runs expose the broader, flatter-from-above top/side plane;
-- directional plane treatment is independent of full/low profile height, so one axis must not be
-  manufactured by transposing the other;
-- west/east facings share that vertical plane depth but reverse local handedness: fascia/contact faces the
-  room and the cream plane faces outward. The low-east source is reanchored around `x=101` inside the fixed
-  `82..120` structural socket; never flip the whole cell or manufacture the facing at runtime;
-- exposed low walls use the 38-unit outer profile (`82..120`);
-- full walls use one continuous 64-unit outer envelope (`56..120`);
-- north/west full cases and south/east low transitions are explicitly authored;
+- north and south use the exact `full_n_straight` base/upper pair with no transform
+  or duplicate south master;
+- west is the accepted full-height vertical source; east is intended to reuse it
+  through a whole-cell mirror around `x=64` (`x' = 128 - x`), but remains a proof
+  proposal rather than a registered source/runtime transform;
+- the former 38-unit low profile (`82..120`), local low-east mirror, and full-to-low
+  turn survive only in historical/reference evidence. Any future low partition
+  must be a separately named catalog family, never an ordinary perimeter wall;
+- the southwest corner preserves exact full-west and shared full-north/south
+  sockets; its south material stack owns the foreground heel;
 - open thresholds remain flat and visually walkable;
 - no raised floor plinth and no baked directional cast shadow;
 - charcoal contour/recess `#252A28`;
@@ -64,16 +81,17 @@ overdraw. Do not rotate a directional frame to manufacture another facing.
 - restrained coral hardware `#B65F4D`;
 - functional metal `#979A91`.
 
-For every composed full/profile frame:
+For every composed ordinary full-height frame:
 
 - only the exterior silhouette receives the strong charcoal contour;
 - no base cap-light, service seam, or upper bottom outline may survive at the
   internal `base`/`upper` handoff;
 - coral meets the lower green face as a material boundary, not as a second ledge;
-- a full-to-low upper stops at the profile change while the base/coping continues
-  through the outgoing low-wall socket; and
-- compatible edge occupancy and band endpoints remain continuous across authored
-  N/E and W/S junction pairs, while each axis retains its distinct plane geometry.
+- compatible edge occupancy and band endpoints remain continuous through every
+  full-height straight and corner, while each axis retains its distinct plane
+  geometry; and
+- legacy full-to-low pieces remain stable only as A/B evidence until an optional
+  partition family is separately requested.
 
 All visible paths live under `detail/*` groups because the charcoal contour is
 authored explicitly and every component must compile without gaining a second
@@ -81,8 +99,9 @@ automatic silhouette. White/black opacity layers are neutral face cues only.
 Terrarium owns this source art and any later palette-mask evidence. Unity owns
 composition, cutaways, sorting application, lighting, and production acceptance.
 
-Do not expand this directory to the complete 47-blob/profile/opening family until separately authorized after
-the complete envelope review. The northwest, northeast, low-east, low-southeast, and southwest full-to-low
-directional source checkpoint is accepted. The south cream/coral/green stack owns the foreground heel at both
-southern turns: the low-southeast east coping and the southwest full-west plane terminate behind the shallow
-south coping. Do not derive a contract or schema change from these source files alone.
+Do not expand this directory to the complete 47-blob/opening family until separately authorized after the
+complete equal-height envelope review. The earlier low-east, low-southeast, and southwest full-to-low
+checkpoint remains historical directional evidence, but its low perimeter profiles and height-step corner
+are superseded for ordinary walls. South and southwest are promoted source decisions; east and northeast
+remain unregistered mirror proposals, and southeast is the next bounded proof. Do not derive a contract or
+schema change from these source files alone.
