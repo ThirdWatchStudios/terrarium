@@ -134,6 +134,63 @@ On restart, keep the pass bounded to A1 wall geometry:
 regeneration; template/catalog registration; exporter, `CONTRACT.md`, or schema changes; prop pilots; Unity;
 and `production.unity`. Commit or propagate only when separately requested.
 
+**Progress 2026-07-20 (second session): steps 1–5 executed, awaiting owner review.** Cross-section proofs
+blessed ("good enough for now"); both treatments applied to the four straights; NW/SE corners and both
+transitions redesigned as authored turns (banded high-wall terminus at each profile drop, coping route
+turning on the outer arc, green switching sides per the plane logic at N→E / W→S, continuous green wrap at
+SE, coral fan at NW). Teal service register retired from the low family per the references. All 834 tests
+green including the master-pointed directional gates; envelope gate and room mock re-rendered. Known
+residuals for the review: door/window/terminus still sit on the old cross-section (visible register jump at
+the door flanks in the room mock — re-seating is the next queued pass); transition stack terminations read
+abrupt at close range; `A1B_LOW_CORRECTION_RULER` in `a1bLowProfileCorrection.ts` still documents the old
+symmetric low registers and needs re-tallying with the style bible after acceptance.
+
+### Measured reference constants (step-1 measurement pass, 2026-07-20)
+
+Measured from crops of `docs/reference/quota-co-office-geometry-study.png` (row 2 col 1 full wall front-on,
+row 3 low walls, row 3 col 4 high-meets-low) and `-golden-room.png` (north-wall slice, west edge, south low
+edge). Proportions are of the wall's visible screen height:
+
+- **Full wall front-on (study):** top reveal ≈5–8% — a rounded lit cap lip only, behind a definite arris
+  seam. Face stack below: cream ≈35%, coral ≈22% (a true band, not a pinstripe), green ≈30%, plinth ≈7%.
+- **Golden-room north wall agrees:** narrow coping edge, tall cream face dominating. (Its teal chair-rail +
+  lower cream field is illustrative room dressing; the study's cream/coral/green stack is the kit-facing
+  version.)
+- **Golden-room west wall:** coping/top plane dominant; the face stack compresses to slivers — coral and the
+  dark register read as lines, not fields.
+- **Low walls (both references):** broad cream coping wrapping both arrises ≈40–50% of visible height, green
+  face below, **no coral on low straights**, charcoal plinth. (Door/terminus surrounds keep their banding.)
+
+Proposed 128-canvas constants (full envelope 56..120, low 82..120; y for horizontal pieces, x for vertical):
+
+| register | horizontal (N/S edge, E-W run) | vertical (E/W edge, N-S run) |
+| --- | --- | --- |
+| outline | 56..58 | 56..58 |
+| lit top plane | 58..63 (5u reveal, white 0.30) | 58..92 (34u plane, white 0.18) |
+| arris seam | at 63, 0.45 | at 92, 0.45 |
+| cream face | 63..85 (22u) | 92..97 (5u sliver) |
+| coral band | 85..97 (12u) | 97..105 (8u) |
+| green face | 97..116 (19u) | 105..116 (11u) |
+| plinth | 116..120 | 116..120 |
+
+Low-wall derivation: horizontal low = coping 82..96, green 96..116; vertical low = coping 82..108, green
+sliver 108..116; coral omitted on low straights per the references (teal service register decision stays
+deferred to the junction redesign).
+
+Depth overlays (added after the first owner pass — the unshaded vertical stack read flat): the coping lip is
+always white 0.30 (the horizontal's whole 5u reveal; a 1.5u arris line on the vertical, with the broad plane
+behind at 0.18); the vertical's descending face stack takes a 0.12 dark face-shade so tops stay lightest and
+the axes separate by value, not just proportion; both treatments ground through a 3.5u, 0.12 contact shade
+on the floor side of the plinth (window-master precedent). If 0.12 is not a sanctioned bible §4 step, clamp
+to the nearest step at transplant time.
+
+Machine gates derived from these numbers (now in `tests/quotaCoHighObliqueEnvelope.test.ts`): horizontal
+reveal ≤ 8u; vertical top plane ≥ 28u; vertical top plane ≥ 3× horizontal reveal; identical
+cream→coral→green→charcoal order on both treatments. The two cross-section proofs live in
+`assets/walls/quota-co-building-system-proofs/` (outside the importer's kit directory), render on the bench
+as the "cross-section proofs" card, and are the first artifacts those gates run against; the gates re-point
+to the masters when step 2 applies the blessed treatments.
+
 ## Gotchas (each cost a pass this session)
 
 - The importer rejects stray files (even `.DS_Store`), gradients, masks, filters, images, text, unknown
