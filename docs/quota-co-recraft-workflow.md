@@ -130,11 +130,21 @@ On restart, keep the pass bounded to A1 wall geometry:
    perimeter—not four joined strips—to survive at 90 and 40 px with exactly one visible cap/coping system and
    intentional high-to-low transitions.
 
-**Locked until that review passes:** the nested transition cleanup; `topology/` and `state/`; official preview
-regeneration; template/catalog registration; exporter, `CONTRACT.md`, or schema changes; prop pilots; Unity;
-and `production.unity`. Commit or propagate only when separately requested.
+**Approved directional checkpoint (2026-07-21):** the northwest full/full corner, northeast full-to-low
+turn, and low-east straight now establish the accepted side-wall rule. The east cross-section is a local,
+reanchored X-mirror inside `82..120` around `x=101`: its coral/green fascia and contact shadow face the room,
+while its cream plane faces outward. This is not permission to flip a whole tile or synthesize the facing at
+runtime. The northeast and repeated east run passed the compact header and long-drop review at gameplay
+distance. Contact-shadow polish is explicitly deferred. The low-southeast corner still carries the rejected
+east ordering and must be reviewed as its own next piece before the complete compact-room/corridor envelope
+can be called visually accepted.
 
-**Progress 2026-07-20 (second session): steps 1–5 executed, awaiting owner review.** Cross-section proofs
+**Still locked until the low-southeast corner review passes:** `topology/` and `state/`; official preview
+regeneration; template/catalog registration; exporter, `CONTRACT.md`, or schema changes; prop pilots; Unity;
+and `production.unity`. Propagate only when separately requested.
+
+**Historical progress 2026-07-20 (superseded by the 2026-07-21 checkpoint):** steps 1–5 were executed and
+awaited owner review. Cross-section proofs
 blessed ("good enough for now"); both treatments applied to the four straights; NW/SE corners and both
 transitions redesigned as authored turns (banded high-wall terminus at each profile drop, coping route
 turning on the outer arc, green switching sides per the plane logic at N→E / W→S, continuous green wrap at
@@ -145,9 +155,8 @@ lows onto the full coral system, re-seated the door, and finally rebuilt both tr
 corner turns with the profile drop on the run past the corner** (matching the golden-room structure): the
 room-side stack terminates against the standing wall's inner outline, the top surface flows through the turn,
 the exterior stack wraps in below the outer arc, and a terminus end face steps down onto the low section.
-Committed piecewise through the corner rebuild. Remaining residuals: window/terminus masters still sit on the
-old cross-section (re-seat next); `A1B_LOW_CORRECTION_RULER` in `a1bLowProfileCorrection.ts` still documents
-the old symmetric low registers and needs re-tallying with the style bible after acceptance.
+Committed piecewise through the corner rebuild. The 2026-07-21 checkpoint supersedes this progress snapshot;
+the low-southeast corner is now the next explicit directional residual.
 
 ### Measured reference constants (step-1 measurement pass, 2026-07-20)
 
@@ -196,8 +205,9 @@ on the floor side of the plinth (window-master precedent). If 0.12 is not a sanc
 to the nearest step at transplant time.
 
 Machine gates derived from these numbers (now in `tests/quotaCoHighObliqueEnvelope.test.ts`): horizontal
-reveal ≤ 8u; vertical top plane ≥ 28u; vertical top plane ≥ 3× horizontal reveal; identical
-cream→coral→green→charcoal order on both treatments. The two cross-section proofs live in
+reveal ≤ 8u; vertical top plane ≥ 28u; vertical top plane ≥ 3× horizontal reveal; one semantic
+outside-to-room material hierarchy across treatments. The applied east facing reverses that hierarchy's
+screen-space order inside its anchored socket so its fascia still faces the room. The two cross-section proofs live in
 `assets/walls/quota-co-building-system-proofs/` (outside the importer's kit directory), render on the bench
 as the "cross-section proofs" card, and are the first artifacts those gates run against; the gates re-point
 to the masters when step 2 applies the blessed treatments.

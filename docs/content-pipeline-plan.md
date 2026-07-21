@@ -18,9 +18,11 @@ changes the export contract except where explicitly flagged (floor variants).
 > The 2026-07-20 connected-room review rejected independently finished base/upper wall halves. A later review
 > found that the unified-envelope correction still collapsed profile height and directional plane treatment:
 > north/south runs must read flat/front-on, east/west runs flatter-from-above, and their joints must mediate
-> those authored cross-sections rather than enforce transpose identity. The current pass is preserved only as
-> an unaccepted working proof. It remains isolated from production templates, topology propagation, schema,
-> and Unity until the revised directional envelope receives owner acceptance.
+> those authored cross-sections rather than enforce transpose identity. On 2026-07-21 the owner accepted the
+> northwest full/full corner plus the reanchored northeast/low-east facing checkpoint: east and west now share
+> plane depth while reversing local handedness so both fascias face the room. The low-southeast corner remains
+> unresolved, so the source checkpoint stays isolated from production templates, topology propagation,
+> schema, and Unity until the complete directional envelope receives separate approval.
 
 ---
 

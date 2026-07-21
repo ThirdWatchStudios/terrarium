@@ -98,7 +98,7 @@ function alphaCounts(
   return { painted, transparent };
 }
 
-function alphaBounds(rendered: Raster): {
+function alphaBounds(rendered: Raster, minimumAlpha = 1): {
   minX: number;
   minY: number;
   maxX: number;
@@ -110,7 +110,7 @@ function alphaBounds(rendered: Raster): {
   let maxY = -1;
   for (let y = 0; y < rendered.height; y += 1) {
     for (let x = 0; x < rendered.width; x += 1) {
-      if (alphaAt(rendered, x, y) === 0) continue;
+      if (alphaAt(rendered, x, y) < minimumAlpha) continue;
       minX = Math.min(minX, x);
       minY = Math.min(minY, y);
       maxX = Math.max(maxX, x);
@@ -290,13 +290,29 @@ describe('QuotaCo A1b low-profile corrective mini-strip', () => {
   it('replaces the 22-unit chassis read with a substantial finished low wall', () => {
     expect(A1B_LOW_CORRECTION_RULER).toEqual({
       outerStart: 82,
-      innerStart: 84,
-      topPlaneEnd: 92,
-      copingEnd: 100,
-      innerEnd: 118,
       outerEnd: 120,
       outerProfile: 38,
       materialProfile: 34,
+      south: {
+        shellStart: 84,
+        revealEnd: 88,
+        creamEnd: 97,
+        coralEnd: 102,
+        greenEnd: 117,
+        contactStart: 120,
+        contactEnd: 123.5,
+      },
+      east: {
+        contactStart: 78.5,
+        contactEnd: 82,
+        greenStart: 85,
+        coralStart: 92,
+        creamStart: 96,
+        copingLipStart: 98.5,
+        topPlaneStart: 100,
+        shellEnd: 118,
+        mirrorAxis: 101,
+      },
     });
     expect(A1B_TOPOLOGY_KERNELS.base).toMatchObject({
       outerStart: 94,
@@ -313,6 +329,7 @@ describe('QuotaCo A1b low-profile corrective mini-strip', () => {
     const oldEastBounds = alphaBounds(raster(a1bTopologyFrameSvg(oldEast)));
     const newSouthBounds = alphaBounds(raster(a1bLowCorrectionFrameSvg(newSouth)));
     const newEastBounds = alphaBounds(raster(a1bLowCorrectionFrameSvg(newEast)));
+    const newEastSolidBounds = alphaBounds(raster(a1bLowCorrectionFrameSvg(newEast)), 128);
     const oldSouthDepth = oldSouthBounds.maxY - oldSouthBounds.minY + 1;
     const oldEastDepth = oldEastBounds.maxX - oldEastBounds.minX + 1;
     const newSouthDepth = newSouthBounds.maxY - newSouthBounds.minY + 1;
@@ -321,6 +338,8 @@ describe('QuotaCo A1b low-profile corrective mini-strip', () => {
     // 38-unit solid wall band plus the 3.5-unit translucent contact shade
     // overhanging onto the floor (owner-blessed depth overlays, 2026-07-20).
     expect([newSouthDepth, newEastDepth]).toEqual([42, 42]);
+    expect(newEastBounds).toMatchObject({ minX: 78, maxX: 119 });
+    expect(newEastSolidBounds).toMatchObject({ minX: 82, maxX: 119 });
     expect(newSouthDepth - oldSouthDepth).toBeGreaterThanOrEqual(10);
     expect(newEastDepth - oldEastDepth).toBeGreaterThanOrEqual(10);
 

@@ -49,6 +49,9 @@ overdraw. Do not rotate a directional frame to manufacture another facing.
 - vertical east/west room-edge runs expose the broader, flatter-from-above top/side plane;
 - directional plane treatment is independent of full/low profile height, so one axis must not be
   manufactured by transposing the other;
+- west/east facings share that vertical plane depth but reverse local handedness: fascia/contact faces the
+  room and the cream plane faces outward. The low-east source is reanchored around `x=101` inside the fixed
+  `82..120` structural socket; never flip the whole cell or manufacture the facing at runtime;
 - exposed low walls use the 38-unit outer profile (`82..120`);
 - full walls use one continuous 64-unit outer envelope (`56..120`);
 - north/west full cases and south/east low transitions are explicitly authored;
@@ -78,6 +81,7 @@ automatic silhouette. White/black opacity layers are neutral face cues only.
 Terrarium owns this source art and any later palette-mask evidence. Unity owns
 composition, cutaways, sorting application, lighting, and production acceptance.
 
-Do not expand this directory to the complete 47-blob/profile/opening family until
-the unified-envelope gate is owner-reviewed. Do not derive a contract or schema
-change from these source files alone.
+Do not expand this directory to the complete 47-blob/profile/opening family until separately authorized after
+the complete envelope review. The northwest, northeast, and low-east checkpoint is accepted; the
+low-southeast corner remains under review. Do not derive a contract or schema change from these source files
+alone.

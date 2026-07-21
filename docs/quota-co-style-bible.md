@@ -31,6 +31,12 @@ expanding the grammar.
   runs on the **east and west** room edges expose the broader, flatter-from-above top/side plane. This axis
   treatment is independent of whether the wall uses the full or low profile. Author both cross-sections;
   transpose identity is not a valid geometry or material-mask gate.
+- Opposing-facing law (owner approval, 2026-07-21): west and east share the vertical treatment's plane
+  depth, but reverse its local cross-section handedness. Coral/green fascia and the contact shadow face the
+  room; the broad cream plane recedes toward the exterior. The low-east master is a reanchored X-mirror
+  **inside its existing `82..120` structural socket around `x=101` (`x′ = 202 − x`)**. Never flip the whole
+  128-unit cell or use a runtime transform to manufacture the facing; either would move the socket or change
+  the tile's cardinal role.
 - Vertical profiles (kit law): exposed low walls occupy the **38-unit outer profile (`82..120`)**; full
   walls occupy one **64-unit outer envelope (`56..120`)**. `base` and `upper` are technical paint passes,
   not two finished products: draw base first, then upper at the same centered pivot, and judge only their

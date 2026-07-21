@@ -242,9 +242,13 @@ function isLitCream(rendered: Raster, x: number, y: number): boolean {
 // Walk inward from the outer silhouette edge: past transparency, past the
 // charcoal outline, then measure the contiguous white-lit cream run — the
 // visible top plane (or reveal) depth of the treatment.
-function litCreamRunDepth(rendered: Raster, edge: 'n' | 'w', offset: number): number {
+function litCreamRunDepth(rendered: Raster, edge: 'n' | 'e' | 'w', offset: number): number {
   const at = (position: number): readonly [number, number] =>
-    edge === 'n' ? [offset, position] : [position, offset];
+    edge === 'n'
+      ? [offset, position]
+      : edge === 'e'
+        ? [A1A_CANVAS - 1 - position, offset]
+        : [position, offset];
   let position = 0;
   while (position < A1A_CANVAS && alphaAt(rendered, ...at(position)) < 128) position += 1;
   while (position < A1A_CANVAS && materialAt(rendered, ...at(position)) === 'charcoal') position += 1;
@@ -492,13 +496,24 @@ describe('QuotaCo directional cross-section law', () => {
     expect(westPlane, 'axis plane ratio').toBeGreaterThanOrEqual(3 * northReveal);
 
     const southReveal = litCreamRunDepth(lowSouth, 'n', 32);
-    const eastCoping = litCreamRunDepth(lowEast, 'w', 32);
+    const eastCoping = litCreamRunDepth(lowEast, 'e', 32);
     expect(southReveal, 'low south reveal depth').toBeGreaterThanOrEqual(3);
     expect(southReveal, 'low south reveal depth').toBeLessThanOrEqual(8);
     expect(eastCoping, 'low east coping depth').toBeGreaterThanOrEqual(16);
   });
 
-  it('keeps one material system in the same order on both treatments', () => {
+  it('keeps the east profile reanchored with its face toward the room', () => {
+    const lowEast = rasterFrame(lowFrame(low, 'a1b_low_corrected_e'));
+
+    expect(materialAt(lowEast, 86, 32), 'east room-side green face').toBe('green');
+    expect(materialAt(lowEast, 93, 32), 'east room-side coral band').toBe('coral');
+    expect(materialAt(lowEast, 105, 32), 'east exterior cream plane').toBe('cream');
+    expect(isLitCream(lowEast, 105, 32), 'east exterior plane is top-lit').toBe(true);
+    expect(alphaAt(lowEast, 79, 32), 'east room-side contact shadow').toBeGreaterThan(0);
+    expect(alphaAt(lowEast, 121, 32), 'east exterior must not retain the old contact shadow').toBe(0);
+  });
+
+  it('keeps one outside-to-room material hierarchy in the north and west proofs', () => {
     expect(materialAt(horizontal, 32, 74), 'horizontal face field').toBe('cream');
     expect(isLitCream(horizontal, 32, 74), 'horizontal face field is not top-lit').toBe(false);
     expect(materialAt(horizontal, 32, 91), 'horizontal coral band').toBe('coral');

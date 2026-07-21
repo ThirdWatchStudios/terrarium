@@ -1,16 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
   <title>QuotaCo Building System full exterior corner upper</title>
-  <desc>Authored northwest turn: the narrow lit north reveal flows into the coping lip while the broad west top plane opens behind it, and the coral band sweeps the corner between two authored arcs — no transpose, one cap system.</desc>
+  <desc>One molded QuotaCo northwest outer corner: the flat north face and broad west plane share a contained return while their coral, green, and plinth registers turn without a patch arc or applied corner box.</desc>
   <g id="detail/upper">
     <path id="upper-contour" d="M 66 56 H 128 V 97 H 105 V 128 H 56 V 66 A 10 10 0 0 1 66 56 Z" fill="#252A28"/>
     <path id="upper-shell" d="M 66 58 H 128 V 97 H 105 V 128 H 58 V 66 A 8 8 0 0 1 66 58 Z" fill="#D9D0B9"/>
     <path id="upper-plane-light" d="M 58 66 A 8 8 0 0 1 66 58 H 90.5 V 128 H 58 Z" fill="#FFFFFF" opacity="0.18"/>
     <path id="upper-reveal-light" d="M 90.5 58 H 128 V 63 H 90.5 Z" fill="#FFFFFF" opacity="0.30"/>
     <path id="upper-arris-lip" d="M 90.5 63 H 92 V 128 H 90.5 Z" fill="#FFFFFF" opacity="0.30"/>
-    <path id="upper-coral-band" d="M 128 85 H 109 A 12 12 0 0 0 97 97 V 128 H 105 V 105 A 8 8 0 0 1 113 97 H 128 Z" fill="#B65F4D"/>
-    <path id="upper-band-light" d="M 109 85 H 128 V 86.5 H 109 Z" fill="#FFFFFF" opacity="0.10"/>
-    <path id="upper-face-shade" d="M 92 105 H 105 V 128 H 92 Z" fill="#000000" opacity="0.12"/>
-    <path id="upper-arris-seam" d="M 127 63 H 121 A 29 29 0 0 0 92 92 V 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
-    <path id="upper-band-seam" d="M 127 97 H 113 A 8 8 0 0 0 105 105 V 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+    <path id="upper-coral-band" d="M 128 88 H 109 A 12 12 0 0 0 97 100 V 128 H 102 V 100 A 6 6 0 0 1 108 94 H 128 Z" fill="#B65F4D"/>
+    <path id="upper-band-light" d="M 109 88 H 128 V 89.5 H 109 Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="upper-green-handoff" d="M 128 94 H 108 A 6 6 0 0 0 102 100 V 128 H 105 V 100 A 3 3 0 0 1 108 97 H 128 Z" fill="#294B3C"/>
+    <path id="upper-face-shade" d="M 92 100 H 105 V 128 H 92 Z" fill="#000000" opacity="0.12"/>
+    <path id="upper-arris-seam" d="M 127 63 H 104 A 12 12 0 0 0 92 75 V 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="upper-band-seam" d="M 127 94 H 108 A 6 6 0 0 0 102 100 V 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
   </g>
 </svg>

@@ -10,11 +10,12 @@ import {
 } from './a1aProof';
 
 /**
- * Proof-only compiler for the rejected-low-wall corrective mini-strip.
+ * Isolated compiler for the low-wall corrective mini-strip.
  *
- * This lane is intentionally separate from the existing 47-mask topology.
- * It proves a finished capped low wall before any source propagation, template
- * registration, schema decision, or Unity import.
+ * The straight south profile and the owner-approved reanchored east profile
+ * remain separate from the existing 47-mask topology while the southeast
+ * corner is still under review. No source propagation, template registration,
+ * schema decision, or Unity import is implied.
  */
 
 export const A1B_LOW_CORRECTION_CANVAS = 128;
@@ -26,13 +27,29 @@ export const A1B_LOW_CORRECTION_STRIDE =
 
 export const A1B_LOW_CORRECTION_RULER = {
   outerStart: 82,
-  innerStart: 84,
-  topPlaneEnd: 92,
-  copingEnd: 100,
-  innerEnd: 118,
   outerEnd: 120,
   outerProfile: 38,
   materialProfile: 34,
+  south: {
+    shellStart: 84,
+    revealEnd: 88,
+    creamEnd: 97,
+    coralEnd: 102,
+    greenEnd: 117,
+    contactStart: 120,
+    contactEnd: 123.5,
+  },
+  east: {
+    contactStart: 78.5,
+    contactEnd: 82,
+    greenStart: 85,
+    coralStart: 92,
+    creamStart: 96,
+    copingLipStart: 98.5,
+    topPlaneStart: 100,
+    shellEnd: 118,
+    mirrorAxis: 101,
+  },
 } as const;
 
 export const A1B_LOW_CORRECTION_SOURCE_IDS = [

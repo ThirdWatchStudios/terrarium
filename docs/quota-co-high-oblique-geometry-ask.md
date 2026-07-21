@@ -1,6 +1,6 @@
 # QuotaCo High-Oblique Geometry — Production Art Ask
 
-**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** ready for A1 visual proof
+**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** partial A1 source acceptance; southeast corner pending
 
 Canonical direction lives in the sim repository:
 
@@ -33,6 +33,11 @@ work as actual sprites.
   only a narrow top reveal. Vertical north-south runs on the east/west room edges must expose the broader,
   flatter-from-above top/side plane. Do not transpose one axis to manufacture the other; compatible sockets
   may share occupancy and band endpoints while their visible cross-sections remain intentionally different.
+- **Owner approval, 2026-07-21: opposite room edges also require opposite authored handedness.** West and
+  east use the same vertical plane depth, but the fascia/contact side must face inward on each edge and the
+  broad cream plane must face outward. For the 38-unit low-east profile, mirror the cross-section locally
+  around `x=101` while preserving the `82..120` structural socket; never flip the whole cell or defer this
+  facing correction to Unity.
 - Shallow south/front and east/side faces are drawn into the art.
 - Floors remain visibly flat on the walkable plane—never raised product plinths.
 - North and west room edges may carry full-height walls.
