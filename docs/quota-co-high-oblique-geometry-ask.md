@@ -1,6 +1,6 @@
 # QuotaCo High-Oblique Geometry — Production Art Ask
 
-**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** equal-height structural-wall correction in progress; south, southwest, and southeast promoted
+**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** all five current equal-height wall decisions accepted; room/corridor/autotiling gate next
 
 Canonical direction lives in the sim repository:
 
@@ -10,9 +10,9 @@ The-Water-Cooler/docs/design/quota-co-high-oblique-art-migration-plan.md
 ```
 
 The owner has committed to a fixed **high-oblique / top-down-plus** office in which the manufactured building,
-furniture, machines, amenities, and campus fixtures read as coordinated QuotaCo catalog products. The immediate
-ask is the building geometry by itself. Do not compose a room, redraw the prop catalog, or change the export
-contract before this sheet is approved.
+furniture, machines, amenities, and campus fixtures read as coordinated QuotaCo catalog products. The initial
+building-geometry ask is now approved at the five-piece directional level. The next proof composes those accepted
+pieces at room, corridor, and autotiling joins; prop-catalog and export-contract changes remain separate work.
 
 ---
 
@@ -31,8 +31,8 @@ work as actual sprites.
 - **Owner approval, 2026-07-21: every ordinary structural wall occupies its complete non-walkable cell with
   the same full 64-unit profile.** North and south use the exact `full_n_straight` base/upper source pair at
   the same centered pivot; south requires no transform, duplicated SVG, or new frame identity. The intended
-  east is a whole-cell X-mirror of the accepted full-west pair around `x=64`; east and northeast remain
-  unregistered reviewed proposals. The promoted `transition_w_to_s` pair is the equal-height southwest
+  east is a whole-cell X-mirror of the accepted full-west pair around `x=64`; east and northeast are
+  owner-accepted mirror contracts that remain unregistered. The promoted `transition_w_to_s` pair is the equal-height southwest
   corner, preserving exact full-west and shared full-north/south sockets. Southeast is promoted as an exact
   X-mirrored derivation of that pair: omit only its two source-side boundary-seam paths so the adjoining south
   cell owns one service seam. This creates no southeast SVG, frame identity, or production registration.
@@ -45,7 +45,7 @@ work as actual sprites.
   may share occupancy and band endpoints while their visible cross-sections remain intentionally different.
 - **Legacy low-east checkpoint, 2026-07-21:** the prior 38-unit east source used a local mirror around
   `x=101` inside its `82..120` socket. Preserve that result as comparison evidence only; it does not constrain
-  the pending full-height east whole-cell mirror or authorize a runtime transform.
+  the accepted full-height east whole-cell mirror or authorize a runtime transform.
 - **Legacy southern-corner checkpoint, 2026-07-21:** at the former low-southeast
   outer turn and the southwest full-to-low height step, the adjoining east/west top terminates behind the
   shallow south coping. The south cream/coral/green stack wraps the heel; a side-wall top or fascia may not
@@ -81,7 +81,7 @@ scales. The first review sheet contains only enough pieces to settle depth, heig
 |---|---|
 | Flat floor | base field plus one modular seam/inlay treatment |
 | Floor transition | straight, corner, and doorway threshold |
-| Ordinary structural wall | north/south shared horizontal straight; west straight; proposed mirrored east; equal-height corners and termini |
+| Ordinary structural wall | north/south shared horizontal straight; west straight; accepted mirrored east; equal-height corners and termini |
 | Optional low partition | deferred separate catalog family; legacy low sources are comparison evidence only |
 | Door | one closed and one open state in a directional opening |
 | Window | one wide opening in a full wall; directional cases only where materially different |
@@ -101,10 +101,11 @@ own the exposed low construction. No topology propagation is authorized until th
 reviewed at 240/90/40 px and in the room context.
 
 **Superseding owner decision, 2026-07-21:** exposed low construction is no longer part of the ordinary
-structural-wall proof. Promote exact north-source reuse for south, evaluate the proposed full-west whole-cell
-mirror for east, then rebuild corners as full-height joins. Southwest and southeast now hold promoted art
-contracts; southeast is a derived facing rather than a duplicate master. Retain the former low/profile files
-and review results without treating them as the current production direction.
+structural-wall proof. South is accepted as exact north-source reuse; east is accepted as a whole-cell mirror
+of west; northeast is accepted as the matching mirrored corner; and southwest and southeast hold accepted
+equal-height art contracts. Southeast is a derived facing rather than a duplicate master. All five decisions
+remain proof-layer art contracts rather than production registration. Retain the former low/profile files and
+review results without treating them as the current production direction.
 
 ### A1a review artifact
 
@@ -146,7 +147,7 @@ Reject or revise the sheet if any of these fail:
 - one-, two-, three-, and six-cell ordinary-wall runs change apparent height or expose broken seams;
 - a compact room, narrow corridor, or corner-plus-straight composition reads as overlapping strips instead of
   one manufactured enclosure;
-- the proposed full-height east mirror changes the pivot, 64-unit envelope, or connected-run sockets;
+- the accepted full-height east mirror changes the pivot, 64-unit envelope, or connected-run sockets;
 - doorway state or walkable cell is ambiguous;
 - continuous cream/green/teal product bands jump or misalign across compatible frames;
 - corners require rotating a fixed-light/high-oblique image into an invalid view;
@@ -158,7 +159,7 @@ Reject or revise the sheet if any of these fail:
 
 The geometry proof should make these questions concrete:
 
-- Can north/south exact source reuse and the proposed west/east mirror be represented without duplicate frame
+- Can north/south exact source reuse and the accepted west/east mirror be represented without duplicate frame
   identities or a new ordinary-wall profile field?
 - Can the technical base/upper paint split preserve one composed envelope across the topology without
   reintroducing visible joins or creating a state explosion?

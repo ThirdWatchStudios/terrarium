@@ -19,8 +19,8 @@
 > 64-unit profile on every room edge. South is exact source reuse of the `full_n_straight` base/upper pair,
 > without a transform or duplicated SVG. The `transition_w_to_s` pair is the promoted equal-height southwest
 > corner. Southeast is promoted as its X-mirrored derived facing, with the adjoining south cell owning the
-> suppressed source-side service tick. No southeast SVG is added. East and northeast remain unregistered
-> mirror proposals. The measured 38-unit low family is retained below as legacy A/B evidence and is not the
+> suppressed source-side service tick. No southeast SVG is added. East and northeast are owner-accepted
+> mirror/reuse contracts that remain unregistered. The measured 38-unit low family is retained below as legacy A/B evidence and is not the
 > current perimeter/cutaway target.
 
 The point of this page: the QuotaCo look is not a talent bar, it is a **closed grammar** — nine paints, two
@@ -36,7 +36,7 @@ expanding the grammar.
 - Fixed high-oblique / top-down-plus: rectangular, screen-aligned, no vanishing point, no diamond grid.
 - Equal-height ordinary-wall law (owner approval, 2026-07-21): every placed ordinary structural wall uses a
   **64-unit outer profile** and fully occupies its non-walkable cell. North/south and the west source span
-  `56..120` on their profile axis; the pending whole-cell east mirror maps X to `8..72` while preserving that
+  `56..120` on their profile axis; the accepted whole-cell east mirror maps X to `8..72` while preserving that
   64-unit size. North and south share the exact `full_n_straight` base/upper source pair at the same centered
   pivot; south introduces no transform, duplicate SVG, or additional frame identity. A 38-unit wall may only
   return as a separately approved internal-partition catalog family.
@@ -45,10 +45,14 @@ expanding the grammar.
   runs on the **east and west** room edges expose the broader, flatter-from-above top/side plane. This axis
   treatment remains distinct even though every ordinary wall now shares one full-height profile; transpose
   identity is not a valid horizontal-versus-vertical geometry gate.
-- East-facing proposal (not yet promoted, 2026-07-21): east is intended to reuse the full-west base/upper
+- Promoted east-facing law (owner acceptance, 2026-07-21): east reuses the full-west base/upper
   pair through a whole-cell mirror around `x=64` (`x′ = 128 − x`) while preserving the centered pivot and
-  64-unit occupancy. Do not register a new source, runtime transform, or production facing until the visual
-  proof is accepted. The former low-east local mirror around `x=101` is retained only as legacy evidence.
+  64-unit occupancy. This is an accepted art-direction reuse contract, not authorization to register a new
+  source, runtime transform, or production facing. The former low-east local mirror around `x=101` is retained
+  only as legacy evidence.
+- Promoted northeast law (owner acceptance, 2026-07-21): reuse the accepted northwest source pair through the
+  same whole-cell X mirror and join it to the accepted full-east run. Its compact, long, and installed-room
+  proof closes the joint East/Northeast gate without adding a northeast SVG or production registration.
 - Legacy low-southeast ownership law (owner acceptance at the prior low-profile checkpoint, 2026-07-21): at
   the low east-to-south outer turn, only the cream top and arris mediate the directional planes. The south
   cream/coral/green stack owns the complete foreground heel, while the east shaft terminates behind the
@@ -73,8 +77,8 @@ expanding the grammar.
 - Shallow **south (front) and east (side) faces** are authored into the sprite. Tops read lightest, vertical
   faces step darker, recesses darkest — that is a *material cue*, not a sun.
 - **Never rotate a directional frame to manufacture another facing.** A source-reuse mirror is allowed only
-  when the facing contract explicitly approves it; the proposed full-height east mirror has not crossed that
-  gate yet.
+  when the facing contract explicitly approves it; the accepted full-height east and northeast mirrors are the
+  explicit approved cases.
 - Paths may meet the canvas edge only as intentional connected-wall seams.
 - Draw on integer or half-unit coordinates. The existing masters are almost entirely `h`/`v` runs plus
   quarter-circle arcs — if you are sculpting freeform béziers, you are probably off-style.
@@ -196,12 +200,12 @@ be automated.
 2. Build from rounded rects and booleans on the 128 grid; snap everything.
 3. Paint only with §2 swatches; shade only with §4 steps.
 4. Keep `npm run style:watch` running (§10) — every save re-validates through the real importer and
-   re-renders base/upper/composed plus the distance proof, on light and dark ground — and the
-   **composed envelope gate** and **room-context mock** at the top of the bench page. The primary control uses
-   the promoted full-height north/south source reuse plus southwest and southeast corners; the east/northeast
-   mirror proofs remain visible beside their sources. Keep the earlier low E/S room as a labeled A/B comparison,
-   because tiling truth only shows composed. Saves under `low-profile-correction/` re-render that legacy
-   comparison too.
+   re-renders base/upper/composed plus the distance proof, on light and dark ground. The open bench page is a
+   **current-state decision surface**: unresolved equal-height pieces appear under `Review next`, and the
+   owner-approved comparison baseline appears under `Accepted working set`. Earlier low-profile comparisons,
+   mixed-profile room/envelope gates, and importer cards remain available only in closed, explicitly archived
+   disclosures. They must never read as the current target. Saves under `low-profile-correction/` still
+   re-render the labeled comparison evidence inside the current proof sheets.
 5. Gate every wall batch against the five-sheet primary wall target and the real contact sheet; use the golden
    room for whole-room feel. Keep rejects with a one-line reason each.
 

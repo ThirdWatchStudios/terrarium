@@ -55,6 +55,8 @@ import {
 } from '../scripts/highOblique/a1bAuthoredProof';
 import {
   derivePromotedSoutheastSourcePair,
+  PROMOTED_EAST_WALL_REUSE,
+  PROMOTED_NORTHEAST_CORNER,
   PROMOTED_SOUTHEAST_CORNER,
   PROMOTED_SOUTH_WALL_REUSE,
   PROMOTED_SOUTHWEST_CORNER,
@@ -200,6 +202,34 @@ describe('QuotaCo high-oblique A1b authored B source family', () => {
     expect(PROMOTED_SOUTH_WALL_REUSE.outerProfile.end - PROMOTED_SOUTH_WALL_REUSE.outerProfile.start)
       .toBe(64);
     expect(A1B_AUTHORED_STEMS).not.toContain('full_s_straight');
+  });
+
+  it('records the accepted east and northeast mirror contracts without production registration', () => {
+    expect(PROMOTED_EAST_WALL_REUSE).toEqual({
+      role: 'east',
+      sourceStem: 'full_w_straight',
+      baseFile: 'full_w_straight-base.svg',
+      upperFile: 'full_w_straight-upper.svg',
+      transform: 'mirror-x',
+      mirrorAxis: 64,
+      outerProfile: { start: 8, end: 72 },
+      pivot: { x: 0.5, y: 0.5 },
+      status: 'owner-accepted-working-contract',
+      productionRegistration: false,
+    });
+    expect(PROMOTED_NORTHEAST_CORNER).toEqual({
+      role: 'northeast-corner',
+      sourceStem: 'full_exterior_corner',
+      baseFile: 'full_exterior_corner-base.svg',
+      upperFile: 'full_exterior_corner-upper.svg',
+      transform: 'mirror-x',
+      mirrorAxis: 64,
+      pivot: { x: 0.5, y: 0.5 },
+      status: 'owner-accepted-working-contract',
+      productionRegistration: false,
+    });
+    expect(A1B_AUTHORED_STEMS).not.toContain('full_e_straight');
+    expect(A1B_AUTHORED_STEMS).not.toContain('full_northeast_corner');
   });
 
   it('promotes the equal-height southwest corner without production registration', () => {

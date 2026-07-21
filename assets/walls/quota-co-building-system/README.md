@@ -15,8 +15,8 @@ southwest corner is the promoted `transition_w_to_s` pair: it keeps the existing
 stem id while replacing the former low exit. Southeast is promoted as an exact
 X-mirrored reuse of that pair, with its source-side boundary ticks omitted so
 the adjoining south cell owns the single service seam. This adds no southeast
-SVG or frame identity. The intended east and northeast mirrors remain
-unregistered visual proposals. Low-wall art is no longer an ordinary
+SVG or frame identity. East and northeast are owner-accepted mirror/reuse
+contracts that remain unregistered. Low-wall art is no longer an ordinary
 perimeter/cutaway family and may only return as a separately approved
 internal-partition product.
 
@@ -61,15 +61,15 @@ overdraw. Do not rotate a directional frame to manufacture another facing.
 
 - fixed orthographic high-oblique/top-down-plus over the rectangular grid;
 - every ordinary structural wall cell uses one continuous 64-unit profile: the
-  accepted north/south and west source spans run `56..120`, while the pending
+  accepted north/south and west source spans run `56..120`, while the accepted
   whole-cell east mirror maps its X span to `8..72` without changing its size;
 - horizontal north/south room-edge runs read flat/front-on with a narrow top reveal;
 - vertical east/west room-edge runs expose the broader, flatter-from-above top/side plane;
 - north and south use the exact `full_n_straight` base/upper pair with no transform
   or duplicate south master;
-- west is the accepted full-height vertical source; east is intended to reuse it
-  through a whole-cell mirror around `x=64` (`x' = 128 - x`), but remains a proof
-  proposal rather than a registered source/runtime transform;
+- west is the accepted full-height vertical source; east is accepted as reuse of
+  that pair through a whole-cell mirror around `x=64` (`x' = 128 - x`). This is
+  an owner-approved art contract, not a registered source/runtime transform;
 - the former 38-unit low profile (`82..120`), local low-east mirror, and full-to-low
   turn survive only in historical/reference evidence. Any future low partition
   must be a separately named catalog family, never an ordinary perimeter wall;
@@ -109,7 +109,7 @@ composition, cutaways, sorting application, lighting, and production acceptance.
 Do not expand this directory to the complete 47-blob/opening family until separately authorized after the
 complete equal-height envelope review. The earlier low-east, low-southeast, and southwest full-to-low
 checkpoint remains historical directional evidence, but its low perimeter profiles and height-step corner
-are superseded for ordinary walls. South, southwest, and the mirror-derived southeast are promoted art
-decisions; east and northeast remain unregistered mirror proposals. The southeast decision adds no source
-stem or production transform. Do not derive a topology, registration, exporter, schema, or Unity change from
-these source files alone.
+are superseded for ordinary walls. South, east, northeast, southwest, and southeast are owner-accepted
+equal-height art decisions; their source reuse and mirrors remain unregistered. The southeast decision adds
+no source stem or production transform. Do not derive a topology, registration, exporter, schema, or Unity
+change from these source files alone.

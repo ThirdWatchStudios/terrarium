@@ -31,8 +31,8 @@ changes the export contract except where explicitly flagged (floor variants).
 > duplicate SVG, or new identity. The equal-height southwest molded corner is now promoted in the existing
 > `transition_w_to_s` source pair; its south frontage owns the foreground heel. Southeast is promoted as an
 > exact X-mirrored reuse of that same pair, with only its source-side boundary ticks suppressed so the
-> adjoining south cell owns one service seam. It adds no SVG or frame identity. East and northeast remain
-> unregistered reviewed mirror proposals. The former
+> adjoining south cell owns one service seam. It adds no SVG or frame identity. East and northeast are also
+> owner-accepted whole-cell mirror contracts, while remaining unregistered. The former
 > low-south/east and full-to-low artifacts remain historical comparisons and may only inform a separately
 > approved partition family. This decision still changes no production template, topology, exporter, schema,
 > or Unity contract.

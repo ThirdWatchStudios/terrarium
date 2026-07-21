@@ -20,7 +20,7 @@ export const PROMOTED_SOUTH_WALL_REUSE = {
   productionRegistration: false,
 } as const;
 
-export const FULL_HEIGHT_EAST_MIRROR_PROPOSAL = {
+export const PROMOTED_EAST_WALL_REUSE = {
   role: 'east',
   sourceStem: 'full_w_straight',
   baseFile: 'full_w_straight-base.svg',
@@ -29,11 +29,11 @@ export const FULL_HEIGHT_EAST_MIRROR_PROPOSAL = {
   mirrorAxis: 64,
   outerProfile: { start: 8, end: 72 },
   pivot: { x: 0.5, y: 0.5 },
-  status: 'proposal',
+  status: 'owner-accepted-working-contract',
   productionRegistration: false,
 } as const;
 
-export const FULL_HEIGHT_NORTHEAST_MIRROR_PROPOSAL = {
+export const PROMOTED_NORTHEAST_CORNER = {
   role: 'northeast-corner',
   sourceStem: 'full_exterior_corner',
   baseFile: 'full_exterior_corner-base.svg',
@@ -41,7 +41,7 @@ export const FULL_HEIGHT_NORTHEAST_MIRROR_PROPOSAL = {
   transform: 'mirror-x' as EqualHeightWallTransform,
   mirrorAxis: 64,
   pivot: { x: 0.5, y: 0.5 },
-  status: 'proposal',
+  status: 'owner-accepted-working-contract',
   productionRegistration: false,
 } as const;
 

@@ -14,9 +14,10 @@ on the live workbench and committed individually with its design rationale.
 
 ## The loop (repeat per piece)
 
-1. **Pick the piece from the room mock.** The composed room at the top of the bench page is the
-   issue-finding surface — tiling truth only shows composed. Anything the owner can point at in that
-   image becomes a one-piece pass.
+1. **Pick the active decision.** When `Review next` is present, choose one unresolved equal-height piece from
+   that lane. When every current piece is accepted, follow the `Next system gate` card instead of reopening a
+   settled piece. Use the installed-room panel inside the active proof sheet as the issue-finding surface —
+   tiling truth only shows composed. Historical mixed-profile room mocks are archived, not valid targets.
 2. **Read before drawing:** the piece's current masters, the five-sheet primary wall target listed in
    `docs/reference/README.md`, the broad geometry and golden-room references, the bible's constants, and any
    already-solved construction that transfers (see ledger below). Start with
@@ -29,9 +30,11 @@ on the live workbench and committed individually with its design rationale.
    shading as overlays never tints (recolor law). Edit masters with the file tools, not shell scripts —
    shell edits break the session harness's write tracking.
 4. **Judge on the bench:** `npm run style:watch` → http://localhost:5411 (one instance only — the port
-   is exclusive). The composed-only envelope gate is the first acceptance surface; the room mock then adds
-   opening content. Per-stem cards give base/upper/composed + 240/90/40 + dark ground. A save re-renders its
-   stem card; saves under `low-profile-correction/` re-render both composition views.
+   is exclusive). Start with the active proof sheet's isolated piece and socket checks, then its compact/long
+   runs and installed room. The open page separates `Review next` from `Accepted working set`; old mixed-profile
+   gates and per-stem importer cards are closed under `Archived checkpoints` and `Compiler diagnostics` so they
+   cannot be mistaken for approval targets. A relevant source save re-renders the current proof sheets and their
+   labeled comparison evidence.
 5. **Iterate on the owner's eye.** Every pass this session was improved by an owner correction —
    present honestly, name residual deltas yourself, and treat "not right yet" as a diagnosis request.
 6. **Owner blesses → commit** just that piece's files, message stating the design rationale (see git log
@@ -143,15 +146,17 @@ and long-run review by applying the same ownership rule at the height step: the 
 behind the shallow south coping and the rounded south stack owns the foreground heel. Contact-shadow polish
 is explicitly deferred.
 
-**Promoted equal-height south, southwest, and southeast checkpoint (owner approval, 2026-07-21):** the ordinary structural-wall
+**Promoted equal-height wall-direction checkpoint (owner approval, 2026-07-21):** the ordinary structural-wall
 contract now uses one full 64-unit profile on every room edge. South reuses the exact
 `full_n_straight-base.svg` and `full_n_straight-upper.svg` sources at the same centered pivot, with no
-transform, duplicate south SVG, or new frame identity. The polished `transition_w_to_s` base/upper pair now
+transform, duplicate south SVG, or new frame identity. East reuses full west through a whole-cell X mirror;
+northeast reuses the accepted northwest pair through that same mirror, and their combined compact/long/room
+gate is owner accepted. The polished `transition_w_to_s` base/upper pair now
 owns the equal-height southwest corner: its west shaft terminates behind the full south frontage, whose
 cream/coral/green/plinth stack wraps the foreground heel. Southeast reuses that pair through a whole-cell X
 mirror around `x=64`; suppress only the two source boundary-seam paths so the adjoining south cell owns one
-service tick. This adds no SVG, stem, or frame identity. East and northeast remain unregistered reviewed
-mirror proposals. Former low/full-to-low geometry survives in history and labeled comparison evidence, not
+service tick. This adds no SVG, stem, or frame identity. Every derived facing remains unregistered. Former
+low/full-to-low geometry survives in history and labeled comparison evidence, not
 as the current ordinary perimeter target. Do not propagate any of this into topology, state, registration,
 exporter, schema, or Unity without separate authorization.
 
