@@ -1,8 +1,8 @@
 # A1b low-profile corrective source strip
 
-This proof-only directory corrects the rejected low-wall silhouette without
-regenerating or registering the complete 47-blob family. The files are editable
-art authority for a deliberately small owner-review strip:
+This source-only directory holds the owner-accepted directional low-wall
+correction without regenerating or registering the complete 47-blob family. The
+files are editable art authority for a deliberately small corrective strip:
 
 - `low-s-straight.svg`
 - `low-e-straight.svg`
@@ -13,6 +13,9 @@ art authority for a deliberately small owner-review strip:
 Every source uses a strict `0 0 128 128` canvas. Low/base art lives under
 `detail/low`; the optional transition extension lives under `detail/upper`.
 South and east are separately authored fixed-light views, not rotated exports.
+Acceptance covers these source silhouettes and their composed visual read; it
+does not authorize topology propagation, production registration, export, schema,
+or Unity changes.
 
 ## Corrective ruler
 
@@ -20,18 +23,26 @@ The prior topology base was only the green lower chassis: outer `94..120`,
 material `96..118`. It had no aged-cream coping and read as skirting when used
 alone.
 
-The corrective low wall is a finished cutaway product:
+The corrective low wall is a finished cutaway product with directional rulers:
 
 - outer silhouette: `82..120` (38 units);
 - material field: `84..118` (34 units);
-- light top plane: `84..92`;
-- cream coping / inner lip: through `100`;
-- green face: `100..118`, with a restrained teal service band;
-- charcoal toe and outline: through `120`.
+- south/front profile: shell starts at `84`, reveal runs `84..88`, cream ends at
+  `97`, coral runs `97..102`, green runs `102..117`, contour/toe continues to
+  `120`, and the narrow contact cue runs `120..123.5`;
+- east/side profile: room-side contact runs `78.5..82`, green runs `85..92`,
+  coral runs `92..96`, cream runs `96..118`, the coping lip starts at `98.5`,
+  and the light top plane starts at `100`;
+- southeast ownership: the south cream/coral/green stack paints the foreground
+  heel, the east shaft ends behind the shallow south coping, and only the cream
+  top/arris bridges the directional turn;
+- connected north and west sockets remain exact. No whole-cell rotation or
+  transpose is permitted.
 
 The existing full upper ends near `99`, allowing it to overlap the cream coping
-without leaving a second visible cap. The transition pair tests that hypothesis
-before any 47-mask propagation. No dimensions here are an export/schema decision.
+without leaving a second visible cap. The transition pair preserves that tested
+relationship before any 47-mask propagation. No dimensions here are an
+export/schema decision.
 
 The actual atlas must remain transparent. Concept-study shadows, card frames,
 labels, and backgrounds are not source art. Terrarium owns these sources and

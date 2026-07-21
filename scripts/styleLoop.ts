@@ -302,9 +302,9 @@ function benchPage(): string {
     'figure.length-ladder{max-width:1100px}</style>' +
     '<h1>QuotaCo Building System — live workbench</h1>' +
     '<div id="status">waiting for first render…</div>' +
-    '<h2>active family review — northwest benchmark and northeast reconciliation</h2>' +
-    '<figure class="transition-focus" data-stem="east-facing-mirror-proof"><img src="east-facing-mirror-proof.png" alt="current and reanchored mirrored east-facing wall profiles"></figure>' +
-    '<h2>cross-section proofs — directional plane law candidates</h2>' +
+    '<h2>accepted one-piece checkpoint — low southeast outer corner</h2>' +
+    '<figure class="transition-focus" data-stem="low-se-corner-focus"><img src="low-se-corner-focus.png" alt="low southeast corner reference and installed proofs"></figure>' +
+    '<h2>cross-section controls — directional plane law</h2>' +
     '<figure class="proofs" data-stem="cross-section-proofs"><img src="cross-section-proofs.png" alt="cross-section proofs"></figure>' +
     '<h2>envelope gate — composed structural shell, no opening content</h2>' +
     '<figure class="gate" data-stem="envelope-gate"><img src="envelope-gate.png" alt="composed wall envelope gate"></figure>' +
@@ -362,6 +362,7 @@ async function render(
   await renderRoomMock(options);
   await renderLengthLadder(options);
   await renderEastFacingMirrorProof(options, root);
+  await renderLowSoutheastCornerFocus(options, root);
   const renderedAt = new Date().toISOString();
   const status = {
     ok: true,
@@ -394,6 +395,7 @@ async function compositionWindow(
   width: number,
   height: number,
   fileOverrides: CompositionFileOverrides = {},
+  cropViewBox?: string,
 ): Promise<string> {
   const basePass: string[] = [];
   const upperPass: string[] = [];
@@ -415,7 +417,7 @@ async function compositionWindow(
   ].join('');
   return (
     `<svg x="${x}" y="${y}" width="${width}" height="${height}" ` +
-    `viewBox="0 0 ${columns * 128} ${rows * 128}" preserveAspectRatio="none">` +
+    `viewBox="${cropViewBox ?? `0 0 ${columns * 128} ${rows * 128}`}" preserveAspectRatio="none">` +
     `<rect width="${columns * 128}" height="${rows * 128}" fill="${A1A_PALETTE.floor}"/>` +
     `<g fill="none" stroke="${INK}" stroke-width="1" opacity="0.14">${gridLines}</g>` +
     basePass.join('') +
@@ -477,6 +479,30 @@ function longCornerWithEastDropCells(): CompositionCell[] {
   ];
 }
 
+const LOW_SE_CORNER_CELL: ReadonlyArray<CompositionCell> = [
+  [0, 0, 'low-profile-correction/low-se-corner.svg', null],
+];
+
+function minimumLowSoutheastInstalledCells(): CompositionCell[] {
+  return [
+    [1, 0, 'low-profile-correction/low-e-straight.svg', null],
+    [0, 1, 'low-profile-correction/low-s-straight.svg', null],
+    [1, 1, 'low-profile-correction/low-se-corner.svg', null],
+  ];
+}
+
+function longLowSoutheastInstalledCells(): CompositionCell[] {
+  return [
+    [3, 0, 'low-profile-correction/low-e-straight.svg', null],
+    [3, 1, 'low-profile-correction/low-e-straight.svg', null],
+    [3, 2, 'low-profile-correction/low-e-straight.svg', null],
+    [0, 3, 'low-profile-correction/low-s-straight.svg', null],
+    [1, 3, 'low-profile-correction/low-s-straight.svg', null],
+    [2, 3, 'low-profile-correction/low-s-straight.svg', null],
+    [3, 3, 'low-profile-correction/low-se-corner.svg', null],
+  ];
+}
+
 async function renderEastFacingMirrorProof(options: CliOptions, root: string): Promise<void> {
   const width = 1600;
   const height = 1240;
@@ -529,9 +555,9 @@ async function renderEastFacingMirrorProof(options: CliOptions, root: string): P
     text(520, 1042, '• x82..120 structural socket never moves', 11, 600, MUTED),
     text(520, 1070, '• contact shadow moves with the facing', 11, 600, MUTED),
     text(520, 1110, 'This is a local mirror—not a whole-cell flip.', 12, 750, '#294B3C'),
-    text(1064, 862, 'REFERENCE / CANDIDATE SCALE CHECK', 14, 800),
+    text(1064, 862, 'REFERENCE / ACCEPTED SCALE CHECK', 14, 800),
     text(1139, 1118, 'REFERENCE NE', 10, 750, MUTED, 'middle'),
-    text(1390, 1118, 'MIRRORED NE', 10, 750, MUTED, 'middle'),
+    text(1390, 1118, 'ACCEPTED NE', 10, 750, MUTED, 'middle'),
     text(1064, 1188, 'Accepted production profile; rejected baseline remains board-only.', 10, 650, MUTED),
   ];
   parts.push(
@@ -591,6 +617,142 @@ async function renderEastFacingMirrorProof(options: CliOptions, root: string): P
     fitTo: { mode: 'width', value: width * CARD_RENDER_SCALE },
   }).render().asPng();
   await writeFile(path.join(options.output, 'east-facing-mirror-proof.png'), png);
+}
+
+async function renderLowSoutheastCornerFocus(options: CliOptions, root: string): Promise<void> {
+  const width = 1600;
+  const height = 1280;
+  const panelFill = '#ECE5D5';
+  const panel = (x: number, y: number, w: number, h: number): string =>
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="14" fill="${panelFill}" ` +
+    `stroke="${INK}" stroke-width="1.5" opacity="0.96"/>`;
+  const cornerReference = `data:image/png;base64,${Buffer.from(
+    await readFile(path.join(root, 'docs', 'reference', 'quota-co-wall-corners-and-ends-study.png')),
+  ).toString('base64')}`;
+  const referenceCrop = (
+    href: string,
+    x: number,
+    y: number,
+    width_: number,
+    height_: number,
+    viewBox: string,
+  ): string =>
+    `<svg x="${x}" y="${y}" width="${width_}" height="${height_}" viewBox="${viewBox}" ` +
+    `preserveAspectRatio="xMidYMid meet"><image width="1536" height="1024" href="${href}"/></svg>`;
+  const southControlCells = straightRunCells(
+    3,
+    'low-profile-correction/low-s-straight.svg',
+    '',
+    false,
+  );
+  const southSocketCells: ReadonlyArray<CompositionCell> = [
+    [0, 0, 'low-profile-correction/low-s-straight.svg', null],
+    [1, 0, 'low-profile-correction/low-se-corner.svg', null],
+  ];
+  const eastSocketCells: ReadonlyArray<CompositionCell> = [
+    [0, 0, 'low-profile-correction/low-e-straight.svg', null],
+    [0, 1, 'low-profile-correction/low-se-corner.svg', null],
+  ];
+
+  const parts: string[] = [
+    `<rect width="${width}" height="${height}" rx="18" fill="${PANEL}"/>`,
+    text(24, 34, 'LOW SOUTHEAST OUTER CORNER — SOUTH-FRONT OWNERSHIP', 21, 800),
+    text(24, 58, 'Promoted source. South fascia owns the foreground heel; east coping stops at the shallow south-top register.', 12, 600, MUTED),
+    panel(20, 76, 350, 330),
+    panel(390, 76, 520, 330),
+    panel(930, 76, 650, 330),
+    panel(20, 426, 980, 390),
+    panel(1020, 426, 560, 390),
+    panel(20, 836, 770, 420),
+    panel(810, 836, 770, 420),
+    text(40, 108, 'SOUTHEAST OWNERSHIP TARGET', 14, 800),
+    text(40, 130, 'Reference panel 8: a capped return with a foreground face.', 11, 600, MUTED),
+    referenceCrop(cornerReference, 45, 142, 300, 230, '1160 520 325 480'),
+    text(40, 391, 'South front wraps the heel. The east leg contributes only the cream top arc.', 10, 600, MUTED),
+    text(410, 108, 'FIXED LOW-SOUTH CONTROL — ALONE', 14, 800),
+    text(410, 130, 'This is the accepted straight with no corner over it.', 11, 600, MUTED),
+    text(410, 326, 'CREAM = lit top plane  ·  CORAL = trim  ·  GREEN = front fascia material', 11, 750),
+    text(410, 350, 'Only the narrow charcoal plinth/contact beneath the green is shadow-dark.', 11, 600, MUTED),
+    text(950, 108, 'PROMOTED LOW-SE CORNER — ISOLATED', 14, 800),
+    text(1260, 146, 'What changed', 12, 750),
+    text(1260, 172, '• south green wraps the full heel', 11, 600, MUTED),
+    text(1260, 196, '• coral remains its foreground trim', 11, 600, MUTED),
+    text(1260, 220, '• east top ends at south coping depth', 11, 600, MUTED),
+    text(1260, 260, 'Read at all sizes', 12, 750),
+    text(1260, 286, '240 px construction', 11, 600, MUTED),
+    text(1260, 310, '90 px gameplay', 11, 600, MUTED),
+    text(1260, 334, '40 px silhouette', 11, 600, MUTED),
+    text(40, 458, 'SOUTH SOCKET — ENLARGED', 14, 800),
+    text(40, 480, 'Accepted low-south left; promoted corner right. The vertical guide marks the tile boundary.', 11, 600, MUTED),
+    text(270, 505, 'FIXED SOUTH', 11, 750, MUTED, 'middle'),
+    text(730, 505, 'PROMOTED CORNER', 11, 750, MUTED, 'middle'),
+    `<path d="M510 494V750" fill="none" stroke="${A1A_PALETTE.coral}" stroke-width="2" stroke-dasharray="6 5" opacity="0.75"/>`,
+    text(40, 773, 'Gate: the south cream / coral / green stack continues through the heel; east coping never occupies the front.', 11, 700),
+    text(1040, 458, 'EAST SOCKET — ENLARGED', 14, 800),
+    text(1040, 480, 'Accepted low-east above; promoted corner below.', 11, 600, MUTED),
+    `<path d="M1064 643H1244" fill="none" stroke="${A1A_PALETTE.coral}" stroke-width="2" stroke-dasharray="6 5" opacity="0.75"/>`,
+    text(1280, 548, 'EAST TOP', 11, 800),
+    text(1280, 570, 'ends behind the coping.', 11, 650),
+    text(1280, 614, 'SOUTH FRONT', 11, 800),
+    text(1280, 638, 'continues across the corner', 11, 600, MUTED),
+    text(1280, 662, 'and rounds the outer heel.', 11, 600, MUTED),
+    text(40, 868, 'MINIMUM INSTALLED TURN', 14, 800),
+    text(40, 890, 'One-cell arms: the compact-room gate.', 11, 600, MUTED),
+    text(830, 868, 'LONG INSTALLED TURN', 14, 800),
+    text(830, 890, 'Three-cell arms: the repetition gate.', 11, 600, MUTED),
+    text(40, 1234, 'The corner must settle immediately without making a short room feel pinched.', 11, 650, MUTED),
+    text(830, 1234, 'The turn must remain quiet and continuous across a long room envelope.', 11, 650, MUTED),
+  ];
+  parts.push(
+    await compositionWindow(
+      options, southControlCells, 3, 1, 420, 150, 460, 153,
+    ),
+  );
+  parts.push(
+    await compositionWindow(
+      options, LOW_SE_CORNER_CELL, 1, 1, 965, 125, 270, 270,
+    ),
+  );
+  parts.push(
+    await compositionWindow(
+      options, LOW_SE_CORNER_CELL, 1, 1, 1370, 278, 90, 90,
+    ),
+  );
+  parts.push(
+    await compositionWindow(
+      options, LOW_SE_CORNER_CELL, 1, 1, 1480, 328, 40, 40,
+    ),
+  );
+  parts.push(
+    await compositionWindow(
+      options, southSocketCells, 2, 1, 70, 510, 880, 220,
+      {}, '0 64 256 64',
+    ),
+  );
+  parts.push(
+    await compositionWindow(
+      options, eastSocketCells, 1, 2, 1085, 500, 143, 286,
+      {}, '64 64 64 128',
+    ),
+  );
+  parts.push(
+    await compositionWindow(
+      options, minimumLowSoutheastInstalledCells(), 2, 2, 260, 920, 290, 290,
+    ),
+  );
+  parts.push(
+    await compositionWindow(
+      options, longLowSoutheastInstalledCells(), 4, 4, 1050, 920, 290, 290,
+    ),
+  );
+
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" ` +
+    `viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+  const png = new Resvg(svg, {
+    fitTo: { mode: 'width', value: width * CARD_RENDER_SCALE },
+  }).render().asPng();
+  await writeFile(path.join(options.output, 'low-se-corner-focus.png'), png);
 }
 
 async function renderLengthLadder(options: CliOptions): Promise<void> {
@@ -798,6 +960,7 @@ async function renderContextMocksSafely(options: CliOptions, root: string): Prom
     await renderRoomMock(options);
     await renderLengthLadder(options);
     await renderEastFacingMirrorProof(options, root);
+    await renderLowSoutheastCornerFocus(options, root);
     const statusPath = path.join(options.output, 'status.json');
     const status = JSON.parse(await readFile(statusPath, 'utf8')) as Record<string, unknown>;
     delete status.contextError;

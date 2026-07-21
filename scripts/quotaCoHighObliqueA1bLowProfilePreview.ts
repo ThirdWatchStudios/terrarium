@@ -1,4 +1,7 @@
-/** Render the rejected-versus-corrected A1b low-profile mini-strip. */
+/**
+ * Render the rejected-versus-accepted A1b low-profile source strip.
+ * Checked-in preview artifacts remain frozen until regeneration is separately authorized.
+ */
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
@@ -212,29 +215,47 @@ const A1B_LOW_CORRECTION_SOURCE_INVENTORY_NOTE: Readonly<Record<
 function boundaryAndRuler(parts: string[], y: number): number {
   const cardWidth = (WIDTH - MARGIN * 2 - GAP) / 2;
   parts.push(panel(MARGIN, y, cardWidth, 248, CORRECTED_PANEL));
-  parts.push(text(MARGIN + 24, y + 34, 'Corrective material stack', 20, 760));
+  parts.push(text(MARGIN + 24, y + 34, 'Accepted directional rulers', 20, 760));
   const stackX = MARGIN + 34;
-  const stackY = y + 66;
-  const scale = 4;
-  const bands = [
-    { from: 82, to: 84, color: A1A_PALETTE.charcoal, label: 'charcoal outline' },
-    { from: 84, to: 92, color: '#EEE8D7', label: 'light top plane · 8' },
-    { from: 92, to: 100, color: A1A_PALETTE.cream, label: 'cream coping/lip · 8' },
-    { from: 100, to: 118, color: A1A_PALETTE.green, label: 'green/teal face · 18' },
-    { from: 118, to: 120, color: A1A_PALETTE.charcoal, label: 'grounded toe' },
+  const scale = 3.5;
+  const southBands = [
+    { from: A1B_LOW_CORRECTION_RULER.outerStart, to: A1B_LOW_CORRECTION_RULER.south.shellStart, color: A1A_PALETTE.charcoal },
+    { from: A1B_LOW_CORRECTION_RULER.south.shellStart, to: A1B_LOW_CORRECTION_RULER.south.revealEnd, color: '#EEE8D7' },
+    { from: A1B_LOW_CORRECTION_RULER.south.revealEnd, to: A1B_LOW_CORRECTION_RULER.south.creamEnd, color: A1A_PALETTE.cream },
+    { from: A1B_LOW_CORRECTION_RULER.south.creamEnd, to: A1B_LOW_CORRECTION_RULER.south.coralEnd, color: A1A_PALETTE.coral },
+    { from: A1B_LOW_CORRECTION_RULER.south.coralEnd, to: A1B_LOW_CORRECTION_RULER.south.greenEnd, color: A1A_PALETTE.green },
+    { from: A1B_LOW_CORRECTION_RULER.south.greenEnd, to: A1B_LOW_CORRECTION_RULER.outerEnd, color: A1A_PALETTE.charcoal },
   ] as const;
-  let bx = stackX;
-  for (const band of bands) {
-    const width = (band.to - band.from) * scale;
-    parts.push(`<rect x="${bx}" y="${stackY}" width="${width}" height="70" fill="${band.color}"/>`);
-    bx += width;
-  }
-  parts.push(`<rect x="${stackX}" y="${stackY}" width="${38 * scale}" height="70" rx="5" fill="none" stroke="${INK}" stroke-width="2"/>`);
-  for (let index = 0; index < bands.length; index += 1) {
-    const band = bands[index];
-    parts.push(text(stackX + 180, y + 159 + index * 17, band.label, 11, 650, index === 2 ? INK : MUTED));
-  }
-  parts.push(text(MARGIN + cardWidth - 24, y + 225, '38 outer · 34 material · prior material field was 22', 12, 800, A1A_PALETTE.green, 'end'));
+  const eastBands = [
+    { from: A1B_LOW_CORRECTION_RULER.outerStart, to: A1B_LOW_CORRECTION_RULER.east.greenStart, color: A1A_PALETTE.charcoal },
+    { from: A1B_LOW_CORRECTION_RULER.east.greenStart, to: A1B_LOW_CORRECTION_RULER.east.coralStart, color: A1A_PALETTE.green },
+    { from: A1B_LOW_CORRECTION_RULER.east.coralStart, to: A1B_LOW_CORRECTION_RULER.east.creamStart, color: A1A_PALETTE.coral },
+    { from: A1B_LOW_CORRECTION_RULER.east.creamStart, to: A1B_LOW_CORRECTION_RULER.east.shellEnd, color: A1A_PALETTE.cream },
+    { from: A1B_LOW_CORRECTION_RULER.east.shellEnd, to: A1B_LOW_CORRECTION_RULER.outerEnd, color: A1A_PALETTE.charcoal },
+  ] as const;
+  const drawBands = (
+    bands: ReadonlyArray<{ readonly from: number; readonly to: number; readonly color: string }>,
+    rowY: number,
+  ): void => {
+    let bx = stackX;
+    for (const band of bands) {
+      const width = (band.to - band.from) * scale;
+      parts.push(`<rect x="${bx}" y="${rowY}" width="${width}" height="30" fill="${band.color}"/>`);
+      bx += width;
+    }
+    parts.push(
+      `<rect x="${stackX}" y="${rowY}" width="${A1B_LOW_CORRECTION_RULER.outerProfile * scale}" ` +
+      `height="30" rx="4" fill="none" stroke="${INK}" stroke-width="2"/>`,
+    );
+  };
+  parts.push(text(stackX, y + 66, 'SOUTH / FRONT', 11, 800, MUTED));
+  drawBands(southBands, y + 74);
+  parts.push(text(stackX + 168, y + 94, 'cream 84–97 · coral 97–102 · green 102–117', 11, 650, MUTED));
+  parts.push(text(stackX, y + 126, 'EAST / SIDE', 11, 800, MUTED));
+  drawBands(eastBands, y + 134);
+  parts.push(text(stackX + 168, y + 154, 'green 85–92 · coral 92–96 · cream 96–118', 11, 650, MUTED));
+  parts.push(text(stackX, y + 196, 'At SE, the south stack owns the heel; the east top stops behind its coping.', 11, 760, A1A_PALETTE.green));
+  parts.push(text(MARGIN + cardWidth - 24, y + 225, '38-unit socket · directional paint · exact neighbour edges', 12, 800, A1A_PALETTE.green, 'end'));
 
   const rightX = MARGIN + cardWidth + GAP;
   parts.push(panel(rightX, y, cardWidth, 248));
@@ -242,13 +263,13 @@ function boundaryAndRuler(parts: string[], y: number): number {
   const facts = [
     'Five editable SVG sources; the transparent atlas is generated evidence.',
     'South and east fixed-light planes are authored separately, never rotated.',
-    'The rejected 47-mask source bank remains byte-for-byte outside this lane.',
+    'The directional source silhouettes and southeast ownership are accepted.',
     'No production registration, exporter, schema, CONTRACT, or Unity change.',
-    'Approval unlocks propagation through the same existing 47-blob table.',
+    'Topology propagation and official preview refresh need separate authorization.',
   ];
   for (let index = 0; index < facts.length; index += 1) {
     const fy = y + 72 + index * 33;
-    parts.push(`<circle cx="${rightX + 31}" cy="${fy - 5}" r="4" fill="${index === 4 ? A1A_PALETTE.teal : A1A_PALETTE.green}"/>`);
+    parts.push(`<circle cx="${rightX + 31}" cy="${fy - 5}" r="4" fill="${index === 4 ? A1A_PALETTE.coral : A1A_PALETTE.green}"/>`);
     parts.push(text(rightX + 45, fy, facts[index], 13, index === 4 ? 750 : 520, index === 4 ? INK : MUTED));
   }
   return y + 248;
@@ -274,7 +295,7 @@ function reviewSheet(
   ];
   let y = 40;
   parts.push(text(MARGIN, y + 36, 'QuotaCo Building System · low-profile corrective mini-strip', 33, 820));
-  parts.push(text(MARGIN, y + 69, 'Finished capped cutaway volumes · rejected 47-bank retained as control · no propagation yet', 16, 520, MUTED));
+  parts.push(text(MARGIN, y + 69, 'Accepted directional source volumes · rejected 47-bank retained as control · no propagation yet', 16, 520, MUTED));
   parts.push(text(WIDTH - MARGIN, y + 34, '5 EDITABLE SOURCES · 6 PROOF FRAMES', 14, 820, A1A_PALETTE.green, 'end'));
   parts.push(text(WIDTH - MARGIN, y + 60, `${A1B_LOW_CORRECTION_COLUMNS}×${A1B_LOW_CORRECTION_ROWS} TRANSPARENT ATLAS · 1×/2×/4×`, 12, 700, MUTED, 'end'));
   y += 104;
@@ -285,7 +306,7 @@ function reviewSheet(
   y = sectionTitle(parts, y, 'Does split-B still work?', 'The persistent low member is now finished on its own; the optional upper extends only the full north run.');
   y = transitionSeparation(parts, y, newAtlas) + 24;
 
-  y = sectionTitle(parts, y, 'Corrective ruler and propagation boundary', 'Concept proportions guide the family relationship; this real 128-unit strip settles the exact low-wall read.');
+  y = sectionTitle(parts, y, 'Accepted rulers and propagation boundary', 'Directional proportions now describe the real 128-unit source strip; topology and official previews remain separately gated.');
   y = boundaryAndRuler(parts, y) + MARGIN;
 
   const height = Math.ceil(y);
@@ -371,7 +392,7 @@ async function main(): Promise<void> {
       '<style>html{background:#252a28;color:#f6f1e5;font-family:sans-serif}body{margin:24px}' +
       'img{display:block;max-width:100%;height:auto;margin-bottom:20px}a{color:#83a9a6;margin-right:16px}</style>' +
       '<h1>QuotaCo A1b low-profile corrective mini-strip</h1>' +
-      '<p>Rejected control versus five-source corrective art. No 47-mask propagation or production registration.</p>' +
+      '<p>Rejected control versus five-source accepted art. No 47-mask propagation or production registration.</p>' +
       '<img src="quota-co-high-oblique-a1b-low-profile-review.png" alt="QuotaCo rejected and corrected low wall comparison">' +
       EXPORT_SCALES.map((scale) =>
         `<a href="quota-co-high-oblique-a1b-low-profile-atlas@${scale}x.png">transparent atlas ${scale}×</a>`).join(''),

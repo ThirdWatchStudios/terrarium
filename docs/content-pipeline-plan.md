@@ -20,9 +20,10 @@ changes the export contract except where explicitly flagged (floor variants).
 > north/south runs must read flat/front-on, east/west runs flatter-from-above, and their joints must mediate
 > those authored cross-sections rather than enforce transpose identity. On 2026-07-21 the owner accepted the
 > northwest full/full corner plus the reanchored northeast/low-east facing checkpoint: east and west now share
-> plane depth while reversing local handedness so both fascias face the room. The low-southeast corner remains
-> unresolved, so the source checkpoint stays isolated from production templates, topology propagation,
-> schema, and Unity until the complete directional envelope receives separate approval.
+> plane depth while reversing local handedness so both fascias face the room. The owner subsequently accepted
+> the low-southeast corner with the south cream/coral/green stack owning the foreground heel and the east coping
+> terminating behind it. The accepted source checkpoint remains isolated from production templates, topology
+> propagation, schema, and Unity until that migration receives separate approval.
 
 ---
 

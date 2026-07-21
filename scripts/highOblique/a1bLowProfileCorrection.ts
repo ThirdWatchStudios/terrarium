@@ -12,10 +12,9 @@ import {
 /**
  * Isolated compiler for the low-wall corrective mini-strip.
  *
- * The straight south profile and the owner-approved reanchored east profile
- * remain separate from the existing 47-mask topology while the southeast
- * corner is still under review. No source propagation, template registration,
- * schema decision, or Unity import is implied.
+ * The owner-accepted south, reanchored east, and southeast source strip remains
+ * separate from the existing 47-mask topology. No source propagation, template
+ * registration, schema decision, or Unity import is implied.
  */
 
 export const A1B_LOW_CORRECTION_CANVAS = 128;
@@ -501,7 +500,7 @@ export function a1bLowCorrectionAtlasDescriptor(
       productionRegistration: false,
       schemaChange: false,
       directionalCastShadow: false,
-      note: 'Corrective mini-strip only. Approve the finished low-wall silhouette before propagating it through the existing 47-blob topology.',
+      note: 'Owner-accepted directional source strip. Propagation through the existing 47-blob topology requires separate authorization.',
     },
   };
 }

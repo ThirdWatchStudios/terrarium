@@ -269,7 +269,10 @@ function authoredFrame(
   return frame as FrameLike;
 }
 
-function lowFrame(family: A1bLowCorrectionFamily, id: 'a1b_low_corrected_s' | 'a1b_low_corrected_e'): FrameLike {
+function lowFrame(
+  family: A1bLowCorrectionFamily,
+  id: 'a1b_low_corrected_s' | 'a1b_low_corrected_e' | 'a1b_low_corrected_se_corner',
+): FrameLike {
   const frame = family.frames.find((candidate): candidate is A1bLowCorrectionFrame => candidate.id === id);
   if (!frame) throw new Error(`Missing low-profile frame ${id}`);
   return frame;
@@ -413,6 +416,35 @@ describe('QuotaCo unified wall-envelope visual contract', () => {
     ).toBeLessThanOrEqual(1);
   });
 
+  it('keeps the low southeast corner sockets continuous with both low-wall neighbours', () => {
+    const corner = rasterFrame(lowFrame(low, 'a1b_low_corrected_se_corner'));
+    const lowEast = rasterFrame(lowFrame(low, 'a1b_low_corrected_e'));
+    const lowSouth = rasterFrame(lowFrame(low, 'a1b_low_corrected_s'));
+
+    expect(
+      edgeMaxChannelDelta(lowEast, 's', corner, 'n'),
+      'low east south edge -> low southeast north edge',
+    ).toBeLessThanOrEqual(1);
+    expect(
+      edgeMaxChannelDelta(lowSouth, 'e', corner, 'w'),
+      'low south east edge -> low southeast west edge',
+    ).toBeLessThanOrEqual(1);
+  });
+
+  it('keeps the south-facing material stack in front through the southeast heel', () => {
+    const corner = rasterFrame(lowFrame(low, 'a1b_low_corrected_se_corner'));
+    const lowSouth = rasterFrame(lowFrame(low, 'a1b_low_corrected_s'));
+
+    for (const x of [88, 96, 104, 112]) {
+      for (const y of [92, 100, 108]) {
+        expect(
+          materialAt(corner, x, y),
+          `low southeast ownership at (${x}, ${y})`,
+        ).toBe(materialAt(lowSouth, 32, y));
+      }
+    }
+  });
+
   it('recompiles the focused envelope evidence to byte-identical rasters', async () => {
     const repeated = await loadFamilies();
     const repeatedAuthoredFrames = buildA1bAuthoredFrames(repeated.authored.components);
@@ -429,7 +461,11 @@ describe('QuotaCo unified wall-envelope visual contract', () => {
       ).toEqual(rasterFrame(authoredFrame(authoredFrames, stem)).pixels);
     }
 
-    for (const id of ['a1b_low_corrected_s', 'a1b_low_corrected_e'] as const) {
+    for (const id of [
+      'a1b_low_corrected_s',
+      'a1b_low_corrected_e',
+      'a1b_low_corrected_se_corner',
+    ] as const) {
       expect(
         rasterFrame(lowFrame(repeated.low, id)).pixels,
         `${id} repeated raster`,

@@ -37,6 +37,10 @@ expanding the grammar.
   **inside its existing `82..120` structural socket around `x=101` (`x′ = 202 − x`)**. Never flip the whole
   128-unit cell or use a runtime transform to manufacture the facing; either would move the socket or change
   the tile's cardinal role.
+- Low-southeast ownership law (owner acceptance, 2026-07-21): at the low east-to-south outer turn, only the
+  cream top and arris mediate the directional planes. The south cream/coral/green stack owns the complete
+  foreground heel, while the east shaft terminates behind the shallow south coping. Never let the east top or
+  fascia overpaint the south front.
 - Vertical profiles (kit law): exposed low walls occupy the **38-unit outer profile (`82..120`)**; full
   walls occupy one **64-unit outer envelope (`56..120`)**. `base` and `upper` are technical paint passes,
   not two finished products: draw base first, then upper at the same centered pivot, and judge only their

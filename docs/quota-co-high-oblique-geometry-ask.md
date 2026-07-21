@@ -1,6 +1,6 @@
 # QuotaCo High-Oblique Geometry — Production Art Ask
 
-**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** partial A1 source acceptance; southeast corner pending
+**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** directional A1 source geometry accepted; propagation pending
 
 Canonical direction lives in the sim repository:
 

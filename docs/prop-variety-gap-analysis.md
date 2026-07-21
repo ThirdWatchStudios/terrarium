@@ -239,3 +239,10 @@ Floors: polished-concrete (clinical), accent/area-tile (zone definition), astrot
   placement-variation SYSTEM (per-instance scatter) may lag; that half is partly Unity-side.
 - **Interaction anchors.** Which new props are sim-interaction anchors (phone-booth, ping-pong, copier) vs. pure
   decor — anchors must join `INTERACTION_PROP_TYPES` + the facility catalog.
+- **Effect-scope metadata + placement preview** *(noted 2026-07-21)*. When B2 types prop effects sim-side
+  (core-loop §7), each effect-bearing prop gains a scope hint — **room** (printer, HVAC noise), **local
+  radius** (whiteboard, plant, lamp, acoustic panel), or **none/cell** (chair, monitors) — and the builder
+  visualizes that reach at placement/inspect time: room-bounds highlight vs. small radius footprint. Rule is
+  **scope, never magnitude** (no +N% aura — the register/numbers boundary). Design home:
+  [The-Water-Cooler `the-environmental-layer.md` §6.5] + [`build-system-charter.md` §5.7 (Tier 2)]. Tool-side
+  impact: likely one template-level field beside `gridFootprint` once the sim schema settles; no art impact.

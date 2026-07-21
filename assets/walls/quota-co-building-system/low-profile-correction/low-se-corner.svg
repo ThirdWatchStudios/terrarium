@@ -1,17 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
   <g id="detail/low">
-    <path id="outer-contour" fill="#252A28" d="M82 0H120V112A8 8 0 0 1 112 120H0V82H72Q82 82 82 72Z"/>
-    <path id="cream-shell" fill="#D9D0B9" d="M84 0H107V88H0V84H74Q84 84 84 74ZM0 88H107V99H0Z"/>
-    <path id="top-plane-light" fill="#FFFFFF" opacity="0.18" d="M84 0H102V88H84Z"/>
-    <path id="reveal-light" fill="#FFFFFF" opacity="0.30" d="M0 84H84V88H0Z"/>
-    <path id="coping-lip" fill="#FFFFFF" opacity="0.30" d="M102 0H103.5V88H102Z"/>
-    <path id="cream-sliver" fill="#D9D0B9" d="M103.5 0H107V88H103.5Z"/>
-    <path id="coral-wrap" fill="#B65F4D" d="M107 0H112V107H0V99H107Z"/>
-    <path id="band-light" fill="#FFFFFF" opacity="0.10" d="M0 99H105V100.5H0Z"/>
-    <path id="green-wrap" fill="#294B3C" d="M112 0H117V112A5 5 0 0 1 112 117H0V107H112Z"/>
-    <path id="east-face-shade" fill="#000000" opacity="0.12" d="M103.5 0H117V96H103.5Z"/>
-    <path id="arris-seam" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45" d="M103.5 1V84M1 88H100"/>
-    <path id="band-seam" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35" d="M112 1V98M1 107H110"/>
-    <path id="contact-shade" fill="#000000" opacity="0.12" d="M120 0H123.5V112A11.5 11.5 0 0 1 112 123.5H0V120H112A8 8 0 0 0 120 112Z"/>
+    <path id="outer-contour" fill="#252A28" d="M82 0H120V112A8 8 0 0 1 112 120H0V82H76A6 6 0 0 0 82 76Z"/>
+    <path id="east-green-shaft" fill="#294B3C" d="M85 0H92V84H85Z"/>
+    <path id="east-coral-shaft" fill="#B65F4D" d="M92 0H96V84H92Z"/>
+    <path id="cream-shell" fill="#D9D0B9" d="M96 0H118V85A12 12 0 0 1 106 97H0V84H90A6 6 0 0 0 96 78Z"/>
+    <path id="top-plane-light" fill="#FFFFFF" opacity="0.18" d="M100 0H118V76A12 12 0 0 1 106 88H104A4 4 0 0 0 100 84Z"/>
+    <path id="reveal-light" fill="#FFFFFF" opacity="0.30" d="M0 84H100A4 4 0 0 1 104 88H0Z"/>
+    <path id="coping-lip" fill="#FFFFFF" opacity="0.30" d="M98.5 0H100V76H98.5Z"/>
+    <path id="south-coral-wrap" fill="#B65F4D" d="M0 97H112A5 5 0 0 1 117 102H0Z"/>
+    <path id="band-light" fill="#FFFFFF" opacity="0.10" d="M0 97H112V98.5H0Z"/>
+    <path id="south-green-wrap" fill="#294B3C" d="M0 102H117V112A5 5 0 0 1 112 117H0Z"/>
+    <path id="east-face-shade" fill="#000000" opacity="0.12" d="M85 0H98.5V76A6 6 0 0 1 92.5 82H85Z"/>
+    <path id="contact-shade" fill="#000000" opacity="0.12" d="M78.5 0H82V76H78.5Z M120 112H123.5A11.5 11.5 0 0 1 112 123.5H0V120H112A8 8 0 0 0 120 112Z"/>
+    <path id="arris-seam" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45" d="M98.5 1V76A12 12 0 0 1 86.5 88H1"/>
+    <path id="band-seam" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35" d="M92 1V83 M1 102H116"/>
   </g>
 </svg>

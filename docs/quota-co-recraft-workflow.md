@@ -131,17 +131,17 @@ On restart, keep the pass bounded to A1 wall geometry:
    intentional high-to-low transitions.
 
 **Approved directional checkpoint (2026-07-21):** the northwest full/full corner, northeast full-to-low
-turn, and low-east straight now establish the accepted side-wall rule. The east cross-section is a local,
+turn, low-east straight, and low-southeast corner now establish the accepted side-wall rule. The east cross-section is a local,
 reanchored X-mirror inside `82..120` around `x=101`: its coral/green fascia and contact shadow face the room,
 while its cream plane faces outward. This is not permission to flip a whole tile or synthesize the facing at
 runtime. The northeast and repeated east run passed the compact header and long-drop review at gameplay
-distance. Contact-shadow polish is explicitly deferred. The low-southeast corner still carries the rejected
-east ordering and must be reviewed as its own next piece before the complete compact-room/corridor envelope
-can be called visually accepted.
+distance. The low-southeast corner passed isolated, one-cell, and long-run review with the south-facing
+cream/coral/green stack wrapping the foreground heel and the east coping terminating behind the shallow south
+top. Contact-shadow polish is explicitly deferred.
 
-**Still locked until the low-southeast corner review passes:** `topology/` and `state/`; official preview
+**Still isolated after directional source acceptance:** `topology/` and `state/`; official preview
 regeneration; template/catalog registration; exporter, `CONTRACT.md`, or schema changes; prop pilots; Unity;
-and `production.unity`. Propagate only when separately requested.
+and `production.unity` remain locked until separately requested.
 
 **Historical progress 2026-07-20 (superseded by the 2026-07-21 checkpoint):** steps 1–5 were executed and
 awaited owner review. Cross-section proofs
@@ -156,7 +156,7 @@ corner turns with the profile drop on the run past the corner** (matching the go
 room-side stack terminates against the standing wall's inner outline, the top surface flows through the turn,
 the exterior stack wraps in below the outer arc, and a terminus end face steps down onto the low section.
 Committed piecewise through the corner rebuild. The 2026-07-21 checkpoint supersedes this progress snapshot;
-the low-southeast corner is now the next explicit directional residual.
+the previously residual low-southeast corner is now accepted at source level, with propagation still isolated.
 
 ### Measured reference constants (step-1 measurement pass, 2026-07-20)
 
