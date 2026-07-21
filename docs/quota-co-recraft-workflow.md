@@ -143,17 +143,19 @@ and long-run review by applying the same ownership rule at the height step: the 
 behind the shallow south coping and the rounded south stack owns the foreground heel. Contact-shadow polish
 is explicitly deferred.
 
-**Promoted equal-height south and southwest checkpoint (owner approval, 2026-07-21):** the ordinary structural-wall
+**Promoted equal-height south, southwest, and southeast checkpoint (owner approval, 2026-07-21):** the ordinary structural-wall
 contract now uses one full 64-unit profile on every room edge. South reuses the exact
 `full_n_straight-base.svg` and `full_n_straight-upper.svg` sources at the same centered pivot, with no
 transform, duplicate south SVG, or new frame identity. The polished `transition_w_to_s` base/upper pair now
 owns the equal-height southwest corner: its west shaft terminates behind the full south frontage, whose
-cream/coral/green/plinth stack wraps the foreground heel. East and northeast remain unregistered reviewed
-mirror proposals; southeast is the next bounded proof. Former low/full-to-low geometry survives in history
-and labeled comparison evidence, not as the current ordinary perimeter target. Do not propagate any of this
-into topology, state, registration, exporter, schema, or Unity without separate authorization.
+cream/coral/green/plinth stack wraps the foreground heel. Southeast reuses that pair through a whole-cell X
+mirror around `x=64`; suppress only the two source boundary-seam paths so the adjoining south cell owns one
+service tick. This adds no SVG, stem, or frame identity. East and northeast remain unregistered reviewed
+mirror proposals. Former low/full-to-low geometry survives in history and labeled comparison evidence, not
+as the current ordinary perimeter target. Do not propagate any of this into topology, state, registration,
+exporter, schema, or Unity without separate authorization.
 
-**Still isolated after equal-height southwest promotion:** `topology/` and `state/`; official preview
+**Still isolated after equal-height southeast promotion:** `topology/` and `state/`; official preview
 regeneration; template/catalog registration; exporter, `CONTRACT.md`, or schema changes; prop pilots; Unity;
 and `production.unity` remain locked until separately requested.
 

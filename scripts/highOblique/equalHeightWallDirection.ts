@@ -60,3 +60,61 @@ export const PROMOTED_SOUTHWEST_CORNER = {
   status: 'owner-accepted-working-contract',
   productionRegistration: false,
 } as const;
+
+/**
+ * Owner-accepted southeast source reuse. The promoted southwest source pair
+ * is reflected around x=64, while its source-side boundary ticks are omitted
+ * so they do not double with the adjoining south cell. This deliberately adds
+ * no southeast SVG, authored stem, frame identity, or production registration.
+ */
+export const PROMOTED_SOUTHEAST_CORNER = {
+  role: 'southeast-corner',
+  sourceStem: PROMOTED_SOUTHWEST_CORNER.sourceStem,
+  baseFile: PROMOTED_SOUTHWEST_CORNER.baseFile,
+  upperFile: PROMOTED_SOUTHWEST_CORNER.upperFile,
+  omittedDetailIds: {
+    base: ['base-boundary-seam'],
+    upper: ['upper-boundary-seam'],
+  },
+  serviceSeamOwner: 'adjoining-south-cell',
+  transform: 'mirror-x' as EqualHeightWallTransform,
+  mirrorAxis: 64,
+  pivot: { x: 0.5, y: 0.5 },
+  status: 'owner-accepted-working-contract',
+  productionRegistration: false,
+} as const;
+
+export interface DerivedEqualHeightSourcePair {
+  readonly baseSource: string;
+  readonly upperSource: string;
+}
+
+function omitRequiredDetailPaths(source: string, ids: readonly string[]): string {
+  return ids.reduce((current, id) => {
+    const withoutPath = current.replace(
+      new RegExp(`\\s*<path\\s+id="${id}"[^>]*/>`, 'g'),
+      '',
+    );
+    if (withoutPath === current) {
+      throw new Error(`Cannot derive promoted southeast source: missing ${id}`);
+    }
+    return withoutPath;
+  }, source);
+}
+
+/** Materialize the accepted southeast detail filter before mirror-X composition. */
+export function derivePromotedSoutheastSourcePair(
+  baseSource: string,
+  upperSource: string,
+): DerivedEqualHeightSourcePair {
+  return {
+    baseSource: omitRequiredDetailPaths(
+      baseSource,
+      PROMOTED_SOUTHEAST_CORNER.omittedDetailIds.base,
+    ),
+    upperSource: omitRequiredDetailPaths(
+      upperSource,
+      PROMOTED_SOUTHEAST_CORNER.omittedDetailIds.upper,
+    ),
+  };
+}

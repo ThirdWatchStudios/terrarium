@@ -54,6 +54,8 @@ import {
   buildA1bAuthoredFrames,
 } from '../scripts/highOblique/a1bAuthoredProof';
 import {
+  derivePromotedSoutheastSourcePair,
+  PROMOTED_SOUTHEAST_CORNER,
   PROMOTED_SOUTH_WALL_REUSE,
   PROMOTED_SOUTHWEST_CORNER,
 } from '../scripts/highOblique/equalHeightWallDirection';
@@ -212,6 +214,64 @@ describe('QuotaCo high-oblique A1b authored B source family', () => {
       productionRegistration: false,
     });
     expect(A1B_AUTHORED_STEMS.filter((stem) => stem === 'transition_w_to_s')).toHaveLength(1);
+  });
+
+  it('promotes southeast as derived southwest source reuse without another authored stem', () => {
+    expect(PROMOTED_SOUTHEAST_CORNER).toEqual({
+      role: 'southeast-corner',
+      sourceStem: 'transition_w_to_s',
+      baseFile: 'transition_w_to_s-base.svg',
+      upperFile: 'transition_w_to_s-upper.svg',
+      omittedDetailIds: {
+        base: ['base-boundary-seam'],
+        upper: ['upper-boundary-seam'],
+      },
+      serviceSeamOwner: 'adjoining-south-cell',
+      transform: 'mirror-x',
+      mirrorAxis: 64,
+      pivot: { x: 0.5, y: 0.5 },
+      status: 'owner-accepted-working-contract',
+      productionRegistration: false,
+    });
+    expect(PROMOTED_SOUTHEAST_CORNER.sourceStem).toBe(PROMOTED_SOUTHWEST_CORNER.sourceStem);
+    expect(PROMOTED_SOUTHEAST_CORNER.baseFile).toBe(PROMOTED_SOUTHWEST_CORNER.baseFile);
+    expect(PROMOTED_SOUTHEAST_CORNER.upperFile).toBe(PROMOTED_SOUTHWEST_CORNER.upperFile);
+    expect(A1B_AUTHORED_STEMS).toHaveLength(9);
+    expect(A1B_AUTHORED_STEMS.filter((stem) => stem === 'transition_w_to_s')).toHaveLength(1);
+    expect(A1B_AUTHORED_STEMS).not.toContain('transition_e_to_s');
+  });
+
+  it('derives the promoted southeast sources deterministically and fails if seam ownership drifts', async () => {
+    const baseSource = await readFile(
+      path.join(A1B_SOURCE_DIRECTORY, PROMOTED_SOUTHEAST_CORNER.baseFile),
+      'utf8',
+    );
+    const upperSource = await readFile(
+      path.join(A1B_SOURCE_DIRECTORY, PROMOTED_SOUTHEAST_CORNER.upperFile),
+      'utf8',
+    );
+    const first = derivePromotedSoutheastSourcePair(baseSource, upperSource);
+    const second = derivePromotedSoutheastSourcePair(baseSource, upperSource);
+
+    expect(second).toEqual(first);
+    expect(baseSource.match(/id="base-boundary-seam"/g)).toHaveLength(1);
+    expect(upperSource.match(/id="upper-boundary-seam"/g)).toHaveLength(1);
+    expect(first.baseSource).toBe(
+      baseSource.replace(/\s*<path\s+id="base-boundary-seam"[^>]*\/>/, ''),
+    );
+    expect(first.upperSource).toBe(
+      upperSource.replace(/\s*<path\s+id="upper-boundary-seam"[^>]*\/>/, ''),
+    );
+    expect(first.baseSource).not.toContain('base-boundary-seam');
+    expect(first.upperSource).not.toContain('upper-boundary-seam');
+    expect(() => derivePromotedSoutheastSourcePair(
+      baseSource.replace('base-boundary-seam', 'renamed-boundary-seam'),
+      upperSource,
+    )).toThrow(/missing base-boundary-seam/);
+    expect(() => derivePromotedSoutheastSourcePair(
+      baseSource,
+      upperSource.replace('upper-boundary-seam', 'renamed-boundary-seam'),
+    )).toThrow(/missing upper-boundary-seam/);
   });
 
   it('makes the checked-in 18-file source inventory authoritative and deterministic', async () => {

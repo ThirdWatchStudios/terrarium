@@ -24,6 +24,10 @@ import {
   A1A_PALETTE,
   type A1aShape,
 } from '../scripts/highOblique/a1aProof';
+import {
+  derivePromotedSoutheastSourcePair,
+  PROMOTED_SOUTHEAST_CORNER,
+} from '../scripts/highOblique/equalHeightWallDirection';
 
 const ROOT_SOURCE_PREFIX = 'assets/walls/quota-co-building-system';
 const ROOT_SOURCE_DIRECTORY = path.resolve(process.cwd(), ROOT_SOURCE_PREFIX);
@@ -84,6 +88,45 @@ function frameSvg(frame: FrameLike): string {
 function rasterFrame(frame: FrameLike): Raster {
   const rendered = new Resvg(frameSvg(frame), { font: { loadSystemFonts: false } }).render();
   return { width: rendered.width, height: rendered.height, pixels: rendered.pixels };
+}
+
+const stripSvgShell = (source: string): string =>
+  source.replace(/^[\s\S]*?<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '');
+
+function rasterSourcePair(
+  baseFile: string,
+  upperFile: string,
+  options: { readonly mirrorX?: boolean; readonly southeastDerivation?: boolean } = {},
+): Raster {
+  const baseSource = readFileSync(path.join(ROOT_SOURCE_DIRECTORY, baseFile), 'utf8');
+  const upperSource = readFileSync(path.join(ROOT_SOURCE_DIRECTORY, upperFile), 'utf8');
+  const sources = options.southeastDerivation
+    ? derivePromotedSoutheastSourcePair(baseSource, upperSource)
+    : { baseSource, upperSource };
+  const content = stripSvgShell(sources.baseSource) + stripSvgShell(sources.upperSource);
+  const transformed = options.mirrorX
+    ? `<g transform="matrix(-1 0 0 1 128 0)">${content}</g>`
+    : content;
+  const rendered = new Resvg(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" ` +
+    `viewBox="0 0 128 128">${transformed}</svg>`,
+    { font: { loadSystemFonts: false } },
+  ).render();
+  return { width: rendered.width, height: rendered.height, pixels: rendered.pixels };
+}
+
+function rasterDifferenceCoordinates(first: Raster, second: Raster): Array<readonly [number, number]> {
+  expect([first.width, first.height]).toEqual([second.width, second.height]);
+  const differences: Array<readonly [number, number]> = [];
+  for (let y = 0; y < first.height; y += 1) {
+    for (let x = 0; x < first.width; x += 1) {
+      const index = pixelIndex(first, x, y);
+      if ([0, 1, 2, 3].some((channel) => first.pixels[index + channel] !== second.pixels[index + channel])) {
+        differences.push([x, y]);
+      }
+    }
+  }
+  return differences;
 }
 
 function pixelIndex(rendered: Raster, x: number, y: number): number {
@@ -408,6 +451,52 @@ describe('QuotaCo unified wall-envelope visual contract', () => {
     expect(edgeAlphaMismatchCount(corner, 'e', fullSouth, 'w')).toBe(0);
   });
 
+  it('joins the promoted southeast derivation exactly to full east and full south', () => {
+    const corner = rasterSourcePair(
+      PROMOTED_SOUTHEAST_CORNER.baseFile,
+      PROMOTED_SOUTHEAST_CORNER.upperFile,
+      { mirrorX: true, southeastDerivation: true },
+    );
+    const fullEast = rasterSourcePair(
+      'full_w_straight-base.svg',
+      'full_w_straight-upper.svg',
+      { mirrorX: true },
+    );
+    const fullSouth = rasterSourcePair(
+      'full_n_straight-base.svg',
+      'full_n_straight-upper.svg',
+    );
+
+    expect(
+      edgeMaxChannelDelta(fullEast, 's', corner, 'n'),
+      'full-east south edge -> southeast north edge',
+    ).toBe(0);
+    expect(
+      edgeMaxChannelDelta(fullSouth, 'e', corner, 'w'),
+      'promoted full-south east edge -> southeast west edge',
+    ).toBe(0);
+    expect(edgeAlphaMismatchCount(fullEast, 's', corner, 'n')).toBe(0);
+    expect(edgeAlphaMismatchCount(fullSouth, 'e', corner, 'w')).toBe(0);
+  });
+
+  it('removes only the mirrored southeast service tick owned by the adjoining south cell', () => {
+    const unfilteredMirror = rasterSourcePair(
+      PROMOTED_SOUTHEAST_CORNER.baseFile,
+      PROMOTED_SOUTHEAST_CORNER.upperFile,
+      { mirrorX: true },
+    );
+    const promoted = rasterSourcePair(
+      PROMOTED_SOUTHEAST_CORNER.baseFile,
+      PROMOTED_SOUTHEAST_CORNER.upperFile,
+      { mirrorX: true, southeastDerivation: true },
+    );
+    const differences = rasterDifferenceCoordinates(unfilteredMirror, promoted);
+
+    expect(differences).toHaveLength(108);
+    expect(differences.every(([x, y]) => x >= 1 && x <= 2 && y >= 63 && y <= 116))
+      .toBe(true);
+  });
+
   it('keeps the exterior corner sockets continuous with both straight neighbours', () => {
     const corner = rasterFrame(authoredFrame(authoredFrames, 'full_exterior_corner'));
     const fullNorth = rasterFrame(authoredFrame(authoredFrames, 'full_n_straight'));
@@ -487,6 +576,37 @@ describe('QuotaCo unified wall-envelope visual contract', () => {
     }
   });
 
+  it('keeps the full south-facing material stack in front through the southeast heel', () => {
+    const corner = rasterSourcePair(
+      PROMOTED_SOUTHEAST_CORNER.baseFile,
+      PROMOTED_SOUTHEAST_CORNER.upperFile,
+      { mirrorX: true, southeastDerivation: true },
+    );
+    const fullSouth = rasterSourcePair(
+      'full_n_straight-base.svg',
+      'full_n_straight-upper.svg',
+    );
+    const registers = [90, 100, 108] as const;
+
+    // The mirrored arris crosses the cream reveal near x=32; sample the
+    // uninterrupted face on both sides of that local construction seam.
+    for (const x of [16, 24, 48, 56, 64]) {
+      expect(materialAt(corner, x, 60), `southeast cream wrap at x=${x}`)
+        .toBe(materialAt(fullSouth, 32, 60));
+    }
+
+    for (const x of [16, 24, 32, 48, 56, 64]) {
+      for (const y of registers) {
+        const cornerIndex = pixelIndex(corner, x, y);
+        const fullSouthIndex = pixelIndex(fullSouth, 32, y);
+        expect(
+          Array.from(corner.pixels.subarray(cornerIndex, cornerIndex + 4)),
+          `southeast full-height foreground pixel at (${x}, ${y})`,
+        ).toEqual(Array.from(fullSouth.pixels.subarray(fullSouthIndex, fullSouthIndex + 4)));
+      }
+    }
+  });
+
   it('recompiles the focused envelope evidence to byte-identical rasters', async () => {
     const repeated = await loadFamilies();
     const repeatedAuthoredFrames = buildA1bAuthoredFrames(repeated.authored.components);
@@ -513,6 +633,21 @@ describe('QuotaCo unified wall-envelope visual contract', () => {
         `${id} repeated raster`,
       ).toEqual(rasterFrame(lowFrame(low, id)).pixels);
     }
+
+    expect(
+      rasterSourcePair(
+        PROMOTED_SOUTHEAST_CORNER.baseFile,
+        PROMOTED_SOUTHEAST_CORNER.upperFile,
+        { mirrorX: true, southeastDerivation: true },
+      ).pixels,
+      'promoted southeast repeated derivation',
+    ).toEqual(
+      rasterSourcePair(
+        PROMOTED_SOUTHEAST_CORNER.baseFile,
+        PROMOTED_SOUTHEAST_CORNER.upperFile,
+        { mirrorX: true, southeastDerivation: true },
+      ).pixels,
+    );
   });
 });
 

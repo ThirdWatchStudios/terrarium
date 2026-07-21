@@ -3,9 +3,10 @@
 > **Legacy comparison status (superseded for ordinary walls by owner approval, 2026-07-21):** these
 > low-south, low-east, low-southeast, and transition sources remain intact as deterministic A/B evidence.
 > They are not the current ordinary structural-wall or perimeter/cutaway target. Ordinary walls now use the
-> full 64-unit profile on every edge, with south reusing the exact full-north pair and east still awaiting
-> review of a full-west whole-cell mirror. Do not delete these sources until the replacement equal-height
-> enclosure is accepted; only a separately approved internal-partition catalog may revive a low profile.
+> full 64-unit profile on every edge, with south reusing the exact full-north pair, east retained as an
+> unregistered reviewed full-west mirror, and southeast promoted as a seam-filtered X mirror of the southwest
+> source pair. Keep these sources as labeled comparison evidence; only a separately approved internal-partition
+> catalog may revive a low profile.
 
 This source-only directory preserves the previously owner-accepted directional
 low-wall correction without regenerating or registering the complete 47-blob

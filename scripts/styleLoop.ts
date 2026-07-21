@@ -30,8 +30,10 @@ import {
   loadA1bLowCorrectionFamily,
 } from './highOblique/a1bLowProfileCorrection';
 import {
+  derivePromotedSoutheastSourcePair,
   FULL_HEIGHT_EAST_MIRROR_PROPOSAL,
   FULL_HEIGHT_NORTHEAST_MIRROR_PROPOSAL,
+  PROMOTED_SOUTHEAST_CORNER,
   PROMOTED_SOUTHWEST_CORNER,
   PROMOTED_SOUTH_WALL_REUSE,
   type EqualHeightWallTransform,
@@ -79,7 +81,8 @@ const ENVELOPE_GATE_CELLS: ReadonlyArray<readonly [number, number, string, strin
 // The room-context mock: real masters tiled the way the game composes a room.
 // Full N wall + door + NE transition across the top, full W wall down the
 // left, the promoted shared full-height horizontal source on S, and the
-// remaining low E source. Southern and eastern corners stay visibly pending.
+// remaining low E source. Later promoted southern corners appear as labeled
+// legacy controls on this earlier room checkpoint.
 const ROOM_CELLS: ReadonlyArray<readonly [number, number, string, string | null]> = [
   [0, 0, 'full_exterior_corner-base.svg', 'full_exterior_corner-upper.svg'],
   [1, 0, 'door_closed-base.svg', 'door_closed-upper.svg'],
@@ -105,6 +108,8 @@ type CompositionFileOverrides = Readonly<Record<string, string>>;
 // the workbench; the accepted equal-height board always reads the real files.
 const LEGACY_LOW_SOUTHWEST_BASE_FILE = '__proof__/legacy-low-southwest-base.svg';
 const LEGACY_LOW_SOUTHWEST_UPPER_FILE = '__proof__/legacy-low-southwest-upper.svg';
+const SOUTHEAST_WORKBENCH_BASE_FILE = '__proof__/promoted-southeast-base.svg';
+const SOUTHEAST_WORKBENCH_UPPER_FILE = '__proof__/promoted-southeast-upper.svg';
 const SOUTHWEST_REVIEW_FILE_OVERRIDES: CompositionFileOverrides = {
   [LEGACY_LOW_SOUTHWEST_BASE_FILE]: `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
@@ -194,7 +199,8 @@ const FULL_HEIGHT_NORTHEAST_ROOM_CELLS: ReadonlyArray<CompositionCell> = [
 
 // Installed context for the promoted source board: every previously reviewed
 // equal-height substitution remains in place, southwest reads from the
-// canonical accepted pair, and southeast stays visibly pending.
+// canonical accepted pair; southeast remains a labeled legacy control on this
+// southwest checkpoint and is promoted on its own following board.
 const FULL_HEIGHT_SOUTHWEST_ROOM_CELLS: ReadonlyArray<CompositionCell> = [
   [0, 0, 'full_exterior_corner-base.svg', 'full_exterior_corner-upper.svg'],
   [1, 0, 'door_closed-base.svg', 'door_closed-upper.svg'],
@@ -222,6 +228,44 @@ const FULL_HEIGHT_SOUTHWEST_ROOM_CELLS: ReadonlyArray<CompositionCell> = [
   ],
   [1, 2, PROMOTED_SOUTH_WALL_REUSE.baseFile, PROMOTED_SOUTH_WALL_REUSE.upperFile],
   [2, 2, 'low-profile-correction/low-se-corner.svg', null],
+];
+
+// Completed equal-height room used on the promoted southeast review board. A
+// workbench alias materializes the accepted detail filter, while provenance
+// remains the canonical southwest source pair and registration stays unchanged.
+const PROMOTED_SOUTHEAST_ROOM_CELLS: ReadonlyArray<CompositionCell> = [
+  [0, 0, 'full_exterior_corner-base.svg', 'full_exterior_corner-upper.svg'],
+  [1, 0, 'door_closed-base.svg', 'door_closed-upper.svg'],
+  [
+    2,
+    0,
+    FULL_HEIGHT_NORTHEAST_MIRROR_PROPOSAL.baseFile,
+    FULL_HEIGHT_NORTHEAST_MIRROR_PROPOSAL.upperFile,
+    FULL_HEIGHT_NORTHEAST_MIRROR_PROPOSAL.transform,
+  ],
+  [0, 1, 'full_w_straight-base.svg', 'full_w_straight-upper.svg'],
+  [
+    2,
+    1,
+    FULL_HEIGHT_EAST_MIRROR_PROPOSAL.baseFile,
+    FULL_HEIGHT_EAST_MIRROR_PROPOSAL.upperFile,
+    FULL_HEIGHT_EAST_MIRROR_PROPOSAL.transform,
+  ],
+  [
+    0,
+    2,
+    PROMOTED_SOUTHWEST_CORNER.baseFile,
+    PROMOTED_SOUTHWEST_CORNER.upperFile,
+    PROMOTED_SOUTHWEST_CORNER.transform,
+  ],
+  [1, 2, PROMOTED_SOUTH_WALL_REUSE.baseFile, PROMOTED_SOUTH_WALL_REUSE.upperFile],
+  [
+    2,
+    2,
+    SOUTHEAST_WORKBENCH_BASE_FILE,
+    SOUTHEAST_WORKBENCH_UPPER_FILE,
+    PROMOTED_SOUTHEAST_CORNER.transform,
+  ],
 ];
 
 const TRANSITION_W_TO_S_CELL: ReadonlyArray<CompositionCell> = [
@@ -386,7 +430,7 @@ function benchPage(): string {
     'main{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:14px}' +
     'figure{margin:0}img{width:100%;height:auto;display:block;border-radius:10px}' +
     'figure.gate,figure.room{max-width:768px}figure.proofs{max-width:900px}' +
-    'figure.south-proof,figure.east-proof,figure.northeast-proof,figure.southwest-proof{max-width:1200px}' +
+    'figure.south-proof,figure.east-proof,figure.northeast-proof,figure.southwest-proof,figure.southeast-proof{max-width:1200px}' +
     'figure.transition-focus{max-width:1200px}' +
     'figure.length-ladder{max-width:1100px}</style>' +
     '<h1>QuotaCo Building System — live workbench</h1>' +
@@ -399,6 +443,8 @@ function benchPage(): string {
     '<figure class="northeast-proof" data-stem="full-height-northeast-proof"><img src="full-height-northeast-proof.png" alt="full-height northeast mirrored corner proposal"></figure>' +
     '<h2>promoted join — full west turns into the shared full south</h2>' +
     '<figure class="southwest-proof" data-stem="full-height-southwest-proof"><img src="full-height-southwest-proof.png" alt="promoted full-height southwest molded corner"></figure>' +
+    '<h2>promoted join — mirror the southwest source into southeast</h2>' +
+    '<figure class="southeast-proof" data-stem="full-height-southeast-proof"><img src="full-height-southeast-proof.png" alt="promoted full-height southeast mirrored corner"></figure>' +
     '<h2>superseded comparison checkpoint — southwest full-to-low transition</h2>' +
     '<figure class="transition-focus" data-stem="transition-w-to-s-focus"><img src="transition-w-to-s-focus.png" alt="accepted southwest full-to-low transition and installed proofs"></figure>' +
     '<h2>cross-section controls — directional plane law</h2>' +
@@ -422,7 +468,7 @@ function benchPage(): string {
     'if(s.ok&&s.renderedAt!==stamp){stamp=s.renderedAt;' +
     'for(const f of document.querySelectorAll("main figure"))f.querySelector("img").src=`${f.dataset.stem}.png?t=${Date.now()}`;}' +
     'if(s.focusRenderedAt&&s.focusRenderedAt!==focusStamp){focusStamp=s.focusRenderedAt;' +
-    'for(const f of document.querySelectorAll("figure.transition-focus,figure.east-proof,figure.northeast-proof,figure.southwest-proof"))f.querySelector("img").src=`${f.dataset.stem}.png?t=${Date.now()}`;}' +
+    'for(const f of document.querySelectorAll("figure.transition-focus,figure.east-proof,figure.northeast-proof,figure.southwest-proof,figure.southeast-proof"))f.querySelector("img").src=`${f.dataset.stem}.png?t=${Date.now()}`;}' +
     'if(s.gateRenderedAt&&s.gateRenderedAt!==gateStamp){gateStamp=s.gateRenderedAt;' +
     'const f=document.querySelector("figure.gate");f.querySelector("img").src=`${f.dataset.stem}.png?t=${Date.now()}`;}' +
     'if(s.proofsRenderedAt&&s.proofsRenderedAt!==proofsStamp){proofsStamp=s.proofsRenderedAt;' +
@@ -463,6 +509,7 @@ async function render(
   await renderFullHeightEastMirrorProof(options);
   await renderFullHeightNortheastProof(options);
   await renderFullHeightSouthwestProof(options);
+  await renderFullHeightSoutheastProof(options);
   await renderLowSoutheastCornerFocus(options, root);
   const renderedAt = new Date().toISOString();
   const status = {
@@ -482,6 +529,26 @@ async function render(
 
 const stripSvgShell = (svg: string): string =>
   svg.replace(/^[\s\S]*?<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '');
+
+async function southeastReviewFileOverrides(
+  options: CliOptions,
+): Promise<CompositionFileOverrides> {
+  const [baseSource, upperSource] = await Promise.all([
+    readFile(
+      path.join(options.input, PROMOTED_SOUTHEAST_CORNER.baseFile),
+      'utf8',
+    ),
+    readFile(
+      path.join(options.input, PROMOTED_SOUTHEAST_CORNER.upperFile),
+      'utf8',
+    ),
+  ]);
+  const derived = derivePromotedSoutheastSourcePair(baseSource, upperSource);
+  return {
+    [SOUTHEAST_WORKBENCH_BASE_FILE]: derived.baseSource,
+    [SOUTHEAST_WORKBENCH_UPPER_FILE]: derived.upperSource,
+  };
+}
 
 const transformCellContent = (
   content: string,
@@ -611,6 +678,40 @@ function southwestInstalledCells(
         PROMOTED_SOUTH_WALL_REUSE.upperFile,
       ] as CompositionCell,
     ),
+  ];
+}
+
+function southeastInstalledCells(
+  verticalLength: number,
+  horizontalLength: number,
+): CompositionCell[] {
+  return [
+    ...Array.from(
+      { length: verticalLength },
+      (_, index) => [
+        horizontalLength,
+        index,
+        FULL_HEIGHT_EAST_MIRROR_PROPOSAL.baseFile,
+        FULL_HEIGHT_EAST_MIRROR_PROPOSAL.upperFile,
+        FULL_HEIGHT_EAST_MIRROR_PROPOSAL.transform,
+      ] as CompositionCell,
+    ),
+    ...Array.from(
+      { length: horizontalLength },
+      (_, index) => [
+        index,
+        verticalLength,
+        PROMOTED_SOUTH_WALL_REUSE.baseFile,
+        PROMOTED_SOUTH_WALL_REUSE.upperFile,
+      ] as CompositionCell,
+    ),
+    [
+      horizontalLength,
+      verticalLength,
+      SOUTHEAST_WORKBENCH_BASE_FILE,
+      SOUTHEAST_WORKBENCH_UPPER_FILE,
+      PROMOTED_SOUTHEAST_CORNER.transform,
+    ],
   ];
 }
 
@@ -885,7 +986,7 @@ async function renderFullHeightEastMirrorProof(options: CliOptions): Promise<voi
     text(44, 818, 'CURRENT ROOM — SOUTH PROMOTED, EAST LEGACY', 14, 800),
     text(44, 842, 'The accepted horizontal source is now the control; east remains low.', 11, 600, MUTED),
     text(824, 818, 'INSTALLED EAST-STRAIGHT PROOF', 14, 800),
-    text(824, 842, 'Only the centre east cell changes. Three old-profile corners remain visibly pending.', 11, 600, MUTED),
+    text(824, 842, 'Only the centre east cell changes. NE and SE remain legacy controls; SW resolves canonically.', 11, 600, MUTED),
     text(44, 1430, 'Control shows the promoted south decision in the primary room composition.', 11, 650, MUTED),
     text(824, 1430, 'Gate: judge the mirrored straight and cell balance—not the deliberately incompatible corner sockets.', 11, 700, A1A_PALETTE.green),
   ];
@@ -905,8 +1006,8 @@ async function renderFullHeightEastMirrorProof(options: CliOptions): Promise<voi
     '</g>',
   );
   parts.push(text(1380, 878, 'NE CORNER PENDING', 11, 800, '#9A493D', 'middle'));
-  parts.push(text(980, 1278, 'SW CORNER PENDING', 11, 800, '#9A493D', 'middle'));
-  parts.push(text(1380, 1278, 'SE CORNER PENDING', 11, 800, '#9A493D', 'middle'));
+  parts.push(text(980, 1278, 'SW PROMOTED', 11, 800, A1A_PALETTE.green, 'middle'));
+  parts.push(text(1380, 1278, 'SE LEGACY CONTROL', 11, 800, '#9A493D', 'middle'));
 
   const svg =
     `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" ` +
@@ -1012,7 +1113,7 @@ async function renderFullHeightNortheastProof(options: CliOptions): Promise<void
     text(564, 908, 'LONG TURN — THREE-CELL ARMS', 14, 800),
     text(564, 932, 'The corner must disappear into the repeated wall rhythm.', 11, 600, MUTED),
     text(1084, 908, 'INSTALLED ROOM — NE REPLACED ONLY', 14, 800),
-    text(1084, 932, 'Southwest and southeast remain deliberately incompatible.', 11, 600, MUTED),
+    text(1084, 932, 'Promoted southwest is present; southeast remains the legacy control on this checkpoint.', 11, 600, MUTED),
     text(44, 1548, 'Gate: one-cell arms remain readable without the elbow becoming oversized.', 11, 700, MUTED),
     text(564, 1548, 'Gate: north and east seams remain continuous at length.', 11, 700, MUTED),
     text(1084, 1548, 'Gate: judge only the northeast turn; southern corners are the next pieces.', 11, 700, A1A_PALETTE.green),
@@ -1055,8 +1156,8 @@ async function renderFullHeightNortheastProof(options: CliOptions): Promise<void
       '<rect x="1396.7" y="1276.7" width="153.3" height="153.3" rx="8"/>' +
     '</g>',
   );
-  parts.push(text(1166, 1302, 'SW PENDING', 10, 800, '#9A493D', 'middle'));
-  parts.push(text(1473, 1302, 'SE PENDING', 10, 800, '#9A493D', 'middle'));
+  parts.push(text(1166, 1302, 'SW PROMOTED', 10, 800, A1A_PALETTE.green, 'middle'));
+  parts.push(text(1473, 1302, 'SE LEGACY', 10, 800, '#9A493D', 'middle'));
 
   const svg =
     `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" ` +
@@ -1155,10 +1256,10 @@ async function renderFullHeightSouthwestProof(options: CliOptions): Promise<void
     text(564, 908, 'LONG TURN — THREE-CELL ARMS', 14, 800),
     text(564, 932, 'The elbow should disappear into the repeated catalog rhythm.', 11, 600, MUTED),
     text(1084, 908, 'INSTALLED ROOM — SW PROMOTED', 14, 800),
-    text(1084, 932, 'The reviewed north/east/south choices remain; southeast stays pending.', 11, 600, MUTED),
+    text(1084, 932, 'This southwest checkpoint retains the legacy southeast for the next-sheet comparison.', 11, 600, MUTED),
     text(44, 1548, 'Gate: the one-cell turn reads as a continuous wall, not a corner appliance.', 11, 700, MUTED),
     text(564, 1548, 'Gate: both sockets stay flush at length without perspective drift.', 11, 700, MUTED),
-    text(1084, 1548, 'Checkpoint: southwest is accepted; southeast is deliberately unresolved.', 11, 700, A1A_PALETTE.green),
+    text(1084, 1548, 'Checkpoint preserved: southwest accepted; see the next sheet for promoted southeast.', 11, 700, A1A_PALETTE.green),
   ];
   parts.push(
     await compositionWindow(
@@ -1241,7 +1342,7 @@ async function renderFullHeightSouthwestProof(options: CliOptions): Promise<void
     '</g>',
   );
   parts.push(text(1166, 1302, 'SW PROMOTED', 10, 800, A1A_PALETTE.green, 'middle'));
-  parts.push(text(1473, 1302, 'SE PENDING', 10, 800, '#9A493D', 'middle'));
+  parts.push(text(1473, 1302, 'SE NEXT SHEET', 10, 800, '#9A493D', 'middle'));
 
   const svg =
     `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" ` +
@@ -1250,6 +1351,212 @@ async function renderFullHeightSouthwestProof(options: CliOptions): Promise<void
     fitTo: { mode: 'width', value: width * CARD_RENDER_SCALE },
   }).render().asPng();
   await writeFile(path.join(options.output, 'full-height-southwest-proof.png'), png);
+}
+
+async function renderFullHeightSoutheastProof(options: CliOptions): Promise<void> {
+  const width = 1600;
+  const height = 1600;
+  const panelFill = '#ECE5D5';
+  const panel = (x: number, y: number, w: number, h: number): string =>
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="14" fill="${panelFill}" ` +
+    `stroke="${INK}" stroke-width="1.5" opacity="0.96"/>`;
+  const fileOverrides = await southeastReviewFileOverrides(options);
+  const legacySoutheast: ReadonlyArray<CompositionCell> = [
+    [0, 0, 'low-profile-correction/low-se-corner.svg', null],
+  ];
+  const southwestSource: ReadonlyArray<CompositionCell> = [
+    [
+      0,
+      0,
+      PROMOTED_SOUTHWEST_CORNER.baseFile,
+      PROMOTED_SOUTHWEST_CORNER.upperFile,
+      PROMOTED_SOUTHWEST_CORNER.transform,
+    ],
+  ];
+  const promotedSoutheast: ReadonlyArray<CompositionCell> = [
+    [
+      0,
+      0,
+      SOUTHEAST_WORKBENCH_BASE_FILE,
+      SOUTHEAST_WORKBENCH_UPPER_FILE,
+      PROMOTED_SOUTHEAST_CORNER.transform,
+    ],
+  ];
+  const promotedBase: ReadonlyArray<CompositionCell> = [
+    [
+      0,
+      0,
+      SOUTHEAST_WORKBENCH_BASE_FILE,
+      null,
+      PROMOTED_SOUTHEAST_CORNER.transform,
+    ],
+  ];
+  const promotedUpper: ReadonlyArray<CompositionCell> = [
+    [
+      0,
+      0,
+      SOUTHEAST_WORKBENCH_UPPER_FILE,
+      null,
+      PROMOTED_SOUTHEAST_CORNER.transform,
+    ],
+  ];
+  const eastSocketCells: ReadonlyArray<CompositionCell> = [
+    [
+      0,
+      0,
+      FULL_HEIGHT_EAST_MIRROR_PROPOSAL.baseFile,
+      FULL_HEIGHT_EAST_MIRROR_PROPOSAL.upperFile,
+      FULL_HEIGHT_EAST_MIRROR_PROPOSAL.transform,
+    ],
+    [
+      0,
+      1,
+      SOUTHEAST_WORKBENCH_BASE_FILE,
+      SOUTHEAST_WORKBENCH_UPPER_FILE,
+      PROMOTED_SOUTHEAST_CORNER.transform,
+    ],
+  ];
+  const southSocketCells: ReadonlyArray<CompositionCell> = [
+    [0, 0, PROMOTED_SOUTH_WALL_REUSE.baseFile, PROMOTED_SOUTH_WALL_REUSE.upperFile],
+    [
+      1,
+      0,
+      SOUTHEAST_WORKBENCH_BASE_FILE,
+      SOUTHEAST_WORKBENCH_UPPER_FILE,
+      PROMOTED_SOUTHEAST_CORNER.transform,
+    ],
+  ];
+  const parts: string[] = [
+    `<rect width="${width}" height="${height}" rx="18" fill="${PANEL}"/>`,
+    text(24, 34, 'FULL-HEIGHT SOUTHEAST CORNER — PROMOTED MIRRORED WRAP', 21, 800),
+    text(24, 58, 'Canonical source-reuse checkpoint. The promoted southwest pair is reflected around x=64; the adjoining south cell owns the suppressed service seam. No southeast SVG or production registration is added.', 12, 600, MUTED),
+    panel(20, 76, 500, 370),
+    panel(540, 76, 500, 370),
+    panel(1060, 76, 520, 370),
+    panel(20, 466, 760, 390),
+    panel(800, 466, 780, 390),
+    panel(20, 876, 500, 700),
+    panel(540, 876, 500, 700),
+    panel(1060, 876, 520, 700),
+    text(44, 108, 'LEGACY CONTROL — LOW SOUTHEAST', 14, 800),
+    text(44, 132, 'Foreground-ownership reference only; its shallow geometry is superseded.', 11, 600, MUTED),
+    text(564, 108, 'SOURCE — PROMOTED SOUTHWEST', 14, 800),
+    text(564, 132, 'The accepted full/full molded wrap before reflection.', 11, 600, MUTED),
+    text(1084, 108, 'PROMOTED — MIRROR / PASSES / DISTANCE', 14, 800),
+    text(1084, 132, 'Accepted source reuse with the duplicate service tick suppressed.', 11, 600, MUTED),
+    text(270, 418, 'LOW OWNERSHIP CONTROL', 11, 800, '#9A493D', 'middle'),
+    text(790, 418, 'PROMOTED SW SOURCE', 11, 800, MUTED, 'middle'),
+    text(1220, 418, 'FULL SE PROMOTED', 11, 800, A1A_PALETTE.green, 'middle'),
+    text(1425, 250, 'BASE', 10, 800, MUTED, 'middle'),
+    text(1520, 250, 'UPPER', 10, 800, MUTED, 'middle'),
+    text(1445, 380, '90 px', 10, 700, MUTED, 'middle'),
+    text(1530, 380, '40 px', 10, 700, MUTED, 'middle'),
+    text(44, 498, 'EAST INGRESS — ENLARGED TILE SEAM', 14, 800),
+    text(44, 522, 'The mirrored full-east profile enters from above without changing planes.', 11, 600, MUTED),
+    text(430, 590, 'EAST SOCKET', 11, 800),
+    text(430, 618, '• x4.5..72 envelope preserved', 11, 600, MUTED),
+    text(430, 646, '• cream / coral / green registers meet', 11, 600, MUTED),
+    text(430, 674, '• east structure remains behind the turn', 11, 600, MUTED),
+    text(430, 730, 'Dashed guide marks the tile boundary.', 11, 700, A1A_PALETTE.green),
+    text(824, 498, 'SOUTH INGRESS — ENLARGED TILE SEAM', 14, 800),
+    text(824, 522, 'The shared full-south frontage enters unchanged from the west.', 11, 600, MUTED),
+    text(1190, 590, 'SOUTH SOCKET', 11, 800),
+    text(1190, 618, '• y56..123.5 envelope preserved', 11, 600, MUTED),
+    text(1190, 646, '• front face wraps the entire heel', 11, 600, MUTED),
+    text(1190, 674, '• one service seam, not a double tick', 11, 600, MUTED),
+    text(1190, 730, 'Dashed guide marks the tile boundary.', 11, 700, A1A_PALETTE.green),
+    text(44, 908, 'COMPACT TURN — ONE-CELL ARMS', 14, 800),
+    text(44, 932, 'The wrap must remain legible when both adjoining runs are one cell.', 11, 600, MUTED),
+    text(564, 908, 'LONG TURN — THREE-CELL ARMS', 14, 800),
+    text(564, 932, 'The mirrored elbow must disappear into the repeated catalog rhythm.', 11, 600, MUTED),
+    text(1084, 908, 'INSTALLED ROOM — SE PROMOTED', 14, 800),
+    text(1084, 932, 'The accepted southeast reuse closes the reviewed equal-height room geometry.', 11, 600, MUTED),
+    text(44, 1548, 'Gate: the one-cell turn reads as a continuous wall, not a corner appliance.', 11, 700, MUTED),
+    text(564, 1548, 'Gate: east and south sockets stay flush at length without perspective drift.', 11, 700, MUTED),
+    text(1084, 1548, 'Checkpoint: southeast is accepted; topology and production registration remain unchanged.', 11, 700, A1A_PALETTE.green),
+  ];
+  parts.push(
+    await compositionWindow(
+      options, legacySoutheast, 1, 1, 150, 150, 240, 240, fileOverrides,
+    ),
+  );
+  parts.push(
+    await compositionWindow(
+      options, southwestSource, 1, 1, 670, 150, 240, 240, fileOverrides,
+    ),
+  );
+  parts.push(
+    await compositionWindow(
+      options, promotedSoutheast, 1, 1, 1100, 150, 240, 240, fileOverrides,
+    ),
+  );
+  parts.push(
+    await compositionWindow(
+      options, promotedBase, 1, 1, 1380, 150, 90, 90, fileOverrides,
+    ),
+  );
+  parts.push(
+    await compositionWindow(
+      options, promotedUpper, 1, 1, 1475, 150, 90, 90, fileOverrides,
+    ),
+  );
+  parts.push(
+    await compositionWindow(
+      options, promotedSoutheast, 1, 1, 1400, 270, 90, 90, fileOverrides,
+    ),
+  );
+  parts.push(
+    await compositionWindow(
+      options, promotedSoutheast, 1, 1, 1510, 300, 40, 40, fileOverrides,
+    ),
+  );
+  parts.push(
+    await compositionWindow(
+      options, eastSocketCells, 1, 2, 70, 540, 312, 312, fileOverrides, '0 64 128 128',
+    ),
+  );
+  parts.push(
+    `<path d="M70 696H382" fill="none" stroke="${A1A_PALETTE.coral}" ` +
+    'stroke-width="2" stroke-dasharray="7 6" opacity="0.75"/>',
+  );
+  parts.push(
+    await compositionWindow(
+      options, southSocketCells, 2, 1, 840, 540, 312, 312, fileOverrides, '64 0 128 128',
+    ),
+  );
+  parts.push(
+    `<path d="M996 540V852" fill="none" stroke="${A1A_PALETTE.coral}" ` +
+    'stroke-width="2" stroke-dasharray="7 6" opacity="0.75"/>',
+  );
+  parts.push(
+    await compositionWindow(
+      options, southeastInstalledCells(1, 1), 2, 2, 90, 980, 360, 360, fileOverrides,
+    ),
+  );
+  parts.push(
+    await compositionWindow(
+      options, southeastInstalledCells(3, 3), 4, 4, 600, 970, 380, 380, fileOverrides,
+    ),
+  );
+  parts.push(
+    await compositionWindow(
+      options, PROMOTED_SOUTHEAST_ROOM_CELLS, 3, 3, 1090, 970, 460, 460,
+      fileOverrides,
+    ),
+  );
+  parts.push(
+    `<rect x="1396.7" y="1276.7" width="153.3" height="153.3" rx="8" fill="none" ` +
+    'stroke="#294B3C" stroke-width="3" stroke-dasharray="10 8" opacity="0.9"/>',
+  );
+  parts.push(text(1473, 1302, 'SE PROMOTED', 10, 800, A1A_PALETTE.green, 'middle'));
+
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" ` +
+    `viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+  const png = new Resvg(svg, {
+    fitTo: { mode: 'width', value: width * CARD_RENDER_SCALE },
+  }).render().asPng();
+  await writeFile(path.join(options.output, 'full-height-southeast-proof.png'), png);
 }
 
 async function renderLowSoutheastCornerFocus(options: CliOptions, root: string): Promise<void> {
@@ -1433,7 +1740,7 @@ async function renderFullHeightSouthProof(options: CliOptions): Promise<void> {
     text(44, 478, 'LEGACY MIXED-PROFILE ROOM', 14, 800),
     text(44, 502, 'Historical comparison: full north/west, low south/east.', 11, 600, MUTED),
     text(824, 478, 'PRIMARY ROOM — SOUTH PROMOTED', 14, 800),
-    text(824, 502, 'Only the centre south cell changes. Existing low corners remain visible as pending work.', 11, 600, MUTED),
+    text(824, 502, 'Only the centre south cell changes. Existing low corners remain visible as legacy controls.', 11, 600, MUTED),
     text(44, 1130, 'Legacy control only; its low-south sources remain untouched.', 11, 650, MUTED),
     text(824, 1130, 'Gate: judge the straight profile and occupied-cell read—not the deliberately incompatible corner sockets.', 11, 700, A1A_PALETTE.green),
   ];
@@ -1467,8 +1774,8 @@ async function renderFullHeightSouthProof(options: CliOptions): Promise<void> {
       '<rect x="1280" y="920" width="200" height="200" rx="8"/>' +
     '</g>',
   );
-  parts.push(text(980, 948, 'SW CORNER PENDING', 11, 800, '#9A493D', 'middle'));
-  parts.push(text(1380, 948, 'SE CORNER PENDING', 11, 800, '#9A493D', 'middle'));
+  parts.push(text(980, 948, 'SW PROMOTED', 11, 800, A1A_PALETTE.green, 'middle'));
+  parts.push(text(1380, 948, 'SE LEGACY CONTROL', 11, 800, '#9A493D', 'middle'));
 
   const svg =
     `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" ` +
@@ -1698,6 +2005,7 @@ async function renderContextMocksSafely(options: CliOptions, root: string): Prom
     await renderFullHeightEastMirrorProof(options);
     await renderFullHeightNortheastProof(options);
     await renderFullHeightSouthwestProof(options);
+    await renderFullHeightSoutheastProof(options);
     await renderLowSoutheastCornerFocus(options, root);
     const statusPath = path.join(options.output, 'status.json');
     const status = JSON.parse(await readFile(statusPath, 'utf8')) as Record<string, unknown>;

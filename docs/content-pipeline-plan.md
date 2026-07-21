@@ -29,8 +29,10 @@ changes the export contract except where explicitly flagged (floor variants).
 > **Latest owner decision, 2026-07-21:** ordinary structural wall cells now use one full 64-unit profile on
 > every room edge. South is promoted as exact reuse of the full-north base/upper sources with no transform,
 > duplicate SVG, or new identity. The equal-height southwest molded corner is now promoted in the existing
-> `transition_w_to_s` source pair; its south frontage owns the foreground heel. East and northeast remain
-> unregistered reviewed mirror proposals, and southeast is the next bounded corner proof. The former
+> `transition_w_to_s` source pair; its south frontage owns the foreground heel. Southeast is promoted as an
+> exact X-mirrored reuse of that same pair, with only its source-side boundary ticks suppressed so the
+> adjoining south cell owns one service seam. It adds no SVG or frame identity. East and northeast remain
+> unregistered reviewed mirror proposals. The former
 > low-south/east and full-to-low artifacts remain historical comparisons and may only inform a separately
 > approved partition family. This decision still changes no production template, topology, exporter, schema,
 > or Unity contract.

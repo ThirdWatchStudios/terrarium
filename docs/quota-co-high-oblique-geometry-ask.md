@@ -1,6 +1,6 @@
 # QuotaCo High-Oblique Geometry — Production Art Ask
 
-**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** equal-height structural-wall correction in progress; south and southwest promoted, southeast next
+**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** equal-height structural-wall correction in progress; south, southwest, and southeast promoted
 
 Canonical direction lives in the sim repository:
 
@@ -33,8 +33,11 @@ work as actual sprites.
   the same centered pivot; south requires no transform, duplicated SVG, or new frame identity. The intended
   east is a whole-cell X-mirror of the accepted full-west pair around `x=64`; east and northeast remain
   unregistered reviewed proposals. The promoted `transition_w_to_s` pair is the equal-height southwest
-  corner, preserving exact full-west and shared full-north/south sockets. Low/cutaway perimeter walls are
-  superseded; a low wall may only return as a separately approved internal-partition catalog product.
+  corner, preserving exact full-west and shared full-north/south sockets. Southeast is promoted as an exact
+  X-mirrored derivation of that pair: omit only its two source-side boundary-seam paths so the adjoining south
+  cell owns one service seam. This creates no southeast SVG, frame identity, or production registration.
+  Low/cutaway perimeter walls are superseded; a low wall may only return as a separately approved
+  internal-partition catalog product.
 - **Owner clarification, 2026-07-20: wall profile height and directional plane treatment are separate
   axes.** Horizontal east-west runs on the north/south room edges must read visibly flat/front-on, with
   only a narrow top reveal. Vertical north-south runs on the east/west room edges must expose the broader,
@@ -51,6 +54,10 @@ work as actual sprites.
 - **Promoted southwest checkpoint, 2026-07-21:** the canonical `transition_w_to_s` pair is now an
   equal-height full-west-to-full-south molded corner. The south cream/coral/green/plinth stack repaints the
   foreground heel after the west planes terminate, and both 64-unit sockets remain pixel-continuous.
+- **Promoted southeast checkpoint, 2026-07-21:** reuse the promoted southwest pair with a whole-cell X mirror
+  around `x=64`. The derived facing suppresses `base-boundary-seam` and `upper-boundary-seam`; the adjoining
+  south cell owns the remaining service tick. Full-east-to-southeast and full-south-to-southeast sockets are
+  pixel-identical, and the south frontage retains foreground ownership. Production delivery remains deferred.
 - Shallow south/front and east/side faces are drawn into the art.
 - Floors remain visibly flat on the walkable plane—never raised product plinths.
 - North, south, east, and west ordinary room edges all use the full-height structural envelope. Agents cannot
@@ -95,8 +102,9 @@ reviewed at 240/90/40 px and in the room context.
 
 **Superseding owner decision, 2026-07-21:** exposed low construction is no longer part of the ordinary
 structural-wall proof. Promote exact north-source reuse for south, evaluate the proposed full-west whole-cell
-mirror for east, then rebuild corners as full-height joins. Retain the former low/profile files and review
-results without treating them as the current production direction.
+mirror for east, then rebuild corners as full-height joins. Southwest and southeast now hold promoted art
+contracts; southeast is a derived facing rather than a duplicate master. Retain the former low/profile files
+and review results without treating them as the current production direction.
 
 ### A1a review artifact
 

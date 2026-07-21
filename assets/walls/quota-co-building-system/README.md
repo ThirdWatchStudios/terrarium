@@ -12,10 +12,13 @@ South is the exact `full_n_straight-base.svg` +
 `full_n_straight-upper.svg` composed source, with the same centered pivot and no
 transform, duplicated south SVG, or new frame identity. The equal-height
 southwest corner is the promoted `transition_w_to_s` pair: it keeps the existing
-stem id while replacing the former low exit. The intended east and northeast
-mirrors remain unregistered visual proposals; southeast is the next corner
-proof. Low-wall art is no longer an ordinary perimeter/cutaway family and may
-only return as a separately approved internal-partition product.
+stem id while replacing the former low exit. Southeast is promoted as an exact
+X-mirrored reuse of that pair, with its source-side boundary ticks omitted so
+the adjoining south cell owns the single service seam. This adds no southeast
+SVG or frame identity. The intended east and northeast mirrors remain
+unregistered visual proposals. Low-wall art is no longer an ordinary
+perimeter/cutaway family and may only return as a separately approved
+internal-partition product.
 
 The original independently finished low-base-plus-optional-upper construction was
 rejected on 2026-07-20 because its duplicate caps and contours read as one wall
@@ -45,7 +48,7 @@ Each stem has one `-base.svg` and one `-upper.svg` source:
 - `full_exterior_corner`
 - `full_terminus`
 - `transition_n_to_e`
-- `transition_w_to_s` — promoted equal-height southwest corner
+- `transition_w_to_s` — promoted equal-height southwest source and southeast mirror provenance
 - `door_closed`
 - `door_open`
 - `window_wide`
@@ -72,6 +75,10 @@ overdraw. Do not rotate a directional frame to manufacture another facing.
   must be a separately named catalog family, never an ordinary perimeter wall;
 - the southwest corner preserves exact full-west and shared full-north/south
   sockets; its south material stack owns the foreground heel;
+- southeast reuses the southwest pair through a whole-cell X mirror around
+  `x=64`; omit only `base-boundary-seam` and `upper-boundary-seam` so the
+  adjoining south cell owns one service seam, while both sockets and the south
+  foreground wrap remain exact;
 - open thresholds remain flat and visually walkable;
 - no raised floor plinth and no baked directional cast shadow;
 - charcoal contour/recess `#252A28`;
@@ -102,6 +109,7 @@ composition, cutaways, sorting application, lighting, and production acceptance.
 Do not expand this directory to the complete 47-blob/opening family until separately authorized after the
 complete equal-height envelope review. The earlier low-east, low-southeast, and southwest full-to-low
 checkpoint remains historical directional evidence, but its low perimeter profiles and height-step corner
-are superseded for ordinary walls. South and southwest are promoted source decisions; east and northeast
-remain unregistered mirror proposals, and southeast is the next bounded proof. Do not derive a contract or
-schema change from these source files alone.
+are superseded for ordinary walls. South, southwest, and the mirror-derived southeast are promoted art
+decisions; east and northeast remain unregistered mirror proposals. The southeast decision adds no source
+stem or production transform. Do not derive a topology, registration, exporter, schema, or Unity change from
+these source files alone.

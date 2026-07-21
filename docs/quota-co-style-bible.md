@@ -18,8 +18,10 @@
 > **Current ordinary-wall amendment (owner approval, 2026-07-21):** ordinary structural walls use the full
 > 64-unit profile on every room edge. South is exact source reuse of the `full_n_straight` base/upper pair,
 > without a transform or duplicated SVG. The `transition_w_to_s` pair is the promoted equal-height southwest
-> corner. East and northeast remain unregistered mirror proposals; southeast is next. The measured 38-unit
-> low family is retained below as legacy A/B evidence and is not the current perimeter/cutaway target.
+> corner. Southeast is promoted as its X-mirrored derived facing, with the adjoining south cell owning the
+> suppressed source-side service tick. No southeast SVG is added. East and northeast remain unregistered
+> mirror proposals. The measured 38-unit low family is retained below as legacy A/B evidence and is not the
+> current perimeter/cutaway target.
 
 The point of this page: the QuotaCo look is not a talent bar, it is a **closed grammar** — nine paints, two
 line weights, four shading steps, eight radii, one projection recipe. An author who obeys the grammar produces
@@ -60,6 +62,10 @@ expanding the grammar.
 - Promoted southwest law (owner acceptance, 2026-07-21): the canonical `transition_w_to_s` pair now joins
   full west to full south. Its inner elbow uses concentric molded radii, its exact 64-unit sockets match both
   masters, and the full south frontage owns the foreground heel after the west shade terminates behind it.
+- Promoted southeast law (owner acceptance, 2026-07-21): reuse the southwest source pair through a whole-cell
+  X mirror around `x=64`. Suppress only `base-boundary-seam` and `upper-boundary-seam`; the adjoining south
+  cell owns the single service tick. Preserve the exact full-east and full-south sockets and the south-owned
+  foreground heel. This is an accepted derived art contract, not a duplicate source or production transform.
 - Vertical profiles (current kit law): ordinary walls occupy one **64-unit outer profile**.
   `base` and `upper` are technical paint passes, not two finished products: draw base first, then upper at
   the same centered pivot, and judge only their composed silhouette. The former **38-unit outer profile
@@ -192,10 +198,10 @@ be automated.
 4. Keep `npm run style:watch` running (§10) — every save re-validates through the real importer and
    re-renders base/upper/composed plus the distance proof, on light and dark ground — and the
    **composed envelope gate** and **room-context mock** at the top of the bench page. The primary control uses
-   the promoted full-height north/south source reuse and southwest corner; the east/northeast mirror proofs
-   remain visible beside their sources, with southeast explicitly pending. Keep the earlier low E/S room as a labeled
-   A/B comparison, because tiling truth only shows composed. Saves under `low-profile-correction/` re-render
-   that legacy comparison too.
+   the promoted full-height north/south source reuse plus southwest and southeast corners; the east/northeast
+   mirror proofs remain visible beside their sources. Keep the earlier low E/S room as a labeled A/B comparison,
+   because tiling truth only shows composed. Saves under `low-profile-correction/` re-render that legacy
+   comparison too.
 5. Gate every wall batch against the five-sheet primary wall target and the real contact sheet; use the golden
    room for whole-room feel. Keep rejects with a one-line reason each.
 
