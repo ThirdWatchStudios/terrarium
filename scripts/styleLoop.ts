@@ -15,8 +15,8 @@
  * cleared dist/ build directory); docs/previews remains the
  * reviewed contact-sheet authority via the existing preview scripts.
  */
-import { watch } from 'node:fs';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { existsSync, watch } from 'node:fs';
+import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import http from 'node:http';
 import path from 'node:path';
 
@@ -45,6 +45,14 @@ const CARD_RENDER_SCALE = 2;
 const PANEL = '#F6F1E5';
 const INK = '#252A28';
 const MUTED = '#606A64';
+
+// Cross-section proofs: throwaway single-file SVGs (literal palette hexes,
+// never imported) that live beside the kit directory so the strict importer
+// never sees them. They render as their own bench card at the review sizes.
+const PROOFS_DIRECTORY_NAME = 'quota-co-building-system-proofs';
+
+const crossSectionProofsDirectory = (input: string): string =>
+  path.join(path.dirname(input), PROOFS_DIRECTORY_NAME);
 
 // The distraction-free envelope gate: one closed 3x3 wall section assembled
 // only from the structural masters under review. The empty centre cell exposes
@@ -199,26 +207,31 @@ function benchPage(): string {
     '#status{font-size:13px;margin-bottom:14px;color:#83a9a6}#status.bad{color:#e0836e;white-space:pre-wrap}' +
     'main{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:14px}' +
     'figure{margin:0}img{width:100%;height:auto;display:block;border-radius:10px}' +
-    'figure.gate,figure.room{max-width:768px}</style>' +
+    'figure.gate,figure.room{max-width:768px}figure.proofs{max-width:900px}</style>' +
     '<h1>QuotaCo Building System — live workbench</h1>' +
     '<div id="status">waiting for first render…</div>' +
+    '<h2>cross-section proofs — directional plane law candidates</h2>' +
+    '<figure class="proofs" data-stem="cross-section-proofs"><img src="cross-section-proofs.png" alt="cross-section proofs"></figure>' +
     '<h2>envelope gate — composed structural shell, no opening content</h2>' +
     '<figure class="gate" data-stem="envelope-gate"><img src="envelope-gate.png" alt="composed wall envelope gate"></figure>' +
     '<h2>room context — masters tiled as the game composes them</h2>' +
     '<figure class="room" data-stem="room-context-mock"><img src="room-context-mock.png" alt="room context mock"></figure>' +
     '<h2>per-stem cards — compiled through the importer</h2>' +
     `<main>${cards}</main>` +
-    '<script>let stamp="",gateStamp="",roomStamp="";async function tick(){try{' +
+    '<script>let stamp="",gateStamp="",roomStamp="",proofsStamp="";async function tick(){try{' +
     'const s=await(await fetch("status.json",{cache:"no-store"})).json();' +
     'const el=document.getElementById("status");' +
     'if(!s.ok){el.textContent=`IMPORT FAILED\\n${s.error}`;el.className="bad";}' +
     'else if(s.contextError){el.textContent=`COMPOSITION IMPORT FAILED\\n${s.contextError}`;el.className="bad";}' +
     'else if(s.roomError){el.textContent=`ROOM IMPORT FAILED\\n${s.roomError}`;el.className="bad";}' +
+    'else if(s.proofsError){el.textContent=`PROOF RENDER FAILED\\n${s.proofsError}`;el.className="bad";}' +
     'else{el.textContent=`ok · ${s.frames} frames · ${s.durationMs}ms · ${s.renderedAt}`;el.className="";}' +
     'if(s.ok&&s.renderedAt!==stamp){stamp=s.renderedAt;' +
     'for(const f of document.querySelectorAll("main figure"))f.querySelector("img").src=`${f.dataset.stem}.png?t=${Date.now()}`;}' +
     'if(s.gateRenderedAt&&s.gateRenderedAt!==gateStamp){gateStamp=s.gateRenderedAt;' +
     'const f=document.querySelector("figure.gate");f.querySelector("img").src=`${f.dataset.stem}.png?t=${Date.now()}`;}' +
+    'if(s.proofsRenderedAt&&s.proofsRenderedAt!==proofsStamp){proofsStamp=s.proofsRenderedAt;' +
+    'const p=document.querySelector("figure.proofs");p.querySelector("img").src=`${p.dataset.stem}.png?t=${Date.now()}`;}' +
     'if(s.roomRenderedAt&&s.roomRenderedAt!==roomStamp){roomStamp=s.roomRenderedAt;' +
     'const f=document.querySelector("figure.room");f.querySelector("img").src=`${f.dataset.stem}.png?t=${Date.now()}`;}' +
     '}catch{}setTimeout(tick,700)}tick()</script>'
@@ -305,6 +318,71 @@ async function renderRoomMock(options: CliOptions): Promise<void> {
   await renderCompositionMock(options, ROOM_CELLS, 'room-context-mock.png', true);
 }
 
+async function renderCrossSectionProofs(options: CliOptions): Promise<void> {
+  const directory = crossSectionProofsDirectory(options.input);
+  const files = existsSync(directory)
+    ? (await readdir(directory)).filter((name) => name.endsWith('.svg')).sort()
+    : [];
+  const rowHeight = 310;
+  const width = 900;
+  const height = files.length === 0 ? 120 : 54 + files.length * rowHeight;
+  const parts: string[] = [
+    `<rect width="${width}" height="${height}" rx="14" fill="${PANEL}"/>`,
+    text(20, 32, 'cross-section proofs — directional plane law candidates', 19, 750),
+  ];
+  if (files.length === 0) {
+    parts.push(text(20, 70, `no proofs present in ${PROOFS_DIRECTORY_NAME}/`, 12, 500, MUTED));
+  }
+  for (const [index, name] of files.entries()) {
+    const top = 54 + index * rowHeight;
+    const content = stripSvgShell(await readFile(path.join(directory, name), 'utf8'));
+    const proof = (x: number, y: number, size: number, floorBacked = true): string =>
+      (floorBacked
+        ? `<rect x="${x}" y="${y}" width="${size}" height="${size}" rx="6" fill="${A1A_PALETTE.floor}"/>`
+        : '') +
+      `<svg x="${x}" y="${y}" width="${size}" height="${size}" viewBox="0 0 128 128">${content}</svg>`;
+    parts.push(text(20, top + 14, name, 13, 750));
+    parts.push(proof(20, top + 24, A1A_REVIEW_SIZES.close));
+    parts.push(text(140, top + 280, `${A1A_REVIEW_SIZES.close}px close`, 10, 650, MUTED, 'middle'));
+    parts.push(proof(290, top + 24, A1A_REVIEW_SIZES.normal));
+    parts.push(text(335, top + 130, `${A1A_REVIEW_SIZES.normal}px`, 10, 650, MUTED, 'middle'));
+    parts.push(proof(290, top + 154, A1A_REVIEW_SIZES.far));
+    parts.push(text(310, top + 210, `${A1A_REVIEW_SIZES.far}px`, 10, 650, MUTED, 'middle'));
+    parts.push(`<rect x="420" y="${top + 24}" width="150" height="240" rx="10" fill="${A1A_PALETTE.charcoal}"/>`);
+    parts.push(proof(450, top + 40, A1A_REVIEW_SIZES.normal, false));
+    parts.push(proof(450, top + 150, A1A_REVIEW_SIZES.far, false));
+    parts.push(text(495, top + 250, 'dark ground', 10, 650, '#A59E8F', 'middle'));
+  }
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" ` +
+    `viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+  const png = new Resvg(svg, {
+    fitTo: { mode: 'width', value: width * CARD_RENDER_SCALE },
+  }).render().asPng();
+  await writeFile(path.join(options.output, 'cross-section-proofs.png'), png);
+}
+
+async function renderProofsSafely(options: CliOptions): Promise<void> {
+  const statusPath = path.join(options.output, 'status.json');
+  let status: Record<string, unknown> = {};
+  try {
+    status = JSON.parse(await readFile(statusPath, 'utf8')) as Record<string, unknown>;
+  } catch {
+    // The initial render normally creates status.json before the watcher starts.
+  }
+  try {
+    await mkdir(options.output, { recursive: true });
+    await renderCrossSectionProofs(options);
+    delete status.proofsError;
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
+    status.proofsError = message;
+    process.stdout.write(`✗ proof render error — last good proofs kept\n${message}\n`);
+  }
+  status.proofsRenderedAt = new Date().toISOString();
+  await writeFile(statusPath, `${JSON.stringify(status)}\n`, 'utf8');
+}
+
 async function renderContextMocksSafely(options: CliOptions, root: string): Promise<void> {
   try {
     await mkdir(options.output, { recursive: true });
@@ -350,6 +428,7 @@ async function renderSafely(
 ): Promise<boolean> {
   try {
     await render(options, root, stems);
+    await renderProofsSafely(options);
     return true;
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : String(error);
@@ -405,31 +484,42 @@ async function main(): Promise<void> {
   let renderInProgress = false;
   let renderAllCards = false;
   let roomRenderPending = false;
+  let proofsRenderPending = false;
   const pendingStems = new Set<A1bAuthoredStem>();
   let lastRootFile = '';
   let lastRoomFile = '';
+  let lastProofFile = '';
   let subfamilyHinted = false;
 
   const flushPendingRenders = async (): Promise<void> => {
     if (renderInProgress) return;
     renderInProgress = true;
     try {
-      while (renderAllCards || pendingStems.size > 0 || roomRenderPending) {
+      while (renderAllCards || pendingStems.size > 0 || roomRenderPending || proofsRenderPending) {
         if (renderAllCards || pendingStems.size > 0) {
           const stems = renderAllCards ? undefined : [...pendingStems];
           const label = stems ? stems.join(', ') : 'all';
           renderAllCards = false;
           pendingStems.clear();
-          // A card render also rebuilds the room from the latest low-profile sources.
+          // A card render also rebuilds the room from the latest low-profile
+          // sources and the proofs card from the latest proof sources.
           roomRenderPending = false;
+          proofsRenderPending = false;
           process.stdout.write(`${lastRootFile} changed — re-rendering ${label}…\n`);
           await renderSafely(options, root, stems);
           continue;
         }
 
-        roomRenderPending = false;
-        process.stdout.write(`${lastRoomFile} changed — re-rendering room mock…\n`);
-        await renderContextMocksSafely(options, root);
+        if (roomRenderPending) {
+          roomRenderPending = false;
+          process.stdout.write(`${lastRoomFile} changed — re-rendering room mock…\n`);
+          await renderContextMocksSafely(options, root);
+          continue;
+        }
+
+        proofsRenderPending = false;
+        process.stdout.write(`${lastProofFile} changed — re-rendering cross-section proofs…\n`);
+        await renderProofsSafely(options);
       }
     } finally {
       renderInProgress = false;
@@ -463,6 +553,17 @@ async function main(): Promise<void> {
     else renderAllCards = true;
     schedulePendingRenders();
   });
+
+  const proofsDirectory = crossSectionProofsDirectory(options.input);
+  if (existsSync(proofsDirectory)) {
+    watch(proofsDirectory, (_event, fileName) => {
+      if (!fileName || !fileName.endsWith('.svg')) return;
+      lastProofFile = fileName;
+      proofsRenderPending = true;
+      schedulePendingRenders();
+    });
+    process.stdout.write(`watching ${path.relative(root, proofsDirectory)} for proof saves\n`);
+  }
   process.stdout.write(`watching ${path.relative(root, options.input)} for saves (ctrl-c to stop)\n`);
 }
 
