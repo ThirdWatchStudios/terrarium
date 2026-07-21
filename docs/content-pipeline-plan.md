@@ -36,13 +36,14 @@ changes the export contract except where explicitly flagged (floor variants).
 > low-south/east and full-to-low artifacts remain historical comparisons and may only inform a separately
 > approved partition family. This decision still changes no production template, topology, exporter, schema,
 > or Unity contract.
-> **Current gate result and next authorization, 2026-07-21:** the accepted equal-height sources pass as a 3×8
-> perimeter around a 1×6 clear aisle at 90 and 40 px per cell. That owner acceptance closes the corridor
-> composition gate. Next, build a proof-only ledger for the existing canonical `mask_0` through `mask_46`
-> connectivity cases and a disposable synthetic complete-family contact proof. The ledger may classify direct
-> reuse, approved mirror/derivation, synthetic assembly, and unresolved authored needs; it may not propagate
-> sources or change production registration, frame identities, export/`CONTRACT.md`, schema, committed atlases,
-> Unity assets, or `production.unity`.
+> **Current mapping result and next authorization, 2026-07-21:** the owner accepted the proof-layer 47-mask
+> ledger structure: unchanged canonical ordering, three direct source mappings, three approved derivations,
+> 36 synthetic assembly candidates, and five explicit authored-geometry gaps. This is not acceptance of the
+> synthetic candidate pixels or a production atlas. Next, prove only the horizontal termini: `mask_8` as direct
+> reuse of the existing full terminus pair and `mask_2` as a whole-cell X-mirror candidate, at 90/40 px and in
+> 1/3/6-cell contexts. `mask_1` and `mask_4` remain unresolved; rotation is prohibited. Production registration,
+> frame identities, export/`CONTRACT.md`, schema, committed atlases, Unity assets, and `production.unity` remain
+> outside this authorization.
 
 ---
 

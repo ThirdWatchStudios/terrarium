@@ -24,10 +24,17 @@ internal-partition product.
 together as a 3×8 equal-height perimeter around a 1×6 clear aisle at 90 and
 40 px per cell. The 18 occupied cells use accepted sources/reuse only; the
 one-cell horizontal bodies remain legible, six-cell side runs remain parallel,
-and all four corners close as one enclosure. The next authorized task is a
-proof-only ledger mapping the existing canonical `mask_0` through `mask_46`
-cases to direct reuse, approved derivation, synthetic assembly, or an explicit
-unresolved geometry need, followed by a disposable synthetic contact proof.
+and all four corners close as one enclosure.
+
+**Accepted mapping gate (owner approval, 2026-07-21):** the proof-layer ledger
+locks the unchanged canonical `mask_0` through `mask_46` order and classifies
+three direct reuses, three approved derivations, 36 synthetic assembly
+candidates, and five explicit authored-geometry gaps. This accepts the mapping
+structure and provenance boundaries only. It does not accept the 36 synthetic
+assembly diagrams, resolve the five gaps, or create an atlas/production family. The next
+authorized proof is the horizontal terminus pair: test existing `mask_8` direct
+reuse and a whole-cell X-mirror candidate for `mask_2`; keep vertical ends
+`mask_1` and `mask_4` unresolved and do not rotate the source.
 
 The original independently finished low-base-plus-optional-upper construction was
 rejected on 2026-07-20 because its duplicate caps and contours read as one wall
@@ -115,9 +122,9 @@ automatic silhouette. White/black opacity layers are neutral face cues only.
 Terrarium owns this source art and any later palette-mask evidence. Unity owns
 composition, cutaways, sorting application, lighting, and production acceptance.
 
-Do not expand this directory into a complete 47-blob/opening source family. Corridor acceptance authorizes only
-the 47-mask mapping ledger, validation, and disposable synthetic proof; it does not authorize authored topology
-propagation or production files. The earlier low-east, low-southeast, and southwest full-to-low
+Do not expand this directory into a complete 47-blob/opening source family. Mapping acceptance authorizes only
+the next named proof-only geometry slice; it does not authorize synthetic-candidate promotion, authored topology
+propagation, or production files. The earlier low-east, low-southeast, and southwest full-to-low
 checkpoint remains historical directional evidence, but its low perimeter profiles and height-step corner
 are superseded for ordinary walls. South, east, northeast, southwest, and southeast are owner-accepted
 equal-height art decisions; their source reuse and mirrors remain unregistered. The southeast decision adds

@@ -8,9 +8,9 @@
  * Every save re-validates the masters through the real A1b importer and
  * re-renders one card per stem: base / upper / composed plus the composed
  * frame at the close / normal / far review sizes on light and dark ground.
- * The open page is a current-state decision surface: the accepted equal-height
- * enclosure proof first, accepted working contracts second, and the next proof-
- * only gate named in the status rail. Historical mixed-profile gates and
+ * The open page is a current-state decision surface: the accepted 47-mask
+ * mapping first, then the accepted equal-height enclosure and working
+ * contracts. Its synthetic diagrams remain proof-only. Historical mixed-profile gates and
  * compiler cards remain available in closed disclosures.
  * Saves under low-profile-correction/ still re-render comparison evidence used
  * inside the current proof sheets.
@@ -44,6 +44,13 @@ import {
   EQUAL_HEIGHT_CORRIDOR_GATE,
   type EqualHeightCorridorCell,
 } from './highOblique/equalHeightCorridorGate';
+import {
+  EQUAL_HEIGHT_MASK_LEDGER,
+  equalHeightMaskContactDescriptor,
+  type EqualHeightMaskLedgerEntry,
+  type EqualHeightMaskResolutionKind,
+  type EqualHeightMaskSourceVariant,
+} from './highOblique/equalHeightMaskLedger';
 import {
   A1B_AUTHORED_STEMS,
   a1bAuthoredAtlasDescriptor,
@@ -543,6 +550,7 @@ async function render(
   await renderFullHeightSouthwestProof(options);
   await renderFullHeightSoutheastProof(options);
   await renderEqualHeightCorridorGate(options);
+  await renderEqualHeightMaskLedger(options);
   await renderLowSoutheastCornerFocus(options, root);
   const renderedAt = new Date().toISOString();
   const status = {
@@ -554,6 +562,7 @@ async function render(
     roomRenderedAt: renderedAt,
     ladderRenderedAt: renderedAt,
     focusRenderedAt: renderedAt,
+    mappingRenderedAt: renderedAt,
     corridorRenderedAt: renderedAt,
   };
   await writeFile(path.join(options.output, 'status.json'), `${JSON.stringify(status)}\n`, 'utf8');
@@ -1640,8 +1649,8 @@ async function renderEqualHeightCorridorGate(options: CliOptions): Promise<void>
     text(1080, 872, '• repeated service seams appear once per owner cell', 11, 650, MUTED),
     text(1080, 902, '• mirrored southeast adds no duplicate service tick', 11, 650, MUTED),
     text(1080, 932, '• no low-profile source or new frame identity is present', 11, 650, MUTED),
-    text(624, 1000, 'ACCEPTED — NEXT', 11, 800, MUTED),
-    text(624, 1028, '47-mask mapping ledger and synthetic proof — not production registration.', 12, 750, A1A_PALETTE.green),
+    text(624, 1000, 'ACCEPTED BASELINE', 11, 800, MUTED),
+    text(624, 1028, '47-mask mapping accepted · horizontal terminus proof next.', 12, 750, A1A_PALETTE.green),
   ];
 
   parts.push(
@@ -1708,6 +1717,354 @@ async function renderEqualHeightCorridorGate(options: CliOptions): Promise<void>
     fitTo: { mode: 'width', value: width * CARD_RENDER_SCALE },
   }).render().asPng();
   await writeFile(path.join(options.output, `${EQUAL_HEIGHT_CORRIDOR_GATE.stem}.png`), png);
+}
+
+const MASK_RESOLUTION_STYLE: Readonly<Record<EqualHeightMaskResolutionKind, {
+  readonly label: string;
+  readonly accent: string;
+  readonly card: string;
+}>> = {
+  'direct-reuse': { label: 'DIRECT', accent: '#294B3C', card: '#E2E8DE' },
+  'approved-derivation': { label: 'DERIVED', accent: '#4E7D79', card: '#DFE9E5' },
+  'synthetic-assembly': { label: 'SYNTHETIC', accent: '#7B715F', card: '#EEE8D7' },
+  'unresolved-authored-geometry': { label: 'UNRESOLVED', accent: '#B65F4D', card: '#F0DDD6' },
+};
+
+const maskList = (values: readonly string[]): string =>
+  values.length === 0 ? '—' : values.map((value) => value.toUpperCase()).join(' ');
+
+function equalHeightMaskTopologyGlyph(
+  entry: EqualHeightMaskLedgerEntry,
+  x: number,
+  y: number,
+  size: number,
+): string {
+  const cell = size / 3;
+  const positions: Readonly<Record<string, readonly [number, number]>> = {
+    n: [1, 0], e: [2, 1], s: [1, 2], w: [0, 1],
+    ne: [2, 0], se: [2, 2], sw: [0, 2], nw: [0, 0],
+  };
+  const parts = [
+    `<rect x="${x}" y="${y}" width="${size}" height="${size}" rx="4" fill="#D7D0C2"/>`,
+    `<rect x="${x + cell + 1}" y="${y + cell + 1}" width="${cell - 2}" ` +
+      `height="${cell - 2}" rx="2" fill="${A1A_PALETTE.green}"/>`,
+  ];
+  for (const edge of entry.connectedEdges) {
+    const [col, row] = positions[edge];
+    parts.push(
+      `<rect x="${x + col * cell + 1}" y="${y + row * cell + 1}" ` +
+      `width="${cell - 2}" height="${cell - 2}" rx="2" fill="${A1A_PALETTE.green}"/>`,
+    );
+  }
+  for (const corner of entry.solidDiagonals) {
+    const [col, row] = positions[corner];
+    parts.push(
+      `<rect x="${x + col * cell + 1}" y="${y + row * cell + 1}" ` +
+      `width="${cell - 2}" height="${cell - 2}" rx="2" fill="${A1A_PALETTE.teal}"/>`,
+    );
+  }
+  for (const corner of entry.pockets) {
+    const [col, row] = positions[corner];
+    parts.push(
+      `<rect x="${x + col * cell + 2}" y="${y + row * cell + 2}" ` +
+      `width="${cell - 4}" height="${cell - 4}" rx="2" fill="none" ` +
+      `stroke="${A1A_PALETTE.coral}" stroke-width="1.5" stroke-dasharray="2 2"/>`,
+    );
+  }
+  parts.push(
+    `<rect x="${x}" y="${y}" width="${size}" height="${size}" rx="4" fill="none" ` +
+    `stroke="${INK}" stroke-width="1" opacity="0.45"/>`,
+  );
+  return parts.join('');
+}
+
+function equalHeightMaskSchematic(
+  entry: EqualHeightMaskLedgerEntry,
+  x: number,
+  y: number,
+  size: number,
+): string {
+  const glyphInset = size * 0.08;
+  return (
+    `<rect x="${x}" y="${y}" width="${size}" height="${size}" rx="6" fill="url(#ledgerHatch)" ` +
+    `stroke="${MASK_RESOLUTION_STYLE[entry.resolution.kind].accent}" stroke-width="1.5"/>` +
+    equalHeightMaskTopologyGlyph(
+      entry,
+      x + glyphInset,
+      y + glyphInset,
+      size - glyphInset * 2,
+    ) +
+    text(x + size / 2, y + size - 5, 'SCHEMATIC', Math.max(5, size * 0.08), 800, MUTED, 'middle')
+  );
+}
+
+function maskVariantCell(variant: EqualHeightMaskSourceVariant): CompositionCell {
+  return [
+    0,
+    0,
+    variant.derivation === 'accepted-southeast-seam-filter'
+      ? SOUTHEAST_WORKBENCH_BASE_FILE
+      : variant.baseFile,
+    variant.derivation === 'accepted-southeast-seam-filter'
+      ? SOUTHEAST_WORKBENCH_UPPER_FILE
+      : variant.upperFile,
+    variant.transform,
+  ];
+}
+
+async function equalHeightMaskPreview(
+  options: CliOptions,
+  entry: EqualHeightMaskLedgerEntry,
+  x: number,
+  y: number,
+  fileOverrides: CompositionFileOverrides,
+): Promise<string> {
+  if (
+    entry.resolution.kind === 'synthetic-assembly' ||
+    entry.resolution.kind === 'unresolved-authored-geometry'
+  ) {
+    return (
+      equalHeightMaskSchematic(entry, x, y, 90) +
+      equalHeightMaskSchematic(entry, x + 100, y + 25, 40)
+    );
+  }
+  const variants = entry.resolution.variants;
+  if (variants.length === 2) {
+    return (
+      await compositionWindow(
+        options, [maskVariantCell(variants[0])], 1, 1, x, y + 10, 64, 64,
+        fileOverrides, undefined, false,
+      ) +
+      await compositionWindow(
+        options, [maskVariantCell(variants[1])], 1, 1, x + 72, y + 10, 64, 64,
+        fileOverrides, undefined, false,
+      ) +
+      text(x + 32, y + 86, 'WEST', 8, 800, MUTED, 'middle') +
+      text(x + 104, y + 86, 'EAST', 8, 800, MUTED, 'middle')
+    );
+  }
+  const cell = maskVariantCell(variants[0]);
+  return (
+    await compositionWindow(
+      options, [cell], 1, 1, x, y, 90, 90, fileOverrides, undefined, false,
+    ) +
+    await compositionWindow(
+      options, [cell], 1, 1, x + 100, y + 25, 40, 40, fileOverrides, undefined, false,
+    )
+  );
+}
+
+function equalHeightMaskSourceLabel(entry: EqualHeightMaskLedgerEntry): string {
+  if (entry.resolution.kind === 'unresolved-authored-geometry') {
+    return entry.topologyClass === 'isolated' ? 'NEEDS ISOLATED SHELL' : 'NEEDS END FAMILY';
+  }
+  const variants = entry.resolution.kind === 'synthetic-assembly'
+    ? entry.resolution.ingredients
+    : entry.resolution.variants;
+  const roles = [...new Set(variants.map((variant) => variant.role
+    .replace('-corner', '')
+    .replace('-wall', '')
+    .replace('north-or-south', 'north/south')))].join(' + ');
+  return roles.length > 29 ? `${roles.slice(0, 28)}…` : roles;
+}
+
+function equalHeightMaskOperationLabel(entry: EqualHeightMaskLedgerEntry): string {
+  if (entry.resolution.kind === 'direct-reuse') return 'exact accepted source';
+  if (entry.resolution.kind === 'approved-derivation') {
+    return entry.index === 5 ? 'facing input: W direct / E mirror' :
+      entry.index === 9 ? 'mirror-X + SE seam filter' : 'approved mirror-X';
+  }
+  if (entry.resolution.kind === 'synthetic-assembly') {
+    return entry.topologyClass === 'filled-elbow' ? 'synthetic solid closure' :
+      entry.topologyClass === 't-junction' ? 'synthetic T hub + cap law' :
+        'synthetic four-way hub';
+  }
+  return entry.topologyClass === 'isolated' ? 'catalog identity unresolved' :
+    'rotation/mirror not approved';
+}
+
+async function renderEqualHeightMaskLedger(options: CliOptions): Promise<void> {
+  const descriptor = equalHeightMaskContactDescriptor();
+  const width = 1900;
+  const height = 2160;
+  const gridX = 24;
+  const gridY = 164;
+  const cardWidth = 202;
+  const cardHeight = 238;
+  const gap = 8;
+  const railX = 1296;
+  const railWidth = 580;
+  const fileOverrides = await southeastReviewFileOverrides(options);
+  const parts: string[] = [
+    '<defs>' +
+      '<pattern id="ledgerHatch" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">' +
+        '<rect width="12" height="12" fill="#E6DFD1"/><rect width="4" height="12" fill="#D4CCBE"/>' +
+      '</pattern>' +
+    '</defs>',
+    `<rect width="${width}" height="${height}" rx="18" fill="${PANEL}"/>`,
+    text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — OWNER-ACCEPTED 47-MASK MAPPING', 24, 820),
+    text(24, 66, 'Canonical mask order unchanged · 256 raw neighborhoods → 47 cases · connectivity, facing, and state remain separate inputs', 13, 600, MUTED),
+  ];
+
+  const chips: ReadonlyArray<readonly [string, string, string]> = [
+    ['47 / 47', 'CANONICAL INDICES', A1A_PALETTE.green],
+    [`${EQUAL_HEIGHT_MASK_LEDGER.counts['direct-reuse']}`, 'DIRECT', '#294B3C'],
+    [`${EQUAL_HEIGHT_MASK_LEDGER.counts['approved-derivation']}`, 'DERIVED', '#4E7D79'],
+    [`${EQUAL_HEIGHT_MASK_LEDGER.counts['synthetic-assembly']}`, 'SYNTHETIC', '#7B715F'],
+    [`${EQUAL_HEIGHT_MASK_LEDGER.counts['unresolved-authored-geometry']}`, 'UNRESOLVED', '#B65F4D'],
+  ];
+  for (const [index, [count, label, accent]] of chips.entries()) {
+    const x = 24 + index * 178;
+    parts.push(`<rect x="${x}" y="86" width="166" height="56" rx="10" fill="#ECE5D5" stroke="${accent}" stroke-width="1.5"/>`);
+    parts.push(text(x + 16, 111, count, 18, 850, accent));
+    parts.push(text(x + 16, 130, label, 9, 800, MUTED));
+  }
+  parts.push(text(926, 110, 'MAPPING ACCEPTED', 12, 850, A1A_PALETTE.green));
+  parts.push(text(926, 130, 'Synthetic diagrams and gaps remain noncanonical · no production mutation', 10, 700, MUTED));
+
+  for (const panel of descriptor.panels) {
+    const { entry } = panel;
+    const style = MASK_RESOLUTION_STYLE[entry.resolution.kind];
+    const x = gridX + panel.column * (cardWidth + gap);
+    const y = gridY + panel.row * (cardHeight + gap);
+    parts.push(
+      `<rect x="${x}" y="${y}" width="${cardWidth}" height="${cardHeight}" rx="10" ` +
+      `fill="${style.card}" stroke="${style.accent}" stroke-width="1.5"/>`,
+    );
+    parts.push(text(x + 10, y + 18, entry.id, 12, 850));
+    parts.push(text(
+      x + cardWidth - 10,
+      y + 18,
+      `0x${entry.canonicalMask.toString(16).padStart(2, '0').toUpperCase()}`,
+      10,
+      800,
+      MUTED,
+      'end',
+    ));
+    parts.push(text(x + 10, y + 35, entry.topologyClass.toUpperCase(), 9, 800, MUTED));
+    parts.push(text(x + cardWidth - 10, y + 35, style.label, 9, 850, style.accent, 'end'));
+    parts.push(await equalHeightMaskPreview(options, entry, x + 10, y + 46, fileOverrides));
+    parts.push(equalHeightMaskTopologyGlyph(entry, x + 158, y + 48, 34));
+    parts.push(text(x + 10, y + 151, `CONNECTED  ${maskList(entry.connectedEdges)}`, 9, 750, INK));
+    parts.push(text(x + 10, y + 165, `EXPOSED    ${maskList(entry.exposedEdges)}`, 9, 650, MUTED));
+    parts.push(text(x + 10, y + 179, `POCKET     ${maskList(entry.pockets)}`, 9, 650, A1A_PALETTE.coral));
+    parts.push(text(x + 10, y + 193, `SOLID      ${maskList(entry.solidDiagonals)}`, 9, 650, A1A_PALETTE.teal));
+    parts.push(text(x + 10, y + 211, equalHeightMaskSourceLabel(entry), 9, 800, style.accent));
+    parts.push(text(x + 10, y + 226, equalHeightMaskOperationLabel(entry), 8, 650, MUTED));
+  }
+
+  const checksumX = gridX + descriptor.checksum.column * (cardWidth + gap);
+  const checksumY = gridY + descriptor.checksum.row * (cardHeight + gap);
+  parts.push(`<rect x="${checksumX}" y="${checksumY}" width="${cardWidth}" height="${cardHeight}" rx="10" fill="#252A28"/>`);
+  parts.push(text(checksumX + cardWidth / 2, checksumY + 70, 'END', 13, 850, '#A59E8F', 'middle'));
+  parts.push(text(checksumX + cardWidth / 2, checksumY + 116, '47 / 47', 32, 900, '#E2E8DE', 'middle'));
+  parts.push(text(checksumX + cardWidth / 2, checksumY + 146, 'NO MISSING OR', 10, 800, '#E2E8DE', 'middle'));
+  parts.push(text(checksumX + cardWidth / 2, checksumY + 162, 'DUPLICATE INDICES', 10, 800, '#E2E8DE', 'middle'));
+  parts.push(text(checksumX + cardWidth / 2, checksumY + 210, 'BLOB CONTRACT v1', 9, 750, '#83A9A6', 'middle'));
+
+  parts.push(`<rect x="${railX}" y="${gridY}" width="${railWidth}" height="1960" rx="14" fill="#ECE5D5" stroke="${INK}" stroke-width="1.5"/>`);
+  parts.push(text(railX + 24, gridY + 34, 'HOW TO READ THIS SHEET', 16, 850));
+  parts.push(text(railX + 24, gridY + 60, 'mask_16 is index 16; its canonical value is 0x13.', 11, 650, MUTED));
+  parts.push(text(railX + 24, gridY + 82, 'CONNECTED describes neighboring wall cells—not art facing.', 11, 700, INK));
+  parts.push(text(railX + 24, gridY + 104, 'POCKET is a missing eligible diagonal; SOLID retains it.', 11, 650, MUTED));
+  parts.push(equalHeightMaskTopologyGlyph(EQUAL_HEIGHT_MASK_LEDGER.entries[24], railX + 24, gridY + 126, 96));
+  parts.push(text(railX + 136, gridY + 154, 'N IS ALWAYS UP', 11, 800, INK));
+  parts.push(text(railX + 136, gridY + 176, 'green = center/cardinal wall', 10, 650, MUTED));
+  parts.push(text(railX + 136, gridY + 196, 'teal = solid diagonal', 10, 650, MUTED));
+  parts.push(text(railX + 136, gridY + 216, 'coral outline = open pocket', 10, 650, MUTED));
+
+  parts.push(text(railX + 24, gridY + 268, 'THE DECISIVE COLLISION', 14, 850, A1A_PALETTE.coral));
+  parts.push(text(railX + 24, gridY + 296, 'mask_5 · CONNECTED N S', 12, 850));
+  parts.push(text(railX + 24, gridY + 320, 'WEST → full_w_straight · unchanged', 11, 700, '#294B3C'));
+  parts.push(text(railX + 24, gridY + 342, 'EAST → full_w_straight · mirror-X', 11, 700, '#4E7D79'));
+  parts.push(text(railX + 24, gridY + 370, 'Connectivity cannot choose. The proof recipe therefore', 11, 650, MUTED));
+  parts.push(text(railX + 24, gridY + 390, 'requires explicit facing/context instead of a second mask bank.', 11, 650, MUTED));
+
+  parts.push(text(railX + 24, gridY + 442, 'RESOLUTION KEY', 14, 850));
+  const legendRows: ReadonlyArray<readonly [EqualHeightMaskResolutionKind, string]> = [
+    ['direct-reuse', 'accepted source exactly'],
+    ['approved-derivation', 'named mirror or seam filter'],
+    ['synthetic-assembly', 'accepted laws; local hub still proof-only'],
+    ['unresolved-authored-geometry', 'new focused geometry decision required'],
+  ];
+  for (const [index, [kind, description]] of legendRows.entries()) {
+    const style = MASK_RESOLUTION_STYLE[kind];
+    const y = gridY + 474 + index * 52;
+    parts.push(`<rect x="${railX + 24}" y="${y - 16}" width="18" height="18" rx="4" fill="${style.card}" stroke="${style.accent}"/>`);
+    parts.push(text(railX + 54, y - 3, `${style.label} · ${EQUAL_HEIGHT_MASK_LEDGER.counts[kind]}`, 11, 850, style.accent));
+    parts.push(text(railX + 54, y + 15, description, 10, 600, MUTED));
+  }
+
+  parts.push(text(railX + 24, gridY + 706, 'RESOLVED PERIMETER REPRESENTATIVES', 14, 850));
+  const resolvedLines = [
+    'mask_3 · SW molded source',
+    'mask_5 · W direct / E mirror-X + facing',
+    'mask_6 · NW exterior source',
+    'mask_9 · SE mirror-X + seam filter',
+    'mask_10 · shared north / south source',
+    'mask_12 · NE mirror-X',
+  ];
+  for (const [index, line] of resolvedLines.entries()) {
+    parts.push(text(railX + 24, gridY + 734 + index * 25, line, 11, 700, index % 2 === 0 ? '#294B3C' : '#4E7D79'));
+  }
+
+  parts.push(text(railX + 24, gridY + 916, 'TOPOLOGY INDEX', 14, 850));
+  const topologyLines = [
+    '0-link isolated · 1',
+    '1-link termini · 4',
+    '2-link straights · 2',
+    '2-link elbows · 8 (4 open + 4 solid)',
+    '3-link T junctions · 16',
+    '4-link cross/interior states · 16',
+  ];
+  for (const [index, line] of topologyLines.entries()) {
+    parts.push(text(railX + 24, gridY + 944 + index * 24, line, 11, 650, MUTED));
+  }
+
+  parts.push(text(railX + 24, gridY + 1124, 'STATE REMAINS EXTERNAL', 14, 850, A1A_PALETTE.coral));
+  parts.push(text(railX + 24, gridY + 1152, 'mask_10 also hosts door/window variants in the old proof.', 11, 650, MUTED));
+  parts.push(text(railX + 24, gridY + 1174, 'That does not make those states part of connectivity or this ledger.', 11, 650, MUTED));
+
+  parts.push(text(railX + 24, gridY + 1230, 'AUTHORED-GEOMETRY GAPS', 14, 850, '#B65F4D'));
+  parts.push(text(railX + 24, gridY + 1258, 'mask_0 · isolated catalog cell', 11, 750, '#B65F4D'));
+  parts.push(text(railX + 24, gridY + 1280, 'mask_1 / 2 / 4 / 8 · directional termini', 11, 750, '#B65F4D'));
+  parts.push(text(railX + 24, gridY + 1308, 'The existing full_terminus is visible evidence, but it was not', 11, 650, MUTED));
+  parts.push(text(railX + 24, gridY + 1330, 'part of the accepted corridor and its mirrors/rotations are not approved.', 11, 650, MUTED));
+
+  parts.push(text(railX + 24, gridY + 1386, 'SYNTHETIC OBLIGATION', 14, 850, '#7B715F'));
+  parts.push(text(railX + 24, gridY + 1414, '4 solid elbows · accepted outer law + synthetic closure', 11, 700, MUTED));
+  parts.push(text(railX + 24, gridY + 1436, '16 T cases · accepted sockets/pockets + new local hub/caps', 11, 700, MUTED));
+  parts.push(text(railX + 24, gridY + 1458, '16 cross cases · accepted pockets + new four-way hub', 11, 700, MUTED));
+  parts.push(text(railX + 24, gridY + 1486, 'Hatched previews are topology diagrams, never proposed final art.', 11, 750, '#7B715F'));
+
+  parts.push(text(railX + 24, gridY + 1542, 'OUT OF SCOPE', 14, 850));
+  const outOfScope = [
+    'opening and door/window state art',
+    'low partitions or cutaway geometry',
+    'palette-mask authoring',
+    'production frame identity or committed atlas',
+    'exporter / CONTRACT / schema / Unity registration',
+  ];
+  for (const [index, line] of outOfScope.entries()) {
+    parts.push(text(railX + 24, gridY + 1570 + index * 24, `• ${line}`, 11, 650, MUTED));
+  }
+
+  parts.push(`<rect x="${railX + 20}" y="${gridY + 1720}" width="${railWidth - 40}" height="214" rx="12" fill="#252A28"/>`);
+  parts.push(text(railX + 42, gridY + 1752, 'PROOF BOUNDARY / FAILURE TRAY', 13, 850, '#E2E8DE'));
+  parts.push(text(railX + 42, gridY + 1784, '✓ canonical order: 47/47, no duplicates', 11, 700, '#9FC7A9'));
+  parts.push(text(railX + 42, gridY + 1810, '✓ accepted source provenance only', 11, 700, '#9FC7A9'));
+  parts.push(text(railX + 42, gridY + 1836, '✓ no low-profile or historical topology pixels', 11, 700, '#9FC7A9'));
+  parts.push(text(railX + 42, gridY + 1862, '! 5 authored geometry gaps remain visible', 11, 750, '#E0836E'));
+  parts.push(text(railX + 42, gridY + 1888, '! 36 synthetic cases are diagrams, not accepted art', 11, 750, '#E0836E'));
+  parts.push(text(railX + 42, gridY + 1918, 'Approval advances focused proofs—not production registration.', 11, 800, '#83A9A6'));
+
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" ` +
+    `viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+  const png = new Resvg(svg, {
+    fitTo: { mode: 'width', value: width * CARD_RENDER_SCALE },
+  }).render().asPng();
+  await writeFile(path.join(options.output, `${EQUAL_HEIGHT_MASK_LEDGER.stem}.png`), png);
 }
 
 async function renderLowSoutheastCornerFocus(options: CliOptions, root: string): Promise<void> {
@@ -2158,6 +2515,7 @@ async function renderContextMocksSafely(options: CliOptions, root: string): Prom
     await renderFullHeightSouthwestProof(options);
     await renderFullHeightSoutheastProof(options);
     await renderEqualHeightCorridorGate(options);
+    await renderEqualHeightMaskLedger(options);
     await renderLowSoutheastCornerFocus(options, root);
     const statusPath = path.join(options.output, 'status.json');
     const status = JSON.parse(await readFile(statusPath, 'utf8')) as Record<string, unknown>;
@@ -2168,6 +2526,7 @@ async function renderContextMocksSafely(options: CliOptions, root: string): Prom
     status.roomRenderedAt = renderedAt;
     status.ladderRenderedAt = renderedAt;
     status.focusRenderedAt = renderedAt;
+    status.mappingRenderedAt = renderedAt;
     status.corridorRenderedAt = renderedAt;
     await writeFile(statusPath, `${JSON.stringify(status)}\n`, 'utf8');
     process.stdout.write('composition mocks re-rendered\n');

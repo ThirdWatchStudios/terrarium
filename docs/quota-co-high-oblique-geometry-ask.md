@@ -1,6 +1,6 @@
 # QuotaCo High-Oblique Geometry — Production Art Ask
 
-**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** equal-height wall set and 3×8 corridor closure accepted; proof-only 47-mask mapping ledger next
+**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** equal-height wall set, corridor closure, and proof-layer 47-mask mapping accepted; horizontal termini next
 
 Canonical direction lives in the sim repository:
 
@@ -11,9 +11,9 @@ The-Water-Cooler/docs/design/quota-co-high-oblique-art-migration-plan.md
 
 The owner has committed to a fixed **high-oblique / top-down-plus** office in which the manufactured building,
 furniture, machines, amenities, and campus fixtures read as coordinated QuotaCo catalog products. The initial
-building-geometry ask is now approved at the five-piece directional level and in the accepted 3×8 narrow-corridor
-closure. The next authorized step is a proof-only ledger and synthetic contact proof mapping those accepted
-contracts onto the existing 47-mask connectivity table; prop-catalog and production changes remain separate work.
+building-geometry ask is now approved at the five-piece directional level, in the 3×8 narrow-corridor closure,
+and as a proof-layer mapping over the existing 47-mask connectivity table. The next authorized step is a
+proof-only horizontal terminus pair; prop-catalog and production changes remain separate work.
 
 ---
 
@@ -114,8 +114,12 @@ remain proof-layer art contracts rather than production registration. Retain the
 review results without treating them as the current production direction.
 
 **Corridor owner decision, 2026-07-21:** the accepted sources also pass together as a 3×8 equal-height
-perimeter around a 1×6 walkable aisle at both 90 and 40 px per cell. This closes the current composition gate;
-the next decision surface is the proof-only 47-mask mapping ledger described below.
+perimeter around a 1×6 walkable aisle at both 90 and 40 px per cell. This closes the composition gate.
+
+**Mapping owner decision, 2026-07-21:** accept the 47-row proof-layer ledger structure and its explicit
+provenance/gap accounting. This accepts three direct mappings and three approved derivations as source law,
+not the 36 synthetic candidate sprites or five unresolved cases. The next decision surface is the horizontal
+terminus pair: `mask_8` direct and `mask_2` mirror-X candidate. Vertical ends remain separate.
 
 ### A1a review artifact
 
@@ -128,28 +132,35 @@ Produce both:
 The labeled sheet is presentation only. The actual atlas must have transparent padding and no card frames,
 background panel, floor plinth, or concept-art cast shadows.
 
-## 4. A1b — proof-only 47-mask mapping ledger
+## 4. A1b — accepted proof-layer 47-mask mapping ledger
 
-The accepted corridor authorizes a mapping exercise, not propagation. Build a ledger over the existing canonical
-`mask_0` through `mask_46` order. For every mask, record its existing connectivity case and the intended
-equal-height source reuse, approved mirror/derivation, synthetic assembly rule, or unresolved authored-geometry
-obligation. Preserve the current raw-256-to-47 mapping and make gaps visible rather than inventing a second
-connectivity system or silently promoting placeholder art.
+The accepted ledger records the existing canonical `mask_0` through `mask_46` order. For every mask, it names
+the existing connectivity case and intended equal-height source reuse, approved mirror/derivation, synthetic
+assembly rule, or unresolved authored-geometry obligation. It preserves the current raw-256-to-47 mapping and
+makes gaps visible rather than inventing a second connectivity system or silently promoting placeholder art.
 
 Required ledger and synthetic-proof evidence:
 
 - each canonical `mask_<i>` appears exactly once in unchanged index order;
 - each row names connectivity, source provenance, transform/derivation, and resolution status;
 - direct reuse, approved mirror/derivation, synthetic assembly, and unresolved authored needs remain distinct;
-- a generated complete-family contact proof exercises the ledger at review scale without becoming an export;
+- a generated complete-ledger contact sheet exercises the classification at review scale without becoming an export;
 - the proof reports duplicated, missing, discontinuous, or ambiguous joins instead of hiding them; and
 - openings, state variants, and palette-token masks remain separately identified rather than implied by the
   connectivity ledger.
 
-This authorization is limited to the ledger, validation, and disposable synthetic proof pixels. It does not
+Acceptance is limited to the ledger, validation, and disposable synthetic assembly diagrams. It does not
 authorize edits to production topology sources, template/catalog registration, frame identities, exporter or
 `CONTRACT.md`, schema versions, committed production atlases, Unity assets, or `production.unity`. Any of those
-requires a separate owner decision after the mapping proof is reviewed.
+requires a separate owner decision.
+
+**Owner result, 2026-07-21:** the ledger envelope is accepted with three direct reuses, three approved
+derivations, 36 proof-only synthetic assemblies, and five unresolved authored-geometry cases. Acceptance locks
+the topology mapping and provenance categories; it does not promote the synthetic contact diagrams. The next
+authorized slice tests the two horizontal termini only at 90 and 40 px and in 1/3/6-cell runs. Reuse
+`full_terminus` unchanged for `mask_8` (connected west, cap east), and test the same whole cell mirrored around
+`x=64` for `mask_2` (connected east, cap west). Keep `mask_1` and `mask_4` unresolved; do not rotate or transpose
+the horizontal source into a vertical end.
 
 ## 5. Readability gates
 
@@ -194,7 +205,7 @@ The later prop pilot—not floor tiles—settles the southern ground-contact sor
 
 ## 8. Handoff
 
-Owner acceptance of the 3×8 corridor closure unlocks only the proof-only 47-mask mapping ledger and its
-synthetic contact proof. Production propagation/registration, export and schema work, the product-family prop
-pilot, and the isolated Unity golden room remain separately gated. Nothing in this ask authorizes a change to
-Unity or `production.unity`.
+Owner acceptance of the 47-mask ledger unlocks only the named proof-only horizontal terminus pair. Acceptance
+of that pair would update ledger provenance for `mask_8` and `mask_2`; it would not unlock the vertical ends,
+remaining synthetic topology, production propagation/registration, export/schema work, the product-family prop
+pilot, or the isolated Unity golden room. Nothing in this ask authorizes a change to Unity or `production.unity`.

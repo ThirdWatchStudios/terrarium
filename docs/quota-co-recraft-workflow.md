@@ -16,8 +16,9 @@ on the live workbench and committed individually with its design rationale.
 
 1. **Pick the active decision.** When `Review next` is present, choose one unresolved equal-height piece from
    that lane. When every current piece is accepted, follow the named system gate instead of reopening a settled
-   piece. The 3×8 corridor closure is now accepted; the current next task is its proof-only 47-mask mapping
-   ledger and synthetic contact proof. Use composed evidence as the issue-finding surface. Historical
+   piece. The corridor closure and 47-mask mapping structure are accepted; the current next task is the
+   proof-only horizontal terminus pair (`mask_8` direct, `mask_2` mirror-X candidate). Use composed evidence as
+   the issue-finding surface. Historical
    mixed-profile room mocks are archived, not valid targets.
 2. **Read before drawing:** the piece's current masters, the five-sheet primary wall target listed in
    `docs/reference/README.md`, the broad geometry and golden-room references, the bible's constants, and any
@@ -32,8 +33,8 @@ on the live workbench and committed individually with its design rationale.
    shell edits break the session harness's write tracking.
 4. **Judge on the bench:** `npm run style:watch` → http://localhost:5411 (one instance only — the port
    is exclusive). Start with the active proof sheet's isolated piece and socket checks, then its compact/long
-   runs and installed room. The accepted 3×8 corridor sheet remains the system-composition baseline while the
-   47-mask ledger becomes the next planning/proof surface. The open page keeps accepted evidence separate from
+   runs and installed room. The accepted 3×8 corridor and 47-mask ledger remain system context while the
+   horizontal terminus pair becomes the only active proof surface. The open page keeps accepted evidence separate from
    unresolved work; old mixed-profile gates and per-stem importer cards stay under `Archived checkpoints` and
    `Compiler diagnostics` so they cannot be mistaken for approval targets.
 5. **Iterate on the owner's eye.** Every pass this session was improved by an owner correction —
@@ -164,15 +165,20 @@ exporter, schema, or Unity without separate authorization.
 **Accepted equal-height corridor checkpoint (owner approval, 2026-07-21):** the 3×8 perimeter around a 1×6
 clear aisle passes at 90 and 40 px per cell using only the accepted source/reuse contracts. Its one-cell
 north/south bodies stay legible, six-cell west/east runs do not drift, and all four corners close as one
-manufactured envelope. The next authorized work is a proof-only `mask_0` through `mask_46` mapping ledger:
-record each canonical connectivity case, its accepted reuse/derivation or synthetic assembly rule, and any
-unresolved geometry obligation, then render a disposable complete-family contact proof. Do not author around a
-gap merely to make the ledger look complete.
+manufactured envelope.
 
-**Still isolated after corridor acceptance:** `topology/` and `state/`; official/production preview
+**Accepted 47-mask mapping checkpoint (owner approval, 2026-07-21):** the unchanged `mask_0` through `mask_46`
+ordering and classification ledger is accepted with three direct reuses, three approved derivations, 36
+proof-only synthetic assembly candidates, and five unresolved authored-geometry cases. This locks the mapping
+structure, not the synthetic pixels or a complete production family. The next bounded proof is horizontal
+termini only: `mask_8` direct reuse plus a whole-cell X-mirror candidate for `mask_2`, shown at 90/40 px in
+1/3/6-cell contexts and enlarged socket/cap crops. `mask_1` and `mask_4` remain unresolved; do not rotate.
+
+**Still isolated after mapping acceptance:** the 36 synthetic candidate sprites and five authored gaps;
+`topology/` and `state/`; official/production preview
 regeneration; template/catalog registration and frame identities; exporter, `CONTRACT.md`, or schema changes;
 committed production atlases; prop pilots; Unity; and `production.unity` remain locked until separately
-requested. The corridor decision authorizes mapping, validation, and synthetic proof pixels only.
+requested. The mapping decision authorizes only the next named proof slice.
 
 **Historical progress 2026-07-20 (superseded by the 2026-07-21 checkpoint):** steps 1–5 were executed and
 awaited owner review. Cross-section proofs
