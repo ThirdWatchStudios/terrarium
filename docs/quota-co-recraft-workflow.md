@@ -139,11 +139,15 @@ blessed ("good enough for now"); both treatments applied to the four straights; 
 transitions redesigned as authored turns (banded high-wall terminus at each profile drop, coping route
 turning on the outer arc, green switching sides per the plane logic at N→E / W→S, continuous green wrap at
 SE, coral fan at NW). Teal service register retired from the low family per the references. All 834 tests
-green including the master-pointed directional gates; envelope gate and room mock re-rendered. Known
-residuals for the review: door/window/terminus still sit on the old cross-section (visible register jump at
-the door flanks in the room mock — re-seating is the next queued pass); transition stack terminations read
-abrupt at close range; `A1B_LOW_CORRECTION_RULER` in `a1bLowProfileCorrection.ts` still documents the old
-symmetric low registers and needs re-tallying with the style bible after acceptance.
+green including the master-pointed directional gates; envelope gate and room mock re-rendered. The pass was
+owner-corrected once ("single room, flush seams; south reads like north"), which re-registered the south/east
+lows onto the full coral system, re-seated the door, and finally rebuilt both transitions as **full-height
+corner turns with the profile drop on the run past the corner** (matching the golden-room structure): the
+room-side stack terminates against the standing wall's inner outline, the top surface flows through the turn,
+the exterior stack wraps in below the outer arc, and a terminus end face steps down onto the low section.
+Committed piecewise through the corner rebuild. Remaining residuals: window/terminus masters still sit on the
+old cross-section (re-seat next); `A1B_LOW_CORRECTION_RULER` in `a1bLowProfileCorrection.ts` still documents
+the old symmetric low registers and needs re-tallying with the style bible after acceptance.
 
 ### Measured reference constants (step-1 measurement pass, 2026-07-20)
 
