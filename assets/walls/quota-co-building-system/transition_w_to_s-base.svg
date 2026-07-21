@@ -1,17 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
   <title>QuotaCo Building System west-to-south transition base</title>
-  <desc>Continuous lower face turning from the full west wall into the exposed south coping without a second finished cap under the upper.</desc>
+  <desc>Shaded green east face of the flatter-from-above west wall diving under the south route that turns the corner; the lit south face — narrow reveal, cream face, coral band, green — reads like the north wall east of the outer arc.</desc>
   <g id="detail/base">
     <path id="base-contour" d="M 94 0 V 86 H 82 V 108 A 12 12 0 0 0 94 120 H 128 V 82 H 120 V 0 Z" fill="#252A28"/>
-    <path id="base-field" d="M 96 0 V 88 H 84 V 108 A 10 10 0 0 0 94 118 H 128 V 84 H 117 V 0 Z" fill="#294B3C"/>
-    <path id="base-coping" d="M 84 86 V 100 H 128 V 84 H 97 V 86 Z" fill="#D9D0B9"/>
-    <path id="base-coping-top-light" d="M 84 86 H 92 V 92 H 84 Z M 97 84 H 128 V 92 H 97 Z" fill="#FFFFFF" opacity="0.18"/>
-    <path id="base-coping-face-shade" d="M 84 92 H 128 V 100 H 84 Z" fill="#000000" opacity="0.08"/>
-    <path id="base-coping-lip" d="M 97 87 V 92 A 8 8 0 0 0 105 100 H 127.25" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>
-    <path id="base-south-face-shade" d="M 105 109 H 128 V 118 H 105 Z" fill="#000000" opacity="0.08"/>
-    <path id="base-teal-service-band" d="M 105 104 H 128 V 109 H 105 Z" fill="#4E7D79" opacity="0.84"/>
-    <path id="base-toe-light" d="M 105 116 H 128 V 118 H 105 Z" fill="#FFFFFF" opacity="0.10"/>
-    <path id="base-fastener-top" d="M 111.5 15 A 1.5 1.5 0 1 1 114.5 15 A 1.5 1.5 0 1 1 111.5 15 Z" fill="#979A91"/>
-    <path id="base-fastener-arm" d="M 111.5 113 A 1.5 1.5 0 1 1 114.5 113 A 1.5 1.5 0 1 1 111.5 113 Z" fill="#979A91"/>
+    <path id="base-field" d="M 105 0 H 117 V 96 H 105 Z" fill="#294B3C"/>
+    <path id="base-west-face-shade" d="M 105 0 H 117 V 84 H 105 Z" fill="#000000" opacity="0.12"/>
+    <path id="base-cream" d="M 97 84 H 128 V 99 H 94 V 118 A 10 10 0 0 1 84 108 V 86 H 97 Z" fill="#D9D0B9"/>
+    <path id="base-reveal-light" d="M 97 84 H 128 V 88 H 97 Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="base-plane-light" d="M 84 86 H 94 V 118 A 10 10 0 0 1 84 108 Z" fill="#FFFFFF" opacity="0.18"/>
+    <path id="base-coral-band" d="M 94 99 H 128 V 107 H 94 Z" fill="#B65F4D"/>
+    <path id="base-band-light" d="M 94 99 H 128 V 100.5 H 94 Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="base-south-green" d="M 94 107 H 128 V 117 H 94 Z" fill="#294B3C"/>
+    <path id="base-arris-seam" d="M 98 88 H 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="base-band-seam" d="M 95 107 H 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+    <path id="base-contact-shade" d="M 94 120 H 128 V 123.5 H 94 Z M 120 0 H 123.5 V 82 H 120 Z" fill="#000000" opacity="0.12"/>
+    <path id="base-fasteners" d="M 111 13.5 A 1.5 1.5 0 1 1 111 16.5 A 1.5 1.5 0 1 1 111 13.5 Z M 113 110.5 A 1.5 1.5 0 1 1 113 113.5 A 1.5 1.5 0 1 1 113 110.5 Z" fill="#979A91"/>
   </g>
 </svg>

@@ -1,16 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
   <title>QuotaCo Building System north-to-east transition upper</title>
-  <desc>High north shell stepping directly into the east coping; the upper stops at the profile change instead of covering the outgoing low wall.</desc>
+  <desc>Flat north shell terminating at the profile change: the coral band stops at the divider seam and the shaded east-facing end zone closes the high mass above the outgoing low coping.</desc>
   <g id="detail/upper">
-    <path id="upper-contour" d="M 0 56 H 91 A 9 9 0 0 1 100 65 V 82 H 86 V 98 H 0 Z" fill="#252A28"/>
-    <path id="upper-shell" d="M 0 58 H 90 A 7 7 0 0 1 97 65 V 84 H 88 V 98 H 0 Z" fill="#D9D0B9"/>
-    <path id="upper-junction-reveal" d="M 88 84 H 92 V 98 H 88 Z" fill="#D9D0B9"/>
-    <path id="upper-cap-light" d="M 0 58 H 90 V 64 H 0 Z" fill="#FFFFFF" opacity="0.20"/>
-    <path id="upper-face-shade" d="M 0 64 H 97 V 84 H 88 V 89 H 0 Z" fill="#000000" opacity="0.08"/>
-    <path id="upper-coral-band" d="M 0 89 H 88 V 98 H 0 Z" fill="#B65F4D"/>
-    <path id="upper-band-light" d="M 0 89 H 88 V 90.5 H 0 Z" fill="#FFFFFF" opacity="0.10"/>
-    <path id="upper-service-seam" d="M 1 64 H 90" fill="none" stroke="#252A28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.28"/>
+    <path id="upper-contour" d="M 0 56 H 91 A 9 9 0 0 1 100 65 V 82 H 86 V 97 H 0 Z" fill="#252A28"/>
+    <path id="upper-shell" d="M 0 58 H 90 A 7 7 0 0 1 97 65 V 84 H 88 V 97 H 0 Z" fill="#D9D0B9"/>
+    <path id="upper-reveal-light" d="M 0 58 H 88 V 63 H 0 Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="upper-coral-band" d="M 0 85 H 88 V 97 H 0 Z" fill="#B65F4D"/>
+    <path id="upper-band-light" d="M 0 85 H 88 V 86.5 H 0 Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="upper-end-shade" d="M 88 58 H 97 V 84 H 88 Z" fill="#000000" opacity="0.12"/>
+    <path id="upper-divider-seam" d="M 88 59 V 96" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="upper-arris-seam" d="M 1 63 H 87" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="upper-band-seam" d="M 1 97 H 87" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
     <path id="upper-module-seam" d="M 64 64 V 96" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.28"/>
-    <path id="upper-band-seam" d="M 1 89 H 86" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
   </g>
 </svg>
