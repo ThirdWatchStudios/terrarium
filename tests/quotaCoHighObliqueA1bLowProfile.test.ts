@@ -318,7 +318,9 @@ describe('QuotaCo A1b low-profile corrective mini-strip', () => {
     const newSouthDepth = newSouthBounds.maxY - newSouthBounds.minY + 1;
     const newEastDepth = newEastBounds.maxX - newEastBounds.minX + 1;
     expect([oldSouthDepth, oldEastDepth]).toEqual([26, 26]);
-    expect([newSouthDepth, newEastDepth]).toEqual([38, 38]);
+    // 38-unit solid wall band plus the 3.5-unit translucent contact shade
+    // overhanging onto the floor (owner-blessed depth overlays, 2026-07-20).
+    expect([newSouthDepth, newEastDepth]).toEqual([42, 42]);
     expect(newSouthDepth - oldSouthDepth).toBeGreaterThanOrEqual(10);
     expect(newEastDepth - oldEastDepth).toBeGreaterThanOrEqual(10);
 
@@ -326,7 +328,9 @@ describe('QuotaCo A1b low-profile corrective mini-strip', () => {
       const paints = new Set(frame.shapes.map(({ fill }) => fill).filter(Boolean));
       expect(paints.has('$cream'), `${frame.id} cream coping`).toBe(true);
       expect(paints.has('$green'), `${frame.id} green face`).toBe(true);
-      expect(paints.has('$teal'), `${frame.id} teal service band`).toBe(true);
+      // The teal service band is retired: the reference shows no teal on low
+      // straights (owner-blessed directional treatments, 2026-07-20).
+      expect(paints.has('$teal'), `${frame.id} retired teal service band`).toBe(false);
     }
     expect(new Set(oldSouth.shapes.map(({ fill }) => fill)).has('$cream')).toBe(false);
     expect(new Set(oldEast.shapes.map(({ fill }) => fill)).has('$cream')).toBe(false);
