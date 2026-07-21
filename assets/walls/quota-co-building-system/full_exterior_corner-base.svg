@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
   <title>QuotaCo Building System full exterior corner base</title>
-  <desc>Lower green faces and floor-contact plinth for the northwest corner; the composed upper owns the exposed top planes.</desc>
+  <desc>Green route sweeping the northwest turn between the flat north face and the shaded west stack, with the plinth and contact shade wrapping the inner corner.</desc>
   <g id="detail/base">
-    <path id="base-contour" d="M 94 62 H 120 V 94 H 128 V 120 A 8 8 0 0 0 120 128 H 94 V 120 H 62 V 94 H 94 Z" fill="#252A28"/>
-    <path id="base-field" d="M 96 64 H 117 V 96 H 128 V 117 A 11 11 0 0 0 117 128 H 96 V 117 H 64 V 96 H 96 Z" fill="#294B3C"/>
-    <path id="base-fastener-east" d="M 122 111.5 A 1.5 1.5 0 1 1 122 114.5 A 1.5 1.5 0 1 1 122 111.5 Z" fill="#979A91"/>
-    <path id="base-fastener-south" d="M 111.5 122 A 1.5 1.5 0 1 0 114.5 122 A 1.5 1.5 0 1 0 111.5 122 Z" fill="#979A91"/>
+    <path id="base-contour" d="M 103 62 H 120 V 95 H 128 V 120 H 120 V 128 H 103 V 120 H 62 V 95 H 103 Z" fill="#252A28"/>
+    <path id="base-green" d="M 128 97 H 113 A 8 8 0 0 0 105 105 V 128 H 117 V 121 A 4 4 0 0 1 121 117 H 128 Z" fill="#294B3C"/>
+    <path id="base-face-shade" d="M 105 105 H 117 V 128 H 105 Z" fill="#000000" opacity="0.12"/>
+    <path id="base-contact-shade" d="M 66 120 H 128 V 123.5 H 66 Z M 120 66 H 123.5 V 128 H 120 Z" fill="#000000" opacity="0.12"/>
   </g>
 </svg>
