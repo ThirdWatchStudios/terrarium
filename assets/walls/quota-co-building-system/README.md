@@ -28,9 +28,9 @@ and all four corners close as one enclosure.
 
 **Accepted mapping gate (owner approvals, 2026-07-21 through 2026-07-22):** the proof-layer ledger
 locks the unchanged canonical `mask_0` through `mask_46` order and classifies
-13 direct reuses, ten approved derivations, 24 synthetic assembly
+15 direct reuses, ten approved derivations, 22 synthetic assembly
 candidates, and zero authored-geometry gaps. This accepts the mapping
-structure and provenance boundaries only. It does not accept the 24 synthetic
+structure and provenance boundaries only. It does not accept the 22 synthetic
 assembly diagrams or create an atlas/production family.
 
 **Accepted horizontal terminus gate (owner approval, 2026-07-21):** `mask_8`
@@ -92,10 +92,21 @@ registration, exporter, atlas, schema, blob mapping, or Unity registration.
 `../quota-co-building-system-proofs/horizontal-open-pocket-t-junction/` bank supplies two separately authored
 fixed-light direct sources: open-south `mask_11` and open-north `mask_14`. Compact 3×3 and six-cell horizontal/
 vertical checks preserve their horizontal spines, vertical branches, and two open floor pockets. The mirrored
-east-registration examples remain comparison evidence only and are not accepted derivations. The ledger now
-records 13 direct / 10 derived / 24 synthetic / 0 unresolved rows. This proof-layer promotion creates no
+east-registration examples remain comparison evidence only and are not accepted derivations. At that
+checkpoint the ledger recorded 13 direct / 10 derived / 24 synthetic / 0 unresolved rows; the later
+single-filled-pocket decision supersedes those counts. This proof-layer promotion creates no
 canonical source, frame identity, template registration, exporter, atlas, schema, blob mapping, or Unity
 registration.
+
+**Accepted west-side single-filled-pocket T-junction gate (owner approval, 2026-07-22):** the external
+`../quota-co-building-system-proofs/west-partial-t-junction/` bank supplies separately authored fixed-light
+direct sources for foreground `mask_17` (`open_w_t_filled_ne`) and rear `mask_21`
+(`open_w_t_filled_se`). Each preserves north/east/south sockets while filling one diagonal crook and leaving
+the other as an open floor pocket. They are sibling states between open `mask_7` and fully filled `mask_24`,
+not a progression or mirror pair. East-side counterparts `mask_36` and `mask_27` remain synthetic, and no
+X-mirror derivation is approved. The ledger now records 15 direct / 10 derived / 22 synthetic / 0 unresolved
+rows. This proof-layer promotion creates no canonical source, frame identity, template registration, exporter,
+atlas, schema, blob mapping, or Unity registration.
 
 The original independently finished low-base-plus-optional-upper construction was
 rejected on 2026-07-20 because its duplicate caps and contours read as one wall

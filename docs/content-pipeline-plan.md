@@ -38,8 +38,9 @@ changes the export contract except where explicitly flagged (floor variants).
 > or Unity contract.
 > **Current mapping and source-gate result, 2026-07-22:** the owner accepted the proof-layer 47-mask
 > ledger structure plus the horizontal and vertical termini, isolated-shell, filled-elbow, 2×N thick-wall-repeat,
-> N×2 horizontal thick-wall-repeat, vertical open-pocket T-junction, and horizontal-spine open-pocket T-junction
-> slices. The ledger now records 13 direct source mappings, ten approved derivations, 24 synthetic assembly candidates, and zero authored-geometry
+> N×2 horizontal thick-wall-repeat, vertical open-pocket T-junction, horizontal-spine open-pocket T-junction,
+> and west-side single-filled-pocket T-junction slices. The ledger now records 15 direct source mappings, ten
+> approved derivations, 22 synthetic assembly candidates, and zero authored-geometry
 > gaps. `mask_8`
 > directly reuses the socket-polished `full_terminus` pair and `mask_2` uses its accepted whole-cell X mirror;
 > both passed at 90/40 px in 1/3/6-cell contexts. This is not acceptance of the synthetic candidate pixels or a
@@ -78,9 +79,18 @@ changes the export contract except where explicitly flagged (floor variants).
 > and `open_n_t_junction` pairs directly resolve `mask_11` and `mask_14` as two separately authored fixed-light
 > axial sources. Compact 3×3 and six-cell horizontal/vertical checks preserve the horizontal spine, vertical
 > branch, and both open pockets at 90 and 40 px per cell. X-mirrored branch registrations remain comparison
-> evidence only, not accepted derivations. The ledger is now 13 direct / 10 derived / 24 synthetic / 0 unresolved.
+> evidence only, not accepted derivations. At that checkpoint the ledger stood at
+> 13 direct / 10 derived / 24 synthetic / 0 unresolved; the later single-filled-pocket decision supersedes
+> those counts.
 > No canonical source, frame identity, template registration, exporter, atlas, schema, blob mapping, Unity
 > asset, or `production.unity` surface is changed.
+> **Accepted west-side single-filled-pocket T-junction slice, 2026-07-22:** the external
+> `open_w_t_filled_ne` and `open_w_t_filled_se` pairs directly resolve foreground `mask_17` and rear `mask_21`
+> as separately authored fixed-light transitions. Each preserves the north/east/south sockets while filling
+> exactly one diagonal crook; east-side counterparts `mask_36` and `mask_27` remain synthetic and no mirror
+> derivation is approved. The ledger now records 15 direct / 10 derived / 22 synthetic / 0 unresolved. No
+> canonical source, frame identity, template registration, exporter, atlas, schema, blob mapping, Unity asset,
+> or `production.unity` surface is changed.
 
 ---
 

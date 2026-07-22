@@ -187,10 +187,10 @@ clear aisle passes at 90 and 40 px per cell using only the accepted source/reuse
 north/south bodies stay legible, six-cell west/east runs do not drift, and all four corners close as one
 manufactured envelope.
 
-**Accepted 47-mask mapping checkpoint (owner approvals, 2026-07-21 through 2026-07-22):** the unchanged `mask_0` through `mask_46`
-ordering and classification ledger is accepted with thirteen direct reuses, ten approved derivations, 24
-proof-only synthetic assembly candidates, and zero unresolved authored-geometry cases. This locks the mapping
-structure, not the synthetic pixels or a complete production family.
+**Accepted 47-mask mapping checkpoint (owner approvals, 2026-07-21 through 2026-07-22):** the unchanged
+`mask_0` through `mask_46` ordering and classification ledger is accepted with fifteen direct reuses, ten
+approved derivations, 22 proof-only synthetic assembly candidates, and zero unresolved authored-geometry
+cases. This locks the mapping structure, not the synthetic pixels or a complete production family.
 
 **Accepted horizontal terminus checkpoint (owner approval, 2026-07-21):** the socket-polished
 `full_terminus` source passes directly for `mask_8` and through a whole-cell X mirror for `mask_2`, at 90/40 px
@@ -259,19 +259,29 @@ changes through this proof-layer acceptance.
 `open_s_t_junction` for `mask_11` and `open_n_t_junction` for `mask_14`. They are evaluated as horizontal
 spines with one vertical branch, two canonical open pockets, compact 3×3 placement, and six-cell horizontal
 and vertical extents. Both rows now have direct proof-layer provenance with no transform or derivation
-approved, bringing the ledger to thirteen direct, ten derived, 24 synthetic, and zero unresolved. Keep the
+approved. At that checkpoint the ledger stood at thirteen direct, ten derived, 24 synthetic, and zero
+unresolved; the later single-filled-pocket decision supersedes those counts. Keep the
 proof bank, gate, workbench card, and tests outside canonical registration, export, atlas, schema, blob mapping,
 and Unity. Same-mask lateral X mirrors on the sheet remain registration comparisons only, not accepted source
 mappings.
 
-**Still outside acceptance after both open-pocket T-junction checkpoints:** all 24 remaining synthetic T/cross
+**Accepted west-side single-filled-pocket T-junction gate (owner approval, 2026-07-22):** the external
+`west-partial-t-junction/` bank directly resolves foreground `mask_17` with `open_w_t_filled_ne` and rear
+`mask_21` with separately authored `open_w_t_filled_se`. Each retains the north/east/south sockets while one
+diagonal crook becomes solid and the other remains an open floor pocket. They are sibling states between
+open-west `mask_7` and fully filled `mask_24`, not a progression or mirror pair. East-side `mask_36` and
+`mask_27` remain synthetic and no X-mirror derivation is approved. The ledger now records fifteen direct, ten
+derived, 22 synthetic, and zero unresolved. Keep this proof bank, gate, workbench card, and tests outside
+canonical registration, export, atlas, schema, blob mapping, and Unity.
+
+**Still outside acceptance after the single-filled-pocket T-junction checkpoint:** all 22 remaining synthetic T/cross
 candidate sprites;
 `topology/` and `state/`; official/production preview
 regeneration; template/catalog registration and frame identities; exporter, `CONTRACT.md`, or schema changes;
 committed production atlases; prop pilots; Unity; and `production.unity` remain locked until separately
-requested. The accepted external `mask_0`, filled-elbow, both thick-wall-repeat, and both open-pocket
-T-junction proof families do not unlock or silently promote any of those surfaces. Acceptance of the external
-T-junction proof families adds ledger provenance only and does not alter that lock.
+requested. The accepted external `mask_0`, filled-elbow, both thick-wall-repeat, both open-pocket T-junction,
+and west-side single-filled-pocket proof families do not unlock or silently promote any of those surfaces.
+Acceptance of the external T-junction proof families adds ledger provenance only and does not alter that lock.
 
 **Historical progress 2026-07-20 (superseded by the 2026-07-21 checkpoint):** steps 1–5 were executed and
 awaited owner review. Cross-section proofs

@@ -385,6 +385,26 @@ const openNorthTJunction: EqualHeightMaskSourceVariant = {
   facingRule: 'connected east, south, and west with the north edge exposed; authored rear fixed-light horizontal-spine T hub',
 };
 
+const partialWestForegroundTJunction: EqualHeightMaskSourceVariant = {
+  role: 'partial-west-foreground-t-junction',
+  sourceStem: 'open_w_t_filled_ne',
+  baseFile: 'open_w_t_filled_ne-base.svg',
+  upperFile: 'open_w_t_filled_ne-upper.svg',
+  transform: 'none',
+  derivation: 'none',
+  facingRule: 'connected north, east, and south with the west edge exposed, northeast solid, and southeast concave; authored foreground fixed-light transition into mask_38',
+};
+
+const partialWestRearTJunction: EqualHeightMaskSourceVariant = {
+  role: 'partial-west-rear-t-junction',
+  sourceStem: 'open_w_t_filled_se',
+  baseFile: 'open_w_t_filled_se-base.svg',
+  upperFile: 'open_w_t_filled_se-upper.svg',
+  transform: 'none',
+  derivation: 'none',
+  facingRule: 'connected north, east, and south with the west edge exposed, southeast solid, and northeast concave; authored rear fixed-light transition into mask_31',
+};
+
 function topologyFor(config: WallTileConfig): EqualHeightMaskTopologyClass {
   const connected = EDGES.filter((edge) => config[edge]);
   if (connected.length === 0) return 'isolated';
@@ -550,12 +570,26 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         variants: [filledSouthwestElbow],
         note: 'Accepted foreground-west filled elbow directly reuses the authored solid-top source with its south-facing material shade.',
       };
+    case 17:
+      return {
+        kind: 'direct-reuse',
+        status: 'accepted-source-mapping',
+        variants: [partialWestForegroundTJunction],
+        note: 'Accepted foreground west-side partial T junction directly reuses the authored northeast-filled fixed-light transition source.',
+      };
     case 20:
       return {
         kind: 'direct-reuse',
         status: 'accepted-source-mapping',
         variants: [filledNorthwestElbow],
         note: 'Accepted rear-west filled elbow directly reuses the authored solid-top source.',
+      };
+    case 21:
+      return {
+        kind: 'direct-reuse',
+        status: 'accepted-source-mapping',
+        variants: [partialWestRearTJunction],
+        note: 'Accepted rear west-side partial T junction directly reuses the authored southeast-filled fixed-light transition source.',
       };
     case 24:
       return {
@@ -711,6 +745,8 @@ const ACCEPTED_SOURCE_VARIANTS = new Set([
   openEastTJunction,
   openSouthTJunction,
   openNorthTJunction,
+  partialWestForegroundTJunction,
+  partialWestRearTJunction,
 ].map(sourceVariantSignature));
 
 function variantsFor(

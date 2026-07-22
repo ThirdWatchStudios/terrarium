@@ -175,9 +175,9 @@ export function validateEqualHeightThickWallHorizontalRepeatGate(
       'filled_s_middle-base.svg',
       'filled_s_middle-upper.svg',
     ]) ||
-    EQUAL_HEIGHT_MASK_LEDGER.counts['direct-reuse'] !== 13 ||
+    EQUAL_HEIGHT_MASK_LEDGER.counts['direct-reuse'] !== 15 ||
     EQUAL_HEIGHT_MASK_LEDGER.counts['approved-derivation'] !== 10 ||
-    EQUAL_HEIGHT_MASK_LEDGER.counts['synthetic-assembly'] !== 24 ||
+    EQUAL_HEIGHT_MASK_LEDGER.counts['synthetic-assembly'] !== 22 ||
     EQUAL_HEIGHT_MASK_LEDGER.counts['unresolved-authored-geometry'] !== 0
   ) {
     throw new Error('Thick-wall horizontal repeat evidence boundary drift');

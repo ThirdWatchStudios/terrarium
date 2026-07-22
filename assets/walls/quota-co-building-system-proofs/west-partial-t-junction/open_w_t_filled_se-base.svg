@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>QuotaCo open-west T-junction with filled southeast pocket proof base</title>
+  <desc>The northeast crook retains the accepted shaded vertical frontage while the southeast half becomes a plain buried structural underlay.</desc>
+  <g id="detail/base">
+    <path id="base-buried-se-underlay" d="M56 56H128V128H56Z" fill="#252A28"/>
+    <path id="base-contour-open-ne" d="M103 0H120V56H103Z" fill="#252A28"/>
+    <path id="base-green-open-ne" d="M105 0H117V56H105Z" fill="#294B3C"/>
+    <path id="base-face-shade-open-ne" d="M105 0H117V56H105Z" fill="#000000" opacity="0.12"/>
+    <path id="base-contact-shade-open-ne" d="M120 0H123.5V56H120Z" fill="#000000" opacity="0.12"/>
+  </g>
+</svg>
