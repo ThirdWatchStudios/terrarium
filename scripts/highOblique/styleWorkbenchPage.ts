@@ -2,6 +2,7 @@ import { EQUAL_HEIGHT_CORRIDOR_GATE } from './equalHeightCorridorGate';
 import { EQUAL_HEIGHT_HORIZONTAL_TERMINUS_GATE } from './equalHeightHorizontalTerminusGate';
 import { EQUAL_HEIGHT_ISOLATED_SHELL_GATE } from './equalHeightIsolatedShellGate';
 import { EQUAL_HEIGHT_MASK_LEDGER } from './equalHeightMaskLedger';
+import { EQUAL_HEIGHT_THICK_WALL_BLOCK_GATE } from './equalHeightThickWallBlockGate';
 import { EQUAL_HEIGHT_VERTICAL_TERMINUS_GATE } from './equalHeightVerticalTerminusGate';
 
 export type CurrentWorkbenchBoardState = 'accepted' | 'review';
@@ -28,6 +29,15 @@ export interface AcceptedSystemGate {
   readonly summary: string;
   readonly alt: string;
 }
+
+/** Owner-accepted filled-elbow source family and its four ledger mappings. */
+export const ACCEPTED_THICK_WALL_BLOCK_GATE: AcceptedSystemGate = {
+  stem: EQUAL_HEIGHT_THICK_WALL_BLOCK_GATE.stem,
+  state: 'accepted',
+  title: '2×2 thick-wall source family',
+  summary: 'Accepted masks 16/20 as direct fixed-light sources and 26/34 as approved X mirrors: one continuous cream wall top with the south-facing material shade preserving the foreground plane break.',
+  alt: 'owner-accepted equal-height two by two solid wall block assembled from direct and mirrored proof sources',
+};
 
 /** Owner-accepted zero-link structural shell and its direct ledger provenance. */
 export const ACCEPTED_ISOLATED_SHELL_GATE: AcceptedSystemGate = {
@@ -61,7 +71,7 @@ export const ACCEPTED_MAPPING_GATE: AcceptedSystemGate = {
   stem: EQUAL_HEIGHT_MASK_LEDGER.stem,
   state: 'accepted',
   title: '47-mask mapping ledger',
-  summary: 'Accepted topology map: 5 direct reuses, 6 approved derivations, 36 synthetic candidates, and 0 authored-geometry gaps.',
+  summary: 'Accepted topology map: 7 direct reuses, 8 approved derivations, 32 synthetic candidates, and 0 authored-geometry gaps.',
   alt: 'owner-accepted equal-height 47-mask mapping ledger with unaccepted synthetic candidates',
 };
 
@@ -181,12 +191,12 @@ const archivedBoard = (board: ArchivedWorkbenchBoard): string => (
 
 const acceptedSystemGate = (
   gate: AcceptedSystemGate,
-  refreshGroup: 'isolated-shell' | 'vertical-terminus' | 'terminus' | 'mapping' | 'corridor',
-  gateId: 'isolated-shell' | 'vertical-terminus' | 'terminus' | 'mapping' | 'corridor',
+  refreshGroup: 'thick-wall-block' | 'isolated-shell' | 'vertical-terminus' | 'terminus' | 'mapping' | 'corridor',
+  gateId: 'thick-wall-block' | 'isolated-shell' | 'vertical-terminus' | 'terminus' | 'mapping' | 'corridor',
 ): string => (
   `<section class="current-section system-accepted" aria-labelledby="accepted-${gateId}-title">` +
-  `<header class="section-copy"><h2 id="accepted-${gateId}-title">${gateId === 'mapping' ? 'Accepted system mapping' : gateId === 'isolated-shell' || gateId === 'terminus' || gateId === 'vertical-terminus' ? 'Accepted source gate' : 'Accepted system proof'}</h2>` +
-  `<p>${gateId === 'mapping' ? 'The mapping structure is locked; its synthetic assembly diagrams remain proof-only and no authored-geometry gaps remain.' : gateId === 'isolated-shell' ? 'The fixed-view isolated shell and ledger row mask_0 are locked at the proof layer.' : gateId === 'vertical-terminus' ? 'The two authored vertical closures, their east mirrors, and ledger rows mask_1/mask_4 are locked at the proof layer.' : gateId === 'terminus' ? 'The horizontal source pair and its two ledger rows are locked at the proof layer.' : 'This remains the approved enclosure baseline for all subsequent wall-family proofs.'}</p></header>` +
+  `<header class="section-copy"><h2 id="accepted-${gateId}-title">${gateId === 'mapping' ? 'Accepted system mapping' : gateId === 'corridor' ? 'Accepted system proof' : 'Accepted source gate'}</h2>` +
+  `<p>${gateId === 'mapping' ? 'The mapping structure is locked; its remaining synthetic assembly diagrams stay proof-only and no authored-geometry gaps remain.' : gateId === 'thick-wall-block' ? 'The two authored filled-elbow sources, their east mirrors, and ledger rows mask_16/mask_20/mask_26/mask_34 are locked at the proof layer.' : gateId === 'isolated-shell' ? 'The fixed-view isolated shell and ledger row mask_0 are locked at the proof layer.' : gateId === 'vertical-terminus' ? 'The two authored vertical closures, their east mirrors, and ledger rows mask_1/mask_4 are locked at the proof layer.' : gateId === 'terminus' ? 'The horizontal source pair and its two ledger rows are locked at the proof layer.' : 'This remains the approved enclosure baseline for all subsequent wall-family proofs.'}</p></header>` +
   `<article class="board" data-state="system-accepted" data-gate="${gateId}">` +
   '<header class="board-copy"><span class="badge">Accepted · System gate</span>' +
   `<h3>${escapeHtml(gate.title)}</h3>` +
@@ -217,10 +227,13 @@ export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): st
     '<p>mask_0 is accepted as one fixed-view direct source with zero cardinal sockets.</p></div>';
   const acceptedMappingGateStatus = '<div class="status-card accepted"><span>Accepted system mapping</span>' +
     `<strong>${escapeHtml(ACCEPTED_MAPPING_GATE.title)}</strong>` +
-    '<p>The 47-row topology plan is locked; its 36 synthetic candidates remain proof-only.</p></div>';
+    '<p>The 47-row topology plan is locked; its 32 synthetic candidates remain proof-only.</p></div>';
   const acceptedCorridorGateStatus = '<div class="status-card accepted"><span>Accepted system proof</span>' +
     `<strong>${escapeHtml(ACCEPTED_CORRIDOR_GATE.title)}</strong>` +
     '<p>The equal-height family reads as one enclosure at short and long extremes.</p></div>';
+  const acceptedThickWallBlockGateStatus = '<div class="status-card accepted"><span>Accepted source gate</span>' +
+    `<strong>${escapeHtml(ACCEPTED_THICK_WALL_BLOCK_GATE.title)}</strong>` +
+    '<p>mask_16/mask_20 are direct; mask_26/mask_34 are accepted whole-cell mirror-X derivations.</p></div>';
   const reviewSection = reviewManifest.length > 0
     ? '<section class="current-section review" aria-labelledby="review-title"><header class="section-copy"><h2 id="review-title">Review next</h2><p>The unresolved pieces currently in play.</p></header>' + reviewBoards + '</section>'
     : '';
@@ -256,10 +269,11 @@ export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): st
     '@media(max-width:700px){body{padding:18px 12px 48px}.status-grid{grid-template-columns:1fr}.archive-grid,.diagnostic-grid{grid-template-columns:1fr}.board{padding:8px}.current-section{margin:26px 0}}' +
     '</style>' +
     '<header><h1>QuotaCo Building System — current wall workbench</h1>' +
-    '<p class="lede">The equal-height source geometry is accepted at the proof layer. No geometry proposal is currently active; the 36 synthetic assembly candidates remain proof-only.</p></header>' +
+    '<p class="lede">The equal-height source geometry and 2×2 thick-wall family are accepted at the proof layer. No proposal is currently active; the remaining 32 synthetic T and cross assemblies stay unaccepted.</p></header>' +
     '<div id="status">waiting for first render…</div>' +
     '<section class="kit-status" aria-labelledby="kit-status-title"><h2 id="kit-status-title">Current direction status — equal-height structural walls</h2>' +
     '<div class="status-grid">' +
+    acceptedThickWallBlockGateStatus +
     acceptedIsolatedShellGateStatus +
     acceptedVerticalTerminusGateStatus +
     acceptedTerminusGateStatus +
@@ -269,6 +283,7 @@ export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): st
     `<div class="status-card accepted"><span>Accepted working set · ${acceptedManifest.length} pieces</span><strong>${escapeHtml(acceptedNames)}</strong><p>These are the current owner-approved working contracts.</p></div>` +
     '</div></section>' +
     '<main id="current-equal-height-wall-system">' +
+    acceptedSystemGate(ACCEPTED_THICK_WALL_BLOCK_GATE, 'thick-wall-block', 'thick-wall-block') +
     acceptedSystemGate(ACCEPTED_ISOLATED_SHELL_GATE, 'isolated-shell', 'isolated-shell') +
     acceptedSystemGate(ACCEPTED_VERTICAL_TERMINUS_GATE, 'vertical-terminus', 'vertical-terminus') +
     acceptedSystemGate(ACCEPTED_HORIZONTAL_TERMINUS_GATE, 'terminus', 'terminus') +
@@ -289,7 +304,7 @@ export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): st
     'else if(s.roomError){status.textContent=`CURRENT ROOM RENDER FAILED\\n${s.roomError}`;status.className="bad";}' +
     'else{status.textContent=`current proofs ok · ${s.frames} frames validated · ${s.durationMs}ms · ${s.renderedAt}`;status.className="";}' +
     'const archiveStatus=document.getElementById("archive-status");if(s.proofsError){archiveStatus.textContent=`ARCHIVED CROSS-SECTION RENDER FAILED\\n${s.proofsError}`;archiveStatus.className="bad";}else{archiveStatus.textContent="";archiveStatus.className="";}' +
-    'const groups={root:s.renderedAt,focus:s.focusRenderedAt,"isolated-shell":s.isolatedShellRenderedAt,"vertical-terminus":s.verticalTerminusRenderedAt,terminus:s.terminusRenderedAt,mapping:s.mappingRenderedAt,corridor:s.corridorRenderedAt,gate:s.gateRenderedAt,proofs:s.proofsRenderedAt,room:s.roomRenderedAt,ladder:s.ladderRenderedAt};' +
+    'const groups={root:s.renderedAt,focus:s.focusRenderedAt,"thick-wall-block":s.thickWallBlockRenderedAt,"isolated-shell":s.isolatedShellRenderedAt,"vertical-terminus":s.verticalTerminusRenderedAt,terminus:s.terminusRenderedAt,mapping:s.mappingRenderedAt,corridor:s.corridorRenderedAt,gate:s.gateRenderedAt,proofs:s.proofsRenderedAt,room:s.roomRenderedAt,ladder:s.ladderRenderedAt};' +
     'for(const [group,next] of Object.entries(groups)){if(next&&stamps[group]!==next){stamps[group]=next;for(const figure of document.querySelectorAll(`[data-refresh="${group}"]`)){const image=figure.querySelector("img");if(image)image.src=`${figure.dataset.stem}.png?t=${Date.now()}`;}}}' +
     '}catch(error){const status=document.getElementById("status");status.textContent=`WORKBENCH STATUS UNAVAILABLE\\n${error instanceof Error?error.message:String(error)}`;status.className="bad";}setTimeout(tick,700)}tick()</script>'
   );

@@ -1,6 +1,6 @@
 # QuotaCo High-Oblique Geometry — Production Art Ask
 
-**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** equal-height wall set, corridor closure, proof-layer 47-mask mapping, horizontal/vertical termini, and isolated `mask_0` source accepted; no geometry proposal is currently active
+**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** equal-height wall set, corridor closure, proof-layer 47-mask mapping, horizontal/vertical termini, isolated `mask_0`, and four-piece filled-elbow source family accepted; no geometry proposal is currently active
 
 Canonical direction lives in the sim repository:
 
@@ -13,8 +13,9 @@ The owner has committed to a fixed **high-oblique / top-down-plus** office in wh
 furniture, machines, amenities, and campus fixtures read as coordinated QuotaCo catalog products. The initial
 building-geometry ask is now approved at the five-piece directional level, in the 3×8 narrow-corridor closure,
 as a proof-layer mapping over the existing 47-mask connectivity table, for all four directional terminus rows,
-and for the isolated `mask_0` source. The accepted proof ledger now has zero authored-geometry gaps; its 36
-synthetic assembly candidates remain proof-only. Prop-catalog work and production changes remain separate decisions.
+for the isolated `mask_0` source, and for the four filled-elbow rows used by a completely occupied 2×2 block.
+The accepted proof ledger now has zero authored-geometry gaps; its remaining 32 T/cross synthetic assembly
+candidates remain proof-only. Prop-catalog work and production changes remain separate decisions.
 
 ---
 
@@ -118,8 +119,9 @@ review results without treating them as the current production direction.
 perimeter around a 1×6 walkable aisle at both 90 and 40 px per cell. This closes the composition gate.
 
 **Mapping owner decisions, 2026-07-21 through 2026-07-22:** accept the 47-row proof-layer ledger structure and
-its explicit provenance/gap accounting. With both terminus families and the isolated shell promoted, it records
-five direct mappings and six approved derivations as source law, not the 36 synthetic candidate sprites.
+its explicit provenance/gap accounting. With both terminus families, the isolated shell, and the filled-elbow
+family promoted, it records seven direct mappings and eight approved derivations as source law, not the 32
+remaining synthetic T/cross candidate sprites.
 
 **Horizontal terminus owner decision, 2026-07-21:** accept the socket-polished `full_terminus` pair directly
 for `mask_8` and through one whole-cell X mirror for `mask_2`. Both facings pass at 90 and 40 px across 1/3/6
@@ -137,8 +139,22 @@ provide accepted proof-ledger provenance, while every production surface remains
 full-height, zero-link QuotaCo structural shell authored in the external
 `assets/walls/quota-co-building-system-proofs/isolated-shell/` bank and proven as a contained catalog item,
 not as four termini joined together. The fixed-view pair directly resolves ledger row `mask_0` with no mirror
-or rotation, taking the ledger to five direct, six derived, 36 synthetic, and zero unresolved. Acceptance adds no production
+or rotation. At that checkpoint the ledger stood at five direct, six derived, 36 synthetic, and zero unresolved.
+Acceptance adds no production
 frame, template registration, exporter or `CONTRACT.md` field, schema value, committed atlas, or Unity asset.
+
+**Accepted filled-elbow source family, 2026-07-22:** the owner-approved 2×2 composition rule is materialized as an accepted
+proof-layer source family. Filling the open crook recalculates all four occupied quadrants (`mask_20`, `mask_26`,
+`mask_16`, and `mask_34`); it does not justify an isolated decorative patch on `mask_16`. Two fixed-light west
+source pairs live in the external `quota-co-building-system-proofs/thick-wall-block/` bank: `mask_20` recuts
+the accepted northwest exterior as a solid rear quadrant, and `mask_16` recuts the accepted southwest exterior
+as a solid foreground quadrant whose south fascia remains the foreground owner. Its standard black `0.08`
+material shade spans local `y=63..88`, separating the south-facing cream face from the continuous top without
+becoming a cast shadow or darkening the coral/green frontage. `mask_26` and `mask_34` are accepted whole-cell
+X mirrors; the southeast derivation applies the accepted boundary-seam omission. The assembled family creates
+the continuous cream wall top without a render-only block overlay. Rows `16/20` are accepted direct mappings
+and rows `26/34` are accepted derivations, taking the ledger to seven direct, eight derived, 32 synthetic, and
+zero unresolved. No production source, exporter, atlas, schema, or Unity surface is promoted by this proof-layer decision.
 
 ### A1a review artifact
 
@@ -173,13 +189,14 @@ authorize edits to production topology sources, template/catalog registration, f
 `CONTRACT.md`, schema versions, committed production atlases, Unity assets, or `production.unity`. Any of those
 requires a separate owner decision.
 
-**Owner result, updated 2026-07-22:** the ledger envelope plus horizontal, vertical, and isolated-shell slices are accepted with five direct
-reuses, six approved derivations, 36 proof-only synthetic assemblies, and zero unresolved authored-geometry
+**Owner result, updated 2026-07-22:** the ledger envelope plus horizontal, vertical, isolated-shell, and filled-elbow slices are accepted with seven direct
+reuses, eight approved derivations, 32 proof-only synthetic assemblies, and zero unresolved authored-geometry
 cases. `mask_8` uses the socket-polished `full_terminus` source directly (connected west, cap east); `mask_2`
 uses the same whole cell mirrored around `x=64` (connected east, cap west). Acceptance locks those provenance
 rows but does not promote the synthetic contact diagrams. `mask_1` and `mask_4` use their separately authored
 vertical sources plus accepted east mirrors. `mask_0` directly reuses its own external `isolated_shell` pair;
-it is not a terminus derivation. Do not rotate or transpose the horizontal source into a vertical end.
+it is not a terminus derivation. `mask_16`/`mask_20` directly reuse the filled-elbow sources and
+`mask_26`/`mask_34` use their accepted east mirrors. Do not rotate or transpose the horizontal source into a vertical end.
 
 ## 5. Readability gates
 
@@ -224,9 +241,9 @@ The later prop pilot—not floor tiles—settles the southern ground-contact sor
 
 ## 8. Handoff
 
-Owner acceptance of the 47-mask ledger, both terminus families, and the isolated shell updates their named
-proof-layer provenance; those accepted decisions remain unchanged. The external `mask_0` source closes the
-authored-geometry gap but does not unlock the 36 synthetic topology
+Owner acceptance of the 47-mask ledger, both terminus families, the isolated shell, and the filled-elbow family
+updates their named proof-layer provenance; those accepted decisions remain unchanged. These external proof
+sources close the authored-geometry gap and four solid-elbow cases but do not unlock the remaining 32 synthetic topology
 cases, production propagation/registration, export or `CONTRACT.md` work, schema changes, committed atlases,
 the product-family prop pilot, or the isolated Unity golden room. Nothing in this ask authorizes a change to
 Unity or `production.unity`.

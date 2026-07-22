@@ -28,9 +28,9 @@ and all four corners close as one enclosure.
 
 **Accepted mapping gate (owner approvals, 2026-07-21 through 2026-07-22):** the proof-layer ledger
 locks the unchanged canonical `mask_0` through `mask_46` order and classifies
-five direct reuses, six approved derivations, 36 synthetic assembly
+seven direct reuses, eight approved derivations, 32 synthetic assembly
 candidates, and zero authored-geometry gaps. This accepts the mapping
-structure and provenance boundaries only. It does not accept the 36 synthetic
+structure and provenance boundaries only. It does not accept the 32 synthetic
 assembly diagrams or create an atlas/production family.
 
 **Accepted horizontal terminus gate (owner approval, 2026-07-21):** `mask_8`
@@ -53,6 +53,15 @@ fixed-view `isolated_shell` pair at `../quota-co-building-system-proofs/isolated
 full-height structural housing with zero cardinal sockets, one front-on plane treatment, and no mirror or
 rotation derivation. The pair remains intentionally absent from this strict canonical inventory; acceptance
 records proof-ledger source provenance only and closes the authored-geometry gap.
+
+**Accepted thick-wall source gate (owner approval, 2026-07-22):** the external
+`../quota-co-building-system-proofs/thick-wall-block/` bank supplies direct fixed-light sources for
+`mask_16` and `mask_20`; `mask_26` and `mask_34` are accepted whole-cell X-mirror derivations, with
+the southeast seam filter applied before mirroring `mask_34`. Together they replace buried pocket
+faces with one continuous wall-top mass in a completely occupied 2×2 block. The ledger now records
+seven direct mappings, eight approved derivations, 32 synthetic T/cross candidates, and zero gaps.
+These sources remain outside the canonical production inventory and do not create exporter, atlas,
+schema, or Unity registrations.
 
 The original independently finished low-base-plus-optional-upper construction was
 rejected on 2026-07-20 because its duplicate caps and contours read as one wall
@@ -145,7 +154,7 @@ acceptance do not authorize another proof slice, synthetic-candidate promotion, 
 propagation, or production files. The earlier low-east, low-southeast, and southwest full-to-low
 checkpoint remains historical directional evidence, but its low perimeter profiles and height-step corner
 are superseded for ordinary walls. South, east, northeast, southwest,
-southeast, both terminus families, and the isolated shell are owner-accepted equal-height art
+southeast, both terminus families, the isolated shell, and the four filled-elbow rows are owner-accepted equal-height art
 decisions; their source reuse, external proof sources, and mirrors remain unregistered. The southeast decision adds
 no source stem or production transform. Production registration, frame identity, exporter, `CONTRACT.md`,
 schema, committed atlas, and Unity changes remain deferred pending a separate owner decision.

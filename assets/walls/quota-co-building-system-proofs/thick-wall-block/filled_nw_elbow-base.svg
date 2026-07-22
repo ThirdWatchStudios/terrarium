@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>QuotaCo Building System full exterior corner base</title>
+  <desc>The lower green fascia and compact plinth turn through one molded northwest L, preserving the flat north face and shaded west stack without a post or applied corner plate.</desc>
+  <g id="detail/base">
+    <path id="base-contour" d="M 103 62 H 120 V 95 H 128 V 120 H 120 V 128 H 103 V 120 H 62 V 95 H 103 Z" fill="#252A28"/>
+    <path id="base-green" d="M 128 97 H 108 A 3 3 0 0 0 105 100 V 128 H 117 V 120 A 3 3 0 0 1 120 117 H 128 Z" fill="#294B3C"/>
+    <path id="base-face-shade" d="M 105 100 H 117 V 128 H 105 Z" fill="#000000" opacity="0.12"/>
+    <path id="base-contact-shade" d="M 66 120 H 128 V 123.5 H 66 Z M 120 66 H 123.5 V 128 H 120 Z" fill="#000000" opacity="0.12"/>
+  </g>
+</svg>

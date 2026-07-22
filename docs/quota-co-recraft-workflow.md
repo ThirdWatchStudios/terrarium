@@ -17,8 +17,8 @@ on the live workbench and committed individually with its design rationale.
 1. **Pick the active decision.** When `Review next` is present, choose one unresolved equal-height piece from
    that lane. When every current piece is accepted, follow the named system gate instead of reopening a settled
    piece. The corridor closure, 47-mask mapping structure, and horizontal and vertical terminus families are
-   accepted. Isolated `mask_0` is also accepted as its own direct external proof source, so no geometry proposal
-   is currently active. A synthetic family becomes active only through a separate named owner decision. Never
+   accepted. Isolated `mask_0` and the four-piece filled-elbow family are also accepted as external proof
+   sources, so no geometry proposal is currently active. A synthetic family becomes active only through a separate named owner decision. Never
    rotate the accepted horizontal source to manufacture a vertical end. Use composed evidence as
    the issue-finding surface. Historical
    mixed-profile room mocks are archived, not valid targets.
@@ -34,7 +34,11 @@ on the live workbench and committed individually with its design rationale.
    shading as overlays never tints (recolor law). Edit masters with the file tools, not shell scripts —
    shell edits break the session harness's write tracking.
 4. **Judge on the bench:** `npm run style:watch` → http://localhost:5411 (one instance only — the port
-   is exclusive). The accepted `mask_0` source gate retains the isolated shell at 240/90/40 px plus its
+   is exclusive). The accepted 2×2 thick-wall source gate appears first, comparing the true three-cell open elbow
+   against the four-cell filled block at 240/90/40 px and beside a one-cell aisle. It composes two external
+   fixed-light source pairs plus their accepted X mirrors, treats the former crook as continuous wall top, and
+   keeps all four filled rows together rather than patching `mask_16` in isolation.
+   The accepted `mask_0` source gate retains the isolated shell at 240/90/40 px plus its
    zero-socket boundary and compact placement checks. The accepted horizontal and vertical termini, 3×8 corridor, and 47-mask ledger remain system
    context while any next proposed slice is named without implying acceptance. The open page keeps accepted evidence separate from
    unresolved work; old mixed-profile gates and per-stem importer cards stay under `Archived checkpoints` and
@@ -170,7 +174,7 @@ north/south bodies stay legible, six-cell west/east runs do not drift, and all f
 manufactured envelope.
 
 **Accepted 47-mask mapping checkpoint (owner approvals, 2026-07-21 through 2026-07-22):** the unchanged `mask_0` through `mask_46`
-ordering and classification ledger is accepted with five direct reuses, six approved derivations, 36
+ordering and classification ledger is accepted with seven direct reuses, eight approved derivations, 32
 proof-only synthetic assembly candidates, and zero unresolved authored-geometry cases. This locks the mapping
 structure, not the synthetic pixels or a complete production family.
 
@@ -186,22 +190,35 @@ ordinary wall width and turn its same cream, coral, and green registers through 
 the separately authored south and north ends differ only in projected plane exposure. Each is also shown
 through an accepted whole-cell X mirror for the east wall, and ledger rows `mask_1`/`mask_4` record both facings. The focused
 sheet exposes 240/90/40 px isolates, 1/3/6-cell installed runs, exact socket crops, and two-/three-cell minimum
-segments. The accepted ledger is five direct, six derived, 36 synthetic, and zero unresolved.
+segments. At that checkpoint the accepted ledger was four direct, six derived, 36 synthetic, and one unresolved;
+later source-family decisions supersede those counts.
 
 **Accepted isolated-shell checkpoint (owner approval, 2026-07-22):** isolated `mask_0` uses one
 base/upper source pair that lives outside the canonical kit in
 `assets/walls/quota-co-building-system-proofs/isolated-shell/` and reads as one full-height, zero-link
 QuotaCo structural shell rather than four capped wall ends. Its contained silhouette, 240/90/40 px readability,
 and compact placement gate are accepted. `mask_0` is a direct source mapping with no mirror or rotation;
-the accepted ledger is five direct, six derived, 36 synthetic, and zero unresolved.
+at that checkpoint the accepted ledger became five direct, six derived, 36 synthetic, and zero unresolved.
 No production source, frame identity, template registration, exporter, `CONTRACT.md`, schema, committed atlas,
 or Unity surface is mutated by this acceptance.
 
-**Still outside acceptance after isolated-shell promotion:** the 36 synthetic candidate sprites;
+**Accepted thick-wall authored-family gate (owner approval, 2026-07-22):** a fully occupied 2×2 block exercises
+`mask_20`, `mask_26`, `mask_16`, and `mask_34` together. The approved composition rule is now materialized as
+two fixed-light west source pairs in the external `thick-wall-block/` proof bank. The rear source removes the
+buried southeast pocket from the accepted northwest law; the foreground source removes the buried northeast
+pocket while retaining the complete south fascia. The east pair is derived by whole-cell X mirror, with the
+accepted southeast boundary-seam omission. The resulting four pieces create the continuous cream top without
+a block-level overlay. The foreground pair retains the fixed-light plane break as a black `0.08` material shade
+across local `y=63..88`; it separates top from south-facing cream without touching the coral/green registers.
+This is accepted proof-layer source art, not a production source. Rows `mask_16`/`mask_20` are direct mappings;
+`mask_26`/`mask_34` are approved whole-cell X-mirror derivations, with the southeast seam filter retained.
+The ledger is now seven direct, eight derived, 32 synthetic, and zero unresolved.
+
+**Still outside acceptance after filled-elbow promotion:** all 32 remaining synthetic T/cross candidate sprites;
 `topology/` and `state/`; official/production preview
 regeneration; template/catalog registration and frame identities; exporter, `CONTRACT.md`, or schema changes;
 committed production atlases; prop pilots; Unity; and `production.unity` remain locked until separately
-requested. The accepted external `mask_0` proof source does not unlock or silently promote any of those surfaces.
+requested. The accepted external `mask_0` and filled-elbow proof sources do not unlock or silently promote any of those surfaces.
 
 **Historical progress 2026-07-20 (superseded by the 2026-07-21 checkpoint):** steps 1–5 were executed and
 awaited owner review. Cross-section proofs

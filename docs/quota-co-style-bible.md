@@ -26,8 +26,8 @@
 > **Current system-gate amendment (owner approvals, 2026-07-21 through 2026-07-22):** the accepted sources close a 3×8 equal-height
 > perimeter around a 1×6 clear aisle at 90 and 40 px per cell. All four turns, one-cell horizontal bodies, and
 > six-cell side runs read as one manufactured enclosure without low-profile art or a new frame identity. The
-> canonical `mask_0` through `mask_46` proof-layer mapping plus both terminus families and the isolated shell are
-> also accepted: five direct, six derived, 36 synthetic candidates, and zero authored-geometry gaps. `mask_8` is direct and `mask_2` is
+> canonical `mask_0` through `mask_46` proof-layer mapping plus both terminus families, the isolated shell, and the filled-elbow family are
+> also accepted: seven direct, eight derived, 32 synthetic candidates, and zero authored-geometry gaps. `mask_8` is direct and `mask_2` is
 > the accepted whole-cell X mirror. The synthetic candidates are not accepted art; production topology, registration, export,
 > `CONTRACT.md`, schema, committed atlases, and Unity remain deferred.
 
@@ -42,6 +42,16 @@
 > QuotaCo structural shell—not four terminus caps assembled in one cell—at 240/90/40 px and in compact
 > placement. It has one fixed front-on orientation and no mirror or rotation derivation. Acceptance creates no production frame, template registration, exporter or `CONTRACT.md` field,
 > schema change, committed atlas, or Unity asset.
+
+> **Accepted thick-wall authored-family gate (owner approval, 2026-07-22):** the owner-approved composition rule for a fully
+> occupied 2×2 wall block is materialized as two external fixed-light proof pairs plus two accepted whole-cell
+> X-mirror derivations. Filling the elbow crook recalculates four rows (`16/20/26/34`), preserves
+> their accepted exterior-edge provenance, and structurally replaces the buried inward faces with one
+> continuous cream wall-top surface. The foreground source retains the standard black `0.08` fixed-light
+> material shade from local `y=63..88`, so the south-facing cream plane remains dimensional above the coral
+> register. No render-only block overlay is used. Rows `16/20` are accepted direct proof-source mappings and
+> `26/34` are accepted derivations; the external proof SVGs remain outside production registration. Export,
+> atlas, schema, and Unity surfaces remain unchanged.
 
 The point of this page: the QuotaCo look is not a talent bar, it is a **closed grammar** — nine paints, two
 line weights, four shading steps, eight radii, one projection recipe. An author who obeys the grammar produces
@@ -95,7 +105,7 @@ expanding the grammar.
   west/east body runs are six cells, and every join uses only the accepted source/reuse/derivation contracts.
   This is the minimum composition regression gate for any later 47-mask synthetic proof.
 - Accepted mapping law (owner approvals, 2026-07-21 through 2026-07-22): preserve the canonical 47-mask order and its explicit
-  resolution split—5 direct reuse, 6 approved derivation, 36 proof-only synthetic assembly, 0 unresolved.
+  resolution split—7 direct reuse, 8 approved derivation, 32 proof-only synthetic assembly, 0 unresolved.
   Mapping acceptance is not sprite or atlas acceptance. A synthetic family advances only through a separate
   named owner decision; the accepted external `mask_0` source closes the authored-geometry gap without promoting those candidates.
 - Accepted horizontal terminus law (owner acceptance, 2026-07-21): `mask_8` directly reuses the
@@ -110,6 +120,10 @@ expanding the grammar.
 - Accepted isolated-shell law (owner acceptance, 2026-07-22): `mask_0` directly reuses one external
   `isolated_shell` pair with zero cardinal sockets, a contained rounded-square mass, and one front-on cream/coral/green
   register stack. It is authored once with no mirror or rotation and remains unregistered and unexported.
+- Accepted filled-elbow law (owner acceptance, 2026-07-22): `mask_16` and `mask_20` directly reuse the external
+  foreground/rear west fixed-light source pairs; `mask_26` and `mask_34` use accepted whole-cell X mirrors, with
+  the southeast seam filter applied before mirroring `mask_34`. Judge the four as one 2×2 wall mass at 240/90/40 px,
+  on light/dark grounds and beside a one-cell aisle. The source bank remains unregistered and unexported.
 - Vertical profiles (current kit law): ordinary walls occupy one **64-unit outer profile**.
   `base` and `upper` are technical paint passes, not two finished products: draw base first, then upper at
   the same centered pivot, and judge only their composed silhouette. The former **38-unit outer profile
@@ -241,9 +255,9 @@ be automated.
 3. Paint only with §2 swatches; shade only with §4 steps.
 4. Keep `npm run style:watch` running (§10) — every save re-validates through the real importer and
    re-renders base/upper/composed plus the distance proof, on light and dark ground. The open bench page is a
-   **current-state decision surface**: no geometry proposal is currently active; the isolated shell,
-   vertical/horizontal termini, 3×8 corridor, and 47-mask ledger remain accepted proof-layer baselines, while
-   the 36 synthetic assembly candidates remain proof-only and accepted pieces remain the
+   **current-state decision surface**: the accepted 2×2 thick-wall source family appears first; the isolated shell,
+   vertical/horizontal termini, 3×8 corridor, and 47-mask ledger remain accepted proof-layer baselines. All
+   32 synthetic T/cross assembly rows remain unaccepted, and accepted pieces remain the
    comparison set. Earlier low-profile
    comparisons, mixed-profile room/envelope gates, and importer cards remain available only in closed,
    explicitly archived disclosures. They must never read as the current target.

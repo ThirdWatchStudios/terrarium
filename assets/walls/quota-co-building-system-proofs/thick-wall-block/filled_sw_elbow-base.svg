@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>QuotaCo Building System full-height southwest corner base</title>
+  <desc>One molded equal-height southwest base preserving the full west north socket and the shared full north/south east socket.</desc>
+  <g id="detail/base">
+    <path id="base-contour" d="M56 0V110A10 10 0 0 0 66 120H128V56A8 8 0 0 1 120 48V0Z" fill="#252A28"/>
+    <path id="base-shell" d="M58 0V110A8 8 0 0 0 66 118H128V58A10 10 0 0 1 118 48V0Z" fill="#D9D0B9"/>
+    <path id="base-west-green" d="M105 0H117V91A6 6 0 0 0 123 97H128V117H113A8 8 0 0 1 105 109Z" fill="#294B3C"/>
+    <path id="base-west-face-shade" d="M105 0H117V58H105Z" fill="#000000" opacity="0.12"/>
+    <path id="base-south-green-wrap" d="M58 97H128V117H66A8 8 0 0 1 58 109Z" fill="#294B3C"/>
+    <path id="base-south-plinth" d="M66 117H128V120H66Z" fill="#252A28"/>
+    <path id="base-contact-shade" d="M120 0H123.5V48H120Z M66 120H128V123.5H66Z" fill="#000000" opacity="0.12"/>
+    <path id="base-boundary-seam" d="M126 98V116" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+  </g>
+</svg>

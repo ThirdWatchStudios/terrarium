@@ -265,6 +265,46 @@ const southeastCorner: EqualHeightMaskSourceVariant = {
   facingRule: 'connected north and west with an open northwest pocket',
 };
 
+const filledSouthwestElbow: EqualHeightMaskSourceVariant = {
+  role: 'filled-southwest-elbow',
+  sourceStem: 'filled_sw_elbow',
+  baseFile: 'filled_sw_elbow-base.svg',
+  upperFile: 'filled_sw_elbow-upper.svg',
+  transform: 'none',
+  derivation: 'none',
+  facingRule: 'connected north and east with a solid northeast diagonal; authored foreground-west fixed-light source',
+};
+
+const filledNorthwestElbow: EqualHeightMaskSourceVariant = {
+  role: 'filled-northwest-elbow',
+  sourceStem: 'filled_nw_elbow',
+  baseFile: 'filled_nw_elbow-base.svg',
+  upperFile: 'filled_nw_elbow-upper.svg',
+  transform: 'none',
+  derivation: 'none',
+  facingRule: 'connected east and south with a solid southeast diagonal; authored rear-west fixed-light source',
+};
+
+const filledNortheastElbow: EqualHeightMaskSourceVariant = {
+  role: 'filled-northeast-elbow',
+  sourceStem: 'filled_nw_elbow',
+  baseFile: 'filled_nw_elbow-base.svg',
+  upperFile: 'filled_nw_elbow-upper.svg',
+  transform: 'mirror-x',
+  derivation: 'none',
+  facingRule: 'connected south and west with a solid southwest diagonal through the accepted whole-cell X mirror',
+};
+
+const filledSoutheastElbow: EqualHeightMaskSourceVariant = {
+  role: 'filled-southeast-elbow',
+  sourceStem: 'filled_sw_elbow',
+  baseFile: 'filled_sw_elbow-base.svg',
+  upperFile: 'filled_sw_elbow-upper.svg',
+  transform: 'mirror-x',
+  derivation: 'accepted-southeast-seam-filter',
+  facingRule: 'connected north and west with a solid northwest diagonal through mirror-X plus the accepted southeast seam filter',
+};
+
 function topologyFor(config: WallTileConfig): EqualHeightMaskTopologyClass {
   const connected = EDGES.filter((edge) => config[edge]);
   if (connected.length === 0) return 'isolated';
@@ -295,16 +335,8 @@ function syntheticIngredientsFor(
   exposedEdges: readonly EqualHeightMaskEdge[],
   pockets: readonly EqualHeightMaskCorner[],
 ): readonly EqualHeightMaskSourceVariant[] {
-  const filledElbowSource: Readonly<Record<number, EqualHeightMaskSourceVariant | undefined>> = {
-    16: southwestCorner,
-    20: northwestCorner,
-    26: northeastCorner,
-    34: southeastCorner,
-  };
   if (topologyClass === 'filled-elbow') {
-    const source = filledElbowSource[index];
-    if (!source) throw new Error(`Missing filled-elbow provenance for mask_${index}`);
-    return [source];
+    throw new Error(`Accepted filled-elbow mask_${index} fell through to synthetic assembly`);
   }
 
   const variants: EqualHeightMaskSourceVariant[] = [];
@@ -402,6 +434,34 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         status: 'accepted-source-mapping',
         variants: [northeastCorner],
         note: 'Accepted northeast is the approved whole-cell mirror-X derivation of the northwest source.',
+      };
+    case 16:
+      return {
+        kind: 'direct-reuse',
+        status: 'accepted-source-mapping',
+        variants: [filledSouthwestElbow],
+        note: 'Accepted foreground-west filled elbow directly reuses the authored solid-top source with its south-facing material shade.',
+      };
+    case 20:
+      return {
+        kind: 'direct-reuse',
+        status: 'accepted-source-mapping',
+        variants: [filledNorthwestElbow],
+        note: 'Accepted rear-west filled elbow directly reuses the authored solid-top source.',
+      };
+    case 26:
+      return {
+        kind: 'approved-derivation',
+        status: 'accepted-source-mapping',
+        variants: [filledNortheastElbow],
+        note: 'Accepted rear-east filled elbow is the whole-cell mirror-X derivation of the rear-west solid-top source.',
+      };
+    case 34:
+      return {
+        kind: 'approved-derivation',
+        status: 'accepted-source-mapping',
+        variants: [filledSoutheastElbow],
+        note: 'Accepted foreground-east filled elbow mirrors the foreground-west source after the accepted southeast seam filter.',
       };
     default:
       return undefined;
@@ -503,6 +563,10 @@ const ACCEPTED_SOURCE_VARIANTS = new Set([
   northeastCorner,
   southwestCorner,
   southeastCorner,
+  filledSouthwestElbow,
+  filledNorthwestElbow,
+  filledNortheastElbow,
+  filledSoutheastElbow,
 ].map(sourceVariantSignature));
 
 function variantsFor(

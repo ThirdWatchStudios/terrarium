@@ -72,7 +72,7 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
     }
   });
 
-  it('makes the eleven accepted source mappings and their facing provenance explicit', () => {
+  it('makes the fifteen accepted source mappings and their facing provenance explicit', () => {
     const byIndex = new Map(
       EQUAL_HEIGHT_MASK_LEDGER.entries.map((entry) => [entry.index, entry]),
     );
@@ -137,12 +137,31 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
         { role: 'east-north-terminus', sourceStem: 'vertical_n_terminus', transform: 'mirror-x' },
       ],
     });
+    expect(byIndex.get(16)?.resolution).toMatchObject({
+      kind: 'direct-reuse',
+      variants: [{ role: 'filled-southwest-elbow', sourceStem: 'filled_sw_elbow', transform: 'none', derivation: 'none' }],
+    });
+    expect(byIndex.get(20)?.resolution).toMatchObject({
+      kind: 'direct-reuse',
+      variants: [{ role: 'filled-northwest-elbow', sourceStem: 'filled_nw_elbow', transform: 'none', derivation: 'none' }],
+    });
+    expect(byIndex.get(26)?.resolution).toMatchObject({
+      kind: 'approved-derivation',
+      variants: [{ role: 'filled-northeast-elbow', sourceStem: 'filled_nw_elbow', transform: 'mirror-x', derivation: 'none' }],
+    });
+    expect(byIndex.get(34)?.resolution).toMatchObject({
+      kind: 'approved-derivation',
+      variants: [{
+        role: 'filled-southeast-elbow', sourceStem: 'filled_sw_elbow', transform: 'mirror-x',
+        derivation: 'accepted-southeast-seam-filter',
+      }],
+    });
 
     const resolved = EQUAL_HEIGHT_MASK_LEDGER.entries
       .filter(({ resolution }) =>
         resolution.kind === 'direct-reuse' || resolution.kind === 'approved-derivation')
       .map(({ index }) => index);
-    expect(resolved).toEqual([0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 12]);
+    expect(resolved).toEqual([0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 16, 20, 26, 34]);
     expect(byIndex.get(5)?.resolution).toMatchObject({
       note: expect.stringContaining('explicit facing input'),
     });
@@ -153,9 +172,9 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
 
   it('keeps synthetic obligations honest after closing every authored-source gap', () => {
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
-      'direct-reuse': 5,
-      'approved-derivation': 6,
-      'synthetic-assembly': 36,
+      'direct-reuse': 7,
+      'approved-derivation': 8,
+      'synthetic-assembly': 32,
       'unresolved-authored-geometry': 0,
     });
     expect(
@@ -171,8 +190,8 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
 
     const synthetic = EQUAL_HEIGHT_MASK_LEDGER.entries
       .filter(({ resolution }) => resolution.kind === 'synthetic-assembly');
-    expect(synthetic).toHaveLength(36);
-    expect(synthetic.filter(({ topologyClass }) => topologyClass === 'filled-elbow')).toHaveLength(4);
+    expect(synthetic).toHaveLength(32);
+    expect(synthetic.filter(({ topologyClass }) => topologyClass === 'filled-elbow')).toHaveLength(0);
     expect(synthetic.filter(({ topologyClass }) => topologyClass === 't-junction')).toHaveLength(16);
     expect(synthetic.filter(({ topologyClass }) => topologyClass === 'cross-junction')).toHaveLength(16);
     for (const entry of synthetic) {
@@ -186,11 +205,11 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
     expect(
       EQUAL_HEIGHT_MASK_LEDGER.entries
         .filter(({ resolution }) => resolution.status === 'accepted-source-mapping'),
-    ).toHaveLength(11);
+    ).toHaveLength(15);
     expect(
       EQUAL_HEIGHT_MASK_LEDGER.entries
         .filter(({ resolution }) => resolution.status === 'proof-only-candidate'),
-    ).toHaveLength(36);
+    ).toHaveLength(32);
     expect(
       EQUAL_HEIGHT_MASK_LEDGER.entries
         .filter(({ resolution }) => resolution.status === 'unresolved'),
@@ -218,6 +237,10 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
       'full_exterior_corner-upper.svg',
       'transition_w_to_s-base.svg',
       'transition_w_to_s-upper.svg',
+      'filled_nw_elbow-base.svg',
+      'filled_nw_elbow-upper.svg',
+      'filled_sw_elbow-base.svg',
+      'filled_sw_elbow-upper.svg',
     ]));
   });
 

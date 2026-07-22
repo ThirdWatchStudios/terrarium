@@ -8,9 +8,9 @@
  * Every save re-validates the masters through the real A1b importer and
  * re-renders one card per stem: base / upper / composed plus the composed
  * frame at the close / normal / far review sizes on light and dark ground.
- * The open page is a current-state decision surface: the active isolated-shell
- * review first, followed by the accepted source, mapping, enclosure, and
- * working-set gates. Historical mixed-profile gates and compiler cards remain
+ * The open page is a current-state decision surface: the accepted 2x2 thick-wall
+ * source family first, followed by the other accepted source, mapping, enclosure,
+ * and working-set gates. Historical mixed-profile gates and compiler cards remain
  * available in closed disclosures.
  * Saves under low-profile-correction/ still re-render comparison evidence used
  * inside the current proof sheets.
@@ -55,6 +55,12 @@ import {
 import {
   compileA1bIsolatedShellProposalDirectory,
 } from './highOblique/a1bIsolatedShellProposal';
+import {
+  compileA1bThickWallBlockProposalDirectory,
+} from './highOblique/a1bThickWallBlockProposal';
+import {
+  EQUAL_HEIGHT_THICK_WALL_BLOCK_GATE,
+} from './highOblique/equalHeightThickWallBlockGate';
 import {
   EQUAL_HEIGHT_ISOLATED_SHELL_GATE,
   type EqualHeightIsolatedShellLayer,
@@ -106,6 +112,9 @@ const verticalTerminusProposalDirectory = (input: string): string =>
 const isolatedShellProposalDirectory = (input: string): string =>
   path.join(crossSectionProofsDirectory(input), 'isolated-shell');
 
+const thickWallBlockProposalDirectory = (input: string): string =>
+  path.join(crossSectionProofsDirectory(input), 'thick-wall-block');
+
 // The distraction-free envelope gate: one closed 3x3 wall section assembled
 // only from the structural masters under review. The empty centre cell exposes
 // the walkable floor; every base is painted before every upper.
@@ -152,6 +161,8 @@ const LEGACY_LOW_SOUTHWEST_BASE_FILE = '__proof__/legacy-low-southwest-base.svg'
 const LEGACY_LOW_SOUTHWEST_UPPER_FILE = '__proof__/legacy-low-southwest-upper.svg';
 const SOUTHEAST_WORKBENCH_BASE_FILE = '__proof__/promoted-southeast-base.svg';
 const SOUTHEAST_WORKBENCH_UPPER_FILE = '__proof__/promoted-southeast-upper.svg';
+const THICK_WALL_SOUTHEAST_BASE_FILE = '__proof__/filled-southeast-base.svg';
+const THICK_WALL_SOUTHEAST_UPPER_FILE = '__proof__/filled-southeast-upper.svg';
 const EMPTY_WORKBENCH_FILE = '__proof__/empty.svg';
 const EMPTY_WORKBENCH_SOURCE = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128"></svg>';
 const SOUTHWEST_REVIEW_FILE_OVERRIDES: CompositionFileOverrides = {
@@ -580,6 +591,7 @@ async function render(
   await renderFullHeightSouthwestProof(options);
   await renderFullHeightSoutheastProof(options);
   await renderEqualHeightCorridorGate(options);
+  await renderEqualHeightThickWallBlockGate(options, root);
   await renderEqualHeightIsolatedShellGate(options, root);
   await renderEqualHeightVerticalTerminusGate(options, root);
   await renderEqualHeightHorizontalTerminusGate(options);
@@ -595,6 +607,7 @@ async function render(
     roomRenderedAt: renderedAt,
     ladderRenderedAt: renderedAt,
     focusRenderedAt: renderedAt,
+    thickWallBlockRenderedAt: renderedAt,
     isolatedShellRenderedAt: renderedAt,
     verticalTerminusRenderedAt: renderedAt,
     terminusRenderedAt: renderedAt,
@@ -656,6 +669,32 @@ async function isolatedShellProposalFileOverrides(
   return Object.fromEntries([
     [EMPTY_WORKBENCH_FILE, EMPTY_WORKBENCH_SOURCE],
     ...compiled.map(({ filename, content }) => [filename, content] as const),
+  ]);
+}
+
+async function thickWallBlockProposalFileOverrides(
+  options: CliOptions,
+  root: string,
+): Promise<CompositionFileOverrides> {
+  const directory = thickWallBlockProposalDirectory(options.input);
+  const compiled = await compileA1bThickWallBlockProposalDirectory({
+    inputDir: directory,
+    sourcePathPrefix: path.relative(root, directory).replaceAll(path.sep, '/'),
+  });
+  const byFilename = new Map(compiled.map((source) => [source.filename, source] as const));
+  const foregroundBase = byFilename.get('filled_sw_elbow-base.svg');
+  const foregroundUpper = byFilename.get('filled_sw_elbow-upper.svg');
+  if (!foregroundBase || !foregroundUpper) {
+    throw new Error('Thick-wall proposal compiler omitted the foreground source pair');
+  }
+  const southeast = derivePromotedSoutheastSourcePair(
+    foregroundBase.content,
+    foregroundUpper.content,
+  );
+  return Object.fromEntries([
+    ...compiled.map(({ filename, content }) => [filename, content] as const),
+    [THICK_WALL_SOUTHEAST_BASE_FILE, southeast.baseSource],
+    [THICK_WALL_SOUTHEAST_UPPER_FILE, southeast.upperSource],
   ]);
 }
 
@@ -1860,6 +1899,251 @@ async function renderEqualHeightCorridorGate(options: CliOptions): Promise<void>
   await writeFile(path.join(options.output, `${EQUAL_HEIGHT_CORRIDOR_GATE.stem}.png`), png);
 }
 
+const THICK_WALL_BLOCK_CONTROL_CELLS: readonly CompositionCell[] = [
+  [0, 0, 'full_exterior_corner-base.svg', 'full_exterior_corner-upper.svg'],
+  [
+    1,
+    0,
+    PROMOTED_NORTHEAST_CORNER.baseFile,
+    PROMOTED_NORTHEAST_CORNER.upperFile,
+    PROMOTED_NORTHEAST_CORNER.transform,
+  ],
+  [
+    0,
+    1,
+    PROMOTED_SOUTHWEST_CORNER.baseFile,
+    PROMOTED_SOUTHWEST_CORNER.upperFile,
+    PROMOTED_SOUTHWEST_CORNER.transform,
+  ],
+  [
+    1,
+    1,
+    SOUTHEAST_WORKBENCH_BASE_FILE,
+    SOUTHEAST_WORKBENCH_UPPER_FILE,
+    PROMOTED_SOUTHEAST_CORNER.transform,
+  ],
+];
+
+function thickWallBlockCandidateCells(): readonly CompositionCell[] {
+  return EQUAL_HEIGHT_THICK_WALL_BLOCK_GATE.cells.map((cell) => [
+    cell.col,
+    cell.row,
+    cell.quadrant === 'southeast' ? THICK_WALL_SOUTHEAST_BASE_FILE : cell.baseFile,
+    cell.quadrant === 'southeast' ? THICK_WALL_SOUTHEAST_UPPER_FILE : cell.upperFile,
+    cell.transform,
+  ] as CompositionCell);
+}
+
+function openElbowControlCells(): readonly CompositionCell[] {
+  return [
+    [
+      0,
+      0,
+      EQUAL_HEIGHT_VERTICAL_TERMINUS_GATE.cases[1].baseFile,
+      EQUAL_HEIGHT_VERTICAL_TERMINUS_GATE.cases[1].upperFile,
+    ],
+    [
+      0,
+      1,
+      PROMOTED_SOUTHWEST_CORNER.baseFile,
+      PROMOTED_SOUTHWEST_CORNER.upperFile,
+      PROMOTED_SOUTHWEST_CORNER.transform,
+    ],
+    [
+      1,
+      1,
+      EQUAL_HEIGHT_HORIZONTAL_TERMINUS_GATE.terminusSource.baseFile,
+      EQUAL_HEIGHT_HORIZONTAL_TERMINUS_GATE.terminusSource.upperFile,
+    ],
+  ];
+}
+
+function thickWallBlockGuideOverlay(
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  columns: 2 | 3 = 2,
+  annotate = false,
+): string {
+  const viewWidth = columns * 128;
+  const overlay: string[] = [
+    `<svg x="${x}" y="${y}" width="${width}" height="${height}" ` +
+    `viewBox="0 0 ${viewWidth} 256" preserveAspectRatio="none">`,
+  ];
+  if (annotate) {
+    overlay.push(
+      '<path d="M128 28V228 M28 128H228" fill="none" stroke="#4E7D79" stroke-width="1" stroke-dasharray="4 4" opacity="0.32"/>',
+      '<path d="M166 96H206" fill="none" stroke="#4E7D79" stroke-width="1.5"/>',
+      text(208, 100, '4 PIECES', 7, 820, '#294B3C'),
+    );
+  }
+  if (columns === 3) {
+    overlay.push(
+      '<rect x="256" y="0" width="128" height="256" fill="#FFFFFF" fill-opacity="0.07" stroke="#606A64" stroke-width="1.5" stroke-dasharray="7 5"/>',
+      text(320, 120, '1-CELL', 10, 800, MUTED, 'middle'),
+      text(320, 138, 'CLEAR AISLE', 10, 800, MUTED, 'middle'),
+    );
+  }
+  overlay.push('</svg>');
+  return overlay.join('');
+}
+
+async function thickWallBlockWindow(
+  options: CliOptions,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  fileOverrides: CompositionFileOverrides,
+  mode: 'raw-corner-reuse' | 'authored-candidate',
+  floorFill: string = A1A_PALETTE.floor,
+  columns: 2 | 3 = 2,
+  annotate = false,
+): Promise<string> {
+  const block = await compositionWindow(
+    options,
+    mode === 'raw-corner-reuse'
+      ? THICK_WALL_BLOCK_CONTROL_CELLS
+      : thickWallBlockCandidateCells(),
+    columns,
+    2,
+    x,
+    y,
+    width,
+    height,
+    fileOverrides,
+    undefined,
+    false,
+    floorFill,
+  );
+  return block + thickWallBlockGuideOverlay(x, y, width, height, columns, annotate);
+}
+
+async function renderEqualHeightThickWallBlockGate(
+  options: CliOptions,
+  root: string,
+): Promise<void> {
+  const gate = EQUAL_HEIGHT_THICK_WALL_BLOCK_GATE;
+  const width = 1600;
+  const height = 1740;
+  const panelFill = '#ECE5D5';
+  const panel = (x: number, y: number, w: number, h: number): string =>
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="14" fill="${panelFill}" ` +
+    `stroke="${INK}" stroke-width="1.5" opacity="0.96"/>`;
+  const fileOverrides: CompositionFileOverrides = {
+    ...await southeastReviewFileOverrides(options),
+    ...await verticalTerminusProposalFileOverrides(options, root),
+    ...await thickWallBlockProposalFileOverrides(options, root),
+  };
+  const parts: string[] = [
+    `<rect width="${width}" height="${height}" rx="18" fill="${PANEL}"/>`,
+    text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED 2x2 THICK-WALL FAMILY', 24, 820),
+    text(24, 68, 'Owner-accepted proof layer · two fixed-light west sources plus two approved X-mirror derivations · solid top lives in the pieces', 13, 650, MUTED),
+    text(1576, 38, 'FOUR MAPPINGS ACCEPTED', 11, 820, A1A_PALETTE.green, 'end'),
+    text(1576, 62, '7 direct · 8 derived · 32 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
+
+    panel(20, 92, 1560, 560),
+    text(44, 126, 'THE PLAYER ACTION — FILL THE OPEN CROOK', 14, 820),
+    text(44, 150, 'The old concave turn does not receive a decorative patch. The occupied cells become one two-cell-thick wall mass.', 10, 650, MUTED),
+
+    panel(20, 672, 1560, 440),
+    text(44, 706, 'WHY MASK_16 ALONE WAS THE WRONG REVIEW UNIT', 14, 820),
+    text(44, 730, 'Accepted perimeter corners remain the control. The accepted sources remove buried pocket geometry at source, so no full-block overlay is needed.', 10, 650, MUTED),
+
+    panel(20, 1132, 1560, 330),
+    text(44, 1166, 'GAME-DISTANCE + COMPACT-PLACEMENT CHECKS', 14, 820),
+    text(44, 1190, 'Judge one solid mass at 90 and 40 px per cell, on both grounds, then beside a one-cell clear aisle.', 10, 650, MUTED),
+
+    panel(20, 1482, 1560, 234),
+    text(44, 1518, 'READING CONTRACT', 14, 820),
+    text(824, 1518, 'PROOF BOUNDARY', 14, 820),
+  ];
+
+  parts.push(text(274, 184, 'A · THREE-CELL L · NE OPEN', 11, 820, MUTED, 'middle'));
+  parts.push(
+    await compositionWindow(
+      options,
+      openElbowControlCells(),
+      2,
+      2,
+      54,
+      204,
+      440,
+      400,
+      fileOverrides,
+      undefined,
+      true,
+    ),
+  );
+  parts.push(text(790, 365, 'ADD WALL', 12, 850, '#B65F4D', 'middle'));
+  parts.push('<path d="M705 382H870" fill="none" stroke="#B65F4D" stroke-width="4" stroke-linecap="round"/><path d="M870 382L848 367V397Z" fill="#B65F4D"/>');
+  parts.push(text(790, 410, 'the crook becomes occupied', 9, 700, MUTED, 'middle'));
+  parts.push(text(1126, 184, 'B · FOUR ACCEPTED SOURCE MAPPINGS · ONE TOP', 11, 820, A1A_PALETTE.green, 'middle'));
+  parts.push(await thickWallBlockWindow(options, 906, 204, 440, 400, fileOverrides, 'authored-candidate', A1A_PALETTE.floor, 2, true));
+  parts.push(text(1390, 274, '20', 10, 850, MUTED));
+  parts.push(text(1514, 274, '26', 10, 850, MUTED));
+  parts.push(text(1390, 548, '16', 10, 850, MUTED));
+  parts.push(text(1514, 548, '34', 10, 850, MUTED));
+  parts.push(text(906, 628, 'All four rows recalculate together; no literal mask_3 remains inside the completed block.', 9, 700, '#294B3C'));
+
+  parts.push(text(244, 764, 'RAW CORNER REUSE', 11, 820, '#9A493D', 'middle'));
+  parts.push(await thickWallBlockWindow(options, 54, 786, 380, 296, fileOverrides, 'raw-corner-reuse'));
+  parts.push(text(244, 1098, 'wrong: four inward faces survive', 9, 750, '#9A493D', 'middle'));
+  parts.push(text(704, 764, 'ACCEPTED AUTHORED FAMILY', 11, 820, A1A_PALETTE.green, 'middle'));
+  parts.push(await thickWallBlockWindow(options, 514, 786, 380, 296, fileOverrides, 'authored-candidate'));
+  parts.push(text(704, 1098, 'source truth: the inner return is gone', 9, 750, '#294B3C', 'middle'));
+  parts.push(text(980, 800, 'THE CHANGE', 10, 850, '#B65F4D'));
+  parts.push(text(980, 838, '• preserve the accepted outside silhouette', 10, 700, INK));
+  parts.push(text(980, 874, '• suppress buried coral / green / charcoal pocket faces', 10, 700, INK));
+  parts.push(text(980, 910, '• continue one cream wall-top plane through the center', 10, 700, INK));
+  parts.push(text(980, 946, '• restore the south-facing cream material shade above coral', 10, 700, INK));
+  parts.push(text(980, 982, '• keep the tri-tone frontage as the foreground owner', 10, 700, INK));
+  parts.push(text(980, 1030, 'mask_20 + mask_16 are accepted direct fixed-light proof sources.', 9, 700, MUTED));
+  parts.push(text(980, 1058, 'mask_26 + mask_34 are accepted X mirrors; mask_34 keeps the southeast seam filter.', 9, 700, MUTED));
+
+  const distanceChecks: ReadonlyArray<readonly [number, number, number, string, string]> = [
+    [54, 1220, 180, A1A_PALETTE.floor, '90 PX / CELL · LIGHT'],
+    [264, 1220, 180, A1A_PALETTE.charcoal, '90 PX / CELL · DARK'],
+    [480, 1265, 80, A1A_PALETTE.floor, '40 · LIGHT'],
+    [588, 1265, 80, A1A_PALETTE.charcoal, '40 · DARK'],
+  ];
+  for (const [x, y, size, floorFill, label] of distanceChecks) {
+    parts.push(await thickWallBlockWindow(options, x, y, size, size, fileOverrides, 'authored-candidate', floorFill));
+    parts.push(text(x + size / 2, y + size + 20, label, 8, 800, MUTED, 'middle'));
+  }
+  parts.push(text(1112, 1218, 'TWO WALL COLUMNS + ONE CLEAR AISLE', 10, 820, MUTED, 'middle'));
+  parts.push(await thickWallBlockWindow(options, 770, 1240, 684, 184, fileOverrides, 'authored-candidate', A1A_PALETTE.floor, 3));
+
+  const readingLines = [
+    'One outer silhouette; no inner service well',
+    'The former crook reads as ordinary wall top',
+    'South-facing cream material shade plus coral and green stay on the exposed face',
+    'The rule survives at 40 px per cell',
+  ];
+  for (const [index, line] of readingLines.entries()) {
+    parts.push(text(44, 1556 + index * 34, `• ${line}`, 10, 700, index < 3 ? '#294B3C' : MUTED));
+  }
+  const boundaryLines: ReadonlyArray<readonly [string, string]> = [
+    ['OWNER ACCEPTED · FILLED-BLOCK FAMILY', A1A_PALETTE.green],
+    ['mask rows 16 / 20 are direct accepted sources', MUTED],
+    ['mask rows 26 / 34 are accepted mirror-X derivations', MUTED],
+    ['PROOF-LAYER LEDGER PROMOTION ONLY', '#4E7D79'],
+    ['NO EXPORT / ATLAS / SCHEMA / UNITY', '#9A493D'],
+  ];
+  for (const [index, [line, color]] of boundaryLines.entries()) {
+    parts.push(text(824, 1556 + index * 32, line, index === 0 || index >= 3 ? 10 : 9, index === 0 || index >= 3 ? 820 : 680, color));
+  }
+
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" ` +
+    `viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+  const png = new Resvg(svg, {
+    fitTo: { mode: 'width', value: width * CARD_RENDER_SCALE },
+  }).render().asPng();
+  await writeFile(path.join(options.output, `${gate.stem}.png`), png);
+}
+
 function equalHeightIsolatedShellCell(
   layer: EqualHeightIsolatedShellLayer = 'composed',
   col = 0,
@@ -1899,7 +2183,7 @@ async function renderEqualHeightIsolatedShellGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED MASK_0 ISOLATED SHELL GATE', 24, 820),
     text(24, 68, 'Owner-accepted proof layer · one full-height structural housing · zero cardinal sockets · no transform', 13, 650, MUTED),
     text(1576, 38, 'MASK_0 MAPPING ACCEPTED', 11, 820, A1A_PALETTE.green, 'end'),
-    text(1576, 62, '5 direct · 6 derived · 36 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
+    text(1576, 62, '7 direct · 8 derived · 32 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1120, 410),
     text(44, 126, 'ONE MOLDED HOUSING — LAYER READ AT 240 PX', 14, 820),
@@ -2101,7 +2385,7 @@ async function renderEqualHeightVerticalTerminusGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED VERTICAL TERMINUS GATE', 24, 820),
     text(24, 68, 'Owner-accepted proof layer · two authored wall rollovers · west source + east mirror-X derivation', 13, 650, MUTED),
     text(1976, 38, 'MASK_1 + MASK_4 MAPPING ACCEPTED', 11, 820, A1A_PALETTE.green, 'end'),
-    text(1976, 62, '5 direct · 6 derived · 36 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
+    text(1976, 62, '7 direct · 8 derived · 32 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
   ];
 
   const isolated: ReadonlyArray<readonly [1 | 4, EqualHeightVerticalTerminusWallSide]> = [
@@ -2630,13 +2914,20 @@ function equalHeightMaskSchematic(
 }
 
 function maskVariantCell(variant: EqualHeightMaskSourceVariant): CompositionCell {
+  const usesThickWallSoutheastFilter =
+    variant.sourceStem === 'filled_sw_elbow' &&
+    variant.derivation === 'accepted-southeast-seam-filter';
   return [
     0,
     0,
-    variant.derivation === 'accepted-southeast-seam-filter'
+    usesThickWallSoutheastFilter
+      ? THICK_WALL_SOUTHEAST_BASE_FILE
+      : variant.derivation === 'accepted-southeast-seam-filter'
       ? SOUTHEAST_WORKBENCH_BASE_FILE
       : variant.baseFile,
-    variant.derivation === 'accepted-southeast-seam-filter'
+    usesThickWallSoutheastFilter
+      ? THICK_WALL_SOUTHEAST_UPPER_FILE
+      : variant.derivation === 'accepted-southeast-seam-filter'
       ? SOUTHEAST_WORKBENCH_UPPER_FILE
       : variant.upperFile,
     variant.transform,
@@ -2703,9 +2994,12 @@ function equalHeightMaskSourceLabel(entry: EqualHeightMaskLedgerEntry): string {
 function equalHeightMaskOperationLabel(entry: EqualHeightMaskLedgerEntry): string {
   if (entry.resolution.kind === 'direct-reuse') return 'exact accepted source';
   if (entry.resolution.kind === 'approved-derivation') {
+    if (entry.resolution.variants.some(({ derivation }) =>
+      derivation === 'accepted-southeast-seam-filter')) {
+      return 'mirror-X + SE seam filter';
+    }
     return entry.index === 5 ? 'facing input: W direct / E mirror' :
-      entry.index === 9 ? 'mirror-X + SE seam filter' :
-        entry.index === 2 ? 'accepted horizontal mirror-X' : 'approved mirror-X';
+      entry.index === 2 ? 'accepted horizontal mirror-X' : 'approved mirror-X';
   }
   if (entry.resolution.kind === 'synthetic-assembly') {
     return entry.topologyClass === 'filled-elbow' ? 'synthetic solid closure' :
@@ -2731,6 +3025,7 @@ async function renderEqualHeightMaskLedger(options: CliOptions, root: string): P
     ...await southeastReviewFileOverrides(options),
     ...await isolatedShellProposalFileOverrides(options, root),
     ...await verticalTerminusProposalFileOverrides(options, root),
+    ...await thickWallBlockProposalFileOverrides(options, root),
   };
   const parts: string[] = [
     '<defs>' +
@@ -2835,16 +3130,14 @@ async function renderEqualHeightMaskLedger(options: CliOptions, root: string): P
   parts.push(text(railX + 24, gridY + 706, 'RESOLVED SOURCE REPRESENTATIVES', 14, 850));
   const resolvedLines = [
     'mask_0 · isolated shell · direct source',
-    'mask_1 · S end · W source / E mirror-X',
-    'mask_2 · W cap · mirror-X',
-    'mask_3 · SW molded source',
-    'mask_4 · N end · W source / E mirror-X',
+    'mask_1 / 4 · vertical ends · W sources / E mirrors',
+    'mask_2 / 8 · horizontal caps · mirror / direct',
+    'mask_3 / 6 · perimeter corners · direct sources',
+    'mask_9 / 12 · perimeter corners · approved mirrors',
     'mask_5 · W direct / E mirror-X + facing',
-    'mask_6 · NW exterior source',
-    'mask_8 · E cap · direct source',
-    'mask_9 · SE mirror-X + seam filter',
     'mask_10 · shared north / south source',
-    'mask_12 · NE mirror-X',
+    'mask_16 / 20 · filled elbows · direct sources',
+    'mask_26 / 34 · filled elbows · mirror-X',
   ];
   for (const [index, line] of resolvedLines.entries()) {
     parts.push(text(railX + 24, gridY + 732 + index * 18, line, 11, 700, index % 2 === 0 ? '#294B3C' : '#4E7D79'));
@@ -2871,9 +3164,10 @@ async function renderEqualHeightMaskLedger(options: CliOptions, root: string): P
   parts.push(text(railX + 24, gridY + 1282, 'mask_0 · accepted fixed-view isolated shell', 11, 750, A1A_PALETTE.green));
   parts.push(text(railX + 24, gridY + 1310, 'mask_1 / 4 are accepted as separately authored vertical ends.', 11, 650, MUTED));
   parts.push(text(railX + 24, gridY + 1332, 'mask_8 direct and mask_2 mirror-X remain the horizontal pair.', 11, 650, MUTED));
+  parts.push(text(railX + 24, gridY + 1354, 'mask_16 / 20 direct and mask_26 / 34 mirror-X form the filled-elbow family.', 11, 650, MUTED));
 
   parts.push(text(railX + 24, gridY + 1386, 'SYNTHETIC OBLIGATION', 14, 850, '#7B715F'));
-  parts.push(text(railX + 24, gridY + 1414, '4 solid elbows · accepted outer law + synthetic closure', 11, 700, MUTED));
+  parts.push(text(railX + 24, gridY + 1414, '0 solid elbows · all four now have accepted proof sources', 11, 700, MUTED));
   parts.push(text(railX + 24, gridY + 1436, '16 T cases · accepted sockets/pockets + new local hub/caps', 11, 700, MUTED));
   parts.push(text(railX + 24, gridY + 1458, '16 cross cases · accepted pockets + new four-way hub', 11, 700, MUTED));
   parts.push(text(railX + 24, gridY + 1486, 'Hatched previews are topology diagrams, never proposed final art.', 11, 750, '#7B715F'));
@@ -2896,7 +3190,7 @@ async function renderEqualHeightMaskLedger(options: CliOptions, root: string): P
   parts.push(text(railX + 42, gridY + 1810, '✓ accepted source provenance only', 11, 700, '#9FC7A9'));
   parts.push(text(railX + 42, gridY + 1836, '✓ no low-profile or historical topology pixels', 11, 700, '#9FC7A9'));
   parts.push(text(railX + 42, gridY + 1862, '✓ 0 authored geometry gaps remain', 11, 750, '#9FC7A9'));
-  parts.push(text(railX + 42, gridY + 1888, '! 36 synthetic cases are diagrams, not accepted art', 11, 750, '#E0836E'));
+  parts.push(text(railX + 42, gridY + 1888, '! 32 synthetic cases are diagrams, not accepted art', 11, 750, '#E0836E'));
   parts.push(text(railX + 42, gridY + 1918, 'No further proof or production registration is implied.', 11, 800, '#83A9A6'));
 
   const svg =
@@ -3356,6 +3650,7 @@ async function renderContextMocksSafely(options: CliOptions, root: string): Prom
     await renderFullHeightSouthwestProof(options);
     await renderFullHeightSoutheastProof(options);
     await renderEqualHeightCorridorGate(options);
+    await renderEqualHeightThickWallBlockGate(options, root);
     await renderEqualHeightIsolatedShellGate(options, root);
     await renderEqualHeightVerticalTerminusGate(options, root);
     await renderEqualHeightHorizontalTerminusGate(options);
@@ -3370,6 +3665,7 @@ async function renderContextMocksSafely(options: CliOptions, root: string): Prom
     status.roomRenderedAt = renderedAt;
     status.ladderRenderedAt = renderedAt;
     status.focusRenderedAt = renderedAt;
+    status.thickWallBlockRenderedAt = renderedAt;
     status.isolatedShellRenderedAt = renderedAt;
     status.verticalTerminusRenderedAt = renderedAt;
     status.terminusRenderedAt = renderedAt;
@@ -3537,7 +3833,8 @@ async function main(): Promise<void> {
       const normalizedProofFile = fileName.replaceAll(path.sep, '/');
       if (
         normalizedProofFile.startsWith('vertical-terminus/') ||
-        normalizedProofFile.startsWith('isolated-shell/')
+        normalizedProofFile.startsWith('isolated-shell/') ||
+        normalizedProofFile.startsWith('thick-wall-block/')
       ) {
         lastRoomFile = fileName;
         roomRenderPending = true;

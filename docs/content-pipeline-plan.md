@@ -37,8 +37,8 @@ changes the export contract except where explicitly flagged (floor variants).
 > approved partition family. This decision still changes no production template, topology, exporter, schema,
 > or Unity contract.
 > **Current mapping and source-gate result, 2026-07-22:** the owner accepted the proof-layer 47-mask
-> ledger structure plus the horizontal, vertical, and isolated-shell slices. The ledger now records five direct source mappings, six
-> approved derivations, 36 synthetic assembly candidates, and zero authored-geometry gaps. `mask_8`
+> ledger structure plus the horizontal, vertical, isolated-shell, and filled-elbow slices. The ledger now records seven direct source mappings, eight
+> approved derivations, 32 synthetic assembly candidates, and zero authored-geometry gaps. `mask_8`
 > directly reuses the socket-polished `full_terminus` pair and `mask_2` uses its accepted whole-cell X mirror;
 > both passed at 90/40 px in 1/3/6-cell contexts. This is not acceptance of the synthetic candidate pixels or a
 > production atlas. `mask_1` and `mask_4` use separately authored vertical rollovers plus accepted east mirror-X
@@ -52,6 +52,10 @@ changes the export contract except where explicitly flagged (floor variants).
 > **Accepted isolated-shell slice, 2026-07-22:** one external base/upper pair passed its 240/90/40 px,
 > contained-boundary, light/dark-ground, and compact-placement evidence. Acceptance records direct proof-layer
 > provenance for `mask_0` only; it does not register or export a production frame.
+> **Accepted filled-elbow slice, 2026-07-22:** direct external proof sources for `mask_16`/`mask_20` and
+> approved X-mirror derivations for `mask_26`/`mask_34` passed as one continuous 2×2 wall mass at 240/90/40 px,
+> on light/dark grounds and beside a clear aisle. Acceptance records proof-layer provenance only; exporter,
+> atlas, schema, and Unity surfaces remain unchanged.
 
 ---
 

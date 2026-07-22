@@ -340,9 +340,9 @@ describe('QuotaCo owner-accepted proof-layer equal-height vertical terminus fami
     expect(() => validateEqualHeightVerticalTerminusGate(rotated)).toThrow(/proof-only production boundary/);
     validateEqualHeightVerticalTerminusGate();
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
-      'direct-reuse': 5,
-      'approved-derivation': 6,
-      'synthetic-assembly': 36,
+      'direct-reuse': 7,
+      'approved-derivation': 8,
+      'synthetic-assembly': 32,
       'unresolved-authored-geometry': 0,
     });
     expect(EQUAL_HEIGHT_MASK_LEDGER.entries
