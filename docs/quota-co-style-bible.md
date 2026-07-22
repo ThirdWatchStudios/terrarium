@@ -26,9 +26,9 @@
 > **Current system-gate amendment (owner approval, 2026-07-21):** the accepted sources close a 3×8 equal-height
 > perimeter around a 1×6 clear aisle at 90 and 40 px per cell. All four turns, one-cell horizontal bodies, and
 > six-cell side runs read as one manufactured enclosure without low-profile art or a new frame identity. The
-> canonical `mask_0` through `mask_46` proof-layer mapping is also accepted: three direct, three derived, 36
-> synthetic candidates, and five explicit gaps. The synthetic candidates are not accepted art. The next
-> authorized artifact is the horizontal terminus pair only; production topology, registration, export,
+> canonical `mask_0` through `mask_46` proof-layer mapping and horizontal terminus pair are also accepted: four
+> direct, four derived, 36 synthetic candidates, and three explicit gaps. `mask_8` is direct and `mask_2` is
+> the accepted whole-cell X mirror. The synthetic candidates are not accepted art; production topology, registration, export,
 > `CONTRACT.md`, schema, committed atlases, and Unity remain deferred.
 
 The point of this page: the QuotaCo look is not a talent bar, it is a **closed grammar** — nine paints, two
@@ -83,10 +83,12 @@ expanding the grammar.
   west/east body runs are six cells, and every join uses only the accepted source/reuse/derivation contracts.
   This is the minimum composition regression gate for any later 47-mask synthetic proof.
 - Accepted mapping law (owner acceptance, 2026-07-21): preserve the canonical 47-mask order and its explicit
-  resolution split—3 direct reuse, 3 approved derivation, 36 proof-only synthetic assembly, 5 unresolved.
+  resolution split—4 direct reuse, 4 approved derivation, 36 proof-only synthetic assembly, 3 unresolved.
   Mapping acceptance is not sprite or atlas acceptance. Advance one unresolved geometry family at a time.
-  First, prove `mask_8` direct and `mask_2` mirror-X as horizontal termini; leave `mask_1`/`mask_4` unresolved
-  and never rotate the horizontal source into those vertical facings.
+- Accepted horizontal terminus law (owner acceptance, 2026-07-21): `mask_8` directly reuses the
+  socket-polished `full_terminus` pair and `mask_2` reuses it through a whole-cell mirror around `x=64`.
+  Base, upper, and composed ingress match the horizontal straight exactly through source `x<96`; the compact
+  molded cap remains local. Leave `mask_1`/`mask_4` unresolved and never rotate this source into those facings.
 - Vertical profiles (current kit law): ordinary walls occupy one **64-unit outer profile**.
   `base` and `upper` are technical paint passes, not two finished products: draw base first, then upper at
   the same centered pivot, and judge only their composed silhouette. The former **38-unit outer profile
@@ -94,8 +96,8 @@ expanding the grammar.
 - Shallow **south (front) and east (side) faces** are authored into the sprite. Tops read lightest, vertical
   faces step darker, recesses darkest — that is a *material cue*, not a sun.
 - **Never rotate a directional frame to manufacture another facing.** A source-reuse mirror is allowed only
-  when the facing contract explicitly approves it; the accepted full-height east and northeast mirrors plus
-  the southeast mirror with its named seam filter are the explicit approved cases.
+  when the facing contract explicitly approves it; the accepted full-height east and northeast mirrors, the
+  southeast mirror with its named seam filter, and the horizontal `mask_2` terminus mirror are the explicit cases.
 - Paths may meet the canvas edge only as intentional connected-wall seams.
 - Draw on integer or half-unit coordinates. The existing masters are almost entirely `h`/`v` runs plus
   quarter-circle arcs — if you are sculpting freeform béziers, you are probably off-style.
@@ -218,8 +220,9 @@ be automated.
 3. Paint only with §2 swatches; shade only with §4 steps.
 4. Keep `npm run style:watch` running (§10) — every save re-validates through the real importer and
    re-renders base/upper/composed plus the distance proof, on light and dark ground. The open bench page is a
-   **current-state decision surface**: the accepted 3×8 corridor and 47-mask ledger are system baselines,
-   accepted pieces remain the comparison set, and the horizontal terminus pair is the next proof. Earlier low-profile
+   **current-state decision surface**: the accepted horizontal termini, 3×8 corridor, and 47-mask ledger are
+   system baselines, accepted pieces remain the comparison set, and the vertical terminus pair is the recommended
+   next bounded proof pending owner authorization. Earlier low-profile
    comparisons, mixed-profile room/envelope gates, and importer cards remain available only in closed,
    explicitly archived disclosures. They must never read as the current target.
 5. Gate every wall batch against the five-sheet primary wall target and the real contact sheet; use the golden

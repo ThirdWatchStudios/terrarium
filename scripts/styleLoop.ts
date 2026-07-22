@@ -8,9 +8,9 @@
  * Every save re-validates the masters through the real A1b importer and
  * re-renders one card per stem: base / upper / composed plus the composed
  * frame at the close / normal / far review sizes on light and dark ground.
- * The open page is a current-state decision surface: the accepted 47-mask
- * mapping first, then the accepted equal-height enclosure and working
- * contracts. Its synthetic diagrams remain proof-only. Historical mixed-profile gates and
+ * The open page is a current-state decision surface: the accepted horizontal
+ * terminus gate first, then the accepted 47-mask mapping, equal-height
+ * enclosure, and working contracts. Historical mixed-profile gates and
  * compiler cards remain available in closed disclosures.
  * Saves under low-profile-correction/ still re-render comparison evidence used
  * inside the current proof sheets.
@@ -44,6 +44,11 @@ import {
   EQUAL_HEIGHT_CORRIDOR_GATE,
   type EqualHeightCorridorCell,
 } from './highOblique/equalHeightCorridorGate';
+import {
+  EQUAL_HEIGHT_HORIZONTAL_TERMINUS_GATE,
+  equalHeightHorizontalTerminusRun,
+  type EqualHeightHorizontalTerminusLayer,
+} from './highOblique/equalHeightHorizontalTerminusGate';
 import {
   EQUAL_HEIGHT_MASK_LEDGER,
   equalHeightMaskContactDescriptor,
@@ -124,6 +129,8 @@ const LEGACY_LOW_SOUTHWEST_BASE_FILE = '__proof__/legacy-low-southwest-base.svg'
 const LEGACY_LOW_SOUTHWEST_UPPER_FILE = '__proof__/legacy-low-southwest-upper.svg';
 const SOUTHEAST_WORKBENCH_BASE_FILE = '__proof__/promoted-southeast-base.svg';
 const SOUTHEAST_WORKBENCH_UPPER_FILE = '__proof__/promoted-southeast-upper.svg';
+const EMPTY_WORKBENCH_FILE = '__proof__/empty.svg';
+const EMPTY_WORKBENCH_SOURCE = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128"></svg>';
 const SOUTHWEST_REVIEW_FILE_OVERRIDES: CompositionFileOverrides = {
   [LEGACY_LOW_SOUTHWEST_BASE_FILE]: `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
@@ -550,6 +557,7 @@ async function render(
   await renderFullHeightSouthwestProof(options);
   await renderFullHeightSoutheastProof(options);
   await renderEqualHeightCorridorGate(options);
+  await renderEqualHeightHorizontalTerminusGate(options);
   await renderEqualHeightMaskLedger(options);
   await renderLowSoutheastCornerFocus(options, root);
   const renderedAt = new Date().toISOString();
@@ -562,6 +570,7 @@ async function render(
     roomRenderedAt: renderedAt,
     ladderRenderedAt: renderedAt,
     focusRenderedAt: renderedAt,
+    terminusRenderedAt: renderedAt,
     mappingRenderedAt: renderedAt,
     corridorRenderedAt: renderedAt,
   };
@@ -771,6 +780,37 @@ function terminusRunCells(bodyLength: number): CompositionCell[] {
     ),
     [bodyLength, 0, 'full_terminus-base.svg', 'full_terminus-upper.svg'],
   ];
+}
+
+function equalHeightHorizontalTerminusRunCells(
+  index: 2 | 8,
+  bodyLength: 1 | 3 | 6,
+  layer: EqualHeightHorizontalTerminusLayer = 'composed',
+): CompositionCell[] {
+  return equalHeightHorizontalTerminusRun(index, bodyLength).map((cell) => {
+    if (layer === 'base') {
+      return [cell.position, 0, cell.baseFile, null, cell.transform] as CompositionCell;
+    }
+    if (layer === 'upper') {
+      return [cell.position, 0, EMPTY_WORKBENCH_FILE, cell.upperFile, cell.transform] as CompositionCell;
+    }
+    return [cell.position, 0, cell.baseFile, cell.upperFile, cell.transform] as CompositionCell;
+  });
+}
+
+function equalHeightHorizontalTerminusCell(
+  index: 2 | 8,
+  layer: EqualHeightHorizontalTerminusLayer = 'composed',
+): CompositionCell[] {
+  const gate = EQUAL_HEIGHT_HORIZONTAL_TERMINUS_GATE;
+  const transform: EqualHeightWallTransform = index === 8 ? 'none' : 'mirror-x';
+  if (layer === 'base') {
+    return [[0, 0, gate.terminusSource.baseFile, null, transform]];
+  }
+  if (layer === 'upper') {
+    return [[0, 0, EMPTY_WORKBENCH_FILE, gate.terminusSource.upperFile, transform]];
+  }
+  return [[0, 0, gate.terminusSource.baseFile, gate.terminusSource.upperFile, transform]];
 }
 
 function transitionWestSouthInstalledCells(length: number): CompositionCell[] {
@@ -1650,7 +1690,7 @@ async function renderEqualHeightCorridorGate(options: CliOptions): Promise<void>
     text(1080, 902, '• mirrored southeast adds no duplicate service tick', 11, 650, MUTED),
     text(1080, 932, '• no low-profile source or new frame identity is present', 11, 650, MUTED),
     text(624, 1000, 'ACCEPTED BASELINE', 11, 800, MUTED),
-    text(624, 1028, '47-mask mapping accepted · horizontal terminus proof next.', 12, 750, A1A_PALETTE.green),
+    text(624, 1028, 'Horizontal termini accepted · three authored geometry gaps remain.', 12, 750, A1A_PALETTE.green),
   ];
 
   parts.push(
@@ -1717,6 +1757,190 @@ async function renderEqualHeightCorridorGate(options: CliOptions): Promise<void>
     fitTo: { mode: 'width', value: width * CARD_RENDER_SCALE },
   }).render().asPng();
   await writeFile(path.join(options.output, `${EQUAL_HEIGHT_CORRIDOR_GATE.stem}.png`), png);
+}
+
+async function renderEqualHeightHorizontalTerminusGate(options: CliOptions): Promise<void> {
+  const gate = EQUAL_HEIGHT_HORIZONTAL_TERMINUS_GATE;
+  const width = 1800;
+  const height = 1600;
+  const panelFill = '#ECE5D5';
+  const panel = (x: number, y: number, w: number, h: number): string =>
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="14" fill="${panelFill}" ` +
+    `stroke="${INK}" stroke-width="1.5" opacity="0.96"/>`;
+  const fileOverrides: CompositionFileOverrides = {
+    [EMPTY_WORKBENCH_FILE]: EMPTY_WORKBENCH_SOURCE,
+  };
+  const parts: string[] = [
+    `<rect width="${width}" height="${height}" rx="18" fill="${PANEL}"/>`,
+    text(24, 36, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED HORIZONTAL TERMINUS GATE', 23, 820),
+    text(24, 64, 'Owner-accepted proof-layer source · mask_8 direct · mask_2 whole-cell mirror-X', 13, 650, MUTED),
+    text(1776, 36, 'MASK_8 + MASK_2 MAPPING ACCEPTED', 11, 820, A1A_PALETTE.green, 'end'),
+    text(1776, 60, 'No rotation · no second source · no production registration', 10, 700, MUTED, 'end'),
+    panel(20, 92, 870, 354),
+    panel(910, 92, 870, 354),
+    panel(20, 466, 870, 524),
+    panel(910, 466, 870, 524),
+    panel(20, 1010, 1120, 566),
+    panel(1160, 1010, 620, 566),
+    text(44, 126, 'MASK_8 · CONNECTED W · CAP E', 15, 820),
+    text(44, 150, 'Accepted direct reuse · existing full_terminus pair · transform none', 11, 650, MUTED),
+    text(934, 126, 'MASK_2 · CONNECTED E · CAP W', 15, 820),
+    text(934, 150, 'Accepted derivation · same pair · matrix(-1 0 0 1 128 0)', 11, 650, MUTED),
+    text(350, 184, '90 PX', 10, 800, MUTED, 'middle'),
+    text(520, 246, '40 PX', 10, 800, MUTED, 'middle'),
+    text(1240, 184, '90 PX', 10, 800, MUTED, 'middle'),
+    text(1410, 246, '40 PX', 10, 800, MUTED, 'middle'),
+    text(604, 212, 'MOLDED END, NOT A PATCH', 12, 820, A1A_PALETTE.green),
+    text(604, 240, '• cap owns only the exposed end', 11, 650, MUTED),
+    text(604, 266, '• incoming wall strata stay unchanged', 11, 650, MUTED),
+    text(604, 292, '• post remains substantial at 40 px', 11, 650, MUTED),
+    text(1494, 212, 'WHOLE-CELL MIRROR', 12, 820, '#4E7D79'),
+    text(1494, 240, '• identical mass and centred pivot', 11, 650, MUTED),
+    text(1494, 266, '• no new stem or frame identity', 11, 650, MUTED),
+    text(1494, 292, '• fixed-light polish judged here', 11, 650, MUTED),
+    text(44, 500, 'MASK_8 INSTALLED · BODY → CAP', 14, 820),
+    text(44, 524, '1 / 3 / 6 body cells at 90 px; the compact strip repeats all three at 40 px.', 11, 650, MUTED),
+    text(934, 500, 'MASK_2 INSTALLED · CAP → BODY', 14, 820),
+    text(934, 524, 'The terminus mirrors; the accepted horizontal body source does not rotate.', 11, 650, MUTED),
+    text(44, 1044, 'SOCKET AUDIT · BASE / UPPER / COMPOSED', 14, 820),
+    text(44, 1068, 'Each crop straddles the tile boundary. The first 96 source units inherit the accepted straight exactly.', 11, 650, MUTED),
+    text(1184, 1044, 'CAP SILHOUETTE + DEFERRALS', 14, 820),
+    text(1184, 1068, 'The local molded end stays intact while only its incoming socket changes.', 11, 650, MUTED),
+  ];
+
+  parts.push(
+    await compositionWindow(options, equalHeightHorizontalTerminusCell(8), 1, 1, 64, 170, 240, 240),
+    await compositionWindow(options, equalHeightHorizontalTerminusCell(8), 1, 1, 350, 200, 90, 90),
+    await compositionWindow(options, equalHeightHorizontalTerminusCell(8), 1, 1, 500, 260, 40, 40),
+    await compositionWindow(options, equalHeightHorizontalTerminusCell(2), 1, 1, 954, 170, 240, 240),
+    await compositionWindow(options, equalHeightHorizontalTerminusCell(2), 1, 1, 1240, 200, 90, 90),
+    await compositionWindow(options, equalHeightHorizontalTerminusCell(2), 1, 1, 1390, 260, 40, 40),
+  );
+
+  for (const [panelIndex, maskIndex] of ([8, 2] as const).entries()) {
+    const panelX = panelIndex === 0 ? 20 : 910;
+    for (const [row, bodyLength] of gate.bodyRunLengths.entries()) {
+      const runWidth = (bodyLength + 1) * 90;
+      const runX = panelX + 190;
+      const runY = 548 + row * 112;
+      parts.push(text(panelX + 62, runY + 52, `${bodyLength} BODY`, 10, 820, MUTED, 'middle'));
+      parts.push(
+        await compositionWindow(
+          options,
+          equalHeightHorizontalTerminusRunCells(maskIndex, bodyLength),
+          bodyLength + 1,
+          1,
+          runX,
+          runY,
+          runWidth,
+          90,
+        ),
+      );
+    }
+    parts.push(text(panelX + 48, 930, '40 PX', 10, 820, MUTED));
+    let compactX = panelX + 118;
+    for (const bodyLength of gate.bodyRunLengths) {
+      const compactWidth = (bodyLength + 1) * 40;
+      parts.push(
+        await compositionWindow(
+          options,
+          equalHeightHorizontalTerminusRunCells(maskIndex, bodyLength),
+          bodyLength + 1,
+          1,
+          compactX,
+          908,
+          compactWidth,
+          40,
+          {},
+          undefined,
+          false,
+        ),
+      );
+      parts.push(text(compactX + compactWidth / 2, 968, `${bodyLength}`, 9, 800, MUTED, 'middle'));
+      compactX += compactWidth + 28;
+    }
+  }
+
+  const cropLayers = gate.socketAuditLayers;
+  for (const [layerIndex, layer] of cropLayers.entries()) {
+    const groupX = 48 + layerIndex * 354;
+    parts.push(text(groupX + 150, 1104, layer.toUpperCase(), 11, 820, MUTED, 'middle'));
+    for (const [facingIndex, maskIndex] of ([8, 2] as const).entries()) {
+      const cropX = groupX + facingIndex * 160;
+      parts.push(text(cropX + 60, 1124, maskIndex === 8 ? 'DIRECT' : 'MIRROR', 9, 800, maskIndex === 8 ? A1A_PALETTE.green : '#4E7D79', 'middle'));
+      parts.push(
+        await compositionWindow(
+          options,
+          equalHeightHorizontalTerminusRunCells(maskIndex, 1, layer),
+          2,
+          1,
+          cropX,
+          1136,
+          120,
+          150,
+          fileOverrides,
+          '96 48 64 80',
+          true,
+        ),
+      );
+      parts.push(
+        `<path d="M${cropX + 60} 1136V1286" fill="none" stroke="${A1A_PALETTE.coral}" ` +
+        'stroke-width="1.5" stroke-dasharray="6 5" opacity="0.8"/>',
+      );
+    }
+  }
+  parts.push(text(44, 1324, 'PASS · base, upper, and composed sockets match the accepted horizontal ingress at 4× raster precision.', 11, 760, A1A_PALETTE.green));
+  parts.push(text(44, 1352, 'The body cell owns its normal module seam; the terminus adds no rounded cap, dark bar, or alpha crack at the join.', 11, 650, MUTED));
+  parts.push(text(44, 1396, 'ACCEPTED CHECKS', 11, 820, A1A_PALETTE.green));
+  parts.push(text(44, 1422, 'One body cell: the end remains a catalog terminal without swallowing the wall.', 11, 650, MUTED));
+  parts.push(text(44, 1448, 'Six body cells: the cap ends the module rhythm without becoming an appliance.', 11, 650, MUTED));
+  parts.push(text(44, 1474, 'At 40 px: direct and mirrored facings remain legible from silhouette alone.', 11, 650, MUTED));
+  parts.push(text(44, 1526, 'ACCEPTED PROOF-LAYER MAPPING · mask_8 and mask_2 only; no other ledger row moves.', 11, 820, A1A_PALETTE.green));
+
+  parts.push(
+    await compositionWindow(
+      options,
+      equalHeightHorizontalTerminusCell(8),
+      1,
+      1,
+      1210,
+      1100,
+      144,
+      240,
+      {},
+      '72 48 48 80',
+      false,
+    ),
+    await compositionWindow(
+      options,
+      equalHeightHorizontalTerminusCell(2),
+      1,
+      1,
+      1400,
+      1100,
+      144,
+      240,
+      {},
+      '8 48 48 80',
+      false,
+    ),
+  );
+  parts.push(text(1282, 1360, 'CAP E', 10, 820, A1A_PALETTE.green, 'middle'));
+  parts.push(text(1472, 1360, 'CAP W', 10, 820, '#4E7D79', 'middle'));
+  parts.push(text(1184, 1404, 'VERTICAL ENDS STAY UNRESOLVED', 11, 820, MUTED));
+  parts.push(text(1184, 1432, 'mask_1 · CONNECTED N · no candidate art', 11, 700, '#9A493D'));
+  parts.push(text(1184, 1458, 'mask_4 · CONNECTED S · no candidate art', 11, 700, '#9A493D'));
+  parts.push(text(1184, 1494, 'A 90° rotation would invent the wrong plane law.', 11, 650, MUTED));
+  parts.push(text(1184, 1520, 'Isolated mask_0 also remains a separate product decision.', 11, 650, MUTED));
+  parts.push(text(1184, 1552, 'No export · no atlas · no schema · no Unity mutation', 10, 820, MUTED));
+
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" ` +
+    `viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+  const png = new Resvg(svg, {
+    fitTo: { mode: 'width', value: width * CARD_RENDER_SCALE },
+  }).render().asPng();
+  await writeFile(path.join(options.output, `${gate.stem}.png`), png);
 }
 
 const MASK_RESOLUTION_STYLE: Readonly<Record<EqualHeightMaskResolutionKind, {
@@ -1864,6 +2088,7 @@ function equalHeightMaskSourceLabel(entry: EqualHeightMaskLedgerEntry): string {
   const roles = [...new Set(variants.map((variant) => variant.role
     .replace('-corner', '')
     .replace('-wall', '')
+    .replace('-cap-terminus', ' cap')
     .replace('north-or-south', 'north/south')))].join(' + ');
   return roles.length > 29 ? `${roles.slice(0, 28)}…` : roles;
 }
@@ -1872,7 +2097,8 @@ function equalHeightMaskOperationLabel(entry: EqualHeightMaskLedgerEntry): strin
   if (entry.resolution.kind === 'direct-reuse') return 'exact accepted source';
   if (entry.resolution.kind === 'approved-derivation') {
     return entry.index === 5 ? 'facing input: W direct / E mirror' :
-      entry.index === 9 ? 'mirror-X + SE seam filter' : 'approved mirror-X';
+      entry.index === 9 ? 'mirror-X + SE seam filter' :
+        entry.index === 2 ? 'accepted horizontal mirror-X' : 'approved mirror-X';
   }
   if (entry.resolution.kind === 'synthetic-assembly') {
     return entry.topologyClass === 'filled-elbow' ? 'synthetic solid closure' :
@@ -1997,15 +2223,17 @@ async function renderEqualHeightMaskLedger(options: CliOptions): Promise<void> {
 
   parts.push(text(railX + 24, gridY + 706, 'RESOLVED PERIMETER REPRESENTATIVES', 14, 850));
   const resolvedLines = [
+    'mask_2 · W cap · mirror-X',
     'mask_3 · SW molded source',
     'mask_5 · W direct / E mirror-X + facing',
     'mask_6 · NW exterior source',
+    'mask_8 · E cap · direct source',
     'mask_9 · SE mirror-X + seam filter',
     'mask_10 · shared north / south source',
     'mask_12 · NE mirror-X',
   ];
   for (const [index, line] of resolvedLines.entries()) {
-    parts.push(text(railX + 24, gridY + 734 + index * 25, line, 11, 700, index % 2 === 0 ? '#294B3C' : '#4E7D79'));
+    parts.push(text(railX + 24, gridY + 734 + index * 22, line, 11, 700, index % 2 === 0 ? '#294B3C' : '#4E7D79'));
   }
 
   parts.push(text(railX + 24, gridY + 916, 'TOPOLOGY INDEX', 14, 850));
@@ -2027,9 +2255,9 @@ async function renderEqualHeightMaskLedger(options: CliOptions): Promise<void> {
 
   parts.push(text(railX + 24, gridY + 1230, 'AUTHORED-GEOMETRY GAPS', 14, 850, '#B65F4D'));
   parts.push(text(railX + 24, gridY + 1258, 'mask_0 · isolated catalog cell', 11, 750, '#B65F4D'));
-  parts.push(text(railX + 24, gridY + 1280, 'mask_1 / 2 / 4 / 8 · directional termini', 11, 750, '#B65F4D'));
-  parts.push(text(railX + 24, gridY + 1308, 'The existing full_terminus is visible evidence, but it was not', 11, 650, MUTED));
-  parts.push(text(railX + 24, gridY + 1330, 'part of the accepted corridor and its mirrors/rotations are not approved.', 11, 650, MUTED));
+  parts.push(text(railX + 24, gridY + 1280, 'mask_1 / 4 · directional vertical termini', 11, 750, '#B65F4D'));
+  parts.push(text(railX + 24, gridY + 1308, 'mask_8 direct and mask_2 mirror-X are accepted horizontally.', 11, 650, MUTED));
+  parts.push(text(railX + 24, gridY + 1330, 'Their source must not be rotated into either vertical facing.', 11, 650, MUTED));
 
   parts.push(text(railX + 24, gridY + 1386, 'SYNTHETIC OBLIGATION', 14, 850, '#7B715F'));
   parts.push(text(railX + 24, gridY + 1414, '4 solid elbows · accepted outer law + synthetic closure', 11, 700, MUTED));
@@ -2054,9 +2282,9 @@ async function renderEqualHeightMaskLedger(options: CliOptions): Promise<void> {
   parts.push(text(railX + 42, gridY + 1784, '✓ canonical order: 47/47, no duplicates', 11, 700, '#9FC7A9'));
   parts.push(text(railX + 42, gridY + 1810, '✓ accepted source provenance only', 11, 700, '#9FC7A9'));
   parts.push(text(railX + 42, gridY + 1836, '✓ no low-profile or historical topology pixels', 11, 700, '#9FC7A9'));
-  parts.push(text(railX + 42, gridY + 1862, '! 5 authored geometry gaps remain visible', 11, 750, '#E0836E'));
+  parts.push(text(railX + 42, gridY + 1862, '! 3 authored geometry gaps remain visible', 11, 750, '#E0836E'));
   parts.push(text(railX + 42, gridY + 1888, '! 36 synthetic cases are diagrams, not accepted art', 11, 750, '#E0836E'));
-  parts.push(text(railX + 42, gridY + 1918, 'Approval advances focused proofs—not production registration.', 11, 800, '#83A9A6'));
+  parts.push(text(railX + 42, gridY + 1918, 'No further proof or production registration is implied.', 11, 800, '#83A9A6'));
 
   const svg =
     `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" ` +
@@ -2515,6 +2743,7 @@ async function renderContextMocksSafely(options: CliOptions, root: string): Prom
     await renderFullHeightSouthwestProof(options);
     await renderFullHeightSoutheastProof(options);
     await renderEqualHeightCorridorGate(options);
+    await renderEqualHeightHorizontalTerminusGate(options);
     await renderEqualHeightMaskLedger(options);
     await renderLowSoutheastCornerFocus(options, root);
     const statusPath = path.join(options.output, 'status.json');
@@ -2526,6 +2755,7 @@ async function renderContextMocksSafely(options: CliOptions, root: string): Prom
     status.roomRenderedAt = renderedAt;
     status.ladderRenderedAt = renderedAt;
     status.focusRenderedAt = renderedAt;
+    status.terminusRenderedAt = renderedAt;
     status.mappingRenderedAt = renderedAt;
     status.corridorRenderedAt = renderedAt;
     await writeFile(statusPath, `${JSON.stringify(status)}\n`, 'utf8');

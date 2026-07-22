@@ -28,13 +28,18 @@ and all four corners close as one enclosure.
 
 **Accepted mapping gate (owner approval, 2026-07-21):** the proof-layer ledger
 locks the unchanged canonical `mask_0` through `mask_46` order and classifies
-three direct reuses, three approved derivations, 36 synthetic assembly
-candidates, and five explicit authored-geometry gaps. This accepts the mapping
+four direct reuses, four approved derivations, 36 synthetic assembly
+candidates, and three explicit authored-geometry gaps. This accepts the mapping
 structure and provenance boundaries only. It does not accept the 36 synthetic
-assembly diagrams, resolve the five gaps, or create an atlas/production family. The next
-authorized proof is the horizontal terminus pair: test existing `mask_8` direct
-reuse and a whole-cell X-mirror candidate for `mask_2`; keep vertical ends
-`mask_1` and `mask_4` unresolved and do not rotate the source.
+assembly diagrams, resolve the three gaps, or create an atlas/production family.
+
+**Accepted horizontal terminus gate (owner approval, 2026-07-21):** `mask_8`
+directly reuses the socket-polished `full_terminus` pair (connected west, cap
+east), and `mask_2` reuses that same pair through the accepted whole-cell X
+mirror (connected east, cap west). The first 96 source units match the accepted
+horizontal body in base, upper, and composed layers; the local molded cap stays
+intact. The remaining authored gaps are isolated `mask_0` and directional
+vertical ends `mask_1`/`mask_4`. Do not rotate the horizontal source into them.
 
 The original independently finished low-base-plus-optional-upper construction was
 rejected on 2026-07-20 because its duplicate caps and contours read as one wall
@@ -122,11 +127,12 @@ automatic silhouette. White/black opacity layers are neutral face cues only.
 Terrarium owns this source art and any later palette-mask evidence. Unity owns
 composition, cutaways, sorting application, lighting, and production acceptance.
 
-Do not expand this directory into a complete 47-blob/opening source family. Mapping acceptance authorizes only
-the next named proof-only geometry slice; it does not authorize synthetic-candidate promotion, authored topology
+Do not expand this directory into a complete 47-blob/opening source family. Mapping and horizontal-terminus
+acceptance do not authorize another proof slice, synthetic-candidate promotion, authored topology
 propagation, or production files. The earlier low-east, low-southeast, and southwest full-to-low
 checkpoint remains historical directional evidence, but its low perimeter profiles and height-step corner
-are superseded for ordinary walls. South, east, northeast, southwest, and southeast are owner-accepted
-equal-height art decisions; their source reuse and mirrors remain unregistered. The southeast decision adds
+are superseded for ordinary walls. South, east, northeast, southwest,
+southeast, and the two horizontal termini are owner-accepted equal-height art
+decisions; their source reuse and mirrors remain unregistered. The southeast decision adds
 no source stem or production transform. Production registration, frame identity, exporter, `CONTRACT.md`,
 schema, committed atlas, and Unity changes remain deferred pending a separate owner decision.

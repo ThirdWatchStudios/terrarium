@@ -155,6 +155,26 @@ const eastWall: EqualHeightMaskSourceVariant = {
   facingRule: 'explicit east exterior facing; connectivity does not select this mirror',
 };
 
+const eastCapTerminus: EqualHeightMaskSourceVariant = {
+  role: 'east-cap-terminus',
+  sourceStem: 'full_terminus',
+  baseFile: 'full_terminus-base.svg',
+  upperFile: 'full_terminus-upper.svg',
+  transform: 'none',
+  derivation: 'none',
+  facingRule: 'connected west; exposed molded cap faces east',
+};
+
+const westCapTerminus: EqualHeightMaskSourceVariant = {
+  role: 'west-cap-terminus',
+  sourceStem: 'full_terminus',
+  baseFile: 'full_terminus-base.svg',
+  upperFile: 'full_terminus-upper.svg',
+  transform: 'mirror-x',
+  derivation: 'none',
+  facingRule: 'connected east; exposed molded cap faces west through the accepted whole-cell X mirror',
+};
+
 const northwestCorner: EqualHeightMaskSourceVariant = {
   role: 'northwest-corner',
   sourceStem: 'full_exterior_corner',
@@ -210,10 +230,10 @@ function topologyFor(config: WallTileConfig): EqualHeightMaskTopologyClass {
 
 function unresolvedReason(topologyClass: EqualHeightMaskTopologyClass): string {
   if (topologyClass === 'isolated') {
-    return 'No isolated-cell shell is in the accepted equal-height set; the existing terminus source was not part of the corridor gate.';
+    return 'No isolated-cell shell is in the accepted equal-height set; the accepted one-link horizontal terminus does not define a zero-link catalog product.';
   }
   if (topologyClass === 'terminus') {
-    return 'No accepted directional end treatment exists for this one-link case; revalidate the terminus family before reuse.';
+    return 'No accepted vertical directional end treatment exists for this one-link case; the horizontal source must not be rotated.';
   }
   throw new Error(`Unexpected unresolved equal-height topology ${topologyClass}`);
 }
@@ -262,6 +282,13 @@ function syntheticIngredientsFor(
 
 function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
   switch (index) {
+    case 2:
+      return {
+        kind: 'approved-derivation',
+        status: 'accepted-source-mapping',
+        variants: [westCapTerminus],
+        note: 'Accepted west-facing cap is the whole-cell mirror-X derivation of the horizontal terminus source.',
+      };
     case 3:
       return {
         kind: 'direct-reuse',
@@ -282,6 +309,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         status: 'accepted-source-mapping',
         variants: [northwestCorner],
         note: 'Accepted northwest turn matches the E+S perimeter socket exactly.',
+      };
+    case 8:
+      return {
+        kind: 'direct-reuse',
+        status: 'accepted-source-mapping',
+        variants: [eastCapTerminus],
+        note: 'Accepted horizontal terminus source matches the W-connected socket and exposes its molded cap to the east.',
       };
     case 9:
       return {
@@ -393,6 +427,8 @@ const ACCEPTED_SOURCE_VARIANTS = new Set([
   horizontalShared,
   westWall,
   eastWall,
+  eastCapTerminus,
+  westCapTerminus,
   northwestCorner,
   northeastCorner,
   southwestCorner,

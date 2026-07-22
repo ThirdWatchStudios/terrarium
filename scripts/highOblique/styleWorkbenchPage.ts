@@ -1,4 +1,5 @@
 import { EQUAL_HEIGHT_CORRIDOR_GATE } from './equalHeightCorridorGate';
+import { EQUAL_HEIGHT_HORIZONTAL_TERMINUS_GATE } from './equalHeightHorizontalTerminusGate';
 import { EQUAL_HEIGHT_MASK_LEDGER } from './equalHeightMaskLedger';
 
 export type CurrentWorkbenchBoardState = 'accepted' | 'review';
@@ -26,12 +27,6 @@ export interface AcceptedSystemGate {
   readonly alt: string;
 }
 
-export interface ActiveSystemGate {
-  readonly state: 'next';
-  readonly title: string;
-  readonly summary: string;
-}
-
 /** Owner-accepted composition proof, kept separate from wall-piece acceptance. */
 export const ACCEPTED_CORRIDOR_GATE: AcceptedSystemGate = {
   stem: EQUAL_HEIGHT_CORRIDOR_GATE.stem,
@@ -46,15 +41,17 @@ export const ACCEPTED_MAPPING_GATE: AcceptedSystemGate = {
   stem: EQUAL_HEIGHT_MASK_LEDGER.stem,
   state: 'accepted',
   title: '47-mask mapping ledger',
-  summary: 'Accepted topology map: 3 direct reuses, 3 approved derivations, 36 synthetic candidates, and 5 explicit authored-geometry gaps.',
+  summary: 'Accepted topology map: 4 direct reuses, 4 approved derivations, 36 synthetic candidates, and 3 explicit authored-geometry gaps.',
   alt: 'owner-accepted equal-height 47-mask mapping ledger with unaccepted synthetic candidates',
 };
 
-/** The next bounded proof; this does not authorize production propagation. */
-export const NEXT_SYSTEM_GATE: ActiveSystemGate = {
-  state: 'next',
+/** Owner-accepted horizontal cap source and its whole-cell mirrored facing. */
+export const ACCEPTED_HORIZONTAL_TERMINUS_GATE: AcceptedSystemGate = {
+  stem: EQUAL_HEIGHT_HORIZONTAL_TERMINUS_GATE.stem,
+  state: 'accepted',
   title: 'Horizontal terminus pair',
-  summary: 'Prove mask_8 as direct source reuse and mask_2 as its whole-cell X mirror before designing either vertical end.',
+  summary: 'Accepted mask_8 direct source and mask_2 whole-cell X mirror, proven at 90/40 px and across 1/3/6-cell runs.',
+  alt: 'owner-accepted equal-height horizontal terminus direct and mirrored source sheet',
 };
 
 /**
@@ -162,10 +159,10 @@ const archivedBoard = (board: ArchivedWorkbenchBoard): string => (
   '</figure></article>'
 );
 
-const acceptedSystemGate = (gate: AcceptedSystemGate, refreshGroup: 'mapping' | 'corridor', gateId: string): string => (
+const acceptedSystemGate = (gate: AcceptedSystemGate, refreshGroup: 'terminus' | 'mapping' | 'corridor', gateId: string): string => (
   `<section class="current-section system-accepted" aria-labelledby="accepted-${gateId}-title">` +
-  `<header class="section-copy"><h2 id="accepted-${gateId}-title">${gateId === 'mapping' ? 'Accepted system mapping' : 'Accepted system proof'}</h2>` +
-  `<p>${gateId === 'mapping' ? 'The mapping structure is locked; synthetic assembly diagrams and unresolved geometry are not accepted art.' : 'This remains the approved enclosure baseline for all subsequent wall-family proofs.'}</p></header>` +
+  `<header class="section-copy"><h2 id="accepted-${gateId}-title">${gateId === 'mapping' ? 'Accepted system mapping' : gateId === 'terminus' ? 'Accepted source gate' : 'Accepted system proof'}</h2>` +
+  `<p>${gateId === 'mapping' ? 'The mapping structure is locked; synthetic assembly diagrams and unresolved geometry are not accepted art.' : gateId === 'terminus' ? 'The horizontal source pair and its two ledger rows are locked at the proof layer; vertical ends remain a separate decision.' : 'This remains the approved enclosure baseline for all subsequent wall-family proofs.'}</p></header>` +
   `<article class="board" data-state="system-accepted" data-gate="${gateId}">` +
   '<header class="board-copy"><span class="badge">Accepted · System gate</span>' +
   `<h3>${escapeHtml(gate.title)}</h3>` +
@@ -173,16 +170,6 @@ const acceptedSystemGate = (gate: AcceptedSystemGate, refreshGroup: 'mapping' | 
   `<figure data-stem="${gate.stem}" data-refresh="${refreshGroup}">` +
   `<img src="${gate.stem}.png" alt="${escapeHtml(gate.alt)}">` +
   '</figure></article></section>'
-);
-
-const nextSystemGate = (): string => (
-  '<section class="current-section system-review" aria-labelledby="active-system-title">' +
-  '<header class="section-copy"><h2 id="active-system-title">Next proof-only decision</h2>' +
-  '<p>This is the smallest unresolved geometry slice exposed by the accepted mapping gate.</p></header>' +
-  '<article class="board" data-state="system-review" data-gate="next">' +
-  '<header class="board-copy"><span class="badge">Next · Proof only</span>' +
-  `<h3>${escapeHtml(NEXT_SYSTEM_GATE.title)}</h3>` +
-  `<p>${escapeHtml(NEXT_SYSTEM_GATE.summary)}</p></header></article></section>`
 );
 
 export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): string {
@@ -195,9 +182,9 @@ export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): st
   const reviewStatus = reviewManifest.length > 0
     ? `<div class="status-card review"><span>Review next · ${reviewManifest.length} pieces</span><strong>${escapeHtml(reviewNames)}</strong><p>These remain active proposals and are not yet in the accepted working set.</p></div>`
     : '';
-  const nextSystemGateStatus = '<div class="status-card review"><span>Next · Proof only</span>' +
-    `<strong>${escapeHtml(NEXT_SYSTEM_GATE.title)}</strong>` +
-    `<p>${escapeHtml(NEXT_SYSTEM_GATE.summary)}</p></div>`;
+  const acceptedTerminusGateStatus = '<div class="status-card accepted"><span>Accepted source gate</span>' +
+    `<strong>${escapeHtml(ACCEPTED_HORIZONTAL_TERMINUS_GATE.title)}</strong>` +
+    '<p>mask_8 is direct; mask_2 is the accepted whole-cell mirror-X derivation.</p></div>';
   const acceptedMappingGateStatus = '<div class="status-card accepted"><span>Accepted system mapping</span>' +
     `<strong>${escapeHtml(ACCEPTED_MAPPING_GATE.title)}</strong>` +
     '<p>The 47-row topology plan is locked; its 36 synthetic candidates remain proof-only.</p></div>';
@@ -217,6 +204,7 @@ export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): st
   return (
     '<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
     '<title>QuotaCo wall workbench</title>' +
+    '<link rel="icon" href="data:,">' +
     '<style>' +
     ':root{color-scheme:dark;--ground:#1d211f;--panel:#252b28;--panel2:#303733;--ink:#f6f1e5;--muted:#a59e8f;--teal:#83a9a6;--green:#9fc7a9;--coral:#e0836e;--line:#46504b}' +
     '*{box-sizing:border-box}html{background:var(--ground);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}' +
@@ -238,18 +226,18 @@ export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): st
     '@media(max-width:700px){body{padding:18px 12px 48px}.status-grid{grid-template-columns:1fr}.archive-grid,.diagnostic-grid{grid-template-columns:1fr}.board{padding:8px}.current-section{margin:26px 0}}' +
     '</style>' +
     '<header><h1>QuotaCo Building System — current wall workbench</h1>' +
-    '<p class="lede">The 47-mask mapping structure is accepted without promoting its synthetic candidates. The next bounded review is the horizontal terminus pair; accepted enclosure and piece references remain below.</p></header>' +
+    '<p class="lede">The horizontal terminus pair is now accepted at the proof layer. No geometry proposal is currently active; unresolved ends and production propagation stay deferred.</p></header>' +
     '<div id="status">waiting for first render…</div>' +
     '<section class="kit-status" aria-labelledby="kit-status-title"><h2 id="kit-status-title">Current direction status — equal-height structural walls</h2>' +
     '<div class="status-grid">' +
-    nextSystemGateStatus +
+    acceptedTerminusGateStatus +
     acceptedMappingGateStatus +
     acceptedCorridorGateStatus +
     reviewStatus +
     `<div class="status-card accepted"><span>Accepted working set · ${acceptedManifest.length} pieces</span><strong>${escapeHtml(acceptedNames)}</strong><p>These are the current owner-approved working contracts.</p></div>` +
     '</div></section>' +
     '<main id="current-equal-height-wall-system">' +
-    nextSystemGate() +
+    acceptedSystemGate(ACCEPTED_HORIZONTAL_TERMINUS_GATE, 'terminus', 'terminus') +
     acceptedSystemGate(ACCEPTED_MAPPING_GATE, 'mapping', 'mapping') +
     acceptedSystemGate(ACCEPTED_CORRIDOR_GATE, 'corridor', 'corridor') +
     reviewSection +
@@ -267,7 +255,7 @@ export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): st
     'else if(s.roomError){status.textContent=`CURRENT ROOM RENDER FAILED\\n${s.roomError}`;status.className="bad";}' +
     'else{status.textContent=`current proofs ok · ${s.frames} frames validated · ${s.durationMs}ms · ${s.renderedAt}`;status.className="";}' +
     'const archiveStatus=document.getElementById("archive-status");if(s.proofsError){archiveStatus.textContent=`ARCHIVED CROSS-SECTION RENDER FAILED\\n${s.proofsError}`;archiveStatus.className="bad";}else{archiveStatus.textContent="";archiveStatus.className="";}' +
-    'const groups={root:s.renderedAt,focus:s.focusRenderedAt,mapping:s.mappingRenderedAt,corridor:s.corridorRenderedAt,gate:s.gateRenderedAt,proofs:s.proofsRenderedAt,room:s.roomRenderedAt,ladder:s.ladderRenderedAt};' +
+    'const groups={root:s.renderedAt,focus:s.focusRenderedAt,terminus:s.terminusRenderedAt,mapping:s.mappingRenderedAt,corridor:s.corridorRenderedAt,gate:s.gateRenderedAt,proofs:s.proofsRenderedAt,room:s.roomRenderedAt,ladder:s.ladderRenderedAt};' +
     'for(const [group,next] of Object.entries(groups)){if(next&&stamps[group]!==next){stamps[group]=next;for(const figure of document.querySelectorAll(`[data-refresh="${group}"]`)){const image=figure.querySelector("img");if(image)image.src=`${figure.dataset.stem}.png?t=${Date.now()}`;}}}' +
     '}catch(error){const status=document.getElementById("status");status.textContent=`WORKBENCH STATUS UNAVAILABLE\\n${error instanceof Error?error.message:String(error)}`;status.className="bad";}setTimeout(tick,700)}tick()</script>'
   );

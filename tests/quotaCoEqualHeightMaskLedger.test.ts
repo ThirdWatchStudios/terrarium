@@ -72,7 +72,7 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
     }
   });
 
-  it('makes the six accepted perimeter mappings and vertical-facing collision explicit', () => {
+  it('makes the eight accepted perimeter mappings and remaining vertical-facing collision explicit', () => {
     const byIndex = new Map(
       EQUAL_HEIGHT_MASK_LEDGER.entries.map((entry) => [entry.index, entry]),
     );
@@ -80,9 +80,17 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
       kind: 'direct-reuse',
       variants: [{ role: 'southwest-corner', sourceStem: 'transition_w_to_s', transform: 'none' }],
     });
+    expect(byIndex.get(2)?.resolution).toMatchObject({
+      kind: 'approved-derivation',
+      variants: [{ role: 'west-cap-terminus', sourceStem: 'full_terminus', transform: 'mirror-x' }],
+    });
     expect(byIndex.get(6)?.resolution).toMatchObject({
       kind: 'direct-reuse',
       variants: [{ role: 'northwest-corner', sourceStem: 'full_exterior_corner', transform: 'none' }],
+    });
+    expect(byIndex.get(8)?.resolution).toMatchObject({
+      kind: 'direct-reuse',
+      variants: [{ role: 'east-cap-terminus', sourceStem: 'full_terminus', transform: 'none' }],
     });
     expect(byIndex.get(10)?.resolution).toMatchObject({
       kind: 'direct-reuse',
@@ -113,7 +121,7 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
       .filter(({ resolution }) =>
         resolution.kind === 'direct-reuse' || resolution.kind === 'approved-derivation')
       .map(({ index }) => index);
-    expect(resolved).toEqual([3, 5, 6, 9, 10, 12]);
+    expect(resolved).toEqual([2, 3, 5, 6, 8, 9, 10, 12]);
     expect(byIndex.get(5)?.resolution).toMatchObject({
       note: expect.stringContaining('explicit facing input'),
     });
@@ -124,10 +132,10 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
 
   it('keeps synthetic obligations and unresolved authored needs honest', () => {
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
-      'direct-reuse': 3,
-      'approved-derivation': 3,
+      'direct-reuse': 4,
+      'approved-derivation': 4,
       'synthetic-assembly': 36,
-      'unresolved-authored-geometry': 5,
+      'unresolved-authored-geometry': 3,
     });
     expect(
       EQUAL_HEIGHT_MASK_RESOLUTION_KINDS.reduce(
@@ -138,9 +146,9 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
 
     const unresolved = EQUAL_HEIGHT_MASK_LEDGER.entries
       .filter(({ resolution }) => resolution.kind === 'unresolved-authored-geometry');
-    expect(unresolved.map(({ index }) => index)).toEqual([0, 1, 2, 4, 8]);
+    expect(unresolved.map(({ index }) => index)).toEqual([0, 1, 4]);
     expect(unresolved.map(({ topologyClass }) => topologyClass)).toEqual([
-      'isolated', 'terminus', 'terminus', 'terminus', 'terminus',
+      'isolated', 'terminus', 'terminus',
     ]);
     for (const entry of unresolved) {
       expect(entry.resolution).toMatchObject({
@@ -167,7 +175,7 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
     expect(
       EQUAL_HEIGHT_MASK_LEDGER.entries
         .filter(({ resolution }) => resolution.status === 'accepted-source-mapping'),
-    ).toHaveLength(6);
+    ).toHaveLength(8);
     expect(
       EQUAL_HEIGHT_MASK_LEDGER.entries
         .filter(({ resolution }) => resolution.status === 'proof-only-candidate'),
@@ -175,7 +183,7 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
     expect(
       EQUAL_HEIGHT_MASK_LEDGER.entries
         .filter(({ resolution }) => resolution.status === 'unresolved'),
-    ).toHaveLength(5);
+    ).toHaveLength(3);
 
     const allSourceFiles = EQUAL_HEIGHT_MASK_LEDGER.entries.flatMap(({ resolution }) =>
       variantsFor(resolution).flatMap(({ baseFile, upperFile }) => [baseFile, upperFile]));
@@ -187,6 +195,8 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
       'full_n_straight-upper.svg',
       'full_w_straight-base.svg',
       'full_w_straight-upper.svg',
+      'full_terminus-base.svg',
+      'full_terminus-upper.svg',
       'full_exterior_corner-base.svg',
       'full_exterior_corner-upper.svg',
       'transition_w_to_s-base.svg',

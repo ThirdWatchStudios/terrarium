@@ -1,8 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
   <title>QuotaCo Building System full terminus base</title>
-  <desc>Broad green fascia and compact floor-contact plinth flowing into the full terminus; the composed upper owns the exposed top and end planes.</desc>
+  <desc>The accepted horizontal straight base profile flows unchanged into a compact molded terminus; the composed upper owns the exposed top and end planes.</desc>
   <g id="detail/base">
-    <path id="base-contour" d="M 0 92 H 102 A 10 10 0 0 1 112 102 V 110 A 10 10 0 0 1 102 120 H 0 Z" fill="#252A28"/>
-    <path id="base-field" d="M 0 94 H 101 A 8 8 0 0 1 109 102 V 110 A 7 7 0 0 1 102 117 H 0 Z" fill="#294B3C"/>
+    <path id="base-contour" d="M 0 95 H 96 V 92 H 102 A 10 10 0 0 1 112 102 V 110 A 10 10 0 0 1 102 120 H 0 Z" fill="#252A28"/>
+    <path id="base-field" d="M 0 97 H 96 V 94 H 101 A 8 8 0 0 1 109 102 V 110 A 7 7 0 0 1 102 117 H 0 Z" fill="#294B3C"/>
+    <path id="base-contact-shade" d="M 0 120 H 96 V 123.5 H 0 Z" fill="#000000" opacity="0.12"/>
   </g>
 </svg>

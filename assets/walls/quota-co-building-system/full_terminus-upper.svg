@@ -1,16 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
   <title>QuotaCo Building System full terminus upper</title>
-  <desc>Full-height cream shell ending in a monolithic banded post, with a thin coral register and broad green fascia meeting the lower component without a doubled ledge.</desc>
+  <desc>The accepted horizontal straight upper profile flows unchanged into a monolithic banded post, with local end-plane shading confined to the molded cap.</desc>
   <g id="detail/upper">
-    <path id="upper-contour" d="M 0 56 H 103 A 9 9 0 0 1 112 65 V 120 H 96 V 98 H 0 Z" fill="#252A28"/>
-    <path id="upper-shell" d="M 0 58 H 102 A 7 7 0 0 1 109 65 V 117 H 98 V 98 H 0 Z" fill="#D9D0B9"/>
-    <path id="upper-cap-light" d="M 0 58 H 102 V 64 H 0 Z" fill="#FFFFFF" opacity="0.20"/>
-    <path id="upper-face-shade" d="M 0 64 H 103.5 V 88 H 0 Z" fill="#000000" opacity="0.08"/>
+    <path id="upper-contour" d="M 0 56 H 103 A 9 9 0 0 1 112 65 V 120 H 96 V 97 H 0 Z" fill="#252A28"/>
+    <path id="upper-shell" d="M 0 58 H 102 A 7 7 0 0 1 109 65 V 117 H 98 V 97 H 0 Z" fill="#D9D0B9"/>
+    <path id="upper-reveal-light" d="M 0 58 H 102 V 63 H 0 Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="upper-end-face-shade" d="M 98 64 H 103.5 V 88 H 98 Z" fill="#000000" opacity="0.08"/>
     <path id="upper-coral-band" d="M 0 88 H 109 V 94 H 0 Z" fill="#B65F4D"/>
     <path id="upper-band-light" d="M 0 88 H 103.5 V 89.5 H 0 Z" fill="#FFFFFF" opacity="0.10"/>
-    <path id="upper-green-handoff" d="M 0 94 H 109 V 98 H 0 Z" fill="#294B3C"/>
+    <path id="upper-green-handoff" d="M 0 94 H 109 V 97 H 0 Z" fill="#294B3C"/>
     <path id="upper-post-green" d="M 98 94 H 109 V 117 H 98 Z" fill="#294B3C"/>
-    <path id="upper-service-seam" d="M 1 64 H 101" fill="none" stroke="#252A28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.28"/>
+    <path id="upper-arris-seam" d="M 1 63 H 101" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
     <path id="upper-band-seam" d="M 1 94 H 102" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
     <path id="upper-post-edge-seam" d="M 97 95 V 115.5" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
     <path id="upper-end-reveal-light" d="M 103.5 62 H 104 a 4.5 4.5 0 0 1 4.5 4.5 V 115 H 103.5 Z" fill="#FFFFFF" opacity="0.10"/>

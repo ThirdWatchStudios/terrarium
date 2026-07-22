@@ -36,12 +36,12 @@ changes the export contract except where explicitly flagged (floor variants).
 > low-south/east and full-to-low artifacts remain historical comparisons and may only inform a separately
 > approved partition family. This decision still changes no production template, topology, exporter, schema,
 > or Unity contract.
-> **Current mapping result and next authorization, 2026-07-21:** the owner accepted the proof-layer 47-mask
-> ledger structure: unchanged canonical ordering, three direct source mappings, three approved derivations,
-> 36 synthetic assembly candidates, and five explicit authored-geometry gaps. This is not acceptance of the
-> synthetic candidate pixels or a production atlas. Next, prove only the horizontal termini: `mask_8` as direct
-> reuse of the existing full terminus pair and `mask_2` as a whole-cell X-mirror candidate, at 90/40 px and in
-> 1/3/6-cell contexts. `mask_1` and `mask_4` remain unresolved; rotation is prohibited. Production registration,
+> **Current mapping and terminus result, 2026-07-21:** the owner accepted the proof-layer 47-mask
+> ledger structure and the horizontal terminus slice. The ledger now records four direct source mappings, four
+> approved derivations, 36 synthetic assembly candidates, and three explicit authored-geometry gaps. `mask_8`
+> directly reuses the socket-polished `full_terminus` pair and `mask_2` uses its accepted whole-cell X mirror;
+> both passed at 90/40 px in 1/3/6-cell contexts. This is not acceptance of the synthetic candidate pixels or a
+> production atlas. `mask_0`, `mask_1`, and `mask_4` remain unresolved; rotation is prohibited. Production registration,
 > frame identities, export/`CONTRACT.md`, schema, committed atlases, Unity assets, and `production.unity` remain
 > outside this authorization.
 
