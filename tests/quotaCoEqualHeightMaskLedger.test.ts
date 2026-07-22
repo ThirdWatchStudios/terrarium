@@ -72,13 +72,20 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
     }
   });
 
-  it('makes the eight accepted perimeter mappings and remaining vertical-facing collision explicit', () => {
+  it('makes the ten accepted perimeter mappings and their facing provenance explicit', () => {
     const byIndex = new Map(
       EQUAL_HEIGHT_MASK_LEDGER.entries.map((entry) => [entry.index, entry]),
     );
     expect(byIndex.get(3)?.resolution).toMatchObject({
       kind: 'direct-reuse',
       variants: [{ role: 'southwest-corner', sourceStem: 'transition_w_to_s', transform: 'none' }],
+    });
+    expect(byIndex.get(1)?.resolution).toMatchObject({
+      kind: 'approved-derivation',
+      variants: [
+        { role: 'west-south-terminus', sourceStem: 'vertical_s_terminus', transform: 'none' },
+        { role: 'east-south-terminus', sourceStem: 'vertical_s_terminus', transform: 'mirror-x' },
+      ],
     });
     expect(byIndex.get(2)?.resolution).toMatchObject({
       kind: 'approved-derivation',
@@ -116,12 +123,19 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
       kind: 'approved-derivation',
       variants: [{ role: 'northeast-corner', sourceStem: 'full_exterior_corner', transform: 'mirror-x' }],
     });
+    expect(byIndex.get(4)?.resolution).toMatchObject({
+      kind: 'approved-derivation',
+      variants: [
+        { role: 'west-north-terminus', sourceStem: 'vertical_n_terminus', transform: 'none' },
+        { role: 'east-north-terminus', sourceStem: 'vertical_n_terminus', transform: 'mirror-x' },
+      ],
+    });
 
     const resolved = EQUAL_HEIGHT_MASK_LEDGER.entries
       .filter(({ resolution }) =>
         resolution.kind === 'direct-reuse' || resolution.kind === 'approved-derivation')
       .map(({ index }) => index);
-    expect(resolved).toEqual([2, 3, 5, 6, 8, 9, 10, 12]);
+    expect(resolved).toEqual([1, 2, 3, 4, 5, 6, 8, 9, 10, 12]);
     expect(byIndex.get(5)?.resolution).toMatchObject({
       note: expect.stringContaining('explicit facing input'),
     });
@@ -133,9 +147,9 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
   it('keeps synthetic obligations and unresolved authored needs honest', () => {
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
       'direct-reuse': 4,
-      'approved-derivation': 4,
+      'approved-derivation': 6,
       'synthetic-assembly': 36,
-      'unresolved-authored-geometry': 3,
+      'unresolved-authored-geometry': 1,
     });
     expect(
       EQUAL_HEIGHT_MASK_RESOLUTION_KINDS.reduce(
@@ -146,10 +160,8 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
 
     const unresolved = EQUAL_HEIGHT_MASK_LEDGER.entries
       .filter(({ resolution }) => resolution.kind === 'unresolved-authored-geometry');
-    expect(unresolved.map(({ index }) => index)).toEqual([0, 1, 4]);
-    expect(unresolved.map(({ topologyClass }) => topologyClass)).toEqual([
-      'isolated', 'terminus', 'terminus',
-    ]);
+    expect(unresolved.map(({ index }) => index)).toEqual([0]);
+    expect(unresolved.map(({ topologyClass }) => topologyClass)).toEqual(['isolated']);
     for (const entry of unresolved) {
       expect(entry.resolution).toMatchObject({
         status: 'unresolved',
@@ -175,7 +187,7 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
     expect(
       EQUAL_HEIGHT_MASK_LEDGER.entries
         .filter(({ resolution }) => resolution.status === 'accepted-source-mapping'),
-    ).toHaveLength(8);
+    ).toHaveLength(10);
     expect(
       EQUAL_HEIGHT_MASK_LEDGER.entries
         .filter(({ resolution }) => resolution.status === 'proof-only-candidate'),
@@ -183,7 +195,7 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
     expect(
       EQUAL_HEIGHT_MASK_LEDGER.entries
         .filter(({ resolution }) => resolution.status === 'unresolved'),
-    ).toHaveLength(3);
+    ).toHaveLength(1);
 
     const allSourceFiles = EQUAL_HEIGHT_MASK_LEDGER.entries.flatMap(({ resolution }) =>
       variantsFor(resolution).flatMap(({ baseFile, upperFile }) => [baseFile, upperFile]));
@@ -197,6 +209,10 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
       'full_w_straight-upper.svg',
       'full_terminus-base.svg',
       'full_terminus-upper.svg',
+      'vertical_s_terminus-base.svg',
+      'vertical_s_terminus-upper.svg',
+      'vertical_n_terminus-base.svg',
+      'vertical_n_terminus-upper.svg',
       'full_exterior_corner-base.svg',
       'full_exterior_corner-upper.svg',
       'transition_w_to_s-base.svg',

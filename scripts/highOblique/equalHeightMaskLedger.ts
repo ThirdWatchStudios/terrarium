@@ -155,6 +155,46 @@ const eastWall: EqualHeightMaskSourceVariant = {
   facingRule: 'explicit east exterior facing; connectivity does not select this mirror',
 };
 
+const westSouthTerminus: EqualHeightMaskSourceVariant = {
+  role: 'west-south-terminus',
+  sourceStem: 'vertical_s_terminus',
+  baseFile: 'vertical_s_terminus-base.svg',
+  upperFile: 'vertical_s_terminus-upper.svg',
+  transform: 'none',
+  derivation: 'none',
+  facingRule: 'connected north; exposed south rollover on the west wall',
+};
+
+const eastSouthTerminus: EqualHeightMaskSourceVariant = {
+  role: 'east-south-terminus',
+  sourceStem: 'vertical_s_terminus',
+  baseFile: 'vertical_s_terminus-base.svg',
+  upperFile: 'vertical_s_terminus-upper.svg',
+  transform: 'mirror-x',
+  derivation: 'none',
+  facingRule: 'connected north; exposed south rollover on the east wall through the accepted whole-cell X mirror',
+};
+
+const westNorthTerminus: EqualHeightMaskSourceVariant = {
+  role: 'west-north-terminus',
+  sourceStem: 'vertical_n_terminus',
+  baseFile: 'vertical_n_terminus-base.svg',
+  upperFile: 'vertical_n_terminus-upper.svg',
+  transform: 'none',
+  derivation: 'none',
+  facingRule: 'connected south; exposed north rollover on the west wall',
+};
+
+const eastNorthTerminus: EqualHeightMaskSourceVariant = {
+  role: 'east-north-terminus',
+  sourceStem: 'vertical_n_terminus',
+  baseFile: 'vertical_n_terminus-base.svg',
+  upperFile: 'vertical_n_terminus-upper.svg',
+  transform: 'mirror-x',
+  derivation: 'none',
+  facingRule: 'connected south; exposed north rollover on the east wall through the accepted whole-cell X mirror',
+};
+
 const eastCapTerminus: EqualHeightMaskSourceVariant = {
   role: 'east-cap-terminus',
   sourceStem: 'full_terminus',
@@ -282,12 +322,26 @@ function syntheticIngredientsFor(
 
 function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
   switch (index) {
+    case 1:
+      return {
+        kind: 'approved-derivation',
+        status: 'accepted-source-mapping',
+        variants: [westSouthTerminus, eastSouthTerminus],
+        note: 'Accepted south-facing vertical terminus uses one west-authored source plus its approved whole-cell X mirror for east-facing context.',
+      };
     case 2:
       return {
         kind: 'approved-derivation',
         status: 'accepted-source-mapping',
         variants: [westCapTerminus],
         note: 'Accepted west-facing cap is the whole-cell mirror-X derivation of the horizontal terminus source.',
+      };
+    case 4:
+      return {
+        kind: 'approved-derivation',
+        status: 'accepted-source-mapping',
+        variants: [westNorthTerminus, eastNorthTerminus],
+        note: 'Accepted north-facing vertical terminus uses one west-authored source plus its approved whole-cell X mirror for east-facing context.',
       };
     case 3:
       return {
@@ -427,6 +481,10 @@ const ACCEPTED_SOURCE_VARIANTS = new Set([
   horizontalShared,
   westWall,
   eastWall,
+  westSouthTerminus,
+  eastSouthTerminus,
+  westNorthTerminus,
+  eastNorthTerminus,
   eastCapTerminus,
   westCapTerminus,
   northwestCorner,

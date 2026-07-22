@@ -28,18 +28,25 @@ and all four corners close as one enclosure.
 
 **Accepted mapping gate (owner approval, 2026-07-21):** the proof-layer ledger
 locks the unchanged canonical `mask_0` through `mask_46` order and classifies
-four direct reuses, four approved derivations, 36 synthetic assembly
-candidates, and three explicit authored-geometry gaps. This accepts the mapping
+four direct reuses, six approved derivations, 36 synthetic assembly
+candidates, and one explicit authored-geometry gap. This accepts the mapping
 structure and provenance boundaries only. It does not accept the 36 synthetic
-assembly diagrams, resolve the three gaps, or create an atlas/production family.
+assembly diagrams, resolve isolated `mask_0`, or create an atlas/production family.
 
 **Accepted horizontal terminus gate (owner approval, 2026-07-21):** `mask_8`
 directly reuses the socket-polished `full_terminus` pair (connected west, cap
 east), and `mask_2` reuses that same pair through the accepted whole-cell X
 mirror (connected east, cap west). The first 96 source units match the accepted
 horizontal body in base, upper, and composed layers; the local molded cap stays
-intact. The remaining authored gaps are isolated `mask_0` and directional
-vertical ends `mask_1`/`mask_4`. Do not rotate the horizontal source into them.
+intact. The horizontal gate does not rotate this source into vertical facings;
+those directions are owned by the separate accepted vertical gate below.
+
+**Accepted vertical terminus gate (owner approval, 2026-07-21):** the two vertical directions use an external,
+proof-layer source bank at `../quota-co-building-system-proofs/vertical-terminus/`. Both accepted ends stay inside the ordinary wall
+cross-section and fold its existing cream, coral, and green registers through shallow, separately authored
+south- and north-facing rollovers. Their east-wall whole-cell X mirrors are accepted derivations. These files
+remain intentionally absent from this strict canonical inventory, while proof-ledger rows `mask_1` and `mask_4`
+record their accepted provenance. Isolated `mask_0` is now the only authored-geometry gap.
 
 The original independently finished low-base-plus-optional-upper construction was
 rejected on 2026-07-20 because its duplicate caps and contours read as one wall

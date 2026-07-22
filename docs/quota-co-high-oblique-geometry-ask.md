@@ -1,6 +1,6 @@
 # QuotaCo High-Oblique Geometry — Production Art Ask
 
-**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** equal-height wall set, corridor closure, proof-layer 47-mask mapping, and horizontal termini accepted
+**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** equal-height wall set, corridor closure, proof-layer 47-mask mapping, and horizontal/vertical termini accepted; isolated mask_0 remains unresolved
 
 Canonical direction lives in the sim repository:
 
@@ -12,8 +12,9 @@ The-Water-Cooler/docs/design/quota-co-high-oblique-art-migration-plan.md
 The owner has committed to a fixed **high-oblique / top-down-plus** office in which the manufactured building,
 furniture, machines, amenities, and campus fixtures read as coordinated QuotaCo catalog products. The initial
 building-geometry ask is now approved at the five-piece directional level, in the 3×8 narrow-corridor closure,
-as a proof-layer mapping over the existing 47-mask connectivity table, and for the two horizontal terminus
-rows. Vertical ends, prop-catalog work, and production changes remain separate decisions.
+as a proof-layer mapping over the existing 47-mask connectivity table, and for all four directional terminus
+rows. Isolated `mask_0` is the remaining authored-geometry gap; prop-catalog work and production
+changes remain separate decisions.
 
 ---
 
@@ -117,13 +118,20 @@ review results without treating them as the current production direction.
 perimeter around a 1×6 walkable aisle at both 90 and 40 px per cell. This closes the composition gate.
 
 **Mapping owner decision, 2026-07-21:** accept the 47-row proof-layer ledger structure and its explicit
-provenance/gap accounting. With the horizontal termini promoted, it records four direct mappings and four
-approved derivations as source law, not the 36 synthetic candidate sprites or three unresolved cases.
+provenance/gap accounting. With both terminus families promoted, it records four direct mappings and six
+approved derivations as source law, not the 36 synthetic candidate sprites or isolated `mask_0`.
 
 **Horizontal terminus owner decision, 2026-07-21:** accept the socket-polished `full_terminus` pair directly
 for `mask_8` and through one whole-cell X mirror for `mask_2`. Both facings pass at 90 and 40 px across 1/3/6
 body-cell runs. The accepted body owns the incoming socket; the compact molded cap owns only the exposed end.
-This advances only those two ledger rows. Vertical ends remain separate and the source must not be rotated.
+This gate owns only those two ledger rows. Vertical ends remain separately authored and this source must not be rotated.
+
+**Vertical terminus owner decision, 2026-07-21:** accept `mask_1` and `mask_4` as two separately authored
+fixed-light wall closures, not rotations or Y mirrors. Both stay inside the ordinary wall cross-section and
+continue its existing cream, coral, and green registers through a shallow molded rollover; the south end
+exposes more foreground face while the north end exposes more cream top plane. Whole-cell X mirrors are
+accepted for the matching east-wall presentations. The external source bank, focused sheet, and tests now
+provide accepted proof-ledger provenance, while every production surface remains unchanged.
 
 ### A1a review artifact
 
@@ -158,12 +166,13 @@ authorize edits to production topology sources, template/catalog registration, f
 `CONTRACT.md`, schema versions, committed production atlases, Unity assets, or `production.unity`. Any of those
 requires a separate owner decision.
 
-**Owner result, 2026-07-21:** the ledger envelope and horizontal terminus slice are accepted with four direct
-reuses, four approved derivations, 36 proof-only synthetic assemblies, and three unresolved authored-geometry
-cases. `mask_8` uses the socket-polished `full_terminus` source directly (connected west, cap east); `mask_2`
+**Owner result, 2026-07-21:** the ledger envelope plus horizontal and vertical terminus slices are accepted with four direct
+reuses, six approved derivations, 36 proof-only synthetic assemblies, and one unresolved authored-geometry
+case. `mask_8` uses the socket-polished `full_terminus` source directly (connected west, cap east); `mask_2`
 uses the same whole cell mirrored around `x=64` (connected east, cap west). Acceptance locks those provenance
-rows but does not promote the synthetic contact diagrams. Keep isolated `mask_0` and vertical `mask_1`/`mask_4`
-unresolved; do not rotate or transpose the horizontal source into a vertical end.
+rows but does not promote the synthetic contact diagrams. `mask_1` and `mask_4` use their separately authored
+vertical sources plus accepted east mirrors. Keep isolated `mask_0` unresolved; do not rotate or transpose the
+horizontal source into a vertical end.
 
 ## 5. Readability gates
 

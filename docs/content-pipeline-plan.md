@@ -37,13 +37,17 @@ changes the export contract except where explicitly flagged (floor variants).
 > approved partition family. This decision still changes no production template, topology, exporter, schema,
 > or Unity contract.
 > **Current mapping and terminus result, 2026-07-21:** the owner accepted the proof-layer 47-mask
-> ledger structure and the horizontal terminus slice. The ledger now records four direct source mappings, four
-> approved derivations, 36 synthetic assembly candidates, and three explicit authored-geometry gaps. `mask_8`
+> ledger structure plus the horizontal and vertical terminus slices. The ledger now records four direct source mappings, six
+> approved derivations, 36 synthetic assembly candidates, and one explicit authored-geometry gap. `mask_8`
 > directly reuses the socket-polished `full_terminus` pair and `mask_2` uses its accepted whole-cell X mirror;
 > both passed at 90/40 px in 1/3/6-cell contexts. This is not acceptance of the synthetic candidate pixels or a
-> production atlas. `mask_0`, `mask_1`, and `mask_4` remain unresolved; rotation is prohibited. Production registration,
+> production atlas. `mask_1` and `mask_4` use separately authored vertical rollovers plus accepted east mirror-X
+> derivations; isolated `mask_0` is the only remaining authored gap. Rotation is prohibited. Production registration,
 > frame identities, export/`CONTRACT.md`, schema, committed atlases, Unity assets, and `production.unity` remain
 > outside this authorization.
+> **Accepted vertical terminus slice, 2026-07-21:** the family has two separately authored external source
+> pairs plus west/east, 240/90/40 px, 1/3/6-run, socket, and minimum-segment evidence. Acceptance records
+> proof-layer provenance only; all production signatures remain unchanged.
 
 ---
 

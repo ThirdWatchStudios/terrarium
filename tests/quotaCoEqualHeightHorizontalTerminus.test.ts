@@ -185,9 +185,9 @@ describe('QuotaCo owner-accepted proof-layer equal-height horizontal terminus ga
     });
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
       'direct-reuse': 4,
-      'approved-derivation': 4,
+      'approved-derivation': 6,
       'synthetic-assembly': 36,
-      'unresolved-authored-geometry': 3,
+      'unresolved-authored-geometry': 1,
     });
   });
 
@@ -331,10 +331,10 @@ describe('QuotaCo owner-accepted proof-layer equal-height horizontal terminus ga
     }
   });
 
-  it('defers vertical ends and preserves every production-facing contract', () => {
-    expect(EQUAL_HEIGHT_HORIZONTAL_TERMINUS_GATE.verticalDeferrals).toEqual([
-      { maskId: 'mask_1', index: 1, connectedEdge: 'n', status: 'unresolved-authored-geometry' },
-      { maskId: 'mask_4', index: 4, connectedEdge: 's', status: 'unresolved-authored-geometry' },
+  it('keeps vertical ends owned by their separate gate and preserves every production-facing contract', () => {
+    expect(EQUAL_HEIGHT_HORIZONTAL_TERMINUS_GATE.verticalSuccessors).toEqual([
+      { maskId: 'mask_1', index: 1, connectedEdge: 'n', status: 'resolved-by-separate-vertical-gate' },
+      { maskId: 'mask_4', index: 4, connectedEdge: 's', status: 'resolved-by-separate-vertical-gate' },
     ]);
     const demoted = structuredClone(EQUAL_HEIGHT_HORIZONTAL_TERMINUS_GATE) as any;
     demoted.status = 'proof-only-review';
@@ -350,7 +350,9 @@ describe('QuotaCo owner-accepted proof-layer equal-height horizontal terminus ga
     expect(Object.keys(wallAtlas(DEFAULT_WALLS[0], DEFAULT_STYLE, 1).frames)).toEqual(
       Array.from({ length: BLOB_TILE_COUNT }, (_, index) => `mask_${index}`),
     );
-    expect([0, 1, 4].map((index) => EQUAL_HEIGHT_MASK_LEDGER.entries[index].resolution.kind))
-      .toEqual(Array(3).fill('unresolved-authored-geometry'));
+    expect(EQUAL_HEIGHT_MASK_LEDGER.entries[0].resolution.kind)
+      .toBe('unresolved-authored-geometry');
+    expect([1, 4].map((index) => EQUAL_HEIGHT_MASK_LEDGER.entries[index].resolution.kind))
+      .toEqual(Array(2).fill('approved-derivation'));
   });
 });

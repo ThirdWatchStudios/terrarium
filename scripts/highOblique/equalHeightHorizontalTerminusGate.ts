@@ -5,7 +5,8 @@ import type { EqualHeightWallTransform } from './equalHeightWallDirection';
 /**
  * Owner-accepted proof-layer gate for the two horizontal one-link cases.
  * This promotes source provenance for mask_8 and mask_2 only; it does not
- * register frames, alter the exporter, or authorize the vertical ends.
+ * register frames or alter the exporter. The vertical ends are owned by their
+ * later, separate accepted gate and never derived by rotating this source.
  */
 
 export type EqualHeightHorizontalTerminusLayer = 'base' | 'upper' | 'composed';
@@ -84,9 +85,9 @@ export const EQUAL_HEIGHT_HORIZONTAL_TERMINUS_GATE = {
   socketAuditLayers: ['base', 'upper', 'composed'] as const satisfies readonly EqualHeightHorizontalTerminusLayer[],
   reviewCellSizes: [90, 40] as const,
   bodyRunLengths: [1, 3, 6] as const,
-  verticalDeferrals: [
-    { maskId: 'mask_1', index: 1, connectedEdge: 'n', status: 'unresolved-authored-geometry' },
-    { maskId: 'mask_4', index: 4, connectedEdge: 's', status: 'unresolved-authored-geometry' },
+  verticalSuccessors: [
+    { maskId: 'mask_1', index: 1, connectedEdge: 'n', status: 'resolved-by-separate-vertical-gate' },
+    { maskId: 'mask_4', index: 4, connectedEdge: 's', status: 'resolved-by-separate-vertical-gate' },
   ] as const,
   rotationAllowed: false,
   sourceMutationScope: 'accepted-socket-polish',
@@ -223,19 +224,21 @@ export function validateEqualHeightHorizontalTerminusGate(
     JSON.stringify(gate.bodyRunLengths) !== JSON.stringify([1, 3, 6]) ||
     JSON.stringify(gate.socketAuditLayers) !== JSON.stringify(['base', 'upper', 'composed']) ||
     JSON.stringify(gate.ledgerRowsAccepted) !== JSON.stringify([2, 8]) ||
-    JSON.stringify(gate.verticalDeferrals.map(({ index }) => index)) !== JSON.stringify([1, 4])
+    JSON.stringify(gate.verticalSuccessors.map(({ index }) => index)) !== JSON.stringify([1, 4])
   ) {
     throw new Error('Horizontal terminus gate evidence matrix drift');
   }
-  for (const { index, connectedEdge } of gate.verticalDeferrals) {
+  for (const { index, connectedEdge } of gate.verticalSuccessors) {
     const entry = EQUAL_HEIGHT_MASK_LEDGER.entries[index];
     if (
       entry.topologyClass !== 'terminus' ||
       JSON.stringify(entry.connectedEdges) !== JSON.stringify([connectedEdge]) ||
-      entry.resolution.kind !== 'unresolved-authored-geometry' ||
-      entry.resolution.status !== 'unresolved'
+      entry.resolution.kind !== 'approved-derivation' ||
+      entry.resolution.status !== 'accepted-source-mapping' ||
+      entry.resolution.variants.some(({ sourceStem }) =>
+        sourceStem === gate.terminusSource.sourceStem)
     ) {
-      throw new Error(`Horizontal terminus gate vertical deferral drift at mask_${index}`);
+      throw new Error(`Horizontal terminus gate vertical successor drift at mask_${index}`);
     }
   }
   if (EQUAL_HEIGHT_MASK_LEDGER.entries[0].resolution.kind !== 'unresolved-authored-geometry') {

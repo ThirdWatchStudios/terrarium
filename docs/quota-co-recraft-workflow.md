@@ -16,9 +16,9 @@ on the live workbench and committed individually with its design rationale.
 
 1. **Pick the active decision.** When `Review next` is present, choose one unresolved equal-height piece from
    that lane. When every current piece is accepted, follow the named system gate instead of reopening a settled
-   piece. The corridor closure, 47-mask mapping structure, and horizontal terminus pair are accepted. The
-   recommended next bounded decision is the directional vertical terminus pair (`mask_1` and `mask_4`), pending
-   owner authorization; never rotate the accepted horizontal source to manufacture them. Use composed evidence as
+   piece. The corridor closure, 47-mask mapping structure, and horizontal and vertical terminus families are
+   accepted. No geometry proposal is currently active; isolated `mask_0` is the recommended next bounded proof,
+   pending owner authorization. Never rotate the accepted horizontal source to manufacture a vertical end. Use composed evidence as
    the issue-finding surface. Historical
    mixed-profile room mocks are archived, not valid targets.
 2. **Read before drawing:** the piece's current masters, the five-sheet primary wall target listed in
@@ -169,17 +169,25 @@ north/south bodies stay legible, six-cell west/east runs do not drift, and all f
 manufactured envelope.
 
 **Accepted 47-mask mapping checkpoint (owner approval, 2026-07-21):** the unchanged `mask_0` through `mask_46`
-ordering and classification ledger is accepted with four direct reuses, four approved derivations, 36
-proof-only synthetic assembly candidates, and three unresolved authored-geometry cases. This locks the mapping
+ordering and classification ledger is accepted with four direct reuses, six approved derivations, 36
+proof-only synthetic assembly candidates, and one unresolved authored-geometry case. This locks the mapping
 structure, not the synthetic pixels or a complete production family.
 
 **Accepted horizontal terminus checkpoint (owner approval, 2026-07-21):** the socket-polished
 `full_terminus` source passes directly for `mask_8` and through a whole-cell X mirror for `mask_2`, at 90/40 px
 in 1/3/6-cell contexts and enlarged base/upper/composed socket crops. The incoming 96-unit socket inherits the
-accepted straight exactly while the molded cap remains local. `mask_1` and `mask_4` remain unresolved; do not
-rotate. Isolated `mask_0` remains its own product decision.
+accepted straight exactly while the molded cap remains local. It does not own the separately authored vertical
+termini and must never be rotated into them. Isolated `mask_0` remains its own product decision.
 
-**Still isolated after horizontal-terminus acceptance:** the 36 synthetic candidate sprites and three authored gaps;
+**Accepted vertical terminus checkpoint (owner approval, 2026-07-21):** two west-authored fixed-light source pairs
+live in the external `quota-co-building-system-proofs/vertical-terminus/` bank. Both sources preserve the
+ordinary wall width and turn its same cream, coral, and green registers through shallow wall-owned closures;
+the separately authored south and north ends differ only in projected plane exposure. Each is also shown
+through an accepted whole-cell X mirror for the east wall, and ledger rows `mask_1`/`mask_4` record both facings. The focused
+sheet exposes 240/90/40 px isolates, 1/3/6-cell installed runs, exact socket crops, and two-/three-cell minimum
+segments. The accepted ledger is four direct, six derived, 36 synthetic, and one unresolved.
+
+**Still isolated after terminus acceptance:** the 36 synthetic candidate sprites and isolated `mask_0`;
 `topology/` and `state/`; official/production preview
 regeneration; template/catalog registration and frame identities; exporter, `CONTRACT.md`, or schema changes;
 committed production atlases; prop pilots; Unity; and `production.unity` remain locked until separately

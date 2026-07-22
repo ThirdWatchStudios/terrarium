@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>QuotaCo equal-height west wall — exposed south end upper proposal</title>
+  <desc>Proof-only foreground wall closure. The ordinary cream, coral, and green wall registers turn continuously through one shallow south rollover without a wider cap or attached housing.</desc>
+  <g id="detail/upper">
+    <path id="upper-contour" d="M56 0H105V80A12 12 0 0 0 117 92H120V106A14 14 0 0 1 106 120H70A14 14 0 0 1 56 106Z" fill="#252A28"/>
+    <path id="upper-shell" d="M58 0H105V80H103V82A10 10 0 0 0 113 92H117V105A11 11 0 0 1 106 116H70A12 12 0 0 1 58 104Z" fill="#D9D0B9"/>
+    <path id="upper-cream-rollover-light" d="M58 0H90.5V80A12 12 0 0 0 102.5 92H58Z" fill="#FFFFFF" opacity="0.18"/>
+    <path id="upper-arris-lip" d="M90.5 0H92V80A12 12 0 0 0 104 92H102.5A12 12 0 0 1 90.5 80Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="upper-coral-wrap" d="M97 0H102V90A12 12 0 0 0 114 102H117V108H58V102H97Z" fill="#B65F4D"/>
+    <path id="upper-green-wrap" d="M102 0H105V95A9 9 0 0 0 114 104H117V108A9 9 0 0 1 108 117H68A10 10 0 0 1 58 107H102Z" fill="#294B3C"/>
+    <path id="upper-face-shade" d="M92 0H105V80A12 12 0 0 0 117 92V102H104A12 12 0 0 1 92 90Z" fill="#000000" opacity="0.12"/>
+    <path id="upper-arris-seam" d="M92 1V80A12 12 0 0 0 104 92H116" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="upper-band-seam" d="M102 1V90A12 12 0 0 0 114 102H116" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+  </g>
+</svg>
