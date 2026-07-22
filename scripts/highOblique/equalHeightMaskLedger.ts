@@ -345,6 +345,26 @@ const filledSouthMiddle: EqualHeightMaskSourceVariant = {
   facingRule: 'connected north, east, and west with the south edge exposed; authored open-X foreground spine with the accepted south-facing material stack',
 };
 
+const openWestTJunction: EqualHeightMaskSourceVariant = {
+  role: 'open-west-t-junction',
+  sourceStem: 'open_w_t_junction',
+  baseFile: 'open_w_t_junction-base.svg',
+  upperFile: 'open_w_t_junction-upper.svg',
+  transform: 'none',
+  derivation: 'none',
+  facingRule: 'connected north, east, and south with the west edge exposed; authored fixed-light open-pocket T hub',
+};
+
+const openEastTJunction: EqualHeightMaskSourceVariant = {
+  role: 'open-east-t-junction',
+  sourceStem: 'open_w_t_junction',
+  baseFile: 'open_w_t_junction-base.svg',
+  upperFile: 'open_w_t_junction-upper.svg',
+  transform: 'mirror-x',
+  derivation: 'accepted-southeast-seam-filter',
+  facingRule: 'connected north, south, and west with the east edge exposed through mirror-X after the accepted boundary-seam filter',
+};
+
 function topologyFor(config: WallTileConfig): EqualHeightMaskTopologyClass {
   const connected = EDGES.filter((edge) => config[edge]);
   if (connected.length === 0) return 'isolated';
@@ -447,6 +467,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         variants: [northwestCorner],
         note: 'Accepted northwest turn matches the E+S perimeter socket exactly.',
       };
+    case 7:
+      return {
+        kind: 'direct-reuse',
+        status: 'accepted-source-mapping',
+        variants: [openWestTJunction],
+        note: 'Accepted west-facing open-pocket T junction directly reuses the authored fixed-light three-socket source.',
+      };
     case 8:
       return {
         kind: 'direct-reuse',
@@ -474,6 +501,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         status: 'accepted-source-mapping',
         variants: [northeastCorner],
         note: 'Accepted northeast is the approved whole-cell mirror-X derivation of the northwest source.',
+      };
+    case 13:
+      return {
+        kind: 'approved-derivation',
+        status: 'accepted-source-mapping',
+        variants: [openEastTJunction],
+        note: 'Accepted east-facing open-pocket T junction mirrors the west-authored source after the accepted boundary-seam filter.',
       };
     case 16:
       return {
@@ -639,6 +673,8 @@ const ACCEPTED_SOURCE_VARIANTS = new Set([
   filledEastMiddle,
   filledNorthMiddle,
   filledSouthMiddle,
+  openWestTJunction,
+  openEastTJunction,
 ].map(sourceVariantSignature));
 
 function variantsFor(

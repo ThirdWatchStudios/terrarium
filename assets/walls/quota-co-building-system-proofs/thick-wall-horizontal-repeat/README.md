@@ -17,7 +17,9 @@ sources for a solid wall mass that grows horizontally:
   repeated fascia cell has one owner; the rear top remains seamless.
 - Neither source owns a cap, rollover, or buried rail.
 
-Both masks are owner-accepted direct proof-layer sources. The ledger now records
-10 direct, 9 derived, 28 synthetic, and 0 unresolved rows. This acceptance does
-not register canonical or production stems, frame identities, templates,
-exporter routes, atlas frames, schema values, blob mappings, or Unity assets.
+Both masks are owner-accepted direct proof-layer sources. At this family's
+acceptance checkpoint the ledger recorded 10 direct, 9 derived, 28 synthetic,
+and 0 unresolved rows; later source-family decisions supersede those counts.
+This acceptance does not register canonical or production stems, frame
+identities, templates, exporter routes, atlas frames, schema values, blob
+mappings, or Unity assets.

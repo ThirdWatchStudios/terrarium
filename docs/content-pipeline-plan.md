@@ -38,8 +38,9 @@ changes the export contract except where explicitly flagged (floor variants).
 > or Unity contract.
 > **Current mapping and source-gate result, 2026-07-22:** the owner accepted the proof-layer 47-mask
 > ledger structure plus the horizontal and vertical termini, isolated-shell, filled-elbow, 2×N thick-wall-repeat,
-> and N×2 horizontal thick-wall-repeat slices. The ledger now records ten direct source mappings, nine
-> approved derivations, 28 synthetic assembly candidates, and zero authored-geometry gaps. `mask_8`
+> N×2 horizontal thick-wall-repeat, and open-pocket T-junction slices. The ledger now records eleven direct
+> source mappings, ten approved derivations, 26 synthetic assembly candidates, and zero authored-geometry
+> gaps. `mask_8`
 > directly reuses the socket-polished `full_terminus` pair and `mask_2` uses its accepted whole-cell X mirror;
 > both passed at 90/40 px in 1/3/6-cell contexts. This is not acceptance of the synthetic candidate pixels or a
 > production atlas. `mask_1` and `mask_4` use separately authored vertical rollovers plus accepted east mirror-X
@@ -64,9 +65,15 @@ changes the export contract except where explicitly flagged (floor variants).
 > **Accepted horizontal thick-wall repeat slice, 2026-07-22:** the external `filled_n_middle` and
 > `filled_s_middle` pairs directly resolve rear `mask_31` and foreground `mask_38`. The 3×2/4×2/6×2 gate reads
 > as one continuous two-row wall mass, with the south-facing material stack owned only by the foreground row.
-> Acceptance records proof-layer provenance only: the ledger is now 10 direct / 9 derived / 28 synthetic /
-> 0 unresolved. No canonical source, frame identity, template registration, exporter, atlas, schema, Unity
-> asset, or `production.unity` surface is changed.
+> At that checkpoint the proof-layer ledger stood at 10 direct / 9 derived / 28 synthetic / 0 unresolved;
+> later source-family decisions supersede those counts.
+> **Accepted open-pocket T-junction slice, 2026-07-22:** the external `open_w_t_junction` pair directly resolves
+> open-west `mask_7`; `mask_13` is its accepted whole-cell X mirror after the southeast boundary-seam filter.
+> Compact 3×3 and six-cell-arm checks preserve three continuous sockets, two open floor pockets, and one molded
+> hub without a cap, post, pasted corner, or doubled seam. Acceptance records proof-layer provenance only: the
+> ledger is now 11 direct / 10 derived / 26 synthetic / 0 unresolved. No canonical source, frame identity,
+> template registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity` surface is
+> changed.
 
 ---
 

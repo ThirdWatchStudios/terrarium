@@ -27,8 +27,9 @@
 > perimeter around a 1×6 clear aisle at 90 and 40 px per cell. All four turns, one-cell horizontal bodies, and
 > six-cell side runs read as one manufactured enclosure without low-profile art or a new frame identity. The
 > canonical `mask_0` through `mask_46` proof-layer mapping plus both terminus families, the isolated shell, the
-> filled-elbow family, and both thick-wall repeat families are also accepted: ten direct, nine derived,
-> 28 synthetic candidates, and zero authored-geometry gaps. `mask_8` is direct and `mask_2` is
+> filled-elbow family, both thick-wall repeat families, and the first open-pocket T-junction pair are also
+> accepted: eleven direct, ten derived, 26 synthetic candidates, and zero authored-geometry gaps. `mask_8` is
+> direct and `mask_2` is
 > the accepted whole-cell X mirror. The synthetic candidates are not accepted art; production topology, registration, export,
 > `CONTRACT.md`, schema, committed atlases, and Unity remain deferred.
 
@@ -63,9 +64,18 @@
 > **Accepted N×2 horizontal repeat gate (owner approval, 2026-07-22):** `mask_31` directly reuses the external
 > cream-only `filled_n_middle` pair and `mask_38` directly reuses the external tri-tone `filled_s_middle` pair.
 > Between the accepted `20/16` and `26/34` columns, both sources repeat through 3×2, 4×2, and 6×2 masses while
-> preserving one continuous cream top and a south-facing foreground stack. The accepted ledger is ten direct,
-> nine derived, 28 synthetic, and zero unresolved. The external source pairs remain proof-only provenance;
+> preserving one continuous cream top and a south-facing foreground stack. At that checkpoint the accepted
+> ledger stood at ten direct, nine derived, 28 synthetic, and zero unresolved; later source-family decisions
+> supersede those counts. The external source pairs remain proof-only provenance;
 > canonical registration, exporter, atlas, schema, and Unity surfaces remain unchanged.
+
+> **Accepted open-pocket T-junction gate (owner approval, 2026-07-22):** `mask_7` directly reuses the external
+> fixed-light `open_w_t_junction` pair for its north/east/south-connected, west-exposed hub. `mask_13` is the
+> approved whole-cell X-mirror derivation after the southeast boundary-seam filter, preserving adjoining-cell
+> seam ownership. Both facings pass compact 3×3 and six-cell-arm checks while keeping their two diagonal floor
+> pockets open. The accepted ledger is eleven direct, ten derived, 26 synthetic, and zero unresolved. The
+> source remains outside canonical registration; exporter, atlas, schema, blob mapping, and Unity surfaces
+> remain unchanged.
 
 The point of this page: the QuotaCo look is not a talent bar, it is a **closed grammar** — nine paints, two
 line weights, four shading steps, eight radii, one projection recipe. An author who obeys the grammar produces
@@ -119,7 +129,7 @@ expanding the grammar.
   west/east body runs are six cells, and every join uses only the accepted source/reuse/derivation contracts.
   This is the minimum composition regression gate for any later 47-mask synthetic proof.
 - Accepted mapping law (owner approvals, 2026-07-21 through 2026-07-22): preserve the canonical 47-mask order and its explicit
-  resolution split—10 direct reuse, 9 approved derivation, 28 proof-only synthetic assembly, 0 unresolved.
+  resolution split—11 direct reuse, 10 approved derivation, 26 proof-only synthetic assembly, 0 unresolved.
   Mapping acceptance is not sprite or atlas acceptance. A synthetic family advances only through a separate
   named owner decision; the accepted external `mask_0` source closes the authored-geometry gap without promoting those candidates.
 - Accepted horizontal terminus law (owner acceptance, 2026-07-21): `mask_8` directly reuses the
@@ -273,10 +283,10 @@ be automated.
 3. Paint only with §2 swatches; shade only with §4 steps.
 4. Keep `npm run style:watch` running (§10) — every save re-validates through the real importer and
    re-renders base/upper/composed plus the distance proof, on light and dark ground. The open bench page is a
-   **current-state decision surface**: the accepted N×2 horizontal thick-wall repeat gate appears first,
-   followed by the accepted 2×N thick-wall repeat gate and accepted 2×2 thick-wall source family; the isolated shell,
+   **current-state decision surface**: the accepted open-pocket T-junction gate appears first, followed by the
+   accepted N×2 and 2×N thick-wall repeat gates and accepted 2×2 thick-wall source family; the isolated shell,
    vertical/horizontal termini, 3×8 corridor, and 47-mask ledger remain accepted proof-layer baselines. All
-   28 synthetic T/cross assembly rows remain unaccepted, and accepted pieces remain the
+   26 synthetic T/cross assembly rows remain unaccepted, and accepted pieces remain the
    comparison set. Earlier low-profile
    comparisons, mixed-profile room/envelope gates, and importer cards remain available only in closed,
    explicitly archived disclosures. They must never read as the current target.

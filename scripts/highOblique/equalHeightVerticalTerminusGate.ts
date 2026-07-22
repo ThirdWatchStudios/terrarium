@@ -289,9 +289,9 @@ export function validateEqualHeightVerticalTerminusGate(
   }
   if (
     JSON.stringify(EQUAL_HEIGHT_MASK_LEDGER.counts) !== JSON.stringify({
-      'direct-reuse': 10,
-      'approved-derivation': 9,
-      'synthetic-assembly': 28,
+      'direct-reuse': 11,
+      'approved-derivation': 10,
+      'synthetic-assembly': 26,
       'unresolved-authored-geometry': 0,
     })
   ) {
