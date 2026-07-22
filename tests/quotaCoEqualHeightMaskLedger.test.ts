@@ -72,7 +72,7 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
     }
   });
 
-  it('makes the fifteen accepted source mappings and their facing provenance explicit', () => {
+  it('makes the seventeen accepted source mappings and their facing provenance explicit', () => {
     const byIndex = new Map(
       EQUAL_HEIGHT_MASK_LEDGER.entries.map((entry) => [entry.index, entry]),
     );
@@ -156,12 +156,26 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
         derivation: 'accepted-southeast-seam-filter',
       }],
     });
+    expect(byIndex.get(24)?.resolution).toMatchObject({
+      kind: 'direct-reuse',
+      variants: [{
+        role: 'filled-west-middle-spine', sourceStem: 'filled_w_middle',
+        transform: 'none', derivation: 'none',
+      }],
+    });
+    expect(byIndex.get(42)?.resolution).toMatchObject({
+      kind: 'approved-derivation',
+      variants: [{
+        role: 'filled-east-middle-spine', sourceStem: 'filled_w_middle',
+        transform: 'mirror-x', derivation: 'none',
+      }],
+    });
 
     const resolved = EQUAL_HEIGHT_MASK_LEDGER.entries
       .filter(({ resolution }) =>
         resolution.kind === 'direct-reuse' || resolution.kind === 'approved-derivation')
       .map(({ index }) => index);
-    expect(resolved).toEqual([0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 16, 20, 26, 34]);
+    expect(resolved).toEqual([0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 16, 20, 24, 26, 34, 42]);
     expect(byIndex.get(5)?.resolution).toMatchObject({
       note: expect.stringContaining('explicit facing input'),
     });
@@ -172,9 +186,9 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
 
   it('keeps synthetic obligations honest after closing every authored-source gap', () => {
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
-      'direct-reuse': 7,
-      'approved-derivation': 8,
-      'synthetic-assembly': 32,
+      'direct-reuse': 8,
+      'approved-derivation': 9,
+      'synthetic-assembly': 30,
       'unresolved-authored-geometry': 0,
     });
     expect(
@@ -190,9 +204,9 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
 
     const synthetic = EQUAL_HEIGHT_MASK_LEDGER.entries
       .filter(({ resolution }) => resolution.kind === 'synthetic-assembly');
-    expect(synthetic).toHaveLength(32);
+    expect(synthetic).toHaveLength(30);
     expect(synthetic.filter(({ topologyClass }) => topologyClass === 'filled-elbow')).toHaveLength(0);
-    expect(synthetic.filter(({ topologyClass }) => topologyClass === 't-junction')).toHaveLength(16);
+    expect(synthetic.filter(({ topologyClass }) => topologyClass === 't-junction')).toHaveLength(14);
     expect(synthetic.filter(({ topologyClass }) => topologyClass === 'cross-junction')).toHaveLength(16);
     for (const entry of synthetic) {
       expect(entry.resolution).toMatchObject({
@@ -205,11 +219,11 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
     expect(
       EQUAL_HEIGHT_MASK_LEDGER.entries
         .filter(({ resolution }) => resolution.status === 'accepted-source-mapping'),
-    ).toHaveLength(15);
+    ).toHaveLength(17);
     expect(
       EQUAL_HEIGHT_MASK_LEDGER.entries
         .filter(({ resolution }) => resolution.status === 'proof-only-candidate'),
-    ).toHaveLength(32);
+    ).toHaveLength(30);
     expect(
       EQUAL_HEIGHT_MASK_LEDGER.entries
         .filter(({ resolution }) => resolution.status === 'unresolved'),
@@ -241,6 +255,8 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
       'filled_nw_elbow-upper.svg',
       'filled_sw_elbow-base.svg',
       'filled_sw_elbow-upper.svg',
+      'filled_w_middle-base.svg',
+      'filled_w_middle-upper.svg',
     ]));
   });
 

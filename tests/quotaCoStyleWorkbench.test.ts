@@ -6,6 +6,7 @@ import {
   ACCEPTED_CORRIDOR_GATE,
   ACCEPTED_HORIZONTAL_TERMINUS_GATE,
   ACCEPTED_MAPPING_GATE,
+  ACCEPTED_THICK_WALL_REPEAT_GATE,
   ACCEPTED_VERTICAL_TERMINUS_GATE,
   ARCHIVED_WORKBENCH_BOARDS,
   CURRENT_WORKBENCH_BOARDS,
@@ -16,6 +17,7 @@ import { EQUAL_HEIGHT_HORIZONTAL_TERMINUS_GATE } from '../scripts/highOblique/eq
 import { EQUAL_HEIGHT_ISOLATED_SHELL_GATE } from '../scripts/highOblique/equalHeightIsolatedShellGate';
 import { EQUAL_HEIGHT_MASK_LEDGER } from '../scripts/highOblique/equalHeightMaskLedger';
 import { EQUAL_HEIGHT_THICK_WALL_BLOCK_GATE } from '../scripts/highOblique/equalHeightThickWallBlockGate';
+import { EQUAL_HEIGHT_THICK_WALL_REPEAT_GATE } from '../scripts/highOblique/equalHeightThickWallRepeatGate';
 import { EQUAL_HEIGHT_VERTICAL_TERMINUS_GATE } from '../scripts/highOblique/equalHeightVerticalTerminusGate';
 
 const occurrences = (source: string, needle: string): number => source.split(needle).length - 1;
@@ -31,7 +33,14 @@ describe('QuotaCo current wall workbench', () => {
     ]);
   });
 
-  it('keeps the accepted thick-wall authored family above the other accepted source and system gates', () => {
+  it('keeps every accepted source and system gate explicit', () => {
+    expect(ACCEPTED_THICK_WALL_REPEAT_GATE).toEqual({
+      stem: EQUAL_HEIGHT_THICK_WALL_REPEAT_GATE.stem,
+      state: 'accepted',
+      title: '2×N thick-wall repeat unit',
+      summary: 'Accepted mask_24 as one west-authored open-Y cream spine and mask_42 as its approved whole-cell X mirror, proven inside 2×3, 2×4, and 2×6 solid wall masses.',
+      alt: 'owner-accepted equal-height two-column thick-wall repeat family with mask twenty-four direct and mask forty-two mirrored',
+    });
     expect(ACCEPTED_THICK_WALL_BLOCK_GATE).toEqual({
       stem: EQUAL_HEIGHT_THICK_WALL_BLOCK_GATE.stem,
       state: 'accepted',
@@ -64,7 +73,7 @@ describe('QuotaCo current wall workbench', () => {
       stem: EQUAL_HEIGHT_MASK_LEDGER.stem,
       state: 'accepted',
       title: '47-mask mapping ledger',
-      summary: 'Accepted topology map: 7 direct reuses, 8 approved derivations, 32 synthetic candidates, and 0 authored-geometry gaps.',
+      summary: 'Accepted topology map: 8 direct reuses, 9 approved derivations, 30 synthetic candidates, and 0 authored-geometry gaps.',
       alt: 'owner-accepted equal-height 47-mask mapping ledger with unaccepted synthetic candidates',
     });
     expect(ACCEPTED_HORIZONTAL_TERMINUS_GATE).toEqual({
@@ -105,6 +114,12 @@ describe('QuotaCo current wall workbench', () => {
     expect(ARCHIVED_WORKBENCH_BOARDS).not.toContainEqual(
       expect.objectContaining({ stem: ACCEPTED_THICK_WALL_BLOCK_GATE.stem }),
     );
+    expect(CURRENT_WORKBENCH_BOARDS).not.toContainEqual(
+      expect.objectContaining({ stem: ACCEPTED_THICK_WALL_REPEAT_GATE.stem }),
+    );
+    expect(ARCHIVED_WORKBENCH_BOARDS).not.toContainEqual(
+      expect.objectContaining({ stem: ACCEPTED_THICK_WALL_REPEAT_GATE.stem }),
+    );
   });
 
   it('shows only current boards in the open primary surface', () => {
@@ -121,6 +136,13 @@ describe('QuotaCo current wall workbench', () => {
     }
     expect(primary).not.toContain('full_n_straight');
     expect(primary).not.toContain('transition_n_to_e');
+    expect(occurrences(primary!, `data-stem="${ACCEPTED_THICK_WALL_REPEAT_GATE.stem}"`)).toBe(1);
+    expect(primary).toContain(
+      `data-stem="${ACCEPTED_THICK_WALL_REPEAT_GATE.stem}" data-refresh="thick-wall-repeat"`,
+    );
+    expect(primary).toContain('data-state="system-accepted" data-gate="thick-wall-repeat"');
+    expect(primary).toContain('mask_24 as one west-authored');
+    expect(primary).toContain('mask_24/mask_42 are locked at the proof layer');
     expect(occurrences(primary!, `data-stem="${ACCEPTED_THICK_WALL_BLOCK_GATE.stem}"`)).toBe(1);
     expect(primary).toContain(
       `data-stem="${ACCEPTED_THICK_WALL_BLOCK_GATE.stem}" data-refresh="thick-wall-block"`,
@@ -164,15 +186,18 @@ describe('QuotaCo current wall workbench', () => {
     expect(primary).toContain('Horizontal terminus pair');
     expect(primary).toContain('Accepted mask_8 direct source');
     expect(page).toContain('No proposal is currently active');
-    expect(page).not.toContain('Review next');
-    expect(page).not.toContain('all four ledger rows remain synthetic');
+    expect(page).not.toContain('One proposal is active');
+    expect(page).not.toContain('Review next · 2 mappings');
+    expect(page).toContain('mask_24 is direct; mask_42 is the accepted whole-cell mirror-X derivation');
     expect(page).toContain('mask_0 is accepted as one fixed-view direct source with zero cardinal sockets');
     expect(page).not.toContain('sole unresolved authored row');
     expect(page).toContain('3×8 narrow-corridor closure');
     expect(page).toContain('Accepted equal-height enclosure baseline at 90 and 40 pixels per cell');
     expect(page).toContain('Accepted system mapping');
     expect(occurrences(page, '47-mask mapping ledger')).toBe(3);
-    expect(page).toContain('32 synthetic candidates remain proof-only');
+    expect(page).toContain('30 synthetic candidates remain proof-only');
+    expect(page.indexOf(`data-stem="${ACCEPTED_THICK_WALL_REPEAT_GATE.stem}"`))
+      .toBeLessThan(page.indexOf(`data-stem="${ACCEPTED_THICK_WALL_BLOCK_GATE.stem}"`));
     expect(page.indexOf(`data-stem="${ACCEPTED_THICK_WALL_BLOCK_GATE.stem}"`))
       .toBeLessThan(page.indexOf(`data-stem="${ACCEPTED_ISOLATED_SHELL_GATE.stem}"`));
     expect(page.indexOf(`data-stem="${ACCEPTED_ISOLATED_SHELL_GATE.stem}"`))
@@ -208,6 +233,7 @@ describe('QuotaCo current wall workbench', () => {
     const page = renderStyleWorkbenchPage([]);
 
     expect(page).toContain('document.querySelectorAll(`[data-refresh="${group}"]`)');
+    expect(page).toContain('"thick-wall-repeat":s.thickWallRepeatRenderedAt');
     expect(page).toContain('"thick-wall-block":s.thickWallBlockRenderedAt');
     expect(page).toContain('"isolated-shell":s.isolatedShellRenderedAt');
     expect(page).toContain('"vertical-terminus":s.verticalTerminusRenderedAt');

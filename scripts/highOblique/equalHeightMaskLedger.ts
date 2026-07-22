@@ -305,6 +305,26 @@ const filledSoutheastElbow: EqualHeightMaskSourceVariant = {
   facingRule: 'connected north and west with a solid northwest diagonal through mirror-X plus the accepted southeast seam filter',
 };
 
+const filledWestMiddle: EqualHeightMaskSourceVariant = {
+  role: 'filled-west-middle-spine',
+  sourceStem: 'filled_w_middle',
+  baseFile: 'filled_w_middle-base.svg',
+  upperFile: 'filled_w_middle-upper.svg',
+  transform: 'none',
+  derivation: 'none',
+  facingRule: 'connected north, east, and south with the west edge exposed; authored open-Y west spine for a solid two-column wall mass',
+};
+
+const filledEastMiddle: EqualHeightMaskSourceVariant = {
+  role: 'filled-east-middle-spine',
+  sourceStem: 'filled_w_middle',
+  baseFile: 'filled_w_middle-base.svg',
+  upperFile: 'filled_w_middle-upper.svg',
+  transform: 'mirror-x',
+  derivation: 'none',
+  facingRule: 'connected north, south, and west with the east edge exposed through the accepted whole-cell X mirror',
+};
+
 function topologyFor(config: WallTileConfig): EqualHeightMaskTopologyClass {
   const connected = EDGES.filter((edge) => config[edge]);
   if (connected.length === 0) return 'isolated';
@@ -449,6 +469,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         variants: [filledNorthwestElbow],
         note: 'Accepted rear-west filled elbow directly reuses the authored solid-top source.',
       };
+    case 24:
+      return {
+        kind: 'direct-reuse',
+        status: 'accepted-source-mapping',
+        variants: [filledWestMiddle],
+        note: 'Accepted west middle spine directly extends the filled-wall cream top through both Y sockets without an internal belt or seam.',
+      };
     case 26:
       return {
         kind: 'approved-derivation',
@@ -462,6 +489,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         status: 'accepted-source-mapping',
         variants: [filledSoutheastElbow],
         note: 'Accepted foreground-east filled elbow mirrors the foreground-west source after the accepted southeast seam filter.',
+      };
+    case 42:
+      return {
+        kind: 'approved-derivation',
+        status: 'accepted-source-mapping',
+        variants: [filledEastMiddle],
+        note: 'Accepted east middle spine is the whole-cell mirror-X derivation of the west-authored open-Y filled-wall source.',
       };
     default:
       return undefined;
@@ -567,6 +601,8 @@ const ACCEPTED_SOURCE_VARIANTS = new Set([
   filledNorthwestElbow,
   filledNortheastElbow,
   filledSoutheastElbow,
+  filledWestMiddle,
+  filledEastMiddle,
 ].map(sourceVariantSignature));
 
 function variantsFor(

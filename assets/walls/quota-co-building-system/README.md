@@ -28,9 +28,9 @@ and all four corners close as one enclosure.
 
 **Accepted mapping gate (owner approvals, 2026-07-21 through 2026-07-22):** the proof-layer ledger
 locks the unchanged canonical `mask_0` through `mask_46` order and classifies
-seven direct reuses, eight approved derivations, 32 synthetic assembly
+eight direct reuses, nine approved derivations, 30 synthetic assembly
 candidates, and zero authored-geometry gaps. This accepts the mapping
-structure and provenance boundaries only. It does not accept the 32 synthetic
+structure and provenance boundaries only. It does not accept the 30 synthetic
 assembly diagrams or create an atlas/production family.
 
 **Accepted horizontal terminus gate (owner approval, 2026-07-21):** `mask_8`
@@ -58,10 +58,17 @@ records proof-ledger source provenance only and closes the authored-geometry gap
 `../quota-co-building-system-proofs/thick-wall-block/` bank supplies direct fixed-light sources for
 `mask_16` and `mask_20`; `mask_26` and `mask_34` are accepted whole-cell X-mirror derivations, with
 the southeast seam filter applied before mirroring `mask_34`. Together they replace buried pocket
-faces with one continuous wall-top mass in a completely occupied 2×2 block. The ledger now records
+faces with one continuous wall-top mass in a completely occupied 2×2 block. That checkpoint recorded
 seven direct mappings, eight approved derivations, 32 synthetic T/cross candidates, and zero gaps.
 These sources remain outside the canonical production inventory and do not create exporter, atlas,
 schema, or Unity registrations.
+
+**Accepted thick-wall repeat gate (owner approval, 2026-07-22):** the external
+`../quota-co-building-system-proofs/thick-wall-repeat/` bank supplies one fixed-light west middle source for
+`mask_24`; `mask_42` is its accepted whole-cell X-mirror derivation. The focused 2×3/2×4/2×6 gate proves that
+the pair extends the accepted 2×2 block as one uninterrupted cream mass. The ledger now records 8 direct /
+9 derived / 30 synthetic / 0 unresolved rows. This proof-layer promotion creates no canonical source,
+exporter, atlas, schema, or Unity registration.
 
 The original independently finished low-base-plus-optional-upper construction was
 rejected on 2026-07-20 because its duplicate caps and contours read as one wall

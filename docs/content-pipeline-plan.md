@@ -37,8 +37,8 @@ changes the export contract except where explicitly flagged (floor variants).
 > approved partition family. This decision still changes no production template, topology, exporter, schema,
 > or Unity contract.
 > **Current mapping and source-gate result, 2026-07-22:** the owner accepted the proof-layer 47-mask
-> ledger structure plus the horizontal, vertical, isolated-shell, and filled-elbow slices. The ledger now records seven direct source mappings, eight
-> approved derivations, 32 synthetic assembly candidates, and zero authored-geometry gaps. `mask_8`
+> ledger structure plus the horizontal, vertical, isolated-shell, filled-elbow, and thick-wall-repeat slices. The ledger now records eight direct source mappings, nine
+> approved derivations, 30 synthetic assembly candidates, and zero authored-geometry gaps. `mask_8`
 > directly reuses the socket-polished `full_terminus` pair and `mask_2` uses its accepted whole-cell X mirror;
 > both passed at 90/40 px in 1/3/6-cell contexts. This is not acceptance of the synthetic candidate pixels or a
 > production atlas. `mask_1` and `mask_4` use separately authored vertical rollovers plus accepted east mirror-X
@@ -56,6 +56,10 @@ changes the export contract except where explicitly flagged (floor variants).
 > approved X-mirror derivations for `mask_26`/`mask_34` passed as one continuous 2×2 wall mass at 240/90/40 px,
 > on light/dark grounds and beside a clear aisle. Acceptance records proof-layer provenance only; exporter,
 > atlas, schema, and Unity surfaces remain unchanged.
+> **Accepted thick-wall repeat slice, 2026-07-22:** one external `filled_w_middle` pair directly resolves
+> `mask_24`, with `mask_42` accepted as its whole-cell X mirror. The 2×3/2×4/2×6 gate reads as one cream mass
+> without a middle belt or buried rail. Acceptance records proof-layer provenance only: the ledger is now
+> 8 direct / 9 derived / 30 synthetic / 0 unresolved and all production surfaces remain unchanged.
 
 ---
 

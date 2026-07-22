@@ -26,8 +26,8 @@
 > **Current system-gate amendment (owner approvals, 2026-07-21 through 2026-07-22):** the accepted sources close a 3×8 equal-height
 > perimeter around a 1×6 clear aisle at 90 and 40 px per cell. All four turns, one-cell horizontal bodies, and
 > six-cell side runs read as one manufactured enclosure without low-profile art or a new frame identity. The
-> canonical `mask_0` through `mask_46` proof-layer mapping plus both terminus families, the isolated shell, and the filled-elbow family are
-> also accepted: seven direct, eight derived, 32 synthetic candidates, and zero authored-geometry gaps. `mask_8` is direct and `mask_2` is
+> canonical `mask_0` through `mask_46` proof-layer mapping plus both terminus families, the isolated shell, the filled-elbow family, and the thick-wall repeat pair are
+> also accepted: eight direct, nine derived, 30 synthetic candidates, and zero authored-geometry gaps. `mask_8` is direct and `mask_2` is
 > the accepted whole-cell X mirror. The synthetic candidates are not accepted art; production topology, registration, export,
 > `CONTRACT.md`, schema, committed atlases, and Unity remain deferred.
 
@@ -52,6 +52,11 @@
 > register. No render-only block overlay is used. Rows `16/20` are accepted direct proof-source mappings and
 > `26/34` are accepted derivations; the external proof SVGs remain outside production registration. Export,
 > atlas, schema, and Unity surfaces remain unchanged.
+
+> **Accepted 2×N repeat gate (owner approval, 2026-07-22):** `mask_24` directly reuses one external west-authored
+> `filled_w_middle` pair and `mask_42` is its accepted whole-cell X mirror. Between the accepted `20/26` and
+> `16/34` rows, the pair extends one cream mass with no internal rail, fascia, cap, shade, or Y seam through
+> 2×3, 2×4, and 2×6 checks. The accepted ledger is eight direct, nine derived, 30 synthetic, and zero unresolved.
 
 The point of this page: the QuotaCo look is not a talent bar, it is a **closed grammar** — nine paints, two
 line weights, four shading steps, eight radii, one projection recipe. An author who obeys the grammar produces
@@ -105,7 +110,7 @@ expanding the grammar.
   west/east body runs are six cells, and every join uses only the accepted source/reuse/derivation contracts.
   This is the minimum composition regression gate for any later 47-mask synthetic proof.
 - Accepted mapping law (owner approvals, 2026-07-21 through 2026-07-22): preserve the canonical 47-mask order and its explicit
-  resolution split—7 direct reuse, 8 approved derivation, 32 proof-only synthetic assembly, 0 unresolved.
+  resolution split—8 direct reuse, 9 approved derivation, 30 proof-only synthetic assembly, 0 unresolved.
   Mapping acceptance is not sprite or atlas acceptance. A synthetic family advances only through a separate
   named owner decision; the accepted external `mask_0` source closes the authored-geometry gap without promoting those candidates.
 - Accepted horizontal terminus law (owner acceptance, 2026-07-21): `mask_8` directly reuses the
@@ -124,6 +129,10 @@ expanding the grammar.
   foreground/rear west fixed-light source pairs; `mask_26` and `mask_34` use accepted whole-cell X mirrors, with
   the southeast seam filter applied before mirroring `mask_34`. Judge the four as one 2×2 wall mass at 240/90/40 px,
   on light/dark grounds and beside a one-cell aisle. The source bank remains unregistered and unexported.
+- Accepted repeat law (owner acceptance, 2026-07-22): `mask_24` directly reuses the west-authored
+  `filled_w_middle` pair and `mask_42` uses its accepted whole-cell X mirror as the plain middle row of 2×3,
+  2×4, and 2×6 thick masses. The composed silhouette stays seamless at 240/90/40 px; the external source bank
+  remains unregistered and unexported.
 - Vertical profiles (current kit law): ordinary walls occupy one **64-unit outer profile**.
   `base` and `upper` are technical paint passes, not two finished products: draw base first, then upper at
   the same centered pivot, and judge only their composed silhouette. The former **38-unit outer profile
@@ -255,9 +264,10 @@ be automated.
 3. Paint only with §2 swatches; shade only with §4 steps.
 4. Keep `npm run style:watch` running (§10) — every save re-validates through the real importer and
    re-renders base/upper/composed plus the distance proof, on light and dark ground. The open bench page is a
-   **current-state decision surface**: the accepted 2×2 thick-wall source family appears first; the isolated shell,
+   **current-state decision surface**: the accepted 2×N thick-wall repeat gate appears first, followed by the
+   accepted 2×2 thick-wall source family; the isolated shell,
    vertical/horizontal termini, 3×8 corridor, and 47-mask ledger remain accepted proof-layer baselines. All
-   32 synthetic T/cross assembly rows remain unaccepted, and accepted pieces remain the
+   30 synthetic T/cross assembly rows remain unaccepted, and accepted pieces remain the
    comparison set. Earlier low-profile
    comparisons, mixed-profile room/envelope gates, and importer cards remain available only in closed,
    explicitly archived disclosures. They must never read as the current target.
