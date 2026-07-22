@@ -184,10 +184,10 @@ describe('QuotaCo owner-accepted proof-layer equal-height horizontal terminus ga
       topologyClass: 'terminus', connectedEdges: ['e'], exposedEdges: ['n', 's', 'w'],
     });
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
-      'direct-reuse': 4,
+      'direct-reuse': 5,
       'approved-derivation': 6,
       'synthetic-assembly': 36,
-      'unresolved-authored-geometry': 1,
+      'unresolved-authored-geometry': 0,
     });
   });
 
@@ -350,8 +350,11 @@ describe('QuotaCo owner-accepted proof-layer equal-height horizontal terminus ga
     expect(Object.keys(wallAtlas(DEFAULT_WALLS[0], DEFAULT_STYLE, 1).frames)).toEqual(
       Array.from({ length: BLOB_TILE_COUNT }, (_, index) => `mask_${index}`),
     );
-    expect(EQUAL_HEIGHT_MASK_LEDGER.entries[0].resolution.kind)
-      .toBe('unresolved-authored-geometry');
+    expect(EQUAL_HEIGHT_MASK_LEDGER.entries[0].resolution).toMatchObject({
+      kind: 'direct-reuse',
+      status: 'accepted-source-mapping',
+      variants: [{ sourceStem: 'isolated_shell', transform: 'none', derivation: 'none' }],
+    });
     expect([1, 4].map((index) => EQUAL_HEIGHT_MASK_LEDGER.entries[index].resolution.kind))
       .toEqual(Array(2).fill('approved-derivation'));
   });

@@ -125,6 +125,16 @@ export interface EqualHeightMaskLedger {
 const EDGES = ['n', 'e', 's', 'w'] as const;
 const CORNERS = ['ne', 'se', 'sw', 'nw'] as const;
 
+const isolatedShell: EqualHeightMaskSourceVariant = {
+  role: 'isolated-shell',
+  sourceStem: 'isolated_shell',
+  baseFile: 'isolated_shell-base.svg',
+  upperFile: 'isolated_shell-upper.svg',
+  transform: 'none',
+  derivation: 'none',
+  facingRule: 'zero cardinal sockets; one fixed front-on authored structural shell',
+};
+
 const horizontalShared: EqualHeightMaskSourceVariant = {
   role: 'north-or-south-wall',
   sourceStem: PROMOTED_SOUTH_WALL_REUSE.sourceStem,
@@ -269,13 +279,7 @@ function topologyFor(config: WallTileConfig): EqualHeightMaskTopologyClass {
 }
 
 function unresolvedReason(topologyClass: EqualHeightMaskTopologyClass): string {
-  if (topologyClass === 'isolated') {
-    return 'No isolated-cell shell is in the accepted equal-height set; the accepted one-link horizontal terminus does not define a zero-link catalog product.';
-  }
-  if (topologyClass === 'terminus') {
-    return 'No accepted vertical directional end treatment exists for this one-link case; the horizontal source must not be rotated.';
-  }
-  throw new Error(`Unexpected unresolved equal-height topology ${topologyClass}`);
+  return `No accepted authored source mapping exists for this ${topologyClass} row.`;
 }
 
 function uniqueVariants(
@@ -322,6 +326,13 @@ function syntheticIngredientsFor(
 
 function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
   switch (index) {
+    case 0:
+      return {
+        kind: 'direct-reuse',
+        status: 'accepted-source-mapping',
+        variants: [isolatedShell],
+        note: 'Accepted zero-link catalog cell directly reuses the authored isolated structural shell with no transform or derivation.',
+      };
     case 1:
       return {
         kind: 'approved-derivation',
@@ -478,6 +489,7 @@ const sourceVariantSignature = (variant: EqualHeightMaskSourceVariant): string =
 ]);
 
 const ACCEPTED_SOURCE_VARIANTS = new Set([
+  isolatedShell,
   horizontalShared,
   westWall,
   eastWall,

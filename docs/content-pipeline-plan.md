@@ -36,18 +36,22 @@ changes the export contract except where explicitly flagged (floor variants).
 > low-south/east and full-to-low artifacts remain historical comparisons and may only inform a separately
 > approved partition family. This decision still changes no production template, topology, exporter, schema,
 > or Unity contract.
-> **Current mapping and terminus result, 2026-07-21:** the owner accepted the proof-layer 47-mask
-> ledger structure plus the horizontal and vertical terminus slices. The ledger now records four direct source mappings, six
-> approved derivations, 36 synthetic assembly candidates, and one explicit authored-geometry gap. `mask_8`
+> **Current mapping and source-gate result, 2026-07-22:** the owner accepted the proof-layer 47-mask
+> ledger structure plus the horizontal, vertical, and isolated-shell slices. The ledger now records five direct source mappings, six
+> approved derivations, 36 synthetic assembly candidates, and zero authored-geometry gaps. `mask_8`
 > directly reuses the socket-polished `full_terminus` pair and `mask_2` uses its accepted whole-cell X mirror;
 > both passed at 90/40 px in 1/3/6-cell contexts. This is not acceptance of the synthetic candidate pixels or a
 > production atlas. `mask_1` and `mask_4` use separately authored vertical rollovers plus accepted east mirror-X
-> derivations; isolated `mask_0` is the only remaining authored gap. Rotation is prohibited. Production registration,
+> derivations. `mask_0` directly reuses one external, fixed-view `isolated_shell` pair with zero cardinal sockets;
+> mirror and rotation are prohibited. Production registration,
 > frame identities, export/`CONTRACT.md`, schema, committed atlases, Unity assets, and `production.unity` remain
 > outside this authorization.
 > **Accepted vertical terminus slice, 2026-07-21:** the family has two separately authored external source
 > pairs plus west/east, 240/90/40 px, 1/3/6-run, socket, and minimum-segment evidence. Acceptance records
 > proof-layer provenance only; all production signatures remain unchanged.
+> **Accepted isolated-shell slice, 2026-07-22:** one external base/upper pair passed its 240/90/40 px,
+> contained-boundary, light/dark-ground, and compact-placement evidence. Acceptance records direct proof-layer
+> provenance for `mask_0` only; it does not register or export a production frame.
 
 ---
 

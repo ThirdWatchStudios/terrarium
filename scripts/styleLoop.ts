@@ -8,10 +8,10 @@
  * Every save re-validates the masters through the real A1b importer and
  * re-renders one card per stem: base / upper / composed plus the composed
  * frame at the close / normal / far review sizes on light and dark ground.
- * The open page is a current-state decision surface: the accepted horizontal
- * terminus gate first, then the accepted 47-mask mapping, equal-height
- * enclosure, and working contracts. Historical mixed-profile gates and
- * compiler cards remain available in closed disclosures.
+ * The open page is a current-state decision surface: the active isolated-shell
+ * review first, followed by the accepted source, mapping, enclosure, and
+ * working-set gates. Historical mixed-profile gates and compiler cards remain
+ * available in closed disclosures.
  * Saves under low-profile-correction/ still re-render comparison evidence used
  * inside the current proof sheets.
  * Output is disposable (.style-loop/ is gitignored and kept outside Vite's
@@ -52,6 +52,13 @@ import {
 import {
   compileA1bVerticalTerminusProposalDirectory,
 } from './highOblique/a1bVerticalTerminusProposal';
+import {
+  compileA1bIsolatedShellProposalDirectory,
+} from './highOblique/a1bIsolatedShellProposal';
+import {
+  EQUAL_HEIGHT_ISOLATED_SHELL_GATE,
+  type EqualHeightIsolatedShellLayer,
+} from './highOblique/equalHeightIsolatedShellGate';
 import {
   EQUAL_HEIGHT_VERTICAL_TERMINUS_GATE,
   equalHeightVerticalTerminusMinimumSegment,
@@ -95,6 +102,9 @@ const crossSectionProofsDirectory = (input: string): string =>
 
 const verticalTerminusProposalDirectory = (input: string): string =>
   path.join(crossSectionProofsDirectory(input), 'vertical-terminus');
+
+const isolatedShellProposalDirectory = (input: string): string =>
+  path.join(crossSectionProofsDirectory(input), 'isolated-shell');
 
 // The distraction-free envelope gate: one closed 3x3 wall section assembled
 // only from the structural masters under review. The empty centre cell exposes
@@ -570,6 +580,7 @@ async function render(
   await renderFullHeightSouthwestProof(options);
   await renderFullHeightSoutheastProof(options);
   await renderEqualHeightCorridorGate(options);
+  await renderEqualHeightIsolatedShellGate(options, root);
   await renderEqualHeightVerticalTerminusGate(options, root);
   await renderEqualHeightHorizontalTerminusGate(options);
   await renderEqualHeightMaskLedger(options, root);
@@ -584,6 +595,7 @@ async function render(
     roomRenderedAt: renderedAt,
     ladderRenderedAt: renderedAt,
     focusRenderedAt: renderedAt,
+    isolatedShellRenderedAt: renderedAt,
     verticalTerminusRenderedAt: renderedAt,
     terminusRenderedAt: renderedAt,
     mappingRenderedAt: renderedAt,
@@ -632,6 +644,21 @@ async function verticalTerminusProposalFileOverrides(
   ]);
 }
 
+async function isolatedShellProposalFileOverrides(
+  options: CliOptions,
+  root: string,
+): Promise<CompositionFileOverrides> {
+  const directory = isolatedShellProposalDirectory(options.input);
+  const compiled = await compileA1bIsolatedShellProposalDirectory({
+    inputDir: directory,
+    sourcePathPrefix: path.relative(root, directory).replaceAll(path.sep, '/'),
+  });
+  return Object.fromEntries([
+    [EMPTY_WORKBENCH_FILE, EMPTY_WORKBENCH_SOURCE],
+    ...compiled.map(({ filename, content }) => [filename, content] as const),
+  ]);
+}
+
 const transformCellContent = (
   content: string,
   transform: EqualHeightWallTransform = 'none',
@@ -661,6 +688,7 @@ async function compositionWindow(
   fileOverrides: CompositionFileOverrides = {},
   cropViewBox?: string,
   showGrid = true,
+  floorFill: string = A1A_PALETTE.floor,
 ): Promise<string> {
   const basePass: string[] = [];
   const upperPass: string[] = [];
@@ -683,7 +711,7 @@ async function compositionWindow(
   return (
     `<svg x="${x}" y="${y}" width="${width}" height="${height}" ` +
     `viewBox="${cropViewBox ?? `0 0 ${columns * 128} ${rows * 128}`}" preserveAspectRatio="none">` +
-    `<rect width="${columns * 128}" height="${rows * 128}" fill="${A1A_PALETTE.floor}"/>` +
+    `<rect width="${columns * 128}" height="${rows * 128}" fill="${floorFill}"/>` +
     (showGrid
       ? `<g fill="none" stroke="${INK}" stroke-width="1" opacity="0.14">${gridLines}</g>`
       : '') +
@@ -1763,7 +1791,7 @@ async function renderEqualHeightCorridorGate(options: CliOptions): Promise<void>
     text(1080, 902, '• mirrored southeast adds no duplicate service tick', 11, 650, MUTED),
     text(1080, 932, '• no low-profile source or new frame identity is present', 11, 650, MUTED),
     text(624, 1000, 'ACCEPTED BASELINE', 11, 800, MUTED),
-    text(624, 1028, 'Horizontal + vertical termini accepted · isolated mask_0 remains.', 12, 750, A1A_PALETTE.green),
+    text(624, 1028, 'All authored source rows accepted · synthetic assemblies remain proof-only.', 12, 750, A1A_PALETTE.green),
   ];
 
   parts.push(
@@ -1832,6 +1860,230 @@ async function renderEqualHeightCorridorGate(options: CliOptions): Promise<void>
   await writeFile(path.join(options.output, `${EQUAL_HEIGHT_CORRIDOR_GATE.stem}.png`), png);
 }
 
+function equalHeightIsolatedShellCell(
+  layer: EqualHeightIsolatedShellLayer = 'composed',
+  col = 0,
+  row = 0,
+): CompositionCell {
+  const gate = EQUAL_HEIGHT_ISOLATED_SHELL_GATE;
+  if (layer === 'base') return [col, row, gate.baseFile, null];
+  if (layer === 'upper') return [col, row, EMPTY_WORKBENCH_FILE, gate.upperFile];
+  return [col, row, gate.baseFile, gate.upperFile];
+}
+
+function equalHeightIsolatedShellContextCells(
+  positions: readonly (readonly [number, number])[],
+): CompositionCell[] {
+  return positions.map(([col, row]) => equalHeightIsolatedShellCell('composed', col, row));
+}
+
+async function renderEqualHeightIsolatedShellGate(
+  options: CliOptions,
+  root: string,
+): Promise<void> {
+  const gate = EQUAL_HEIGHT_ISOLATED_SHELL_GATE;
+  const width = 1600;
+  const height = 1580;
+  const panelFill = '#ECE5D5';
+  const panel = (x: number, y: number, w: number, h: number): string =>
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="14" fill="${panelFill}" ` +
+    `stroke="${INK}" stroke-width="1.5" opacity="0.96"/>`;
+  const fileOverrides = {
+    ...await isolatedShellProposalFileOverrides(options, root),
+    ...await verticalTerminusProposalFileOverrides(options, root),
+  };
+  const singleContext = gate.contexts[0];
+  const pairContext = gate.contexts[1];
+  const parts: string[] = [
+    `<rect width="${width}" height="${height}" rx="18" fill="${PANEL}"/>`,
+    text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED MASK_0 ISOLATED SHELL GATE', 24, 820),
+    text(24, 68, 'Owner-accepted proof layer · one full-height structural housing · zero cardinal sockets · no transform', 13, 650, MUTED),
+    text(1576, 38, 'MASK_0 MAPPING ACCEPTED', 11, 820, A1A_PALETTE.green, 'end'),
+    text(1576, 62, '5 direct · 6 derived · 36 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
+
+    panel(20, 92, 1120, 410),
+    text(44, 126, 'ONE MOLDED HOUSING — LAYER READ AT 240 PX', 14, 820),
+    text(44, 150, 'Base owns one continuous green body; upper commits to the accepted front-on wall plane.', 10, 650, MUTED),
+    panel(1160, 92, 420, 410),
+    text(1184, 126, 'DISTANCE + GROUND CHECK', 14, 820),
+    text(1184, 150, 'The silhouette must survive without labels.', 10, 650, MUTED),
+
+    panel(20, 522, 760, 570),
+    text(44, 556, 'ONE OCCUPIED CELL IN A 3×3 FLOOR', 14, 820),
+    text(44, 580, 'Contained alpha on every edge: this tile exposes four sides and joins nothing.', 10, 650, MUTED),
+    panel(800, 522, 780, 570),
+    text(824, 556, 'COMPACT SEPARATION + FAMILY SCALE', 14, 820),
+    text(824, 580, 'Two diagonal shells stay separate; accepted neighbors establish the shared wall mass.', 10, 650, MUTED),
+
+    panel(20, 1112, 1560, 448),
+    text(44, 1148, 'READING CONTRACT', 14, 820),
+    text(824, 1148, 'PROOF BOUNDARY', 14, 820),
+  ];
+
+  for (const [index, layer] of gate.reviewLayers.entries()) {
+    const x = 58 + index * 350;
+    parts.push(text(x + 120, 184, layer.toUpperCase(), 11, 820, layer === 'composed' ? '#294B3C' : MUTED, 'middle'));
+    parts.push(
+      await compositionWindow(
+        options,
+        [equalHeightIsolatedShellCell(layer)],
+        1,
+        1,
+        x,
+        204,
+        240,
+        240,
+        fileOverrides,
+      ),
+    );
+    parts.push(text(x + 120, 466, layer === 'composed' ? 'ONE ACCEPTED SHELL · NOT FOUR CAPS' : `${layer} source`, 10, 780, layer === 'composed' ? A1A_PALETTE.green : MUTED, 'middle'));
+  }
+
+  const distanceChecks: ReadonlyArray<readonly [number, number, 90 | 40, string, string]> = [
+    [1192, 190, 90, A1A_PALETTE.floor, '90 · LIGHT'],
+    [1360, 190, 90, A1A_PALETTE.charcoal, '90 · DARK'],
+    [1217, 350, 40, A1A_PALETTE.floor, '40 · LIGHT'],
+    [1385, 350, 40, A1A_PALETTE.charcoal, '40 · DARK'],
+  ];
+  for (const [x, y, size, floorFill, label] of distanceChecks) {
+    parts.push(
+      await compositionWindow(
+        options,
+        [equalHeightIsolatedShellCell()],
+        1,
+        1,
+        x,
+        y,
+        size,
+        size,
+        fileOverrides,
+        undefined,
+        false,
+        floorFill,
+      ),
+    );
+    parts.push(text(x + size / 2, y + size + 18, label, 9, 800, MUTED, 'middle'));
+  }
+  parts.push(text(1184, 454, 'PASS · squat structural mass, visible coral register, no post or appliance read', 9, 740, '#294B3C'));
+
+  parts.push(text(179, 618, '90 PX / CELL', 10, 820, MUTED, 'middle'));
+  parts.push(
+    await compositionWindow(
+      options,
+      equalHeightIsolatedShellContextCells(singleContext.positions),
+      singleContext.columns,
+      singleContext.rows,
+      44,
+      636,
+      270,
+      270,
+      fileOverrides,
+    ),
+  );
+  parts.push(text(410, 618, '40 PX / CELL', 10, 820, MUTED, 'middle'));
+  parts.push(
+    await compositionWindow(
+      options,
+      equalHeightIsolatedShellContextCells(singleContext.positions),
+      singleContext.columns,
+      singleContext.rows,
+      350,
+      636,
+      120,
+      120,
+      fileOverrides,
+      undefined,
+      true,
+    ),
+  );
+  parts.push(text(44, 956, 'ZERO-SOCKET TEST', 10, 820, '#9A493D'));
+  parts.push(text(44, 982, '• no alpha reaches north / east / south / west cell boundaries', 10, 680, MUTED));
+  parts.push(text(44, 1008, '• no cardinal nose, collar, or half-join implies a neighbor', 10, 680, MUTED));
+  parts.push(text(44, 1034, '• one cell remains visibly blocked without pretending to be a full room', 10, 680, MUTED));
+
+  parts.push(text(938, 618, 'DIAGONAL PAIR · 90 PX / CELL', 10, 820, MUTED, 'middle'));
+  parts.push(
+    await compositionWindow(
+      options,
+      equalHeightIsolatedShellContextCells(pairContext.positions),
+      pairContext.columns,
+      pairContext.rows,
+      848,
+      636,
+      180,
+      180,
+      fileOverrides,
+    ),
+  );
+  parts.push(text(1108, 618, '40 PX / CELL', 10, 820, MUTED, 'middle'));
+  parts.push(
+    await compositionWindow(
+      options,
+      equalHeightIsolatedShellContextCells(pairContext.positions),
+      pairContext.columns,
+      pairContext.rows,
+      1068,
+      636,
+      80,
+      80,
+      fileOverrides,
+    ),
+  );
+
+  const comparisons: ReadonlyArray<readonly [string, CompositionCell]> = [
+    ['NW CORNER', [0, 0, 'full_exterior_corner-base.svg', 'full_exterior_corner-upper.svg']],
+    ['MASK_0', equalHeightIsolatedShellCell()],
+    ['H END', [0, 0, 'full_terminus-base.svg', 'full_terminus-upper.svg']],
+    ['V END', [0, 0, 'vertical_s_terminus-base.svg', 'vertical_s_terminus-upper.svg']],
+  ];
+  for (const [index, [label, cell]] of comparisons.entries()) {
+    const x = 824 + index * 178;
+    parts.push(
+      await compositionWindow(options, [cell], 1, 1, x, 846, 90, 90, fileOverrides),
+    );
+    parts.push(text(x + 45, 954, label, 9, 820, label === 'MASK_0' ? A1A_PALETTE.green : MUTED, 'middle'));
+  }
+  parts.push(text(824, 994, 'Same 128×128 cell · same tri-tone hierarchy · deliberately different topology', 10, 700, MUTED));
+  parts.push(text(824, 1024, 'The isolated cell is a compact pier, never a terminus with nowhere to connect.', 10, 700, '#294B3C'));
+
+  const readingLines = [
+    'ONE uninterrupted rounded-square outer contour',
+    'ONE front-on cream coping plane with one horizontal edge',
+    'ONE coral register spanning the same front-facing plane',
+    'ONE broad green body and compact charcoal contact edge',
+    'No vertical side register competes with the chosen front perspective',
+    'At 40 px: near-square mass first, tri-tone hierarchy second',
+  ];
+  for (const [index, line] of readingLines.entries()) {
+    parts.push(text(44, 1184 + index * 48, `• ${line}`, 11, 700, index < 4 ? '#294B3C' : MUTED));
+  }
+  parts.push(text(44, 1490, 'FAIL IF IT READS AS', 10, 820, '#9A493D'));
+  parts.push(text(44, 1518, 'four caps · pipe fitting · bollard · appliance · decorative prop', 11, 760, '#9A493D'));
+
+  const boundaryLines: ReadonlyArray<readonly [string, string]> = [
+    ['MASK_0 · DIRECT SOURCE ACCEPTED', A1A_PALETTE.green],
+    ['ledger row accepted · source provenance only', MUTED],
+    ['one authored orientation · no mirror / rotation', MUTED],
+    ['external editable proof pair retained', MUTED],
+    ['NO PRODUCTION REGISTRATION', '#9A493D'],
+    ['NO EXPORT / ATLAS / SCHEMA', '#9A493D'],
+    ['NO UNITY OR TOPOLOGY MUTATION', '#9A493D'],
+    ['OWNER-ACCEPTED PROOF SOURCE', A1A_PALETTE.green],
+  ];
+  for (const [index, [line, color]] of boundaryLines.entries()) {
+    parts.push(text(824, 1188 + index * 43, line, index === 0 || index >= 4 ? 11 : 10, index === 0 || index >= 4 ? 820 : 680, color));
+  }
+  parts.push(text(824, 1516, 'Acceptance records proof-layer provenance only; production remains a separate decision.', 10, 700, MUTED));
+
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" ` +
+    `viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+  const png = new Resvg(svg, {
+    fitTo: { mode: 'width', value: width * CARD_RENDER_SCALE },
+  }).render().asPng();
+  await writeFile(path.join(options.output, `${gate.stem}.png`), png);
+}
+
 async function renderEqualHeightVerticalTerminusGate(
   options: CliOptions,
   root: string,
@@ -1849,7 +2101,7 @@ async function renderEqualHeightVerticalTerminusGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED VERTICAL TERMINUS GATE', 24, 820),
     text(24, 68, 'Owner-accepted proof layer · two authored wall rollovers · west source + east mirror-X derivation', 13, 650, MUTED),
     text(1976, 38, 'MASK_1 + MASK_4 MAPPING ACCEPTED', 11, 820, A1A_PALETTE.green, 'end'),
-    text(1976, 62, '4 direct · 6 derived · 36 synthetic · 1 unresolved', 10, 700, MUTED, 'end'),
+    text(1976, 62, '5 direct · 6 derived · 36 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
   ];
 
   const isolated: ReadonlyArray<readonly [1 | 4, EqualHeightVerticalTerminusWallSide]> = [
@@ -2092,7 +2344,7 @@ async function renderEqualHeightVerticalTerminusGate(
     ['X MIRROR · ACCEPTED', '#4E7D79'],
     ['LEDGER ROWS ACCEPTED', A1A_PALETTE.green],
     ['mask_1 / 4 · derived', MUTED],
-    ['mask_0 · unresolved', '#9A493D'],
+    ['mask_0 · accepted direct source', A1A_PALETTE.green],
     ['NO EXPORT', MUTED],
     ['NO ATLAS', MUTED],
     ['NO SCHEMA', MUTED],
@@ -2286,7 +2538,7 @@ async function renderEqualHeightHorizontalTerminusGate(options: CliOptions): Pro
   parts.push(text(1184, 1432, 'mask_1 · accepted by the vertical terminus gate', 11, 700, A1A_PALETTE.green));
   parts.push(text(1184, 1458, 'mask_4 · accepted by the vertical terminus gate', 11, 700, A1A_PALETTE.green));
   parts.push(text(1184, 1494, 'They use authored rollovers; this source is never rotated.', 11, 650, MUTED));
-  parts.push(text(1184, 1520, 'Isolated mask_0 also remains a separate product decision.', 11, 650, MUTED));
+  parts.push(text(1184, 1520, 'Isolated mask_0 is accepted by its own source gate, never derived from this cap.', 11, 650, MUTED));
   parts.push(text(1184, 1552, 'No export · no atlas · no schema · no Unity mutation', 10, 820, MUTED));
 
   const svg =
@@ -2477,6 +2729,7 @@ async function renderEqualHeightMaskLedger(options: CliOptions, root: string): P
   const railWidth = 580;
   const fileOverrides = {
     ...await southeastReviewFileOverrides(options),
+    ...await isolatedShellProposalFileOverrides(options, root),
     ...await verticalTerminusProposalFileOverrides(options, root),
   };
   const parts: string[] = [
@@ -2504,7 +2757,7 @@ async function renderEqualHeightMaskLedger(options: CliOptions, root: string): P
     parts.push(text(x + 16, 130, label, 9, 800, MUTED));
   }
   parts.push(text(926, 110, 'MAPPING ACCEPTED', 12, 850, A1A_PALETTE.green));
-  parts.push(text(926, 130, 'Synthetic diagrams and gaps remain noncanonical · no production mutation', 10, 700, MUTED));
+  parts.push(text(926, 130, 'Synthetic diagrams remain noncanonical · no production mutation', 10, 700, MUTED));
 
   for (const panel of descriptor.panels) {
     const { entry } = panel;
@@ -2579,8 +2832,9 @@ async function renderEqualHeightMaskLedger(options: CliOptions, root: string): P
     parts.push(text(railX + 54, y + 15, description, 10, 600, MUTED));
   }
 
-  parts.push(text(railX + 24, gridY + 706, 'RESOLVED PERIMETER REPRESENTATIVES', 14, 850));
+  parts.push(text(railX + 24, gridY + 706, 'RESOLVED SOURCE REPRESENTATIVES', 14, 850));
   const resolvedLines = [
+    'mask_0 · isolated shell · direct source',
     'mask_1 · S end · W source / E mirror-X',
     'mask_2 · W cap · mirror-X',
     'mask_3 · SW molded source',
@@ -2593,7 +2847,7 @@ async function renderEqualHeightMaskLedger(options: CliOptions, root: string): P
     'mask_12 · NE mirror-X',
   ];
   for (const [index, line] of resolvedLines.entries()) {
-    parts.push(text(railX + 24, gridY + 734 + index * 19, line, 11, 700, index % 2 === 0 ? '#294B3C' : '#4E7D79'));
+    parts.push(text(railX + 24, gridY + 732 + index * 18, line, 11, 700, index % 2 === 0 ? '#294B3C' : '#4E7D79'));
   }
 
   parts.push(text(railX + 24, gridY + 940, 'TOPOLOGY INDEX', 14, 850));
@@ -2613,8 +2867,8 @@ async function renderEqualHeightMaskLedger(options: CliOptions, root: string): P
   parts.push(text(railX + 24, gridY + 1176, 'mask_10 also hosts door/window variants in the old proof.', 11, 650, MUTED));
   parts.push(text(railX + 24, gridY + 1198, 'That does not make those states part of connectivity or this ledger.', 11, 650, MUTED));
 
-  parts.push(text(railX + 24, gridY + 1254, 'AUTHORED-GEOMETRY GAP', 14, 850, '#B65F4D'));
-  parts.push(text(railX + 24, gridY + 1282, 'mask_0 · isolated catalog cell', 11, 750, '#B65F4D'));
+  parts.push(text(railX + 24, gridY + 1254, 'AUTHORED SOURCE SET', 14, 850, A1A_PALETTE.green));
+  parts.push(text(railX + 24, gridY + 1282, 'mask_0 · accepted fixed-view isolated shell', 11, 750, A1A_PALETTE.green));
   parts.push(text(railX + 24, gridY + 1310, 'mask_1 / 4 are accepted as separately authored vertical ends.', 11, 650, MUTED));
   parts.push(text(railX + 24, gridY + 1332, 'mask_8 direct and mask_2 mirror-X remain the horizontal pair.', 11, 650, MUTED));
 
@@ -2641,7 +2895,7 @@ async function renderEqualHeightMaskLedger(options: CliOptions, root: string): P
   parts.push(text(railX + 42, gridY + 1784, '✓ canonical order: 47/47, no duplicates', 11, 700, '#9FC7A9'));
   parts.push(text(railX + 42, gridY + 1810, '✓ accepted source provenance only', 11, 700, '#9FC7A9'));
   parts.push(text(railX + 42, gridY + 1836, '✓ no low-profile or historical topology pixels', 11, 700, '#9FC7A9'));
-  parts.push(text(railX + 42, gridY + 1862, '! 1 authored geometry gap remains visible', 11, 750, '#E0836E'));
+  parts.push(text(railX + 42, gridY + 1862, '✓ 0 authored geometry gaps remain', 11, 750, '#9FC7A9'));
   parts.push(text(railX + 42, gridY + 1888, '! 36 synthetic cases are diagrams, not accepted art', 11, 750, '#E0836E'));
   parts.push(text(railX + 42, gridY + 1918, 'No further proof or production registration is implied.', 11, 800, '#83A9A6'));
 
@@ -3102,6 +3356,7 @@ async function renderContextMocksSafely(options: CliOptions, root: string): Prom
     await renderFullHeightSouthwestProof(options);
     await renderFullHeightSoutheastProof(options);
     await renderEqualHeightCorridorGate(options);
+    await renderEqualHeightIsolatedShellGate(options, root);
     await renderEqualHeightVerticalTerminusGate(options, root);
     await renderEqualHeightHorizontalTerminusGate(options);
     await renderEqualHeightMaskLedger(options, root);
@@ -3115,6 +3370,7 @@ async function renderContextMocksSafely(options: CliOptions, root: string): Prom
     status.roomRenderedAt = renderedAt;
     status.ladderRenderedAt = renderedAt;
     status.focusRenderedAt = renderedAt;
+    status.isolatedShellRenderedAt = renderedAt;
     status.verticalTerminusRenderedAt = renderedAt;
     status.terminusRenderedAt = renderedAt;
     status.mappingRenderedAt = renderedAt;
@@ -3278,7 +3534,11 @@ async function main(): Promise<void> {
   if (existsSync(proofsDirectory)) {
     watch(proofsDirectory, { recursive: true }, (_event, fileName) => {
       if (!fileName || !fileName.endsWith('.svg')) return;
-      if (fileName.replaceAll(path.sep, '/').startsWith('vertical-terminus/')) {
+      const normalizedProofFile = fileName.replaceAll(path.sep, '/');
+      if (
+        normalizedProofFile.startsWith('vertical-terminus/') ||
+        normalizedProofFile.startsWith('isolated-shell/')
+      ) {
         lastRoomFile = fileName;
         roomRenderPending = true;
         schedulePendingRenders();

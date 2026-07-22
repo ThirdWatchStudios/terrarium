@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>QuotaCo equal-height isolated structural shell base proposal</title>
+  <desc>Proof-only zero-socket wall cell. One squat molded green housing occupies the accepted wall-envelope intersection and closes against a continuous charcoal floor-contact edge.</desc>
+  <g id="detail/base">
+    <path id="base-contour" d="M66 56H110A10 10 0 0 1 120 66V106A14 14 0 0 1 106 120H70A14 14 0 0 1 56 106V66A10 10 0 0 1 66 56Z" fill="#252A28"/>
+    <path id="base-green-housing" d="M66 58H108A9 9 0 0 1 117 67V105A12 12 0 0 1 105 117H70A12 12 0 0 1 58 105V66A8 8 0 0 1 66 58Z" fill="#294B3C"/>
+    <path id="base-east-contact-shade" d="M120 67H123.5V106A14 14 0 0 1 109.5 120H106A14 14 0 0 0 120 106Z" fill="#000000" opacity="0.12"/>
+    <path id="base-south-contact-shade" d="M70 120H109.5V123.5H70A14 14 0 0 1 56 109.5V106A14 14 0 0 0 70 120Z" fill="#000000" opacity="0.12"/>
+  </g>
+</svg>

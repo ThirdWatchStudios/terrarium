@@ -26,12 +26,12 @@ together as a 3×8 equal-height perimeter around a 1×6 clear aisle at 90 and
 one-cell horizontal bodies remain legible, six-cell side runs remain parallel,
 and all four corners close as one enclosure.
 
-**Accepted mapping gate (owner approval, 2026-07-21):** the proof-layer ledger
+**Accepted mapping gate (owner approvals, 2026-07-21 through 2026-07-22):** the proof-layer ledger
 locks the unchanged canonical `mask_0` through `mask_46` order and classifies
-four direct reuses, six approved derivations, 36 synthetic assembly
-candidates, and one explicit authored-geometry gap. This accepts the mapping
+five direct reuses, six approved derivations, 36 synthetic assembly
+candidates, and zero authored-geometry gaps. This accepts the mapping
 structure and provenance boundaries only. It does not accept the 36 synthetic
-assembly diagrams, resolve isolated `mask_0`, or create an atlas/production family.
+assembly diagrams or create an atlas/production family.
 
 **Accepted horizontal terminus gate (owner approval, 2026-07-21):** `mask_8`
 directly reuses the socket-polished `full_terminus` pair (connected west, cap
@@ -46,7 +46,13 @@ proof-layer source bank at `../quota-co-building-system-proofs/vertical-terminus
 cross-section and fold its existing cream, coral, and green registers through shallow, separately authored
 south- and north-facing rollovers. Their east-wall whole-cell X mirrors are accepted derivations. These files
 remain intentionally absent from this strict canonical inventory, while proof-ledger rows `mask_1` and `mask_4`
-record their accepted provenance. Isolated `mask_0` is now the only authored-geometry gap.
+record their accepted provenance.
+
+**Accepted isolated-shell gate (owner approval, 2026-07-22):** `mask_0` directly reuses the external,
+fixed-view `isolated_shell` pair at `../quota-co-building-system-proofs/isolated-shell/`. It is one contained
+full-height structural housing with zero cardinal sockets, one front-on plane treatment, and no mirror or
+rotation derivation. The pair remains intentionally absent from this strict canonical inventory; acceptance
+records proof-ledger source provenance only and closes the authored-geometry gap.
 
 The original independently finished low-base-plus-optional-upper construction was
 rejected on 2026-07-20 because its duplicate caps and contours read as one wall
@@ -134,12 +140,12 @@ automatic silhouette. White/black opacity layers are neutral face cues only.
 Terrarium owns this source art and any later palette-mask evidence. Unity owns
 composition, cutaways, sorting application, lighting, and production acceptance.
 
-Do not expand this directory into a complete 47-blob/opening source family. Mapping and horizontal-terminus
+Do not expand this directory into a complete 47-blob/opening source family. Mapping and source-gate
 acceptance do not authorize another proof slice, synthetic-candidate promotion, authored topology
 propagation, or production files. The earlier low-east, low-southeast, and southwest full-to-low
 checkpoint remains historical directional evidence, but its low perimeter profiles and height-step corner
 are superseded for ordinary walls. South, east, northeast, southwest,
-southeast, and the two horizontal termini are owner-accepted equal-height art
-decisions; their source reuse and mirrors remain unregistered. The southeast decision adds
+southeast, both terminus families, and the isolated shell are owner-accepted equal-height art
+decisions; their source reuse, external proof sources, and mirrors remain unregistered. The southeast decision adds
 no source stem or production transform. Production registration, frame identity, exporter, `CONTRACT.md`,
 schema, committed atlas, and Unity changes remain deferred pending a separate owner decision.

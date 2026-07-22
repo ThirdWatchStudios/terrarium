@@ -17,8 +17,9 @@ on the live workbench and committed individually with its design rationale.
 1. **Pick the active decision.** When `Review next` is present, choose one unresolved equal-height piece from
    that lane. When every current piece is accepted, follow the named system gate instead of reopening a settled
    piece. The corridor closure, 47-mask mapping structure, and horizontal and vertical terminus families are
-   accepted. No geometry proposal is currently active; isolated `mask_0` is the recommended next bounded proof,
-   pending owner authorization. Never rotate the accepted horizontal source to manufacture a vertical end. Use composed evidence as
+   accepted. Isolated `mask_0` is also accepted as its own direct external proof source, so no geometry proposal
+   is currently active. A synthetic family becomes active only through a separate named owner decision. Never
+   rotate the accepted horizontal source to manufacture a vertical end. Use composed evidence as
    the issue-finding surface. Historical
    mixed-profile room mocks are archived, not valid targets.
 2. **Read before drawing:** the piece's current masters, the five-sheet primary wall target listed in
@@ -33,9 +34,9 @@ on the live workbench and committed individually with its design rationale.
    shading as overlays never tints (recolor law). Edit masters with the file tools, not shell scripts —
    shell edits break the session harness's write tracking.
 4. **Judge on the bench:** `npm run style:watch` → http://localhost:5411 (one instance only — the port
-   is exclusive). Start with the active proof sheet's isolated piece and socket checks, then its compact/long
-   runs and installed room. The accepted horizontal termini, 3×8 corridor, and 47-mask ledger remain system
-   context while the next proposed slice is named without implying acceptance. The open page keeps accepted evidence separate from
+   is exclusive). The accepted `mask_0` source gate retains the isolated shell at 240/90/40 px plus its
+   zero-socket boundary and compact placement checks. The accepted horizontal and vertical termini, 3×8 corridor, and 47-mask ledger remain system
+   context while any next proposed slice is named without implying acceptance. The open page keeps accepted evidence separate from
    unresolved work; old mixed-profile gates and per-stem importer cards stay under `Archived checkpoints` and
    `Compiler diagnostics` so they cannot be mistaken for approval targets.
 5. **Iterate on the owner's eye.** Every pass this session was improved by an owner correction —
@@ -168,16 +169,16 @@ clear aisle passes at 90 and 40 px per cell using only the accepted source/reuse
 north/south bodies stay legible, six-cell west/east runs do not drift, and all four corners close as one
 manufactured envelope.
 
-**Accepted 47-mask mapping checkpoint (owner approval, 2026-07-21):** the unchanged `mask_0` through `mask_46`
-ordering and classification ledger is accepted with four direct reuses, six approved derivations, 36
-proof-only synthetic assembly candidates, and one unresolved authored-geometry case. This locks the mapping
+**Accepted 47-mask mapping checkpoint (owner approvals, 2026-07-21 through 2026-07-22):** the unchanged `mask_0` through `mask_46`
+ordering and classification ledger is accepted with five direct reuses, six approved derivations, 36
+proof-only synthetic assembly candidates, and zero unresolved authored-geometry cases. This locks the mapping
 structure, not the synthetic pixels or a complete production family.
 
 **Accepted horizontal terminus checkpoint (owner approval, 2026-07-21):** the socket-polished
 `full_terminus` source passes directly for `mask_8` and through a whole-cell X mirror for `mask_2`, at 90/40 px
 in 1/3/6-cell contexts and enlarged base/upper/composed socket crops. The incoming 96-unit socket inherits the
 accepted straight exactly while the molded cap remains local. It does not own the separately authored vertical
-termini and must never be rotated into them. Isolated `mask_0` remains its own product decision.
+termini and must never be rotated into them. Isolated `mask_0` remains its own separately authored product.
 
 **Accepted vertical terminus checkpoint (owner approval, 2026-07-21):** two west-authored fixed-light source pairs
 live in the external `quota-co-building-system-proofs/vertical-terminus/` bank. Both sources preserve the
@@ -185,13 +186,22 @@ ordinary wall width and turn its same cream, coral, and green registers through 
 the separately authored south and north ends differ only in projected plane exposure. Each is also shown
 through an accepted whole-cell X mirror for the east wall, and ledger rows `mask_1`/`mask_4` record both facings. The focused
 sheet exposes 240/90/40 px isolates, 1/3/6-cell installed runs, exact socket crops, and two-/three-cell minimum
-segments. The accepted ledger is four direct, six derived, 36 synthetic, and one unresolved.
+segments. The accepted ledger is five direct, six derived, 36 synthetic, and zero unresolved.
 
-**Still isolated after terminus acceptance:** the 36 synthetic candidate sprites and isolated `mask_0`;
+**Accepted isolated-shell checkpoint (owner approval, 2026-07-22):** isolated `mask_0` uses one
+base/upper source pair that lives outside the canonical kit in
+`assets/walls/quota-co-building-system-proofs/isolated-shell/` and reads as one full-height, zero-link
+QuotaCo structural shell rather than four capped wall ends. Its contained silhouette, 240/90/40 px readability,
+and compact placement gate are accepted. `mask_0` is a direct source mapping with no mirror or rotation;
+the accepted ledger is five direct, six derived, 36 synthetic, and zero unresolved.
+No production source, frame identity, template registration, exporter, `CONTRACT.md`, schema, committed atlas,
+or Unity surface is mutated by this acceptance.
+
+**Still outside acceptance after isolated-shell promotion:** the 36 synthetic candidate sprites;
 `topology/` and `state/`; official/production preview
 regeneration; template/catalog registration and frame identities; exporter, `CONTRACT.md`, or schema changes;
 committed production atlases; prop pilots; Unity; and `production.unity` remain locked until separately
-requested. No further proof slice is authorized implicitly by this checkpoint.
+requested. The accepted external `mask_0` proof source does not unlock or silently promote any of those surfaces.
 
 **Historical progress 2026-07-20 (superseded by the 2026-07-21 checkpoint):** steps 1–5 were executed and
 awaited owner review. Cross-section proofs

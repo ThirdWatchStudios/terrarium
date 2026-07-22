@@ -241,8 +241,16 @@ export function validateEqualHeightHorizontalTerminusGate(
       throw new Error(`Horizontal terminus gate vertical successor drift at mask_${index}`);
     }
   }
-  if (EQUAL_HEIGHT_MASK_LEDGER.entries[0].resolution.kind !== 'unresolved-authored-geometry') {
-    throw new Error('Horizontal terminus gate crossed the isolated-cell boundary');
+  const isolatedEntry = EQUAL_HEIGHT_MASK_LEDGER.entries[0];
+  if (
+    isolatedEntry.resolution.kind !== 'direct-reuse' ||
+    isolatedEntry.resolution.status !== 'accepted-source-mapping' ||
+    isolatedEntry.resolution.variants.length !== 1 ||
+    isolatedEntry.resolution.variants[0].sourceStem !== 'isolated_shell' ||
+    isolatedEntry.resolution.variants[0].transform !== 'none' ||
+    isolatedEntry.resolution.variants[0].derivation !== 'none'
+  ) {
+    throw new Error('Horizontal terminus gate crossed the isolated-source boundary');
   }
   const evidence = equalHeightHorizontalTerminusEvidenceRuns();
   if (evidence.length !== 12 || new Set(evidence.map((run) =>

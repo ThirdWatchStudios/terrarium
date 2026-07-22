@@ -289,10 +289,10 @@ export function validateEqualHeightVerticalTerminusGate(
   }
   if (
     JSON.stringify(EQUAL_HEIGHT_MASK_LEDGER.counts) !== JSON.stringify({
-      'direct-reuse': 4,
+      'direct-reuse': 5,
       'approved-derivation': 6,
       'synthetic-assembly': 36,
-      'unresolved-authored-geometry': 1,
+      'unresolved-authored-geometry': 0,
     })
   ) {
     throw new Error('Vertical terminus gate changed the accepted ledger counts');
@@ -300,7 +300,7 @@ export function validateEqualHeightVerticalTerminusGate(
   const unresolved = EQUAL_HEIGHT_MASK_LEDGER.entries
     .filter(({ resolution }) => resolution.status === 'unresolved')
     .map(({ index }) => index);
-  if (JSON.stringify(unresolved) !== JSON.stringify([0])) {
+  if (unresolved.length !== 0) {
     throw new Error('Vertical terminus gate changed the unresolved mask set');
   }
   const evidence = equalHeightVerticalTerminusEvidenceRuns();
