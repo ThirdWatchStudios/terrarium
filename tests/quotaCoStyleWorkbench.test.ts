@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  ACCEPTED_HORIZONTAL_OPEN_POCKET_T_JUNCTION_GATE,
   ACCEPTED_OPEN_POCKET_T_JUNCTION_GATE,
   ACCEPTED_THICK_WALL_BLOCK_GATE,
   ACCEPTED_THICK_WALL_HORIZONTAL_REPEAT_GATE,
@@ -15,6 +16,7 @@ import {
   renderStyleWorkbenchPage,
 } from '../scripts/highOblique/styleWorkbenchPage';
 import { EQUAL_HEIGHT_CORRIDOR_GATE } from '../scripts/highOblique/equalHeightCorridorGate';
+import { EQUAL_HEIGHT_HORIZONTAL_OPEN_POCKET_T_JUNCTION_GATE } from '../scripts/highOblique/equalHeightHorizontalOpenPocketTJunctionGate';
 import { EQUAL_HEIGHT_HORIZONTAL_TERMINUS_GATE } from '../scripts/highOblique/equalHeightHorizontalTerminusGate';
 import { EQUAL_HEIGHT_ISOLATED_SHELL_GATE } from '../scripts/highOblique/equalHeightIsolatedShellGate';
 import { EQUAL_HEIGHT_MASK_LEDGER } from '../scripts/highOblique/equalHeightMaskLedger';
@@ -27,6 +29,16 @@ import { EQUAL_HEIGHT_VERTICAL_TERMINUS_GATE } from '../scripts/highOblique/equa
 const occurrences = (source: string, needle: string): number => source.split(needle).length - 1;
 
 describe('QuotaCo current wall workbench', () => {
+  it('keeps the accepted horizontal open-pocket T pair explicit', () => {
+    expect(ACCEPTED_HORIZONTAL_OPEN_POCKET_T_JUNCTION_GATE).toEqual({
+      stem: EQUAL_HEIGHT_HORIZONTAL_OPEN_POCKET_T_JUNCTION_GATE.stem,
+      state: 'accepted',
+      title: 'Horizontal open-pocket T-junction pair',
+      summary: 'Accepted mask_11 and mask_14 as two separately authored fixed-light direct proof sources; same-mask lateral X mirrors remain comparison evidence, not accepted derivations.',
+      alt: 'owner-accepted horizontal open-pocket T-junction pair with masks eleven and fourteen as direct fixed-light proof sources',
+    });
+  });
+
   it('keeps the accepted proof-layer T-junction identity explicit', () => {
     expect(ACCEPTED_OPEN_POCKET_T_JUNCTION_GATE).toEqual({
       stem: EQUAL_HEIGHT_OPEN_POCKET_T_JUNCTION_GATE.stem,
@@ -94,7 +106,7 @@ describe('QuotaCo current wall workbench', () => {
       stem: EQUAL_HEIGHT_MASK_LEDGER.stem,
       state: 'accepted',
       title: '47-mask mapping ledger',
-      summary: 'Accepted topology map: 11 direct reuses, 10 approved derivations, 26 synthetic candidates, and 0 authored-geometry gaps.',
+      summary: 'Accepted topology map: 13 direct reuses, 10 approved derivations, 24 synthetic candidates, and 0 authored-geometry gaps.',
       alt: 'owner-accepted equal-height 47-mask mapping ledger with unaccepted synthetic candidates',
     });
     expect(ACCEPTED_HORIZONTAL_TERMINUS_GATE).toEqual({
@@ -153,6 +165,12 @@ describe('QuotaCo current wall workbench', () => {
     expect(ARCHIVED_WORKBENCH_BOARDS).not.toContainEqual(
       expect.objectContaining({ stem: ACCEPTED_OPEN_POCKET_T_JUNCTION_GATE.stem }),
     );
+    expect(CURRENT_WORKBENCH_BOARDS).not.toContainEqual(
+      expect.objectContaining({ stem: ACCEPTED_HORIZONTAL_OPEN_POCKET_T_JUNCTION_GATE.stem }),
+    );
+    expect(ARCHIVED_WORKBENCH_BOARDS).not.toContainEqual(
+      expect.objectContaining({ stem: ACCEPTED_HORIZONTAL_OPEN_POCKET_T_JUNCTION_GATE.stem }),
+    );
   });
 
   it('shows only current boards in the open primary surface', () => {
@@ -169,6 +187,15 @@ describe('QuotaCo current wall workbench', () => {
     }
     expect(primary).not.toContain('full_n_straight');
     expect(primary).not.toContain('transition_n_to_e');
+    expect(occurrences(primary!, `data-stem="${ACCEPTED_HORIZONTAL_OPEN_POCKET_T_JUNCTION_GATE.stem}"`)).toBe(1);
+    expect(primary).toContain(
+      `data-stem="${ACCEPTED_HORIZONTAL_OPEN_POCKET_T_JUNCTION_GATE.stem}" data-refresh="horizontal-open-pocket-t-junction"`,
+    );
+    expect(primary).toContain('data-state="system-accepted" data-gate="horizontal-open-pocket-t-junction"');
+    expect(occurrences(primary!, 'data-state="system-review"')).toBe(0);
+    expect(primary).toContain('mask_11/mask_14 are locked at the proof layer');
+    expect(primary).toContain('lateral X mirrors remain comparison evidence only');
+    expect(primary).not.toContain('data-state="system-review" data-gate="horizontal-open-pocket-t-junction"');
     expect(occurrences(primary!, `data-stem="${ACCEPTED_OPEN_POCKET_T_JUNCTION_GATE.stem}"`)).toBe(1);
     expect(primary).toContain(
       `data-stem="${ACCEPTED_OPEN_POCKET_T_JUNCTION_GATE.stem}" data-refresh="open-pocket-t-junction"`,
@@ -238,6 +265,8 @@ describe('QuotaCo current wall workbench', () => {
     expect(page).not.toContain('One proposal is active');
     expect(page).toContain('No proposal is currently active');
     expect(page).not.toContain('Review next · 2 mappings');
+    expect(page).toContain('mask_11 and mask_14 are direct fixed-light proof sources');
+    expect(page).toContain('lateral X mirrors are evidence only, not accepted derivations');
     expect(page).toContain('mask_7 is direct; mask_13 is the approved whole-cell X mirror');
     expect(page).toContain('mask_31 and mask_38 are accepted as two direct fixed-light proof sources');
     expect(page).toContain('mask_24 is direct; mask_42 is the accepted whole-cell mirror-X derivation');
@@ -247,7 +276,9 @@ describe('QuotaCo current wall workbench', () => {
     expect(page).toContain('Accepted equal-height enclosure baseline at 90 and 40 pixels per cell');
     expect(page).toContain('Accepted system mapping');
     expect(occurrences(page, '47-mask mapping ledger')).toBe(3);
-    expect(page).toContain('26 synthetic candidates remain proof-only');
+    expect(page).toContain('24 synthetic candidates remain proof-only');
+    expect(page.indexOf(`data-stem="${ACCEPTED_HORIZONTAL_OPEN_POCKET_T_JUNCTION_GATE.stem}"`))
+      .toBeLessThan(page.indexOf(`data-stem="${ACCEPTED_OPEN_POCKET_T_JUNCTION_GATE.stem}"`));
     expect(page.indexOf(`data-stem="${ACCEPTED_OPEN_POCKET_T_JUNCTION_GATE.stem}"`))
       .toBeLessThan(page.indexOf(`data-stem="${ACCEPTED_THICK_WALL_HORIZONTAL_REPEAT_GATE.stem}"`));
     expect(page.indexOf(`data-stem="${ACCEPTED_THICK_WALL_HORIZONTAL_REPEAT_GATE.stem}"`))
@@ -289,6 +320,7 @@ describe('QuotaCo current wall workbench', () => {
     const page = renderStyleWorkbenchPage([]);
 
     expect(page).toContain('document.querySelectorAll(`[data-refresh="${group}"]`)');
+    expect(page).toContain('"horizontal-open-pocket-t-junction":s.horizontalOpenPocketTJunctionRenderedAt');
     expect(page).toContain('"open-pocket-t-junction":s.openPocketTJunctionRenderedAt');
     expect(page).toContain('"thick-wall-horizontal-repeat":s.thickWallHorizontalRepeatRenderedAt');
     expect(page).toContain('"thick-wall-repeat":s.thickWallRepeatRenderedAt');

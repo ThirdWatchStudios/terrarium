@@ -20,8 +20,8 @@ accepted ordinary three-way wall junction:
   this family.
 
 The accepted proof ledger records `mask_7` as direct and `mask_13` as an
-approved filtered X-mirror derivation, bringing its totals to 11 direct, 10
-derived, 26 synthetic, and 0 unresolved. This acceptance is proof-layer
+approved filtered X-mirror derivation. At that checkpoint the totals were 11 direct, 10
+derived, 26 synthetic, and 0 unresolved; later source-family decisions supersede them. This acceptance is proof-layer
 provenance only: it does not register canonical or production stems, frame
 identities, templates, exporter routes, atlas frames, schema values, blob
 mappings, or Unity assets.

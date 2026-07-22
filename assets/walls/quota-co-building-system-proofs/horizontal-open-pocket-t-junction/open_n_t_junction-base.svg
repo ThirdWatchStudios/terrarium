@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>QuotaCo open-north T-junction proof base</title>
+  <desc>The east-west base folds into one outgoing south socket, suppressing the buried center plinth while preserving the horizontal frontage and fixed-light service ownership.</desc>
+  <g id="detail/base">
+    <path id="base-contour" d="M0 95H128V120H120V128H103V120H0Z" fill="#252A28"/>
+    <path id="base-green" d="M0 97H128V117H120A3 3 0 0 0 117 120V128H105V120A3 3 0 0 0 102 117H0Z" fill="#294B3C"/>
+    <path id="base-face-shade" d="M105 117H117V128H105Z" fill="#000000" opacity="0.12"/>
+    <path id="base-contact-shade" d="M0 120H56V123.5H0Z M120 120H128V123.5H123.5V128H120Z" fill="#000000" opacity="0.12"/>
+    <path id="base-boundary-seam" d="M126 98V116" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+    <path id="base-south-service-seam" d="M106 126H116" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+  </g>
+</svg>

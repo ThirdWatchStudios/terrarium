@@ -365,6 +365,26 @@ const openEastTJunction: EqualHeightMaskSourceVariant = {
   facingRule: 'connected north, south, and west with the east edge exposed through mirror-X after the accepted boundary-seam filter',
 };
 
+const openSouthTJunction: EqualHeightMaskSourceVariant = {
+  role: 'open-south-t-junction',
+  sourceStem: 'open_s_t_junction',
+  baseFile: 'open_s_t_junction-base.svg',
+  upperFile: 'open_s_t_junction-upper.svg',
+  transform: 'none',
+  derivation: 'none',
+  facingRule: 'connected north, east, and west with the south edge exposed; authored foreground fixed-light horizontal-spine T hub',
+};
+
+const openNorthTJunction: EqualHeightMaskSourceVariant = {
+  role: 'open-north-t-junction',
+  sourceStem: 'open_n_t_junction',
+  baseFile: 'open_n_t_junction-base.svg',
+  upperFile: 'open_n_t_junction-upper.svg',
+  transform: 'none',
+  derivation: 'none',
+  facingRule: 'connected east, south, and west with the north edge exposed; authored rear fixed-light horizontal-spine T hub',
+};
+
 function topologyFor(config: WallTileConfig): EqualHeightMaskTopologyClass {
   const connected = EDGES.filter((edge) => config[edge]);
   if (connected.length === 0) return 'isolated';
@@ -495,6 +515,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         variants: [horizontalShared],
         note: 'E+W connectivity uses one exact composed source for both north and south room edges.',
       };
+    case 11:
+      return {
+        kind: 'direct-reuse',
+        status: 'accepted-source-mapping',
+        variants: [openSouthTJunction],
+        note: 'Accepted foreground horizontal-spine T junction directly reuses the authored open-south fixed-light source.',
+      };
     case 12:
       return {
         kind: 'approved-derivation',
@@ -508,6 +535,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         status: 'accepted-source-mapping',
         variants: [openEastTJunction],
         note: 'Accepted east-facing open-pocket T junction mirrors the west-authored source after the accepted boundary-seam filter.',
+      };
+    case 14:
+      return {
+        kind: 'direct-reuse',
+        status: 'accepted-source-mapping',
+        variants: [openNorthTJunction],
+        note: 'Accepted rear horizontal-spine T junction directly reuses the independently authored open-north fixed-light source.',
       };
     case 16:
       return {
@@ -675,6 +709,8 @@ const ACCEPTED_SOURCE_VARIANTS = new Set([
   filledSouthMiddle,
   openWestTJunction,
   openEastTJunction,
+  openSouthTJunction,
+  openNorthTJunction,
 ].map(sourceVariantSignature));
 
 function variantsFor(

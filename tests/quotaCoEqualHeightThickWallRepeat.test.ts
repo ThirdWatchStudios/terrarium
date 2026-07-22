@@ -170,9 +170,9 @@ describe('QuotaCo accepted proof-layer 2xN thick-wall repeat family', () => {
       },
     });
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
-      'direct-reuse': 11,
+      'direct-reuse': 13,
       'approved-derivation': 10,
-      'synthetic-assembly': 26,
+      'synthetic-assembly': 24,
       'unresolved-authored-geometry': 0,
     });
   });
