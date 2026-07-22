@@ -12,6 +12,7 @@ repeatable middle row of a solid, two-cell-thick wall mass.
 - These files do not register production stems, exporter routes, atlas frames,
   schema values, blob mappings, or Unity assets.
 
-The accepted proof-layer ledger records 8 direct, 9 derived, 30 synthetic, and
-0 unresolved rows. Acceptance records source provenance only; the production
+At this family's acceptance checkpoint the proof-layer ledger recorded 8 direct,
+9 derived, 30 synthetic, and 0 unresolved rows; later source-family decisions
+supersede those counts. Acceptance records source provenance only; the production
 registry, exporter, atlas, schema, and Unity remain unchanged.

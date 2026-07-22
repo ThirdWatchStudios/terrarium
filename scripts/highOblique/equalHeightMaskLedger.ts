@@ -325,6 +325,26 @@ const filledEastMiddle: EqualHeightMaskSourceVariant = {
   facingRule: 'connected north, south, and west with the east edge exposed through the accepted whole-cell X mirror',
 };
 
+const filledNorthMiddle: EqualHeightMaskSourceVariant = {
+  role: 'filled-north-middle-spine',
+  sourceStem: 'filled_n_middle',
+  baseFile: 'filled_n_middle-base.svg',
+  upperFile: 'filled_n_middle-upper.svg',
+  transform: 'none',
+  derivation: 'none',
+  facingRule: 'connected east, south, and west with the north edge exposed; authored open-X rear spine for a solid two-row wall mass',
+};
+
+const filledSouthMiddle: EqualHeightMaskSourceVariant = {
+  role: 'filled-south-middle-spine',
+  sourceStem: 'filled_s_middle',
+  baseFile: 'filled_s_middle-base.svg',
+  upperFile: 'filled_s_middle-upper.svg',
+  transform: 'none',
+  derivation: 'none',
+  facingRule: 'connected north, east, and west with the south edge exposed; authored open-X foreground spine with the accepted south-facing material stack',
+};
+
 function topologyFor(config: WallTileConfig): EqualHeightMaskTopologyClass {
   const connected = EDGES.filter((edge) => config[edge]);
   if (connected.length === 0) return 'isolated';
@@ -483,12 +503,26 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         variants: [filledNortheastElbow],
         note: 'Accepted rear-east filled elbow is the whole-cell mirror-X derivation of the rear-west solid-top source.',
       };
+    case 31:
+      return {
+        kind: 'direct-reuse',
+        status: 'accepted-source-mapping',
+        variants: [filledNorthMiddle],
+        note: 'Accepted rear middle spine directly extends the two-row solid wall cream top through both X sockets without an internal face rail.',
+      };
     case 34:
       return {
         kind: 'approved-derivation',
         status: 'accepted-source-mapping',
         variants: [filledSoutheastElbow],
         note: 'Accepted foreground-east filled elbow mirrors the foreground-west source after the accepted southeast seam filter.',
+      };
+    case 38:
+      return {
+        kind: 'direct-reuse',
+        status: 'accepted-source-mapping',
+        variants: [filledSouthMiddle],
+        note: 'Accepted foreground middle spine directly continues the south-facing material stack through both X sockets with one source-owned service boundary.',
       };
     case 42:
       return {
@@ -603,6 +637,8 @@ const ACCEPTED_SOURCE_VARIANTS = new Set([
   filledSoutheastElbow,
   filledWestMiddle,
   filledEastMiddle,
+  filledNorthMiddle,
+  filledSouthMiddle,
 ].map(sourceVariantSignature));
 
 function variantsFor(

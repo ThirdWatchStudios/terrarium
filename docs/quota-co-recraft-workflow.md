@@ -17,9 +17,9 @@ on the live workbench and committed individually with its design rationale.
 1. **Pick the active decision.** When `Review next` is present, choose one unresolved equal-height piece from
    that lane. When every current piece is accepted, follow the named system gate instead of reopening a settled
    piece. The corridor closure, 47-mask mapping structure, and horizontal and vertical terminus families are
-   accepted. Isolated `mask_0`, the four-piece filled-elbow family, and the `mask_24`/`mask_42` 2×N thick-wall
-   repeat pair are also accepted as external proof sources. No proposal is currently active; select the next
-   unresolved synthetic family before editing. Never
+   accepted. Isolated `mask_0`, the four-piece filled-elbow family, the `mask_24`/`mask_42` 2×N thick-wall
+   repeat pair, and the `mask_31`/`mask_38` N×2 horizontal-repeat pair are also accepted as external proof
+   sources. No proposal is currently active. Never
    rotate the accepted horizontal source to manufacture a vertical end. Use composed evidence as
    the issue-finding surface. Historical
    mixed-profile room mocks are archived, not valid targets.
@@ -35,7 +35,10 @@ on the live workbench and committed individually with its design rationale.
    shading as overlays never tints (recolor law). Edit masters with the file tools, not shell scripts —
    shell edits break the session harness's write tracking.
 4. **Judge on the bench:** `npm run style:watch` → http://localhost:5411 (one instance only — the port
-   is exclusive). The accepted 2×N thick-wall repeat gate appears first, comparing the accepted 2×2 control
+   is exclusive). The accepted N×2 horizontal-repeat gate appears first, comparing the accepted 2×2 control
+   against 3×2/4×2/6×2 masses. It records `mask_31` as a direct cream-only rear middle and `mask_38` as the
+   direct foreground tri-tone middle. The accepted 2×N thick-wall repeat gate follows,
+   comparing the accepted 2×2 control
    with accepted 2×3/2×4/2×6 masses. It adds an uninterrupted cream middle row without a belt, buried
    rail, cap, or Y seam. The accepted 2×2 thick-wall source gate follows, comparing the true three-cell open elbow
    against the four-cell filled block at 240/90/40 px and beside a one-cell aisle. It composes two external
@@ -177,7 +180,7 @@ north/south bodies stay legible, six-cell west/east runs do not drift, and all f
 manufactured envelope.
 
 **Accepted 47-mask mapping checkpoint (owner approvals, 2026-07-21 through 2026-07-22):** the unchanged `mask_0` through `mask_46`
-ordering and classification ledger is accepted with eight direct reuses, nine approved derivations, 30
+ordering and classification ledger is accepted with ten direct reuses, nine approved derivations, 28
 proof-only synthetic assembly candidates, and zero unresolved authored-geometry cases. This locks the mapping
 structure, not the synthetic pixels or a complete production family.
 
@@ -221,14 +224,23 @@ The ledger at that checkpoint was seven direct, eight derived, 32 synthetic, and
 one `filled_w_middle` base/upper pair for direct `mask_24` use; `mask_42` is its accepted whole-cell X mirror.
 The exact 2×3 matrix is `20 26 / 24 42 / 16 34`. Consecutive middle rows remain one cream mass through 2×4 and
 2×6 checks, while the final `16/34` row alone owns the south-facing shade and coral/green frontage. The ledger
-is now eight direct, nine derived, 30 synthetic, and zero unresolved; every production surface remains unchanged.
+at that checkpoint stood at eight direct, nine derived, 30 synthetic, and zero unresolved; later source-family
+decisions supersede those counts. Every production surface remains unchanged.
 
-**Still outside acceptance after repeat-family promotion:** all 30 remaining synthetic T/cross candidate sprites;
+**Accepted horizontal thick-wall repeat gate (owner approval, 2026-07-22):** the external
+`thick-wall-horizontal-repeat/` bank supplies `filled_n_middle` directly for rear `mask_31` and
+`filled_s_middle` directly for
+foreground `mask_38`. The exact 3×2 matrix is `20 31 26 / 16 38 34`; both middle cells repeat through the
+4×2 and 6×2 checks. This acceptance records proof-layer source provenance only: the ledger is now ten direct,
+nine derived, 28 synthetic, and zero unresolved. No canonical source, frame identity, template registration,
+exporter, atlas, schema, or Unity surface is changed.
+
+**Still outside acceptance after repeat-family promotion:** all 28 remaining synthetic T/cross candidate sprites;
 `topology/` and `state/`; official/production preview
 regeneration; template/catalog registration and frame identities; exporter, `CONTRACT.md`, or schema changes;
 committed production atlases; prop pilots; Unity; and `production.unity` remain locked until separately
-requested. The accepted external `mask_0`, filled-elbow, and thick-wall-repeat proof sources do not unlock or
-silently promote any of those surfaces.
+requested. The accepted external `mask_0`, filled-elbow, and both thick-wall-repeat proof families do not
+unlock or silently promote any of those surfaces. No proposal is currently active.
 
 **Historical progress 2026-07-20 (superseded by the 2026-07-21 checkpoint):** steps 1–5 were executed and
 awaited owner review. Cross-section proofs

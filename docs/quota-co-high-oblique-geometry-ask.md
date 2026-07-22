@@ -1,6 +1,6 @@
 # QuotaCo High-Oblique Geometry — Production Art Ask
 
-**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** accepted equal-height sources remain locked; the `mask_24`/`mask_42` 2×N thick-wall repeat family is owner accepted at the proof layer
+**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** accepted equal-height sources remain locked; no proof proposal is currently active
 
 Canonical direction lives in the sim repository:
 
@@ -13,14 +13,19 @@ The owner has committed to a fixed **high-oblique / top-down-plus** office in wh
 furniture, machines, amenities, and campus fixtures read as coordinated QuotaCo catalog products. The initial
 building-geometry ask is now approved at the five-piece directional level, in the 3×8 narrow-corridor closure,
 as a proof-layer mapping over the existing 47-mask connectivity table, for all four directional terminus rows,
-for the isolated `mask_0` source, and for the four filled-elbow rows used by a completely occupied 2×2 block.
-The accepted proof ledger now has zero authored-geometry gaps; its remaining 30 T/cross synthetic assembly
-candidates remain proof-only. Prop-catalog work and production changes remain separate decisions.
+for the isolated `mask_0` source, for the four filled-elbow rows used by a completely occupied 2×2 block, and
+for both directions of two-cell-thick wall repetition. The accepted proof ledger now has zero authored-geometry
+gaps; its remaining 28 T/cross synthetic assembly candidates remain proof-only. Prop-catalog work and
+production changes remain separate decisions.
 
 The accepted repeat slice authors one external west-side middle source for `mask_24`, accepts `mask_42` as
 its whole-cell X mirror, and judges the pair between the accepted `20/26` rear row and `16/34` foreground row
 in 2×3, 2×4, and 2×6 solid masses. Both rows now carry accepted proof-layer provenance without changing any
 production surface.
+
+The accepted horizontal counterpart uses two separately authored fixed-light middle sources: cream-only rear
+`mask_31` and foreground tri-tone `mask_38`. They pass in `20 31…26 / 16 38…34` masses at 3×2, 4×2, and
+6×2. Both rows now carry accepted direct proof-layer provenance without changing any production surface.
 
 ---
 
@@ -124,9 +129,9 @@ review results without treating them as the current production direction.
 perimeter around a 1×6 walkable aisle at both 90 and 40 px per cell. This closes the composition gate.
 
 **Mapping owner decisions, 2026-07-21 through 2026-07-22:** accept the 47-row proof-layer ledger structure and
-its explicit provenance/gap accounting. With both terminus families, the isolated shell, and the filled-elbow
-family and repeat pair promoted, it records eight direct mappings and nine approved derivations as source law,
-not the 30 remaining synthetic T/cross candidate sprites.
+its explicit provenance/gap accounting. With both terminus families, the isolated shell, the filled-elbow
+family, and both thick-wall repeat families promoted, it records ten direct mappings and nine approved
+derivations as source law, not the 28 remaining synthetic T/cross candidate sprites.
 
 **Horizontal terminus owner decision, 2026-07-21:** accept the socket-polished `full_terminus` pair directly
 for `mask_8` and through one whole-cell X mirror for `mask_2`. Both facings pass at 90 and 40 px across 1/3/6
@@ -166,8 +171,18 @@ by this proof-layer decision.
 `20 26 / 24 42 / 16 34`. The accepted `filled_w_middle` source gives `mask_24` a straight west outline and
 cream top through both Y sockets; `mask_42` is its accepted whole-cell X mirror. The middle owns no coral/green
 fascia, south-facing shade, cap, rollover, or internal seam. Consecutive copies pass in 2×4 and 2×6 masses,
-including literal 40 px-per-cell checks. The ledger is now eight direct, nine derived, 30 synthetic, and zero
-unresolved. Production surfaces remain unchanged.
+including literal 40 px-per-cell checks. At that checkpoint the ledger stood at eight direct, nine derived,
+30 synthetic, and zero unresolved; later source-family decisions supersede those counts. Production surfaces
+remain unchanged.
+
+**Accepted horizontal thick-wall repeat family, 2026-07-22:** the external
+`thick-wall-horizontal-repeat/` bank supplies `filled_n_middle` directly for rear `mask_31` and
+`filled_s_middle` directly for foreground `mask_38`. The exact 3×2 matrix is
+`20 31 26 / 16 38 34`; both middle cells repeat through the 4×2 and 6×2 checks. The rear source preserves a
+cream-only open-X top span, while the foreground source owns the accepted south-facing shade, coral register,
+green frontage, plinth, and one right-edge service seam. The accepted proof-layer ledger is now ten direct,
+nine derived, 28 synthetic, and zero unresolved. No canonical source, frame identity, template registration,
+exporter, atlas, schema, or Unity surface is changed by this decision.
 
 ### A1a review artifact
 
@@ -202,8 +217,9 @@ authorize edits to production topology sources, template/catalog registration, f
 `CONTRACT.md`, schema versions, committed production atlases, Unity assets, or `production.unity`. Any of those
 requires a separate owner decision.
 
-**Owner result, updated 2026-07-22:** the ledger envelope plus horizontal, vertical, isolated-shell, filled-elbow, and thick-wall-repeat slices are accepted with eight direct
-reuses, nine approved derivations, 30 proof-only synthetic assemblies, and zero unresolved authored-geometry
+**Owner result, updated 2026-07-22:** the ledger envelope plus horizontal and vertical termini, isolated-shell,
+filled-elbow, 2×N thick-wall-repeat, and N×2 horizontal thick-wall-repeat slices are accepted with ten direct
+reuses, nine approved derivations, 28 proof-only synthetic assemblies, and zero unresolved authored-geometry
 cases. `mask_8` uses the socket-polished `full_terminus` source directly (connected west, cap east); `mask_2`
 uses the same whole cell mirrored around `x=64` (connected east, cap west). Acceptance locks those provenance
 rows but does not promote the synthetic contact diagrams. `mask_1` and `mask_4` use their separately authored
@@ -211,6 +227,9 @@ vertical sources plus accepted east mirrors. `mask_0` directly reuses its own ex
 it is not a terminus derivation. `mask_16`/`mask_20` directly reuse the filled-elbow sources and
 `mask_26`/`mask_34` use their accepted east mirrors. Do not rotate or transpose the horizontal source into a vertical end.
 `mask_24` directly reuses the external `filled_w_middle` source and `mask_42` is its accepted whole-cell X mirror.
+`mask_31` directly reuses the external `filled_n_middle` source and `mask_38` directly reuses the external
+`filled_s_middle` source. Their acceptance is proof-layer provenance only; it does not register either source
+with the canonical kit or production pipeline.
 
 ## 5. Readability gates
 
@@ -255,9 +274,10 @@ The later prop pilot—not floor tiles—settles the southern ground-contact sor
 
 ## 8. Handoff
 
-Owner acceptance of the 47-mask ledger, both terminus families, the isolated shell, the filled-elbow family, and the thick-wall-repeat pair
-updates their named proof-layer provenance; those accepted decisions remain unchanged. These external proof
-sources close the authored-geometry gap, four solid-elbow cases, and two repeat-row cases but do not unlock the remaining 30 synthetic topology
-cases, production propagation/registration, export or `CONTRACT.md` work, schema changes, committed atlases,
+Owner acceptance of the 47-mask ledger, both terminus families, the isolated shell, the filled-elbow family,
+and both thick-wall repeat families updates their named proof-layer provenance; those accepted decisions remain
+unchanged. These external proof sources close the authored-geometry gap, four solid-elbow cases, and four
+repeat-row cases but do not unlock the remaining 28 synthetic topology cases, production
+propagation/registration, export or `CONTRACT.md` work, schema changes, committed atlases,
 the product-family prop pilot, or the isolated Unity golden room. Nothing in this ask authorizes a change to
 Unity or `production.unity`.

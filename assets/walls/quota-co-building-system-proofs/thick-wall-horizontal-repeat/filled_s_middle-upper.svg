@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>QuotaCo filled south middle accepted proof upper</title>
+  <desc>The foreground middle span continues the cream plane, south material shade, coral register, green frontage, and plinth without an internal face rail or doubled boundary.</desc>
+  <g id="detail/upper">
+    <path id="upper-contour" d="M0 0H128V120H0Z" fill="#252A28"/>
+    <path id="upper-solid-top-fill" d="M0 0H128V97H0Z" fill="#D9D0B9"/>
+    <path id="upper-south-face-shade" d="M0 63H128V88H0Z" fill="#000000" opacity="0.08"/>
+    <path id="upper-south-coral-wrap" d="M0 88H128V94H0Z" fill="#B65F4D"/>
+    <path id="upper-south-band-light" d="M0 88H128V89.5H0Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="upper-south-green-wrap" d="M0 94H128V117H0Z" fill="#294B3C"/>
+    <path id="upper-south-plinth" d="M0 117H128V120H0Z" fill="#252A28"/>
+    <path id="upper-south-band-seam" d="M1 94H127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+    <path id="upper-boundary-seam" d="M126 88V96 M126 98V116" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+  </g>
+</svg>

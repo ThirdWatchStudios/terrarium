@@ -8,9 +8,9 @@
  * Every save re-validates the masters through the real A1b importer and
  * re-renders one card per stem: base / upper / composed plus the composed
  * frame at the close / normal / far review sizes on light and dark ground.
- * The open page is a current-state decision surface: the accepted 2xN thick-wall
- * repeat gate first, then the accepted 2x2 source family and the other accepted
- * source, mapping, enclosure, and working-set gates. Historical mixed-profile
+ * The open page is a current-state decision surface: the accepted N×2 horizontal
+ * repeat gate first, then the accepted 2×N repeat and 2×2 source-family gates,
+ * followed by the other accepted source, mapping, enclosure, and working-set gates. Historical mixed-profile
  * gates and compiler cards remain available in closed disclosures.
  * Saves under low-profile-correction/ still re-render comparison evidence used
  * inside the current proof sheets.
@@ -62,12 +62,19 @@ import {
   compileA1bThickWallRepeatProposalDirectory,
 } from './highOblique/a1bThickWallRepeatProposal';
 import {
+  compileA1bThickWallHorizontalRepeatProposalDirectory,
+} from './highOblique/a1bThickWallHorizontalRepeatProposal';
+import {
   EQUAL_HEIGHT_THICK_WALL_BLOCK_GATE,
 } from './highOblique/equalHeightThickWallBlockGate';
 import {
   EQUAL_HEIGHT_THICK_WALL_REPEAT_GATE,
   type EqualHeightThickWallRepeatCandidate,
 } from './highOblique/equalHeightThickWallRepeatGate';
+import {
+  EQUAL_HEIGHT_THICK_WALL_HORIZONTAL_REPEAT_GATE,
+  type EqualHeightThickWallHorizontalRepeatCandidate,
+} from './highOblique/equalHeightThickWallHorizontalRepeatGate';
 import {
   EQUAL_HEIGHT_ISOLATED_SHELL_GATE,
   type EqualHeightIsolatedShellLayer,
@@ -124,6 +131,9 @@ const thickWallBlockProposalDirectory = (input: string): string =>
 
 const thickWallRepeatProposalDirectory = (input: string): string =>
   path.join(crossSectionProofsDirectory(input), 'thick-wall-repeat');
+
+const thickWallHorizontalRepeatProposalDirectory = (input: string): string =>
+  path.join(crossSectionProofsDirectory(input), 'thick-wall-horizontal-repeat');
 
 // The distraction-free envelope gate: one closed 3x3 wall section assembled
 // only from the structural masters under review. The empty centre cell exposes
@@ -601,6 +611,7 @@ async function render(
   await renderFullHeightSouthwestProof(options);
   await renderFullHeightSoutheastProof(options);
   await renderEqualHeightCorridorGate(options);
+  await renderEqualHeightThickWallHorizontalRepeatGate(options, root);
   await renderEqualHeightThickWallRepeatGate(options, root);
   await renderEqualHeightThickWallBlockGate(options, root);
   await renderEqualHeightIsolatedShellGate(options, root);
@@ -618,6 +629,7 @@ async function render(
     roomRenderedAt: renderedAt,
     ladderRenderedAt: renderedAt,
     focusRenderedAt: renderedAt,
+    thickWallHorizontalRepeatRenderedAt: renderedAt,
     thickWallRepeatRenderedAt: renderedAt,
     thickWallBlockRenderedAt: renderedAt,
     isolatedShellRenderedAt: renderedAt,
@@ -716,6 +728,20 @@ async function thickWallRepeatProposalFileOverrides(
 ): Promise<CompositionFileOverrides> {
   const directory = thickWallRepeatProposalDirectory(options.input);
   const compiled = await compileA1bThickWallRepeatProposalDirectory({
+    inputDir: directory,
+    sourcePathPrefix: path.relative(root, directory).replaceAll(path.sep, '/'),
+  });
+  return Object.fromEntries(
+    compiled.map(({ filename, content }) => [filename, content] as const),
+  );
+}
+
+async function thickWallHorizontalRepeatProposalFileOverrides(
+  options: CliOptions,
+  root: string,
+): Promise<CompositionFileOverrides> {
+  const directory = thickWallHorizontalRepeatProposalDirectory(options.input);
+  const compiled = await compileA1bThickWallHorizontalRepeatProposalDirectory({
     inputDir: directory,
     sourcePathPrefix: path.relative(root, directory).replaceAll(path.sep, '/'),
   });
@@ -1943,6 +1969,197 @@ function acceptedFilledBlockCell(
   ];
 }
 
+function thickWallHorizontalRepeatCandidateCell(
+  candidate: EqualHeightThickWallHorizontalRepeatCandidate,
+  col: number,
+  row: number,
+  layer: 'base' | 'upper' | 'composed' = 'composed',
+): CompositionCell {
+  if (layer === 'base') return [col, row, candidate.baseFile, null];
+  if (layer === 'upper') return [col, row, EMPTY_WORKBENCH_FILE, candidate.upperFile];
+  return [col, row, candidate.baseFile, candidate.upperFile];
+}
+
+function thickWallHorizontalRepeatCells(
+  columns: 2 | 3 | 4 | 6,
+  middleMode: 'authored-candidate' | 'straight-reuse' = 'authored-candidate',
+): readonly CompositionCell[] {
+  const cells: CompositionCell[] = [
+    acceptedFilledBlockCell(20, 0, 0),
+    acceptedFilledBlockCell(16, 0, 1),
+  ];
+  for (let col = 1; col < columns - 1; col += 1) {
+    if (middleMode === 'straight-reuse') {
+      cells.push(
+        [col, 0, 'full_n_straight-base.svg', 'full_n_straight-upper.svg'],
+        [col, 1, 'full_n_straight-base.svg', 'full_n_straight-upper.svg'],
+      );
+    } else {
+      cells.push(
+        ...EQUAL_HEIGHT_THICK_WALL_HORIZONTAL_REPEAT_GATE.candidates.map((candidate) =>
+          thickWallHorizontalRepeatCandidateCell(candidate, col, candidate.rowIndex)),
+      );
+    }
+  }
+  cells.push(
+    acceptedFilledBlockCell(26, columns - 1, 0),
+    acceptedFilledBlockCell(34, columns - 1, 1),
+  );
+  return cells;
+}
+
+async function thickWallHorizontalRepeatWindow(
+  options: CliOptions,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  columns: 2 | 3 | 4 | 6,
+  fileOverrides: CompositionFileOverrides,
+  floorFill: string = A1A_PALETTE.floor,
+  middleMode: 'authored-candidate' | 'straight-reuse' = 'authored-candidate',
+): Promise<string> {
+  return compositionWindow(
+    options,
+    thickWallHorizontalRepeatCells(columns, middleMode),
+    columns,
+    2,
+    x,
+    y,
+    width,
+    height,
+    fileOverrides,
+    undefined,
+    false,
+    floorFill,
+  );
+}
+
+async function renderEqualHeightThickWallHorizontalRepeatGate(
+  options: CliOptions,
+  root: string,
+): Promise<void> {
+  const gate = EQUAL_HEIGHT_THICK_WALL_HORIZONTAL_REPEAT_GATE;
+  const width = 1600;
+  const height = 1900;
+  const panelFill = '#ECE5D5';
+  const panel = (x: number, y: number, w: number, h: number): string =>
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="14" fill="${panelFill}" ` +
+      `stroke="${INK}" stroke-width="1.5" opacity="0.96"/>`;
+  const fileOverrides: CompositionFileOverrides = {
+    [EMPTY_WORKBENCH_FILE]: EMPTY_WORKBENCH_SOURCE,
+    ...await southeastReviewFileOverrides(options),
+    ...await thickWallBlockProposalFileOverrides(options, root),
+    ...await thickWallHorizontalRepeatProposalFileOverrides(options, root),
+  };
+  const rear = gate.candidates[0];
+  const foreground = gate.candidates[1];
+  const parts: string[] = [
+    `<rect width="${width}" height="${height}" rx="18" fill="${PANEL}"/>`,
+    text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED N×2 HORIZONTAL REPEAT FAMILY', 24, 820),
+    text(24, 68, 'Owner-accepted proof layer · two fixed-light direct sources · accepted 2×2 family remains the control', 13, 650, MUTED),
+    text(1576, 38, 'MASKS 31 / 38 ACCEPTED', 11, 820, A1A_PALETTE.green, 'end'),
+    text(1576, 62, '10 direct · 9 derived · 28 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
+
+    panel(20, 92, 1560, 500),
+    text(44, 126, 'THE PLAYER-SHAPED CASE — WIDEN THE SOLID MASS', 14, 820),
+    text(44, 150, 'Adding one complete wall column must extend the accepted slab without reopening a north face, burying a fascia rail, or inventing a center cap.', 10, 650, MUTED),
+
+    panel(20, 612, 1560, 410),
+    text(44, 646, 'THE ONLY NEW PIXELS — REAR TOP + FOREGROUND FRONTAGE', 14, 820),
+    text(44, 670, 'The rear source is cream-only. The foreground source alone owns the south shade, coral register, green face, plinth, and one right-edge service seam.', 10, 650, MUTED),
+
+    panel(20, 1042, 1560, 560),
+    text(44, 1076, 'REPEATABILITY GATE — SHORT, CONSECUTIVE, AND LONG', 14, 820),
+    text(44, 1100, 'Judge the first inserted column, consecutive middle columns, and a literal 40 px-per-cell six-column mass on both grounds.', 10, 650, MUTED),
+
+    panel(20, 1622, 1560, 254),
+    text(44, 1658, 'READING CONTRACT', 14, 820),
+    text(824, 1658, 'PROOF BOUNDARY', 14, 820),
+  ];
+
+  parts.push(text(246, 186, 'ACCEPTED 2×2 CONTROL', 11, 820, A1A_PALETTE.green, 'middle'));
+  parts.push(await thickWallHorizontalRepeatWindow(options, 66, 206, 360, 330, 2, fileOverrides));
+  parts.push(text(592, 342, 'INSERT', 11, 850, '#B65F4D', 'middle'));
+  parts.push(text(592, 364, 'ONE FULL COLUMN', 11, 850, '#B65F4D', 'middle'));
+  parts.push('<path d="M470 380H692" fill="none" stroke="#B65F4D" stroke-width="4" stroke-linecap="round"/><path d="M692 380L670 365V395Z" fill="#B65F4D"/>');
+  parts.push(text(1036, 186, '3×2 ACCEPTED MASS · ONE INSERT', 11, 820, A1A_PALETTE.green, 'middle'));
+  parts.push(await thickWallHorizontalRepeatWindow(options, 786, 206, 500, 330, 3, fileOverrides));
+  parts.push(text(1370, 272, '20   31   26', 11, 850, MUTED));
+  parts.push(text(1370, 438, '16   38   34', 11, 850, '#B65F4D'));
+  parts.push(text(1370, 480, '31 and 38 repeat;', 9, 700, '#294B3C'));
+  parts.push(text(1370, 502, 'corners stay unchanged', 9, 700, '#294B3C'));
+
+  const sourceCards: ReadonlyArray<readonly [number, string, CompositionCell, string]> = [
+    [54, 'REAR · MASK_31', thickWallHorizontalRepeatCandidateCell(rear, 0, 0), '#4E7D79'],
+    [324, 'FOREGROUND · MASK_38', thickWallHorizontalRepeatCandidateCell(foreground, 0, 0), '#B65F4D'],
+  ];
+  for (const [x, label, cell, color] of sourceCards) {
+    parts.push(await compositionWindow(options, [cell], 1, 1, x, 710, 220, 220, fileOverrides));
+    parts.push(text(x + 110, 954, label, 10, 820, color, 'middle'));
+  }
+  const pairedColumn = [
+    thickWallHorizontalRepeatCandidateCell(rear, 0, 0),
+    thickWallHorizontalRepeatCandidateCell(foreground, 0, 1),
+  ];
+  parts.push(await compositionWindow(options, pairedColumn, 1, 2, 640, 702, 180, 280, fileOverrides));
+  parts.push(text(730, 1000, 'COMPOSED COLUMN', 10, 820, '#294B3C', 'middle'));
+  parts.push(await compositionWindow(options, pairedColumn, 1, 2, 940, 750, 90, 180, fileOverrides));
+  parts.push(text(985, 954, '90 PX / CELL', 9, 820, MUTED, 'middle'));
+  parts.push(await compositionWindow(options, pairedColumn, 1, 2, 1130, 800, 40, 80, fileOverrides));
+  parts.push(text(1150, 904, '40 PX', 9, 820, MUTED, 'middle'));
+  parts.push(text(1260, 750, 'REAR', 9, 850, '#4E7D79'));
+  parts.push(text(1260, 780, 'north contour · cream · highlight', 9, 680, MUTED));
+  parts.push(text(1260, 838, 'FOREGROUND', 9, 850, '#B65F4D'));
+  parts.push(text(1260, 868, 'shade · coral · green · plinth · service seam', 9, 680, MUTED));
+  parts.push(text(1260, 926, 'NO ROTATION · NO Y MIRROR', 9, 820, '#9A493D'));
+
+  parts.push(text(194, 1140, 'REJECT · ORDINARY STRAIGHT REUSE', 10, 820, '#9A493D', 'middle'));
+  parts.push(await thickWallHorizontalRepeatWindow(options, 54, 1160, 280, 210, 3, fileOverrides, A1A_PALETTE.floor, 'straight-reuse'));
+  parts.push(text(194, 1394, 'buried face rails split the mass', 9, 740, '#9A493D', 'middle'));
+  parts.push(text(520, 1140, '3×2 · ONE MIDDLE', 10, 820, '#B65F4D', 'middle'));
+  parts.push(await thickWallHorizontalRepeatWindow(options, 380, 1160, 280, 210, 3, fileOverrides));
+  parts.push(text(850, 1140, '4×2 · CONSECUTIVE MIDDLES', 10, 820, '#294B3C', 'middle'));
+  parts.push(await thickWallHorizontalRepeatWindow(options, 700, 1180, 300, 180, 4, fileOverrides));
+  parts.push(text(1260, 1140, '6×2 · 40 PX / CELL', 10, 820, '#294B3C', 'middle'));
+  parts.push(await thickWallHorizontalRepeatWindow(options, 1120, 1200, 240, 80, 6, fileOverrides));
+  parts.push(text(1260, 1302, 'LIGHT', 8, 820, MUTED, 'middle'));
+  parts.push(await thickWallHorizontalRepeatWindow(options, 1120, 1360, 240, 80, 6, fileOverrides, A1A_PALETTE.charcoal));
+  parts.push(text(1260, 1462, 'DARK', 8, 820, '#4E7D79', 'middle'));
+  parts.push(text(360, 1510, 'rear cream plane', 9, 780, '#4E7D79', 'middle'));
+  parts.push('<path d="M180 1480H540" fill="none" stroke="#4E7D79" stroke-width="2" stroke-linecap="round"/>');
+  parts.push(text(790, 1510, 'foreground tri-tone frontage', 9, 780, '#B65F4D', 'middle'));
+  parts.push('<path d="M610 1480H970" fill="none" stroke="#B65F4D" stroke-width="2" stroke-linecap="round"/>');
+
+  const readingLines = [
+    'One cream mass across the rear row and through the rear/foreground join',
+    'Only the foreground row carries the south-facing plane break and tri-tone face',
+    'Repeated cells keep one quiet service-seam owner without a doubled boundary',
+    'The silhouette reads cleanly with one or several inserted columns',
+  ];
+  for (const [index, line] of readingLines.entries()) {
+    parts.push(text(44, 1696 + index * 34, `• ${line}`, 10, 700, index < 3 ? '#294B3C' : MUTED));
+  }
+  const boundaryLines: ReadonlyArray<readonly [string, string]> = [
+    ['OWNER ACCEPTED · HORIZONTAL REPEAT FAMILY', A1A_PALETTE.green],
+    ['mask_31 · direct accepted rear source', MUTED],
+    ['mask_38 · direct accepted foreground source', MUTED],
+    ['PROOF-LAYER LEDGER PROMOTION ONLY', '#4E7D79'],
+    ['NO EXPORT / ATLAS / SCHEMA / UNITY', '#9A493D'],
+  ];
+  for (const [index, [line, color]] of boundaryLines.entries()) {
+    parts.push(text(824, 1696 + index * 32, line, index === 0 || index >= 3 ? 10 : 9, index === 0 || index >= 3 ? 820 : 680, color));
+  }
+
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" ` +
+    `viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+  const png = new Resvg(svg, {
+    fitTo: { mode: 'width', value: width * CARD_RENDER_SCALE },
+  }).render().asPng();
+  await writeFile(path.join(options.output, `${gate.stem}.png`), png);
+}
+
 function thickWallRepeatCandidateCell(
   candidate: EqualHeightThickWallRepeatCandidate,
   col: number,
@@ -2035,7 +2252,7 @@ async function renderEqualHeightThickWallRepeatGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED 2xN THICK-WALL REPEAT FAMILY', 24, 820),
     text(24, 68, 'Owner-accepted proof layer · one west-authored middle spine plus one approved whole-cell X mirror · 2x2 family remains the control', 13, 650, MUTED),
     text(1576, 38, 'MASKS 24 / 42 ACCEPTED', 11, 820, A1A_PALETTE.green, 'end'),
-    text(1576, 62, '8 direct · 9 derived · 30 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
+    text(1576, 62, '10 direct · 9 derived · 28 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1560, 570),
     text(44, 126, 'THE PLAYER-SHAPED CASE — EXTEND THE SOLID MASS', 14, 820),
@@ -2266,7 +2483,7 @@ async function renderEqualHeightThickWallBlockGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED 2x2 THICK-WALL FAMILY', 24, 820),
     text(24, 68, 'Owner-accepted proof layer · two fixed-light west sources plus two approved X-mirror derivations · solid top lives in the pieces', 13, 650, MUTED),
     text(1576, 38, 'FOUR MAPPINGS ACCEPTED', 11, 820, A1A_PALETTE.green, 'end'),
-    text(1576, 62, '8 direct · 9 derived · 30 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
+    text(1576, 62, '10 direct · 9 derived · 28 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1560, 560),
     text(44, 126, 'THE PLAYER ACTION — FILL THE OPEN CROOK', 14, 820),
@@ -2408,7 +2625,7 @@ async function renderEqualHeightIsolatedShellGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED MASK_0 ISOLATED SHELL GATE', 24, 820),
     text(24, 68, 'Owner-accepted proof layer · one full-height structural housing · zero cardinal sockets · no transform', 13, 650, MUTED),
     text(1576, 38, 'MASK_0 MAPPING ACCEPTED', 11, 820, A1A_PALETTE.green, 'end'),
-    text(1576, 62, '8 direct · 9 derived · 30 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
+    text(1576, 62, '10 direct · 9 derived · 28 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1120, 410),
     text(44, 126, 'ONE MOLDED HOUSING — LAYER READ AT 240 PX', 14, 820),
@@ -2610,7 +2827,7 @@ async function renderEqualHeightVerticalTerminusGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED VERTICAL TERMINUS GATE', 24, 820),
     text(24, 68, 'Owner-accepted proof layer · two authored wall rollovers · west source + east mirror-X derivation', 13, 650, MUTED),
     text(1976, 38, 'MASK_1 + MASK_4 MAPPING ACCEPTED', 11, 820, A1A_PALETTE.green, 'end'),
-    text(1976, 62, '8 direct · 9 derived · 30 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
+    text(1976, 62, '10 direct · 9 derived · 28 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
   ];
 
   const isolated: ReadonlyArray<readonly [1 | 4, EqualHeightVerticalTerminusWallSide]> = [
@@ -3251,6 +3468,7 @@ async function renderEqualHeightMaskLedger(options: CliOptions, root: string): P
     ...await isolatedShellProposalFileOverrides(options, root),
     ...await verticalTerminusProposalFileOverrides(options, root),
     ...await thickWallBlockProposalFileOverrides(options, root),
+    ...await thickWallHorizontalRepeatProposalFileOverrides(options, root),
     ...await thickWallRepeatProposalFileOverrides(options, root),
   };
   const parts: string[] = [
@@ -3365,6 +3583,7 @@ async function renderEqualHeightMaskLedger(options: CliOptions, root: string): P
     'mask_16 / 20 · filled elbows · direct sources',
     'mask_26 / 34 · filled elbows · mirror-X',
     'mask_24 / 42 · filled middle spine · direct / mirror-X',
+    'mask_31 / 38 · horizontal middle spines · direct',
   ];
   for (const [index, line] of resolvedLines.entries()) {
     parts.push(text(railX + 24, gridY + 732 + index * 18, line, 11, 700, index % 2 === 0 ? '#294B3C' : '#4E7D79'));
@@ -3392,11 +3611,11 @@ async function renderEqualHeightMaskLedger(options: CliOptions, root: string): P
   parts.push(text(railX + 24, gridY + 1310, 'mask_1 / 4 are accepted as separately authored vertical ends.', 11, 650, MUTED));
   parts.push(text(railX + 24, gridY + 1332, 'mask_8 direct and mask_2 mirror-X remain the horizontal pair.', 11, 650, MUTED));
   parts.push(text(railX + 24, gridY + 1354, 'mask_16 / 20 direct and mask_26 / 34 mirror-X form the filled-elbow family.', 11, 650, MUTED));
-  parts.push(text(railX + 24, gridY + 1376, 'mask_24 direct and mask_42 mirror-X extend that family through repeat rows.', 11, 650, MUTED));
+  parts.push(text(railX + 24, gridY + 1376, 'mask_24 / 42 extend Y; direct masks 31 / 38 extend X.', 11, 650, MUTED));
 
   parts.push(text(railX + 24, gridY + 1408, 'SYNTHETIC OBLIGATION', 14, 850, '#7B715F'));
   parts.push(text(railX + 24, gridY + 1436, '0 solid elbows · all four now have accepted proof sources', 11, 700, MUTED));
-  parts.push(text(railX + 24, gridY + 1458, '14 T cases · accepted sockets/pockets + new local hub/caps', 11, 700, MUTED));
+  parts.push(text(railX + 24, gridY + 1458, '12 T cases · accepted sockets/pockets + new local hub/caps', 11, 700, MUTED));
   parts.push(text(railX + 24, gridY + 1480, '16 cross cases · accepted pockets + new four-way hub', 11, 700, MUTED));
   parts.push(text(railX + 24, gridY + 1508, 'Hatched previews are topology diagrams, never proposed final art.', 11, 750, '#7B715F'));
 
@@ -3418,7 +3637,7 @@ async function renderEqualHeightMaskLedger(options: CliOptions, root: string): P
   parts.push(text(railX + 42, gridY + 1810, '✓ accepted source provenance only', 11, 700, '#9FC7A9'));
   parts.push(text(railX + 42, gridY + 1836, '✓ no low-profile or historical topology pixels', 11, 700, '#9FC7A9'));
   parts.push(text(railX + 42, gridY + 1862, '✓ 0 authored geometry gaps remain', 11, 750, '#9FC7A9'));
-  parts.push(text(railX + 42, gridY + 1888, '! 30 synthetic cases are diagrams, not accepted art', 11, 750, '#E0836E'));
+  parts.push(text(railX + 42, gridY + 1888, '! 28 synthetic cases are diagrams, not accepted art', 11, 750, '#E0836E'));
   parts.push(text(railX + 42, gridY + 1918, 'No further proof or production registration is implied.', 11, 800, '#83A9A6'));
 
   const svg =
@@ -3878,6 +4097,7 @@ async function renderContextMocksSafely(options: CliOptions, root: string): Prom
     await renderFullHeightSouthwestProof(options);
     await renderFullHeightSoutheastProof(options);
     await renderEqualHeightCorridorGate(options);
+    await renderEqualHeightThickWallHorizontalRepeatGate(options, root);
     await renderEqualHeightThickWallRepeatGate(options, root);
     await renderEqualHeightThickWallBlockGate(options, root);
     await renderEqualHeightIsolatedShellGate(options, root);
@@ -3894,6 +4114,7 @@ async function renderContextMocksSafely(options: CliOptions, root: string): Prom
     status.roomRenderedAt = renderedAt;
     status.ladderRenderedAt = renderedAt;
     status.focusRenderedAt = renderedAt;
+    status.thickWallHorizontalRepeatRenderedAt = renderedAt;
     status.thickWallRepeatRenderedAt = renderedAt;
     status.thickWallBlockRenderedAt = renderedAt;
     status.isolatedShellRenderedAt = renderedAt;
@@ -4065,6 +4286,7 @@ async function main(): Promise<void> {
         normalizedProofFile.startsWith('vertical-terminus/') ||
         normalizedProofFile.startsWith('isolated-shell/') ||
         normalizedProofFile.startsWith('thick-wall-block/') ||
+        normalizedProofFile.startsWith('thick-wall-horizontal-repeat/') ||
         normalizedProofFile.startsWith('thick-wall-repeat/')
       ) {
         lastRoomFile = fileName;

@@ -28,9 +28,9 @@ and all four corners close as one enclosure.
 
 **Accepted mapping gate (owner approvals, 2026-07-21 through 2026-07-22):** the proof-layer ledger
 locks the unchanged canonical `mask_0` through `mask_46` order and classifies
-eight direct reuses, nine approved derivations, 30 synthetic assembly
+ten direct reuses, nine approved derivations, 28 synthetic assembly
 candidates, and zero authored-geometry gaps. This accepts the mapping
-structure and provenance boundaries only. It does not accept the 30 synthetic
+structure and provenance boundaries only. It does not accept the 28 synthetic
 assembly diagrams or create an atlas/production family.
 
 **Accepted horizontal terminus gate (owner approval, 2026-07-21):** `mask_8`
@@ -67,8 +67,16 @@ schema, or Unity registrations.
 `../quota-co-building-system-proofs/thick-wall-repeat/` bank supplies one fixed-light west middle source for
 `mask_24`; `mask_42` is its accepted whole-cell X-mirror derivation. The focused 2×3/2×4/2×6 gate proves that
 the pair extends the accepted 2×2 block as one uninterrupted cream mass. The ledger now records 8 direct /
-9 derived / 30 synthetic / 0 unresolved rows. This proof-layer promotion creates no canonical source,
-exporter, atlas, schema, or Unity registration.
+9 derived / 30 synthetic / 0 unresolved rows at that checkpoint; later source-family decisions supersede
+those counts. This proof-layer promotion creates no canonical source, exporter, atlas, schema, or Unity
+registration.
+
+**Accepted horizontal thick-wall repeat gate (owner approval, 2026-07-22):** the external
+`../quota-co-building-system-proofs/thick-wall-horizontal-repeat/` bank supplies direct fixed-light sources
+for rear `mask_31` and foreground `mask_38`. The focused 3×2/4×2/6×2 gate proves that both middle cells can
+repeat between the accepted filled-elbow columns as one continuous two-row wall mass. The ledger now records
+10 direct / 9 derived / 28 synthetic / 0 unresolved rows. This proof-layer promotion creates no canonical
+source, frame identity, template registration, exporter, atlas, schema, or Unity registration.
 
 The original independently finished low-base-plus-optional-upper construction was
 rejected on 2026-07-20 because its duplicate caps and contours read as one wall
