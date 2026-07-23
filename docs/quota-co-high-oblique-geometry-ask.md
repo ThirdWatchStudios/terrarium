@@ -1,6 +1,6 @@
 # QuotaCo High-Oblique Geometry — Production Art Ask
 
-**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** open-pocket cross-junction `mask_15`
+**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** single-filled cross-junction `mask_19`
 is accepted as one direct fixed-light proof source; no proposal is currently active
 
 Canonical direction lives in the sim repository:
@@ -17,7 +17,8 @@ as a proof-layer mapping over the existing 47-mask connectivity table, for all f
 for the isolated `mask_0` source, for the four filled-elbow rows used by a completely occupied 2×2 block, and
 for both directions of two-cell-thick wall repetition, for both open-pocket T-junction axes, and for all four
 west- and east-side single-filled-pocket T-junction states, all four horizontal partial T-junction states, and
-the all-open `mask_15` cross-junction. The accepted proof ledger now records 18 direct, 14 derived, 15 synthetic,
+the all-open `mask_15` cross-junction and northeast-filled `mask_19` cross-junction. The accepted proof ledger
+now records 19 direct, 14 derived, 14 synthetic,
 and zero collisions; every remaining
 synthetic assembly candidate is a cross-junction. Prop-catalog work and
 production changes remain separate decisions.
@@ -151,11 +152,12 @@ review results without treating them as the current production direction.
 **Corridor owner decision, 2026-07-21:** the accepted sources also pass together as a 3×8 equal-height
 perimeter around a 1×6 walkable aisle at both 90 and 40 px per cell. This closes the composition gate.
 
-**Mapping owner decisions, 2026-07-21 through 2026-07-22:** accept the 47-row proof-layer ledger structure and
+**Mapping owner decisions, 2026-07-21 through 2026-07-23:** accept the 47-row proof-layer ledger structure and
 its explicit provenance/gap accounting. With both terminus families, the isolated shell, the filled-elbow
 family, both thick-wall repeat families, both open-pocket T-junction pairs, and both west- and east-side
-single-filled-pocket T-junction pairs, the horizontal partial T-junction family, and open-pocket `mask_15`
-promoted, it records eighteen direct mappings and fourteen approved derivations as source law, not the 15
+single-filled-pocket T-junction pairs, the horizontal partial T-junction family, open-pocket `mask_15`, and
+single-filled `mask_19` promoted, it records nineteen direct mappings and fourteen approved derivations as
+source law, not the 14
 remaining synthetic
 cross-junction candidate sprites. The ledger has zero collisions.
 
@@ -275,6 +277,18 @@ ledger to eighteen direct, fourteen derived, 15 synthetic, and zero collisions; 
 rows are cross-junctions. Proof-layer acceptance changes no canonical production source, frame identity,
 template registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity` surface.
 
+**Accepted single-filled cross-junction family (owner approval, 2026-07-23):** the external
+`assets/walls/quota-co-building-system-proofs/single-filled-cross-junction/` bank supplies one direct,
+fixed-light `open_cross_filled_ne` pair for `mask_19`. It retains all four ordinary-wall sockets, fills only
+the northeast diagonal as continuous wall top, and keeps the southeast, southwest, and northwest crooks open
+floor. The flattened authored union preserves the canonical west fixed-light register through its north and
+south neighbors; the east-register companion is the separate `mask_37` topology row, not a transformed
+`mask_19`. The source passes at 240/90/40 px and in compact, three-cell-arm, and six-cell-arm crossings on
+light and dark floors. Promotion advances the ledger to nineteen direct, fourteen derived, 14 synthetic, and
+zero collisions; all 14 remaining synthetic rows are cross-junctions. Proof-layer acceptance changes no
+canonical production source, frame identity, template registration, exporter, atlas, schema, blob mapping,
+Unity asset, or `production.unity` surface.
+
 ### A1a review artifact
 
 Produce both:
@@ -308,10 +322,11 @@ authorize edits to production topology sources, template/catalog registration, f
 `CONTRACT.md`, schema versions, committed production atlases, Unity assets, or `production.unity`. Any of those
 requires a separate owner decision.
 
-**Owner result, updated 2026-07-22:** the ledger envelope plus horizontal and vertical termini, isolated-shell,
+**Owner result, updated 2026-07-23:** the ledger envelope plus horizontal and vertical termini, isolated-shell,
 filled-elbow, both thick-wall-repeat slices, both open-pocket T-junction pairs, both west- and east-side
-single-filled-pocket T-junction pairs, the horizontal partial T-junction family, and open-pocket `mask_15` are
-accepted with eighteen direct reuses, fourteen approved derivations, fifteen proof-only synthetic cross-junction
+single-filled-pocket T-junction pairs, the horizontal partial T-junction family, open-pocket `mask_15`, and
+single-filled `mask_19` are accepted with nineteen direct reuses, fourteen approved derivations, fourteen
+proof-only synthetic cross-junction
 assemblies, and zero collisions. `mask_8` uses the socket-polished `full_terminus` source directly (connected west, cap east); `mask_2`
 uses the same whole cell mirrored around `x=64` (connected east, cap west). Acceptance locks those provenance
 rows but does not promote the remaining synthetic contact diagrams. `mask_1` and `mask_4` use their separately authored
@@ -332,7 +347,9 @@ same-mask lateral X mirrors remain comparison evidence only and are not accepted
 filtered whole-cell X mirror of `mask_18`, and `mask_28` is the approved plain whole-cell X mirror of
 `mask_22`. `mask_15` directly reuses the external `open_cross_junction` pair as one authored four-way hub;
 it is not a stacked-T assembly. South-facing shadow continuity remains deferred across that accepted family and is not claimed as
-fixed by this provenance decision.
+fixed by this provenance decision. `mask_19` directly reuses the external `open_cross_filled_ne` pair as one
+northeast-filled four-way hub in the fixed west register; `mask_37` remains a separate synthetic east-register
+topology row.
 
 ## 5. Readability gates
 
@@ -379,10 +396,11 @@ The later prop pilot—not floor tiles—settles the southern ground-contact sor
 
 Owner acceptance of the 47-mask ledger, both terminus families, the isolated shell, the filled-elbow family,
 both thick-wall repeat families, both open-pocket T-junction pairs, both west- and east-side
-single-filled-pocket pairs, the horizontal partial T-junction family, and open-pocket `mask_15`
+single-filled-pocket pairs, the horizontal partial T-junction family, open-pocket `mask_15`, and
+single-filled `mask_19`
 updates their named proof-layer
 provenance; those accepted decisions remain unchanged. These external proof sources close the
-authored-geometry gap and assign provenance to the accepted family rows, but do not unlock the remaining 15
+authored-geometry gap and assign provenance to the accepted family rows, but do not unlock the remaining 14
 synthetic cross-junction topology cases, production
 propagation/registration, export or `CONTRACT.md` work, schema changes, committed atlases,
 the product-family prop pilot, or the isolated Unity golden room. Acceptance of `mask_7`/`mask_13` authorizes
@@ -398,4 +416,6 @@ composition evidence. Acceptance of `mask_18`/`mask_22` and derived `mask_35`/`m
 only their external proof bank, the accepted `mask_35` seam filter, ledger provenance, and compact/long
 composition evidence. South-facing shadow continuity remains deferred family-wide polish and is not claimed
 as fixed. Acceptance of `mask_15` authorizes only its external proof bank, direct ledger provenance, and
-compact/long crossing evidence. No proposal is currently active.
+compact/long crossing evidence. Acceptance of `mask_19` authorizes only its external proof bank, direct ledger
+provenance, fixed west-register compact/long crossing evidence, and workbench presentation; it does not
+promote or derive `mask_37`. No proposal is currently active.

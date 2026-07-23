@@ -36,12 +36,12 @@ changes the export contract except where explicitly flagged (floor variants).
 > low-south/east and full-to-low artifacts remain historical comparisons and may only inform a separately
 > approved partition family. This decision still changes no production template, topology, exporter, schema,
 > or Unity contract.
-> **Current mapping and source-gate result, 2026-07-22:** the owner accepted the proof-layer 47-mask
+> **Current mapping and source-gate result, 2026-07-23:** the owner accepted the proof-layer 47-mask
 > ledger structure plus the horizontal and vertical termini, isolated-shell, filled-elbow, 2×N thick-wall-repeat,
 > N×2 horizontal thick-wall-repeat, vertical open-pocket T-junction, horizontal-spine open-pocket T-junction,
 > both west- and east-side single-filled-pocket T-junction slices, the horizontal partial T-junction family,
-> and the open-pocket cross-junction `mask_15`. The ledger now records 18 direct source mappings, 14 approved
-> derivations, 15 synthetic assembly
+> the open-pocket cross-junction `mask_15`, and the single-filled cross-junction `mask_19`. The ledger now
+> records 19 direct source mappings, 14 approved derivations, 14 synthetic assembly
 > candidates, and zero collisions; all remaining synthetic rows are cross-junctions. `mask_8`
 > directly reuses the socket-polished `full_terminus` pair and `mask_2` uses its accepted whole-cell X mirror;
 > both passed at 90/40 px in 1/3/6-cell contexts. This is not acceptance of the remaining synthetic candidate pixels or a
@@ -122,6 +122,16 @@ changes the export contract except where explicitly flagged (floor variants).
 > 0 collisions; all 15 remaining synthetic rows are cross-junctions. Acceptance records proof-layer source
 > provenance only. It adds no canonical production source, frame identity, template registration, exporter,
 > atlas, schema, blob mapping, Unity asset, or `production.unity` change.
+> **Accepted single-filled cross-junction slice (owner approval, 2026-07-23):** the external
+> `single-filled-cross-junction/` proof bank supplies one direct fixed-light `open_cross_filled_ne` source pair
+> for `mask_19`. Its four cardinal sockets continue ordinary one-cell runs, the northeast diagonal becomes
+> continuous wall mass, and the southeast, southwest, and northwest crooks remain open floor. The authored
+> union preserves the fixed west socket register and replaces any stacked-T, patch, peak, or post construction.
+> It passes 240/90/40 px source checks plus compact, three-cell-arm, and six-cell-arm installed crossings on
+> light and dark floors. The accepted ledger now records 19 direct / 14 derived / 14 synthetic / 0 collisions;
+> all 14 remaining synthetic rows are cross-junctions. Acceptance records proof-layer source provenance only.
+> It adds no canonical production source, frame identity, template registration, exporter, atlas, schema, blob
+> mapping, Unity asset, or `production.unity` change.
 
 ---
 
