@@ -316,9 +316,9 @@ describe('QuotaCo owner-accepted horizontal partial T-junction gate', () => {
 
   it('locks all four rows as accepted mappings and leaves only cross-junctions synthetic', () => {
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
-      'direct-reuse': 17,
+      'direct-reuse': 18,
       'approved-derivation': 14,
-      'synthetic-assembly': 16,
+      'synthetic-assembly': 15,
       'unresolved-authored-geometry': 0,
     });
     for (const maskIndex of [18, 35, 22, 28] as const) {
@@ -334,10 +334,10 @@ describe('QuotaCo owner-accepted horizontal partial T-junction gate', () => {
       .toEqual(EQUAL_HEIGHT_MASK_LEDGER.counts);
     expect(EQUAL_HEIGHT_MASK_LEDGER.entries
       .filter(({ resolution }) => resolution.status === 'accepted-source-mapping'))
-      .toHaveLength(31);
+      .toHaveLength(32);
     const synthetic = EQUAL_HEIGHT_MASK_LEDGER.entries
       .filter(({ resolution }) => resolution.status === 'proof-only-candidate');
-    expect(synthetic).toHaveLength(16);
+    expect(synthetic).toHaveLength(15);
     expect(synthetic.every(({ topologyClass }) => topologyClass === 'cross-junction'))
       .toBe(true);
   });

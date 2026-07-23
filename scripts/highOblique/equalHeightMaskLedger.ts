@@ -385,6 +385,16 @@ const openNorthTJunction: EqualHeightMaskSourceVariant = {
   facingRule: 'connected east, south, and west with the north edge exposed; authored rear fixed-light horizontal-spine T hub',
 };
 
+const openCrossJunction: EqualHeightMaskSourceVariant = {
+  role: 'open-pocket-cross-junction',
+  sourceStem: 'open_cross_junction',
+  baseFile: 'open_cross_junction-base.svg',
+  upperFile: 'open_cross_junction-upper.svg',
+  transform: 'none',
+  derivation: 'none',
+  facingRule: 'connected north, east, south, and west with all four diagonal floor pockets open; authored fixed-light four-way hub',
+};
+
 const partialWestForegroundTJunction: EqualHeightMaskSourceVariant = {
   role: 'partial-west-foreground-t-junction',
   sourceStem: 'open_w_t_filled_ne',
@@ -623,6 +633,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         variants: [openNorthTJunction],
         note: 'Accepted rear horizontal-spine T junction directly reuses the independently authored open-north fixed-light source.',
       };
+    case 15:
+      return {
+        kind: 'direct-reuse',
+        status: 'accepted-source-mapping',
+        variants: [openCrossJunction],
+        note: 'Accepted open-pocket cross junction directly reuses the authored fixed-light four-way hub with all four diagonal floor pockets open.',
+      };
     case 16:
       return {
         kind: 'direct-reuse',
@@ -847,6 +864,7 @@ const ACCEPTED_SOURCE_VARIANTS = new Set([
   openEastTJunction,
   openSouthTJunction,
   openNorthTJunction,
+  openCrossJunction,
   partialWestForegroundTJunction,
   partialWestRearTJunction,
   partialEastForegroundTJunction,

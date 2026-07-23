@@ -28,9 +28,9 @@ and all four corners close as one enclosure.
 
 **Accepted mapping gate (owner approvals, 2026-07-21 through 2026-07-22):** the proof-layer ledger
 locks the unchanged canonical `mask_0` through `mask_46` order and classifies
-17 direct reuses, 14 approved derivations, 16 synthetic assembly
+18 direct reuses, 14 approved derivations, 15 synthetic assembly
 candidates, and zero collisions. The remaining synthetic rows are all cross-junctions. This accepts the
-mapping structure and provenance boundaries only. It does not accept the 16 synthetic
+mapping structure and provenance boundaries only. It does not accept the 15 remaining synthetic
 cross-junction diagrams or create an atlas/production family.
 
 **Accepted horizontal terminus gate (owner approval, 2026-07-21):** `mask_8`
@@ -130,6 +130,17 @@ South-facing shadow continuity remains deferred family-wide polish across these 
 sources; this checkpoint does not claim that shadow work is fixed. Proof-layer acceptance changes no
 canonical source, frame identity, template registration, exporter, atlas, schema, blob mapping, or Unity
 registration.
+
+**Accepted open-pocket cross-junction gate (owner approval, 2026-07-22):** the external
+`../quota-co-building-system-proofs/open-pocket-cross-junction/` bank supplies one direct fixed-light source
+for `mask_15`. Its four cardinal sockets join ordinary one-cell wall runs while all four diagonal crooks remain
+open floor. The flattened authored union replaces the rejected stacked-T construction and keeps the horizontal
+cream coping visually dominant through the center without a cap, post, badge, or doubled material belt. It
+passes at 240, 90, and 40 px per cell with one-, three-, and six-cell arms on light and dark floors. Promotion
+advances the proof ledger to 18 direct / 14 derived / 15 synthetic / 0 collisions; all 15 remaining synthetic
+rows are cross-junctions. This accepts the source and its direct proof-ledger provenance only. It creates no
+canonical production source, frame identity, template registration, exporter, atlas, schema, blob mapping, or
+Unity registration.
 
 The original independently finished low-base-plus-optional-upper construction was
 rejected on 2026-07-20 because its duplicate caps and contours read as one wall

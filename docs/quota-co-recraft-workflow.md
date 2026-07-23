@@ -26,8 +26,9 @@ on the live workbench and committed individually with its design rationale.
    evidence rather than accepted derivations. The single-filled-pocket family is accepted on both sides:
    west `mask_17`/`mask_21` are direct sources, east `mask_36` is the filtered whole-cell X mirror of
    `mask_17`, and east `mask_27` is the plain whole-cell X mirror of `mask_21`. The horizontal partial family
-   is accepted too: direct `mask_18`/`mask_22`, filtered mirror `mask_35`, and plain mirror `mask_28`. No east
-   SVG bank is added. No proposal is currently active. Never
+   is accepted too: direct `mask_18`/`mask_22`, filtered mirror `mask_35`, and plain mirror `mask_28`. Open-pocket
+   cross-junction `mask_15` now directly reuses one authored fixed-light four-way hub with all four diagonal
+   crooks open. No east SVG bank is added. No proposal is currently active. Never
    rotate the accepted horizontal source to manufacture a vertical end. Use composed evidence as
    the issue-finding surface. Historical
    mixed-profile room mocks are archived, not valid targets.
@@ -43,7 +44,8 @@ on the live workbench and committed individually with its design rationale.
    shading as overlays never tints (recolor law). Edit masters with the file tools, not shell scripts —
    shell edits break the session harness's write tracking.
 4. **Judge on the bench:** `npm run style:watch` → http://localhost:5411 (one instance only — the port
-   is exclusive). The accepted horizontal partial T-junction gate appears first, followed by the accepted
+   is exclusive). The accepted open-pocket `mask_15` cross-junction gate appears first, followed by the accepted
+   horizontal partial T-junction gate and then the accepted
    east-side single-filled-pocket T-junction gate comparing filtered
    mirror-X `mask_36` and plain mirror-X `mask_27` in compact and long light/dark compositions; the accepted
    west `mask_17`/`mask_21` sources remain its provenance control. The accepted horizontal open-pocket
@@ -196,8 +198,8 @@ north/south bodies stay legible, six-cell west/east runs do not drift, and all f
 manufactured envelope.
 
 **Accepted 47-mask mapping checkpoint (owner approvals, 2026-07-21 through 2026-07-22):** the unchanged
-`mask_0` through `mask_46` ordering and classification ledger is accepted with seventeen direct reuses,
-fourteen approved derivations, 16 proof-only synthetic cross-junction candidates, and zero collisions. This
+`mask_0` through `mask_46` ordering and classification ledger is accepted with eighteen direct reuses,
+fourteen approved derivations, 15 proof-only synthetic cross-junction candidates, and zero collisions. This
 locks the mapping structure, not the synthetic pixels or a complete production family.
 
 **Accepted horizontal terminus checkpoint (owner approval, 2026-07-21):** the socket-polished
@@ -298,17 +300,28 @@ registration, exporter, atlas, schema, blob mapping, or Unity surface.
 `mask_35` omits only `base-boundary-seam` and `upper-boundary-seam`. Judge the two state diamonds
 `mask_11 -> {mask_18, mask_35} -> mask_38` and `mask_14 -> {mask_22, mask_28} -> mask_31` at compact and
 long-run distance: the middle state fills exactly one crook without exposing a buried face or duplicating the
-shared-socket seam. The accepted ledger is 17 direct / 14 derived / 16 synthetic / 0 collisions, with every
-remaining synthetic row a cross-junction. South-facing shadow continuity remains deferred family-wide polish
+shared-socket seam. At that checkpoint the accepted ledger stood at 17 direct / 14 derived / 16 synthetic /
+0 collisions, with every remaining synthetic row a cross-junction. South-facing shadow continuity remains deferred family-wide polish
 across the accepted sources; this checkpoint does not claim it is fixed.
 
-**Still outside acceptance after the horizontal partial T-junction checkpoint:** all 16 remaining synthetic
+**Accepted open-pocket cross-junction gate (owner approval, 2026-07-22):** the external
+`open-pocket-cross-junction/` bank supplies the direct fixed-light `open_cross_junction` pair for `mask_15`.
+Its north/east/south/west sockets continue ordinary one-cell runs while all four diagonal crooks remain open
+floor. The flattened authored union replaces the rejected stacked-T overlay and keeps the horizontal cream
+coping dominant through the center without a peak, post, badge, or duplicate material belt. Judge the accepted
+hub at 240/90/40 px and in one-, three-, and six-cell crossings on light and dark floors. Promotion advances
+the ledger to 18 direct / 14 derived / 15 synthetic / 0 collisions; all 15 remaining synthetic rows are
+cross-junctions. This creates no canonical production source, registration, exporter, atlas, schema, blob
+mapping, or Unity change.
+
+**Still outside acceptance after the open-pocket cross-junction checkpoint:** all 15 remaining synthetic
 cross-junction candidate sprites;
 `topology/` and `state/`; official/production preview
 regeneration; template/catalog registration and frame identities; exporter, `CONTRACT.md`, or schema changes;
 committed production atlases; prop pilots; Unity; and `production.unity` remain locked until separately
 requested. The accepted external `mask_0`, filled-elbow, both thick-wall-repeat, both open-pocket T-junction,
-west/east single-filled-pocket, and horizontal-partial proof families do not unlock or silently promote any of those surfaces.
+west/east single-filled-pocket, horizontal-partial, and open-pocket cross-junction proof families do not
+unlock or silently promote any of those surfaces.
 Acceptance of the external T-junction proof families adds ledger provenance only and does not alter that lock.
 The accepted horizontal-partial family likewise creates no canonical source, registration, exporter, atlas,
 schema, blob mapping, or Unity change.
