@@ -412,7 +412,17 @@ const singleFilledSoutheastCrossJunction: EqualHeightMaskSourceVariant = {
   upperFile: 'open_cross_filled_se-upper.svg',
   transform: 'none',
   derivation: 'none',
-  facingRule: 'connected north, east, south, and west with southeast solid and the other three diagonal floor pockets open; authored west-fixed rear register for mask_23',
+  facingRule: 'connected north, east, south, and west with southeast solid and the other three diagonal floor pockets open; authored west-fixed rear source for mask_23 and accepted mirror source for mask_29',
+};
+
+const singleFilledSouthwestCrossJunction: EqualHeightMaskSourceVariant = {
+  role: 'single-filled-southwest-cross-junction',
+  sourceStem: 'open_cross_filled_se',
+  baseFile: 'open_cross_filled_se-base.svg',
+  upperFile: 'open_cross_filled_se-upper.svg',
+  transform: 'mirror-x',
+  derivation: 'none',
+  facingRule: 'connected north, east, south, and west with southwest solid and northeast, southeast, and northwest floor crooks open; accepted plain whole-cell X mirror of the authored mask_23 southeast-filled fixed-light source',
 };
 
 const doubleFilledEastCrossJunction: EqualHeightMaskSourceVariant = {
@@ -734,7 +744,7 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         kind: 'direct-reuse',
         status: 'accepted-source-mapping',
         variants: [singleFilledSoutheastCrossJunction],
-        note: 'Accepted southeast-filled cross junction directly reuses the authored west-fixed rear four-way hub.',
+        note: 'Accepted southeast-filled cross junction directly reuses the authored west-fixed rear four-way hub and supplies the fixed-light source for the accepted mask_29 mirror.',
       };
     case 24:
       return {
@@ -770,6 +780,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         status: 'accepted-source-mapping',
         variants: [partialNorthRearMirrorTJunction],
         note: 'Accepted rear horizontal partial T junction is the whole-cell mirror-X derivation of the authored southeast-filled transition source.',
+      };
+    case 29:
+      return {
+        kind: 'approved-derivation',
+        status: 'accepted-source-mapping',
+        variants: [singleFilledSouthwestCrossJunction],
+        note: 'Accepted southwest-filled cross junction is the plain whole-cell mirror-X derivation of the authored mask_23 southeast-filled four-way union.',
       };
     case 31:
       return {
@@ -935,6 +952,7 @@ const ACCEPTED_SOURCE_VARIANTS = new Set([
   openCrossJunction,
   singleFilledNortheastCrossJunction,
   singleFilledSoutheastCrossJunction,
+  singleFilledSouthwestCrossJunction,
   doubleFilledEastCrossJunction,
   doubleFilledWestCrossJunction,
   partialWestForegroundTJunction,

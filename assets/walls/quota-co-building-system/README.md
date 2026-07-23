@@ -28,9 +28,9 @@ and all four corners close as one enclosure.
 
 **Accepted mapping gate (owner approvals, 2026-07-21 through 2026-07-23):** the proof-layer ledger
 locks the unchanged canonical `mask_0` through `mask_46` order and classifies
-21 direct reuses, 15 approved derivations, 11 synthetic assembly
+21 direct reuses, 16 approved derivations, 10 synthetic assembly
 candidates, and zero collisions. The remaining synthetic rows are all cross-junctions. This accepts the
-mapping structure and provenance boundaries only. It does not accept the 11 remaining synthetic
+mapping structure and provenance boundaries only. It does not accept the 10 remaining synthetic
 cross-junction diagrams or create an atlas/production family.
 
 **Accepted horizontal terminus gate (owner approval, 2026-07-21):** `mask_8`
@@ -188,6 +188,17 @@ northeast and southeast crooks remain open floor. No seam filter or new SVG bank
 derivation preserves the source's fixed-light north/south ownership and passes at 240, 90, and 40 px per cell
 plus compact, three-cell-arm, and six-cell-arm crossings on light and dark floors. Promotion advances the
 proof ledger to 21 direct / 15 derived / 11 synthetic / 0 collisions; all 11 remaining synthetic rows are
+cross-junctions. This accepts one derivation and its proof-ledger provenance only. It creates no canonical
+production source, frame identity, template registration, exporter, atlas, schema, blob mapping, or Unity
+registration.
+
+**Accepted southwest-filled cross-junction gate (owner approval, 2026-07-23):** `mask_29` reuses the
+accepted external `open_cross_filled_se` pair from `mask_23` through one plain whole-cell X mirror. All four
+cardinal sockets remain connected; the southwest diagonal is one continuous wall-top mass while the northeast,
+southeast, and northwest crooks remain open floor. The derivation preserves the source's Y-based fixed-light
+ownership and uses no seam filter, companion SVG, or new SVG bank. It passes at 240, 90, and 40 px per cell
+plus compact, three-cell-arm, and six-cell-arm crossings on light and dark floors. Promotion advances the
+proof ledger to 21 direct / 16 derived / 10 synthetic / 0 collisions; all 10 remaining synthetic rows are
 cross-junctions. This accepts one derivation and its proof-ledger provenance only. It creates no canonical
 production source, frame identity, template registration, exporter, atlas, schema, blob mapping, or Unity
 registration.

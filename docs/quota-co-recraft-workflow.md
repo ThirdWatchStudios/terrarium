@@ -36,7 +36,9 @@ on the live workbench and committed individually with its design rationale.
    four-way junction with its northeast and southeast diagonals joined as continuous wall mass and both west
    crooks open. West-filled slab cross-junction `mask_43` now reuses that pair through a plain whole-cell
    X mirror, joining the southwest and northwest diagonals while both east crooks stay open. No mirrored
-   companion SVG bank or seam filter is added. Never
+   companion SVG bank or seam filter is added. Southwest-filled cross-junction `mask_29` now reuses the
+   accepted `mask_23` source through a plain whole-cell X mirror, filling only the southwest diagonal while
+   the other three crooks remain open. No companion SVG bank or seam filter is added. Never
    rotate the accepted horizontal source to manufacture a vertical end. Use composed evidence as
    the issue-finding surface. Historical
    mixed-profile room mocks are archived, not valid targets.
@@ -52,8 +54,9 @@ on the live workbench and committed individually with its design rationale.
    shading as overlays never tints (recolor law). Edit masters with the file tools, not shell scripts —
    shell edits break the session harness's write tracking.
 4. **Judge on the bench:** `npm run style:watch` → http://localhost:5411 (one instance only — the port
-   is exclusive). The accepted west-filled slab `mask_43` gate appears first, with the accepted east-filled
-   slab `mask_25` cross-junction gate immediately behind it, followed by the
+   is exclusive). The accepted southwest-filled `mask_29` cross-junction gate appears first, followed by the
+   accepted west-filled slab `mask_43` gate, with the accepted east-filled slab `mask_25` cross-junction gate
+   immediately behind it, followed by the
    accepted southeast-filled `mask_23` cross-junction gate, followed by the
    accepted single-filled `mask_19` cross-junction gate, the accepted open-pocket `mask_15` cross-junction
    gate, and then the accepted
@@ -211,7 +214,7 @@ manufactured envelope.
 
 **Accepted 47-mask mapping checkpoint (owner approvals, 2026-07-21 through 2026-07-23):** the unchanged
 `mask_0` through `mask_46` ordering and classification ledger is accepted with twenty-one direct reuses,
-fifteen approved derivations, 11 proof-only synthetic cross-junction candidates, and zero collisions. This
+sixteen approved derivations, 10 proof-only synthetic cross-junction candidates, and zero collisions. This
 locks the mapping structure, not the synthetic pixels or a complete production family.
 
 **Accepted horizontal terminus checkpoint (owner approval, 2026-07-21):** the socket-polished
@@ -369,14 +372,25 @@ ledger to 21 direct / 15 derived / 11 synthetic / 0 collisions; all 11 remaining
 cross-junctions. This creates no canonical production source, registration, exporter, atlas, schema, blob
 mapping, or Unity change.
 
-**Still outside acceptance after the west-filled slab cross-junction checkpoint:** all 11 remaining synthetic
+**Accepted southwest-filled cross-junction gate (owner approval, 2026-07-23):** `mask_29` reuses the accepted
+`open_cross_filled_se` pair from `mask_23` through one plain whole-cell X mirror. Its north/east/south/west
+sockets continue ordinary one-cell runs, the southwest diagonal is continuous wall top, and the northeast,
+southeast, and northwest crooks remain open floor. The derivation preserves the source's Y-based fixed-light
+ownership and uses no seam filter, companion SVG, or new SVG bank. Judge it at 240/90/40 px and in compact,
+three-cell-arm, and six-cell-arm crossings on light and dark floors. Promotion advances the ledger to
+21 direct / 16 derived / 10 synthetic / 0 collisions; all 10 remaining synthetic rows are cross-junctions.
+This creates no canonical production source, registration, exporter, atlas, schema, blob mapping, or Unity
+change.
+
+**Still outside acceptance after the southwest-filled cross-junction checkpoint:** all 10 remaining synthetic
 cross-junction candidate sprites;
 `topology/` and `state/`; official/production preview
 regeneration; template/catalog registration and frame identities; exporter, `CONTRACT.md`, or schema changes;
 committed production atlases; prop pilots; Unity; and `production.unity` remain locked until separately
 requested. The accepted external `mask_0`, filled-elbow, both thick-wall-repeat, both open-pocket T-junction,
 west/east single-filled-pocket, horizontal-partial, open-pocket cross-junction, and single-filled
-cross-junction, southeast-filled cross-junction, east-filled slab cross-junction, and west-filled slab
+cross-junction, southeast-filled cross-junction, east-filled slab cross-junction, west-filled slab
+cross-junction, and southwest-filled
 cross-junction proof families do not
 unlock or silently promote any of those surfaces.
 Acceptance of the external T-junction proof families adds ledger provenance only and does not alter that lock.

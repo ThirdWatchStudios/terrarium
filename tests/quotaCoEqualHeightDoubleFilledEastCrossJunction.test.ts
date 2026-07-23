@@ -412,8 +412,8 @@ describe('QuotaCo owner-accepted double-filled east cross-junction gate', () => 
     });
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
       'direct-reuse': 21,
-      'approved-derivation': 15,
-      'synthetic-assembly': 11,
+      'approved-derivation': 16,
+      'synthetic-assembly': 10,
       'unresolved-authored-geometry': 0,
     });
     const acceptedStems = EQUAL_HEIGHT_MASK_LEDGER.entries.flatMap(({ resolution }) =>

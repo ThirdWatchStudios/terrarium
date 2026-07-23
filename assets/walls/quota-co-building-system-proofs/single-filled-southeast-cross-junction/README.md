@@ -26,3 +26,14 @@ This pair is accepted as direct proof-layer provenance for `mask_23` in the
 equal-height ledger. Acceptance does not register a canonical source or frame
 identity, alter the blob contract, add an exporter or atlas route, change
 schema, or authorize a Unity asset.
+
+A separate owner approval on 2026-07-23 accepts `mask_29` as the plain
+whole-cell X-mirror derivation of this exact pair. Its four cardinal sockets
+remain connected; the southwest diagonal becomes continuous wall mass while
+the northeast, southeast, and northwest crooks remain open floor. The mirror
+preserves the source pair's Y-based fixed-light ownership and adds no seam
+filter, companion SVG, or new SVG bank. That promotion advances the accepted
+ledger to 21 direct / 16 derived / 10 synthetic / 0 collisions. It records
+proof-layer provenance only and does not register a canonical source or frame
+identity, alter the blob contract, add an exporter or atlas route, change
+schema, or authorize a Unity asset.

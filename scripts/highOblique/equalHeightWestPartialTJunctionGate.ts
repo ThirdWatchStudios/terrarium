@@ -211,8 +211,8 @@ export function validateEqualHeightWestPartialTJunctionGate(
       'open_w_t_filled_se-upper.svg',
     ]) ||
     EQUAL_HEIGHT_MASK_LEDGER.counts['direct-reuse'] !== 21 ||
-    EQUAL_HEIGHT_MASK_LEDGER.counts['approved-derivation'] !== 15 ||
-    EQUAL_HEIGHT_MASK_LEDGER.counts['synthetic-assembly'] !== 11 ||
+    EQUAL_HEIGHT_MASK_LEDGER.counts['approved-derivation'] !== 16 ||
+    EQUAL_HEIGHT_MASK_LEDGER.counts['synthetic-assembly'] !== 10 ||
     EQUAL_HEIGHT_MASK_LEDGER.counts['unresolved-authored-geometry'] !== 0
   ) {
     throw new Error('West partial T-junction evidence boundary drift');

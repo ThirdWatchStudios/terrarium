@@ -235,8 +235,8 @@ export function validateEqualHeightThickWallBlockGate(
   if (
     JSON.stringify(EQUAL_HEIGHT_MASK_LEDGER.counts) !== JSON.stringify({
       'direct-reuse': 21,
-      'approved-derivation': 15,
-      'synthetic-assembly': 11,
+      'approved-derivation': 16,
+      'synthetic-assembly': 10,
       'unresolved-authored-geometry': 0,
     })
   ) {
