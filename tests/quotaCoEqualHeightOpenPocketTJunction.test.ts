@@ -268,9 +268,9 @@ describe('QuotaCo owner-accepted proof-layer open-pocket T-junction pair', () =>
       });
     }
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
-      'direct-reuse': 21,
+      'direct-reuse': 22,
       'approved-derivation': 16,
-      'synthetic-assembly': 10,
+      'synthetic-assembly': 9,
       'unresolved-authored-geometry': 0,
     });
   });

@@ -1,7 +1,7 @@
 # QuotaCo High-Oblique Geometry — Production Art Ask
 
-**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** southwest-filled cross-junction accepted
-`mask_29` is accepted as the whole-cell X-mirror companion to `mask_23`; no wall proposal is currently active and the ledger stands at 21 direct / 16 derived / 10 synthetic
+**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** northwest-filled cross-junction accepted
+`mask_37` is accepted as a separately authored east-register direct source; no wall proposal is currently active and the ledger stands at 22 direct / 16 derived / 9 synthetic
 
 Canonical direction lives in the sim repository:
 
@@ -18,9 +18,10 @@ for the isolated `mask_0` source, for the four filled-elbow rows used by a compl
 for both directions of two-cell-thick wall repetition, for both open-pocket T-junction axes, and for all four
 west- and east-side single-filled-pocket T-junction states, all four horizontal partial T-junction states, and
 the all-open `mask_15`, northeast-filled `mask_19`, southeast-filled `mask_23`, east-filled slab
-`mask_25`, west-filled mirror companion `mask_43`, and southwest-filled mirror companion `mask_29`
+`mask_25`, west-filled mirror companion `mask_43`, southwest-filled mirror companion `mask_29`,
+and the separately authored northwest-filled `mask_37`
 cross-junctions. The accepted proof ledger now records
-21 direct, 16 derived, 10 synthetic,
+22 direct, 16 derived, 9 synthetic,
 and zero collisions; every remaining
 synthetic assembly candidate is a cross-junction. Prop-catalog work and
 production changes remain separate decisions.
@@ -159,8 +160,9 @@ its explicit provenance/gap accounting. With both terminus families, the isolate
 family, both thick-wall repeat families, both open-pocket T-junction pairs, and both west- and east-side
 single-filled-pocket T-junction pairs, the horizontal partial T-junction family, open-pocket `mask_15`, and
 single-filled `mask_19`, southeast-filled `mask_23`, east-filled slab `mask_25`, and west-filled mirror
-`mask_43`, plus southwest-filled mirror `mask_29` promoted, it records twenty-one direct mappings and sixteen
-approved derivations as source law, not the 10 remaining synthetic
+`mask_43`, southwest-filled mirror `mask_29`, plus the separately authored northwest-filled `mask_37`
+promoted, it records twenty-two direct mappings and sixteen
+approved derivations as source law, not the 9 remaining synthetic
 cross-junction candidate sprites.
 The ledger has zero collisions.
 
@@ -338,6 +340,16 @@ twenty-one direct, sixteen derived, 10 synthetic, and zero collisions; all 10 re
 cross-junctions. Proof-layer acceptance changes no canonical production source, frame identity, template
 registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity` surface.
 
+**Accepted northwest-filled cross-junction family (owner approval, 2026-07-23):** `mask_37` directly reuses
+the external `open_cross_filled_nw` pair as one separately authored east-register four-way union. It retains
+all four ordinary-wall sockets, makes the northwest diagonal continuous wall mass, and keeps the northeast,
+southeast, and southwest crooks open floor. It is not a mirror or rotation of `mask_19`, and uses no seam
+filter or companion derivation. It passes at 240/90/40 px and in compact, three-cell-arm, and six-cell-arm
+crossings on light and dark floors. Promotion advances the ledger to twenty-two direct, sixteen derived,
+9 synthetic, and zero collisions; all 9 remaining synthetic rows are cross-junctions. Proof-layer acceptance
+changes no canonical production source, frame identity, template registration, exporter, atlas, schema, blob
+mapping, Unity asset, or `production.unity` surface.
+
 ### A1a review artifact
 
 Produce both:
@@ -399,8 +411,9 @@ filtered whole-cell X mirror of `mask_18`, and `mask_28` is the approved plain w
 `mask_22`. `mask_15` directly reuses the external `open_cross_junction` pair as one authored four-way hub;
 it is not a stacked-T assembly. South-facing shadow continuity remains deferred across that accepted family and is not claimed as
 fixed by this provenance decision. `mask_19` directly reuses the external `open_cross_filled_ne` pair as one
-northeast-filled four-way hub in the fixed west register; `mask_37` remains a separate synthetic east-register
-topology row. `mask_23` directly reuses the external `open_cross_filled_se` pair as one southeast-filled
+northeast-filled four-way hub in the fixed west register. `mask_37` directly reuses the separately authored
+external `open_cross_filled_nw` pair as its east-register northwest-filled topology; it is not a mirror or
+rotation of `mask_19`. `mask_23` directly reuses the external `open_cross_filled_se` pair as one southeast-filled
 four-way hub in the fixed west register; accepted `mask_21`/`mask_22` define its rear-facing boundary laws but
 are not stacked into it. `mask_25` directly reuses the external `open_cross_filled_e` pair as one east-filled
 slab junction with northeast and southeast solid and both western crooks open. `mask_43` reuses that pair
@@ -488,3 +501,6 @@ crossing evidence, and workbench presentation; it adds no authored SVG or produc
 Acceptance of `mask_29` likewise authorizes only plain whole-cell X-mirror reuse of the accepted `mask_23`
 source pair, proof-ledger provenance, compact/long crossing evidence, and workbench presentation. It adds no
 seam filter, companion SVG, new SVG bank, or production registration.
+Acceptance of `mask_37` authorizes only its external proof bank, direct ledger provenance, fixed east-register
+compact/long crossing evidence, and workbench presentation. It does not authorize a `mask_19` mirror or
+rotation, a seam filter, a companion derivation, a canonical source, or production registration.

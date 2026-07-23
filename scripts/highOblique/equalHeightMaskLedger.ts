@@ -402,7 +402,17 @@ const singleFilledNortheastCrossJunction: EqualHeightMaskSourceVariant = {
   upperFile: 'open_cross_filled_ne-upper.svg',
   transform: 'none',
   derivation: 'none',
-  facingRule: 'connected north, east, south, and west with northeast solid and the other three diagonal floor pockets open; authored west-fixed register for mask_19, while mask_37 remains a separate east-register companion rather than a mirror promotion',
+  facingRule: 'connected north, east, south, and west with northeast solid and the other three diagonal floor pockets open; independently authored west-fixed register for mask_19, paired with the separately authored east-register mask_37 source',
+};
+
+const singleFilledNorthwestCrossJunction: EqualHeightMaskSourceVariant = {
+  role: 'single-filled-northwest-cross-junction',
+  sourceStem: 'open_cross_filled_nw',
+  baseFile: 'open_cross_filled_nw-base.svg',
+  upperFile: 'open_cross_filled_nw-upper.svg',
+  transform: 'none',
+  derivation: 'none',
+  facingRule: 'connected north, east, south, and west with northwest solid and northeast, southeast, and southwest floor crooks open; independently authored east-fixed register rather than a mirror or rotation of mask_19',
 };
 
 const singleFilledSoutheastCrossJunction: EqualHeightMaskSourceVariant = {
@@ -716,7 +726,7 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         kind: 'direct-reuse',
         status: 'accepted-source-mapping',
         variants: [singleFilledNortheastCrossJunction],
-        note: 'Accepted northeast-filled cross junction directly reuses the authored west-fixed four-way hub; the east-register companion remains a separate mask_37 candidate.',
+        note: 'Accepted northeast-filled cross junction directly reuses its authored west-fixed four-way hub; mask_37 is the separately authored direct-source east-register companion, not a transformed variant.',
       };
     case 20:
       return {
@@ -815,6 +825,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         status: 'accepted-source-mapping',
         variants: [partialEastForegroundTJunction],
         note: 'Accepted foreground east-side partial T junction mirrors the west foreground transition after the accepted boundary-seam filter.',
+      };
+    case 37:
+      return {
+        kind: 'direct-reuse',
+        status: 'accepted-source-mapping',
+        variants: [singleFilledNorthwestCrossJunction],
+        note: 'Accepted northwest-filled cross junction directly reuses the separately authored east-fixed four-way hub; its mask_19 geometry cues do not create mirror or rotation provenance.',
       };
     case 38:
       return {
@@ -951,6 +968,7 @@ const ACCEPTED_SOURCE_VARIANTS = new Set([
   openNorthTJunction,
   openCrossJunction,
   singleFilledNortheastCrossJunction,
+  singleFilledNorthwestCrossJunction,
   singleFilledSoutheastCrossJunction,
   singleFilledSouthwestCrossJunction,
   doubleFilledEastCrossJunction,

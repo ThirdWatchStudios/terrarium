@@ -28,9 +28,9 @@ and all four corners close as one enclosure.
 
 **Accepted mapping gate (owner approvals, 2026-07-21 through 2026-07-23):** the proof-layer ledger
 locks the unchanged canonical `mask_0` through `mask_46` order and classifies
-21 direct reuses, 16 approved derivations, 10 synthetic assembly
+22 direct reuses, 16 approved derivations, 9 synthetic assembly
 candidates, and zero collisions. The remaining synthetic rows are all cross-junctions. This accepts the
-mapping structure and provenance boundaries only. It does not accept the 10 remaining synthetic
+mapping structure and provenance boundaries only. It does not accept the 9 remaining synthetic
 cross-junction diagrams or create an atlas/production family.
 
 **Accepted horizontal terminus gate (owner approval, 2026-07-21):** `mask_8`
@@ -200,6 +200,17 @@ ownership and uses no seam filter, companion SVG, or new SVG bank. It passes at 
 plus compact, three-cell-arm, and six-cell-arm crossings on light and dark floors. Promotion advances the
 proof ledger to 21 direct / 16 derived / 10 synthetic / 0 collisions; all 10 remaining synthetic rows are
 cross-junctions. This accepts one derivation and its proof-ledger provenance only. It creates no canonical
+production source, frame identity, template registration, exporter, atlas, schema, blob mapping, or Unity
+registration.
+
+**Accepted northwest-filled cross-junction gate (owner approval, 2026-07-23):** `mask_37` directly reuses
+the external `open_cross_filled_nw` base/upper pair as one separately authored east-register four-way union.
+All four cardinal sockets remain connected; the northwest diagonal is one continuous wall-top mass while the
+northeast, southeast, and southwest crooks remain open floor. This is not a mirror or rotation of `mask_19`,
+and the source uses no seam filter or companion derivation. It passes at 240, 90, and 40 px per cell plus
+compact, three-cell-arm, and six-cell-arm crossings on light and dark floors. Promotion advances the proof
+ledger to 22 direct / 16 derived / 9 synthetic / 0 collisions; all 9 remaining synthetic rows are
+cross-junctions. This accepts one direct source and its proof-ledger provenance only. It creates no canonical
 production source, frame identity, template registration, exporter, atlas, schema, blob mapping, or Unity
 registration.
 

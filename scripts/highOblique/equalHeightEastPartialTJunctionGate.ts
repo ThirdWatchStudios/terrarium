@@ -246,9 +246,9 @@ export function validateEqualHeightEastPartialTJunctionGate(
     gate.renderingDecision.mirrorPolicy.mask36 !==
       'omit-boundary-seams-then-whole-cell-x' ||
     gate.renderingDecision.mirrorPolicy.mask27 !== 'whole-cell-x' ||
-    EQUAL_HEIGHT_MASK_LEDGER.counts['direct-reuse'] !== 21 ||
+    EQUAL_HEIGHT_MASK_LEDGER.counts['direct-reuse'] !== 22 ||
     EQUAL_HEIGHT_MASK_LEDGER.counts['approved-derivation'] !== 16 ||
-    EQUAL_HEIGHT_MASK_LEDGER.counts['synthetic-assembly'] !== 10 ||
+    EQUAL_HEIGHT_MASK_LEDGER.counts['synthetic-assembly'] !== 9 ||
     EQUAL_HEIGHT_MASK_LEDGER.counts['unresolved-authored-geometry'] !== 0
   ) {
     throw new Error('East partial T-junction accepted evidence boundary drift');

@@ -31,8 +31,9 @@
 > east-side single-filled-pocket T-junction pairs, the horizontal partial T-junction family, and open-pocket
 > cross-junction `mask_15`, northeast-filled cross-junction `mask_19`, southeast-filled cross-junction
 > `mask_23`, east-filled slab cross-junction `mask_25`, west-filled mirror companion `mask_43`, and
-> southwest-filled mirror companion `mask_29` are also
-> accepted: 21 direct, sixteen derived, ten synthetic cross-junction
+> southwest-filled mirror companion `mask_29`, plus the separately authored east-register northwest-filled
+> cross-junction `mask_37`, are also
+> accepted: 22 direct, sixteen derived, nine synthetic cross-junction
 > candidates, and zero collisions.
 > `mask_8` is
 > direct and `mask_2` is
@@ -182,6 +183,16 @@
 > are cross-junctions. This proof-layer promotion creates no canonical production source, registration,
 > exporter, atlas, schema, blob mapping, or Unity change.
 
+> **Accepted northwest-filled cross-junction gate (owner approval, 2026-07-23):** `mask_37` directly reuses
+> the external `open_cross_filled_nw` pair as one separately authored east-register four-way union. Its four
+> cardinal sockets continue ordinary one-cell runs, the northwest diagonal is continuous wall mass, and the
+> northeast, southeast, and southwest crooks remain open floor. This is not a mirror or rotation of `mask_19`;
+> no seam filter or companion derivation is involved. It passes at 240/90/40 px and in compact,
+> three-cell-arm, and six-cell-arm crossings on light and dark floors. The accepted ledger now stands at
+> 22 direct / 16 derived / 9 synthetic / 0 collisions; all 9 remaining synthetic rows are cross-junctions.
+> This proof-layer promotion creates no canonical production source, registration, exporter, atlas, schema,
+> blob mapping, or Unity change.
+
 The point of this page: the QuotaCo look is not a talent bar, it is a **closed grammar** — nine paints, two
 line weights, four shading steps, eight radii, one projection recipe. An author who obeys the grammar produces
 catalog-legitimate art on week one; taste then develops by judging results at gameplay distance, not by
@@ -234,7 +245,7 @@ expanding the grammar.
   west/east body runs are six cells, and every join uses only the accepted source/reuse/derivation contracts.
   This is the minimum composition regression gate for any later 47-mask synthetic proof.
 - Accepted mapping law (owner approvals, 2026-07-21 through 2026-07-23): preserve the canonical 47-mask order and its explicit
-  resolution split—21 direct reuse, 16 approved derivation, 10 proof-only synthetic cross-junction assemblies,
+  resolution split—22 direct reuse, 16 approved derivation, 9 proof-only synthetic cross-junction assemblies,
   0 collisions.
   Mapping acceptance is not sprite or atlas acceptance. A synthetic family advances only through a separate
   named owner decision; the accepted external `mask_0` source closes the authored-geometry gap without promoting those candidates.
@@ -256,6 +267,11 @@ expanding the grammar.
   `open_cross_filled_se` pair from `mask_23` through a plain whole-cell X mirror. Preserve four exact cardinal
   sockets, one continuous solid southwest diagonal, the other three crooks as open floor, and unchanged Y-based
   fixed-light ownership. Do not introduce a seam filter, companion SVG, new SVG bank, rotation, or Y mirror.
+- Accepted northwest-filled cross-junction law (owner acceptance, 2026-07-23): `mask_37` directly reuses the
+  separately authored east-register `open_cross_filled_nw` pair. Preserve four exact cardinal sockets, one
+  continuous solid northwest diagonal, the other three crooks as open floor, and the fixed east vertical
+  register. Never mirror or rotate `mask_19`, add a seam filter, or manufacture the source from stacked
+  T-junctions.
 - Accepted east-filled slab cross-junction law (owner acceptance, 2026-07-23): `mask_25` directly reuses the
   external `open_cross_filled_e` pair as one fixed-light authored four-way hub. Preserve four exact cardinal
   sockets, one continuous east slab across the northeast and southeast diagonals, both western crooks as open
@@ -422,8 +438,9 @@ be automated.
 3. Paint only with §2 swatches; shade only with §4 steps.
 4. Keep `npm run style:watch` running (§10) — every save re-validates through the real importer and
    re-renders base/upper/composed plus the distance proof, on light and dark ground. The open bench page is a
-   **current-state decision surface**: the accepted southwest-filled `mask_29` cross-junction gate appears
-   first, followed by the accepted west-filled slab `mask_43` cross-junction gate, then the accepted east-filled
+   **current-state decision surface**: the accepted northwest-filled `mask_37` direct-source gate appears
+   first, followed by the accepted southwest-filled `mask_29` cross-junction gate, then the accepted
+   west-filled slab `mask_43` cross-junction gate, then the accepted east-filled
    slab `mask_25` cross-junction gate, then the accepted
    southeast-filled `mask_23` cross-junction gate, followed by the accepted
    single-filled `mask_19` cross-junction gate, the accepted open-pocket
@@ -434,7 +451,7 @@ be automated.
    followed by the accepted open-west/open-east T-junction gate, then the
    accepted N×2 and 2×N thick-wall repeat gates and accepted 2×2 thick-wall source family; the isolated shell,
    vertical/horizontal termini, 3×8 corridor, and 47-mask ledger remain accepted proof-layer baselines. All
-   10 synthetic cross-junction assembly rows remain unaccepted, and accepted pieces remain the
+   9 synthetic cross-junction assembly rows remain unaccepted, and accepted pieces remain the
    comparison set. Earlier low-profile
    comparisons, mixed-profile room/envelope gates, and importer cards remain available only in closed,
    explicitly archived disclosures. They must never read as the current target.
