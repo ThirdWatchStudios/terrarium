@@ -369,17 +369,17 @@ describe('QuotaCo owner-accepted east partial T-junction gate', () => {
       },
     });
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
-      'direct-reuse': 22,
+      'direct-reuse': 23,
       'approved-derivation': 16,
-      'synthetic-assembly': 9,
+      'synthetic-assembly': 8,
       'unresolved-authored-geometry': 0,
     });
     expect(EQUAL_HEIGHT_MASK_LEDGER.entries
       .filter(({ resolution }) => resolution.status === 'accepted-source-mapping'))
-      .toHaveLength(38);
+      .toHaveLength(39);
     expect(EQUAL_HEIGHT_MASK_LEDGER.entries
       .filter(({ resolution }) => resolution.status === 'proof-only-candidate'))
-      .toHaveLength(9);
+      .toHaveLength(8);
     expect(EQUAL_HEIGHT_MASK_LEDGER.entries
       .filter(({ topologyClass, resolution }) => (
         topologyClass === 't-junction' && resolution.kind === 'synthetic-assembly'

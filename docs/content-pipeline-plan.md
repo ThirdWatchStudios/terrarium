@@ -44,9 +44,9 @@ changes the export contract except where explicitly flagged (floor variants).
 > southeast-filled cross-junction `mask_23`, the east-filled slab cross-junction `mask_25`, and its accepted
 > west-filled whole-cell X-mirror companion `mask_43`, plus the accepted southwest-filled whole-cell X-mirror
 > companion `mask_29` to `mask_23`, plus the separately authored east-register northwest-filled
-> cross-junction `mask_37`. The ledger
-> now records 22 direct source mappings, 16 approved
-> derivations, 9 synthetic assembly
+> cross-junction `mask_37` and west-register north-filled slab cross-junction `mask_39`. The ledger
+> now records 23 direct source mappings, 16 approved
+> derivations, 8 synthetic assembly
 > candidates, and zero collisions; all remaining synthetic rows are cross-junctions. `mask_8`
 > directly reuses the socket-polished `full_terminus` pair and `mask_2` uses its accepted whole-cell X mirror;
 > both passed at 90/40 px in 1/3/6-cell contexts. This is not acceptance of the remaining synthetic candidate pixels or a
@@ -190,6 +190,17 @@ changes the export contract except where explicitly flagged (floor variants).
 > cross-junctions. Acceptance records one direct proof-layer source only. It adds no canonical production
 > source, frame identity, template registration, exporter, atlas, schema, blob mapping, Unity asset, or
 > `production.unity` change.
+> **Accepted north-filled slab cross-junction slice (owner approval, 2026-07-23):** `mask_39` directly reuses
+> the external `open_cross_filled_n` pair as one separately authored west-register four-way union. Its four
+> cardinal sockets continue ordinary one-cell runs, northeast and northwest form one continuous two-row cream
+> slab, and southeast and southwest remain open floor. The cream top continues through the south socket while
+> frontage shade and belts yield at the top-to-top join. `mask_19` and `mask_37` remain geometry controls only;
+> the accepted source is neither stacked nor derived from them. It passes 240/90/40 px source checks plus
+> compact, three-cell, and six-cell installed extents on light and dark floors. The accepted ledger now records
+> 23 direct / 16 derived / 8 synthetic / 0 collisions; all 8 remaining synthetic rows are cross-junctions.
+> Acceptance records one direct proof-layer source only. It adds no canonical production source, frame
+> identity, template registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity`
+> change.
 
 ---
 

@@ -415,6 +415,16 @@ const singleFilledNorthwestCrossJunction: EqualHeightMaskSourceVariant = {
   facingRule: 'connected north, east, south, and west with northwest solid and northeast, southeast, and southwest floor crooks open; independently authored east-fixed register rather than a mirror or rotation of mask_19',
 };
 
+const doubleFilledNorthCrossJunction: EqualHeightMaskSourceVariant = {
+  role: 'double-filled-north-cross-junction',
+  sourceStem: 'open_cross_filled_n',
+  baseFile: 'open_cross_filled_n-base.svg',
+  upperFile: 'open_cross_filled_n-upper.svg',
+  transform: 'none',
+  derivation: 'none',
+  facingRule: 'connected north, east, south, and west with northeast and northwest solid and southeast/southwest floor crooks open; independently authored west-fixed north slab with one uninterrupted cream south-socket join',
+};
+
 const singleFilledSoutheastCrossJunction: EqualHeightMaskSourceVariant = {
   role: 'single-filled-southeast-cross-junction',
   sourceStem: 'open_cross_filled_se',
@@ -840,6 +850,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         variants: [filledSouthMiddle],
         note: 'Accepted foreground middle spine directly continues the south-facing material stack through both X sockets with one source-owned service boundary.',
       };
+    case 39:
+      return {
+        kind: 'direct-reuse',
+        status: 'accepted-source-mapping',
+        variants: [doubleFilledNorthCrossJunction],
+        note: 'Accepted north-filled slab cross junction directly reuses the authored west-fixed four-way union; mask_19 and mask_37 constrain geometry cues without creating stacked or derived provenance.',
+      };
     case 42:
       return {
         kind: 'approved-derivation',
@@ -969,6 +986,7 @@ const ACCEPTED_SOURCE_VARIANTS = new Set([
   openCrossJunction,
   singleFilledNortheastCrossJunction,
   singleFilledNorthwestCrossJunction,
+  doubleFilledNorthCrossJunction,
   singleFilledSoutheastCrossJunction,
   singleFilledSouthwestCrossJunction,
   doubleFilledEastCrossJunction,

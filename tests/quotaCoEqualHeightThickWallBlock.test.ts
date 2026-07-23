@@ -189,9 +189,9 @@ describe('QuotaCo accepted proof-layer 2x2 thick-wall block', () => {
       });
     }
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
-      'direct-reuse': 22,
+      'direct-reuse': 23,
       'approved-derivation': 16,
-      'synthetic-assembly': 9,
+      'synthetic-assembly': 8,
       'unresolved-authored-geometry': 0,
     });
   });

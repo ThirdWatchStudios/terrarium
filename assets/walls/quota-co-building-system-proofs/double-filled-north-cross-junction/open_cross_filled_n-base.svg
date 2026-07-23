@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>QuotaCo double-filled north cross-junction review base</title>
+  <desc>One flattened lower structure buries the north slab, preserves both open southern crooks, and exposes no duplicate north fascia.</desc>
+  <g id="detail/base">
+    <path id="base-buried-north-underlay" d="M0 0H128V95H0Z" fill="#252A28"/>
+    <path id="base-contour-exposed-south" d="M103 95H128V120H120V128H103V120H0V95Z" fill="#252A28"/>
+    <path id="base-green-exposed-south" d="M105 94A3 3 0 0 0 108 97H128V117H120A3 3 0 0 0 117 120V128H105V120A3 3 0 0 0 102 117H0V97H102A3 3 0 0 0 105 94Z" fill="#294B3C"/>
+    <path id="base-face-shade-exposed-south" d="M105 117H117V128H105Z" fill="#000000" opacity="0.12"/>
+    <path id="base-contact-shade-exposed-south" d="M0 120H56V123.5H0Z M120 120H128V123.5H123.5V128H120Z" fill="#000000" opacity="0.12"/>
+    <path id="base-boundary-seam" d="M126 98V116" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+    <path id="base-south-service-seam" d="M106 126H116" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+  </g>
+</svg>
