@@ -308,23 +308,23 @@ describe('QuotaCo owner-accepted west partial T-junction gate', () => {
     expect(EQUAL_HEIGHT_MASK_LEDGER.entries[24].resolution.status)
       .toBe('accepted-source-mapping');
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
-      'direct-reuse': 15,
-      'approved-derivation': 12,
-      'synthetic-assembly': 20,
+      'direct-reuse': 17,
+      'approved-derivation': 14,
+      'synthetic-assembly': 16,
       'unresolved-authored-geometry': 0,
     });
     expect(EQUAL_HEIGHT_MASK_LEDGER.entries
       .filter(({ resolution }) => resolution.status === 'accepted-source-mapping'))
-      .toHaveLength(27);
+      .toHaveLength(31);
     expect(EQUAL_HEIGHT_MASK_LEDGER.entries
       .filter(({ resolution }) => resolution.status === 'proof-only-candidate'))
-      .toHaveLength(20);
+      .toHaveLength(16);
     expect(EQUAL_HEIGHT_MASK_LEDGER.entries
       .filter(({ topologyClass, resolution }) => (
         topologyClass === 't-junction' && resolution.kind === 'synthetic-assembly'
       ))
       .map(({ index }) => index))
-      .toEqual([18, 22, 28, 35]);
+      .toEqual([]);
     expect(EQUAL_HEIGHT_MASK_LEDGER.entries
       .filter(({ topologyClass }) => topologyClass === 'cross-junction'))
       .toHaveLength(16);

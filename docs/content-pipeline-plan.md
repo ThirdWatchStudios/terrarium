@@ -39,9 +39,9 @@ changes the export contract except where explicitly flagged (floor variants).
 > **Current mapping and source-gate result, 2026-07-22:** the owner accepted the proof-layer 47-mask
 > ledger structure plus the horizontal and vertical termini, isolated-shell, filled-elbow, 2×N thick-wall-repeat,
 > N×2 horizontal thick-wall-repeat, vertical open-pocket T-junction, horizontal-spine open-pocket T-junction,
-> and both west- and east-side single-filled-pocket T-junction slices. The ledger now records 15 direct source
-> mappings, twelve approved derivations, 20 synthetic assembly candidates, and zero authored-geometry
-> gaps. `mask_8`
+> both west- and east-side single-filled-pocket T-junction slices, and the horizontal partial T-junction
+> family. The ledger now records 17 direct source mappings, 14 approved derivations, 16 synthetic assembly
+> candidates, and zero collisions; all remaining synthetic rows are cross-junctions. `mask_8`
 > directly reuses the socket-polished `full_terminus` pair and `mask_2` uses its accepted whole-cell X mirror;
 > both passed at 90/40 px in 1/3/6-cell contexts. This is not acceptance of the synthetic candidate pixels or a
 > production atlas. `mask_1` and `mask_4` use separately authored vertical rollovers plus accepted east mirror-X
@@ -96,10 +96,22 @@ changes the export contract except where explicitly flagged (floor variants).
 > foreground `mask_17` source through whole-cell mirror-X after the established omission of
 > `base-boundary-seam` and `upper-boundary-seam`; `mask_27` is the plain whole-cell mirror-X of the accepted
 > rear `mask_21` source. Compact and long light/dark checks preserve the fixed-light roles, one open floor
-> crook, and singular shared-socket seam ownership. The ledger now records 15 direct / 12 derived /
+> crook, and singular shared-socket seam ownership. At that checkpoint the ledger recorded 15 direct / 12 derived /
 > 20 synthetic / 0 unresolved. No east SVG source bank, canonical source, frame identity, template
 > registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity` surface is added or
 > changed.
+> **Accepted horizontal partial T-junction slice (owner approval, 2026-07-22):** the external
+> `horizontal-partial-t-junction/` proof bank supplies direct fixed-light sources `open_s_t_filled_ne` for
+> `mask_18` and `open_n_t_filled_se` for `mask_22`. `mask_35` is the whole-cell X mirror of
+> `mask_18` after omitting `base-boundary-seam` and `upper-boundary-seam`; `mask_28` is the plain
+> whole-cell X mirror of `mask_22`. The occupancy diamonds are
+> `mask_11 -> {mask_18, mask_35} -> mask_38` and `mask_14 -> {mask_22, mask_28} -> mask_31`: each accepted middle state
+> fills exactly one crook between an accepted open horizontal-spine junction and an accepted fully filled
+> horizontal repeat. The accepted ledger is now 17 direct / 14 derived / 16 synthetic / 0 collisions, and all
+> 16 remaining synthetic rows are cross-junctions. South-facing shadow continuity remains deferred
+> family-wide polish across the accepted direct and derived sources; this acceptance does not claim it is fixed.
+> No canonical source, frame identity, template registration, exporter, atlas, schema, blob mapping, Unity
+> asset, or `production.unity` surface is added or changed by this proof-layer promotion.
 
 ---
 

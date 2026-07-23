@@ -28,9 +28,9 @@
 > six-cell side runs read as one manufactured enclosure without low-profile art or a new frame identity. The
 > canonical `mask_0` through `mask_46` proof-layer mapping plus both terminus families, the isolated shell, the
 > filled-elbow family, both thick-wall repeat families, both open-pocket T-junction pairs, and both west- and
-> east-side single-filled-pocket T-junction pairs are also accepted: 15 direct, twelve derived, twenty
-> synthetic candidates, and
-> zero authored-geometry gaps. `mask_8` is
+> east-side single-filled-pocket T-junction pairs plus the horizontal partial T-junction family are also
+> accepted: 17 direct, fourteen derived, sixteen synthetic cross-junction candidates, and zero collisions.
+> `mask_8` is
 > direct and `mask_2` is
 > the accepted whole-cell X mirror. The synthetic candidates are not accepted art; production topology, registration, export,
 > `CONTRACT.md`, schema, committed atlases, and Unity remain deferred.
@@ -101,9 +101,21 @@
 > whole-cell X mirror of accepted foreground `mask_17` after omitting only `base-boundary-seam` and
 > `upper-boundary-seam`, leaving adjoining `mask_38` as the shared-socket seam owner. `mask_27` is the plain
 > whole-cell X mirror of accepted rear `mask_21`. The mirrored pair preserves the same fixed-light roles and
-> open-floor crooks without adding an east SVG source bank. The ledger now records 15 direct, twelve derived,
+> open-floor crooks without adding an east SVG source bank. At that checkpoint the ledger recorded 15 direct, twelve derived,
 > 20 synthetic, and zero unresolved; canonical registration, exporter, atlas, schema, blob mapping, and Unity
 > remain unchanged.
+
+> **Accepted horizontal partial T-junction gate (owner approval, 2026-07-22):** the external
+> `horizontal-partial-t-junction/` proof bank supplies `open_s_t_filled_ne` as direct `mask_18` and
+> `open_n_t_filled_se` as direct `mask_22`. `mask_35` is an approved whole-cell X mirror of `mask_18` after
+> omitting `base-boundary-seam` and `upper-boundary-seam`; `mask_28` is the approved plain whole-cell X mirror
+> of `mask_22`. The state diamonds are `mask_11 -> {mask_18, mask_35} -> mask_38` and
+> `mask_14 -> {mask_22, mask_28} -> mask_31`, each moving from two open crooks to one filled crook to a fully
+> filled horizontal-repeat state. The accepted ledger is now
+> 17 direct / 14 derived / 16 synthetic / 0 collisions; all 16 remaining synthetic rows are cross-junctions.
+> South-facing shadow continuity remains deferred family-wide polish across the accepted direct and derived
+> sources, and this checkpoint does not claim it is fixed. The promotion creates no canonical source,
+> registration, exporter, atlas, schema, blob mapping, or Unity change.
 
 The point of this page: the QuotaCo look is not a talent bar, it is a **closed grammar** — nine paints, two
 line weights, four shading steps, eight radii, one projection recipe. An author who obeys the grammar produces
@@ -157,7 +169,8 @@ expanding the grammar.
   west/east body runs are six cells, and every join uses only the accepted source/reuse/derivation contracts.
   This is the minimum composition regression gate for any later 47-mask synthetic proof.
 - Accepted mapping law (owner approvals, 2026-07-21 through 2026-07-22): preserve the canonical 47-mask order and its explicit
-  resolution split—15 direct reuse, 12 approved derivation, 20 proof-only synthetic assembly, 0 unresolved.
+  resolution split—17 direct reuse, 14 approved derivation, 16 proof-only synthetic cross-junction assemblies,
+  0 collisions.
   Mapping acceptance is not sprite or atlas acceptance. A synthetic family advances only through a separate
   named owner decision; the accepted external `mask_0` source closes the authored-geometry gap without promoting those candidates.
 - Accepted horizontal terminus law (owner acceptance, 2026-07-21): `mask_8` directly reuses the
@@ -316,13 +329,13 @@ be automated.
 3. Paint only with §2 swatches; shade only with §4 steps.
 4. Keep `npm run style:watch` running (§10) — every save re-validates through the real importer and
    re-renders base/upper/composed plus the distance proof, on light and dark ground. The open bench page is a
-   **current-state decision surface**: the accepted east-side single-filled-pocket T-junction gate appears first,
-   followed by the accepted west-side source gate,
+   **current-state decision surface**: the accepted horizontal partial T-junction gate appears first, followed
+   by the accepted east-side single-filled-pocket T-junction gate and accepted west-side source gate,
    followed by the accepted horizontal-spine open-pocket T-junction gate,
    followed by the accepted open-west/open-east T-junction gate, then the
    accepted N×2 and 2×N thick-wall repeat gates and accepted 2×2 thick-wall source family; the isolated shell,
    vertical/horizontal termini, 3×8 corridor, and 47-mask ledger remain accepted proof-layer baselines. All
-   20 synthetic T/cross assembly rows remain unaccepted, and accepted pieces remain the
+   16 synthetic cross-junction assembly rows remain unaccepted, and accepted pieces remain the
    comparison set. Earlier low-profile
    comparisons, mixed-profile room/envelope gates, and importer cards remain available only in closed,
    explicitly archived disclosures. They must never read as the current target.

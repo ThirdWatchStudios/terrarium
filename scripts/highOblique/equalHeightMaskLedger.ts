@@ -425,6 +425,46 @@ const partialEastRearTJunction: EqualHeightMaskSourceVariant = {
   facingRule: 'connected north, south, and west with the east edge exposed, southwest solid, and northwest concave; accepted X mirror of the rear transition into mask_31',
 };
 
+const partialSouthForegroundTJunction: EqualHeightMaskSourceVariant = {
+  role: 'partial-south-foreground-t-junction',
+  sourceStem: 'open_s_t_filled_ne',
+  baseFile: 'open_s_t_filled_ne-base.svg',
+  upperFile: 'open_s_t_filled_ne-upper.svg',
+  transform: 'none',
+  derivation: 'none',
+  facingRule: 'connected north, east, and west with the south edge exposed, northeast solid, and northwest concave; authored foreground horizontal transition into mask_38',
+};
+
+const partialSouthForegroundMirrorTJunction: EqualHeightMaskSourceVariant = {
+  role: 'partial-south-foreground-mirror-t-junction',
+  sourceStem: 'open_s_t_filled_ne',
+  baseFile: 'open_s_t_filled_ne-base.svg',
+  upperFile: 'open_s_t_filled_ne-upper.svg',
+  transform: 'mirror-x',
+  derivation: 'accepted-southeast-seam-filter',
+  facingRule: 'connected north, east, and west with the south edge exposed, northwest solid, and northeast concave; accepted filtered X mirror of the foreground horizontal transition into mask_38',
+};
+
+const partialNorthRearTJunction: EqualHeightMaskSourceVariant = {
+  role: 'partial-north-rear-t-junction',
+  sourceStem: 'open_n_t_filled_se',
+  baseFile: 'open_n_t_filled_se-base.svg',
+  upperFile: 'open_n_t_filled_se-upper.svg',
+  transform: 'none',
+  derivation: 'none',
+  facingRule: 'connected east, south, and west with the north edge exposed, southeast solid, and southwest concave; authored rear horizontal transition into mask_31',
+};
+
+const partialNorthRearMirrorTJunction: EqualHeightMaskSourceVariant = {
+  role: 'partial-north-rear-mirror-t-junction',
+  sourceStem: 'open_n_t_filled_se',
+  baseFile: 'open_n_t_filled_se-base.svg',
+  upperFile: 'open_n_t_filled_se-upper.svg',
+  transform: 'mirror-x',
+  derivation: 'none',
+  facingRule: 'connected east, south, and west with the north edge exposed, southwest solid, and southeast concave; accepted X mirror of the rear horizontal transition into mask_31',
+};
+
 function topologyFor(config: WallTileConfig): EqualHeightMaskTopologyClass {
   const connected = EDGES.filter((edge) => config[edge]);
   if (connected.length === 0) return 'isolated';
@@ -597,6 +637,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         variants: [partialWestForegroundTJunction],
         note: 'Accepted foreground west-side partial T junction directly reuses the authored northeast-filled fixed-light transition source.',
       };
+    case 18:
+      return {
+        kind: 'direct-reuse',
+        status: 'accepted-source-mapping',
+        variants: [partialSouthForegroundTJunction],
+        note: 'Accepted foreground horizontal partial T junction directly reuses the authored northeast-filled fixed-light transition source.',
+      };
     case 20:
       return {
         kind: 'direct-reuse',
@@ -610,6 +657,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         status: 'accepted-source-mapping',
         variants: [partialWestRearTJunction],
         note: 'Accepted rear west-side partial T junction directly reuses the authored southeast-filled fixed-light transition source.',
+      };
+    case 22:
+      return {
+        kind: 'direct-reuse',
+        status: 'accepted-source-mapping',
+        variants: [partialNorthRearTJunction],
+        note: 'Accepted rear horizontal partial T junction directly reuses the authored southeast-filled fixed-light transition source.',
       };
     case 24:
       return {
@@ -632,6 +686,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         variants: [partialEastRearTJunction],
         note: 'Accepted rear east-side partial T junction is the whole-cell mirror-X derivation of the separately authored west rear transition source.',
       };
+    case 28:
+      return {
+        kind: 'approved-derivation',
+        status: 'accepted-source-mapping',
+        variants: [partialNorthRearMirrorTJunction],
+        note: 'Accepted rear horizontal partial T junction is the whole-cell mirror-X derivation of the authored southeast-filled transition source.',
+      };
     case 31:
       return {
         kind: 'direct-reuse',
@@ -645,6 +706,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         status: 'accepted-source-mapping',
         variants: [filledSoutheastElbow],
         note: 'Accepted foreground-east filled elbow mirrors the foreground-west source after the accepted southeast seam filter.',
+      };
+    case 35:
+      return {
+        kind: 'approved-derivation',
+        status: 'accepted-source-mapping',
+        variants: [partialSouthForegroundMirrorTJunction],
+        note: 'Accepted foreground horizontal partial T junction mirrors the authored northeast-filled transition after the accepted boundary-seam filter.',
       };
     case 36:
       return {
@@ -783,6 +851,10 @@ const ACCEPTED_SOURCE_VARIANTS = new Set([
   partialWestRearTJunction,
   partialEastForegroundTJunction,
   partialEastRearTJunction,
+  partialSouthForegroundTJunction,
+  partialSouthForegroundMirrorTJunction,
+  partialNorthRearTJunction,
+  partialNorthRearMirrorTJunction,
 ].map(sourceVariantSignature));
 
 function variantsFor(

@@ -8,8 +8,8 @@
  * Every save re-validates the masters through the real A1b importer and
  * re-renders one card per stem: base / upper / composed plus the composed
  * frame at the close / normal / far review sizes on light and dark ground.
- * The open page is a current-state decision surface: the accepted east-side
- * mask_36/mask_27 single-filled-pocket gate first, then the accepted west source,
+ * The open page is a current-state decision surface: the newly accepted horizontal
+ * partial T-junction gate first, then the accepted east/west partial sources,
  * mapping, enclosure, and working-set gates. Historical mixed-profile
  * gates and compiler cards remain available in closed disclosures.
  * Saves under low-profile-correction/ still re-render comparison evidence used
@@ -62,6 +62,9 @@ import {
   compileA1bWestPartialTJunctionProposalDirectory,
 } from './highOblique/a1bWestPartialTJunctionProposal';
 import {
+  compileA1bHorizontalPartialTJunctionProposalDirectory,
+} from './highOblique/a1bHorizontalPartialTJunctionProposal';
+import {
   compileA1bIsolatedShellProposalDirectory,
 } from './highOblique/a1bIsolatedShellProposal';
 import {
@@ -109,6 +112,10 @@ import {
   EQUAL_HEIGHT_EAST_PARTIAL_T_JUNCTION_GATE,
   type EqualHeightEastPartialTJunctionMask,
 } from './highOblique/equalHeightEastPartialTJunctionGate';
+import {
+  EQUAL_HEIGHT_HORIZONTAL_PARTIAL_T_JUNCTION_GATE,
+  type EqualHeightHorizontalPartialTJunctionMask,
+} from './highOblique/equalHeightHorizontalPartialTJunctionGate';
 import {
   EQUAL_HEIGHT_MASK_LEDGER,
   equalHeightMaskContactDescriptor,
@@ -167,6 +174,9 @@ const horizontalOpenPocketTJunctionProposalDirectory = (input: string): string =
 const westPartialTJunctionProposalDirectory = (input: string): string =>
   path.join(crossSectionProofsDirectory(input), 'west-partial-t-junction');
 
+const horizontalPartialTJunctionProposalDirectory = (input: string): string =>
+  path.join(crossSectionProofsDirectory(input), 'horizontal-partial-t-junction');
+
 // The distraction-free envelope gate: one closed 3x3 wall section assembled
 // only from the structural masters under review. The empty centre cell exposes
 // the walkable floor; every base is painted before every upper.
@@ -221,6 +231,10 @@ const EAST_PARTIAL_T_JUNCTION_FILTERED_BASE_FILE =
   '__proof__/open-east-t-filled-nw-base.svg';
 const EAST_PARTIAL_T_JUNCTION_FILTERED_UPPER_FILE =
   '__proof__/open-east-t-filled-nw-upper.svg';
+const HORIZONTAL_PARTIAL_T_JUNCTION_FILTERED_BASE_FILE =
+  '__proof__/open-south-t-filled-nw-base.svg';
+const HORIZONTAL_PARTIAL_T_JUNCTION_FILTERED_UPPER_FILE =
+  '__proof__/open-south-t-filled-nw-upper.svg';
 const EMPTY_WORKBENCH_FILE = '__proof__/empty.svg';
 const EMPTY_WORKBENCH_SOURCE = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128"></svg>';
 const SOUTHWEST_REVIEW_FILE_OVERRIDES: CompositionFileOverrides = {
@@ -649,6 +663,7 @@ async function render(
   await renderFullHeightSouthwestProof(options);
   await renderFullHeightSoutheastProof(options);
   await renderEqualHeightCorridorGate(options);
+  await renderEqualHeightHorizontalPartialTJunctionGate(options, root);
   await renderEqualHeightEastPartialTJunctionGate(options, root);
   await renderEqualHeightWestPartialTJunctionGate(options, root);
   await renderEqualHeightHorizontalOpenPocketTJunctionGate(options, root);
@@ -671,6 +686,7 @@ async function render(
     roomRenderedAt: renderedAt,
     ladderRenderedAt: renderedAt,
     focusRenderedAt: renderedAt,
+    horizontalPartialTJunctionRenderedAt: renderedAt,
     eastPartialTJunctionRenderedAt: renderedAt,
     singleFilledPocketTJunctionRenderedAt: renderedAt,
     horizontalOpenPocketTJunctionRenderedAt: renderedAt,
@@ -869,6 +885,33 @@ async function eastPartialTJunctionGateFileOverrides(
     [EAST_PARTIAL_T_JUNCTION_FILTERED_BASE_FILE]: filtered.baseSource,
     [EAST_PARTIAL_T_JUNCTION_FILTERED_UPPER_FILE]: filtered.upperSource,
   };
+}
+
+async function horizontalPartialTJunctionProposalFileOverrides(
+  options: CliOptions,
+  root: string,
+): Promise<CompositionFileOverrides> {
+  const directory = horizontalPartialTJunctionProposalDirectory(options.input);
+  const compiled = await compileA1bHorizontalPartialTJunctionProposalDirectory({
+    inputDir: directory,
+    sourcePathPrefix: path.relative(root, directory).replaceAll(path.sep, '/'),
+  });
+  const byFilename = new Map(compiled.map((source) => [source.filename, source] as const));
+  const foregroundBase = byFilename.get('open_s_t_filled_ne-base.svg');
+  const foregroundUpper = byFilename.get('open_s_t_filled_ne-upper.svg');
+  if (!foregroundBase || !foregroundUpper) {
+    throw new Error('Horizontal partial T-junction compiler omitted the mask_18 pair');
+  }
+  const filtered = derivePromotedSoutheastSourcePair(
+    foregroundBase.content,
+    foregroundUpper.content,
+  );
+  return Object.fromEntries([
+    [EMPTY_WORKBENCH_FILE, EMPTY_WORKBENCH_SOURCE],
+    ...compiled.map(({ filename, content }) => [filename, content] as const),
+    [HORIZONTAL_PARTIAL_T_JUNCTION_FILTERED_BASE_FILE, filtered.baseSource],
+    [HORIZONTAL_PARTIAL_T_JUNCTION_FILTERED_UPPER_FILE, filtered.upperSource],
+  ]);
 }
 
 const transformCellContent = (
@@ -2270,7 +2313,7 @@ async function renderEqualHeightHorizontalOpenPocketTJunctionGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED HORIZONTAL-SPINE OPEN-POCKET T FAMILY', 23, 820),
     text(24, 68, 'Owner-accepted proof layer · two direct fixed-light sources · lateral mirror remains registration evidence only', 13, 650, MUTED),
     text(1576, 38, 'MASKS 11 / 14 · ACCEPTED', 11, 820, '#294B3C', 'end'),
-    text(1576, 62, '15 direct · 12 derived · 20 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
+    text(1576, 62, '17 direct · 14 derived · 16 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1560, 440),
     text(44, 126, 'AUTHORED SOURCE READ — 240 / 90 / 40 PX', 14, 820),
@@ -2420,7 +2463,7 @@ async function renderEqualHeightOpenPocketTJunctionGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED OPEN-POCKET T-JUNCTION FAMILY', 24, 820),
     text(24, 68, 'Owner-accepted proof layer · one authored west-side hub · one filtered whole-cell X mirror', 13, 650, MUTED),
     text(1576, 38, 'MASKS 7 / 13 ACCEPTED', 11, 820, '#294B3C', 'end'),
-    text(1576, 62, '15 direct · 12 derived · 20 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
+    text(1576, 62, '17 direct · 14 derived · 16 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1560, 500),
     text(44, 126, 'THE HUB ITSELF — 240 PX SOURCE READ', 14, 820),
@@ -2762,6 +2805,437 @@ async function eastPartialTJunctionMatrixWindow(
   );
 }
 
+type HorizontalPartialTJunctionMatrixMask =
+  | 1 | 2 | 4 | 5 | 8 | 10
+  | 16 | 17 | 18 | 20 | 21 | 22 | 26 | 27 | 28
+  | 31 | 34 | 35 | 36 | 38;
+
+function horizontalPartialTJunctionCandidateCell(
+  maskIndex: EqualHeightHorizontalPartialTJunctionMask,
+  col: number,
+  row: number,
+  layer: 'base' | 'upper' | 'composed' = 'composed',
+  rawMirror = false,
+): CompositionCell {
+  const candidate = EQUAL_HEIGHT_HORIZONTAL_PARTIAL_T_JUNCTION_GATE.candidates.find(
+    ({ maskIndex: candidateIndex }) => candidateIndex === maskIndex,
+  );
+  if (!candidate) throw new Error(`Unknown horizontal partial T-junction mask_${maskIndex}`);
+  const filteredMirror = maskIndex === 35 && !rawMirror;
+  const baseFile = filteredMirror
+    ? HORIZONTAL_PARTIAL_T_JUNCTION_FILTERED_BASE_FILE
+    : candidate.baseFile;
+  const upperFile = filteredMirror
+    ? HORIZONTAL_PARTIAL_T_JUNCTION_FILTERED_UPPER_FILE
+    : candidate.upperFile;
+  if (layer === 'base') return [col, row, baseFile, null, candidate.transform];
+  if (layer === 'upper') {
+    return [col, row, EMPTY_WORKBENCH_FILE, upperFile, candidate.transform];
+  }
+  return [col, row, baseFile, upperFile, candidate.transform];
+}
+
+function horizontalPartialTJunctionMatrixCell(
+  maskIndex: HorizontalPartialTJunctionMatrixMask,
+  targetMaskIndex: EqualHeightHorizontalPartialTJunctionMask,
+  col: number,
+  row: number,
+): CompositionCell {
+  const eastFacing = targetMaskIndex === 35 || targetMaskIndex === 28;
+  if (maskIndex === 18 || maskIndex === 35 || maskIndex === 22 || maskIndex === 28) {
+    return horizontalPartialTJunctionCandidateCell(maskIndex, col, row);
+  }
+  if (maskIndex === 17 || maskIndex === 21) {
+    return westPartialTJunctionCandidateCell(maskIndex, col, row);
+  }
+  if (maskIndex === 36 || maskIndex === 27) {
+    return eastPartialTJunctionCandidateCell(maskIndex, col, row);
+  }
+  if (maskIndex === 1 || maskIndex === 4) {
+    return openPocketVerticalEndCell(maskIndex, eastFacing ? 'east' : 'west', col, row);
+  }
+  if (maskIndex === 2 || maskIndex === 8) {
+    return openPocketHorizontalEndCell(maskIndex, col, row);
+  }
+  if (maskIndex === 5) {
+    return [
+      col,
+      row,
+      'full_w_straight-base.svg',
+      'full_w_straight-upper.svg',
+      eastFacing ? 'mirror-x' : 'none',
+    ];
+  }
+  if (maskIndex === 10) {
+    return [col, row, 'full_n_straight-base.svg', 'full_n_straight-upper.svg'];
+  }
+  if (maskIndex === 16 || maskIndex === 20 || maskIndex === 26 || maskIndex === 34) {
+    return acceptedFilledBlockCell(maskIndex, col, row);
+  }
+  const repeat = EQUAL_HEIGHT_THICK_WALL_HORIZONTAL_REPEAT_GATE.candidates.find(
+    ({ maskIndex: candidateIndex }) => candidateIndex === maskIndex,
+  );
+  if (!repeat) throw new Error(`Accepted horizontal repeat source missing for mask_${maskIndex}`);
+  return thickWallHorizontalRepeatCandidateCell(repeat, col, row);
+}
+
+function horizontalPartialTJunctionMatrixCells(
+  matrix: readonly (readonly (number | null)[])[],
+  targetMaskIndex: EqualHeightHorizontalPartialTJunctionMask,
+): readonly CompositionCell[] {
+  const cells: CompositionCell[] = [];
+  for (const [row, masks] of matrix.entries()) {
+    for (const [col, maskIndex] of masks.entries()) {
+      if (maskIndex === null) continue;
+      cells.push(horizontalPartialTJunctionMatrixCell(
+        maskIndex as HorizontalPartialTJunctionMatrixMask,
+        targetMaskIndex,
+        col,
+        row,
+      ));
+    }
+  }
+  return cells;
+}
+
+async function horizontalPartialTJunctionMatrixWindow(
+  options: CliOptions,
+  matrix: readonly (readonly (number | null)[])[],
+  targetMaskIndex: EqualHeightHorizontalPartialTJunctionMask,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  fileOverrides: CompositionFileOverrides,
+  floorFill: string = A1A_PALETTE.floor,
+  showGrid = true,
+): Promise<string> {
+  return compositionWindow(
+    options,
+    horizontalPartialTJunctionMatrixCells(matrix, targetMaskIndex),
+    matrix[0].length,
+    matrix.length,
+    x,
+    y,
+    width,
+    height,
+    fileOverrides,
+    undefined,
+    showGrid,
+    floorFill,
+  );
+}
+
+async function renderEqualHeightHorizontalPartialTJunctionGate(
+  options: CliOptions,
+  root: string,
+): Promise<void> {
+  const gate = EQUAL_HEIGHT_HORIZONTAL_PARTIAL_T_JUNCTION_GATE;
+  const width = 1600;
+  const height = 3630;
+  const panelFill = '#ECE5D5';
+  const panel = (x: number, y: number, w: number, h: number): string =>
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="14" fill="${panelFill}" ` +
+      `stroke="${INK}" stroke-width="1.5" opacity="0.96"/>`;
+  const fileOverrides: CompositionFileOverrides = {
+    [EMPTY_WORKBENCH_FILE]: EMPTY_WORKBENCH_SOURCE,
+    ...await verticalTerminusProposalFileOverrides(options, root),
+    ...await openPocketTJunctionProposalFileOverrides(options, root),
+    ...await horizontalOpenPocketTJunctionProposalFileOverrides(options, root),
+    ...await thickWallBlockProposalFileOverrides(options, root),
+    ...await thickWallHorizontalRepeatProposalFileOverrides(options, root),
+    ...await eastPartialTJunctionGateFileOverrides(options, root),
+    ...await horizontalPartialTJunctionProposalFileOverrides(options, root),
+  };
+  const parts: string[] = [
+    `<rect width="${width}" height="${height}" rx="18" fill="${PANEL}"/>`,
+    text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — HORIZONTAL PARTIAL T-JUNCTION GATE', 24, 820),
+    text(24, 68, 'OWNER ACCEPTED · two fixed-light direct masters plus two approved whole-cell X derivations', 13, 650, MUTED),
+    text(1576, 38, 'MASKS 18 / 35 / 22 / 28', 11, 820, '#B65F4D', 'end'),
+    text(1576, 62, 'ledger · 17 direct · 14 derived · 16 synthetic', 10, 700, MUTED, 'end'),
+
+    panel(20, 92, 1560, 430),
+    text(44, 126, 'TWO OCCUPANCY DIAMONDS — FOUR SIBLING STATES, NOT A SEQUENCE', 14, 820),
+    text(44, 150, 'Each accepted mapping fills exactly one upper or lower crook. The opposite crook remains genuine floor while the solid quadrant merges into the two-row mass.', 10, 650, MUTED),
+
+    panel(20, 542, 1560, 690),
+    text(44, 576, 'THE TWO DIRECT SOURCE PAIRS — BASE / UPPER / COMPOSED', 14, 820),
+    text(44, 600, 'Buried faces are absent at source. Foreground and rear planes are separately authored; no rotation or Y-mirror is permitted.', 10, 650, MUTED),
+
+    panel(20, 1252, 1560, 390),
+    text(44, 1286, 'DERIVATION AUDIT — ONE FILTERED MIRROR, ONE PLAIN MIRROR', 14, 820),
+    text(44, 1310, 'mask_35 drops the source-side boundary ticks before mirror-X so mask_38 owns the shared seam. mask_28 mirrors the rear source unchanged.', 10, 650, MUTED),
+
+    panel(20, 1662, 1560, 570),
+    text(44, 1696, 'COMPACT INSTALLED CHECK — LITERAL 90 PX AND 40 PX PER CELL', 14, 820),
+    text(44, 1720, 'Every neighbor is accepted. Dashed frames identify the four newly accepted mappings; light and dark grounds expose different seam failures.', 10, 650, MUTED),
+
+    panel(20, 2252, 1560, 1090),
+    text(44, 2286, 'LONG INSTALLED GATE — TRUE FIVE-ROW MASS, PAIRED PARTIAL SEAMS INCLUDED', 14, 820),
+    text(44, 2310, 'Each 40 px proof joins a partial sibling above or below the accepted mapping. The branch is three cells deep and the horizontal mass extends in both directions.', 10, 650, MUTED),
+
+    panel(20, 3362, 1560, 244),
+    text(44, 3398, 'READING CONTRACT', 14, 820),
+    text(824, 3398, 'ACCEPTANCE BOUNDARY', 14, 820),
+  ];
+
+  const openSouth = horizontalOpenPocketTJunctionCandidateCell(11, 'west-source', 0, 0);
+  const openNorth = horizontalOpenPocketTJunctionCandidateCell(14, 'west-source', 0, 0);
+  const stateCells: ReadonlyArray<readonly [CompositionCell, number, number, string, string]> = [
+    [openSouth, 72, 220, 'MASK_11', A1A_PALETTE.green],
+    [horizontalPartialTJunctionCandidateCell(18, 0, 0), 292, 180, 'MASK_18 · NE SOLID', '#B65F4D'],
+    [horizontalPartialTJunctionCandidateCell(35, 0, 0), 292, 340, 'MASK_35 · NW SOLID', '#4E7D79'],
+    [horizontalPartialTJunctionMatrixCell(38, 18, 0, 0), 590, 220, 'MASK_38', A1A_PALETTE.green],
+    [openNorth, 842, 220, 'MASK_14', A1A_PALETTE.green],
+    [horizontalPartialTJunctionCandidateCell(22, 0, 0), 1062, 180, 'MASK_22 · SE SOLID', '#B65F4D'],
+    [horizontalPartialTJunctionCandidateCell(28, 0, 0), 1062, 340, 'MASK_28 · SW SOLID', '#4E7D79'],
+    [horizontalPartialTJunctionMatrixCell(31, 22, 0, 0), 1360, 220, 'MASK_31', A1A_PALETTE.green],
+  ];
+  for (const [cell, x, y, label, color] of stateCells) {
+    parts.push(await compositionWindow(options, [cell], 1, 1, x, y, 96, 96, fileOverrides));
+    parts.push(text(x + 48, y + 118, label, 9, 820, color, 'middle'));
+  }
+  parts.push('<defs><marker id="horizontal-partial-arrow" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#B65F4D"/></marker></defs>');
+  parts.push('<path d="M180 268L270 228 M180 268L270 388 M410 228L568 268 M410 388L568 268 M950 268L1040 228 M950 268L1040 388 M1180 228L1338 268 M1180 388L1338 268" fill="none" stroke="#B65F4D" stroke-width="2.4" stroke-linecap="round" marker-end="url(#horizontal-partial-arrow)"/>');
+  parts.push(text(365, 490, 'mask_11 → mask_18 or mask_35 → mask_38', 11, 780, MUTED, 'middle'));
+  parts.push(text(1135, 490, 'mask_14 → mask_22 or mask_28 → mask_31', 11, 780, MUTED, 'middle'));
+
+  const sourceRows: ReadonlyArray<readonly [
+    number,
+    18 | 22,
+    string,
+    string,
+    readonly string[],
+  ]> = [
+    [620, 18, 'MASK_18 · DIRECT FOREGROUND MASTER · NE SOLID / NW OPEN', '#B65F4D', [
+      'west socket keeps the full tri-tone frontage',
+      'north/east mass is cream-led with no buried face rail',
+      'local plane cue preserves the top/front break; family-wide continuity is deferred',
+    ]],
+    [910, 22, 'MASK_22 · DIRECT REAR MASTER · SE SOLID / SW OPEN', '#4E7D79', [
+      'east socket stays quiet and cream-only like mask_31',
+      'south/east mass has no buried coral or green return',
+      'southwest crook remains open floor, not cream paint',
+    ]],
+  ];
+  for (const [y, maskIndex, label, color, notes] of sourceRows) {
+    parts.push(text(44, y + 16, label, 11, 840, color));
+    const sourceViews: ReadonlyArray<readonly ['base' | 'upper' | 'composed', number, string]> = [
+      ['base', 54, 'BASE'],
+      ['upper', 274, 'UPPER'],
+      ['composed', 494, 'COMPOSED'],
+    ];
+    for (const [layer, x, viewLabel] of sourceViews) {
+      parts.push(await compositionWindow(
+        options,
+        [horizontalPartialTJunctionCandidateCell(maskIndex, 0, 0, layer)],
+        1,
+        1,
+        x,
+        y + 34,
+        200,
+        200,
+        fileOverrides,
+      ));
+      parts.push(text(x + 100, y + 254, viewLabel, 10, 820, layer === 'composed' ? color : MUTED, 'middle'));
+    }
+    parts.push(await compositionWindow(
+      options,
+      [horizontalPartialTJunctionCandidateCell(maskIndex, 0, 0)],
+      1,
+      1,
+      754,
+      y + 82,
+      90,
+      90,
+      fileOverrides,
+    ));
+    parts.push(await compositionWindow(
+      options,
+      [horizontalPartialTJunctionCandidateCell(maskIndex, 0, 0)],
+      1,
+      1,
+      884,
+      y + 107,
+      40,
+      40,
+      fileOverrides,
+      undefined,
+      true,
+      A1A_PALETTE.charcoal,
+    ));
+    parts.push(text(799, y + 194, '90 PX', 9, 820, color, 'middle'));
+    parts.push(text(904, y + 172, '40 PX · DARK', 9, 820, color, 'middle'));
+    for (const [index, note] of notes.entries()) {
+      parts.push(text(1000, y + 82 + index * 38, `• ${note}`, 10, 720, index === 0 ? color : MUTED));
+    }
+    parts.push(text(1000, y + 208, 'NO ROTATION · NO Y MIRROR · NO COVER PATCH', 9, 820, '#9A493D'));
+  }
+
+  const mask38 = EQUAL_HEIGHT_THICK_WALL_HORIZONTAL_REPEAT_GATE.candidates.find(
+    ({ maskIndex }) => maskIndex === 38,
+  );
+  if (!mask38) throw new Error('Accepted foreground repeat source missing for mask_38');
+  const rawMask35Join: readonly CompositionCell[] = [
+    thickWallHorizontalRepeatCandidateCell(mask38, 0, 0),
+    horizontalPartialTJunctionCandidateCell(35, 1, 0, 'composed', true),
+  ];
+  const filteredMask35Join: readonly CompositionCell[] = [
+    thickWallHorizontalRepeatCandidateCell(mask38, 0, 0),
+    horizontalPartialTJunctionCandidateCell(35, 1, 0),
+  ];
+  parts.push(text(220, 1354, 'RAW MASK_35 · DOUBLED SOCKET TICK', 10, 840, '#9A493D', 'middle'));
+  parts.push(await compositionWindow(options, rawMask35Join, 2, 1, 54, 1372, 332, 166, fileOverrides));
+  parts.push('<path d="M220 1372V1538" fill="none" stroke="#9A493D" stroke-width="2" stroke-dasharray="7 5"/>');
+  parts.push(text(620, 1354, 'FILTERED MASK_35 · NEIGHBOR OWNS SEAM', 10, 840, '#B65F4D', 'middle'));
+  parts.push(await compositionWindow(options, filteredMask35Join, 2, 1, 454, 1372, 332, 166, fileOverrides));
+  parts.push('<path d="M620 1372V1538" fill="none" stroke="#B65F4D" stroke-width="2" stroke-dasharray="7 5"/>');
+  parts.push(text(1012, 1354, 'MASK_28 · PLAIN WHOLE-CELL X MIRROR', 10, 840, '#4E7D79', 'middle'));
+  parts.push(await compositionWindow(
+    options,
+    [horizontalPartialTJunctionCandidateCell(28, 0, 0)],
+    1,
+    1,
+    896,
+    1372,
+    166,
+    166,
+    fileOverrides,
+  ));
+  parts.push(await compositionWindow(
+    options,
+    [horizontalPartialTJunctionCandidateCell(35, 0, 0)],
+    1,
+    1,
+    1120,
+    1390,
+    90,
+    90,
+    fileOverrides,
+  ));
+  parts.push(await compositionWindow(
+    options,
+    [horizontalPartialTJunctionCandidateCell(28, 0, 0)],
+    1,
+    1,
+    1260,
+    1415,
+    40,
+    40,
+    fileOverrides,
+    undefined,
+    true,
+    A1A_PALETTE.charcoal,
+  ));
+  parts.push(text(1165, 1500, 'MASK_35 · 90 PX', 9, 800, MUTED, 'middle'));
+  parts.push(text(1280, 1480, 'MASK_28 · 40 PX', 9, 800, MUTED, 'middle'));
+  parts.push(text(1370, 1408, 'Only mask_35 needs filtering.', 10, 720, MUTED, 'middle'));
+  parts.push(text(1370, 1440, 'Both derivations stay X-only.', 10, 720, MUTED, 'middle'));
+  parts.push(text(1370, 1472, 'No source pixels rotate.', 10, 720, '#9A493D', 'middle'));
+
+  const compactCases: ReadonlyArray<readonly [
+    keyof typeof gate.compactMatrices,
+    EqualHeightHorizontalPartialTJunctionMask,
+    string,
+    string,
+  ]> = [
+    ['mask18', 18, 'NE SOLID', '#B65F4D'],
+    ['mask35', 35, 'NW SOLID', '#4E7D79'],
+    ['mask22', 22, 'SE SOLID', '#B65F4D'],
+    ['mask28', 28, 'SW SOLID', '#4E7D79'],
+  ];
+  for (const [index, [matrixKey, maskIndex, label, color]] of compactCases.entries()) {
+    const x = 44 + index * 388;
+    const matrix = gate.compactMatrices[matrixKey];
+    parts.push(text(x + 135, 1754, `MASK_${maskIndex} · ${label}`, 10, 840, color, 'middle'));
+    parts.push(await horizontalPartialTJunctionMatrixWindow(
+      options, matrix, maskIndex, x, 1772, 270, 270, fileOverrides,
+    ));
+    parts.push(westPartialTJunctionCandidateFrame(x + 90, 1862, 90, color));
+    parts.push(await horizontalPartialTJunctionMatrixWindow(
+      options, matrix, maskIndex, x + 118, 2064, 120, 120, fileOverrides, A1A_PALETTE.charcoal,
+    ));
+    parts.push(westPartialTJunctionCandidateFrame(x + 158, 2104, 40, color));
+    parts.push(text(x + 178, 2206, '40 PX · DARK', 9, 820, color, 'middle'));
+  }
+
+  const longCases: ReadonlyArray<readonly [
+    keyof typeof gate.longMatrices,
+    EqualHeightHorizontalPartialTJunctionMask,
+    string,
+    string,
+    number,
+    number,
+  ]> = [
+    ['mask18', 18, 'MASK_18 BELOW ACCEPTED MASK_21', '#B65F4D', 4, 4],
+    ['mask35', 35, 'MASK_35 BELOW ACCEPTED MASK_27', '#4E7D79', 5, 4],
+    ['mask22', 22, 'MASK_22 ABOVE ACCEPTED MASK_17', '#B65F4D', 4, 0],
+    ['mask28', 28, 'MASK_28 ABOVE ACCEPTED MASK_36', '#4E7D79', 5, 0],
+  ];
+  for (const [index, [matrixKey, maskIndex, label, color, candidateCol, candidateRow]] of longCases.entries()) {
+    const top = 2334 + index * 246;
+    const matrix = gate.longMatrices[matrixKey];
+    parts.push(text(54, top, label, 10, 840, color));
+    parts.push(await horizontalPartialTJunctionMatrixWindow(
+      options, matrix, maskIndex, 54, top + 18, 400, 200, fileOverrides, A1A_PALETTE.floor,
+    ));
+    parts.push(westPartialTJunctionCandidateFrame(
+      54 + candidateCol * 40,
+      top + 18 + candidateRow * 40,
+      40,
+      color,
+    ));
+    parts.push(await horizontalPartialTJunctionMatrixWindow(
+      options, matrix, maskIndex, 494, top + 18, 400, 200, fileOverrides, A1A_PALETTE.charcoal,
+    ));
+    parts.push(westPartialTJunctionCandidateFrame(
+      494 + candidateCol * 40,
+      top + 18 + candidateRow * 40,
+      40,
+      color,
+    ));
+    const notes = maskIndex === 18
+      ? ['west ordinary run enters cleanly', 'mask_21/18 pair has one continuous cream bridge', 'east thick mass keeps tri-tone frontage']
+      : maskIndex === 35
+        ? ['west thick mass owns the filtered seam', 'mask_27/35 mirrored branch shares one perspective', 'east ordinary run exits without a false cap']
+        : maskIndex === 22
+          ? ['rear mapping meets ordinary west run', 'mask_22/17 pair keeps the south-facing depth break', 'east filled row stays cream-led']
+          : ['west filled row remains cream-led', 'mask_28/36 mirrored branch shares one perspective', 'east ordinary run exits without a socket step'];
+    for (const [noteIndex, note] of notes.entries()) {
+      parts.push(text(940, top + 62 + noteIndex * 38, `• ${note}`, 10, 720, noteIndex === 1 ? color : MUTED));
+    }
+    parts.push(text(940, top + 190, '40 PX/CELL · LIGHT + DARK', 9, 820, color));
+  }
+
+  const readingLines = [
+    'One solid quadrant disappears into accepted thick-wall top pixels; no buried inner façade survives',
+    'The opposite crook remains floor-shaped negative space at both 90 and 40 px per cell',
+    'Cream, coral, green, and plinth registers are accepted; continuous south-face plane cues remain family-wide polish',
+    'A one-cell room remains as valid as a long run; no graphic requires extra wall length to read',
+  ];
+  for (const [index, line] of readingLines.entries()) {
+    parts.push(text(44, 3442 + index * 34, `• ${line}`, 10, 720, index < 3 ? '#294B3C' : MUTED));
+  }
+  const boundaryLines: ReadonlyArray<readonly [string, string]> = [
+    ['OWNER ACCEPTED · PROOF-LAYER SOURCE MAPPING', '#294B3C'],
+    ['ledger · 17 direct / 14 derived / 16 synthetic', MUTED],
+    ['remaining synthetic rows · cross-junctions only', MUTED],
+    ['4 EXTERNAL PROOF SVGs · TEMPORARY FRAMES', '#4E7D79'],
+    ['NO CANONICAL / EXPORT / ATLAS / SCHEMA / BLOB / UNITY', '#9A493D'],
+  ];
+  for (const [index, [line, color]] of boundaryLines.entries()) {
+    parts.push(text(824, 3442 + index * 30, line, index === 0 || index >= 3 ? 10 : 9, index === 0 || index >= 3 ? 820 : 700, color));
+  }
+
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" ` +
+    `viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+  const png = new Resvg(svg, {
+    fitTo: { mode: 'width', value: width * CARD_RENDER_SCALE },
+  }).render().asPng();
+  await writeFile(path.join(options.output, `${gate.stem}.png`), png);
+}
+
 async function renderEqualHeightEastPartialTJunctionGate(
   options: CliOptions,
   root: string,
@@ -2787,7 +3261,7 @@ async function renderEqualHeightEastPartialTJunctionGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — EAST SINGLE-FILLED-POCKET T TRANSITIONS', 24, 820),
     text(24, 68, 'OWNER ACCEPTED · approved X-mirror derivations of the accepted west pair · fixed-light source roles preserved', 13, 650, MUTED),
     text(1576, 38, 'MASKS 36 / 27 · ACCEPTED', 11, 820, A1A_PALETTE.green, 'end'),
-    text(1576, 62, 'ledger · 15 direct · 12 derived · 20 synthetic', 10, 700, MUTED, 'end'),
+    text(1576, 62, 'ledger · 17 direct · 14 derived · 16 synthetic', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1560, 430),
     text(44, 126, 'THE EAST OCCUPANCY DIAMOND — MIRRORED TOPOLOGY, SAME FIXED-LIGHT ROLES', 14, 820),
@@ -3038,7 +3512,7 @@ async function renderEqualHeightWestPartialTJunctionGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — SINGLE-FILLED-POCKET T TRANSITIONS', 24, 820),
     text(24, 68, 'OWNER ACCEPTED · two separately authored west-side fixed-light direct sources · open and fully filled states remain the controls', 13, 650, MUTED),
     text(1576, 38, 'MASKS 17 / 21 · ACCEPTED', 11, 820, '#B65F4D', 'end'),
-    text(1576, 62, 'ledger · 15 direct · 12 derived · 20 synthetic', 10, 700, MUTED, 'end'),
+    text(1576, 62, 'ledger · 17 direct · 14 derived · 16 synthetic', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1560, 450),
     text(44, 126, 'THE OCCUPANCY DIAMOND — THESE ARE SIBLING STATES', 14, 820),
@@ -3368,7 +3842,7 @@ async function renderEqualHeightThickWallHorizontalRepeatGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED N×2 HORIZONTAL REPEAT FAMILY', 24, 820),
     text(24, 68, 'Owner-accepted proof layer · two fixed-light direct sources · accepted 2×2 family remains the control', 13, 650, MUTED),
     text(1576, 38, 'MASKS 31 / 38 ACCEPTED', 11, 820, A1A_PALETTE.green, 'end'),
-    text(1576, 62, '15 direct · 12 derived · 20 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
+    text(1576, 62, '17 direct · 14 derived · 16 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1560, 500),
     text(44, 126, 'THE PLAYER-SHAPED CASE — WIDEN THE SOLID MASS', 14, 820),
@@ -3561,7 +4035,7 @@ async function renderEqualHeightThickWallRepeatGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED 2xN THICK-WALL REPEAT FAMILY', 24, 820),
     text(24, 68, 'Owner-accepted proof layer · one west-authored middle spine plus one approved whole-cell X mirror · 2x2 family remains the control', 13, 650, MUTED),
     text(1576, 38, 'MASKS 24 / 42 ACCEPTED', 11, 820, A1A_PALETTE.green, 'end'),
-    text(1576, 62, '15 direct · 12 derived · 20 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
+    text(1576, 62, '17 direct · 14 derived · 16 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1560, 570),
     text(44, 126, 'THE PLAYER-SHAPED CASE — EXTEND THE SOLID MASS', 14, 820),
@@ -3792,7 +4266,7 @@ async function renderEqualHeightThickWallBlockGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED 2x2 THICK-WALL FAMILY', 24, 820),
     text(24, 68, 'Owner-accepted proof layer · two fixed-light west sources plus two approved X-mirror derivations · solid top lives in the pieces', 13, 650, MUTED),
     text(1576, 38, 'FOUR MAPPINGS ACCEPTED', 11, 820, A1A_PALETTE.green, 'end'),
-    text(1576, 62, '15 direct · 12 derived · 20 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
+    text(1576, 62, '17 direct · 14 derived · 16 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1560, 560),
     text(44, 126, 'THE PLAYER ACTION — FILL THE OPEN CROOK', 14, 820),
@@ -3934,7 +4408,7 @@ async function renderEqualHeightIsolatedShellGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED MASK_0 ISOLATED SHELL GATE', 24, 820),
     text(24, 68, 'Owner-accepted proof layer · one full-height structural housing · zero cardinal sockets · no transform', 13, 650, MUTED),
     text(1576, 38, 'MASK_0 MAPPING ACCEPTED', 11, 820, A1A_PALETTE.green, 'end'),
-    text(1576, 62, '15 direct · 12 derived · 20 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
+    text(1576, 62, '17 direct · 14 derived · 16 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1120, 410),
     text(44, 126, 'ONE MOLDED HOUSING — LAYER READ AT 240 PX', 14, 820),
@@ -4136,7 +4610,7 @@ async function renderEqualHeightVerticalTerminusGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED VERTICAL TERMINUS GATE', 24, 820),
     text(24, 68, 'Owner-accepted proof layer · two authored wall rollovers · west source + east mirror-X derivation', 13, 650, MUTED),
     text(1976, 38, 'MASK_1 + MASK_4 MAPPING ACCEPTED', 11, 820, A1A_PALETTE.green, 'end'),
-    text(1976, 62, '15 direct · 12 derived · 20 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
+    text(1976, 62, '17 direct · 14 derived · 16 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
   ];
 
   const isolated: ReadonlyArray<readonly [1 | 4, EqualHeightVerticalTerminusWallSide]> = [
@@ -4797,6 +5271,7 @@ async function renderEqualHeightMaskLedger(options: CliOptions, root: string): P
     ...await horizontalOpenPocketTJunctionProposalFileOverrides(options, root),
     ...await westPartialTJunctionProposalFileOverrides(options, root),
     ...await eastPartialTJunctionGateFileOverrides(options, root),
+    ...await horizontalPartialTJunctionProposalFileOverrides(options, root),
   };
   const parts: string[] = [
     '<defs>' +
@@ -4946,7 +5421,7 @@ async function renderEqualHeightMaskLedger(options: CliOptions, root: string): P
 
   parts.push(text(railX + 24, gridY + 1452, 'SYNTHETIC OBLIGATION', 14, 850, '#7B715F'));
   parts.push(text(railX + 24, gridY + 1480, '0 solid elbows · all four now have accepted proof sources', 11, 700, MUTED));
-  parts.push(text(railX + 24, gridY + 1502, '4 T cases · accepted sockets/pockets + new local hub/caps', 11, 700, MUTED));
+  parts.push(text(railX + 24, gridY + 1502, '0 T cases · every open and single-filled-pocket T row is accepted', 11, 700, MUTED));
   parts.push(text(railX + 24, gridY + 1524, '16 cross cases · accepted pockets + new four-way hub', 11, 700, MUTED));
   parts.push(text(railX + 24, gridY + 1552, 'Hatched previews are topology diagrams, never proposed final art.', 11, 750, '#7B715F'));
 
@@ -4968,7 +5443,7 @@ async function renderEqualHeightMaskLedger(options: CliOptions, root: string): P
   parts.push(text(railX + 42, gridY + 1810, '✓ accepted source provenance only', 11, 700, '#9FC7A9'));
   parts.push(text(railX + 42, gridY + 1836, '✓ no low-profile or historical topology pixels', 11, 700, '#9FC7A9'));
   parts.push(text(railX + 42, gridY + 1862, '✓ 0 authored geometry gaps remain', 11, 750, '#9FC7A9'));
-  parts.push(text(railX + 42, gridY + 1888, '! 20 synthetic cases are diagrams, not accepted art', 11, 750, '#E0836E'));
+  parts.push(text(railX + 42, gridY + 1888, '! 16 synthetic cross-junction cases are diagrams, not accepted art', 11, 750, '#E0836E'));
   parts.push(text(railX + 42, gridY + 1918, 'No further proof or production registration is implied.', 11, 800, '#83A9A6'));
 
   const svg =
@@ -5428,6 +5903,7 @@ async function renderContextMocksSafely(options: CliOptions, root: string): Prom
     await renderFullHeightSouthwestProof(options);
     await renderFullHeightSoutheastProof(options);
     await renderEqualHeightCorridorGate(options);
+    await renderEqualHeightHorizontalPartialTJunctionGate(options, root);
     await renderEqualHeightEastPartialTJunctionGate(options, root);
     await renderEqualHeightWestPartialTJunctionGate(options, root);
     await renderEqualHeightHorizontalOpenPocketTJunctionGate(options, root);
@@ -5449,6 +5925,7 @@ async function renderContextMocksSafely(options: CliOptions, root: string): Prom
     status.roomRenderedAt = renderedAt;
     status.ladderRenderedAt = renderedAt;
     status.focusRenderedAt = renderedAt;
+    status.horizontalPartialTJunctionRenderedAt = renderedAt;
     status.eastPartialTJunctionRenderedAt = renderedAt;
     status.singleFilledPocketTJunctionRenderedAt = renderedAt;
     status.horizontalOpenPocketTJunctionRenderedAt = renderedAt;

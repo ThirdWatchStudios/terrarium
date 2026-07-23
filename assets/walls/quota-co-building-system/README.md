@@ -28,10 +28,10 @@ and all four corners close as one enclosure.
 
 **Accepted mapping gate (owner approvals, 2026-07-21 through 2026-07-22):** the proof-layer ledger
 locks the unchanged canonical `mask_0` through `mask_46` order and classifies
-15 direct reuses, twelve approved derivations, 20 synthetic assembly
-candidates, and zero authored-geometry gaps. This accepts the mapping
-structure and provenance boundaries only. It does not accept the 20 synthetic
-assembly diagrams or create an atlas/production family.
+17 direct reuses, 14 approved derivations, 16 synthetic assembly
+candidates, and zero collisions. The remaining synthetic rows are all cross-junctions. This accepts the
+mapping structure and provenance boundaries only. It does not accept the 16 synthetic
+cross-junction diagrams or create an atlas/production family.
 
 **Accepted horizontal terminus gate (owner approval, 2026-07-21):** `mask_8`
 directly reuses the socket-polished `full_terminus` pair (connected west, cap
@@ -113,10 +113,23 @@ mapping, or Unity registration.
 the accepted foreground `mask_17` source through a whole-cell X mirror after omitting only
 `base-boundary-seam` and `upper-boundary-seam`, so adjoining `mask_38` retains the single shared-socket seam.
 `mask_27` is the plain whole-cell X mirror of the accepted rear `mask_21` source. Both preserve the accepted
-fixed-light roles and fill one diagonal crook while leaving the other as open floor. The ledger now records
+fixed-light roles and fill one diagonal crook while leaving the other as open floor. At that checkpoint the ledger recorded
 15 direct / 12 derived / 20 synthetic / 0 unresolved rows. No east SVG source bank is added, and this
 proof-layer promotion changes no canonical source, frame identity, template registration, exporter, atlas,
 schema, blob mapping, or Unity registration.
+
+**Accepted horizontal partial T-junction gate (owner approval, 2026-07-22):** the external
+`../quota-co-building-system-proofs/horizontal-partial-t-junction/` bank supplies two fixed-light
+direct sources: `open_s_t_filled_ne` for `mask_18` and `open_n_t_filled_se` for `mask_22`. The accepted family
+derives `mask_35` from `mask_18` by omitting `base-boundary-seam` and `upper-boundary-seam` before a whole-cell
+X mirror, and derives `mask_28` as the plain whole-cell X mirror of `mask_22`. These are the one-filled-crook
+states in the occupancy diamonds `mask_11 -> {mask_18, mask_35} -> mask_38` and
+`mask_14 -> {mask_22, mask_28} -> mask_31`. Their promotion advances the proof ledger to
+17 direct / 14 derived / 16 synthetic / 0 collisions; all 16 remaining synthetic rows are cross-junctions.
+South-facing shadow continuity remains deferred family-wide polish across these accepted direct and derived
+sources; this checkpoint does not claim that shadow work is fixed. Proof-layer acceptance changes no
+canonical source, frame identity, template registration, exporter, atlas, schema, blob mapping, or Unity
+registration.
 
 The original independently finished low-base-plus-optional-upper construction was
 rejected on 2026-07-20 because its duplicate caps and contours read as one wall

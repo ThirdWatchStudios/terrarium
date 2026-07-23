@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>QuotaCo accepted open-south T-junction with filled northeast pocket upper</title>
+  <desc>One molded foreground source keeps the northwest crook open while the northeast quadrant becomes a continuous cream wall top flowing into the filled east socket.</desc>
+  <g id="detail/upper">
+    <path id="upper-contour" d="M56 0H128V120H0V56H46A10 10 0 0 0 56 46Z" fill="#252A28"/>
+    <path id="upper-shell" d="M58 0H128V97H0V58H48A10 10 0 0 0 58 48Z" fill="#D9D0B9"/>
+    <path id="upper-reveal-open-nw" d="M0 58H48A10 10 0 0 0 58 48V63H0Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="upper-south-face-shade" d="M103 63H128V88H103Z" fill="#000000" opacity="0.08"/>
+    <path id="upper-coral-open-nw" d="M0 88H128V94H0Z" fill="#B65F4D"/>
+    <path id="upper-band-light" d="M0 88H128V89.5H0Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="upper-green-open-nw" d="M0 94H128V117H0Z" fill="#294B3C"/>
+    <path id="upper-plinth" d="M0 117H128V120H0Z" fill="#252A28"/>
+    <path id="upper-arris-seam" d="M1 63H46A12 12 0 0 0 58 51V1" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="upper-band-seam" d="M1 94H127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+    <path id="upper-boundary-seam" d="M126 88V96 M126 98V116" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+  </g>
+</svg>

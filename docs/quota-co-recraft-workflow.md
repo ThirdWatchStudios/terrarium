@@ -25,8 +25,9 @@ on the live workbench and committed individually with its design rationale.
    `mask_11` and `mask_14` are direct proof-layer sources, while same-mask lateral X mirrors remain comparison
    evidence rather than accepted derivations. The single-filled-pocket family is accepted on both sides:
    west `mask_17`/`mask_21` are direct sources, east `mask_36` is the filtered whole-cell X mirror of
-   `mask_17`, and east `mask_27` is the plain whole-cell X mirror of `mask_21`. No east SVG bank is added. No
-   proposal is currently active. Never
+   `mask_17`, and east `mask_27` is the plain whole-cell X mirror of `mask_21`. The horizontal partial family
+   is accepted too: direct `mask_18`/`mask_22`, filtered mirror `mask_35`, and plain mirror `mask_28`. No east
+   SVG bank is added. No proposal is currently active. Never
    rotate the accepted horizontal source to manufacture a vertical end. Use composed evidence as
    the issue-finding surface. Historical
    mixed-profile room mocks are archived, not valid targets.
@@ -42,7 +43,8 @@ on the live workbench and committed individually with its design rationale.
    shading as overlays never tints (recolor law). Edit masters with the file tools, not shell scripts —
    shell edits break the session harness's write tracking.
 4. **Judge on the bench:** `npm run style:watch` → http://localhost:5411 (one instance only — the port
-   is exclusive). The accepted east-side single-filled-pocket T-junction gate appears first, comparing filtered
+   is exclusive). The accepted horizontal partial T-junction gate appears first, followed by the accepted
+   east-side single-filled-pocket T-junction gate comparing filtered
    mirror-X `mask_36` and plain mirror-X `mask_27` in compact and long light/dark compositions; the accepted
    west `mask_17`/`mask_21` sources remain its provenance control. The accepted horizontal open-pocket
    T-junction gate follows, comparing the separately
@@ -194,9 +196,9 @@ north/south bodies stay legible, six-cell west/east runs do not drift, and all f
 manufactured envelope.
 
 **Accepted 47-mask mapping checkpoint (owner approvals, 2026-07-21 through 2026-07-22):** the unchanged
-`mask_0` through `mask_46` ordering and classification ledger is accepted with fifteen direct reuses, twelve
-approved derivations, 20 proof-only synthetic assembly candidates, and zero unresolved authored-geometry
-cases. This locks the mapping structure, not the synthetic pixels or a complete production family.
+`mask_0` through `mask_46` ordering and classification ledger is accepted with seventeen direct reuses,
+fourteen approved derivations, 16 proof-only synthetic cross-junction candidates, and zero collisions. This
+locks the mapping structure, not the synthetic pixels or a complete production family.
 
 **Accepted horizontal terminus checkpoint (owner approval, 2026-07-21):** the socket-polished
 `full_terminus` source passes directly for `mask_8` and through a whole-cell X mirror for `mask_2`, at 90/40 px
@@ -285,18 +287,31 @@ canonical registration, export, atlas, schema, blob mapping, and Unity.
 accepted foreground `mask_17` through a whole-cell X mirror after omitting only `base-boundary-seam` and
 `upper-boundary-seam`, leaving adjoining `mask_38` as the single shared-socket seam owner. `mask_27` is the
 plain whole-cell X mirror of accepted rear `mask_21`. Compact and long light/dark checks preserve the fixed-light
-roles and one open floor crook in each state. The ledger now records fifteen direct, twelve derived,
+roles and one open floor crook in each state. At that checkpoint the ledger recorded fifteen direct, twelve derived,
 20 synthetic, and zero unresolved. This adds no east SVG source bank and changes no canonical source,
 registration, exporter, atlas, schema, blob mapping, or Unity surface.
 
-**Still outside acceptance after the east single-filled-pocket T-junction checkpoint:** all 20 remaining synthetic T/cross
-candidate sprites;
+**Accepted horizontal partial T-junction gate (owner approval, 2026-07-22):** the external
+`horizontal-partial-t-junction/` bank supplies two direct fixed-light sources and two approved derivations:
+`open_s_t_filled_ne -> mask_18`, filtered whole-cell X mirror `mask_18 -> mask_35`,
+`open_n_t_filled_se -> mask_22`, and plain whole-cell X mirror `mask_22 -> mask_28`. The filter for
+`mask_35` omits only `base-boundary-seam` and `upper-boundary-seam`. Judge the two state diamonds
+`mask_11 -> {mask_18, mask_35} -> mask_38` and `mask_14 -> {mask_22, mask_28} -> mask_31` at compact and
+long-run distance: the middle state fills exactly one crook without exposing a buried face or duplicating the
+shared-socket seam. The accepted ledger is 17 direct / 14 derived / 16 synthetic / 0 collisions, with every
+remaining synthetic row a cross-junction. South-facing shadow continuity remains deferred family-wide polish
+across the accepted sources; this checkpoint does not claim it is fixed.
+
+**Still outside acceptance after the horizontal partial T-junction checkpoint:** all 16 remaining synthetic
+cross-junction candidate sprites;
 `topology/` and `state/`; official/production preview
 regeneration; template/catalog registration and frame identities; exporter, `CONTRACT.md`, or schema changes;
 committed production atlases; prop pilots; Unity; and `production.unity` remain locked until separately
 requested. The accepted external `mask_0`, filled-elbow, both thick-wall-repeat, both open-pocket T-junction,
-and west/east single-filled-pocket proof families do not unlock or silently promote any of those surfaces.
+west/east single-filled-pocket, and horizontal-partial proof families do not unlock or silently promote any of those surfaces.
 Acceptance of the external T-junction proof families adds ledger provenance only and does not alter that lock.
+The accepted horizontal-partial family likewise creates no canonical source, registration, exporter, atlas,
+schema, blob mapping, or Unity change.
 
 **Historical progress 2026-07-20 (superseded by the 2026-07-21 checkpoint):** steps 1–5 were executed and
 awaited owner review. Cross-section proofs
