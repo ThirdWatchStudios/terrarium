@@ -28,9 +28,9 @@ and all four corners close as one enclosure.
 
 **Accepted mapping gate (owner approvals, 2026-07-21 through 2026-07-23):** the proof-layer ledger
 locks the unchanged canonical `mask_0` through `mask_46` order and classifies
-21 direct reuses, 14 approved derivations, 12 synthetic assembly
+21 direct reuses, 15 approved derivations, 11 synthetic assembly
 candidates, and zero collisions. The remaining synthetic rows are all cross-junctions. This accepts the
-mapping structure and provenance boundaries only. It does not accept the 12 remaining synthetic
+mapping structure and provenance boundaries only. It does not accept the 11 remaining synthetic
 cross-junction diagrams or create an atlas/production family.
 
 **Accepted horizontal terminus gate (owner approval, 2026-07-21):** `mask_8`
@@ -180,6 +180,17 @@ rows are cross-junctions. `mask_43` remains a separate synthetic topology row an
 or implied promotion. This accepts the source and its direct proof-ledger provenance only. It creates no
 canonical production source, frame identity, template registration, exporter, atlas, schema, blob mapping,
 or Unity registration.
+
+**Accepted west-filled slab cross-junction gate (owner approval, 2026-07-23):** `mask_43` reuses the
+accepted `open_cross_filled_e` pair through one plain whole-cell X mirror. All four cardinal sockets remain
+connected; the southwest and northwest diagonals form one continuous two-cell-wide west slab while the
+northeast and southeast crooks remain open floor. No seam filter or new SVG bank is involved. The accepted
+derivation preserves the source's fixed-light north/south ownership and passes at 240, 90, and 40 px per cell
+plus compact, three-cell-arm, and six-cell-arm crossings on light and dark floors. Promotion advances the
+proof ledger to 21 direct / 15 derived / 11 synthetic / 0 collisions; all 11 remaining synthetic rows are
+cross-junctions. This accepts one derivation and its proof-ledger provenance only. It creates no canonical
+production source, frame identity, template registration, exporter, atlas, schema, blob mapping, or Unity
+registration.
 
 The original independently finished low-base-plus-optional-upper construction was
 rejected on 2026-07-20 because its duplicate caps and contours read as one wall

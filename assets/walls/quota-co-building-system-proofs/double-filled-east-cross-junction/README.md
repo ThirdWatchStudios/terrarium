@@ -29,3 +29,10 @@ provenance for `mask_25` in the equal-height 47-mask ledger. Acceptance does not
 register a canonical source or frame identity, alter templates or the blob
 contract, add an exporter or atlas route, change schema, or authorize a Unity
 asset. Companion `mask_43` remains synthetic and outside this acceptance.
+
+## Later companion decision
+
+Owner approval on 2026-07-23 separately accepts `mask_43` as the plain whole-cell
+X mirror of this fixed-light source pair. That later derivation adds no SVG,
+filter, canonical registration, exporter, atlas, schema, blob, or Unity change;
+the mask_25 checkpoint above remains the historical boundary of this source bank.

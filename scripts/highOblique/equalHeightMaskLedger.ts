@@ -422,7 +422,17 @@ const doubleFilledEastCrossJunction: EqualHeightMaskSourceVariant = {
   upperFile: 'open_cross_filled_e-upper.svg',
   transform: 'none',
   derivation: 'none',
-  facingRule: 'connected north, east, south, and west with northeast and southeast solid, southwest and northwest floor crooks open, and one west branch entering the two-cell-wide east slab; mask_43 remains a separate east-continuation candidate',
+  facingRule: 'connected north, east, south, and west with northeast and southeast solid, southwest and northwest floor crooks open, and one west branch entering the two-cell-wide east slab; authored west-fixed source for mask_25 and accepted mirror source for mask_43',
+};
+
+const doubleFilledWestCrossJunction: EqualHeightMaskSourceVariant = {
+  role: 'double-filled-west-cross-junction',
+  sourceStem: 'open_cross_filled_e',
+  baseFile: 'open_cross_filled_e-base.svg',
+  upperFile: 'open_cross_filled_e-upper.svg',
+  transform: 'mirror-x',
+  derivation: 'none',
+  facingRule: 'connected north, east, south, and west with southwest and northwest solid, northeast and southeast floor crooks open, and one east branch entering the two-cell-wide west slab; accepted whole-cell X mirror of mask_25',
 };
 
 const partialWestForegroundTJunction: EqualHeightMaskSourceVariant = {
@@ -738,7 +748,7 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         kind: 'direct-reuse',
         status: 'accepted-source-mapping',
         variants: [doubleFilledEastCrossJunction],
-        note: 'Accepted east-filled slab junction directly reuses the authored west-fixed four-way union while mask_43 remains a separate synthetic east-continuation candidate.',
+        note: 'Accepted east-filled slab junction directly reuses the authored west-fixed four-way union and supplies the fixed-light source for the accepted mask_43 mirror.',
       };
     case 26:
       return {
@@ -802,6 +812,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         status: 'accepted-source-mapping',
         variants: [filledEastMiddle],
         note: 'Accepted east middle spine is the whole-cell mirror-X derivation of the west-authored open-Y filled-wall source.',
+      };
+    case 43:
+      return {
+        kind: 'approved-derivation',
+        status: 'accepted-source-mapping',
+        variants: [doubleFilledWestCrossJunction],
+        note: 'Accepted west-filled slab junction is the plain whole-cell mirror-X derivation of the authored mask_25 east-filled four-way union.',
       };
     default:
       return undefined;
@@ -919,6 +936,7 @@ const ACCEPTED_SOURCE_VARIANTS = new Set([
   singleFilledNortheastCrossJunction,
   singleFilledSoutheastCrossJunction,
   doubleFilledEastCrossJunction,
+  doubleFilledWestCrossJunction,
   partialWestForegroundTJunction,
   partialWestRearTJunction,
   partialEastForegroundTJunction,

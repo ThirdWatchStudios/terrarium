@@ -94,7 +94,7 @@ export const EQUAL_HEIGHT_DOUBLE_FILLED_EAST_CROSS_JUNCTION_GATE = {
   maskRowsAccepted: [25] as const,
   reviewCellSizes: [240, 90, 40] as const,
   reviewExtentLengths: [1, 3, 6] as const,
-  deferredEastArmCompanionMaskIndex: 43,
+  acceptedWestFilledCompanionMaskIndex: 43,
   renderingDecision: {
     kind: 'one-accepted-authored-double-filled-east-four-way-hub',
     scope: 'external-proof-source-bank',
@@ -157,8 +157,8 @@ export const EQUAL_HEIGHT_DOUBLE_FILLED_EAST_CROSS_JUNCTION_GATE = {
   },
   acceptedLedgerCounts: {
     'direct-reuse': 21,
-    'approved-derivation': 14,
-    'synthetic-assembly': 12,
+    'approved-derivation': 15,
+    'synthetic-assembly': 11,
     'unresolved-authored-geometry': 0,
   },
   xMirrorAllowed: false,
@@ -237,7 +237,7 @@ export function validateEqualHeightDoubleFilledEastCrossJunctionGate(
     JSON.stringify(gate.maskRowsAccepted) !== JSON.stringify([25]) ||
     JSON.stringify(gate.reviewCellSizes) !== JSON.stringify([240, 90, 40]) ||
     JSON.stringify(gate.reviewExtentLengths) !== JSON.stringify([1, 3, 6]) ||
-    gate.deferredEastArmCompanionMaskIndex !== 43
+    gate.acceptedWestFilledCompanionMaskIndex !== 43
   ) {
     throw new Error('Double-filled east cross-junction gate identity drift');
   }
@@ -290,21 +290,25 @@ export function validateEqualHeightDoubleFilledEastCrossJunctionGate(
     }
   }
 
-  const deferredCompanion = EQUAL_HEIGHT_MASK_LEDGER.entries[43];
+  const acceptedCompanion = EQUAL_HEIGHT_MASK_LEDGER.entries[43];
   if (
     BLOB_CONFIGS[43] !== 0xcf ||
-    deferredCompanion.resolution.kind !== 'synthetic-assembly' ||
-    deferredCompanion.resolution.status !== 'proof-only-candidate'
+    acceptedCompanion.resolution.kind !== 'approved-derivation' ||
+    acceptedCompanion.resolution.status !== 'accepted-source-mapping' ||
+    acceptedCompanion.resolution.variants.length !== 1 ||
+    acceptedCompanion.resolution.variants[0].sourceStem !== gate.candidate.sourceStem ||
+    acceptedCompanion.resolution.variants[0].transform !== 'mirror-x' ||
+    acceptedCompanion.resolution.variants[0].derivation !== 'none'
   ) {
-    throw new Error('Double-filled east cross-junction deferred mask_43 drift');
+    throw new Error('Double-filled east cross-junction accepted mask_43 companion drift');
   }
 
   const currentCounts = EQUAL_HEIGHT_MASK_LEDGER.counts;
   if (
     JSON.stringify(gate.acceptedLedgerCounts) !== JSON.stringify(currentCounts) ||
     currentCounts['direct-reuse'] !== 21 ||
-    currentCounts['approved-derivation'] !== 14 ||
-    currentCounts['synthetic-assembly'] !== 12 ||
+    currentCounts['approved-derivation'] !== 15 ||
+    currentCounts['synthetic-assembly'] !== 11 ||
     currentCounts['unresolved-authored-geometry'] !== 0
   ) {
     throw new Error('Double-filled east cross-junction ledger-count boundary drift');

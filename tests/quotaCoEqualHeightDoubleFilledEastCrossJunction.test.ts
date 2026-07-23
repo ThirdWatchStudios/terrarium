@@ -294,7 +294,7 @@ describe('QuotaCo owner-accepted double-filled east cross-junction gate', () => 
       maskRowsAccepted: [25],
       reviewCellSizes: [240, 90, 40],
       reviewExtentLengths: [1, 3, 6],
-      deferredEastArmCompanionMaskIndex: 43,
+      acceptedWestFilledCompanionMaskIndex: 43,
       xMirrorAllowed: false,
       yMirrorAllowed: false,
       rotationAllowed: false,
@@ -366,7 +366,7 @@ describe('QuotaCo owner-accepted double-filled east cross-junction gate', () => 
     }
   });
 
-  it('keeps the control diamond explicit, mask_25 direct, and mask_43 synthetic', () => {
+  it('keeps the control diamond explicit, mask_25 direct, and mask_43 independently derived', () => {
     expect(
       EQUAL_HEIGHT_DOUBLE_FILLED_EAST_CROSS_JUNCTION_GATE.stateDiamond,
     ).toEqual({
@@ -401,14 +401,19 @@ describe('QuotaCo owner-accepted double-filled east cross-junction gate', () => 
     expect(EQUAL_HEIGHT_MASK_LEDGER.entries[43]).toMatchObject({
       id: 'mask_43',
       resolution: {
-        kind: 'synthetic-assembly',
-        status: 'proof-only-candidate',
+        kind: 'approved-derivation',
+        status: 'accepted-source-mapping',
+        variants: [{
+          sourceStem: 'open_cross_filled_e',
+          transform: 'mirror-x',
+          derivation: 'none',
+        }],
       },
     });
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
       'direct-reuse': 21,
-      'approved-derivation': 14,
-      'synthetic-assembly': 12,
+      'approved-derivation': 15,
+      'synthetic-assembly': 11,
       'unresolved-authored-geometry': 0,
     });
     const acceptedStems = EQUAL_HEIGHT_MASK_LEDGER.entries.flatMap(({ resolution }) =>
