@@ -28,9 +28,9 @@ and all four corners close as one enclosure.
 
 **Accepted mapping gate (owner approvals, 2026-07-21 through 2026-07-23):** the proof-layer ledger
 locks the unchanged canonical `mask_0` through `mask_46` order and classifies
-19 direct reuses, 14 approved derivations, 14 synthetic assembly
+20 direct reuses, 14 approved derivations, 13 synthetic assembly
 candidates, and zero collisions. The remaining synthetic rows are all cross-junctions. This accepts the
-mapping structure and provenance boundaries only. It does not accept the 14 remaining synthetic
+mapping structure and provenance boundaries only. It does not accept the 13 remaining synthetic
 cross-junction diagrams or create an atlas/production family.
 
 **Accepted horizontal terminus gate (owner approval, 2026-07-21):** `mask_8`
@@ -153,6 +153,18 @@ Promotion advances the proof ledger to 19 direct / 14 derived / 14 synthetic / 0
 synthetic rows are cross-junctions. This accepts the source and its direct proof-ledger provenance only. It
 creates no canonical production source, frame identity, template registration, exporter, atlas, schema, blob
 mapping, or Unity registration.
+
+**Accepted southeast-filled cross-junction gate (owner approval, 2026-07-23):** the external
+`../quota-co-building-system-proofs/single-filled-southeast-cross-junction/` bank supplies the direct
+fixed-light `open_cross_filled_se` source pair for `mask_23`. All four cardinal sockets remain connected; the
+southeast diagonal is one continuous wall-top mass while the northeast, southwest, and northwest crooks
+remain open floor. The flattened source preserves the fixed west socket register and the accepted rear-facing
+plane laws from `mask_21` and `mask_22` without stacking either T-junction source. It passes at 240, 90, and
+40 px per cell and in compact, three-cell-arm, and six-cell-arm crossings on light and dark floors. Promotion
+advances the proof ledger to 20 direct / 14 derived / 13 synthetic / 0 collisions; all 13 remaining synthetic
+rows are cross-junctions. This accepts the source and its direct proof-ledger provenance only. It creates no
+canonical production source, frame identity, template registration, exporter, atlas, schema, blob mapping, or
+Unity registration.
 
 The original independently finished low-base-plus-optional-upper construction was
 rejected on 2026-07-20 because its duplicate caps and contours read as one wall

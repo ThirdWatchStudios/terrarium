@@ -257,9 +257,9 @@ describe('QuotaCo owner-accepted horizontal-spine open-pocket T-junction gate', 
       },
     });
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
-      'direct-reuse': 19,
+      'direct-reuse': 20,
       'approved-derivation': 14,
-      'synthetic-assembly': 14,
+      'synthetic-assembly': 13,
       'unresolved-authored-geometry': 0,
     });
   });

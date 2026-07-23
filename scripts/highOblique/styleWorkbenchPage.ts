@@ -8,6 +8,7 @@ import { EQUAL_HEIGHT_MASK_LEDGER } from './equalHeightMaskLedger';
 import { EQUAL_HEIGHT_OPEN_POCKET_T_JUNCTION_GATE } from './equalHeightOpenPocketTJunctionGate';
 import { EQUAL_HEIGHT_OPEN_POCKET_CROSS_JUNCTION_GATE } from './equalHeightOpenPocketCrossJunctionGate';
 import { EQUAL_HEIGHT_SINGLE_FILLED_CROSS_JUNCTION_GATE } from './equalHeightSingleFilledCrossJunctionGate';
+import { EQUAL_HEIGHT_SINGLE_FILLED_SOUTHEAST_CROSS_JUNCTION_GATE } from './equalHeightSingleFilledSoutheastCrossJunctionGate';
 import { EQUAL_HEIGHT_THICK_WALL_BLOCK_GATE } from './equalHeightThickWallBlockGate';
 import { EQUAL_HEIGHT_THICK_WALL_HORIZONTAL_REPEAT_GATE } from './equalHeightThickWallHorizontalRepeatGate';
 import { EQUAL_HEIGHT_THICK_WALL_REPEAT_GATE } from './equalHeightThickWallRepeatGate';
@@ -19,6 +20,7 @@ export type CurrentWorkbenchBoardState = 'accepted' | 'review';
 export interface CurrentWorkbenchBoard {
   readonly stem: string;
   readonly state: CurrentWorkbenchBoardState;
+  readonly status?: string;
   readonly title: string;
   readonly summary: string;
   readonly alt: string;
@@ -38,6 +40,15 @@ export interface AcceptedSystemGate {
   readonly summary: string;
   readonly alt: string;
 }
+
+/** Owner-accepted authored source for the southeast-filled four-way wall hub. */
+export const ACCEPTED_SINGLE_FILLED_SOUTHEAST_CROSS_JUNCTION_GATE: AcceptedSystemGate = {
+  stem: EQUAL_HEIGHT_SINGLE_FILLED_SOUTHEAST_CROSS_JUNCTION_GATE.stem,
+  state: 'accepted',
+  title: 'mask_23 southeast-filled cross-junction',
+  summary: 'Accepted one west-fixed authored four-way union with a solid southeast crook and three genuine floor crooks; mask_23 now has direct proof-layer provenance.',
+  alt: 'owner-accepted mask twenty-three single-filled southeast crook QuotaCo cross-junction in source compact and long installed proofs',
+};
 
 /** Owner-accepted authored source for the northeast-filled four-way wall hub. */
 export const ACCEPTED_SINGLE_FILLED_CROSS_JUNCTION_GATE: AcceptedSystemGate = {
@@ -161,7 +172,7 @@ export const ACCEPTED_MAPPING_GATE: AcceptedSystemGate = {
   stem: EQUAL_HEIGHT_MASK_LEDGER.stem,
   state: 'accepted',
   title: '47-mask mapping ledger',
-  summary: 'Accepted topology map: 19 direct reuses, 14 approved derivations, 14 synthetic cross-junction candidates, and 0 authored-geometry gaps.',
+  summary: 'Accepted topology map: 20 direct reuses, 14 approved derivations, 13 synthetic cross-junction candidates, and 0 authored-geometry gaps.',
   alt: 'owner-accepted equal-height 47-mask mapping ledger with unaccepted synthetic candidates',
 };
 
@@ -175,7 +186,8 @@ export const ACCEPTED_HORIZONTAL_TERMINUS_GATE: AcceptedSystemGate = {
 };
 
 /**
- * The current owner-accepted equal-height direction sheets.
+ * The current equal-height decision sheets: the owner-accepted directional
+ * working set. Accepted source/system gates render separately before it.
  */
 export const CURRENT_WORKBENCH_BOARDS: readonly CurrentWorkbenchBoard[] = [
   {
@@ -258,14 +270,18 @@ const escapeHtml = (value: string): string => value
 
 const currentBoard = (board: CurrentWorkbenchBoard): string => {
   const stateLabel = board.state === 'accepted' ? 'Accepted' : 'Review next';
+  const refreshGroup =
+    board.state === 'review' ? 'single-filled-southeast-cross-junction' : 'focus';
+  const statusAttribute =
+    board.status === undefined ? '' : ` data-status="${escapeHtml(board.status)}"`;
   return (
-    `<article class="board" data-state="${board.state}">` +
+    `<article class="board" data-state="${board.state}"${statusAttribute}>` +
     '<header class="board-copy">' +
     `<span class="badge">${stateLabel}</span>` +
     `<h3>${escapeHtml(board.title)}</h3>` +
     `<p>${escapeHtml(board.summary)}</p>` +
     '</header>' +
-    `<figure data-stem="${board.stem}" data-refresh="focus">` +
+    `<figure data-stem="${board.stem}" data-refresh="${refreshGroup}">` +
     `<img src="${board.stem}.png" alt="${escapeHtml(board.alt)}">` +
     '</figure></article>'
   );
@@ -281,12 +297,12 @@ const archivedBoard = (board: ArchivedWorkbenchBoard): string => (
 
 const acceptedSystemGate = (
   gate: AcceptedSystemGate,
-  refreshGroup: 'single-filled-cross-junction' | 'open-pocket-cross-junction' | 'horizontal-partial-t-junction' | 'east-partial-t-junction' | 'single-filled-pocket-t-junction' | 'horizontal-open-pocket-t-junction' | 'open-pocket-t-junction' | 'thick-wall-horizontal-repeat' | 'thick-wall-repeat' | 'thick-wall-block' | 'isolated-shell' | 'vertical-terminus' | 'terminus' | 'mapping' | 'corridor',
-  gateId: 'single-filled-cross-junction' | 'open-pocket-cross-junction' | 'horizontal-partial-t-junction' | 'east-partial-t-junction' | 'single-filled-pocket-t-junction' | 'horizontal-open-pocket-t-junction' | 'open-pocket-t-junction' | 'thick-wall-horizontal-repeat' | 'thick-wall-repeat' | 'thick-wall-block' | 'isolated-shell' | 'vertical-terminus' | 'terminus' | 'mapping' | 'corridor',
+  refreshGroup: 'single-filled-southeast-cross-junction' | 'single-filled-cross-junction' | 'open-pocket-cross-junction' | 'horizontal-partial-t-junction' | 'east-partial-t-junction' | 'single-filled-pocket-t-junction' | 'horizontal-open-pocket-t-junction' | 'open-pocket-t-junction' | 'thick-wall-horizontal-repeat' | 'thick-wall-repeat' | 'thick-wall-block' | 'isolated-shell' | 'vertical-terminus' | 'terminus' | 'mapping' | 'corridor',
+  gateId: 'single-filled-southeast-cross-junction' | 'single-filled-cross-junction' | 'open-pocket-cross-junction' | 'horizontal-partial-t-junction' | 'east-partial-t-junction' | 'single-filled-pocket-t-junction' | 'horizontal-open-pocket-t-junction' | 'open-pocket-t-junction' | 'thick-wall-horizontal-repeat' | 'thick-wall-repeat' | 'thick-wall-block' | 'isolated-shell' | 'vertical-terminus' | 'terminus' | 'mapping' | 'corridor',
 ): string => (
   `<section class="current-section system-accepted" aria-labelledby="accepted-${gateId}-title">` +
   `<header class="section-copy"><h2 id="accepted-${gateId}-title">${gateId === 'mapping' ? 'Accepted system mapping' : gateId === 'corridor' ? 'Accepted system proof' : 'Accepted source gate'}</h2>` +
-  `<p>${gateId === 'mapping' ? 'The mapping structure is locked; its remaining 14 cross-junction assembly diagrams stay proof-only and no authored-geometry gaps remain.' : gateId === 'single-filled-cross-junction' ? 'The authored west-fixed four-way union and ledger row mask_19 are locked at the proof layer; the northeast crook is solid while the other three remain open floor.' : gateId === 'open-pocket-cross-junction' ? 'The authored four-way union and ledger row mask_15 are locked at the proof layer; all four cardinal sockets connect while every diagonal crook remains open floor.' : gateId === 'horizontal-partial-t-junction' ? 'The two direct horizontal fixed-light sources, two approved X derivations, and ledger rows mask_18/mask_35/mask_22/mask_28 are locked at the proof layer; uniform south-face shading is deferred family-wide polish.' : gateId === 'east-partial-t-junction' ? 'The filtered foreground mirror, rear mirror, and ledger rows mask_36/mask_27 are locked at the proof layer.' : gateId === 'single-filled-pocket-t-junction' ? 'The two separately authored west fixed-light sources and ledger rows mask_17/mask_21 are locked at the proof layer; their east mirror rows are accepted separately.' : gateId === 'horizontal-open-pocket-t-junction' ? 'The two separately authored fixed-light sources and ledger rows mask_11/mask_14 are locked at the proof layer; lateral X mirrors remain comparison evidence only.' : gateId === 'open-pocket-t-junction' ? 'The authored open-west source, its filtered mirror, and ledger rows mask_7/mask_13 are locked at the proof layer.' : gateId === 'thick-wall-horizontal-repeat' ? 'The authored rear and foreground middle spines and ledger rows mask_31/mask_38 are locked at the proof layer.' : gateId === 'thick-wall-repeat' ? 'The authored west middle spine, its east mirror, and ledger rows mask_24/mask_42 are locked at the proof layer.' : gateId === 'thick-wall-block' ? 'The two authored filled-elbow sources, their east mirrors, and ledger rows mask_16/mask_20/mask_26/mask_34 are locked at the proof layer.' : gateId === 'isolated-shell' ? 'The fixed-view isolated shell and ledger row mask_0 are locked at the proof layer.' : gateId === 'vertical-terminus' ? 'The two authored vertical closures, their east mirrors, and ledger rows mask_1/mask_4 are locked at the proof layer.' : gateId === 'terminus' ? 'The horizontal source pair and its two ledger rows are locked at the proof layer.' : 'This remains the approved enclosure baseline for all subsequent wall-family proofs.'}</p></header>` +
+  `<p>${gateId === 'mapping' ? 'The mapping structure is locked; its remaining 13 cross-junction assembly diagrams stay proof-only and no authored-geometry gaps remain.' : gateId === 'single-filled-southeast-cross-junction' ? 'The authored west-fixed four-way union and ledger row mask_23 are locked at the proof layer; the southeast crook is solid while the other three remain open floor.' : gateId === 'single-filled-cross-junction' ? 'The authored west-fixed four-way union and ledger row mask_19 are locked at the proof layer; the northeast crook is solid while the other three remain open floor.' : gateId === 'open-pocket-cross-junction' ? 'The authored four-way union and ledger row mask_15 are locked at the proof layer; all four cardinal sockets connect while every diagonal crook remains open floor.' : gateId === 'horizontal-partial-t-junction' ? 'The two direct horizontal fixed-light sources, two approved X derivations, and ledger rows mask_18/mask_35/mask_22/mask_28 are locked at the proof layer; uniform south-face shading is deferred family-wide polish.' : gateId === 'east-partial-t-junction' ? 'The filtered foreground mirror, rear mirror, and ledger rows mask_36/mask_27 are locked at the proof layer.' : gateId === 'single-filled-pocket-t-junction' ? 'The two separately authored west fixed-light sources and ledger rows mask_17/mask_21 are locked at the proof layer; their east mirror rows are accepted separately.' : gateId === 'horizontal-open-pocket-t-junction' ? 'The two separately authored fixed-light sources and ledger rows mask_11/mask_14 are locked at the proof layer; lateral X mirrors remain comparison evidence only.' : gateId === 'open-pocket-t-junction' ? 'The authored open-west source, its filtered mirror, and ledger rows mask_7/mask_13 are locked at the proof layer.' : gateId === 'thick-wall-horizontal-repeat' ? 'The authored rear and foreground middle spines and ledger rows mask_31/mask_38 are locked at the proof layer.' : gateId === 'thick-wall-repeat' ? 'The authored west middle spine, its east mirror, and ledger rows mask_24/mask_42 are locked at the proof layer.' : gateId === 'thick-wall-block' ? 'The two authored filled-elbow sources, their east mirrors, and ledger rows mask_16/mask_20/mask_26/mask_34 are locked at the proof layer.' : gateId === 'isolated-shell' ? 'The fixed-view isolated shell and ledger row mask_0 are locked at the proof layer.' : gateId === 'vertical-terminus' ? 'The two authored vertical closures, their east mirrors, and ledger rows mask_1/mask_4 are locked at the proof layer.' : gateId === 'terminus' ? 'The horizontal source pair and its two ledger rows are locked at the proof layer.' : 'This remains the approved enclosure baseline for all subsequent wall-family proofs.'}</p></header>` +
   `<article class="board" data-state="system-accepted" data-gate="${gateId}">` +
   '<header class="board-copy"><span class="badge">Accepted · System gate</span>' +
   `<h3>${escapeHtml(gate.title)}</h3>` +
@@ -306,6 +322,10 @@ export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): st
   const reviewStatus = reviewManifest.length > 0
     ? `<div class="status-card review"><span>Review next · ${reviewManifest.length} ${reviewManifest.length === 1 ? 'piece' : 'pieces'}</span><strong>${escapeHtml(reviewNames)}</strong><p>These remain active proposals and are not yet in the accepted working set.</p></div>`
     : '';
+  const acceptedSingleFilledSoutheastCrossJunctionStatus =
+    '<div class="status-card accepted"><span>Accepted source gate</span>' +
+    `<strong>${escapeHtml(ACCEPTED_SINGLE_FILLED_SOUTHEAST_CROSS_JUNCTION_GATE.title)}</strong>` +
+    '<p>mask_23 directly reuses one west-fixed authored four-way union; the southeast crook is solid and the other three remain open floor.</p></div>';
   const acceptedSingleFilledCrossJunctionStatus =
     '<div class="status-card accepted"><span>Accepted source gate</span>' +
     `<strong>${escapeHtml(ACCEPTED_SINGLE_FILLED_CROSS_JUNCTION_GATE.title)}</strong>` +
@@ -332,7 +352,7 @@ export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): st
     '<p>mask_0 is accepted as one fixed-view direct source with zero cardinal sockets.</p></div>';
   const acceptedMappingGateStatus = '<div class="status-card accepted"><span>Accepted system mapping</span>' +
     `<strong>${escapeHtml(ACCEPTED_MAPPING_GATE.title)}</strong>` +
-    '<p>The 47-row topology plan is locked; its 14 remaining synthetic cross-junction candidates remain proof-only.</p></div>';
+    '<p>The 47-row topology plan is locked; its 13 remaining synthetic cross-junction candidates remain proof-only.</p></div>';
   const acceptedCorridorGateStatus = '<div class="status-card accepted"><span>Accepted system proof</span>' +
     `<strong>${escapeHtml(ACCEPTED_CORRIDOR_GATE.title)}</strong>` +
     '<p>The equal-height family reads as one enclosure at short and long extremes.</p></div>';
@@ -389,11 +409,12 @@ export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): st
     '@media(max-width:700px){body{padding:18px 12px 48px}.status-grid{grid-template-columns:1fr}.archive-grid,.diagnostic-grid{grid-template-columns:1fr}.board{padding:8px}.current-section{margin:26px 0}}' +
     '</style>' +
     '<header><h1>QuotaCo Building System — current wall workbench</h1>' +
-    '<p class="lede">No proposal is currently active. The newly accepted mask_19 single-filled-crook cross-junction appears first; accepted provenance is 19 direct / 14 derived / 14 synthetic.</p></header>' +
+    '<p class="lede">No proposal is currently active. The newly accepted mask_23 southeast-filled cross-junction appears first; accepted provenance is 20 direct / 14 derived / 13 synthetic.</p></header>' +
     '<div id="status">waiting for first render…</div>' +
     '<section class="kit-status" aria-labelledby="kit-status-title"><h2 id="kit-status-title">Current direction status — equal-height structural walls</h2>' +
     '<div class="status-grid">' +
     reviewStatus +
+    acceptedSingleFilledSoutheastCrossJunctionStatus +
     acceptedSingleFilledCrossJunctionStatus +
     acceptedOpenPocketCrossJunctionStatus +
     acceptedHorizontalPartialTJunctionStatus +
@@ -413,6 +434,7 @@ export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): st
     '</div></section>' +
     '<main id="current-equal-height-wall-system">' +
     reviewSection +
+    acceptedSystemGate(ACCEPTED_SINGLE_FILLED_SOUTHEAST_CROSS_JUNCTION_GATE, 'single-filled-southeast-cross-junction', 'single-filled-southeast-cross-junction') +
     acceptedSystemGate(ACCEPTED_SINGLE_FILLED_CROSS_JUNCTION_GATE, 'single-filled-cross-junction', 'single-filled-cross-junction') +
     acceptedSystemGate(ACCEPTED_OPEN_POCKET_CROSS_JUNCTION_GATE, 'open-pocket-cross-junction', 'open-pocket-cross-junction') +
     acceptedSystemGate(ACCEPTED_HORIZONTAL_PARTIAL_T_JUNCTION_GATE, 'horizontal-partial-t-junction', 'horizontal-partial-t-junction') +
@@ -442,7 +464,7 @@ export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): st
     'else if(s.roomError){status.textContent=`CURRENT ROOM RENDER FAILED\\n${s.roomError}`;status.className="bad";}' +
     'else{status.textContent=`current proofs ok · ${s.frames} frames validated · ${s.durationMs}ms · ${s.renderedAt}`;status.className="";}' +
     'const archiveStatus=document.getElementById("archive-status");if(s.proofsError){archiveStatus.textContent=`ARCHIVED CROSS-SECTION RENDER FAILED\\n${s.proofsError}`;archiveStatus.className="bad";}else{archiveStatus.textContent="";archiveStatus.className="";}' +
-    'const groups={root:s.renderedAt,focus:s.focusRenderedAt,"single-filled-cross-junction":s.singleFilledCrossJunctionRenderedAt,"open-pocket-cross-junction":s.openPocketCrossJunctionRenderedAt,"horizontal-partial-t-junction":s.horizontalPartialTJunctionRenderedAt,"east-partial-t-junction":s.eastPartialTJunctionRenderedAt,"single-filled-pocket-t-junction":s.singleFilledPocketTJunctionRenderedAt,"horizontal-open-pocket-t-junction":s.horizontalOpenPocketTJunctionRenderedAt,"open-pocket-t-junction":s.openPocketTJunctionRenderedAt,"thick-wall-horizontal-repeat":s.thickWallHorizontalRepeatRenderedAt,"thick-wall-repeat":s.thickWallRepeatRenderedAt,"thick-wall-block":s.thickWallBlockRenderedAt,"isolated-shell":s.isolatedShellRenderedAt,"vertical-terminus":s.verticalTerminusRenderedAt,terminus:s.terminusRenderedAt,mapping:s.mappingRenderedAt,corridor:s.corridorRenderedAt,gate:s.gateRenderedAt,proofs:s.proofsRenderedAt,room:s.roomRenderedAt,ladder:s.ladderRenderedAt};' +
+    'const groups={root:s.renderedAt,focus:s.focusRenderedAt,"single-filled-southeast-cross-junction":s.singleFilledSoutheastCrossJunctionRenderedAt,"single-filled-cross-junction":s.singleFilledCrossJunctionRenderedAt,"open-pocket-cross-junction":s.openPocketCrossJunctionRenderedAt,"horizontal-partial-t-junction":s.horizontalPartialTJunctionRenderedAt,"east-partial-t-junction":s.eastPartialTJunctionRenderedAt,"single-filled-pocket-t-junction":s.singleFilledPocketTJunctionRenderedAt,"horizontal-open-pocket-t-junction":s.horizontalOpenPocketTJunctionRenderedAt,"open-pocket-t-junction":s.openPocketTJunctionRenderedAt,"thick-wall-horizontal-repeat":s.thickWallHorizontalRepeatRenderedAt,"thick-wall-repeat":s.thickWallRepeatRenderedAt,"thick-wall-block":s.thickWallBlockRenderedAt,"isolated-shell":s.isolatedShellRenderedAt,"vertical-terminus":s.verticalTerminusRenderedAt,terminus:s.terminusRenderedAt,mapping:s.mappingRenderedAt,corridor:s.corridorRenderedAt,gate:s.gateRenderedAt,proofs:s.proofsRenderedAt,room:s.roomRenderedAt,ladder:s.ladderRenderedAt};' +
     'for(const [group,next] of Object.entries(groups)){if(next&&stamps[group]!==next){stamps[group]=next;for(const figure of document.querySelectorAll(`[data-refresh="${group}"]`)){const image=figure.querySelector("img");if(image)image.src=`${figure.dataset.stem}.png?t=${Date.now()}`;}}}' +
     '}catch(error){const status=document.getElementById("status");status.textContent=`WORKBENCH STATUS UNAVAILABLE\\n${error instanceof Error?error.message:String(error)}`;status.className="bad";}setTimeout(tick,700)}tick()</script>'
   );

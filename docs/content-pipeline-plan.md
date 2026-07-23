@@ -40,8 +40,9 @@ changes the export contract except where explicitly flagged (floor variants).
 > ledger structure plus the horizontal and vertical termini, isolated-shell, filled-elbow, 2×N thick-wall-repeat,
 > N×2 horizontal thick-wall-repeat, vertical open-pocket T-junction, horizontal-spine open-pocket T-junction,
 > both west- and east-side single-filled-pocket T-junction slices, the horizontal partial T-junction family,
-> the open-pocket cross-junction `mask_15`, and the single-filled cross-junction `mask_19`. The ledger now
-> records 19 direct source mappings, 14 approved derivations, 14 synthetic assembly
+> the open-pocket cross-junction `mask_15`, the northeast-filled cross-junction `mask_19`, and the
+> southeast-filled cross-junction `mask_23`. The ledger now records 20 direct source mappings, 14 approved
+> derivations, 13 synthetic assembly
 > candidates, and zero collisions; all remaining synthetic rows are cross-junctions. `mask_8`
 > directly reuses the socket-polished `full_terminus` pair and `mask_2` uses its accepted whole-cell X mirror;
 > both passed at 90/40 px in 1/3/6-cell contexts. This is not acceptance of the remaining synthetic candidate pixels or a
@@ -132,6 +133,17 @@ changes the export contract except where explicitly flagged (floor variants).
 > all 14 remaining synthetic rows are cross-junctions. Acceptance records proof-layer source provenance only.
 > It adds no canonical production source, frame identity, template registration, exporter, atlas, schema, blob
 > mapping, Unity asset, or `production.unity` change.
+> **Accepted southeast-filled cross-junction slice (owner approval, 2026-07-23):** the external
+> `single-filled-southeast-cross-junction/` proof bank supplies one direct fixed-light
+> `open_cross_filled_se` source pair for `mask_23`. Its four cardinal sockets continue ordinary one-cell runs,
+> the southeast diagonal becomes continuous wall mass, and the northeast, southwest, and northwest crooks
+> remain open floor. The authored union preserves the fixed west socket register and applies the accepted
+> rear-facing `mask_21`/`mask_22` boundary laws without stacking either T source. It passes 240/90/40 px
+> source checks plus compact, three-cell-arm, and six-cell-arm installed crossings on light and dark floors.
+> The accepted ledger now records 20 direct / 14 derived / 13 synthetic / 0 collisions; all 13 remaining
+> synthetic rows are cross-junctions. Acceptance records proof-layer source provenance only. It adds no
+> canonical production source, frame identity, template registration, exporter, atlas, schema, blob mapping,
+> Unity asset, or `production.unity` change.
 
 ---
 
