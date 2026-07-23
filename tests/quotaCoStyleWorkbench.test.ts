@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  ACCEPTED_DOUBLE_FILLED_EAST_CROSS_JUNCTION_GATE,
   ACCEPTED_EAST_PARTIAL_T_JUNCTION_GATE,
   ACCEPTED_HORIZONTAL_PARTIAL_T_JUNCTION_GATE,
   ACCEPTED_WEST_PARTIAL_T_JUNCTION_GATE,
@@ -22,6 +23,7 @@ import {
   renderStyleWorkbenchPage,
 } from '../scripts/highOblique/styleWorkbenchPage';
 import { EQUAL_HEIGHT_CORRIDOR_GATE } from '../scripts/highOblique/equalHeightCorridorGate';
+import { EQUAL_HEIGHT_DOUBLE_FILLED_EAST_CROSS_JUNCTION_GATE } from '../scripts/highOblique/equalHeightDoubleFilledEastCrossJunctionGate';
 import { EQUAL_HEIGHT_EAST_PARTIAL_T_JUNCTION_GATE } from '../scripts/highOblique/equalHeightEastPartialTJunctionGate';
 import { EQUAL_HEIGHT_HORIZONTAL_OPEN_POCKET_T_JUNCTION_GATE } from '../scripts/highOblique/equalHeightHorizontalOpenPocketTJunctionGate';
 import { EQUAL_HEIGHT_HORIZONTAL_PARTIAL_T_JUNCTION_GATE } from '../scripts/highOblique/equalHeightHorizontalPartialTJunctionGate';
@@ -41,7 +43,47 @@ import { EQUAL_HEIGHT_WEST_PARTIAL_T_JUNCTION_GATE } from '../scripts/highObliqu
 const occurrences = (source: string, needle: string): number => source.split(needle).length - 1;
 
 describe('QuotaCo current wall workbench', () => {
-  it('keeps accepted mask_23 first without adding it to the ordinary board manifest', () => {
+  it('keeps accepted mask_25 first without adding it to the ordinary board manifest', () => {
+    expect(ACCEPTED_DOUBLE_FILLED_EAST_CROSS_JUNCTION_GATE).toEqual({
+      stem: EQUAL_HEIGHT_DOUBLE_FILLED_EAST_CROSS_JUNCTION_GATE.stem,
+      state: 'accepted',
+      title: 'mask_25 east-filled slab junction',
+      summary: 'Accepted one west-fixed authored union for a west branch entering a two-cell-wide north–south slab; both east crooks are solid while northwest and southwest remain open floor.',
+      alt: 'owner-accepted mask twenty-five QuotaCo east-filled slab junction in source compact and long installed proofs',
+    });
+    expect(EQUAL_HEIGHT_DOUBLE_FILLED_EAST_CROSS_JUNCTION_GATE).toMatchObject({
+      status: 'owner-accepted-double-filled-east-cross-junction-gate',
+      maskRowsUnderReview: [],
+      maskRowsAccepted: [25],
+      productionRegistration: false,
+      productionTopologyMutation: false,
+      schemaChange: false,
+      exportable: false,
+      committedAtlas: false,
+    });
+    expect(EQUAL_HEIGHT_MASK_LEDGER.entries[25].resolution).toMatchObject({
+      kind: 'direct-reuse',
+      status: 'accepted-source-mapping',
+    });
+    expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
+      'direct-reuse': 21,
+      'approved-derivation': 14,
+      'synthetic-assembly': 12,
+      'unresolved-authored-geometry': 0,
+    });
+    expect(CURRENT_WORKBENCH_BOARDS).not.toContainEqual(
+      expect.objectContaining({
+        stem: ACCEPTED_DOUBLE_FILLED_EAST_CROSS_JUNCTION_GATE.stem,
+      }),
+    );
+    expect(ARCHIVED_WORKBENCH_BOARDS).not.toContainEqual(
+      expect.objectContaining({
+        stem: ACCEPTED_DOUBLE_FILLED_EAST_CROSS_JUNCTION_GATE.stem,
+      }),
+    );
+  });
+
+  it('keeps accepted mask_23 behind mask_25 without adding it to the ordinary board manifest', () => {
     expect(ACCEPTED_SINGLE_FILLED_SOUTHEAST_CROSS_JUNCTION_GATE).toEqual({
       stem: EQUAL_HEIGHT_SINGLE_FILLED_SOUTHEAST_CROSS_JUNCTION_GATE.stem,
       state: 'accepted',
@@ -64,9 +106,9 @@ describe('QuotaCo current wall workbench', () => {
       status: 'accepted-source-mapping',
     });
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
-      'direct-reuse': 20,
+      'direct-reuse': 21,
       'approved-derivation': 14,
-      'synthetic-assembly': 13,
+      'synthetic-assembly': 12,
       'unresolved-authored-geometry': 0,
     });
     expect(CURRENT_WORKBENCH_BOARDS).not.toContainEqual(
@@ -166,9 +208,9 @@ describe('QuotaCo current wall workbench', () => {
       ]);
     expect(EQUAL_HEIGHT_HORIZONTAL_PARTIAL_T_JUNCTION_GATE.acceptedLedgerCounts)
       .toEqual({
-        'direct-reuse': 20,
+        'direct-reuse': 21,
         'approved-derivation': 14,
-        'synthetic-assembly': 13,
+        'synthetic-assembly': 12,
         'unresolved-authored-geometry': 0,
       });
     for (const index of [18, 35, 22, 28] as const) {
@@ -194,9 +236,9 @@ describe('QuotaCo current wall workbench', () => {
       kind: 'approved-derivation', status: 'accepted-source-mapping',
     });
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
-      'direct-reuse': 20,
+      'direct-reuse': 21,
       'approved-derivation': 14,
-      'synthetic-assembly': 13,
+      'synthetic-assembly': 12,
       'unresolved-authored-geometry': 0,
     });
   });
@@ -290,7 +332,7 @@ describe('QuotaCo current wall workbench', () => {
       stem: EQUAL_HEIGHT_MASK_LEDGER.stem,
       state: 'accepted',
       title: '47-mask mapping ledger',
-      summary: 'Accepted topology map: 20 direct reuses, 14 approved derivations, 13 synthetic cross-junction candidates, and 0 authored-geometry gaps.',
+      summary: 'Accepted topology map: 21 direct reuses, 14 approved derivations, 12 synthetic cross-junction candidates, and 0 authored-geometry gaps.',
       alt: 'owner-accepted equal-height 47-mask mapping ledger with unaccepted synthetic candidates',
     });
     expect(ACCEPTED_HORIZONTAL_TERMINUS_GATE).toEqual({
@@ -394,7 +436,7 @@ describe('QuotaCo current wall workbench', () => {
       expect(occurrences(primary!, `data-stem="${board.stem}"`)).toBe(1);
       expect(primary).toContain(
         `data-stem="${board.stem}" data-refresh="${
-          board.state === 'review' ? 'single-filled-southeast-cross-junction' : 'focus'
+          board.refreshGroup ?? (board.state === 'review' ? 'double-filled-east-cross-junction' : 'focus')
         }"`,
       );
     }
@@ -405,6 +447,14 @@ describe('QuotaCo current wall workbench', () => {
     expect(primary).not.toContain('transition_n_to_e');
     expect(primary?.trimStart()).toMatch(/^<section class="current-section system-accepted"/);
     expect(primary).not.toContain('id="review-title">Review next</h2>');
+    expect(primary).toContain(
+      `data-stem="${EQUAL_HEIGHT_DOUBLE_FILLED_EAST_CROSS_JUNCTION_GATE.stem}" data-refresh="double-filled-east-cross-junction"`,
+    );
+    expect(primary).toContain(
+      'data-state="system-accepted" data-gate="double-filled-east-cross-junction"',
+    );
+    expect(primary).toContain('ledger row mask_25 are locked at the proof layer');
+    expect(primary).toContain('mask_25 east-filled slab junction');
     expect(occurrences(
       primary!,
       `data-stem="${ACCEPTED_SINGLE_FILLED_SOUTHEAST_CROSS_JUNCTION_GATE.stem}"`,
@@ -454,7 +504,7 @@ describe('QuotaCo current wall workbench', () => {
     );
     expect(primary).toContain('mask_18/mask_35/mask_22/mask_28 are locked at the proof layer');
     expect(primary).toContain('uniform south-face shading is deferred family-wide polish');
-    expect(primary).toContain('20 direct reuses, 14 approved derivations, 13 synthetic cross-junction candidates');
+    expect(primary).toContain('21 direct reuses, 14 approved derivations, 12 synthetic cross-junction candidates');
     expect(occurrences(primary!, `data-stem="${ACCEPTED_EAST_PARTIAL_T_JUNCTION_GATE.stem}"`)).toBe(1);
     expect(primary).toContain(
       `data-stem="${ACCEPTED_EAST_PARTIAL_T_JUNCTION_GATE.stem}" data-refresh="east-partial-t-junction"`,
@@ -533,7 +583,7 @@ describe('QuotaCo current wall workbench', () => {
     );
     expect(primary).toContain('data-state="system-accepted" data-gate="mapping"');
     expect(primary).toContain('Accepted system mapping');
-    expect(primary).toContain('The mapping structure is locked; its remaining 13 cross-junction assembly diagrams stay proof-only and no authored-geometry gaps remain.');
+    expect(primary).toContain('The mapping structure is locked; its remaining 12 cross-junction assembly diagrams stay proof-only and no authored-geometry gaps remain.');
     expect(occurrences(primary!, `data-stem="${ACCEPTED_CORRIDOR_GATE.stem}"`)).toBe(1);
     expect(primary).toContain(
       `data-stem="${ACCEPTED_CORRIDOR_GATE.stem}" data-refresh="corridor"`,
@@ -543,10 +593,10 @@ describe('QuotaCo current wall workbench', () => {
     expect(primary).toContain('Accepted · System gate');
     expect(primary).toContain('Horizontal terminus pair');
     expect(primary).toContain('Accepted mask_8 direct source');
-    expect(page).not.toContain('One proposal is active');
-    expect(page).toContain('No proposal is currently active');
-    expect(page).toMatch(/<p class="lede">No proposal is currently active\.[^<]*mask_23[^<]*20 direct[^<]*13 synthetic[^<]*<\/p>/);
+    expect(page).toMatch(/<p class="lede">No proposal is currently active\.[^<]*mask_25 is accepted[^<]*21 direct[^<]*12 synthetic[^<]*<\/p>/);
     expect(page).not.toContain('Review next · 1 piece');
+    expect(page).not.toContain('These remain active proposals and are not yet in the accepted working set.');
+    expect(page).toContain('mask_25 directly reuses one west-fixed authored union');
     expect(page).toContain('mask_23 directly reuses one west-fixed authored four-way union');
     expect(page).toContain('mask_19 directly reuses one west-fixed authored four-way union');
     expect(page).toContain('mask_18/mask_22 are direct; mask_35/mask_28 are approved X derivations');
@@ -564,7 +614,9 @@ describe('QuotaCo current wall workbench', () => {
     expect(page).toContain('Accepted equal-height enclosure baseline at 90 and 40 pixels per cell');
     expect(page).toContain('Accepted system mapping');
     expect(occurrences(page, '47-mask mapping ledger')).toBe(3);
-    expect(page).toContain('13 remaining synthetic cross-junction candidates remain proof-only');
+    expect(page).toContain('12 remaining synthetic cross-junction candidates remain proof-only');
+    expect(page.indexOf(`data-stem="${ACCEPTED_DOUBLE_FILLED_EAST_CROSS_JUNCTION_GATE.stem}"`))
+      .toBeLessThan(page.indexOf(`data-stem="${ACCEPTED_SINGLE_FILLED_SOUTHEAST_CROSS_JUNCTION_GATE.stem}"`));
     expect(page.indexOf(`data-stem="${ACCEPTED_SINGLE_FILLED_SOUTHEAST_CROSS_JUNCTION_GATE.stem}"`))
       .toBeLessThan(page.indexOf(`data-stem="${ACCEPTED_SINGLE_FILLED_CROSS_JUNCTION_GATE.stem}"`));
     expect(page.indexOf(`data-stem="${ACCEPTED_SINGLE_FILLED_CROSS_JUNCTION_GATE.stem}"`))
@@ -620,6 +672,7 @@ describe('QuotaCo current wall workbench', () => {
     const page = renderStyleWorkbenchPage([]);
 
     expect(page).toContain('document.querySelectorAll(`[data-refresh="${group}"]`)');
+    expect(page).toContain('"double-filled-east-cross-junction":s.doubleFilledEastCrossJunctionRenderedAt');
     expect(page).toContain('"single-filled-southeast-cross-junction":s.singleFilledSoutheastCrossJunctionRenderedAt');
     expect(page).toContain('"single-filled-cross-junction":s.singleFilledCrossJunctionRenderedAt');
     expect(page).toContain('"open-pocket-cross-junction":s.openPocketCrossJunctionRenderedAt');

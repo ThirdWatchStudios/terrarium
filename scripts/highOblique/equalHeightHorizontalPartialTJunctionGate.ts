@@ -162,9 +162,9 @@ export const EQUAL_HEIGHT_HORIZONTAL_PARTIAL_T_JUNCTION_GATE = {
       'the filled diagonal disappears into the two-row mass while the sibling crook remains visibly open floor',
   },
   acceptedLedgerCounts: {
-    'direct-reuse': 20,
+    'direct-reuse': 21,
     'approved-derivation': 14,
-    'synthetic-assembly': 13,
+    'synthetic-assembly': 12,
     'unresolved-authored-geometry': 0,
   },
   xMirrorAllowed: true,
@@ -338,9 +338,9 @@ export function validateEqualHeightHorizontalPartialTJunctionGate(
 
   if (
     JSON.stringify(EQUAL_HEIGHT_MASK_LEDGER.counts) !== JSON.stringify({
-      'direct-reuse': 20,
+      'direct-reuse': 21,
       'approved-derivation': 14,
-      'synthetic-assembly': 13,
+      'synthetic-assembly': 12,
       'unresolved-authored-geometry': 0,
     }) ||
     JSON.stringify(gate.acceptedLedgerCounts) !== JSON.stringify(EQUAL_HEIGHT_MASK_LEDGER.counts) ||

@@ -415,6 +415,16 @@ const singleFilledSoutheastCrossJunction: EqualHeightMaskSourceVariant = {
   facingRule: 'connected north, east, south, and west with southeast solid and the other three diagonal floor pockets open; authored west-fixed rear register for mask_23',
 };
 
+const doubleFilledEastCrossJunction: EqualHeightMaskSourceVariant = {
+  role: 'double-filled-east-cross-junction',
+  sourceStem: 'open_cross_filled_e',
+  baseFile: 'open_cross_filled_e-base.svg',
+  upperFile: 'open_cross_filled_e-upper.svg',
+  transform: 'none',
+  derivation: 'none',
+  facingRule: 'connected north, east, south, and west with northeast and southeast solid, southwest and northwest floor crooks open, and one west branch entering the two-cell-wide east slab; mask_43 remains a separate east-continuation candidate',
+};
+
 const partialWestForegroundTJunction: EqualHeightMaskSourceVariant = {
   role: 'partial-west-foreground-t-junction',
   sourceStem: 'open_w_t_filled_ne',
@@ -723,6 +733,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         variants: [filledWestMiddle],
         note: 'Accepted west middle spine directly extends the filled-wall cream top through both Y sockets without an internal belt or seam.',
       };
+    case 25:
+      return {
+        kind: 'direct-reuse',
+        status: 'accepted-source-mapping',
+        variants: [doubleFilledEastCrossJunction],
+        note: 'Accepted east-filled slab junction directly reuses the authored west-fixed four-way union while mask_43 remains a separate synthetic east-continuation candidate.',
+      };
     case 26:
       return {
         kind: 'approved-derivation',
@@ -901,6 +918,7 @@ const ACCEPTED_SOURCE_VARIANTS = new Set([
   openCrossJunction,
   singleFilledNortheastCrossJunction,
   singleFilledSoutheastCrossJunction,
+  doubleFilledEastCrossJunction,
   partialWestForegroundTJunction,
   partialWestRearTJunction,
   partialEastForegroundTJunction,

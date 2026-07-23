@@ -28,9 +28,9 @@ and all four corners close as one enclosure.
 
 **Accepted mapping gate (owner approvals, 2026-07-21 through 2026-07-23):** the proof-layer ledger
 locks the unchanged canonical `mask_0` through `mask_46` order and classifies
-20 direct reuses, 14 approved derivations, 13 synthetic assembly
+21 direct reuses, 14 approved derivations, 12 synthetic assembly
 candidates, and zero collisions. The remaining synthetic rows are all cross-junctions. This accepts the
-mapping structure and provenance boundaries only. It does not accept the 13 remaining synthetic
+mapping structure and provenance boundaries only. It does not accept the 12 remaining synthetic
 cross-junction diagrams or create an atlas/production family.
 
 **Accepted horizontal terminus gate (owner approval, 2026-07-21):** `mask_8`
@@ -165,6 +165,21 @@ advances the proof ledger to 20 direct / 14 derived / 13 synthetic / 0 collision
 rows are cross-junctions. This accepts the source and its direct proof-ledger provenance only. It creates no
 canonical production source, frame identity, template registration, exporter, atlas, schema, blob mapping, or
 Unity registration.
+
+**Accepted east-filled slab cross-junction gate (owner approval, 2026-07-23):** the external
+`../quota-co-building-system-proofs/double-filled-east-cross-junction/` bank supplies the direct fixed-light
+`open_cross_filled_e` source pair for `mask_25`. All four cardinal sockets remain connected; the northeast
+and southeast diagonals form one continuous two-cell-wide east slab while the southwest and northwest crooks
+remain open floor. The west branch enters that slab as one authored connector, without stacking accepted
+T-junctions or manufacturing a central post. The polished upper source owns only the narrow southwest
+coping transition through `y=95..97`; the base owns the south-facing shade from `y=97` onward so the compact
+40 px proof keeps one material boundary instead of a doubled dark pinch. The source passes at 240, 90, and
+40 px per cell and in compact, three-cell-arm, and six-cell-arm crossings on light and dark floors. Promotion
+advances the proof ledger to 21 direct / 14 derived / 12 synthetic / 0 collisions; all 12 remaining synthetic
+rows are cross-junctions. `mask_43` remains a separate synthetic topology row and is not a mirror, rotation,
+or implied promotion. This accepts the source and its direct proof-ledger provenance only. It creates no
+canonical production source, frame identity, template registration, exporter, atlas, schema, blob mapping,
+or Unity registration.
 
 The original independently finished low-base-plus-optional-upper construction was
 rejected on 2026-07-20 because its duplicate caps and contours read as one wall
