@@ -26,8 +26,10 @@ shade and matches the foreground `mask_38` east socket. The southeast-filled
 `mask_21` source uses the accepted cream-only `mask_31` rear socket and rear
 solid-top highlight instead; it is separately authored and is not a Y mirror.
 
-The east-side counterparts `mask_36` and `mask_27` remain deferred. This
-acceptance does not authorize an X-mirror derivation for either source.
+The east-side counterparts are accepted approved derivations of this source
+bank. `mask_36` is the whole-cell X mirror of `mask_17` after the accepted
+shared-boundary seam filter; `mask_27` is the plain whole-cell X mirror of
+`mask_21`. No separate east SVG source bank is introduced.
 
 Acceptance records direct proof-layer provenance only. These files do not
 register canonical or production stems, change blob connectivity, add exporter

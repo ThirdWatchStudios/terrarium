@@ -89,7 +89,7 @@ export const EQUAL_HEIGHT_WEST_PARTIAL_T_JUNCTION_GATE = {
   ] as const satisfies readonly EqualHeightWestPartialTJunctionCandidate[],
   maskRowsUnderReview: [] as const,
   maskRowsAccepted: [17, 21] as const,
-  deferredMirrorRows: [36, 27] as const,
+  acceptedMirrorRows: [36, 27] as const,
   reviewCellSizes: [240, 90, 40] as const,
   renderingDecision: {
     kind: 'two-authored-west-fixed-light-transition-sources',
@@ -144,7 +144,7 @@ export function validateEqualHeightWestPartialTJunctionGate(
     }) ||
     gate.maskRowsUnderReview.length !== 0 ||
     JSON.stringify(gate.maskRowsAccepted) !== JSON.stringify([17, 21]) ||
-    JSON.stringify(gate.deferredMirrorRows) !== JSON.stringify([36, 27]) ||
+    JSON.stringify(gate.acceptedMirrorRows) !== JSON.stringify([36, 27]) ||
     JSON.stringify(gate.reviewCellSizes) !== JSON.stringify([240, 90, 40])
   ) {
     throw new Error('West partial T-junction gate identity drift');
@@ -180,13 +180,13 @@ export function validateEqualHeightWestPartialTJunctionGate(
     }
   }
 
-  for (const mirrorIndex of gate.deferredMirrorRows) {
+  for (const mirrorIndex of gate.acceptedMirrorRows) {
     const resolution = EQUAL_HEIGHT_MASK_LEDGER.entries[mirrorIndex].resolution;
     if (
-      resolution.kind !== 'synthetic-assembly' ||
-      resolution.status !== 'proof-only-candidate'
+      resolution.kind !== 'approved-derivation' ||
+      resolution.status !== 'accepted-source-mapping'
     ) {
-      throw new Error(`West partial T-junction deferred mirror drift at mask_${mirrorIndex}`);
+      throw new Error(`West partial T-junction accepted mirror drift at mask_${mirrorIndex}`);
     }
   }
 
@@ -211,8 +211,8 @@ export function validateEqualHeightWestPartialTJunctionGate(
       'open_w_t_filled_se-upper.svg',
     ]) ||
     EQUAL_HEIGHT_MASK_LEDGER.counts['direct-reuse'] !== 15 ||
-    EQUAL_HEIGHT_MASK_LEDGER.counts['approved-derivation'] !== 10 ||
-    EQUAL_HEIGHT_MASK_LEDGER.counts['synthetic-assembly'] !== 22 ||
+    EQUAL_HEIGHT_MASK_LEDGER.counts['approved-derivation'] !== 12 ||
+    EQUAL_HEIGHT_MASK_LEDGER.counts['synthetic-assembly'] !== 20 ||
     EQUAL_HEIGHT_MASK_LEDGER.counts['unresolved-authored-geometry'] !== 0
   ) {
     throw new Error('West partial T-junction evidence boundary drift');

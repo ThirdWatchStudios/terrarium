@@ -23,7 +23,10 @@ on the live workbench and committed individually with its design rationale.
    is direct and `mask_13` is its approved whole-cell X mirror with the accepted southeast boundary-seam
    omission. The horizontal-spine open-pocket pair is also accepted: separately authored fixed-light
    `mask_11` and `mask_14` are direct proof-layer sources, while same-mask lateral X mirrors remain comparison
-   evidence rather than accepted derivations. No proposal is currently active. Never
+   evidence rather than accepted derivations. The single-filled-pocket family is accepted on both sides:
+   west `mask_17`/`mask_21` are direct sources, east `mask_36` is the filtered whole-cell X mirror of
+   `mask_17`, and east `mask_27` is the plain whole-cell X mirror of `mask_21`. No east SVG bank is added. No
+   proposal is currently active. Never
    rotate the accepted horizontal source to manufacture a vertical end. Use composed evidence as
    the issue-finding surface. Historical
    mixed-profile room mocks are archived, not valid targets.
@@ -39,7 +42,10 @@ on the live workbench and committed individually with its design rationale.
    shading as overlays never tints (recolor law). Edit masters with the file tools, not shell scripts —
    shell edits break the session harness's write tracking.
 4. **Judge on the bench:** `npm run style:watch` → http://localhost:5411 (one instance only — the port
-   is exclusive). The accepted horizontal open-pocket T-junction gate appears first, comparing the separately
+   is exclusive). The accepted east-side single-filled-pocket T-junction gate appears first, comparing filtered
+   mirror-X `mask_36` and plain mirror-X `mask_27` in compact and long light/dark compositions; the accepted
+   west `mask_17`/`mask_21` sources remain its provenance control. The accepted horizontal open-pocket
+   T-junction gate follows, comparing the separately
    authored direct `mask_11` and `mask_14` sources in compact 3×3 and long six-cell compositions. Same-mask
    lateral X mirrors remain registration comparisons only. The accepted open-pocket T-junction gate follows immediately, comparing direct authored
    open-west `mask_7` with its approved, southeast-seam-filtered X-mirror `mask_13` in compact 3×3 placement
@@ -188,8 +194,8 @@ north/south bodies stay legible, six-cell west/east runs do not drift, and all f
 manufactured envelope.
 
 **Accepted 47-mask mapping checkpoint (owner approvals, 2026-07-21 through 2026-07-22):** the unchanged
-`mask_0` through `mask_46` ordering and classification ledger is accepted with fifteen direct reuses, ten
-approved derivations, 22 proof-only synthetic assembly candidates, and zero unresolved authored-geometry
+`mask_0` through `mask_46` ordering and classification ledger is accepted with fifteen direct reuses, twelve
+approved derivations, 20 proof-only synthetic assembly candidates, and zero unresolved authored-geometry
 cases. This locks the mapping structure, not the synthetic pixels or a complete production family.
 
 **Accepted horizontal terminus checkpoint (owner approval, 2026-07-21):** the socket-polished
@@ -270,17 +276,26 @@ mappings.
 `mask_21` with separately authored `open_w_t_filled_se`. Each retains the north/east/south sockets while one
 diagonal crook becomes solid and the other remains an open floor pocket. They are sibling states between
 open-west `mask_7` and fully filled `mask_24`, not a progression or mirror pair. East-side `mask_36` and
-`mask_27` remain synthetic and no X-mirror derivation is approved. The ledger now records fifteen direct, ten
-derived, 22 synthetic, and zero unresolved. Keep this proof bank, gate, workbench card, and tests outside
+`mask_27` remained synthetic and no X-mirror derivation was approved at that checkpoint. The ledger then
+recorded fifteen direct, ten derived, 22 synthetic, and zero unresolved; the later east-side decision
+supersedes those totals. Keep this proof bank, gate, workbench card, and tests outside
 canonical registration, export, atlas, schema, blob mapping, and Unity.
 
-**Still outside acceptance after the single-filled-pocket T-junction checkpoint:** all 22 remaining synthetic T/cross
+**Accepted east-side single-filled-pocket T-junction gate (owner approval, 2026-07-22):** `mask_36` reuses
+accepted foreground `mask_17` through a whole-cell X mirror after omitting only `base-boundary-seam` and
+`upper-boundary-seam`, leaving adjoining `mask_38` as the single shared-socket seam owner. `mask_27` is the
+plain whole-cell X mirror of accepted rear `mask_21`. Compact and long light/dark checks preserve the fixed-light
+roles and one open floor crook in each state. The ledger now records fifteen direct, twelve derived,
+20 synthetic, and zero unresolved. This adds no east SVG source bank and changes no canonical source,
+registration, exporter, atlas, schema, blob mapping, or Unity surface.
+
+**Still outside acceptance after the east single-filled-pocket T-junction checkpoint:** all 20 remaining synthetic T/cross
 candidate sprites;
 `topology/` and `state/`; official/production preview
 regeneration; template/catalog registration and frame identities; exporter, `CONTRACT.md`, or schema changes;
 committed production atlases; prop pilots; Unity; and `production.unity` remain locked until separately
 requested. The accepted external `mask_0`, filled-elbow, both thick-wall-repeat, both open-pocket T-junction,
-and west-side single-filled-pocket proof families do not unlock or silently promote any of those surfaces.
+and west/east single-filled-pocket proof families do not unlock or silently promote any of those surfaces.
 Acceptance of the external T-junction proof families adds ledger provenance only and does not alter that lock.
 
 **Historical progress 2026-07-20 (superseded by the 2026-07-21 checkpoint):** steps 1–5 were executed and

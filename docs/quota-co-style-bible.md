@@ -27,8 +27,9 @@
 > perimeter around a 1×6 clear aisle at 90 and 40 px per cell. All four turns, one-cell horizontal bodies, and
 > six-cell side runs read as one manufactured enclosure without low-profile art or a new frame identity. The
 > canonical `mask_0` through `mask_46` proof-layer mapping plus both terminus families, the isolated shell, the
-> filled-elbow family, both thick-wall repeat families, both open-pocket T-junction pairs, and the west-side
-> single-filled-pocket T-junction pair are also accepted: 15 direct, ten derived, 22 synthetic candidates, and
+> filled-elbow family, both thick-wall repeat families, both open-pocket T-junction pairs, and both west- and
+> east-side single-filled-pocket T-junction pairs are also accepted: 15 direct, twelve derived, twenty
+> synthetic candidates, and
 > zero authored-geometry gaps. `mask_8` is
 > direct and `mask_2` is
 > the accepted whole-cell X mirror. The synthetic candidates are not accepted art; production topology, registration, export,
@@ -91,9 +92,18 @@
 > reuses the external foreground `open_w_t_filled_ne` pair and `mask_21` directly reuses the separately authored
 > rear `open_w_t_filled_se` pair. Each preserves north/east/south sockets while filling one diagonal crook and
 > leaving the other as an open floor pocket. They are sibling states between open `mask_7` and filled
-> `mask_24`, not a progression or mirror pair. East-side `mask_36` and `mask_27` remain synthetic, with no
-> X-mirror derivation accepted. The ledger now records 15 direct, ten derived, 22 synthetic, and zero unresolved;
+> `mask_24`, not a progression or mirror pair. At that checkpoint east-side `mask_36` and `mask_27` remained
+> synthetic, with no X-mirror derivation accepted; the ledger stood at 15 direct, ten derived, 22 synthetic,
+> and zero unresolved. The later east-side decision supersedes those totals;
 > canonical registration, exporter, atlas, schema, blob mapping, and Unity remain unchanged.
+
+> **Accepted east-side single-filled-pocket T-junction gate (owner approval, 2026-07-22):** `mask_36` is the
+> whole-cell X mirror of accepted foreground `mask_17` after omitting only `base-boundary-seam` and
+> `upper-boundary-seam`, leaving adjoining `mask_38` as the shared-socket seam owner. `mask_27` is the plain
+> whole-cell X mirror of accepted rear `mask_21`. The mirrored pair preserves the same fixed-light roles and
+> open-floor crooks without adding an east SVG source bank. The ledger now records 15 direct, twelve derived,
+> 20 synthetic, and zero unresolved; canonical registration, exporter, atlas, schema, blob mapping, and Unity
+> remain unchanged.
 
 The point of this page: the QuotaCo look is not a talent bar, it is a **closed grammar** — nine paints, two
 line weights, four shading steps, eight radii, one projection recipe. An author who obeys the grammar produces
@@ -147,7 +157,7 @@ expanding the grammar.
   west/east body runs are six cells, and every join uses only the accepted source/reuse/derivation contracts.
   This is the minimum composition regression gate for any later 47-mask synthetic proof.
 - Accepted mapping law (owner approvals, 2026-07-21 through 2026-07-22): preserve the canonical 47-mask order and its explicit
-  resolution split—15 direct reuse, 10 approved derivation, 22 proof-only synthetic assembly, 0 unresolved.
+  resolution split—15 direct reuse, 12 approved derivation, 20 proof-only synthetic assembly, 0 unresolved.
   Mapping acceptance is not sprite or atlas acceptance. A synthetic family advances only through a separate
   named owner decision; the accepted external `mask_0` source closes the authored-geometry gap without promoting those candidates.
 - Accepted horizontal terminus law (owner acceptance, 2026-07-21): `mask_8` directly reuses the
@@ -172,8 +182,9 @@ expanding the grammar.
   remains unregistered and unexported.
 - Accepted single-filled-pocket law (owner acceptance, 2026-07-22): `mask_17` and `mask_21` directly reuse
   separately authored west-side foreground/rear source pairs. Each keeps one diagonal floor pocket and fills
-  the other without exposing a buried face. East-side `mask_36` and `mask_27` remain synthetic; do not infer an
-  X-mirror derivation from the review evidence. The external source bank remains unregistered and unexported.
+  the other without exposing a buried face. `mask_36` is the accepted filtered whole-cell X mirror of
+  `mask_17`; `mask_27` is the accepted plain whole-cell X mirror of `mask_21`. No east SVG source bank is added,
+  and the reused external west source bank remains unregistered and unexported.
 - Vertical profiles (current kit law): ordinary walls occupy one **64-unit outer profile**.
   `base` and `upper` are technical paint passes, not two finished products: draw base first, then upper at
   the same centered pivot, and judge only their composed silhouette. The former **38-unit outer profile
@@ -305,12 +316,13 @@ be automated.
 3. Paint only with §2 swatches; shade only with §4 steps.
 4. Keep `npm run style:watch` running (§10) — every save re-validates through the real importer and
    re-renders base/upper/composed plus the distance proof, on light and dark ground. The open bench page is a
-   **current-state decision surface**: the accepted west-side single-filled-pocket T-junction gate appears first,
+   **current-state decision surface**: the accepted east-side single-filled-pocket T-junction gate appears first,
+   followed by the accepted west-side source gate,
    followed by the accepted horizontal-spine open-pocket T-junction gate,
    followed by the accepted open-west/open-east T-junction gate, then the
    accepted N×2 and 2×N thick-wall repeat gates and accepted 2×2 thick-wall source family; the isolated shell,
    vertical/horizontal termini, 3×8 corridor, and 47-mask ledger remain accepted proof-layer baselines. All
-   22 synthetic T/cross assembly rows remain unaccepted, and accepted pieces remain the
+   20 synthetic T/cross assembly rows remain unaccepted, and accepted pieces remain the
    comparison set. Earlier low-profile
    comparisons, mixed-profile room/envelope gates, and importer cards remain available only in closed,
    explicitly archived disclosures. They must never read as the current target.

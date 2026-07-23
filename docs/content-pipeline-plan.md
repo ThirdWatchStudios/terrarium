@@ -39,8 +39,8 @@ changes the export contract except where explicitly flagged (floor variants).
 > **Current mapping and source-gate result, 2026-07-22:** the owner accepted the proof-layer 47-mask
 > ledger structure plus the horizontal and vertical termini, isolated-shell, filled-elbow, 2×N thick-wall-repeat,
 > N×2 horizontal thick-wall-repeat, vertical open-pocket T-junction, horizontal-spine open-pocket T-junction,
-> and west-side single-filled-pocket T-junction slices. The ledger now records 15 direct source mappings, ten
-> approved derivations, 22 synthetic assembly candidates, and zero authored-geometry
+> and both west- and east-side single-filled-pocket T-junction slices. The ledger now records 15 direct source
+> mappings, twelve approved derivations, 20 synthetic assembly candidates, and zero authored-geometry
 > gaps. `mask_8`
 > directly reuses the socket-polished `full_terminus` pair and `mask_2` uses its accepted whole-cell X mirror;
 > both passed at 90/40 px in 1/3/6-cell contexts. This is not acceptance of the synthetic candidate pixels or a
@@ -87,10 +87,19 @@ changes the export contract except where explicitly flagged (floor variants).
 > **Accepted west-side single-filled-pocket T-junction slice, 2026-07-22:** the external
 > `open_w_t_filled_ne` and `open_w_t_filled_se` pairs directly resolve foreground `mask_17` and rear `mask_21`
 > as separately authored fixed-light transitions. Each preserves the north/east/south sockets while filling
-> exactly one diagonal crook; east-side counterparts `mask_36` and `mask_27` remain synthetic and no mirror
-> derivation is approved. The ledger now records 15 direct / 10 derived / 22 synthetic / 0 unresolved. No
+> exactly one diagonal crook. At that checkpoint east-side counterparts `mask_36` and `mask_27` remained
+> synthetic and no mirror derivation was approved; the ledger stood at 15 direct / 10 derived / 22 synthetic /
+> 0 unresolved. The later east-side decision supersedes those totals. No
 > canonical source, frame identity, template registration, exporter, atlas, schema, blob mapping, Unity asset,
 > or `production.unity` surface is changed.
+> **Accepted east-side single-filled-pocket T-junction slice, 2026-07-22:** `mask_36` reuses the accepted
+> foreground `mask_17` source through whole-cell mirror-X after the established omission of
+> `base-boundary-seam` and `upper-boundary-seam`; `mask_27` is the plain whole-cell mirror-X of the accepted
+> rear `mask_21` source. Compact and long light/dark checks preserve the fixed-light roles, one open floor
+> crook, and singular shared-socket seam ownership. The ledger now records 15 direct / 12 derived /
+> 20 synthetic / 0 unresolved. No east SVG source bank, canonical source, frame identity, template
+> registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity` surface is added or
+> changed.
 
 ---
 

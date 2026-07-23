@@ -405,6 +405,26 @@ const partialWestRearTJunction: EqualHeightMaskSourceVariant = {
   facingRule: 'connected north, east, and south with the west edge exposed, southeast solid, and northeast concave; authored rear fixed-light transition into mask_31',
 };
 
+const partialEastForegroundTJunction: EqualHeightMaskSourceVariant = {
+  role: 'partial-east-foreground-t-junction',
+  sourceStem: 'open_w_t_filled_ne',
+  baseFile: 'open_w_t_filled_ne-base.svg',
+  upperFile: 'open_w_t_filled_ne-upper.svg',
+  transform: 'mirror-x',
+  derivation: 'accepted-southeast-seam-filter',
+  facingRule: 'connected north, south, and west with the east edge exposed, northwest solid, and southwest concave; accepted filtered X mirror of the foreground transition into mask_38',
+};
+
+const partialEastRearTJunction: EqualHeightMaskSourceVariant = {
+  role: 'partial-east-rear-t-junction',
+  sourceStem: 'open_w_t_filled_se',
+  baseFile: 'open_w_t_filled_se-base.svg',
+  upperFile: 'open_w_t_filled_se-upper.svg',
+  transform: 'mirror-x',
+  derivation: 'none',
+  facingRule: 'connected north, south, and west with the east edge exposed, southwest solid, and northwest concave; accepted X mirror of the rear transition into mask_31',
+};
+
 function topologyFor(config: WallTileConfig): EqualHeightMaskTopologyClass {
   const connected = EDGES.filter((edge) => config[edge]);
   if (connected.length === 0) return 'isolated';
@@ -605,6 +625,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         variants: [filledNortheastElbow],
         note: 'Accepted rear-east filled elbow is the whole-cell mirror-X derivation of the rear-west solid-top source.',
       };
+    case 27:
+      return {
+        kind: 'approved-derivation',
+        status: 'accepted-source-mapping',
+        variants: [partialEastRearTJunction],
+        note: 'Accepted rear east-side partial T junction is the whole-cell mirror-X derivation of the separately authored west rear transition source.',
+      };
     case 31:
       return {
         kind: 'direct-reuse',
@@ -618,6 +645,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         status: 'accepted-source-mapping',
         variants: [filledSoutheastElbow],
         note: 'Accepted foreground-east filled elbow mirrors the foreground-west source after the accepted southeast seam filter.',
+      };
+    case 36:
+      return {
+        kind: 'approved-derivation',
+        status: 'accepted-source-mapping',
+        variants: [partialEastForegroundTJunction],
+        note: 'Accepted foreground east-side partial T junction mirrors the west foreground transition after the accepted boundary-seam filter.',
       };
     case 38:
       return {
@@ -747,6 +781,8 @@ const ACCEPTED_SOURCE_VARIANTS = new Set([
   openNorthTJunction,
   partialWestForegroundTJunction,
   partialWestRearTJunction,
+  partialEastForegroundTJunction,
+  partialEastRearTJunction,
 ].map(sourceVariantSignature));
 
 function variantsFor(

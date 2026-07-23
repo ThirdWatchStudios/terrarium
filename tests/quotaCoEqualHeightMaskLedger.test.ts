@@ -72,7 +72,7 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
     }
   });
 
-  it('makes the twenty-five accepted source mappings and their facing provenance explicit', () => {
+  it('makes the twenty-seven accepted source mappings and their facing provenance explicit', () => {
     const byIndex = new Map(
       EQUAL_HEIGHT_MASK_LEDGER.entries.map((entry) => [entry.index, entry]),
     );
@@ -188,12 +188,28 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
       }],
     });
     expect(byIndex.get(27)?.resolution).toMatchObject({
-      kind: 'synthetic-assembly',
-      status: 'proof-only-candidate',
+      kind: 'approved-derivation',
+      status: 'accepted-source-mapping',
+      variants: [{
+        role: 'partial-east-rear-t-junction',
+        sourceStem: 'open_w_t_filled_se',
+        baseFile: 'open_w_t_filled_se-base.svg',
+        upperFile: 'open_w_t_filled_se-upper.svg',
+        transform: 'mirror-x',
+        derivation: 'none',
+      }],
     });
     expect(byIndex.get(36)?.resolution).toMatchObject({
-      kind: 'synthetic-assembly',
-      status: 'proof-only-candidate',
+      kind: 'approved-derivation',
+      status: 'accepted-source-mapping',
+      variants: [{
+        role: 'partial-east-foreground-t-junction',
+        sourceStem: 'open_w_t_filled_ne',
+        baseFile: 'open_w_t_filled_ne-base.svg',
+        upperFile: 'open_w_t_filled_ne-upper.svg',
+        transform: 'mirror-x',
+        derivation: 'accepted-southeast-seam-filter',
+      }],
     });
     expect(byIndex.get(26)?.resolution).toMatchObject({
       kind: 'approved-derivation',
@@ -249,7 +265,7 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
       .filter(({ resolution }) =>
         resolution.kind === 'direct-reuse' || resolution.kind === 'approved-derivation')
       .map(({ index }) => index);
-    expect(resolved).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20, 21, 24, 26, 31, 34, 38, 42]);
+    expect(resolved).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20, 21, 24, 26, 27, 31, 34, 36, 38, 42]);
     expect(byIndex.get(5)?.resolution).toMatchObject({
       note: expect.stringContaining('explicit facing input'),
     });
@@ -261,8 +277,8 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
   it('keeps synthetic obligations honest after closing every authored-source gap', () => {
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
       'direct-reuse': 15,
-      'approved-derivation': 10,
-      'synthetic-assembly': 22,
+      'approved-derivation': 12,
+      'synthetic-assembly': 20,
       'unresolved-authored-geometry': 0,
     });
     expect(
@@ -278,9 +294,12 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
 
     const synthetic = EQUAL_HEIGHT_MASK_LEDGER.entries
       .filter(({ resolution }) => resolution.kind === 'synthetic-assembly');
-    expect(synthetic).toHaveLength(22);
+    expect(synthetic).toHaveLength(20);
     expect(synthetic.filter(({ topologyClass }) => topologyClass === 'filled-elbow')).toHaveLength(0);
-    expect(synthetic.filter(({ topologyClass }) => topologyClass === 't-junction')).toHaveLength(6);
+    expect(synthetic.filter(({ topologyClass }) => topologyClass === 't-junction')).toHaveLength(4);
+    expect(synthetic
+      .filter(({ topologyClass }) => topologyClass === 't-junction')
+      .map(({ index }) => index)).toEqual([18, 22, 28, 35]);
     expect(synthetic.filter(({ topologyClass }) => topologyClass === 'cross-junction')).toHaveLength(16);
     for (const entry of synthetic) {
       expect(entry.resolution).toMatchObject({
@@ -293,11 +312,11 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
     expect(
       EQUAL_HEIGHT_MASK_LEDGER.entries
         .filter(({ resolution }) => resolution.status === 'accepted-source-mapping'),
-    ).toHaveLength(25);
+    ).toHaveLength(27);
     expect(
       EQUAL_HEIGHT_MASK_LEDGER.entries
         .filter(({ resolution }) => resolution.status === 'proof-only-candidate'),
-    ).toHaveLength(22);
+    ).toHaveLength(20);
     expect(
       EQUAL_HEIGHT_MASK_LEDGER.entries
         .filter(({ resolution }) => resolution.status === 'unresolved'),

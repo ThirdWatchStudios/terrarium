@@ -158,7 +158,7 @@ describe('QuotaCo owner-accepted west partial T-junction gate', () => {
       },
       maskRowsUnderReview: [],
       maskRowsAccepted: [17, 21],
-      deferredMirrorRows: [36, 27],
+      acceptedMirrorRows: [36, 27],
       reviewCellSizes: [240, 90, 40],
       xMirrorAllowed: false,
       yMirrorAllowed: false,
@@ -247,7 +247,7 @@ describe('QuotaCo owner-accepted west partial T-junction gate', () => {
     }
   });
 
-  it('promotes the west-authored candidates while keeping their east mirrors deferred', () => {
+  it('keeps the west-authored candidates and their accepted east derivations explicit', () => {
     expect(EQUAL_HEIGHT_MASK_LEDGER.entries[17]).toMatchObject({
       topologyClass: 't-junction',
       connectedEdges: ['n', 'e', 's'],
@@ -286,11 +286,22 @@ describe('QuotaCo owner-accepted west partial T-junction gate', () => {
     });
     expect(EQUAL_HEIGHT_MASK_LEDGER.entries[36]).toMatchObject({
       pockets: ['sw'], solidDiagonals: ['nw'],
-      resolution: { kind: 'synthetic-assembly', status: 'proof-only-candidate' },
+      resolution: {
+        kind: 'approved-derivation', status: 'accepted-source-mapping',
+        variants: [{
+          sourceStem: 'open_w_t_filled_ne', transform: 'mirror-x',
+          derivation: 'accepted-southeast-seam-filter',
+        }],
+      },
     });
     expect(EQUAL_HEIGHT_MASK_LEDGER.entries[27]).toMatchObject({
       pockets: ['nw'], solidDiagonals: ['sw'],
-      resolution: { kind: 'synthetic-assembly', status: 'proof-only-candidate' },
+      resolution: {
+        kind: 'approved-derivation', status: 'accepted-source-mapping',
+        variants: [{
+          sourceStem: 'open_w_t_filled_se', transform: 'mirror-x', derivation: 'none',
+        }],
+      },
     });
     expect(EQUAL_HEIGHT_MASK_LEDGER.entries[7].resolution.status)
       .toBe('accepted-source-mapping');
@@ -298,22 +309,22 @@ describe('QuotaCo owner-accepted west partial T-junction gate', () => {
       .toBe('accepted-source-mapping');
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
       'direct-reuse': 15,
-      'approved-derivation': 10,
-      'synthetic-assembly': 22,
+      'approved-derivation': 12,
+      'synthetic-assembly': 20,
       'unresolved-authored-geometry': 0,
     });
     expect(EQUAL_HEIGHT_MASK_LEDGER.entries
       .filter(({ resolution }) => resolution.status === 'accepted-source-mapping'))
-      .toHaveLength(25);
+      .toHaveLength(27);
     expect(EQUAL_HEIGHT_MASK_LEDGER.entries
       .filter(({ resolution }) => resolution.status === 'proof-only-candidate'))
-      .toHaveLength(22);
+      .toHaveLength(20);
     expect(EQUAL_HEIGHT_MASK_LEDGER.entries
       .filter(({ topologyClass, resolution }) => (
         topologyClass === 't-junction' && resolution.kind === 'synthetic-assembly'
       ))
       .map(({ index }) => index))
-      .toEqual([18, 22, 27, 28, 35, 36]);
+      .toEqual([18, 22, 28, 35]);
     expect(EQUAL_HEIGHT_MASK_LEDGER.entries
       .filter(({ topologyClass }) => topologyClass === 'cross-junction'))
       .toHaveLength(16);

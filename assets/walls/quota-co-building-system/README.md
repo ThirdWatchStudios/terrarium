@@ -28,9 +28,9 @@ and all four corners close as one enclosure.
 
 **Accepted mapping gate (owner approvals, 2026-07-21 through 2026-07-22):** the proof-layer ledger
 locks the unchanged canonical `mask_0` through `mask_46` order and classifies
-15 direct reuses, ten approved derivations, 22 synthetic assembly
+15 direct reuses, twelve approved derivations, 20 synthetic assembly
 candidates, and zero authored-geometry gaps. This accepts the mapping
-structure and provenance boundaries only. It does not accept the 22 synthetic
+structure and provenance boundaries only. It does not accept the 20 synthetic
 assembly diagrams or create an atlas/production family.
 
 **Accepted horizontal terminus gate (owner approval, 2026-07-21):** `mask_8`
@@ -103,10 +103,20 @@ registration.
 direct sources for foreground `mask_17` (`open_w_t_filled_ne`) and rear `mask_21`
 (`open_w_t_filled_se`). Each preserves north/east/south sockets while filling one diagonal crook and leaving
 the other as an open floor pocket. They are sibling states between open `mask_7` and fully filled `mask_24`,
-not a progression or mirror pair. East-side counterparts `mask_36` and `mask_27` remain synthetic, and no
-X-mirror derivation is approved. The ledger now records 15 direct / 10 derived / 22 synthetic / 0 unresolved
-rows. This proof-layer promotion creates no canonical source, frame identity, template registration, exporter,
-atlas, schema, blob mapping, or Unity registration.
+not a progression or mirror pair. East-side counterparts `mask_36` and `mask_27` remained synthetic, and no
+X-mirror derivation was approved at that checkpoint. The ledger then recorded 15 direct / 10 derived /
+22 synthetic / 0 unresolved rows; the later east-side decision supersedes those totals. This proof-layer
+promotion creates no canonical source, frame identity, template registration, exporter, atlas, schema, blob
+mapping, or Unity registration.
+
+**Accepted east-side single-filled-pocket T-junction gate (owner approval, 2026-07-22):** `mask_36` reuses
+the accepted foreground `mask_17` source through a whole-cell X mirror after omitting only
+`base-boundary-seam` and `upper-boundary-seam`, so adjoining `mask_38` retains the single shared-socket seam.
+`mask_27` is the plain whole-cell X mirror of the accepted rear `mask_21` source. Both preserve the accepted
+fixed-light roles and fill one diagonal crook while leaving the other as open floor. The ledger now records
+15 direct / 12 derived / 20 synthetic / 0 unresolved rows. No east SVG source bank is added, and this
+proof-layer promotion changes no canonical source, frame identity, template registration, exporter, atlas,
+schema, blob mapping, or Unity registration.
 
 The original independently finished low-base-plus-optional-upper construction was
 rejected on 2026-07-20 because its duplicate caps and contours read as one wall
