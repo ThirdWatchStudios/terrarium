@@ -126,9 +126,9 @@ export const EQUAL_HEIGHT_DOUBLE_FILLED_SOUTH_CROSS_JUNCTION_GATE = {
       'mask_39 is a geometry and fixed-light comparison only; Y mirror is forbidden',
   },
   acceptedLedgerCounts: {
-    'direct-reuse': 26,
+    'direct-reuse': 27,
     'approved-derivation': 18,
-    'synthetic-assembly': 3,
+    'synthetic-assembly': 2,
     'unresolved-authored-geometry': 0,
   },
   directSourceAccepted: true,
@@ -294,9 +294,9 @@ export function validateEqualHeightDoubleFilledSouthCrossJunctionGate(
   if (
     JSON.stringify(gate.acceptedLedgerCounts) !==
       JSON.stringify(EQUAL_HEIGHT_MASK_LEDGER.counts) ||
-    EQUAL_HEIGHT_MASK_LEDGER.counts['direct-reuse'] !== 26 ||
+    EQUAL_HEIGHT_MASK_LEDGER.counts['direct-reuse'] !== 27 ||
     EQUAL_HEIGHT_MASK_LEDGER.counts['approved-derivation'] !== 18 ||
-    EQUAL_HEIGHT_MASK_LEDGER.counts['synthetic-assembly'] !== 3 ||
+    EQUAL_HEIGHT_MASK_LEDGER.counts['synthetic-assembly'] !== 2 ||
     EQUAL_HEIGHT_MASK_LEDGER.counts['unresolved-authored-geometry'] !== 0
   ) {
     throw new Error(

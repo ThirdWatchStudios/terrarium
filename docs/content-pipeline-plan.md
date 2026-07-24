@@ -48,9 +48,10 @@ changes the export contract except where explicitly flagged (floor variants).
 > opposed-diagonal-filled cross-junction `mask_30`, plus its accepted filtered whole-cell X-mirror companion
 > `mask_40`, the independently authored south-filled slab cross-junction `mask_32`, and the independently
 > authored single-open southwest cross-junction `mask_41`, plus its accepted plain whole-cell X-mirror
-> single-open southeast companion `mask_44`. The ledger
-> now records 26 direct source mappings, 18 approved
-> derivations, 3 synthetic assembly
+> single-open southeast companion `mask_44`, and the independently authored single-open northwest
+> cross-junction `mask_33`. The ledger
+> now records 27 direct source mappings, 18 approved
+> derivations, 2 synthetic assembly
 > candidates, and zero collisions; all remaining synthetic rows are cross-junctions. `mask_8`
 > directly reuses the socket-polished `full_terminus` pair and `mask_2` uses its accepted whole-cell X mirror;
 > both passed at 90/40 px in 1/3/6-cell contexts. This is not acceptance of the remaining synthetic candidate pixels or a
@@ -250,6 +251,16 @@ changes the export contract except where explicitly flagged (floor variants).
 > synthetic rows are cross-junctions. Acceptance records one approved proof-layer derivation only and adds no
 > canonical production source, frame identity, template registration, exporter, atlas, schema, blob mapping,
 > Unity asset, or `production.unity` change.
+> **Accepted single-open northwest cross-junction slice (owner approval, 2026-07-24):** `mask_33` directly
+> reuses the external `open_cross_filled_ne_se_sw` pair as one independently authored fixed-view four-way
+> union. Northeast, southeast, and southwest remain one continuous solid mass; northwest remains genuine
+> floor; and all four cardinal sockets stay exact. `mask_25` and `mask_32` constrain the buried east and south
+> slabs while `mask_30` constrains only the exposed northwest reveal and arris; none supplies stacked or
+> transformed provenance. One cream owner spans all three filled crooks, with no local coral or green repaint
+> because adjoining foreground pieces own that frontage. The accepted ledger now records 27 direct / 18
+> derived / 2 synthetic / 0 collisions; the two remaining synthetic rows are cross-junctions. Acceptance
+> records one direct proof-layer source only and adds no canonical production source, frame identity, template
+> registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity` change.
 
 ---
 

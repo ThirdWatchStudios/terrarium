@@ -1,8 +1,8 @@
 # QuotaCo High-Oblique Geometry — Production Art Ask
 
-**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** single-open southeast cross-junction accepted
-`mask_44` is accepted as the plain whole-cell X-mirror derivation of the independently authored `mask_41`
-proof source; no wall proposal is currently active and the ledger stands at 26 direct / 18 derived / 3 synthetic
+**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** single-open northwest cross-junction accepted
+`mask_33` is accepted as one independently authored fixed-view direct proof source; no wall proposal is
+currently active and the ledger stands at 27 direct / 18 derived / 2 synthetic
 
 Canonical direction lives in the sim repository:
 
@@ -23,9 +23,10 @@ the all-open `mask_15`, northeast-filled `mask_19`, southeast-filled `mask_23`, 
 and the separately authored northwest-filled `mask_37`, north-filled slab `mask_39`, and
 opposed-diagonal-filled `mask_30`, plus its filtered opposite-diagonal `mask_40` derivation,
 the independently authored south-filled slab `mask_32`, and the independently authored single-open southwest
-`mask_41` cross-junction, plus its plain whole-cell X-mirror single-open southeast `mask_44` companion. The
+`mask_41` cross-junction, plus its plain whole-cell X-mirror single-open southeast `mask_44` companion, and the
+independently authored single-open northwest `mask_33` cross-junction. The
 accepted proof ledger now records
-26 direct, 18 derived, 3 synthetic,
+27 direct, 18 derived, 2 synthetic,
 and zero collisions; every remaining
 synthetic assembly candidate is a cross-junction. Prop-catalog work and
 production changes remain separate decisions.
@@ -168,8 +169,8 @@ single-filled `mask_19`, southeast-filled `mask_23`, east-filled slab `mask_25`,
 north-filled slab `mask_39`, opposed-diagonal-filled `mask_30`, and filtered opposite-diagonal mirror
 `mask_40`, plus the independently authored south-filled slab `mask_32` and independently authored
 single-open southwest `mask_41`, plus its plain whole-cell X-mirror single-open southeast `mask_44`
-companion promoted, it records twenty-six direct
-mappings and eighteen approved derivations as source law, not the 3 remaining synthetic
+companion and the independently authored single-open northwest `mask_33` promoted, it records twenty-seven
+direct mappings and eighteen approved derivations as source law, not the 2 remaining synthetic
 cross-junction candidate sprites.
 The ledger has zero collisions.
 
@@ -422,6 +423,18 @@ shadow hierarchy. Promotion advances the ledger to twenty-six direct, eighteen d
 collisions; all three remaining synthetic rows are cross-junctions. Proof-layer acceptance changes no
 canonical production source, frame identity, template registration, exporter, atlas, schema, blob mapping,
 Unity asset, or `production.unity` surface.
+
+**Accepted single-open northwest cross-junction gate (owner approval, 2026-07-24):** `mask_33` directly
+reuses the external `open_cross_filled_ne_se_sw` pair as one independently authored fixed-view four-way union.
+Northeast, southeast, and southwest are one continuous solid wall mass, northwest remains genuine floor, and
+all four cardinal sockets remain exact. `mask_25` and `mask_32` constrain the buried east and south slabs;
+`mask_30` constrains only the exposed northwest reveal and arris. None is stacked, transformed, or treated as
+source provenance. One cream owner spans all three filled crooks, while local coral and green remain absent
+because adjoining foreground pieces own that frontage. It passes at 240/90/40 px and in compact,
+three-cell-arm, and six-cell-arm crossings on light and dark floors. Promotion advances the ledger to
+twenty-seven direct, eighteen derived, 2 synthetic, and zero collisions; the two remaining synthetic rows are
+cross-junctions. Proof-layer acceptance changes no canonical production source, frame identity, template
+registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity` surface.
 
 ### A1a review artifact
 

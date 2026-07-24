@@ -72,7 +72,7 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
     }
   });
 
-  it('makes the forty-three accepted source mappings and their facing provenance explicit', () => {
+  it('makes the forty-five accepted source mappings and their facing provenance explicit', () => {
     const byIndex = new Map(
       EQUAL_HEIGHT_MASK_LEDGER.entries.map((entry) => [entry.index, entry]),
     );
@@ -328,6 +328,20 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
       }],
       note: 'Accepted south-filled slab cross junction directly reuses the independently authored fixed-view four-way union; mask_39 remains a geometry and fixed-light control only and creates no transformed provenance.',
     });
+    expect(byIndex.get(33)?.resolution).toEqual({
+      kind: 'direct-reuse',
+      status: 'accepted-source-mapping',
+      variants: [{
+        role: 'single-open-northwest-cross-junction',
+        sourceStem: 'open_cross_filled_ne_se_sw',
+        baseFile: 'open_cross_filled_ne_se_sw-base.svg',
+        upperFile: 'open_cross_filled_ne_se_sw-upper.svg',
+        transform: 'none',
+        derivation: 'none',
+        facingRule: 'connected north, east, south, and west with northeast, southeast, and southwest solid while the northwest floor crook remains open; independently authored fixed-view source with one cream-led three-crook mass',
+      }],
+      note: 'Accepted single-open northwest cross junction directly reuses one independently authored fixed-view union; masks 25, 32, and 30 constrain geometry and fixed-light cues without creating stacked or transformed provenance.',
+    });
     expect(byIndex.get(23)?.resolution).toEqual({
       kind: 'direct-reuse',
       status: 'accepted-source-mapping',
@@ -448,7 +462,7 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
       .map(({ index }) => index);
     expect(resolved).toEqual([
       0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
-      17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44,
+      17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44,
     ]);
     expect(byIndex.get(5)?.resolution).toMatchObject({
       note: expect.stringContaining('explicit facing input'),
@@ -460,9 +474,9 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
 
   it('keeps synthetic obligations honest after closing every authored-source gap', () => {
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
-      'direct-reuse': 26,
+      'direct-reuse': 27,
       'approved-derivation': 18,
-      'synthetic-assembly': 3,
+      'synthetic-assembly': 2,
       'unresolved-authored-geometry': 0,
     });
     expect(
@@ -478,16 +492,16 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
 
     const synthetic = EQUAL_HEIGHT_MASK_LEDGER.entries
       .filter(({ resolution }) => resolution.kind === 'synthetic-assembly');
-    expect(synthetic).toHaveLength(3);
+    expect(synthetic).toHaveLength(2);
     expect(synthetic.map(({ index }) => index)).toEqual([
-      33, 45, 46,
+      45, 46,
     ]);
     expect(synthetic.filter(({ topologyClass }) => topologyClass === 'filled-elbow')).toHaveLength(0);
     expect(synthetic.filter(({ topologyClass }) => topologyClass === 't-junction')).toHaveLength(0);
     expect(synthetic
       .filter(({ topologyClass }) => topologyClass === 't-junction')
       .map(({ index }) => index)).toEqual([]);
-    expect(synthetic.filter(({ topologyClass }) => topologyClass === 'cross-junction')).toHaveLength(3);
+    expect(synthetic.filter(({ topologyClass }) => topologyClass === 'cross-junction')).toHaveLength(2);
     expect(synthetic.every(({ topologyClass }) => topologyClass === 'cross-junction')).toBe(true);
     for (const entry of synthetic) {
       expect(entry.resolution).toMatchObject({
@@ -500,11 +514,11 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
     expect(
       EQUAL_HEIGHT_MASK_LEDGER.entries
         .filter(({ resolution }) => resolution.status === 'accepted-source-mapping'),
-    ).toHaveLength(44);
+    ).toHaveLength(45);
     expect(
       EQUAL_HEIGHT_MASK_LEDGER.entries
         .filter(({ resolution }) => resolution.status === 'proof-only-candidate'),
-    ).toHaveLength(3);
+    ).toHaveLength(2);
     expect(
       EQUAL_HEIGHT_MASK_LEDGER.entries
         .filter(({ resolution }) => resolution.status === 'unresolved'),
@@ -570,6 +584,8 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
       'open_cross_filled_ne_sw-upper.svg',
       'open_cross_filled_ne_se_nw-base.svg',
       'open_cross_filled_ne_se_nw-upper.svg',
+      'open_cross_filled_ne_se_sw-base.svg',
+      'open_cross_filled_ne_se_sw-upper.svg',
       'open_cross_filled_se-base.svg',
       'open_cross_filled_se-upper.svg',
       'open_cross_filled_e-base.svg',
@@ -628,9 +644,9 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
     expect(() => validateEqualHeightMaskLedger(demotedEnvelope)).toThrow(/invalid promotion status/);
 
     const overclaimedSynthetic = clone() as any;
-    overclaimedSynthetic.entries[33].resolution.status = 'accepted-source-mapping';
+    overclaimedSynthetic.entries[45].resolution.status = 'accepted-source-mapping';
     expect(() => validateEqualHeightMaskLedger(overclaimedSynthetic)).toThrow(
-      /synthetic assembly has invalid status at mask_33/,
+      /synthetic assembly has invalid status at mask_45/,
     );
 
     const demotedDirect = clone() as any;

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>QuotaCo single-open northwest cross-junction review base</title>
+  <desc>One flattened lower union fills northeast, southeast, and southwest while the northwest crook remains open floor.</desc>
+  <g id="detail/base">
+    <path id="base-structural-mass" d="M56 0H128V128H0V56H46A10 10 0 0 0 56 46Z" fill="#252A28"/>
+  </g>
+</svg>

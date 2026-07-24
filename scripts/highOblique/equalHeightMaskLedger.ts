@@ -478,6 +478,16 @@ const singleOpenSoutheastCrossJunction: EqualHeightMaskSourceVariant = {
   facingRule: 'connected north, east, south, and west with northwest, northeast, and southwest solid while the southeast floor crook remains open; accepted plain whole-cell X mirror of the authored mask_41 single-open southwest fixed-light source',
 };
 
+const singleOpenNorthwestCrossJunction: EqualHeightMaskSourceVariant = {
+  role: 'single-open-northwest-cross-junction',
+  sourceStem: 'open_cross_filled_ne_se_sw',
+  baseFile: 'open_cross_filled_ne_se_sw-base.svg',
+  upperFile: 'open_cross_filled_ne_se_sw-upper.svg',
+  transform: 'none',
+  derivation: 'none',
+  facingRule: 'connected north, east, south, and west with northeast, southeast, and southwest solid while the northwest floor crook remains open; independently authored fixed-view source with one cream-led three-crook mass',
+};
+
 const singleFilledSoutheastCrossJunction: EqualHeightMaskSourceVariant = {
   role: 'single-filled-southeast-cross-junction',
   sourceStem: 'open_cross_filled_se',
@@ -882,6 +892,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         variants: [doubleFilledSouthCrossJunction],
         note: 'Accepted south-filled slab cross junction directly reuses the independently authored fixed-view four-way union; mask_39 remains a geometry and fixed-light control only and creates no transformed provenance.',
       };
+    case 33:
+      return {
+        kind: 'direct-reuse',
+        status: 'accepted-source-mapping',
+        variants: [singleOpenNorthwestCrossJunction],
+        note: 'Accepted single-open northwest cross junction directly reuses one independently authored fixed-view union; masks 25, 32, and 30 constrain geometry and fixed-light cues without creating stacked or transformed provenance.',
+      };
     case 34:
       return {
         kind: 'approved-derivation',
@@ -1080,6 +1097,7 @@ const ACCEPTED_SOURCE_VARIANTS = new Set([
   doubleFilledOppositeDiagonalCrossJunction,
   singleOpenSouthwestCrossJunction,
   singleOpenSoutheastCrossJunction,
+  singleOpenNorthwestCrossJunction,
   singleFilledSoutheastCrossJunction,
   singleFilledSouthwestCrossJunction,
   doubleFilledEastCrossJunction,

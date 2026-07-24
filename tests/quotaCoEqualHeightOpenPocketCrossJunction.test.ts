@@ -213,9 +213,9 @@ describe('QuotaCo owner-accepted open-pocket cross-junction gate', () => {
       },
     });
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
-    'direct-reuse': 26,
+    'direct-reuse': 27,
       'approved-derivation': 18,
-    'synthetic-assembly': 3,
+    'synthetic-assembly': 2,
       'unresolved-authored-geometry': 0,
     });
     expect(EQUAL_HEIGHT_OPEN_POCKET_CROSS_JUNCTION_GATE.acceptedLedgerCounts)

@@ -108,9 +108,9 @@ export const EQUAL_HEIGHT_DOUBLE_FILLED_WEST_CROSS_JUNCTION_GATE = {
       'preserve north/south fixed-light ownership and the y=97 south-face handoff while moving only the occupied west/east register',
   },
   acceptedLedgerCounts: {
-    'direct-reuse': 26,
+    'direct-reuse': 27,
     'approved-derivation': 18,
-    'synthetic-assembly': 3,
+    'synthetic-assembly': 2,
     'unresolved-authored-geometry': 0,
   },
   xMirrorAllowed: true,
@@ -258,9 +258,9 @@ export function validateEqualHeightDoubleFilledWestCrossJunctionGate(
   if (
     JSON.stringify(gate.acceptedLedgerCounts) !==
       JSON.stringify(currentCounts) ||
-    currentCounts['direct-reuse'] !== 26 ||
+    currentCounts['direct-reuse'] !== 27 ||
     currentCounts['approved-derivation'] !== 18 ||
-    currentCounts['synthetic-assembly'] !== 3 ||
+    currentCounts['synthetic-assembly'] !== 2 ||
     currentCounts['unresolved-authored-geometry'] !== 0
   ) {
     throw new Error(
