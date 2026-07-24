@@ -112,9 +112,9 @@ export const EQUAL_HEIGHT_SINGLE_FILLED_CROSS_JUNCTION_GATE = {
       'preserve authored fixed-light planes from the mask_15, mask_17, and mask_18 controls; family-wide south-face continuity remains deferred polish',
   },
   acceptedLedgerCounts: {
-    'direct-reuse': 23,
+    'direct-reuse': 24,
     'approved-derivation': 16,
-    'synthetic-assembly': 8,
+    'synthetic-assembly': 7,
     'unresolved-authored-geometry': 0,
   },
   xMirrorAllowed: false,
@@ -247,9 +247,9 @@ export function validateEqualHeightSingleFilledCrossJunctionGate(
   const currentCounts = EQUAL_HEIGHT_MASK_LEDGER.counts;
   if (
     JSON.stringify(gate.acceptedLedgerCounts) !== JSON.stringify(currentCounts) ||
-    currentCounts['direct-reuse'] !== 23 ||
+    currentCounts['direct-reuse'] !== 24 ||
     currentCounts['approved-derivation'] !== 16 ||
-    currentCounts['synthetic-assembly'] !== 8 ||
+    currentCounts['synthetic-assembly'] !== 7 ||
     currentCounts['unresolved-authored-geometry'] !== 0
   ) {
     throw new Error('Single-filled cross-junction ledger-count boundary drift');

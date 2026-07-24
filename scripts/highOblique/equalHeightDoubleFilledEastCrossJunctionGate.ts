@@ -156,9 +156,9 @@ export const EQUAL_HEIGHT_DOUBLE_FILLED_EAST_CROSS_JUNCTION_GATE = {
       'retain reveal, coral, green, and shade only on exposed west frontage; defer family-wide south-face normalization',
   },
   acceptedLedgerCounts: {
-    'direct-reuse': 23,
+    'direct-reuse': 24,
     'approved-derivation': 16,
-    'synthetic-assembly': 8,
+    'synthetic-assembly': 7,
     'unresolved-authored-geometry': 0,
   },
   xMirrorAllowed: false,
@@ -306,9 +306,9 @@ export function validateEqualHeightDoubleFilledEastCrossJunctionGate(
   const currentCounts = EQUAL_HEIGHT_MASK_LEDGER.counts;
   if (
     JSON.stringify(gate.acceptedLedgerCounts) !== JSON.stringify(currentCounts) ||
-    currentCounts['direct-reuse'] !== 23 ||
+    currentCounts['direct-reuse'] !== 24 ||
     currentCounts['approved-derivation'] !== 16 ||
-    currentCounts['synthetic-assembly'] !== 8 ||
+    currentCounts['synthetic-assembly'] !== 7 ||
     currentCounts['unresolved-authored-geometry'] !== 0
   ) {
     throw new Error('Double-filled east cross-junction ledger-count boundary drift');

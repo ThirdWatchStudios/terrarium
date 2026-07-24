@@ -28,9 +28,9 @@ and all four corners close as one enclosure.
 
 **Accepted mapping gate (owner approvals, 2026-07-21 through 2026-07-23):** the proof-layer ledger
 locks the unchanged canonical `mask_0` through `mask_46` order and classifies
-23 direct reuses, 16 approved derivations, 8 synthetic assembly
+24 direct reuses, 16 approved derivations, 7 synthetic assembly
 candidates, and zero collisions. The remaining synthetic rows are all cross-junctions. This accepts the
-mapping structure and provenance boundaries only. It does not accept the 8 remaining synthetic
+mapping structure and provenance boundaries only. It does not accept the 7 remaining synthetic
 cross-junction diagrams or create an atlas/production family.
 
 **Accepted horizontal terminus gate (owner approval, 2026-07-21):** `mask_8`
@@ -224,6 +224,18 @@ and six-cell extents on light and dark floors. Promotion advances the proof ledg
 8 synthetic / 0 collisions; all 8 remaining synthetic rows are cross-junctions. This accepts one direct
 proof-layer source only. It creates no canonical production source, frame identity, template registration,
 exporter, atlas, schema, blob mapping, or Unity registration.
+
+**Accepted opposed-diagonal-filled cross-junction gate (owner approval, 2026-07-23):** `mask_30` directly
+reuses the external `open_cross_filled_ne_sw` base/upper pair as one separately authored fixed-light four-way
+union. All four cardinal sockets remain connected; northeast and southwest are continuous solid wall while
+northwest and southeast remain open floor. The source keeps the west-authored register above the hub and
+hands the south outlet to the accepted east register below it, without a runtime transform, stacked source,
+center cap, peak, post, patch, or doubled cream owner. It passes at 240, 90, and 40 px per cell plus compact,
+three-cell-arm, and six-cell-arm crossings on light and dark floors. Promotion advances the proof ledger to
+24 direct / 16 derived / 7 synthetic / 0 collisions; all 7 remaining synthetic rows are cross-junctions.
+This accepts one direct proof-layer source only. It creates no canonical production source, frame identity,
+template registration, exporter, atlas, schema, blob mapping, or Unity registration. The X-mirrored
+`mask_40` topology remains a separate review decision with no implied derivation or promotion.
 
 The original independently finished low-base-plus-optional-upper construction was
 rejected on 2026-07-20 because its duplicate caps and contours read as one wall

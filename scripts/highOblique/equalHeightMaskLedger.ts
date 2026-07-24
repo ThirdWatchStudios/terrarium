@@ -425,6 +425,16 @@ const doubleFilledNorthCrossJunction: EqualHeightMaskSourceVariant = {
   facingRule: 'connected north, east, south, and west with northeast and northwest solid and southeast/southwest floor crooks open; independently authored west-fixed north slab with one uninterrupted cream south-socket join',
 };
 
+const doubleFilledDiagonalCrossJunction: EqualHeightMaskSourceVariant = {
+  role: 'double-filled-diagonal-cross-junction',
+  sourceStem: 'open_cross_filled_ne_sw',
+  baseFile: 'open_cross_filled_ne_sw-base.svg',
+  upperFile: 'open_cross_filled_ne_sw-upper.svg',
+  transform: 'none',
+  derivation: 'none',
+  facingRule: 'connected north, east, south, and west with northeast and southwest solid and southeast/northwest floor crooks open; one authored fixed-light union hands the north outlet to the west register and the south outlet to the east register',
+};
+
 const singleFilledSoutheastCrossJunction: EqualHeightMaskSourceVariant = {
   role: 'single-filled-southeast-cross-junction',
   sourceStem: 'open_cross_filled_se',
@@ -808,6 +818,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         variants: [singleFilledSouthwestCrossJunction],
         note: 'Accepted southwest-filled cross junction is the plain whole-cell mirror-X derivation of the authored mask_23 southeast-filled four-way union.',
       };
+    case 30:
+      return {
+        kind: 'direct-reuse',
+        status: 'accepted-source-mapping',
+        variants: [doubleFilledDiagonalCrossJunction],
+        note: 'Accepted diagonal-filled cross junction directly reuses one authored fixed-light four-way union; mask_19 and mask_29 remain geometry and register cues rather than stacked provenance.',
+      };
     case 31:
       return {
         kind: 'direct-reuse',
@@ -987,6 +1004,7 @@ const ACCEPTED_SOURCE_VARIANTS = new Set([
   singleFilledNortheastCrossJunction,
   singleFilledNorthwestCrossJunction,
   doubleFilledNorthCrossJunction,
+  doubleFilledDiagonalCrossJunction,
   singleFilledSoutheastCrossJunction,
   singleFilledSouthwestCrossJunction,
   doubleFilledEastCrossJunction,

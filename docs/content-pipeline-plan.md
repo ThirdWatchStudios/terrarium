@@ -44,9 +44,10 @@ changes the export contract except where explicitly flagged (floor variants).
 > southeast-filled cross-junction `mask_23`, the east-filled slab cross-junction `mask_25`, and its accepted
 > west-filled whole-cell X-mirror companion `mask_43`, plus the accepted southwest-filled whole-cell X-mirror
 > companion `mask_29` to `mask_23`, plus the separately authored east-register northwest-filled
-> cross-junction `mask_37` and west-register north-filled slab cross-junction `mask_39`. The ledger
-> now records 23 direct source mappings, 16 approved
-> derivations, 8 synthetic assembly
+> cross-junction `mask_37`, west-register north-filled slab cross-junction `mask_39`, and separately authored
+> opposed-diagonal-filled cross-junction `mask_30`. The ledger
+> now records 24 direct source mappings, 16 approved
+> derivations, 7 synthetic assembly
 > candidates, and zero collisions; all remaining synthetic rows are cross-junctions. `mask_8`
 > directly reuses the socket-polished `full_terminus` pair and `mask_2` uses its accepted whole-cell X mirror;
 > both passed at 90/40 px in 1/3/6-cell contexts. This is not acceptance of the remaining synthetic candidate pixels or a
@@ -201,6 +202,18 @@ changes the export contract except where explicitly flagged (floor variants).
 > Acceptance records one direct proof-layer source only. It adds no canonical production source, frame
 > identity, template registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity`
 > change.
+> **Accepted opposed-diagonal-filled cross-junction slice (owner approval, 2026-07-23):** `mask_30`
+> directly reuses the external `open_cross_filled_ne_sw` pair as one separately authored fixed-light
+> four-way union. Its four cardinal sockets continue ordinary one-cell runs; northeast and southwest are
+> continuous solid wall while northwest and southeast remain open floor. The source keeps the west-authored
+> register above the hub and hands the south outlet to the accepted east register below it, with no runtime
+> transform, stacked source, or duplicate cream owner. It passes 240/90/40 px source checks plus compact,
+> three-cell-arm, and six-cell-arm crossings on light and dark floors. The accepted ledger now records
+> 24 direct / 16 derived / 7 synthetic / 0 collisions; all 7 remaining synthetic rows are cross-junctions.
+> Acceptance records one direct proof-layer source only. It adds no canonical production source, frame
+> identity, template registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity`
+> change. The X-mirrored `mask_40` topology remains a separate review decision with no implied derivation or
+> promotion.
 
 ---
 

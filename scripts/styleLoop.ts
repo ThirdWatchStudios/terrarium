@@ -82,6 +82,10 @@ import {
   compileA1bDoubleFilledNorthCrossJunctionProposalDirectory,
 } from './highOblique/a1bDoubleFilledNorthCrossJunctionProposal';
 import {
+  A1B_DOUBLE_FILLED_DIAGONAL_CROSS_JUNCTION_PROPOSAL_SOURCE_INVENTORY,
+  compileA1bDoubleFilledDiagonalCrossJunctionProposalDirectory,
+} from './highOblique/a1bDoubleFilledDiagonalCrossJunctionProposal';
+import {
   compileA1bDoubleFilledEastCrossJunctionProposalDirectory,
 } from './highOblique/a1bDoubleFilledEastCrossJunctionProposal';
 import {
@@ -154,6 +158,11 @@ import {
 import {
   EQUAL_HEIGHT_DOUBLE_FILLED_NORTH_CROSS_JUNCTION_GATE,
 } from './highOblique/equalHeightDoubleFilledNorthCrossJunctionGate';
+import {
+  doubleFilledDiagonalCrossJunctionVerticalFacing,
+  EQUAL_HEIGHT_DOUBLE_FILLED_DIAGONAL_CROSS_JUNCTION_GATE,
+  type EqualHeightDoubleFilledDiagonalCrossJunctionVerticalFacing,
+} from './highOblique/equalHeightDoubleFilledDiagonalCrossJunctionGate';
 import {
   EQUAL_HEIGHT_DOUBLE_FILLED_EAST_CROSS_JUNCTION_GATE,
 } from './highOblique/equalHeightDoubleFilledEastCrossJunctionGate';
@@ -235,6 +244,12 @@ const singleFilledNorthwestCrossJunctionProposalDirectory = (input: string): str
 
 const doubleFilledNorthCrossJunctionProposalDirectory = (input: string): string =>
   path.join(crossSectionProofsDirectory(input), 'double-filled-north-cross-junction');
+
+const doubleFilledDiagonalCrossJunctionProposalDirectory = (input: string): string =>
+  path.join(
+    crossSectionProofsDirectory(input),
+    'double-filled-diagonal-cross-junction',
+  );
 
 const doubleFilledEastCrossJunctionProposalDirectory = (input: string): string =>
   path.join(crossSectionProofsDirectory(input), 'double-filled-east-cross-junction');
@@ -725,6 +740,10 @@ async function render(
   await renderFullHeightSouthwestProof(options);
   await renderFullHeightSoutheastProof(options);
   await renderEqualHeightCorridorGate(options);
+  await renderEqualHeightDoubleFilledDiagonalCrossJunctionProposal(
+    options,
+    root,
+  );
   await renderEqualHeightDoubleFilledNorthCrossJunctionGate(options, root);
   await renderEqualHeightSingleFilledNorthwestCrossJunctionGate(
     options,
@@ -762,6 +781,7 @@ async function render(
     roomRenderedAt: renderedAt,
     ladderRenderedAt: renderedAt,
     focusRenderedAt: renderedAt,
+    doubleFilledDiagonalCrossJunctionRenderedAt: renderedAt,
     doubleFilledNorthCrossJunctionRenderedAt: renderedAt,
     singleFilledNorthwestCrossJunctionRenderedAt: renderedAt,
     singleFilledSouthwestCrossJunctionRenderedAt: renderedAt,
@@ -1089,6 +1109,33 @@ async function doubleFilledNorthCrossJunctionProposalFileOverrides(
   if (JSON.stringify(actual) !== JSON.stringify(expected)) {
     throw new Error(
       'Double-filled north cross-junction compiler inventory drift',
+    );
+  }
+  return Object.fromEntries([
+    [EMPTY_WORKBENCH_FILE, EMPTY_WORKBENCH_SOURCE],
+    ...compiled.map(({ filename, content }) => [filename, content] as const),
+  ]);
+}
+
+async function doubleFilledDiagonalCrossJunctionProposalFileOverrides(
+  options: CliOptions,
+  root: string,
+): Promise<CompositionFileOverrides> {
+  const directory =
+    doubleFilledDiagonalCrossJunctionProposalDirectory(options.input);
+  const compiled =
+    await compileA1bDoubleFilledDiagonalCrossJunctionProposalDirectory({
+      inputDir: directory,
+      sourcePathPrefix: path.relative(root, directory).replaceAll(path.sep, '/'),
+    });
+  const actual = compiled.map(({ filename }) => filename).sort();
+  const expected =
+    A1B_DOUBLE_FILLED_DIAGONAL_CROSS_JUNCTION_PROPOSAL_SOURCE_INVENTORY
+      .map(({ filename }) => filename)
+      .sort();
+  if (JSON.stringify(actual) !== JSON.stringify(expected)) {
+    throw new Error(
+      'Double-filled diagonal cross-junction compiler inventory drift',
     );
   }
   return Object.fromEntries([
@@ -2511,7 +2558,7 @@ async function renderEqualHeightHorizontalOpenPocketTJunctionGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED HORIZONTAL-SPINE OPEN-POCKET T FAMILY', 23, 820),
     text(24, 68, 'Owner-accepted proof layer · two direct fixed-light sources · lateral mirror remains registration evidence only', 13, 650, MUTED),
     text(1576, 38, 'MASKS 11 / 14 · ACCEPTED', 11, 820, '#294B3C', 'end'),
-    text(1576, 62, '23 direct · 16 derived · 8 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
+    text(1576, 62, '24 direct · 16 derived · 7 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1560, 440),
     text(44, 126, 'AUTHORED SOURCE READ — 240 / 90 / 40 PX', 14, 820),
@@ -2661,7 +2708,7 @@ async function renderEqualHeightOpenPocketTJunctionGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED OPEN-POCKET T-JUNCTION FAMILY', 24, 820),
     text(24, 68, 'Owner-accepted proof layer · one authored west-side hub · one filtered whole-cell X mirror', 13, 650, MUTED),
     text(1576, 38, 'MASKS 7 / 13 ACCEPTED', 11, 820, '#294B3C', 'end'),
-    text(1576, 62, '23 direct · 16 derived · 8 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
+    text(1576, 62, '24 direct · 16 derived · 7 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1560, 500),
     text(44, 126, 'THE HUB ITSELF — 240 PX SOURCE READ', 14, 820),
@@ -3499,6 +3546,118 @@ async function doubleFilledNorthCrossJunctionMatrixWindow(
   );
 }
 
+type DoubleFilledDiagonalCrossJunctionMatrixMask =
+  | 1 | 2 | 4 | 5 | 8 | 10
+  | 16 | 20 | 21 | 22 | 26 | 30 | 34 | 35 | 36;
+
+function doubleFilledDiagonalCrossJunctionCandidateCell(
+  col: number,
+  row: number,
+  layer: 'base' | 'upper' | 'composed' = 'composed',
+): CompositionCell {
+  const candidate =
+    EQUAL_HEIGHT_DOUBLE_FILLED_DIAGONAL_CROSS_JUNCTION_GATE.candidate;
+  if (layer === 'base') return [col, row, candidate.baseFile, null];
+  if (layer === 'upper') {
+    return [col, row, EMPTY_WORKBENCH_FILE, candidate.upperFile];
+  }
+  return [col, row, candidate.baseFile, candidate.upperFile];
+}
+
+function doubleFilledDiagonalCrossJunctionMatrixCell(
+  maskIndex: DoubleFilledDiagonalCrossJunctionMatrixMask,
+  col: number,
+  row: number,
+  verticalFacing: EqualHeightDoubleFilledDiagonalCrossJunctionVerticalFacing,
+): CompositionCell {
+  if (maskIndex === 30) {
+    return doubleFilledDiagonalCrossJunctionCandidateCell(col, row);
+  }
+  if (
+    maskIndex === 16 ||
+    maskIndex === 20 ||
+    maskIndex === 26 ||
+    maskIndex === 34
+  ) {
+    return acceptedFilledBlockCell(maskIndex, col, row);
+  }
+  if (maskIndex === 21) {
+    return westPartialTJunctionCandidateCell(maskIndex, col, row);
+  }
+  if (maskIndex === 22 || maskIndex === 35) {
+    return horizontalPartialTJunctionCandidateCell(maskIndex, col, row);
+  }
+  if (maskIndex === 36) {
+    return eastPartialTJunctionCandidateCell(maskIndex, col, row);
+  }
+  if (maskIndex === 1 || maskIndex === 4) {
+    return openPocketVerticalEndCell(maskIndex, verticalFacing, col, row);
+  }
+  if (maskIndex === 2 || maskIndex === 8) {
+    return openPocketHorizontalEndCell(maskIndex, col, row);
+  }
+  if (maskIndex === 5) {
+    return [
+      col,
+      row,
+      'full_w_straight-base.svg',
+      'full_w_straight-upper.svg',
+      verticalFacing === 'east' ? 'mirror-x' : 'none',
+    ];
+  }
+  return [col, row, 'full_n_straight-base.svg', 'full_n_straight-upper.svg'];
+}
+
+function doubleFilledDiagonalCrossJunctionMatrixCells(
+  matrix: readonly (readonly (number | null)[])[],
+): readonly CompositionCell[] {
+  const cells: CompositionCell[] = [];
+  for (const [row, masks] of matrix.entries()) {
+    for (const [col, maskIndex] of masks.entries()) {
+      if (maskIndex === null) continue;
+      cells.push(
+        doubleFilledDiagonalCrossJunctionMatrixCell(
+          maskIndex as DoubleFilledDiagonalCrossJunctionMatrixMask,
+          col,
+          row,
+          doubleFilledDiagonalCrossJunctionVerticalFacing(
+            row,
+            matrix.length,
+          ),
+        ),
+      );
+    }
+  }
+  return cells;
+}
+
+async function doubleFilledDiagonalCrossJunctionMatrixWindow(
+  options: CliOptions,
+  matrix: readonly (readonly (number | null)[])[],
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  fileOverrides: CompositionFileOverrides,
+  floorFill: string = A1A_PALETTE.floor,
+  showGrid = true,
+): Promise<string> {
+  return compositionWindow(
+    options,
+    doubleFilledDiagonalCrossJunctionMatrixCells(matrix),
+    matrix[0].length,
+    matrix.length,
+    x,
+    y,
+    width,
+    height,
+    fileOverrides,
+    undefined,
+    showGrid,
+    floorFill,
+  );
+}
+
 type SingleFilledNorthwestCrossJunctionMatrixMask =
   | 1 | 2 | 4 | 5 | 8 | 10
   | 16 | 18 | 20 | 26 | 27 | 37;
@@ -3871,6 +4030,566 @@ const installedMassFrame = (
     'stroke="#4E7D79" stroke-width="2.5" stroke-linecap="square" opacity="0.82"/>';
 };
 
+async function renderEqualHeightDoubleFilledDiagonalCrossJunctionProposal(
+  options: CliOptions,
+  root: string,
+): Promise<void> {
+  const gate = EQUAL_HEIGHT_DOUBLE_FILLED_DIAGONAL_CROSS_JUNCTION_GATE;
+  const width = 1600;
+  const height = 3310;
+  const panelFill = '#ECE5D5';
+  const panel = (x: number, y: number, w: number, h: number): string =>
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="14" fill="${panelFill}" ` +
+      `stroke="${INK}" stroke-width="1.5" opacity="0.96"/>`;
+  const fileOverrides: CompositionFileOverrides = {
+    [EMPTY_WORKBENCH_FILE]: EMPTY_WORKBENCH_SOURCE,
+    ...await verticalTerminusProposalFileOverrides(options, root),
+    ...await openPocketCrossJunctionProposalFileOverrides(options, root),
+    ...await thickWallBlockProposalFileOverrides(options, root),
+    ...await eastPartialTJunctionGateFileOverrides(options, root),
+    ...await horizontalPartialTJunctionProposalFileOverrides(options, root),
+    ...await singleFilledCrossJunctionProposalFileOverrides(options, root),
+    ...await singleFilledSoutheastCrossJunctionProposalFileOverrides(
+      options,
+      root,
+    ),
+    ...await doubleFilledDiagonalCrossJunctionProposalFileOverrides(
+      options,
+      root,
+    ),
+  };
+  const parts: string[] = [
+    `<rect width="${width}" height="${height}" rx="18" fill="${PANEL}"/>`,
+    text(
+      24,
+      38,
+      'QUOTACO EQUAL-HEIGHT WALLS — NE/SW DIAGONAL-FILLED CROSS-JUNCTION',
+      23,
+      820,
+    ),
+    text(
+      24,
+      68,
+      'OWNER ACCEPTED · one new fixed-view union for mask_30; direct proof-layer source, no production registration',
+      13,
+      650,
+      MUTED,
+    ),
+    text(1576, 38, 'MASK_30 · ACCEPTED', 11, 820, '#4E7D79', 'end'),
+    text(
+      1576,
+      62,
+      'accepted ledger · 24 direct · 16 derived · 7 synthetic',
+      10,
+      700,
+      MUTED,
+      'end',
+    ),
+
+    panel(20, 92, 1560, 520),
+    text(
+      44,
+      126,
+      'STATE DIAMOND — TWO OPPOSITE CROOKS CLOSE; TWO REMAIN FLOOR',
+      14,
+      820,
+    ),
+    text(
+      44,
+      150,
+      'mask_15 governs the hub. mask_19 supplies the NE register and mask_29 supplies only the SW closure law; neither source is stacked.',
+      10,
+      650,
+      MUTED,
+    ),
+
+    panel(20, 632, 1560, 620),
+    text(
+      44,
+      666,
+      'SOURCE READ — ONE BASE / UPPER UNION AT 240; COMPOSED AT 90 / 40',
+      14,
+      820,
+    ),
+    text(
+      44,
+      690,
+      'One S-shaped cream owner reaches every socket. Coral, green, and foreground shade survive only around the open southeast return.',
+      10,
+      650,
+      MUTED,
+    ),
+
+    panel(20, 1272, 1560, 620),
+    text(
+      44,
+      1306,
+      'COMPACT INSTALLED MASS — BOTH DIAGONAL FILLS MUST READ AT ONE CELL',
+      14,
+      820,
+    ),
+    text(
+      44,
+      1330,
+      'Exact occupancy: floor / 20 / 26; 20 / 30 / 34; 16 / 34 / floor. Teal brackets mark the two overlapping 2×2 wall masses.',
+      10,
+      650,
+      MUTED,
+    ),
+
+    panel(20, 1912, 1560, 900),
+    text(
+      44,
+      1946,
+      'EXTENT GATE — SAME SOURCE WITH THREE-CELL AND SIX-CELL ARMS',
+      14,
+      820,
+    ),
+    text(
+      44,
+      1970,
+      'Long runs may not conceal a pinched hourglass, center ridge, doubled belt, socket gap, or lost northwest/southeast floor crook.',
+      10,
+      650,
+      MUTED,
+    ),
+
+    panel(20, 2832, 1560, 454),
+    text(44, 2868, 'ACCEPTANCE CONTRACT', 14, 820),
+    text(824, 2868, 'PROOF BOUNDARY', 14, 820),
+  ];
+
+  const controls: ReadonlyArray<
+  readonly [CompositionCell, number, string, string]
+  > = [
+    [
+      openPocketCrossJunctionCandidateCell(0, 0),
+      60,
+      'MASK_15',
+      'ALL CROOKS OPEN',
+    ],
+    [
+      singleFilledCrossJunctionCandidateCell(0, 0),
+      430,
+      'MASK_19',
+      'NE FILLED · REGISTER LAW',
+    ],
+    [
+      singleFilledSouthwestCrossJunctionCandidateCell(0, 0),
+      800,
+      'MASK_29',
+      'SW FILLED · CLOSURE LAW',
+    ],
+    [
+      doubleFilledDiagonalCrossJunctionCandidateCell(0, 0),
+      1170,
+      'MASK_30',
+      'NE + SW · ACCEPTED',
+    ],
+  ];
+  for (const [cell, x, label, caption] of controls) {
+    const isCandidate = label === 'MASK_30';
+    parts.push(
+      text(
+        x + 120,
+        184,
+        label,
+        10,
+        840,
+        isCandidate ? '#B65F4D' : '#4E7D79',
+        'middle',
+      ),
+    );
+    parts.push(
+      await compositionWindow(
+        options,
+        [cell],
+        1,
+        1,
+        x,
+        204,
+        240,
+        240,
+        fileOverrides,
+      ),
+    );
+    parts.push(
+      isCandidate
+        ? crossSourceCellFrame(x, 204, 240)
+        : crossAcceptedFrame(x, 204, 240),
+    );
+    parts.push(
+      text(
+        x + 120,
+        468,
+        caption,
+        9,
+        800,
+        isCandidate ? '#B65F4D' : MUTED,
+        'middle',
+      ),
+    );
+  }
+  parts.push(
+    text(
+      800,
+      534,
+      'AUTHOR ONE MOLDED S-UNION · DO NOT OVERLAY MASK_19 + MASK_29',
+      11,
+      840,
+      '#294B3C',
+      'middle',
+    ),
+  );
+  parts.push(
+    text(
+      800,
+      568,
+      'NW + SE remain real floor crooks · mask_40 mirror remains a later decision',
+      10,
+      760,
+      '#9A493D',
+      'middle',
+    ),
+  );
+
+  const sourceCases: ReadonlyArray<
+  readonly ['base' | 'upper' | 'composed', number, string]
+  > = [
+    ['base', 60, 'BASE · 240'],
+    ['upper', 340, 'UPPER · 240'],
+    ['composed', 620, 'COMPOSED · 240'],
+  ];
+  for (const [layer, x, label] of sourceCases) {
+    parts.push(
+      await compositionWindow(
+        options,
+        [doubleFilledDiagonalCrossJunctionCandidateCell(0, 0, layer)],
+        1,
+        1,
+        x,
+        728,
+        240,
+        240,
+        fileOverrides,
+      ),
+    );
+    parts.push(
+      text(
+        x + 120,
+        996,
+        label,
+        9,
+        820,
+        layer === 'composed' ? '#B65F4D' : MUTED,
+        'middle',
+      ),
+    );
+  }
+  parts.push(
+    await compositionWindow(
+      options,
+      [doubleFilledDiagonalCrossJunctionCandidateCell(0, 0)],
+      1,
+      1,
+      920,
+      742,
+      90,
+      90,
+      fileOverrides,
+    ),
+  );
+  parts.push(crossSourceCellFrame(920, 742, 90, 2));
+  parts.push(
+    await compositionWindow(
+      options,
+      [doubleFilledDiagonalCrossJunctionCandidateCell(0, 0)],
+      1,
+      1,
+      1042,
+      767,
+      40,
+      40,
+      fileOverrides,
+      undefined,
+      true,
+      A1A_PALETTE.charcoal,
+    ),
+  );
+  parts.push(crossSourceCellFrame(1042, 767, 40, 1));
+  parts.push(text(965, 852, '90 PX', 9, 820, '#B65F4D', 'middle'));
+  parts.push(
+    text(1062, 830, '40 PX · DARK', 9, 820, '#4E7D79', 'middle'),
+  );
+  const sourceNotes = [
+    'one continuous S-shaped cream plane; no internal dividing ridge',
+    'exact N / E / S / W sockets remain flush',
+    'NW and SE keep the accepted mask_15 concave radii',
+    'NE and SW contain no buried coral, green, or frontage rail',
+    'only the SE return owns coral, green, shadow, and service ticks',
+  ];
+  for (const [index, note] of sourceNotes.entries()) {
+    parts.push(
+      text(
+        1120,
+        738 + index * 52,
+        `• ${note}`,
+        10,
+        720,
+        index < 4 ? '#294B3C' : '#9A493D',
+      ),
+    );
+  }
+  parts.push(
+    text(
+      800,
+      1184,
+      'REJECT · TWO ELBOWS KISSING · CENTER PEAK · HOURGLASS PINCH · DUPLICATE MATERIAL BELTS',
+      10,
+      840,
+      '#9A493D',
+      'middle',
+    ),
+  );
+
+  parts.push(
+    text(
+      215,
+      1364,
+      '90 PX/CELL · LIGHT',
+      10,
+      840,
+      '#B65F4D',
+      'middle',
+    ),
+  );
+  parts.push(
+    await doubleFilledDiagonalCrossJunctionMatrixWindow(
+      options,
+      gate.compactMatrix,
+      80,
+      1384,
+      270,
+      270,
+      fileOverrides,
+    ),
+  );
+  parts.push(crossInstalledUnionFrame(170, 1384, 90));
+  parts.push(crossInstalledUnionFrame(80, 1474, 90));
+  parts.push(crossSourceCellFrame(170, 1474, 90, 3));
+  parts.push(
+    text(
+      500,
+      1364,
+      '40 PX/CELL · DARK',
+      10,
+      840,
+      '#4E7D79',
+      'middle',
+    ),
+  );
+  parts.push(
+    await doubleFilledDiagonalCrossJunctionMatrixWindow(
+      options,
+      gate.compactMatrix,
+      440,
+      1384,
+      120,
+      120,
+      fileOverrides,
+      A1A_PALETTE.charcoal,
+    ),
+  );
+  parts.push(crossInstalledUnionFrame(480, 1384, 40));
+  parts.push(crossInstalledUnionFrame(440, 1424, 40));
+  parts.push(crossSourceCellFrame(480, 1424, 40, 2));
+  const compactNotes = [
+    'NE wall mass: mask_20 / 26 / 30 / 34',
+    'SW wall mass: mask_20 / 30 / 16 / 34',
+    'both open crooks stay floor-shaped at 40 px',
+    'the center reads as one connector, never two elbows',
+    'adjacent accepted pieces meet without duplicate service seams',
+  ];
+  for (const [index, note] of compactNotes.entries()) {
+    parts.push(
+      text(
+        700,
+        1398 + index * 54,
+        `• ${note}`,
+        11,
+        740,
+        index < 3 ? '#294B3C' : MUTED,
+      ),
+    );
+  }
+  parts.push(
+    text(
+      700,
+      1702,
+      'PASS ONLY IF THE TWO OPEN CROOKS STAY DISTINCT WITHOUT PINCHING THE CREAM PLANE.',
+      10,
+      840,
+      '#B65F4D',
+    ),
+  );
+  parts.push(
+    text(
+      80,
+      1830,
+      'TEAL = TWO INSTALLED 2×2 MASSES · CORAL = MASK_30 ACCEPTED SOURCE',
+      9,
+      820,
+      '#4E7D79',
+    ),
+  );
+
+  parts.push(
+    text(
+      180,
+      2010,
+      '3-CELL ARMS · 40 PX/CELL · LIGHT',
+      10,
+      840,
+      '#B65F4D',
+      'middle',
+    ),
+  );
+  parts.push(
+    await doubleFilledDiagonalCrossJunctionMatrixWindow(
+      options,
+      gate.threeCellArmMatrix,
+      40,
+      2030,
+      280,
+      280,
+      fileOverrides,
+    ),
+  );
+  parts.push(crossInstalledUnionFrame(160, 2110, 40));
+  parts.push(crossInstalledUnionFrame(120, 2150, 40));
+  parts.push(crossSourceCellFrame(160, 2150, 40, 2));
+  parts.push(
+    text(
+      630,
+      2010,
+      '6-CELL ARMS · 40 PX/CELL · LIGHT',
+      10,
+      840,
+      '#4E7D79',
+      'middle',
+    ),
+  );
+  parts.push(
+    await doubleFilledDiagonalCrossJunctionMatrixWindow(
+      options,
+      gate.sixCellArmMatrix,
+      370,
+      2030,
+      520,
+      520,
+      fileOverrides,
+    ),
+  );
+  parts.push(crossInstalledUnionFrame(610, 2230, 40));
+  parts.push(crossInstalledUnionFrame(570, 2270, 40));
+  parts.push(crossSourceCellFrame(610, 2270, 40, 2));
+  parts.push(
+    text(
+      1270,
+      2010,
+      '6-CELL ARMS · 40 PX/CELL · DARK',
+      10,
+      840,
+      '#B65F4D',
+      'middle',
+    ),
+  );
+  parts.push(
+    await doubleFilledDiagonalCrossJunctionMatrixWindow(
+      options,
+      gate.sixCellArmMatrix,
+      1010,
+      2030,
+      520,
+      520,
+      fileOverrides,
+      A1A_PALETTE.charcoal,
+    ),
+  );
+  parts.push(crossInstalledUnionFrame(1250, 2230, 40));
+  parts.push(crossInstalledUnionFrame(1210, 2270, 40));
+  parts.push(crossSourceCellFrame(1250, 2270, 40, 2));
+  parts.push(
+    text(
+      800,
+      2634,
+      'SAME MASK_30 SOURCE AT EVERY EXTENT · LONG ARMS MAY NOT CAMOUFLAGE A BAD CENTER',
+      10,
+      840,
+      '#294B3C',
+      'middle',
+    ),
+  );
+  parts.push(
+    text(
+      800,
+      2680,
+      'Local joins: 21 / 26 above; 22 / 30 / 35 center; 16 / 36 below',
+      10,
+      740,
+      MUTED,
+      'middle',
+    ),
+  );
+
+  const reviewLines = [
+    'Judge one direct 128×128 base / upper source with no transform',
+    'Keep exact N/E/S/W sockets, solid NE/SW, and open NW/SE',
+    'Require one continuous S-shaped cream plane at 240/90/40 px',
+    'Keep frontage shade and material belts off every top-to-top join',
+    'Reject peaks, posts, patches, doubled seams, or an hourglass pinch',
+  ];
+  for (const [index, line] of reviewLines.entries()) {
+    parts.push(
+      text(
+        44,
+        2910 + index * 48,
+        `• ${line}`,
+        10,
+        720,
+        index < 4 ? '#294B3C' : MUTED,
+      ),
+    );
+  }
+  const boundaryLines: ReadonlyArray<readonly [string, string]> = [
+    ['OWNER ACCEPTED · MASK_30 DIRECT PROOF SOURCE', '#4E7D79'],
+    ['accepted ledger · 24 direct / 16 derived / 7 synthetic', MUTED],
+    ['2 EXTERNAL PROOF SVGs · TEMPORARY FRAMES', '#4E7D79'],
+    ['MASK_40 MIRROR REMAINS A LATER DECISION', MUTED],
+    ['NO CANONICAL / EXPORT / ATLAS / SCHEMA / BLOB / UNITY', '#9A493D'],
+  ];
+  for (const [index, [line, color]] of boundaryLines.entries()) {
+    parts.push(
+      text(
+        824,
+        2910 + index * 48,
+        line,
+        10,
+        index === 0 || index >= 2 ? 820 : 700,
+        color,
+      ),
+    );
+  }
+
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" ` +
+    `viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+  const png = new Resvg(svg, {
+    fitTo: { mode: 'width', value: width * CARD_RENDER_SCALE },
+  }).render().asPng();
+  await writeFile(path.join(options.output, `${gate.stem}.png`), png);
+}
+
 async function renderEqualHeightDoubleFilledNorthCrossJunctionGate(
   options: CliOptions,
   root: string,
@@ -3916,7 +4635,7 @@ async function renderEqualHeightDoubleFilledNorthCrossJunctionGate(
     text(
       1576,
       62,
-      'accepted ledger · 23 direct · 16 derived · 8 synthetic',
+      'accepted ledger · 24 direct · 16 derived · 7 synthetic',
       10,
       700,
       MUTED,
@@ -4287,7 +5006,7 @@ async function renderEqualHeightDoubleFilledNorthCrossJunctionGate(
   }
   const boundaryLines: ReadonlyArray<readonly [string, string]> = [
     ['OWNER ACCEPTED · MASK_39 DIRECT PROOF SOURCE', '#4E7D79'],
-    ['accepted ledger · 23 direct / 16 derived / 8 synthetic', MUTED],
+    ['accepted ledger · 24 direct / 16 derived / 7 synthetic', MUTED],
     ['2 EXTERNAL PROOF SVGs · TEMPORARY FRAMES', '#4E7D79'],
     ['NO CANONICAL / EXPORT / ATLAS / SCHEMA / BLOB / UNITY', '#9A493D'],
   ];
@@ -4373,7 +5092,7 @@ async function renderEqualHeightSingleFilledNorthwestCrossJunctionGate(
     text(
       1576,
       62,
-      'accepted ledger · 23 direct · 16 derived · 8 synthetic',
+      'accepted ledger · 24 direct · 16 derived · 7 synthetic',
       10,
       700,
       MUTED,
@@ -4929,7 +5648,7 @@ async function renderEqualHeightSingleFilledNorthwestCrossJunctionGate(
   }
   const boundaryLines: ReadonlyArray<readonly [string, string]> = [
     ['OWNER ACCEPTED · MASK_37 DIRECT PROOF SOURCE', '#4E7D79'],
-    ['accepted ledger · 23 direct / 16 derived / 8 synthetic', MUTED],
+    ['accepted ledger · 24 direct / 16 derived / 7 synthetic', MUTED],
     ['2 EXTERNAL PROOF SVGs · TEMPORARY FRAMES', '#4E7D79'],
     ['NO CANONICAL / EXPORT / ATLAS / SCHEMA / BLOB / UNITY', '#9A493D'],
   ];
@@ -5005,7 +5724,7 @@ async function renderEqualHeightSingleFilledSouthwestCrossJunctionGate(
     text(
       1576,
       62,
-      'accepted ledger · 23 direct · 16 derived · 8 synthetic',
+      'accepted ledger · 24 direct · 16 derived · 7 synthetic',
       10,
       700,
       MUTED,
@@ -5528,7 +6247,7 @@ async function renderEqualHeightSingleFilledSouthwestCrossJunctionGate(
   }
   const boundaryLines: ReadonlyArray<readonly [string, string]> = [
     ['OWNER ACCEPTED · MASK_29 APPROVED DERIVATION', '#4E7D79'],
-    ['accepted ledger · 23 direct / 16 derived / 8 synthetic', MUTED],
+    ['accepted ledger · 24 direct / 16 derived / 7 synthetic', MUTED],
     ['2 REUSED EXTERNAL PROOF SVGs · 0 NEW SOURCE FILES', '#4E7D79'],
     ['NO CANONICAL / EXPORT / ATLAS / SCHEMA / BLOB / UNITY', '#9A493D'],
   ];
@@ -5576,7 +6295,7 @@ async function renderEqualHeightDoubleFilledWestCrossJunctionGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — WEST-FILLED SLAB JUNCTION GATE', 23, 820),
     text(24, 68, 'OWNER ACCEPTED · mask_25 mirrored as one whole-cell union; no new authored source', 13, 650, MUTED),
     text(1576, 38, 'MASK_43 · ACCEPTED', 11, 820, '#4E7D79', 'end'),
-    text(1576, 62, 'accepted ledger · 23 direct · 16 derived · 8 synthetic', 10, 700, MUTED, 'end'),
+    text(1576, 62, 'accepted ledger · 24 direct · 16 derived · 7 synthetic', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1560, 470),
     text(44, 126, 'ACCEPTED MIRROR — ONE AUTHORED UNION, ONE WHOLE-CELL X TRANSFORM', 14, 820),
@@ -5786,7 +6505,7 @@ async function renderEqualHeightDoubleFilledWestCrossJunctionGate(
   }
   const boundaryLines: ReadonlyArray<readonly [string, string]> = [
     ['OWNER ACCEPTED · MASK_43 APPROVED DERIVATION', '#4E7D79'],
-    ['accepted ledger · 23 direct / 16 derived / 8 synthetic', MUTED],
+    ['accepted ledger · 24 direct / 16 derived / 7 synthetic', MUTED],
     ['SOURCE: MASK_25 + WHOLE-CELL MIRROR-X', '#4E7D79'],
     ['0 NEW SVGs · TEMPORARY PROOF FRAME', '#4E7D79'],
     ['NO CANONICAL / EXPORT / ATLAS / SCHEMA / BLOB / UNITY', '#9A493D'],
@@ -5829,7 +6548,7 @@ async function renderEqualHeightDoubleFilledEastCrossJunctionProposal(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED EAST-FILLED SLAB JUNCTION', 23, 820),
     text(24, 68, 'OWNER ACCEPTED · one west branch enters a two-cell-wide north–south structural slab', 13, 650, MUTED),
     text(1576, 38, 'MASK_25 · ACCEPTED', 11, 820, '#4E7D79', 'end'),
-    text(1576, 62, 'accepted ledger · 23 direct · 16 derived · 8 synthetic', 10, 700, MUTED, 'end'),
+    text(1576, 62, 'accepted ledger · 24 direct · 16 derived · 7 synthetic', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1560, 470),
     text(44, 126, 'OCCUPANCY LADDER — ACCEPTED BOUNDARY LAWS, NEVER STACKED SOURCE ART', 14, 820),
@@ -5952,7 +6671,7 @@ async function renderEqualHeightDoubleFilledEastCrossJunctionProposal(
   }
   const boundaryLines: ReadonlyArray<readonly [string, string]> = [
     ['OWNER ACCEPTED · MASK_25 DIRECT PROOF SOURCE', '#294B3C'],
-    ['accepted ledger · 23 direct / 16 derived / 8 synthetic', MUTED],
+    ['accepted ledger · 24 direct / 16 derived / 7 synthetic', MUTED],
     ['MASK_43 IS THE SEPARATELY ACCEPTED WHOLE-CELL X COMPANION', '#4E7D79'],
     ['2 EXTERNAL PROOF SVGs · TEMPORARY FRAMES', '#4E7D79'],
     ['NO CANONICAL / EXPORT / ATLAS / SCHEMA / BLOB / UNITY', '#9A493D'],
@@ -5995,7 +6714,7 @@ async function renderEqualHeightSingleFilledSoutheastCrossJunctionProposal(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — SOUTHEAST-FILLED CROSS-JUNCTION GATE', 23, 820),
     text(24, 68, 'OWNER ACCEPTED · one southeast crook closes inside the accepted four-way socket envelope', 13, 650, MUTED),
     text(1576, 38, 'MASK_23 · ACCEPTED', 11, 820, '#4E7D79', 'end'),
-    text(1576, 62, 'accepted ledger · 23 direct · 16 derived · 8 synthetic', 10, 700, MUTED, 'end'),
+    text(1576, 62, 'accepted ledger · 24 direct · 16 derived · 7 synthetic', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1560, 470),
     text(44, 126, 'ACCEPTED SOURCE LOCK — MASK_15 OPEN CONTROL → MASK_23 SE-FILLED', 14, 820),
@@ -6151,7 +6870,7 @@ async function renderEqualHeightSingleFilledSoutheastCrossJunctionProposal(
   }
   const boundaryLines: ReadonlyArray<readonly [string, string]> = [
     ['OWNER ACCEPTED · MASK_23 DIRECT PROOF SOURCE', '#294B3C'],
-    ['accepted ledger · 23 direct / 16 derived / 8 synthetic', MUTED],
+    ['accepted ledger · 24 direct / 16 derived / 7 synthetic', MUTED],
     ['2 EXTERNAL PROOF SVGs · TEMPORARY FRAMES', '#4E7D79'],
     ['NO CANONICAL / EXPORT / ATLAS / SCHEMA / BLOB / UNITY', '#9A493D'],
   ];
@@ -6193,7 +6912,7 @@ async function renderEqualHeightSingleFilledCrossJunctionGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — SINGLE-FILLED CROSS-JUNCTION GATE', 23, 820),
     text(24, 68, 'OWNER ACCEPTED · one northeast crook closes inside the four-way socket envelope', 13, 650, MUTED),
     text(1576, 38, 'MASK_19 · ACCEPTED', 11, 820, '#4E7D79', 'end'),
-    text(1576, 62, 'accepted ledger · 23 direct · 16 derived · 8 synthetic', 10, 700, MUTED, 'end'),
+    text(1576, 62, 'accepted ledger · 24 direct · 16 derived · 7 synthetic', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1560, 470),
     text(44, 126, 'ACCEPTED SOURCE LOCK — MASK_15 OPEN CONTROL → MASK_19 NE-FILLED', 14, 820),
@@ -6349,7 +7068,7 @@ async function renderEqualHeightSingleFilledCrossJunctionGate(
   }
   const boundaryLines: ReadonlyArray<readonly [string, string]> = [
     ['OWNER ACCEPTED · MASK_19 DIRECT PROOF SOURCE', '#294B3C'],
-    ['accepted ledger · 23 direct / 16 derived / 8 synthetic', MUTED],
+    ['accepted ledger · 24 direct / 16 derived / 7 synthetic', MUTED],
     ['2 EXTERNAL PROOF SVGs · TEMPORARY FRAMES', '#4E7D79'],
     ['NO CANONICAL / EXPORT / ATLAS / SCHEMA / BLOB / UNITY', '#9A493D'],
   ];
@@ -6484,7 +7203,7 @@ async function renderEqualHeightOpenPocketCrossJunctionGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — OPEN-POCKET CROSS-JUNCTION GATE', 24, 820),
     text(24, 68, 'OWNER ACCEPTED · one authored fixed-light four-way union · direct proof-layer source', 13, 650, MUTED),
     text(1576, 38, 'MASK_15 · ACCEPTED', 11, 820, '#4E7D79', 'end'),
-    text(1576, 62, 'ledger · 23 direct · 16 derived · 8 synthetic', 10, 700, MUTED, 'end'),
+    text(1576, 62, 'ledger · 24 direct · 16 derived · 7 synthetic', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1560, 450),
     text(44, 126, 'CONCRETE USE CASE — ONE-CELL-WIDE RUNS CROSS, ALL FOUR DIAGONALS STAY FLOOR', 14, 820),
@@ -6633,7 +7352,7 @@ async function renderEqualHeightOpenPocketCrossJunctionGate(
   }
   const boundaryLines: ReadonlyArray<readonly [string, string]> = [
     ['OWNER ACCEPTED · MASK_15 DIRECT SOURCE', '#4E7D79'],
-    ['accepted ledger · 23 direct / 16 derived / 8 synthetic', MUTED],
+    ['accepted ledger · 24 direct / 16 derived / 7 synthetic', MUTED],
     ['8 remaining cross-junction rows stay proof-only', MUTED],
     ['2 EXTERNAL PROOF SVGs · TEMPORARY FRAMES', '#4E7D79'],
     ['NO CANONICAL / EXPORT / ATLAS / SCHEMA / BLOB / UNITY', '#9A493D'],
@@ -6677,7 +7396,7 @@ async function renderEqualHeightHorizontalPartialTJunctionGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — HORIZONTAL PARTIAL T-JUNCTION GATE', 24, 820),
     text(24, 68, 'OWNER ACCEPTED · two fixed-light direct masters plus two approved whole-cell X derivations', 13, 650, MUTED),
     text(1576, 38, 'MASKS 18 / 35 / 22 / 28', 11, 820, '#B65F4D', 'end'),
-    text(1576, 62, 'ledger · 23 direct · 16 derived · 8 synthetic', 10, 700, MUTED, 'end'),
+    text(1576, 62, 'ledger · 24 direct · 16 derived · 7 synthetic', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1560, 430),
     text(44, 126, 'TWO OCCUPANCY DIAMONDS — FOUR SIBLING STATES, NOT A SEQUENCE', 14, 820),
@@ -6943,7 +7662,7 @@ async function renderEqualHeightHorizontalPartialTJunctionGate(
   }
   const boundaryLines: ReadonlyArray<readonly [string, string]> = [
     ['OWNER ACCEPTED · PROOF-LAYER SOURCE MAPPING', '#294B3C'],
-    ['ledger · 23 direct / 16 derived / 8 synthetic', MUTED],
+    ['ledger · 24 direct / 16 derived / 7 synthetic', MUTED],
     ['remaining synthetic rows · cross-junctions only', MUTED],
     ['4 EXTERNAL PROOF SVGs · TEMPORARY FRAMES', '#4E7D79'],
     ['NO CANONICAL / EXPORT / ATLAS / SCHEMA / BLOB / UNITY', '#9A493D'],
@@ -6986,7 +7705,7 @@ async function renderEqualHeightEastPartialTJunctionGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — EAST SINGLE-FILLED-POCKET T TRANSITIONS', 24, 820),
     text(24, 68, 'OWNER ACCEPTED · approved X-mirror derivations of the accepted west pair · fixed-light source roles preserved', 13, 650, MUTED),
     text(1576, 38, 'MASKS 36 / 27 · ACCEPTED', 11, 820, A1A_PALETTE.green, 'end'),
-    text(1576, 62, 'ledger · 23 direct · 16 derived · 8 synthetic', 10, 700, MUTED, 'end'),
+    text(1576, 62, 'ledger · 24 direct · 16 derived · 7 synthetic', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1560, 430),
     text(44, 126, 'THE EAST OCCUPANCY DIAMOND — MIRRORED TOPOLOGY, SAME FIXED-LIGHT ROLES', 14, 820),
@@ -7237,7 +7956,7 @@ async function renderEqualHeightWestPartialTJunctionGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — SINGLE-FILLED-POCKET T TRANSITIONS', 24, 820),
     text(24, 68, 'OWNER ACCEPTED · two separately authored west-side fixed-light direct sources · open and fully filled states remain the controls', 13, 650, MUTED),
     text(1576, 38, 'MASKS 17 / 21 · ACCEPTED', 11, 820, '#B65F4D', 'end'),
-    text(1576, 62, 'ledger · 23 direct · 16 derived · 8 synthetic', 10, 700, MUTED, 'end'),
+    text(1576, 62, 'ledger · 24 direct · 16 derived · 7 synthetic', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1560, 450),
     text(44, 126, 'THE OCCUPANCY DIAMOND — THESE ARE SIBLING STATES', 14, 820),
@@ -7567,7 +8286,7 @@ async function renderEqualHeightThickWallHorizontalRepeatGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED N×2 HORIZONTAL REPEAT FAMILY', 24, 820),
     text(24, 68, 'Owner-accepted proof layer · two fixed-light direct sources · accepted 2×2 family remains the control', 13, 650, MUTED),
     text(1576, 38, 'MASKS 31 / 38 ACCEPTED', 11, 820, A1A_PALETTE.green, 'end'),
-    text(1576, 62, '23 direct · 16 derived · 8 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
+    text(1576, 62, '24 direct · 16 derived · 7 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1560, 500),
     text(44, 126, 'THE PLAYER-SHAPED CASE — WIDEN THE SOLID MASS', 14, 820),
@@ -7760,7 +8479,7 @@ async function renderEqualHeightThickWallRepeatGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED 2xN THICK-WALL REPEAT FAMILY', 24, 820),
     text(24, 68, 'Owner-accepted proof layer · one west-authored middle spine plus one approved whole-cell X mirror · 2x2 family remains the control', 13, 650, MUTED),
     text(1576, 38, 'MASKS 24 / 42 ACCEPTED', 11, 820, A1A_PALETTE.green, 'end'),
-    text(1576, 62, '23 direct · 16 derived · 8 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
+    text(1576, 62, '24 direct · 16 derived · 7 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1560, 570),
     text(44, 126, 'THE PLAYER-SHAPED CASE — EXTEND THE SOLID MASS', 14, 820),
@@ -7991,7 +8710,7 @@ async function renderEqualHeightThickWallBlockGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED 2x2 THICK-WALL FAMILY', 24, 820),
     text(24, 68, 'Owner-accepted proof layer · two fixed-light west sources plus two approved X-mirror derivations · solid top lives in the pieces', 13, 650, MUTED),
     text(1576, 38, 'FOUR MAPPINGS ACCEPTED', 11, 820, A1A_PALETTE.green, 'end'),
-    text(1576, 62, '23 direct · 16 derived · 8 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
+    text(1576, 62, '24 direct · 16 derived · 7 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1560, 560),
     text(44, 126, 'THE PLAYER ACTION — FILL THE OPEN CROOK', 14, 820),
@@ -8133,7 +8852,7 @@ async function renderEqualHeightIsolatedShellGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED MASK_0 ISOLATED SHELL GATE', 24, 820),
     text(24, 68, 'Owner-accepted proof layer · one full-height structural housing · zero cardinal sockets · no transform', 13, 650, MUTED),
     text(1576, 38, 'MASK_0 MAPPING ACCEPTED', 11, 820, A1A_PALETTE.green, 'end'),
-    text(1576, 62, '23 direct · 16 derived · 8 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
+    text(1576, 62, '24 direct · 16 derived · 7 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
 
     panel(20, 92, 1120, 410),
     text(44, 126, 'ONE MOLDED HOUSING — LAYER READ AT 240 PX', 14, 820),
@@ -8335,7 +9054,7 @@ async function renderEqualHeightVerticalTerminusGate(
     text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED VERTICAL TERMINUS GATE', 24, 820),
     text(24, 68, 'Owner-accepted proof layer · two authored wall rollovers · west source + east mirror-X derivation', 13, 650, MUTED),
     text(1976, 38, 'MASK_1 + MASK_4 MAPPING ACCEPTED', 11, 820, A1A_PALETTE.green, 'end'),
-    text(1976, 62, '23 direct · 16 derived · 8 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
+    text(1976, 62, '24 direct · 16 derived · 7 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
   ];
 
   const isolated: ReadonlyArray<readonly [1 | 4, EqualHeightVerticalTerminusWallSide]> = [
@@ -9001,6 +9720,10 @@ async function renderEqualHeightMaskLedger(options: CliOptions, root: string): P
     ...await singleFilledCrossJunctionProposalFileOverrides(options, root),
     ...await singleFilledNorthwestCrossJunctionProposalFileOverrides(options, root),
     ...await singleFilledSoutheastCrossJunctionProposalFileOverrides(options, root),
+    ...await doubleFilledDiagonalCrossJunctionProposalFileOverrides(
+      options,
+      root,
+    ),
     ...await doubleFilledNorthCrossJunctionProposalFileOverrides(options, root),
     ...await doubleFilledEastCrossJunctionProposalFileOverrides(options, root),
   };
@@ -9114,7 +9837,7 @@ async function renderEqualHeightMaskLedger(options: CliOptions, root: string): P
     'mask_5 · W direct / E mirror-X + facing',
     'mask_10 · shared north / south source',
     'mask_7 / 13 · open-pocket T · direct / filtered mirror-X',
-    'mask_11 / 14 · horizontal T; mask_15 / 19 / 23 / 25 · direct cross hubs',
+    'mask_11 / 14 · horizontal T; mask_15 / 19 / 23 / 25 / 30 · direct cross hubs',
     'mask_16 / 20 · filled elbows · direct sources',
     'mask_26 / 34 · filled elbows · mirror-X',
     'mask_24 / 42 · filled middle spine · direct / mirror-X',
@@ -9148,12 +9871,12 @@ async function renderEqualHeightMaskLedger(options: CliOptions, root: string): P
   parts.push(text(railX + 24, gridY + 1354, 'mask_16 / 20 direct and mask_26 / 34 mirror-X form the filled-elbow family.', 11, 650, MUTED));
   parts.push(text(railX + 24, gridY + 1376, 'mask_24 / 42 extend Y; direct masks 31 / 38 extend X.', 11, 650, MUTED));
   parts.push(text(railX + 24, gridY + 1398, 'mask_7 / 13 vertical T and direct masks 11 / 14 horizontal T are accepted.', 11, 650, MUTED));
-  parts.push(text(railX + 24, gridY + 1420, 'mask_15 open, mask_19 / 23 single-filled, and mask_25 east-filled are direct hubs.', 11, 650, MUTED));
+  parts.push(text(railX + 24, gridY + 1420, 'mask_15 / 19 / 23 / 25 / 30 / 37 / 39 are accepted direct cross hubs.', 11, 650, MUTED));
 
   parts.push(text(railX + 24, gridY + 1452, 'SYNTHETIC OBLIGATION', 14, 850, '#7B715F'));
   parts.push(text(railX + 24, gridY + 1480, '0 solid elbows · all four now have accepted proof sources', 11, 700, MUTED));
   parts.push(text(railX + 24, gridY + 1502, '0 T cases · every open and single-filled-pocket T row is accepted', 11, 700, MUTED));
-  parts.push(text(railX + 24, gridY + 1524, '12 cross cases · accepted pocket laws still need local four-way hubs', 11, 700, MUTED));
+  parts.push(text(railX + 24, gridY + 1524, '7 cross cases · accepted pocket laws still need local four-way hubs', 11, 700, MUTED));
   parts.push(text(railX + 24, gridY + 1552, 'Hatched previews are topology diagrams, never proposed final art.', 11, 750, '#7B715F'));
 
   parts.push(text(railX + 24, gridY + 1586, 'OUT OF SCOPE', 14, 850));
@@ -9174,7 +9897,7 @@ async function renderEqualHeightMaskLedger(options: CliOptions, root: string): P
   parts.push(text(railX + 42, gridY + 1810, '✓ accepted source provenance only', 11, 700, '#9FC7A9'));
   parts.push(text(railX + 42, gridY + 1836, '✓ no low-profile or historical topology pixels', 11, 700, '#9FC7A9'));
   parts.push(text(railX + 42, gridY + 1862, '✓ 0 authored geometry gaps remain', 11, 750, '#9FC7A9'));
-  parts.push(text(railX + 42, gridY + 1888, '! 8 synthetic cross-junction cases are diagrams, not accepted art', 11, 750, '#E0836E'));
+  parts.push(text(railX + 42, gridY + 1888, '! 7 synthetic cross-junction cases are diagrams, not accepted art', 11, 750, '#E0836E'));
   parts.push(text(railX + 42, gridY + 1918, 'No further proof or production registration is implied.', 11, 800, '#83A9A6'));
 
   const svg =
@@ -9634,6 +10357,10 @@ async function renderContextMocksSafely(options: CliOptions, root: string): Prom
     await renderFullHeightSouthwestProof(options);
     await renderFullHeightSoutheastProof(options);
     await renderEqualHeightCorridorGate(options);
+    await renderEqualHeightDoubleFilledDiagonalCrossJunctionProposal(
+      options,
+      root,
+    );
     await renderEqualHeightDoubleFilledNorthCrossJunctionGate(options, root);
     await renderEqualHeightSingleFilledNorthwestCrossJunctionGate(
       options,
@@ -9670,6 +10397,7 @@ async function renderContextMocksSafely(options: CliOptions, root: string): Prom
     status.roomRenderedAt = renderedAt;
     status.ladderRenderedAt = renderedAt;
     status.focusRenderedAt = renderedAt;
+    status.doubleFilledDiagonalCrossJunctionRenderedAt = renderedAt;
     status.doubleFilledNorthCrossJunctionRenderedAt = renderedAt;
     status.singleFilledNorthwestCrossJunctionRenderedAt = renderedAt;
     status.singleFilledSouthwestCrossJunctionRenderedAt = renderedAt;
@@ -9853,6 +10581,7 @@ async function main(): Promise<void> {
       const normalizedProofFile = fileName.replaceAll(path.sep, '/');
       if (
         normalizedProofFile.startsWith('vertical-terminus/') ||
+        normalizedProofFile.startsWith('double-filled-diagonal-cross-junction/') ||
         normalizedProofFile.startsWith('double-filled-north-cross-junction/') ||
         normalizedProofFile.startsWith('double-filled-east-cross-junction/') ||
         normalizedProofFile.startsWith('single-filled-northwest-cross-junction/') ||
