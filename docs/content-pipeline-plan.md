@@ -46,9 +46,9 @@ changes the export contract except where explicitly flagged (floor variants).
 > companion `mask_29` to `mask_23`, plus the separately authored east-register northwest-filled
 > cross-junction `mask_37`, west-register north-filled slab cross-junction `mask_39`, and separately authored
 > opposed-diagonal-filled cross-junction `mask_30`, plus its accepted filtered whole-cell X-mirror companion
-> `mask_40`. The ledger
-> now records 24 direct source mappings, 17 approved
-> derivations, 6 synthetic assembly
+> `mask_40`, and the independently authored south-filled slab cross-junction `mask_32`. The ledger
+> now records 25 direct source mappings, 17 approved
+> derivations, 5 synthetic assembly
 > candidates, and zero collisions; all remaining synthetic rows are cross-junctions. `mask_8`
 > directly reuses the socket-polished `full_terminus` pair and `mask_2` uses its accepted whole-cell X mirror;
 > both passed at 90/40 px in 1/3/6-cell contexts. This is not acceptance of the remaining synthetic candidate pixels or a
@@ -222,6 +222,14 @@ changes the export contract except where explicitly flagged (floor variants).
 > The accepted ledger now records 24 direct / 17 derived / 6 synthetic / 0 collisions; all six remaining
 > synthetic rows are cross-junctions. Acceptance adds no SVG, canonical production source, frame identity,
 > template registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity` change.
+> **Accepted south-filled slab cross-junction slice (owner approval, 2026-07-23):** `mask_32` directly reuses
+> the external `open_cross_filled_s` pair as one independently authored fixed-view four-way union. Southeast
+> and southwest form one continuous cream south slab, northeast and northwest remain open floor, and the
+> centered north spur keeps one exposed vertical register. `mask_39` is a geometry/fixed-light control only,
+> never Y-mirrored provenance. The accepted ledger now records 25 direct / 17 derived / 5 synthetic /
+> 0 collisions; all five remaining synthetic rows are cross-junctions. Acceptance records one direct
+> proof-layer source only and adds no canonical source, frame identity, template registration, exporter,
+> atlas, schema, blob mapping, Unity asset, or `production.unity` change.
 
 ---
 

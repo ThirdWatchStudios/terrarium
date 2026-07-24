@@ -28,9 +28,9 @@ and all four corners close as one enclosure.
 
 **Accepted mapping gate (owner approvals, 2026-07-21 through 2026-07-23):** the proof-layer ledger
 locks the unchanged canonical `mask_0` through `mask_46` order and classifies
-24 direct reuses, 17 approved derivations, 6 synthetic assembly
+25 direct reuses, 17 approved derivations, 5 synthetic assembly
 candidates, and zero collisions. The remaining synthetic rows are all cross-junctions. This accepts the
-mapping structure and provenance boundaries only. It does not accept the 6 remaining synthetic
+mapping structure and provenance boundaries only. It does not accept the 5 remaining synthetic
 cross-junction diagrams or create an atlas/production family.
 
 **Accepted horizontal terminus gate (owner approval, 2026-07-21):** `mask_8`
@@ -246,6 +246,16 @@ the sole shared-socket seam owner while preserving every other path and the fixe
 Promotion advances the proof ledger to 24 direct / 17 derived / 6 synthetic / 0 collisions; all six remaining
 synthetic rows are cross-junctions. It creates no new SVG, canonical source, frame identity, template
 registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity` change.
+
+**Accepted south-filled slab cross-junction gate (owner approval, 2026-07-23):** `mask_32` directly reuses
+the external `open_cross_filled_s` base/upper pair as one independently authored fixed-view four-way union.
+All four cardinal sockets remain connected; southeast and southwest form one continuous south slab while
+northeast and northwest remain open floor. One cream owner crosses the slab and centered north spur; the
+accepted foreground row owns the exposed south-facing fascia. `mask_39` remains a geometry and fixed-light
+control only, never a Y-mirrored source. Promotion advances the proof ledger to 25 direct / 17 derived /
+5 synthetic / 0 collisions; all five remaining synthetic rows are cross-junctions. It creates no canonical
+source, frame identity, template registration, exporter, atlas, schema, blob mapping, Unity asset, or
+`production.unity` change.
 
 The original independently finished low-base-plus-optional-upper construction was
 rejected on 2026-07-20 because its duplicate caps and contours read as one wall

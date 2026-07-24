@@ -182,9 +182,9 @@ describe('QuotaCo owner-accepted proof-layer N×2 thick-wall horizontal repeat f
       },
     });
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
-      'direct-reuse': 24,
+    'direct-reuse': 25,
       'approved-derivation': 17,
-      'synthetic-assembly': 6,
+    'synthetic-assembly': 5,
       'unresolved-authored-geometry': 0,
     });
   });

@@ -124,9 +124,9 @@ export const EQUAL_HEIGHT_SINGLE_FILLED_NORTHWEST_CROSS_JUNCTION_GATE = {
       'preserve the east-register fixed-light sockets and the continuous south-facing depth treatment; family-wide shadow cleanup remains deferred polish',
   },
   acceptedLedgerCounts: {
-    'direct-reuse': 24,
+    'direct-reuse': 25,
     'approved-derivation': 17,
-    'synthetic-assembly': 6,
+    'synthetic-assembly': 5,
     'unresolved-authored-geometry': 0,
   },
   directSourceAccepted: true,
@@ -297,9 +297,9 @@ export function validateEqualHeightSingleFilledNorthwestCrossJunctionGate(
   if (
     JSON.stringify(gate.acceptedLedgerCounts) !==
       JSON.stringify(EQUAL_HEIGHT_MASK_LEDGER.counts) ||
-    EQUAL_HEIGHT_MASK_LEDGER.counts['direct-reuse'] !== 24 ||
+    EQUAL_HEIGHT_MASK_LEDGER.counts['direct-reuse'] !== 25 ||
     EQUAL_HEIGHT_MASK_LEDGER.counts['approved-derivation'] !== 17 ||
-    EQUAL_HEIGHT_MASK_LEDGER.counts['synthetic-assembly'] !== 6 ||
+    EQUAL_HEIGHT_MASK_LEDGER.counts['synthetic-assembly'] !== 5 ||
     EQUAL_HEIGHT_MASK_LEDGER.counts['unresolved-authored-geometry'] !== 0
   ) {
     throw new Error(

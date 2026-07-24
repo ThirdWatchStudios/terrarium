@@ -115,9 +115,9 @@ export const EQUAL_HEIGHT_DOUBLE_FILLED_NORTH_CROSS_JUNCTION_GATE = {
       'carry horizontal south-facing depth, coral, and green only across exposed frontage; yield at the top-to-top south socket and wrap the side stack down the west-fixed branch',
   },
   acceptedLedgerCounts: {
-    'direct-reuse': 24,
+    'direct-reuse': 25,
     'approved-derivation': 17,
-    'synthetic-assembly': 6,
+    'synthetic-assembly': 5,
     'unresolved-authored-geometry': 0,
   },
   directSourceAccepted: true,
@@ -277,9 +277,9 @@ export function validateEqualHeightDoubleFilledNorthCrossJunctionGate(
   if (
     JSON.stringify(gate.acceptedLedgerCounts) !==
       JSON.stringify(EQUAL_HEIGHT_MASK_LEDGER.counts) ||
-    EQUAL_HEIGHT_MASK_LEDGER.counts['direct-reuse'] !== 24 ||
+    EQUAL_HEIGHT_MASK_LEDGER.counts['direct-reuse'] !== 25 ||
     EQUAL_HEIGHT_MASK_LEDGER.counts['approved-derivation'] !== 17 ||
-    EQUAL_HEIGHT_MASK_LEDGER.counts['synthetic-assembly'] !== 6 ||
+    EQUAL_HEIGHT_MASK_LEDGER.counts['synthetic-assembly'] !== 5 ||
     EQUAL_HEIGHT_MASK_LEDGER.counts['unresolved-authored-geometry'] !== 0
   ) {
     throw new Error(

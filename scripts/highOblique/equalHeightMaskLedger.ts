@@ -428,6 +428,16 @@ const doubleFilledNorthCrossJunction: EqualHeightMaskSourceVariant = {
   facingRule: 'connected north, east, south, and west with northeast and northwest solid and southeast/southwest floor crooks open; independently authored west-fixed north slab with one uninterrupted cream south-socket join',
 };
 
+const doubleFilledSouthCrossJunction: EqualHeightMaskSourceVariant = {
+  role: 'double-filled-south-cross-junction',
+  sourceStem: 'open_cross_filled_s',
+  baseFile: 'open_cross_filled_s-base.svg',
+  upperFile: 'open_cross_filled_s-upper.svg',
+  transform: 'none',
+  derivation: 'none',
+  facingRule: 'connected north, east, south, and west with southeast and southwest solid and northeast/northwest floor crooks open; independently authored fixed-view south slab with one uninterrupted cream plane and centered north spur',
+};
+
 const doubleFilledDiagonalCrossJunction: EqualHeightMaskSourceVariant = {
   role: 'double-filled-diagonal-cross-junction',
   sourceStem: 'open_cross_filled_ne_sw',
@@ -845,6 +855,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         variants: [filledNorthMiddle],
         note: 'Accepted rear middle spine directly extends the two-row solid wall cream top through both X sockets without an internal face rail.',
       };
+    case 32:
+      return {
+        kind: 'direct-reuse',
+        status: 'accepted-source-mapping',
+        variants: [doubleFilledSouthCrossJunction],
+        note: 'Accepted south-filled slab cross junction directly reuses the independently authored fixed-view four-way union; mask_39 remains a geometry and fixed-light control only and creates no transformed provenance.',
+      };
     case 34:
       return {
         kind: 'approved-derivation',
@@ -1024,6 +1041,7 @@ const ACCEPTED_SOURCE_VARIANTS = new Set([
   singleFilledNortheastCrossJunction,
   singleFilledNorthwestCrossJunction,
   doubleFilledNorthCrossJunction,
+  doubleFilledSouthCrossJunction,
   doubleFilledDiagonalCrossJunction,
   doubleFilledOppositeDiagonalCrossJunction,
   singleFilledSoutheastCrossJunction,
