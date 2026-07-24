@@ -121,9 +121,10 @@ describe('QuotaCo owner-accepted open-pocket cross-junction gate', () => {
     expect(source('open_cross_junction-upper.svg')).not.toContain('104 63');
     for (const cellPixels of [240, 90, 40] as const) {
       const raster = rasterCandidate(cellPixels);
+      const pixels = raster.pixels;
       expect([raster.width, raster.height]).toEqual([cellPixels, cellPixels]);
       expect(
-        raster.pixels.some((channel, offset) => offset % 4 === 3 && channel > 0),
+        pixels.some((channel, offset) => offset % 4 === 3 && channel > 0),
         `mask_15 alpha at ${cellPixels}px`,
       ).toBe(true);
     }

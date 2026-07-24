@@ -58,8 +58,9 @@ function alphaRowSpan(
   row: number,
 ): readonly [number, number] {
   const occupied: number[] = [];
+  const pixels = raster.pixels;
   for (let column = 0; column < raster.width; column += 1) {
-    if (raster.pixels[(row * raster.width + column) * 4 + 3] > 0) {
+    if (pixels[(row * raster.width + column) * 4 + 3] > 0) {
       occupied.push(column);
     }
   }
@@ -72,8 +73,9 @@ function alphaColumnSpan(
   column: number,
 ): readonly [number, number] {
   const occupied: number[] = [];
+  const pixels = raster.pixels;
   for (let row = 0; row < raster.height; row += 1) {
-    if (raster.pixels[(row * raster.width + column) * 4 + 3] > 0) {
+    if (pixels[(row * raster.width + column) * 4 + 3] > 0) {
       occupied.push(row);
     }
   }
@@ -86,8 +88,9 @@ function alphaRowIsContiguous(
   row: number,
   span: readonly [number, number],
 ): boolean {
+  const pixels = raster.pixels;
   for (let column = span[0]; column <= span[1]; column += 1) {
-    if (raster.pixels[(row * raster.width + column) * 4 + 3] === 0) return false;
+    if (pixels[(row * raster.width + column) * 4 + 3] === 0) return false;
   }
   return true;
 }
@@ -97,8 +100,9 @@ function alphaColumnIsContiguous(
   column: number,
   span: readonly [number, number],
 ): boolean {
+  const pixels = raster.pixels;
   for (let row = span[0]; row <= span[1]; row += 1) {
-    if (raster.pixels[(row * raster.width + column) * 4 + 3] === 0) return false;
+    if (pixels[(row * raster.width + column) * 4 + 3] === 0) return false;
   }
   return true;
 }

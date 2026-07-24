@@ -96,12 +96,13 @@ function allPixelsEqual(
   rendered: ReturnType<Resvg['render']>,
   rgb: readonly [number, number, number],
 ): boolean {
-  for (let offset = 0; offset < rendered.pixels.length; offset += 4) {
+  const pixels = rendered.pixels;
+  for (let offset = 0; offset < pixels.length; offset += 4) {
     if (
-      rendered.pixels[offset] !== rgb[0] ||
-      rendered.pixels[offset + 1] !== rgb[1] ||
-      rendered.pixels[offset + 2] !== rgb[2] ||
-      rendered.pixels[offset + 3] !== 255
+      pixels[offset] !== rgb[0] ||
+      pixels[offset + 1] !== rgb[1] ||
+      pixels[offset + 2] !== rgb[2] ||
+      pixels[offset + 3] !== 255
     ) {
       return false;
     }

@@ -66,12 +66,13 @@ function hasOpaqueRgb(
   expected: readonly [number, number, number],
   tolerance = 0,
 ): boolean {
-  for (let offset = 0; offset < raster.pixels.length; offset += 4) {
+  const pixels = raster.pixels;
+  for (let offset = 0; offset < pixels.length; offset += 4) {
     if (
-      Math.abs(raster.pixels[offset] - expected[0]) <= tolerance &&
-      Math.abs(raster.pixels[offset + 1] - expected[1]) <= tolerance &&
-      Math.abs(raster.pixels[offset + 2] - expected[2]) <= tolerance &&
-      raster.pixels[offset + 3] === 255
+      Math.abs(pixels[offset] - expected[0]) <= tolerance &&
+      Math.abs(pixels[offset + 1] - expected[1]) <= tolerance &&
+      Math.abs(pixels[offset + 2] - expected[2]) <= tolerance &&
+      pixels[offset + 3] === 255
     ) {
       return true;
     }
@@ -85,11 +86,12 @@ function opaqueRgbAt(
   y: number,
 ): readonly [number, number, number] {
   const offset = (y * raster.width + x) * 4;
-  expect(raster.pixels[offset + 3]).toBe(255);
+  const pixels = raster.pixels;
+  expect(pixels[offset + 3]).toBe(255);
   return [
-    raster.pixels[offset],
-    raster.pixels[offset + 1],
-    raster.pixels[offset + 2],
+    pixels[offset],
+    pixels[offset + 1],
+    pixels[offset + 2],
   ];
 }
 

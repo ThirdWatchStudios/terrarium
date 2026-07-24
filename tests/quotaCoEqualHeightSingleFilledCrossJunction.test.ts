@@ -79,8 +79,9 @@ function alphaSpan(
   row: number,
 ): readonly [number, number] {
   const occupied: number[] = [];
+  const pixels = raster.pixels;
   for (let column = 0; column < raster.width; column += 1) {
-    if (raster.pixels[(row * raster.width + column) * 4 + 3] > 0) {
+    if (pixels[(row * raster.width + column) * 4 + 3] > 0) {
       occupied.push(column);
     }
   }

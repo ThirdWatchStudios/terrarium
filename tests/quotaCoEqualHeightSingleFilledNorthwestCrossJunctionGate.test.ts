@@ -170,12 +170,13 @@ describe('QuotaCo accepted single-filled northwest cross-junction gate', () => {
     ).toEqual(['upper-shell']);
     for (const cellPixels of [240, 90, 40] as const) {
       const raster = rasterCandidate(cellPixels);
+      const pixels = raster.pixels;
       expect([raster.width, raster.height]).toEqual([
         cellPixels,
         cellPixels,
       ]);
       expect(
-        raster.pixels.some(
+        pixels.some(
           (channel, offset) => offset % 4 === 3 && channel > 0,
         ),
         `mask_37 alpha at ${cellPixels}px`,

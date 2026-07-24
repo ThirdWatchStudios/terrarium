@@ -3,6 +3,8 @@
  *
  *   npm run style:watch            # watch kit, re-render on save, serve bench page
  *   npm run style:once             # single render, no watcher, no server
+ *   npm run style:consistency      # explicit all-47 full + bounded preview render, then exit
+ *   npm run style:serve            # serve existing workbench output, no renderer or watcher
  *   npm run style:watch -- --input assets/walls/quota-co-building-system --out .style-loop --port 5411
  *
  * Every save re-validates the masters through the real A1b importer and
@@ -19,12 +21,13 @@
  * reviewed contact-sheet authority via the existing preview scripts.
  */
 import { existsSync, watch } from 'node:fs';
-import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readdir, readFile, stat, writeFile } from 'node:fs/promises';
 import http from 'node:http';
 import path from 'node:path';
 
 import { Resvg } from '@resvg/resvg-js';
 
+import { NB, blobIndex } from '../src/tiles/blob';
 import { A1bAuthoredBImportError, loadA1bAuthoredBFamily } from './highOblique/a1bAuthored';
 import { A1A_PALETTE, A1A_REVIEW_SIZES } from './highOblique/a1aProof';
 import {
@@ -211,8 +214,13 @@ import {
   EQUAL_HEIGHT_SINGLE_OPEN_SOUTHEAST_CROSS_JUNCTION_GATE,
 } from './highOblique/equalHeightSingleOpenSoutheastCrossJunctionGate';
 import {
+  EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE,
+} from './highOblique/equalHeightAllMaskConsistencyGate';
+import {
   EQUAL_HEIGHT_MASK_LEDGER,
   equalHeightMaskContactDescriptor,
+  type EqualHeightMaskCorner,
+  type EqualHeightMaskEdge,
   type EqualHeightMaskLedgerEntry,
   type EqualHeightMaskResolutionKind,
   type EqualHeightMaskSourceVariant,
@@ -652,6 +660,8 @@ interface CliOptions {
   readonly input: string;
   readonly output: string;
   readonly once: boolean;
+  readonly consistency: boolean;
+  readonly serveOnly: boolean;
   readonly port: number;
 }
 
@@ -659,11 +669,21 @@ function parseArgs(args: string[], root: string): CliOptions {
   let input = path.join(root, 'assets/walls/quota-co-building-system');
   let output = path.join(root, '.style-loop');
   let once = false;
+  let consistency = false;
+  let serveOnly = false;
   let port = 5411;
   for (let index = 0; index < args.length; index++) {
     const argument = args[index];
     if (argument === '--once') {
       once = true;
+      continue;
+    }
+    if (argument === '--consistency') {
+      consistency = true;
+      continue;
+    }
+    if (argument === '--serve-only') {
+      serveOnly = true;
       continue;
     }
     if (argument !== '--input' && argument !== '--out' && argument !== '--port') {
@@ -675,7 +695,12 @@ function parseArgs(args: string[], root: string): CliOptions {
     else if (argument === '--out') output = path.resolve(root, value);
     else port = Number.parseInt(value, 10);
   }
-  return { input, output, once, port };
+  if ([once, consistency, serveOnly].filter(Boolean).length > 1) {
+    throw new Error(
+      '--once, --consistency, and --serve-only are separate modes',
+    );
+  }
+  return { input, output, once, consistency, serveOnly, port };
 }
 
 function escapeText(value: string): string {
@@ -766,6 +791,18 @@ function benchPage(): string {
   return renderStyleWorkbenchPage(A1B_AUTHORED_STEMS);
 }
 
+async function readWorkbenchStatus(
+  options: CliOptions,
+): Promise<Record<string, unknown>> {
+  try {
+    return JSON.parse(
+      await readFile(path.join(options.output, 'status.json'), 'utf8'),
+    ) as Record<string, unknown>;
+  } catch {
+    return {};
+  }
+}
+
 async function render(
   options: CliOptions,
   root: string,
@@ -850,6 +887,7 @@ async function render(
   await renderEqualHeightMaskLedger(options, root);
   await renderLowSoutheastCornerFocus(options, root);
   const renderedAt = new Date().toISOString();
+  const previousStatus = await readWorkbenchStatus(options);
   const status = {
     ok: true,
     frames: frames.length,
@@ -887,6 +925,9 @@ async function render(
     terminusRenderedAt: renderedAt,
     mappingRenderedAt: renderedAt,
     corridorRenderedAt: renderedAt,
+    ...(typeof previousStatus.consistencyRenderedAt === 'string'
+      ? { consistencyRenderedAt: previousStatus.consistencyRenderedAt }
+      : {}),
   };
   await writeFile(path.join(options.output, 'status.json'), `${JSON.stringify(status)}\n`, 'utf8');
   await writeFile(path.join(options.output, 'index.html'), benchPage(), 'utf8');
@@ -14879,6 +14920,9 @@ function maskVariantCell(variant: EqualHeightMaskSourceVariant): CompositionCell
   const usesEastPartialTJunctionFilter =
     variant.sourceStem === 'open_w_t_filled_ne' &&
     variant.derivation === 'accepted-southeast-seam-filter';
+  const usesHorizontalPartialTJunctionFilter =
+    variant.sourceStem === 'open_s_t_filled_ne' &&
+    variant.derivation === 'accepted-southeast-seam-filter';
   const usesOppositeDiagonalCrossJunctionFilter =
     variant.sourceStem === 'open_cross_filled_ne_sw' &&
     variant.derivation ===
@@ -14892,6 +14936,8 @@ function maskVariantCell(variant: EqualHeightMaskSourceVariant): CompositionCell
       ? OPEN_POCKET_T_JUNCTION_EAST_BASE_FILE
       : usesEastPartialTJunctionFilter
       ? EAST_PARTIAL_T_JUNCTION_FILTERED_BASE_FILE
+      : usesHorizontalPartialTJunctionFilter
+      ? HORIZONTAL_PARTIAL_T_JUNCTION_FILTERED_BASE_FILE
       : usesOppositeDiagonalCrossJunctionFilter
       ? DOUBLE_FILLED_OPPOSITE_DIAGONAL_FILTERED_BASE_FILE
       : variant.derivation === 'accepted-southeast-seam-filter'
@@ -14903,6 +14949,8 @@ function maskVariantCell(variant: EqualHeightMaskSourceVariant): CompositionCell
       ? OPEN_POCKET_T_JUNCTION_EAST_UPPER_FILE
       : usesEastPartialTJunctionFilter
       ? EAST_PARTIAL_T_JUNCTION_FILTERED_UPPER_FILE
+      : usesHorizontalPartialTJunctionFilter
+      ? HORIZONTAL_PARTIAL_T_JUNCTION_FILTERED_UPPER_FILE
       : usesOppositeDiagonalCrossJunctionFilter
       ? DOUBLE_FILLED_OPPOSITE_DIAGONAL_FILTERED_UPPER_FILE
       : variant.derivation === 'accepted-southeast-seam-filter'
@@ -14952,6 +15000,1166 @@ async function equalHeightMaskPreview(
       options, [cell], 1, 1, x + 100, y + 25, 40, 40, fileOverrides, undefined, false,
     )
   );
+}
+
+type EqualHeightConsistencyLayer = 'base' | 'upper' | 'composed';
+type OccupiedCoordinate = readonly [number, number];
+
+const CONSISTENCY_DARK_FLOOR = '#202624';
+const CONSISTENCY_EDGE_DELTAS: Readonly<
+Record<EqualHeightMaskEdge, readonly [number, number]>
+> = {
+  n: [0, -1],
+  e: [1, 0],
+  s: [0, 1],
+  w: [-1, 0],
+};
+const CONSISTENCY_CORNER_DELTAS: Readonly<
+Record<EqualHeightMaskCorner, readonly [number, number]>
+> = {
+  ne: [1, -1],
+  se: [1, 1],
+  sw: [-1, 1],
+  nw: [-1, -1],
+};
+const CONSISTENCY_NEIGHBORS = [
+  [NB.N, 0, -1],
+  [NB.E, 1, 0],
+  [NB.S, 0, 1],
+  [NB.W, -1, 0],
+  [NB.NE, 1, -1],
+  [NB.SE, 1, 1],
+  [NB.SW, -1, 1],
+  [NB.NW, -1, -1],
+] as const;
+
+function acceptedMaskVariants(
+  entry: EqualHeightMaskLedgerEntry,
+): readonly EqualHeightMaskSourceVariant[] {
+  if (
+    entry.resolution.kind !== 'direct-reuse' &&
+    entry.resolution.kind !== 'approved-derivation'
+  ) {
+    throw new Error(
+      `All-mask consistency review encountered unaccepted ${entry.id}`,
+    );
+  }
+  return entry.resolution.variants;
+}
+
+function positionedMaskVariantCell(
+  variant: EqualHeightMaskSourceVariant,
+  column: number,
+  row: number,
+  layer: EqualHeightConsistencyLayer = 'composed',
+): CompositionCell {
+  const [, , baseFile, upperFile, transform = 'none'] =
+    maskVariantCell(variant);
+  if (layer === 'base') {
+    return [column, row, baseFile, null, transform];
+  }
+  if (layer === 'upper') {
+    return [column, row, EMPTY_WORKBENCH_FILE, upperFile, transform];
+  }
+  return [column, row, baseFile, upperFile, transform];
+}
+
+function reviewVariantForCell(
+  entry: EqualHeightMaskLedgerEntry,
+  column: number,
+  columns: number,
+): EqualHeightMaskSourceVariant {
+  const variants = acceptedMaskVariants(entry);
+  if (variants.length === 1) return variants[0];
+  const wantsEast = column >= columns / 2;
+  const side = wantsEast ? 'east' : 'west';
+  return (
+    variants.find(({ role }) => role.startsWith(side)) ??
+    variants[wantsEast ? variants.length - 1 : 0]
+  );
+}
+
+function occupancyKey(column: number, row: number): string {
+  return `${column},${row}`;
+}
+
+function compositionCellsForOccupancy(
+  occupiedCoordinates: readonly OccupiedCoordinate[],
+  columns: number,
+  rows: number,
+): CompositionCell[] {
+  const occupied = new Set(
+    occupiedCoordinates.map(([column, row]) => occupancyKey(column, row)),
+  );
+  const sorted = [...occupiedCoordinates].sort(
+    ([leftColumn, leftRow], [rightColumn, rightRow]) =>
+      leftRow - rightRow || leftColumn - rightColumn,
+  );
+  if (
+    sorted.some(
+      ([column, row]) =>
+        column < 0 || row < 0 || column >= columns || row >= rows,
+    )
+  ) {
+    throw new Error('All-mask consistency occupancy exceeds its bounds');
+  }
+  return sorted.map(([column, row]) => {
+    let rawNeighbors = 0;
+    for (const [bit, dx, dy] of CONSISTENCY_NEIGHBORS) {
+      if (occupied.has(occupancyKey(column + dx, row + dy))) {
+        rawNeighbors |= bit;
+      }
+    }
+    const entry = EQUAL_HEIGHT_MASK_LEDGER.entries[blobIndex(rawNeighbors)];
+    if (!entry) {
+      throw new Error(
+        `All-mask consistency occupancy produced missing index at ${column},${row}`,
+      );
+    }
+    return positionedMaskVariantCell(
+      reviewVariantForCell(entry, column, columns),
+      column,
+      row,
+    );
+  });
+}
+
+function maskStarComposition(
+  maskIndex: number,
+  extent: 1 | 3 | 6,
+): {
+  readonly cells: readonly CompositionCell[];
+  readonly columns: number;
+  readonly rows: number;
+  readonly center: number;
+} {
+  const entry = EQUAL_HEIGHT_MASK_LEDGER.entries[maskIndex];
+  if (!entry) throw new Error(`Missing consistency mask_${maskIndex}`);
+  const center = extent;
+  const occupied = new Set<string>([occupancyKey(center, center)]);
+  for (const edge of entry.connectedEdges) {
+    const [dx, dy] = CONSISTENCY_EDGE_DELTAS[edge];
+    for (let step = 1; step <= extent; step += 1) {
+      occupied.add(occupancyKey(center + dx * step, center + dy * step));
+    }
+  }
+  for (const corner of entry.solidDiagonals) {
+    const [dx, dy] = CONSISTENCY_CORNER_DELTAS[corner];
+    occupied.add(occupancyKey(center + dx, center + dy));
+  }
+  const occupiedCoordinates = [...occupied].map((coordinate) =>
+    coordinate.split(',').map(Number) as [number, number],
+  );
+  const columns = extent * 2 + 1;
+  const rows = columns;
+  const cells = compositionCellsForOccupancy(
+    occupiedCoordinates,
+    columns,
+    rows,
+  );
+  const centerCell = cells.find(
+    ([column, row]) => column === center && row === center,
+  );
+  if (!centerCell) {
+    throw new Error(`Consistency star omitted mask_${maskIndex} center`);
+  }
+  let centerRaw = 0;
+  for (const [bit, dx, dy] of CONSISTENCY_NEIGHBORS) {
+    if (occupied.has(occupancyKey(center + dx, center + dy))) {
+      centerRaw |= bit;
+    }
+  }
+  if (blobIndex(centerRaw) !== maskIndex) {
+    throw new Error(
+      `Consistency star drift for mask_${maskIndex}; received mask_${blobIndex(centerRaw)}`,
+    );
+  }
+  return { cells, columns, rows, center };
+}
+
+function occupiedRectangle(
+  columns: number,
+  rows: number,
+  perimeterOnly = false,
+): OccupiedCoordinate[] {
+  const occupied: OccupiedCoordinate[] = [];
+  for (let row = 0; row < rows; row += 1) {
+    for (let column = 0; column < columns; column += 1) {
+      if (
+        !perimeterOnly ||
+        row === 0 ||
+        column === 0 ||
+        row === rows - 1 ||
+        column === columns - 1
+      ) {
+        occupied.push([column, row]);
+      }
+    }
+  }
+  return occupied;
+}
+
+function occupiedFromRows(rows: readonly string[]): OccupiedCoordinate[] {
+  const width = rows[0]?.length ?? 0;
+  if (
+    width === 0 ||
+    rows.some((row) => row.length !== width || /[^.#]/.test(row))
+  ) {
+    throw new Error('Invalid all-mask consistency occupancy diagram');
+  }
+  return rows.flatMap((row, rowIndex) =>
+    [...row].flatMap((cell, columnIndex) =>
+      cell === '#' ? [[columnIndex, rowIndex] as const] : [],
+    ),
+  );
+}
+
+function centerReviewOutline(
+  x: number,
+  y: number,
+  center: number,
+  cellSize: number,
+): string {
+  return (
+    `<rect x="${x + center * cellSize + 2}" y="${y + center * cellSize + 2}" ` +
+    `width="${cellSize - 4}" height="${cellSize - 4}" rx="5" fill="none" ` +
+    `stroke="${A1A_PALETTE.coral}" stroke-width="2.5" stroke-dasharray="9 7"/>`
+  );
+}
+
+function consistencyRoleLabel(
+  variant: EqualHeightMaskSourceVariant,
+): string {
+  const label = variant.role
+    .replaceAll('-cross-junction', ' cross')
+    .replaceAll('-t-junction', ' T')
+    .replaceAll('-terminus', ' end')
+    .replaceAll('-', ' ')
+    .toUpperCase();
+  return label.length > 40 ? `${label.slice(0, 39)}…` : label;
+}
+
+function assertRasterPixelBudget(
+  label: string,
+  width: number,
+  height: number,
+  pixelBudget: number,
+): void {
+  if (
+    !Number.isSafeInteger(width) ||
+    !Number.isSafeInteger(height) ||
+    width <= 0 ||
+    height <= 0
+  ) {
+    throw new Error(`${label} raster dimensions must be positive integers`);
+  }
+  const pixels = width * height;
+  if (pixels > pixelBudget) {
+    throw new Error(
+      `${label} raster ${width}×${height} (${pixels.toLocaleString()} pixels) ` +
+        `exceeds its ${pixelBudget.toLocaleString()}-pixel containment budget`,
+    );
+  }
+}
+
+async function renderEqualHeightMaskConsistencyReview(
+  options: CliOptions,
+  fileOverrides: CompositionFileOverrides,
+): Promise<void> {
+  const width = EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.fullRasterWidth;
+  const margin = 24;
+  const catalogColumns = 8;
+  const catalogCardWidth = 540;
+  const catalogCardHeight = 430;
+  const catalogGap = 14;
+  const panel = (
+    x: number,
+    y: number,
+    panelWidth: number,
+    panelHeight: number,
+    fill = '#ECE5D5',
+    stroke = INK,
+  ): string =>
+    `<rect x="${x}" y="${y}" width="${panelWidth}" height="${panelHeight}" ` +
+    `rx="12" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;
+  const sectionTitle = (
+    y: number,
+    titleValue: string,
+    subtitle: string,
+  ): string =>
+    text(margin, y, titleValue, 24, 850) +
+    text(margin, y + 27, subtitle, 13, 650, MUTED);
+  const presentations = EQUAL_HEIGHT_MASK_LEDGER.entries.flatMap((entry) =>
+    acceptedMaskVariants(entry).map((variant, variantIndex) => ({
+      entry,
+      variant,
+      variantIndex,
+    })),
+  );
+  const parts: string[] = [
+    `<rect width="${width}" height="100%" rx="18" fill="${PANEL}"/>`,
+    text(
+      margin,
+      42,
+      'QUOTACO EQUAL-HEIGHT WALLS — ALL-47 FAMILY CONSISTENCY REVIEW',
+      30,
+      880,
+    ),
+    text(
+      margin,
+      76,
+      'REVIEW ONLY · 47 accepted topology rows · 50 accepted visual presentations · ledger frozen at 28 direct / 19 derived / 0 synthetic / 0 unresolved',
+      15,
+      720,
+      A1A_PALETTE.green,
+    ),
+    text(
+      margin,
+      104,
+      'Judge family coherence, not topology acceptance: cream plane, tri-tone register, sockets, outline ownership, seam cadence, and south-facing dimensional shade.',
+      13,
+      620,
+      MUTED,
+    ),
+    panel(width - 820, 24, 796, 96, '#252A28', '#252A28'),
+    text(width - 790, 55, 'PROOF BOUNDARY', 13, 850, '#E2E8DE'),
+    text(
+      width - 790,
+      80,
+      'No source, ledger, atlas, exporter, schema, blob, or Unity promotion.',
+      11,
+      700,
+      '#9FC7A9',
+    ),
+    text(
+      width - 790,
+      101,
+      'Any correction remains a review proposal until owner approval.',
+      11,
+      650,
+      '#83A9A6',
+    ),
+  ];
+
+  let sectionY = 160;
+  parts.push(
+    sectionTitle(
+      sectionY,
+      'A · ALL ACCEPTED PRESENTATIONS',
+      'Every visual presentation at 240 / 90 / 40 px on light and dark floor; 40 px base / upper / composed strips expose doubled paint and register drift.',
+    ),
+  );
+  const catalogY = sectionY + 52;
+  for (const [index, { entry, variant, variantIndex }] of
+    presentations.entries()) {
+    const column = index % catalogColumns;
+    const row = Math.floor(index / catalogColumns);
+    const x = margin + column * (catalogCardWidth + catalogGap);
+    const y = catalogY + row * (catalogCardHeight + catalogGap);
+    const accent =
+      entry.resolution.kind === 'direct-reuse' ? '#294B3C' : '#4E7D79';
+    const cardFill =
+      entry.resolution.kind === 'direct-reuse' ? '#E4EBE3' : '#DFECEB';
+    const composedCell = positionedMaskVariantCell(variant, 0, 0);
+    const baseCell = positionedMaskVariantCell(variant, 0, 0, 'base');
+    const upperCell = positionedMaskVariantCell(variant, 0, 0, 'upper');
+    parts.push(
+      panel(x, y, catalogCardWidth, catalogCardHeight, cardFill, accent),
+    );
+    parts.push(text(x + 12, y + 20, entry.id, 13, 850));
+    parts.push(
+      text(
+        x + catalogCardWidth - 12,
+        y + 20,
+        `${entry.topologyClass.toUpperCase()} · ${
+          entry.resolution.kind === 'direct-reuse' ? 'DIRECT' : 'DERIVED'
+        }`,
+        9,
+        800,
+        accent,
+        'end',
+      ),
+    );
+    parts.push(
+      text(
+        x + 12,
+        y + 37,
+        `${consistencyRoleLabel(variant)}${
+          acceptedMaskVariants(entry).length > 1
+            ? ` · PRESENTATION ${variantIndex + 1}/2`
+            : ''
+        }`,
+        9,
+        700,
+        MUTED,
+      ),
+    );
+    parts.push(
+      await compositionWindow(
+        options,
+        [composedCell],
+        1,
+        1,
+        x + 12,
+        y + 48,
+        240,
+        240,
+        fileOverrides,
+        undefined,
+        false,
+      ),
+      await compositionWindow(
+        options,
+        [composedCell],
+        1,
+        1,
+        x + 276,
+        y + 48,
+        240,
+        240,
+        fileOverrides,
+        undefined,
+        false,
+        CONSISTENCY_DARK_FLOOR,
+      ),
+      text(x + 132, y + 302, '240 · LIGHT', 8, 800, MUTED, 'middle'),
+      text(x + 396, y + 302, '240 · DARK', 8, 800, MUTED, 'middle'),
+      await compositionWindow(
+        options,
+        [composedCell],
+        1,
+        1,
+        x + 12,
+        y + 314,
+        90,
+        90,
+        fileOverrides,
+        undefined,
+        false,
+      ),
+      await compositionWindow(
+        options,
+        [composedCell],
+        1,
+        1,
+        x + 112,
+        y + 314,
+        90,
+        90,
+        fileOverrides,
+        undefined,
+        false,
+        CONSISTENCY_DARK_FLOOR,
+      ),
+      await compositionWindow(
+        options,
+        [composedCell],
+        1,
+        1,
+        x + 216,
+        y + 339,
+        40,
+        40,
+        fileOverrides,
+        undefined,
+        false,
+      ),
+      await compositionWindow(
+        options,
+        [composedCell],
+        1,
+        1,
+        x + 266,
+        y + 339,
+        40,
+        40,
+        fileOverrides,
+        undefined,
+        false,
+        CONSISTENCY_DARK_FLOOR,
+      ),
+      await compositionWindow(
+        options,
+        [baseCell],
+        1,
+        1,
+        x + 336,
+        y + 339,
+        40,
+        40,
+        fileOverrides,
+        undefined,
+        false,
+      ),
+      await compositionWindow(
+        options,
+        [upperCell],
+        1,
+        1,
+        x + 386,
+        y + 339,
+        40,
+        40,
+        fileOverrides,
+        undefined,
+        false,
+      ),
+      await compositionWindow(
+        options,
+        [composedCell],
+        1,
+        1,
+        x + 436,
+        y + 339,
+        40,
+        40,
+        fileOverrides,
+        undefined,
+        false,
+      ),
+      text(x + 57, y + 418, '90 L', 7, 800, MUTED, 'middle'),
+      text(x + 157, y + 418, '90 D', 7, 800, MUTED, 'middle'),
+      text(x + 236, y + 396, '40 L', 7, 800, MUTED, 'middle'),
+      text(x + 286, y + 396, '40 D', 7, 800, MUTED, 'middle'),
+      text(x + 356, y + 396, 'BASE', 7, 800, MUTED, 'middle'),
+      text(x + 406, y + 396, 'UPPER', 7, 800, MUTED, 'middle'),
+      text(x + 456, y + 396, 'B+U', 7, 800, MUTED, 'middle'),
+    );
+  }
+  const catalogRows = Math.ceil(presentations.length / catalogColumns);
+  sectionY =
+    catalogY + catalogRows * (catalogCardHeight + catalogGap) + 50;
+
+  parts.push(
+    sectionTitle(
+      sectionY,
+      'B · COMPACT OCCUPANCY / SOCKET PROBES',
+      'Every canonical center installed in its literal 3×3 neighborhood at 90 and 40 px per cell; coral boxes identify the accepted row under inspection.',
+    ),
+  );
+  const occupancyY = sectionY + 52;
+  const occupancyCardHeight = 332;
+  for (const entry of EQUAL_HEIGHT_MASK_LEDGER.entries) {
+    const column = entry.index % catalogColumns;
+    const row = Math.floor(entry.index / catalogColumns);
+    const x = margin + column * (catalogCardWidth + catalogGap);
+    const y = occupancyY + row * (occupancyCardHeight + catalogGap);
+    const star = maskStarComposition(entry.index, 1);
+    const accent =
+      entry.resolution.kind === 'direct-reuse' ? '#294B3C' : '#4E7D79';
+    parts.push(panel(x, y, catalogCardWidth, occupancyCardHeight, '#ECE5D5', accent));
+    parts.push(text(x + 10, y + 20, `${entry.id} · ${entry.topologyClass}`, 11, 850));
+    parts.push(
+      text(
+        x + catalogCardWidth - 10,
+        y + 20,
+        entry.resolution.kind === 'direct-reuse' ? 'DIRECT' : 'DERIVED',
+        9,
+        850,
+        accent,
+        'end',
+      ),
+      await compositionWindow(
+        options,
+        star.cells,
+        star.columns,
+        star.rows,
+        x + 10,
+        y + 34,
+        270,
+        270,
+        fileOverrides,
+        undefined,
+        true,
+      ),
+      centerReviewOutline(x + 10, y + 34, star.center, 90),
+      await compositionWindow(
+        options,
+        star.cells,
+        star.columns,
+        star.rows,
+        x + 304,
+        y + 74,
+        120,
+        120,
+        fileOverrides,
+        undefined,
+        true,
+        CONSISTENCY_DARK_FLOOR,
+      ),
+      centerReviewOutline(x + 304, y + 74, star.center, 40),
+      equalHeightMaskTopologyGlyph(entry, x + 444, y + 74, 72),
+      text(x + 364, y + 214, '40 PX / CELL · DARK', 8, 800, MUTED, 'middle'),
+      text(x + 364, y + 242, `SOCKETS  ${maskList(entry.connectedEdges)}`, 8, 750, INK, 'middle'),
+      text(x + 364, y + 260, `OPEN  ${maskList(entry.pockets)}`, 8, 700, A1A_PALETTE.coral, 'middle'),
+      text(x + 364, y + 278, `SOLID  ${maskList(entry.solidDiagonals)}`, 8, 700, A1A_PALETTE.teal, 'middle'),
+      text(x + 145, y + 320, '90 PX / CELL · LIGHT', 8, 800, MUTED, 'middle'),
+    );
+  }
+  const occupancyRows = Math.ceil(
+    EQUAL_HEIGHT_MASK_LEDGER.entries.length / catalogColumns,
+  );
+  sectionY =
+    occupancyY + occupancyRows * (occupancyCardHeight + catalogGap) + 50;
+
+  parts.push(
+    sectionTitle(
+      sectionY,
+      'C · SOURCE / DERIVATION COMPARISONS',
+      'All 19 derived rows: sixteen source-to-row mappings plus the three dual-facing connectivity rows. Filtered derivations are called out explicitly.',
+    ),
+  );
+  const comparisonY = sectionY + 52;
+  const comparisons = [
+    ...EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.derivationPairs.map((pair) => {
+      const sourceEntry = EQUAL_HEIGHT_MASK_LEDGER.entries[pair.sourceMask];
+      const derivedEntry = EQUAL_HEIGHT_MASK_LEDGER.entries[pair.derivedMask];
+      return {
+        sourceEntry,
+        sourceVariant: acceptedMaskVariants(sourceEntry)[0],
+        derivedEntry,
+        derivedVariant: acceptedMaskVariants(derivedEntry)[0],
+        operation: pair.operation.replaceAll('-', ' ').toUpperCase(),
+      };
+    }),
+    ...EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.internalFacingMasks.map(
+      (maskIndex) => {
+        const entry = EQUAL_HEIGHT_MASK_LEDGER.entries[maskIndex];
+        const variants = acceptedMaskVariants(entry);
+        return {
+          sourceEntry: entry,
+          sourceVariant: variants[0],
+          derivedEntry: entry,
+          derivedVariant: variants[1],
+          operation: 'EXPLICIT WEST / EAST PRESENTATION · CONNECTIVITY SHARED',
+        };
+      },
+    ),
+  ];
+  const comparisonColumns = 5;
+  const comparisonCardWidth = 870;
+  const comparisonCardHeight = 332;
+  const comparisonGap = 18;
+  for (const [index, comparison] of comparisons.entries()) {
+    const column = index % comparisonColumns;
+    const row = Math.floor(index / comparisonColumns);
+    const x = margin + column * (comparisonCardWidth + comparisonGap);
+    const y = comparisonY + row * (comparisonCardHeight + comparisonGap);
+    const sourceCell = positionedMaskVariantCell(
+      comparison.sourceVariant,
+      0,
+      0,
+    );
+    const derivedCell = positionedMaskVariantCell(
+      comparison.derivedVariant,
+      0,
+      0,
+    );
+    const filtered = comparison.operation.includes('FILTER');
+    parts.push(
+      panel(
+        x,
+        y,
+        comparisonCardWidth,
+        comparisonCardHeight,
+        filtered ? '#F1E5DD' : '#E4EBE8',
+        filtered ? A1A_PALETTE.coral : '#4E7D79',
+      ),
+      text(
+        x + 12,
+        y + 21,
+        `${comparison.sourceEntry.id}  →  ${comparison.derivedEntry.id}`,
+        12,
+        850,
+      ),
+      text(
+        x + comparisonCardWidth - 12,
+        y + 21,
+        comparison.operation,
+        8,
+        820,
+        filtered ? A1A_PALETTE.coral : '#4E7D79',
+        'end',
+      ),
+      await compositionWindow(
+        options,
+        [sourceCell],
+        1,
+        1,
+        x + 16,
+        y + 42,
+        240,
+        240,
+        fileOverrides,
+        undefined,
+        false,
+      ),
+      text(x + 276, y + 174, '→', 30, 850, MUTED, 'middle'),
+      await compositionWindow(
+        options,
+        [derivedCell],
+        1,
+        1,
+        x + 300,
+        y + 42,
+        240,
+        240,
+        fileOverrides,
+        undefined,
+        false,
+      ),
+      await compositionWindow(
+        options,
+        [sourceCell],
+        1,
+        1,
+        x + 568,
+        y + 72,
+        90,
+        90,
+        fileOverrides,
+        undefined,
+        false,
+        CONSISTENCY_DARK_FLOOR,
+      ),
+      await compositionWindow(
+        options,
+        [derivedCell],
+        1,
+        1,
+        x + 674,
+        y + 72,
+        90,
+        90,
+        fileOverrides,
+        undefined,
+        false,
+        CONSISTENCY_DARK_FLOOR,
+      ),
+      text(
+        x + 120,
+        y + 306,
+        consistencyRoleLabel(comparison.sourceVariant),
+        8,
+        750,
+        MUTED,
+        'middle',
+      ),
+      text(
+        x + 404,
+        y + 306,
+        consistencyRoleLabel(comparison.derivedVariant),
+        8,
+        750,
+        MUTED,
+        'middle',
+      ),
+      text(x + 613, y + 182, '90 DARK', 7, 750, '#A59E8F', 'middle'),
+      text(x + 719, y + 182, '90 DARK', 7, 750, '#A59E8F', 'middle'),
+    );
+  }
+  const comparisonRows = Math.ceil(comparisons.length / comparisonColumns);
+  sectionY =
+    comparisonY +
+    comparisonRows * (comparisonCardHeight + comparisonGap) +
+    50;
+
+  parts.push(
+    sectionTitle(
+      sectionY,
+      'D · CENTER-STABILITY / EXTENT LADDER',
+      'The coral-boxed center must not change as accepted sockets grow from 1 to 3 to 6 cells. Six-cell arms remain at the decisive 40 px per cell.',
+    ),
+  );
+  const extentY = sectionY + 52;
+  const extentColumns = 3;
+  const extentCardWidth = 1456;
+  const extentCardHeight = 586;
+  const extentGap = 18;
+  for (const [index, maskIndex] of
+    EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.extentMasks.entries()) {
+    const entry = EQUAL_HEIGHT_MASK_LEDGER.entries[maskIndex];
+    const column = index % extentColumns;
+    const row = Math.floor(index / extentColumns);
+    const x = margin + column * (extentCardWidth + extentGap);
+    const y = extentY + row * (extentCardHeight + extentGap);
+    const extentOne = maskStarComposition(maskIndex, 1);
+    const extentThree = maskStarComposition(maskIndex, 3);
+    const extentSix = maskStarComposition(maskIndex, 6);
+    parts.push(
+      panel(x, y, extentCardWidth, extentCardHeight),
+      text(x + 14, y + 22, `${entry.id} · ${entry.topologyClass}`, 13, 850),
+      text(
+        x + extentCardWidth - 14,
+        y + 22,
+        'SAME ACCEPTED CENTER AT EVERY EXTENT',
+        9,
+        820,
+        A1A_PALETTE.green,
+        'end',
+      ),
+      await compositionWindow(
+        options,
+        extentOne.cells,
+        extentOne.columns,
+        extentOne.rows,
+        x + 18,
+        y + 44,
+        270,
+        270,
+        fileOverrides,
+        undefined,
+        true,
+      ),
+      centerReviewOutline(x + 18, y + 44, extentOne.center, 90),
+      await compositionWindow(
+        options,
+        extentThree.cells,
+        extentThree.columns,
+        extentThree.rows,
+        x + 322,
+        y + 44,
+        350,
+        350,
+        fileOverrides,
+        undefined,
+        true,
+      ),
+      centerReviewOutline(x + 322, y + 44, extentThree.center, 50),
+      await compositionWindow(
+        options,
+        extentSix.cells,
+        extentSix.columns,
+        extentSix.rows,
+        x + 710,
+        y + 44,
+        520,
+        520,
+        fileOverrides,
+        undefined,
+        true,
+      ),
+      centerReviewOutline(x + 710, y + 44, extentSix.center, 40),
+      text(x + 153, y + 334, '1-CELL ARMS · 90 PX', 9, 800, MUTED, 'middle'),
+      text(x + 497, y + 414, '3-CELL ARMS · 50 PX', 9, 800, MUTED, 'middle'),
+      text(x + 970, y + 580, '6-CELL ARMS · 40 PX', 9, 800, MUTED, 'middle'),
+      equalHeightMaskTopologyGlyph(entry, x + 1270, y + 86, 120),
+      text(x + 1330, y + 236, `SOCKETS ${maskList(entry.connectedEdges)}`, 9, 800, INK, 'middle'),
+      text(x + 1330, y + 258, `OPEN ${maskList(entry.pockets)}`, 9, 750, A1A_PALETTE.coral, 'middle'),
+      text(x + 1330, y + 280, `SOLID ${maskList(entry.solidDiagonals)}`, 9, 750, A1A_PALETTE.teal, 'middle'),
+    );
+  }
+  const extentRows = Math.ceil(
+    EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.extentMasks.length /
+      extentColumns,
+  );
+  sectionY =
+    extentY + extentRows * (extentCardHeight + extentGap) + 50;
+
+  parts.push(
+    sectionTitle(
+      sectionY,
+      'E · COMPOSED ENVIRONMENT STRESS',
+      'Compact enclosure, narrow corridor, filled masses, and a mixed junction yard on both floor grounds. These are real accepted-source unions, not topology-bank stand-ins.',
+    ),
+  );
+  const contextY = sectionY + 52;
+  const contextHeight = 650;
+  const compactRoomCoordinates = occupiedRectangle(3, 3, true);
+  const compactRoomCells = compositionCellsForOccupancy(
+    compactRoomCoordinates,
+    3,
+    3,
+  );
+  const corridorCoordinates = occupiedRectangle(3, 8, true);
+  const corridorCells = compositionCellsForOccupancy(
+    corridorCoordinates,
+    3,
+    8,
+  );
+  const massThreeCoordinates = occupiedRectangle(3, 3);
+  const massFourCoordinates = occupiedRectangle(4, 4);
+  const massSixCoordinates = occupiedRectangle(6, 6);
+  const massThreeCells = compositionCellsForOccupancy(
+    massThreeCoordinates,
+    3,
+    3,
+  );
+  const massFourCells = compositionCellsForOccupancy(
+    massFourCoordinates,
+    4,
+    4,
+  );
+  const massSixCells = compositionCellsForOccupancy(
+    massSixCoordinates,
+    6,
+    6,
+  );
+  const junctionRows = [
+    '..#...#...',
+    '..#...#...',
+    '##########',
+    '..##.###..',
+    '#####.####',
+    '..##..##..',
+    '..######..',
+    '.....#....',
+  ] as const;
+  const junctionCoordinates = occupiedFromRows(junctionRows);
+  const junctionCells = compositionCellsForOccupancy(
+    junctionCoordinates,
+    junctionRows[0].length,
+    junctionRows.length,
+  );
+
+  parts.push(
+    panel(margin, contextY, 900, contextHeight),
+    text(margin + 14, contextY + 24, 'COMPACT 3×3 ENCLOSURE', 13, 850),
+    await compositionWindow(
+      options,
+      compactRoomCells,
+      3,
+      3,
+      margin + 20,
+      contextY + 48,
+      405,
+      405,
+      fileOverrides,
+      undefined,
+      true,
+    ),
+    await compositionWindow(
+      options,
+      compactRoomCells,
+      3,
+      3,
+      margin + 455,
+      contextY + 48,
+      405,
+      405,
+      fileOverrides,
+      undefined,
+      true,
+      CONSISTENCY_DARK_FLOOR,
+    ),
+    text(
+      margin + 450,
+      contextY + 486,
+      'All four corner facings · one-cell floor pocket · light / dark',
+      10,
+      750,
+      MUTED,
+      'middle',
+    ),
+    text(
+      margin + 450,
+      contextY + 524,
+      'No socket flare, corner pedestal, duplicate outline, or south-belt jump.',
+      10,
+      700,
+      A1A_PALETTE.green,
+      'middle',
+    ),
+  );
+
+  parts.push(
+    panel(944, contextY, 700, contextHeight),
+    text(958, contextY + 24, '3×8 NARROW CORRIDOR', 13, 850),
+    await compositionWindow(
+      options,
+      corridorCells,
+      3,
+      8,
+      984,
+      contextY + 48,
+      240,
+      560,
+      fileOverrides,
+      undefined,
+      true,
+    ),
+    await compositionWindow(
+      options,
+      corridorCells,
+      3,
+      8,
+      1274,
+      contextY + 48,
+      240,
+      560,
+      fileOverrides,
+      undefined,
+      true,
+      CONSISTENCY_DARK_FLOOR,
+    ),
+    text(1530, contextY + 162, 'CHECK', 11, 850, A1A_PALETTE.coral, 'middle'),
+    text(1530, contextY + 194, 'one-cell aisle', 9, 700, MUTED, 'middle'),
+    text(1530, contextY + 216, 'parallel register', 9, 700, MUTED, 'middle'),
+    text(1530, contextY + 238, 'quiet repetition', 9, 700, MUTED, 'middle'),
+    text(1530, contextY + 260, 'end ownership', 9, 700, MUTED, 'middle'),
+  );
+
+  parts.push(
+    panel(1668, contextY, 1020, contextHeight),
+    text(1682, contextY + 24, 'SOLID MASSES · 3×3 / 4×4 / 6×6', 13, 850),
+    await compositionWindow(
+      options,
+      massThreeCells,
+      3,
+      3,
+      1688,
+      contextY + 54,
+      210,
+      210,
+      fileOverrides,
+      undefined,
+      true,
+    ),
+    await compositionWindow(
+      options,
+      massFourCells,
+      4,
+      4,
+      1930,
+      contextY + 54,
+      280,
+      280,
+      fileOverrides,
+      undefined,
+      true,
+    ),
+    await compositionWindow(
+      options,
+      massSixCells,
+      6,
+      6,
+      2248,
+      contextY + 54,
+      420,
+      420,
+      fileOverrides,
+      undefined,
+      true,
+      CONSISTENCY_DARK_FLOOR,
+    ),
+    text(1793, contextY + 286, '3×3 · 70 PX', 9, 800, MUTED, 'middle'),
+    text(2070, contextY + 356, '4×4 · 70 PX', 9, 800, MUTED, 'middle'),
+    text(2458, contextY + 496, '6×6 · 70 PX · DARK', 9, 800, '#A59E8F', 'middle'),
+    text(
+      2178,
+      contextY + 552,
+      'One uninterrupted cream field; mask_46 must disappear inside the mass.',
+      10,
+      750,
+      A1A_PALETTE.green,
+      'middle',
+    ),
+  );
+
+  parts.push(
+    panel(2712, contextY, width - 2712 - margin, contextHeight),
+    text(2726, contextY + 24, 'MIXED JUNCTION YARD · 10×8', 13, 850),
+    await compositionWindow(
+      options,
+      junctionCells,
+      junctionRows[0].length,
+      junctionRows.length,
+      2732,
+      contextY + 48,
+      820,
+      560,
+      fileOverrides,
+      undefined,
+      true,
+    ),
+    await compositionWindow(
+      options,
+      junctionCells,
+      junctionRows[0].length,
+      junctionRows.length,
+      3580,
+      contextY + 48,
+      820,
+      560,
+      fileOverrides,
+      undefined,
+      true,
+      CONSISTENCY_DARK_FLOOR,
+    ),
+    text(
+      3566,
+      contextY + 630,
+      'Mixed T / cross / filled-crook transitions · same occupancy on light and dark',
+      10,
+      750,
+      MUTED,
+      'middle',
+    ),
+  );
+
+  sectionY = contextY + contextHeight + 48;
+  const footerHeight = 190;
+  parts.push(
+    panel(margin, sectionY, width - margin * 2, footerHeight, '#252A28', '#252A28'),
+    text(margin + 24, sectionY + 34, 'REVIEW QUESTIONS', 16, 850, '#E2E8DE'),
+    text(margin + 24, sectionY + 66, '1 · Do all cream tops read as one molded catalog family at 240, 90, and 40 px?', 12, 700, '#9FC7A9'),
+    text(margin + 24, sectionY + 92, '2 · Do adjoining sockets erase cleanly without doubled outlines, buried belts, or false seams?', 12, 700, '#9FC7A9'),
+    text(margin + 24, sectionY + 118, '3 · Are coral / green / cream registers and south-facing shade coherent across independently authored source banks?', 12, 700, '#9FC7A9'),
+    text(margin + 24, sectionY + 144, '4 · Does every coral-boxed center remain visually stable as its accepted arms and occupied crooks grow?', 12, 700, '#9FC7A9'),
+    text(
+      width - 34,
+      sectionY + 170,
+      'STOP HERE FOR OWNER REVIEW · NO PROMOTION IMPLIED',
+      12,
+      850,
+      '#83A9A6',
+      'end',
+    ),
+  );
+
+  const height = sectionY + footerHeight + margin;
+  parts[0] = `<rect width="${width}" height="${height}" rx="18" fill="${PANEL}"/>`;
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" ` +
+    `viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+  const previewWidth =
+    EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.previewRasterWidth;
+  const previewHeight = Math.ceil((height * previewWidth) / width);
+  const targets = [
+    {
+      label: 'All-47 consistency preview',
+      stem: EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.previewStem,
+      width: previewWidth,
+      height: previewHeight,
+      pixelBudget:
+        EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.previewRasterPixelBudget,
+    },
+    {
+      label: 'All-47 consistency full review',
+      stem: EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.stem,
+      width,
+      height,
+      pixelBudget:
+        EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.fullRasterPixelBudget,
+    },
+  ] as const;
+  for (const target of targets) {
+    assertRasterPixelBudget(
+      target.label,
+      target.width,
+      target.height,
+      target.pixelBudget,
+    );
+    const png = new Resvg(svg, {
+      fitTo: { mode: 'width', value: target.width },
+    })
+      .render()
+      .asPng();
+    await writeFile(
+      path.join(options.output, `${target.stem}.png`),
+      png,
+    );
+  }
 }
 
 function equalHeightMaskSourceLabel(entry: EqualHeightMaskLedgerEntry): string {
@@ -15004,43 +16212,7 @@ async function renderEqualHeightMaskLedger(options: CliOptions, root: string): P
   const gap = 8;
   const railX = 1296;
   const railWidth = 580;
-  const fileOverrides = {
-    ...await southeastReviewFileOverrides(options),
-    ...await isolatedShellProposalFileOverrides(options, root),
-    ...await verticalTerminusProposalFileOverrides(options, root),
-    ...await thickWallBlockProposalFileOverrides(options, root),
-    ...await thickWallHorizontalRepeatProposalFileOverrides(options, root),
-    ...await thickWallRepeatProposalFileOverrides(options, root),
-    ...await openPocketTJunctionProposalFileOverrides(options, root),
-    ...await horizontalOpenPocketTJunctionProposalFileOverrides(options, root),
-    ...await westPartialTJunctionProposalFileOverrides(options, root),
-    ...await eastPartialTJunctionGateFileOverrides(options, root),
-    ...await horizontalPartialTJunctionProposalFileOverrides(options, root),
-    ...await openPocketCrossJunctionProposalFileOverrides(options, root),
-    ...await singleFilledCrossJunctionProposalFileOverrides(options, root),
-    ...await singleFilledNorthwestCrossJunctionProposalFileOverrides(options, root),
-    ...await singleFilledSoutheastCrossJunctionProposalFileOverrides(options, root),
-    ...await doubleFilledDiagonalCrossJunctionProposalFileOverrides(
-      options,
-      root,
-    ),
-    ...await doubleFilledOppositeDiagonalCrossJunctionFileOverrides(
-      options,
-      root,
-    ),
-    ...await doubleFilledNorthCrossJunctionProposalFileOverrides(options, root),
-    ...await doubleFilledSouthCrossJunctionProposalFileOverrides(options, root),
-    ...await doubleFilledEastCrossJunctionProposalFileOverrides(options, root),
-    ...await singleOpenSouthwestCrossJunctionProposalFileOverrides(
-      options,
-      root,
-    ),
-    ...await singleOpenNorthwestCrossJunctionProposalFileOverrides(
-      options,
-      root,
-    ),
-    ...await fullyFilledCrossJunctionProposalFileOverrides(options, root),
-  };
+  const fileOverrides = await equalHeightAcceptedFileOverrides(options, root);
   const parts: string[] = [
     '<defs>' +
       '<pattern id="ledgerHatch" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">' +
@@ -15222,6 +16394,82 @@ async function renderEqualHeightMaskLedger(options: CliOptions, root: string): P
     fitTo: { mode: 'width', value: width * CARD_RENDER_SCALE },
   }).render().asPng();
   await writeFile(path.join(options.output, `${EQUAL_HEIGHT_MASK_LEDGER.stem}.png`), png);
+}
+
+async function equalHeightAcceptedFileOverrides(
+  options: CliOptions,
+  root: string,
+): Promise<CompositionFileOverrides> {
+  return {
+    ...await southeastReviewFileOverrides(options),
+    ...await isolatedShellProposalFileOverrides(options, root),
+    ...await verticalTerminusProposalFileOverrides(options, root),
+    ...await thickWallBlockProposalFileOverrides(options, root),
+    ...await thickWallHorizontalRepeatProposalFileOverrides(options, root),
+    ...await thickWallRepeatProposalFileOverrides(options, root),
+    ...await openPocketTJunctionProposalFileOverrides(options, root),
+    ...await horizontalOpenPocketTJunctionProposalFileOverrides(options, root),
+    ...await westPartialTJunctionProposalFileOverrides(options, root),
+    ...await eastPartialTJunctionGateFileOverrides(options, root),
+    ...await horizontalPartialTJunctionProposalFileOverrides(options, root),
+    ...await openPocketCrossJunctionProposalFileOverrides(options, root),
+    ...await singleFilledCrossJunctionProposalFileOverrides(options, root),
+    ...await singleFilledNorthwestCrossJunctionProposalFileOverrides(
+      options,
+      root,
+    ),
+    ...await singleFilledSoutheastCrossJunctionProposalFileOverrides(
+      options,
+      root,
+    ),
+    ...await doubleFilledDiagonalCrossJunctionProposalFileOverrides(
+      options,
+      root,
+    ),
+    ...await doubleFilledOppositeDiagonalCrossJunctionFileOverrides(
+      options,
+      root,
+    ),
+    ...await doubleFilledNorthCrossJunctionProposalFileOverrides(
+      options,
+      root,
+    ),
+    ...await doubleFilledSouthCrossJunctionProposalFileOverrides(
+      options,
+      root,
+    ),
+    ...await doubleFilledEastCrossJunctionProposalFileOverrides(options, root),
+    ...await singleOpenSouthwestCrossJunctionProposalFileOverrides(
+      options,
+      root,
+    ),
+    ...await singleOpenNorthwestCrossJunctionProposalFileOverrides(
+      options,
+      root,
+    ),
+    ...await fullyFilledCrossJunctionProposalFileOverrides(options, root),
+  };
+}
+
+async function renderAllMaskConsistencyReviewOnly(
+  options: CliOptions,
+  root: string,
+): Promise<void> {
+  const started = Date.now();
+  await mkdir(options.output, { recursive: true });
+  const fileOverrides = await equalHeightAcceptedFileOverrides(options, root);
+  await renderEqualHeightMaskConsistencyReview(options, fileOverrides);
+  const status = await readWorkbenchStatus(options);
+  status.consistencyRenderedAt = new Date().toISOString();
+  await writeFile(
+    path.join(options.output, 'status.json'),
+    `${JSON.stringify(status)}\n`,
+    'utf8',
+  );
+  process.stdout.write(
+    `rendered explicit all-47 consistency full + bounded preview in ` +
+      `${Date.now() - started}ms\n`,
+  );
 }
 
 async function renderLowSoutheastCornerFocus(options: CliOptions, root: string): Promise<void> {
@@ -15800,9 +17048,17 @@ async function renderSafely(
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : String(error);
     await mkdir(options.output, { recursive: true });
+    const previousStatus = await readWorkbenchStatus(options);
     await writeFile(
       path.join(options.output, 'status.json'),
-      `${JSON.stringify({ ok: false, error: message, renderedAt: new Date().toISOString() })}\n`,
+      `${JSON.stringify({
+        ok: false,
+        error: message,
+        renderedAt: new Date().toISOString(),
+        ...(typeof previousStatus.consistencyRenderedAt === 'string'
+          ? { consistencyRenderedAt: previousStatus.consistencyRenderedAt }
+          : {}),
+      })}\n`,
       'utf8',
     );
     const kind = error instanceof A1bAuthoredBImportError ? 'import contract' : 'render';
@@ -15817,36 +17073,84 @@ const MIME: Readonly<Record<string, string>> = {
   '.json': 'application/json; charset=utf-8',
 };
 
-function serve(outputDir: string, port: number): void {
+async function reserveWorkbenchServer(
+  outputDir: string,
+  port: number,
+): Promise<http.Server> {
   const server = http.createServer(async (request, response) => {
     const name = path.basename(request.url?.split('?')[0] || '/') || 'index.html';
     const file = path.join(outputDir, name === '' ? 'index.html' : name);
     try {
+      const extension = path.extname(file);
+      const cacheControl =
+        name === 'status.json'
+          ? 'no-store'
+          : extension === '.png'
+            ? 'public, max-age=0, must-revalidate'
+            : 'no-cache';
+      const headers: Record<string, string> = {
+        'content-type': MIME[extension] ?? 'application/octet-stream',
+        'cache-control': cacheControl,
+      };
+      if (extension === '.png') {
+        const fileStat = await stat(file);
+        const etag =
+          `W/"${fileStat.size.toString(16)}-` +
+          `${Math.trunc(fileStat.mtimeMs).toString(16)}"`;
+        headers.etag = etag;
+        if (request.headers['if-none-match'] === etag) {
+          response.writeHead(304, headers).end();
+          return;
+        }
+      }
       const body = await readFile(file);
-      response.writeHead(200, {
-        'content-type': MIME[path.extname(file)] ?? 'application/octet-stream',
-        'cache-control': 'no-store',
-      });
+      response.writeHead(200, headers);
       response.end(body);
     } catch {
       response.writeHead(404).end('not found');
     }
   });
-  server.listen(port, () => {
-    process.stdout.write(`bench page: http://localhost:${port}/ — pin it beside your editor\n`);
+  await new Promise<void>((resolve, reject) => {
+    const onError = (error: Error): void => {
+      server.off('listening', onListening);
+      reject(error);
+    };
+    const onListening = (): void => {
+      server.off('error', onError);
+      resolve();
+    };
+    server.once('error', onError);
+    server.once('listening', onListening);
+    server.listen(port);
   });
+  return server;
 }
 
 async function main(): Promise<void> {
   const root = process.cwd();
   const options = parseArgs(process.argv.slice(2), root);
-  const initialRenderOk = await renderSafely(options, root);
+  if (options.consistency) {
+    await renderAllMaskConsistencyReviewOnly(options, root);
+    return;
+  }
+  if (options.serveOnly) {
+    await reserveWorkbenchServer(options.output, options.port);
+    process.stdout.write(
+      `bench page: http://localhost:${options.port}/ — serving existing output only\n`,
+    );
+    return;
+  }
   if (options.once) {
+    const initialRenderOk = await renderSafely(options, root);
     if (!initialRenderOk) process.exitCode = 1;
     return;
   }
 
-  serve(options.output, options.port);
+  await reserveWorkbenchServer(options.output, options.port);
+  await renderSafely(options, root);
+  process.stdout.write(
+    `bench page: http://localhost:${options.port}/ — pin it beside your editor\n`,
+  );
   let timer: NodeJS.Timeout | undefined;
   let renderInProgress = false;
   let renderAllCards = false;
@@ -15940,6 +17244,7 @@ async function main(): Promise<void> {
         normalizedProofFile.startsWith('single-filled-cross-junction/') ||
         normalizedProofFile.startsWith('open-pocket-cross-junction/') ||
         normalizedProofFile.startsWith('west-partial-t-junction/') ||
+        normalizedProofFile.startsWith('horizontal-partial-t-junction/') ||
         normalizedProofFile.startsWith('horizontal-open-pocket-t-junction/') ||
         normalizedProofFile.startsWith('open-pocket-t-junction/') ||
         normalizedProofFile.startsWith('isolated-shell/') ||

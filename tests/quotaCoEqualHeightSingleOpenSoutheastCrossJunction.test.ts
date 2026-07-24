@@ -114,6 +114,8 @@ function mirrorDistance(
   readonly meanAbsoluteChannelDistance: number;
   readonly maximumChannelDistance: number;
 } {
+  const directPixels = direct.pixels;
+  const candidatePixels = candidate.pixels;
   let differingChannels = 0;
   let totalDistance = 0;
   let maximumDistance = 0;
@@ -125,7 +127,7 @@ function mirrorDistance(
         const candidateOffset =
           (row * candidate.width + column) * 4 + channel;
         const distance = Math.abs(
-          direct.pixels[directOffset] - candidate.pixels[candidateOffset],
+          directPixels[directOffset] - candidatePixels[candidateOffset],
         );
         if (distance > 0) differingChannels += 1;
         totalDistance += distance;
@@ -134,8 +136,8 @@ function mirrorDistance(
     }
   }
   return {
-    differingChannelRatio: differingChannels / direct.pixels.length,
-    meanAbsoluteChannelDistance: totalDistance / direct.pixels.length,
+    differingChannelRatio: differingChannels / directPixels.length,
+    meanAbsoluteChannelDistance: totalDistance / directPixels.length,
     maximumChannelDistance: maximumDistance,
   };
 }
@@ -148,10 +150,11 @@ function rgbAt(
   const column = Math.floor(normalizedColumn * raster.width);
   const row = Math.floor(normalizedRow * raster.height);
   const offset = (row * raster.width + column) * 4;
+  const pixels = raster.pixels;
   return [
-    raster.pixels[offset],
-    raster.pixels[offset + 1],
-    raster.pixels[offset + 2],
+    pixels[offset],
+    pixels[offset + 1],
+    pixels[offset + 2],
   ];
 }
 
@@ -160,12 +163,13 @@ function hasOpaqueRgb(
   expected: readonly [number, number, number],
   tolerance = 0,
 ): boolean {
-  for (let offset = 0; offset < raster.pixels.length; offset += 4) {
+  const pixels = raster.pixels;
+  for (let offset = 0; offset < pixels.length; offset += 4) {
     if (
-      Math.abs(raster.pixels[offset] - expected[0]) <= tolerance &&
-      Math.abs(raster.pixels[offset + 1] - expected[1]) <= tolerance &&
-      Math.abs(raster.pixels[offset + 2] - expected[2]) <= tolerance &&
-      raster.pixels[offset + 3] === 255
+      Math.abs(pixels[offset] - expected[0]) <= tolerance &&
+      Math.abs(pixels[offset + 1] - expected[1]) <= tolerance &&
+      Math.abs(pixels[offset + 2] - expected[2]) <= tolerance &&
+      pixels[offset + 3] === 255
     ) {
       return true;
     }

@@ -35,6 +35,7 @@ import {
   renderStyleWorkbenchPage,
 } from '../scripts/highOblique/styleWorkbenchPage';
 import { EQUAL_HEIGHT_CORRIDOR_GATE } from '../scripts/highOblique/equalHeightCorridorGate';
+import { EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE } from '../scripts/highOblique/equalHeightAllMaskConsistencyGate';
 import { EQUAL_HEIGHT_DOUBLE_FILLED_DIAGONAL_CROSS_JUNCTION_GATE } from '../scripts/highOblique/equalHeightDoubleFilledDiagonalCrossJunctionGate';
 import { EQUAL_HEIGHT_DOUBLE_FILLED_EAST_CROSS_JUNCTION_GATE } from '../scripts/highOblique/equalHeightDoubleFilledEastCrossJunctionGate';
 import { EQUAL_HEIGHT_DOUBLE_FILLED_NORTH_CROSS_JUNCTION_GATE } from '../scripts/highOblique/equalHeightDoubleFilledNorthCrossJunctionGate';
@@ -114,7 +115,18 @@ describe('QuotaCo current wall workbench', () => {
         'owner-accepted mask forty-one QuotaCo single-open southwest cross-junction in source compact and long installed proofs',
     });
     expect(CURRENT_WORKBENCH_BOARDS.filter(({ state }) => state === 'review'))
-      .toEqual([]);
+      .toEqual([
+        {
+          stem: EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.stem,
+          previewStem: EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.previewStem,
+          state: 'review',
+          status: EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.status,
+          refreshGroup: 'consistency',
+          title: 'All-47 family consistency review',
+          summary: 'Review-only whole-vocabulary pass across all 50 accepted visual presentations, compact occupancy, direct/derived pairs, 1/3/6-cell extents, and light/dark composed environments. The accepted 28/19/0/0 ledger remains frozen.',
+          alt: 'review-only QuotaCo equal-height all forty-seven mask family consistency sheet across scales grounds derivations sockets extents and composed environments',
+        },
+      ]);
     expect(CURRENT_WORKBENCH_BOARDS.filter(({ state }) => state === 'accepted'))
       .toHaveLength(5);
     expect(EQUAL_HEIGHT_SINGLE_OPEN_NORTHWEST_CROSS_JUNCTION_GATE)
@@ -207,7 +219,7 @@ describe('QuotaCo current wall workbench', () => {
         'owner-accepted mask thirty-two QuotaCo south-filled slab cross-junction in source compact and long installed proofs',
     });
     expect(CURRENT_WORKBENCH_BOARDS.filter(({ state }) => state === 'review'))
-      .toHaveLength(0);
+      .toHaveLength(1);
     expect(CURRENT_WORKBENCH_BOARDS.filter(({ state }) => state === 'accepted'))
       .toHaveLength(5);
     expect(EQUAL_HEIGHT_MASK_LEDGER.entries[32]).toMatchObject({
@@ -348,7 +360,7 @@ describe('QuotaCo current wall workbench', () => {
         committedAtlas: false,
       });
     expect(CURRENT_WORKBENCH_BOARDS.filter(({ state }) => state === 'review'))
-      .toHaveLength(0);
+      .toHaveLength(1);
     expect(CURRENT_WORKBENCH_BOARDS.filter(({ state }) => state === 'accepted'))
       .toHaveLength(5);
     expect(EQUAL_HEIGHT_MASK_LEDGER.entries[39]).toMatchObject({
@@ -580,7 +592,7 @@ describe('QuotaCo current wall workbench', () => {
       status: 'accepted-source-mapping',
     });
     expect(CURRENT_WORKBENCH_BOARDS.filter(({ state }) => state === 'review'))
-      .toHaveLength(0);
+      .toHaveLength(1);
   });
 
   it('keeps the accepted horizontal single-filled-pocket family explicit behind the cross-junction gate', () => {
@@ -676,7 +688,7 @@ describe('QuotaCo current wall workbench', () => {
     });
     expect(CURRENT_WORKBENCH_BOARDS.filter(({ state }) => state === 'accepted')).toHaveLength(5);
     expect(CURRENT_WORKBENCH_BOARDS.filter(({ state }) => state === 'review'))
-      .toHaveLength(0);
+      .toHaveLength(1);
   });
 
   it('keeps the accepted horizontal open-pocket T pair explicit', () => {
@@ -699,8 +711,9 @@ describe('QuotaCo current wall workbench', () => {
     });
   });
 
-  it('keeps ordinary accepted pieces unchanged with no active review board', () => {
+  it('keeps ordinary accepted pieces unchanged behind the active consistency review', () => {
     expect(CURRENT_WORKBENCH_BOARDS.map(({ stem, state }) => ({ stem, state }))).toEqual([
+      { stem: EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.stem, state: 'review' },
       { stem: 'full-height-east-proof', state: 'accepted' },
       { stem: 'full-height-northeast-proof', state: 'accepted' },
       { stem: 'full-height-south-proof', state: 'accepted' },
@@ -859,7 +872,11 @@ describe('QuotaCo current wall workbench', () => {
     for (const board of CURRENT_WORKBENCH_BOARDS) {
       expect(occurrences(primary!, `data-stem="${board.stem}"`)).toBe(1);
       expect(primary).toContain(
-        `data-stem="${board.stem}" data-refresh="${
+        `data-stem="${board.stem}"${
+          board.previewStem === undefined
+            ? ''
+            : ` data-preview-stem="${board.previewStem}"`
+        } data-refresh="${
           board.refreshGroup ?? 'focus'
         }"`,
       );
@@ -870,10 +887,14 @@ describe('QuotaCo current wall workbench', () => {
     expect(primary).not.toContain('full_n_straight');
     expect(primary).not.toContain('transition_n_to_e');
     expect(primary?.trimStart()).toMatch(
-      /^<section class="current-section system-accepted" aria-labelledby="accepted-fully-filled-cross-junction-title"/,
+      /^<section class="current-section review" aria-labelledby="review-title"/,
     );
-    expect(primary).not.toContain('id="review-title">Review next</h2>');
-    expect(occurrences(primary!, 'data-state="review"')).toBe(0);
+    expect(primary).toContain('id="review-title">Review next</h2>');
+    expect(occurrences(primary!, 'data-state="review"')).toBe(1);
+    expect(primary).toContain(
+      `data-stem="${EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.stem}" data-preview-stem="${EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.previewStem}" data-refresh="consistency"`,
+    );
+    expect(primary).toContain('All-47 family consistency review');
     expect(primary).not.toContain(
       'review-only-fully-filled-cross-junction-proposal',
     );
@@ -897,7 +918,10 @@ describe('QuotaCo current wall workbench', () => {
       `data-stem="${EQUAL_HEIGHT_SINGLE_OPEN_NORTHEAST_CROSS_JUNCTION_GATE.stem}" data-refresh="single-open-northeast-cross-junction"`,
     );
     expect(primary).toContain(
-      `<img src="${EQUAL_HEIGHT_SINGLE_OPEN_NORTHEAST_CROSS_JUNCTION_GATE.stem}.png" alt="owner-accepted mask forty-five QuotaCo single-open northeast cross-junction plain whole-cell X derivation in source compact and long installed proofs">`,
+      '<img alt="owner-accepted mask forty-five QuotaCo single-open northeast cross-junction plain whole-cell X derivation in source compact and long installed proofs">',
+    );
+    expect(primary).not.toContain(
+      `<img src="${EQUAL_HEIGHT_SINGLE_OPEN_NORTHEAST_CROSS_JUNCTION_GATE.stem}.png"`,
     );
     expect(primary).toContain(
       'mask_45 single-open northeast cross-junction',
@@ -1103,7 +1127,7 @@ describe('QuotaCo current wall workbench', () => {
     expect(primary).toContain('Accepted masks 31/38 as two direct fixed-light middle sources');
     expect(primary).toContain('mask_31/mask_38 are locked at the proof layer');
     expect(primary).not.toContain('data-state="system-review" data-gate="thick-wall-horizontal-repeat"');
-    expect(occurrences(primary!, 'Review next')).toBe(0);
+    expect(occurrences(primary!, 'Review next')).toBe(2);
     expect(occurrences(primary!, `data-stem="${ACCEPTED_THICK_WALL_REPEAT_GATE.stem}"`)).toBe(1);
     expect(primary).toContain(
       `data-stem="${ACCEPTED_THICK_WALL_REPEAT_GATE.stem}" data-refresh="thick-wall-repeat"`,
@@ -1153,9 +1177,9 @@ describe('QuotaCo current wall workbench', () => {
     expect(primary).toContain('Accepted · System gate');
     expect(primary).toContain('Horizontal terminus pair');
     expect(primary).toContain('Accepted mask_8 direct source');
-    expect(page).toMatch(/<p class="lede">No wall proposal is currently active\. mask_46 is accepted as the final direct proof-layer source; the complete ledger stands at 28 direct \/ 19 derived \/ 0 synthetic\.<\/p>/);
-    expect(page).not.toContain('Review next · 1 piece');
-    expect(page).not.toContain(
+    expect(page).toContain('<p class="lede">The all-47 family consistency pass is active for review.');
+    expect(page).toContain('Review next · 1 piece');
+    expect(page).toContain(
       'These remain active proposals and are not yet in the accepted working set.',
     );
     expect(page).toContain('mask_46 directly reuses one independently authored flattened buried-center pair');
@@ -1334,6 +1358,77 @@ describe('QuotaCo current wall workbench', () => {
     expect(occurrences(page, 'data-stem="transition_n_to_e"')).toBe(1);
   });
 
+  it('eagerly loads only the bounded active-review preview', () => {
+    const page = renderStyleWorkbenchPage([
+      'full_n_straight',
+      'transition_n_to_e',
+    ]);
+    const imageTags = [...page.matchAll(/<img\b[^>]*>/g)].map(([tag]) => tag);
+    const eagerImages = imageTags.filter((tag) => tag.includes(' src="'));
+
+    expect(eagerImages).toEqual([
+      `<img src="${EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.previewStem}.png" alt="review-only QuotaCo equal-height all forty-seven mask family consistency sheet across scales grounds derivations sockets extents and composed environments bounded preview">`,
+    ]);
+    expect(page).not.toContain(
+      `<img src="${EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.stem}.png"`,
+    );
+    expect(page).toContain(
+      `data-stem="${EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.stem}" data-preview-stem="${EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.previewStem}"`,
+    );
+    expect(page).toContain('data-full-resolution="download-only"');
+    expect(page).toContain(
+      `<a href="${EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.stem}.png" download>Download full-resolution PNG</a>`,
+    );
+    expect(page).toContain(
+      'The full sheet is download-only and is never decoded by this page.',
+    );
+  });
+
+  it('keeps accepted, archived, and diagnostic images unloaded behind controls', () => {
+    const page = renderStyleWorkbenchPage([
+      'full_n_straight',
+      'transition_n_to_e',
+    ]);
+    const imageTags = [...page.matchAll(/<img\b[^>]*>/g)].map(([tag]) => tag);
+    const unloadedImages = imageTags.filter((tag) => !tag.includes(' src="'));
+
+    expect(unloadedImages.length).toBeGreaterThan(0);
+    expect(occurrences(page, 'data-loadable="true"')).toBe(imageTags.length);
+    expect(occurrences(page, '<button type="button" data-action="load"'))
+      .toBe(imageTags.length);
+    expect(occurrences(page, '<button type="button" data-action="unload"'))
+      .toBe(imageTags.length);
+    expect(page).toContain(
+      `data-stem="${ACCEPTED_MAPPING_GATE.stem}" data-refresh="mapping" data-loadable="true" data-loaded="false"`,
+    );
+    expect(page).toContain(
+      'data-stem="transition-w-to-s-focus" data-refresh="focus" data-loadable="true" data-loaded="false"',
+    );
+    expect(page).toContain(
+      'data-stem="full_n_straight" data-refresh="root" data-loadable="true" data-loaded="false"',
+    );
+    expect(page).toContain(
+      '<button type="button" data-action="load">Load image</button><button type="button" data-action="unload" disabled>Unload image</button>',
+    );
+    expect(page).toContain('image.removeAttribute("src")');
+    expect(page).toContain('setFigureLoaded(figure,target.dataset.action==="load")');
+  });
+
+  it('seeds first-tick stamps without cache-busting and refreshes only loaded figures', () => {
+    const page = renderStyleWorkbenchPage([]);
+
+    expect(page).toContain(
+      'if(!(group in stamps)){stamps[group]=next;continue;}',
+    );
+    expect(page).toContain(
+      'if(image?.hasAttribute("src"))image.src=resourceUrl(figure);',
+    );
+    expect(page).not.toContain('Date.now()');
+    expect(page).not.toContain(
+      'if(next&&stamps[group]!==next){stamps[group]=next;',
+    );
+  });
+
   it('refreshes by declared groups without requiring any single figure to exist', () => {
     const page = renderStyleWorkbenchPage([]);
 
@@ -1365,6 +1460,7 @@ describe('QuotaCo current wall workbench', () => {
     expect(page).toContain('"vertical-terminus":s.verticalTerminusRenderedAt');
     expect(page).toContain('terminus:s.terminusRenderedAt');
     expect(page).toContain('mapping:s.mappingRenderedAt');
+    expect(page).toContain('consistency:s.consistencyRenderedAt');
     expect(page).toContain('corridor:s.corridorRenderedAt');
     expect(page).toContain('"fully-filled-cross-junction":s.fullyFilledCrossJunctionRenderedAt');
     expect(page).not.toContain('querySelector("figure.gate")');

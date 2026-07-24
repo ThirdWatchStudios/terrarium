@@ -84,8 +84,9 @@ function alphaRowSpan(
   row: number,
 ): readonly [number, number] {
   const occupied: number[] = [];
+  const pixels = raster.pixels;
   for (let column = 0; column < raster.width; column += 1) {
-    if (raster.pixels[(row * raster.width + column) * 4 + 3] > 0) {
+    if (pixels[(row * raster.width + column) * 4 + 3] > 0) {
       occupied.push(column);
     }
   }
@@ -98,8 +99,9 @@ function alphaColumnSpan(
   column: number,
 ): readonly [number, number] {
   const occupied: number[] = [];
+  const pixels = raster.pixels;
   for (let row = 0; row < raster.height; row += 1) {
-    if (raster.pixels[(row * raster.width + column) * 4 + 3] > 0) {
+    if (pixels[(row * raster.width + column) * 4 + 3] > 0) {
       occupied.push(row);
     }
   }
@@ -118,9 +120,10 @@ const rgbaColumn = (
   column: number,
 ): readonly number[] => {
   const values: number[] = [];
+  const pixels = raster.pixels;
   for (let row = 0; row < raster.height; row += 1) {
     const offset = (row * raster.width + column) * 4;
-    values.push(...raster.pixels.slice(offset, offset + 4));
+    values.push(...pixels.slice(offset, offset + 4));
   }
   return values;
 };

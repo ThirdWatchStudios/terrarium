@@ -210,11 +210,12 @@ describe('wall bevel topology and production isolation', () => {
         [[1], [1]],
       ]) {
         const rendered = new Resvg(composeWallRoom(wall, DEFAULT_STYLE, layout, 128)).render();
+        const pixels = rendered.pixels;
         const vertical = layout[0].length === 2;
         for (const offset of [20, 64, 108]) {
           const x = vertical ? 128 : offset;
           const y = vertical ? offset : 128;
-          const alpha = rendered.pixels[(y * rendered.width + x) * 4 + 3];
+          const alpha = pixels[(y * rendered.width + x) * 4 + 3];
           expect(alpha, `${templateId} ${vertical ? 'vertical' : 'horizontal'} seam at ${offset}`)
             .toBe(255);
         }

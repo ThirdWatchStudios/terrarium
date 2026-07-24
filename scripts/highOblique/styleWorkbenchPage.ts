@@ -1,4 +1,5 @@
 import { EQUAL_HEIGHT_CORRIDOR_GATE } from './equalHeightCorridorGate';
+import { EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE } from './equalHeightAllMaskConsistencyGate';
 import { EQUAL_HEIGHT_DOUBLE_FILLED_DIAGONAL_CROSS_JUNCTION_GATE } from './equalHeightDoubleFilledDiagonalCrossJunctionGate';
 import { EQUAL_HEIGHT_DOUBLE_FILLED_EAST_CROSS_JUNCTION_GATE } from './equalHeightDoubleFilledEastCrossJunctionGate';
 import { EQUAL_HEIGHT_DOUBLE_FILLED_NORTH_CROSS_JUNCTION_GATE } from './equalHeightDoubleFilledNorthCrossJunctionGate';
@@ -32,6 +33,7 @@ export type CurrentWorkbenchBoardState = 'accepted' | 'review';
 
 export interface CurrentWorkbenchBoard {
   readonly stem: string;
+  readonly previewStem?: string;
   readonly state: CurrentWorkbenchBoardState;
   readonly status?: string;
   readonly gateId?:
@@ -42,6 +44,7 @@ export interface CurrentWorkbenchBoard {
     | 'double-filled-opposite-diagonal-cross-junction';
   readonly refreshGroup?:
     | 'focus'
+    | 'consistency'
     | 'fully-filled-cross-junction'
     | 'single-open-northeast-cross-junction'
     | 'single-open-northwest-cross-junction'
@@ -347,6 +350,16 @@ export const ACCEPTED_HORIZONTAL_TERMINUS_GATE: AcceptedSystemGate = {
 /** The current owner-accepted decision sheets. */
 export const CURRENT_WORKBENCH_BOARDS: readonly CurrentWorkbenchBoard[] = [
   {
+    stem: EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.stem,
+    previewStem: EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.previewStem,
+    state: 'review',
+    status: EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.status,
+    refreshGroup: 'consistency',
+    title: 'All-47 family consistency review',
+    summary: 'Review-only whole-vocabulary pass across all 50 accepted visual presentations, compact occupancy, direct/derived pairs, 1/3/6-cell extents, and light/dark composed environments. The accepted 28/19/0/0 ledger remains frozen.',
+    alt: 'review-only QuotaCo equal-height all forty-seven mask family consistency sheet across scales grounds derivations sockets extents and composed environments',
+  },
+  {
     stem: 'full-height-east-proof',
     state: 'accepted',
     title: 'East wall',
@@ -424,6 +437,28 @@ const escapeHtml = (value: string): string => value
   .replaceAll('"', '&quot;')
   .replaceAll("'", '&#039;');
 
+const imageControls = (
+  loadLabel: string,
+  unloadLabel: string,
+  initiallyLoaded: boolean,
+): string => (
+  '<div class="image-controls">' +
+  `<button type="button" data-action="load"${initiallyLoaded ? ' disabled' : ''}>${escapeHtml(loadLabel)}</button>` +
+  `<button type="button" data-action="unload"${initiallyLoaded ? '' : ' disabled'}>${escapeHtml(unloadLabel)}</button>` +
+  '</div>'
+);
+
+const loadableFigure = (
+  stem: string,
+  refreshGroup: string,
+  alt: string,
+): string => (
+  `<figure data-stem="${escapeHtml(stem)}" data-refresh="${escapeHtml(refreshGroup)}" data-loadable="true" data-loaded="false">` +
+  `<img alt="${escapeHtml(alt)}">` +
+  imageControls('Load image', 'Unload image', false) +
+  '</figure>'
+);
+
 const currentBoard = (board: CurrentWorkbenchBoard): string => {
   const stateLabel = board.state === 'accepted' ? 'Accepted' : 'Review next';
   const refreshGroup = board.refreshGroup ?? 'focus';
@@ -431,6 +466,17 @@ const currentBoard = (board: CurrentWorkbenchBoard): string => {
     board.status === undefined ? '' : ` data-status="${escapeHtml(board.status)}"`;
   const gateAttribute =
     board.gateId === undefined ? '' : ` data-gate="${escapeHtml(board.gateId)}"`;
+  const figure = board.state === 'review' && board.previewStem !== undefined
+    ? (
+      `<figure data-stem="${escapeHtml(board.stem)}" data-preview-stem="${escapeHtml(board.previewStem)}" data-refresh="${escapeHtml(refreshGroup)}" data-loadable="true" data-loaded="preview" data-full-resolution="download-only">` +
+      `<img src="${escapeHtml(board.previewStem)}.png" alt="${escapeHtml(`${board.alt} bounded preview`)}">` +
+      imageControls('Load preview', 'Unload preview', true) +
+      '<figcaption class="artifact-download">' +
+      `<a href="${escapeHtml(board.stem)}.png" download>Download full-resolution PNG</a>` +
+      '<span>The full sheet is download-only and is never decoded by this page.</span>' +
+      '</figcaption></figure>'
+    )
+    : loadableFigure(board.stem, refreshGroup, board.alt);
   return (
     `<article class="board" data-state="${board.state}"${statusAttribute}${gateAttribute}>` +
     '<header class="board-copy">' +
@@ -438,18 +484,16 @@ const currentBoard = (board: CurrentWorkbenchBoard): string => {
     `<h3>${escapeHtml(board.title)}</h3>` +
     `<p>${escapeHtml(board.summary)}</p>` +
     '</header>' +
-    `<figure data-stem="${board.stem}" data-refresh="${refreshGroup}">` +
-    `<img src="${board.stem}.png" alt="${escapeHtml(board.alt)}">` +
-    '</figure></article>'
+    figure +
+    '</article>'
   );
 };
 
 const archivedBoard = (board: ArchivedWorkbenchBoard): string => (
   '<article class="archived-board">' +
   `<h3>${escapeHtml(board.title)}</h3>` +
-  `<figure data-stem="${board.stem}" data-refresh="${board.refreshGroup}">` +
-  `<img loading="lazy" src="${board.stem}.png" alt="${escapeHtml(board.alt)}">` +
-  '</figure></article>'
+  loadableFigure(board.stem, board.refreshGroup, board.alt) +
+  '</article>'
 );
 
 const acceptedSystemGate = (
@@ -464,9 +508,8 @@ const acceptedSystemGate = (
   '<header class="board-copy"><span class="badge">Accepted · System gate</span>' +
   `<h3>${escapeHtml(gate.title)}</h3>` +
   `<p>${escapeHtml(gate.summary)}</p></header>` +
-  `<figure data-stem="${gate.stem}" data-refresh="${refreshGroup}">` +
-  `<img src="${gate.stem}.png" alt="${escapeHtml(gate.alt)}">` +
-  '</figure></article></section>'
+  loadableFigure(gate.stem, refreshGroup, gate.alt) +
+  '</article></section>'
 );
 
 export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): string {
@@ -588,9 +631,7 @@ export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): st
     : '';
   const archivedBoards = ARCHIVED_WORKBENCH_BOARDS.map(archivedBoard).join('');
   const diagnostics = diagnosticStems.map((stem) => (
-    `<figure data-stem="${escapeHtml(stem)}" data-refresh="root">` +
-    `<img loading="lazy" src="${escapeHtml(stem)}.png" alt="compiler diagnostic for ${escapeHtml(stem)}">` +
-    '</figure>'
+    loadableFigure(stem, 'root', `compiler diagnostic for ${stem}`)
   )).join('');
 
   return (
@@ -611,6 +652,7 @@ export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): st
     '.current-section{margin:34px 0}.section-copy{border-left:3px solid var(--line);padding-left:12px;margin-bottom:14px}.current-section.review .section-copy,.current-section.system-review .section-copy{border-color:var(--coral)}.current-section.accepted .section-copy,.current-section.system-accepted .section-copy{border-color:var(--green)}' +
     '.section-copy p{color:var(--muted);font-size:13px;margin-top:4px}.board{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin:0 0 18px}' +
     '.board-copy{margin:0 2px 12px}.board-copy p{color:var(--muted);font-size:13px;line-height:1.45}figure{margin:0}img{display:block;width:100%;height:auto;border-radius:10px}' +
+    'img:not([src]){display:none}.image-controls{display:flex;gap:8px;align-items:center;padding-top:10px}.image-controls button{appearance:none;border:1px solid var(--line);border-radius:8px;background:var(--panel2);color:var(--ink);font:inherit;font-size:12px;font-weight:700;padding:7px 10px;cursor:pointer}.image-controls button:disabled{cursor:default;opacity:.4}.artifact-download{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline;padding-top:8px;font-size:12px}.artifact-download a{color:var(--teal);font-weight:700}.artifact-download span{color:var(--muted)}' +
     'details{border-top:1px solid var(--line);margin-top:26px;padding-top:14px}summary{cursor:pointer;color:var(--muted);font-size:13px;font-weight:700;list-style-position:outside}' +
     'summary small{display:block;font-size:11px;font-weight:500;margin:5px 0 0 18px;color:#7e8983}details[open] summary{color:var(--ink);margin-bottom:16px}' +
     '.archive-grid,.diagnostic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:14px}.archived-board h3{font-size:12px;color:var(--muted);margin:0 0 7px}' +
@@ -618,7 +660,7 @@ export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): st
     '@media(max-width:700px){body{padding:18px 12px 48px}.status-grid{grid-template-columns:1fr}.archive-grid,.diagnostic-grid{grid-template-columns:1fr}.board{padding:8px}.current-section{margin:26px 0}}' +
     '</style>' +
     '<header><h1>QuotaCo Building System — current wall workbench</h1>' +
-    '<p class="lede">No wall proposal is currently active. mask_46 is accepted as the final direct proof-layer source; the complete ledger stands at 28 direct / 19 derived / 0 synthetic.</p></header>' +
+    '<p class="lede">The all-47 family consistency pass is active for review. Every topology row remains accepted; this sheet audits cross-family register, socket, seam, silhouette, and south-facing shade coherence without crossing the production boundary.</p></header>' +
     '<div id="status">waiting for first render…</div>' +
     '<section class="kit-status" aria-labelledby="kit-status-title"><h2 id="kit-status-title">Current direction status — equal-height structural walls</h2>' +
     '<div class="status-grid">' +
@@ -691,7 +733,7 @@ export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): st
     '<div id="archive-status"></div><div class="archive-grid">' + archivedBoards + '</div></details>' +
     '<details class="diagnostics"><summary>Compiler diagnostics — not approval status<small>The strict source inventory remains available for importer debugging.</small></summary>' +
     '<div class="diagnostic-grid">' + diagnostics + '</div></details>' +
-    '<script>const stamps={};async function tick(){try{' +
+    '<script>const stamps={};function resourceUrl(figure){const stem=figure.dataset.previewStem||figure.dataset.stem;const stamp=stamps[figure.dataset.refresh];return `${stem}.png${stamp?`?t=${encodeURIComponent(stamp)}`:""}`;}function setFigureLoaded(figure,loaded){const image=figure.querySelector("img");if(!image)return;if(loaded){image.src=resourceUrl(figure);figure.dataset.loaded=figure.dataset.previewStem?"preview":"true";}else{image.removeAttribute("src");figure.dataset.loaded="false";}const load=figure.querySelector(`[data-action="load"]`);const unload=figure.querySelector(`[data-action="unload"]`);if(load)load.disabled=loaded;if(unload)unload.disabled=!loaded;}document.addEventListener("click",(event)=>{const target=event.target instanceof Element?event.target.closest("button[data-action]"):null;const figure=target?.closest("figure[data-loadable]");if(!target||!figure)return;setFigureLoaded(figure,target.dataset.action==="load");});async function tick(){try{' +
     'const response=await fetch("status.json",{cache:"no-store"});if(!response.ok)throw new Error(`status ${response.status}`);const s=await response.json();' +
     'const status=document.getElementById("status");' +
     'if(!s.ok){status.textContent=`IMPORT FAILED\\n${s.error}`;status.className="bad";}' +
@@ -699,8 +741,8 @@ export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): st
     'else if(s.roomError){status.textContent=`CURRENT ROOM RENDER FAILED\\n${s.roomError}`;status.className="bad";}' +
     'else{status.textContent=`current proofs ok · ${s.frames} frames validated · ${s.durationMs}ms · ${s.renderedAt}`;status.className="";}' +
     'const archiveStatus=document.getElementById("archive-status");if(s.proofsError){archiveStatus.textContent=`ARCHIVED CROSS-SECTION RENDER FAILED\\n${s.proofsError}`;archiveStatus.className="bad";}else{archiveStatus.textContent="";archiveStatus.className="";}' +
-    'const groups={root:s.renderedAt,focus:s.focusRenderedAt,"fully-filled-cross-junction":s.fullyFilledCrossJunctionRenderedAt,"single-open-northeast-cross-junction":s.singleOpenNortheastCrossJunctionRenderedAt,"single-open-northwest-cross-junction":s.singleOpenNorthwestCrossJunctionRenderedAt,"single-open-southeast-cross-junction":s.singleOpenSoutheastCrossJunctionRenderedAt,"single-open-southwest-cross-junction":s.singleOpenSouthwestCrossJunctionRenderedAt,"double-filled-south-cross-junction":s.doubleFilledSouthCrossJunctionRenderedAt,"double-filled-opposite-diagonal-cross-junction":s.doubleFilledOppositeDiagonalCrossJunctionRenderedAt,"double-filled-diagonal-cross-junction":s.doubleFilledDiagonalCrossJunctionRenderedAt,"double-filled-north-cross-junction":s.doubleFilledNorthCrossJunctionRenderedAt,"single-filled-northwest-cross-junction":s.singleFilledNorthwestCrossJunctionRenderedAt,"single-filled-southwest-cross-junction":s.singleFilledSouthwestCrossJunctionRenderedAt,"double-filled-west-cross-junction":s.doubleFilledWestCrossJunctionRenderedAt,"double-filled-east-cross-junction":s.doubleFilledEastCrossJunctionRenderedAt,"single-filled-southeast-cross-junction":s.singleFilledSoutheastCrossJunctionRenderedAt,"single-filled-cross-junction":s.singleFilledCrossJunctionRenderedAt,"open-pocket-cross-junction":s.openPocketCrossJunctionRenderedAt,"horizontal-partial-t-junction":s.horizontalPartialTJunctionRenderedAt,"east-partial-t-junction":s.eastPartialTJunctionRenderedAt,"single-filled-pocket-t-junction":s.singleFilledPocketTJunctionRenderedAt,"horizontal-open-pocket-t-junction":s.horizontalOpenPocketTJunctionRenderedAt,"open-pocket-t-junction":s.openPocketTJunctionRenderedAt,"thick-wall-horizontal-repeat":s.thickWallHorizontalRepeatRenderedAt,"thick-wall-repeat":s.thickWallRepeatRenderedAt,"thick-wall-block":s.thickWallBlockRenderedAt,"isolated-shell":s.isolatedShellRenderedAt,"vertical-terminus":s.verticalTerminusRenderedAt,terminus:s.terminusRenderedAt,mapping:s.mappingRenderedAt,corridor:s.corridorRenderedAt,gate:s.gateRenderedAt,proofs:s.proofsRenderedAt,room:s.roomRenderedAt,ladder:s.ladderRenderedAt};' +
-    'for(const [group,next] of Object.entries(groups)){if(next&&stamps[group]!==next){stamps[group]=next;for(const figure of document.querySelectorAll(`[data-refresh="${group}"]`)){const image=figure.querySelector("img");if(image)image.src=`${figure.dataset.stem}.png?t=${Date.now()}`;}}}' +
+    'const groups={root:s.renderedAt,focus:s.focusRenderedAt,consistency:s.consistencyRenderedAt,"fully-filled-cross-junction":s.fullyFilledCrossJunctionRenderedAt,"single-open-northeast-cross-junction":s.singleOpenNortheastCrossJunctionRenderedAt,"single-open-northwest-cross-junction":s.singleOpenNorthwestCrossJunctionRenderedAt,"single-open-southeast-cross-junction":s.singleOpenSoutheastCrossJunctionRenderedAt,"single-open-southwest-cross-junction":s.singleOpenSouthwestCrossJunctionRenderedAt,"double-filled-south-cross-junction":s.doubleFilledSouthCrossJunctionRenderedAt,"double-filled-opposite-diagonal-cross-junction":s.doubleFilledOppositeDiagonalCrossJunctionRenderedAt,"double-filled-diagonal-cross-junction":s.doubleFilledDiagonalCrossJunctionRenderedAt,"double-filled-north-cross-junction":s.doubleFilledNorthCrossJunctionRenderedAt,"single-filled-northwest-cross-junction":s.singleFilledNorthwestCrossJunctionRenderedAt,"single-filled-southwest-cross-junction":s.singleFilledSouthwestCrossJunctionRenderedAt,"double-filled-west-cross-junction":s.doubleFilledWestCrossJunctionRenderedAt,"double-filled-east-cross-junction":s.doubleFilledEastCrossJunctionRenderedAt,"single-filled-southeast-cross-junction":s.singleFilledSoutheastCrossJunctionRenderedAt,"single-filled-cross-junction":s.singleFilledCrossJunctionRenderedAt,"open-pocket-cross-junction":s.openPocketCrossJunctionRenderedAt,"horizontal-partial-t-junction":s.horizontalPartialTJunctionRenderedAt,"east-partial-t-junction":s.eastPartialTJunctionRenderedAt,"single-filled-pocket-t-junction":s.singleFilledPocketTJunctionRenderedAt,"horizontal-open-pocket-t-junction":s.horizontalOpenPocketTJunctionRenderedAt,"open-pocket-t-junction":s.openPocketTJunctionRenderedAt,"thick-wall-horizontal-repeat":s.thickWallHorizontalRepeatRenderedAt,"thick-wall-repeat":s.thickWallRepeatRenderedAt,"thick-wall-block":s.thickWallBlockRenderedAt,"isolated-shell":s.isolatedShellRenderedAt,"vertical-terminus":s.verticalTerminusRenderedAt,terminus:s.terminusRenderedAt,mapping:s.mappingRenderedAt,corridor:s.corridorRenderedAt,gate:s.gateRenderedAt,proofs:s.proofsRenderedAt,room:s.roomRenderedAt,ladder:s.ladderRenderedAt};' +
+    'for(const [group,next] of Object.entries(groups)){if(!next)continue;if(!(group in stamps)){stamps[group]=next;continue;}if(stamps[group]===next)continue;stamps[group]=next;for(const figure of document.querySelectorAll(`[data-refresh="${group}"]`)){const image=figure.querySelector("img");if(image?.hasAttribute("src"))image.src=resourceUrl(figure);}}' +
     '}catch(error){const status=document.getElementById("status");status.textContent=`WORKBENCH STATUS UNAVAILABLE\\n${error instanceof Error?error.message:String(error)}`;status.className="bad";}setTimeout(tick,700)}tick()</script>'
   );
 }
