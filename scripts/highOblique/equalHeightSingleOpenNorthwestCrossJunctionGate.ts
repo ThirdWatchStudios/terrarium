@@ -127,9 +127,9 @@ export const EQUAL_HEIGHT_SINGLE_OPEN_NORTHWEST_CROSS_JUNCTION_GATE = {
       'keep one northwest reveal light and arris seam; do not repaint coral, green, or south-facing frontage because all southern and eastern crooks are buried',
   },
   acceptedLedgerCounts: {
-    'direct-reuse': 27,
+    'direct-reuse': 28,
     'approved-derivation': 19,
-    'synthetic-assembly': 1,
+    'synthetic-assembly': 0,
     'unresolved-authored-geometry': 0,
   },
   directSourceAccepted: true,
@@ -304,9 +304,9 @@ export function validateEqualHeightSingleOpenNorthwestCrossJunctionGate(
   if (
     JSON.stringify(gate.acceptedLedgerCounts) !==
       JSON.stringify(EQUAL_HEIGHT_MASK_LEDGER.counts) ||
-    EQUAL_HEIGHT_MASK_LEDGER.counts['direct-reuse'] !== 27 ||
+    EQUAL_HEIGHT_MASK_LEDGER.counts['direct-reuse'] !== 28 ||
     EQUAL_HEIGHT_MASK_LEDGER.counts['approved-derivation'] !== 19 ||
-    EQUAL_HEIGHT_MASK_LEDGER.counts['synthetic-assembly'] !== 1 ||
+    EQUAL_HEIGHT_MASK_LEDGER.counts['synthetic-assembly'] !== 0 ||
     EQUAL_HEIGHT_MASK_LEDGER.counts['unresolved-authored-geometry'] !== 0
   ) {
     throw new Error(

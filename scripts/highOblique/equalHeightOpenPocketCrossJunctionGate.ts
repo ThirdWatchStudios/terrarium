@@ -101,9 +101,9 @@ export const EQUAL_HEIGHT_OPEN_POCKET_CROSS_JUNCTION_GATE = {
       'preserve local fixed-light plane cues; continuous south-face shade remains a separate cross-family polish pass',
   },
   acceptedLedgerCounts: {
-    'direct-reuse': 27,
+    'direct-reuse': 28,
     'approved-derivation': 19,
-    'synthetic-assembly': 1,
+    'synthetic-assembly': 0,
     'unresolved-authored-geometry': 0,
   },
   xMirrorAllowed: false,
@@ -215,9 +215,9 @@ export function validateEqualHeightOpenPocketCrossJunctionGate(
   const currentCounts = EQUAL_HEIGHT_MASK_LEDGER.counts;
   if (
     JSON.stringify(gate.acceptedLedgerCounts) !== JSON.stringify(currentCounts) ||
-    currentCounts['direct-reuse'] !== 27 ||
+    currentCounts['direct-reuse'] !== 28 ||
     currentCounts['approved-derivation'] !== 19 ||
-    currentCounts['synthetic-assembly'] !== 1 ||
+    currentCounts['synthetic-assembly'] !== 0 ||
     currentCounts['unresolved-authored-geometry'] !== 0
   ) {
     throw new Error('Open-pocket cross-junction ledger-count boundary drift');

@@ -133,9 +133,9 @@ export const EQUAL_HEIGHT_SINGLE_OPEN_SOUTHEAST_CROSS_JUNCTION_GATE = {
       'central post, peak, hourglass, stair-step, doubled outline, duplicate color belts, or stacked pieces',
   },
   acceptedLedgerCounts: {
-    'direct-reuse': 27,
+    'direct-reuse': 28,
     'approved-derivation': 19,
-    'synthetic-assembly': 1,
+    'synthetic-assembly': 0,
     'unresolved-authored-geometry': 0,
   },
   sourceGateAccepted: true,
@@ -340,9 +340,9 @@ export function validateEqualHeightSingleOpenSoutheastCrossJunctionGate(
   if (
     JSON.stringify(gate.acceptedLedgerCounts) !==
       JSON.stringify(EQUAL_HEIGHT_MASK_LEDGER.counts) ||
-    EQUAL_HEIGHT_MASK_LEDGER.counts['direct-reuse'] !== 27 ||
+    EQUAL_HEIGHT_MASK_LEDGER.counts['direct-reuse'] !== 28 ||
     EQUAL_HEIGHT_MASK_LEDGER.counts['approved-derivation'] !== 19 ||
-    EQUAL_HEIGHT_MASK_LEDGER.counts['synthetic-assembly'] !== 1 ||
+    EQUAL_HEIGHT_MASK_LEDGER.counts['synthetic-assembly'] !== 0 ||
     EQUAL_HEIGHT_MASK_LEDGER.counts['unresolved-authored-geometry'] !== 0
   ) {
     throw new Error(

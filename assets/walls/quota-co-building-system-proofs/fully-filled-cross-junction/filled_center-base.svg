@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>QuotaCo fully filled center review base</title>
+  <desc>A completely buried structural underlay for the center of a solid wall mass.</desc>
+  <g id="detail/base">
+    <path id="base-buried-underlay" d="M0 0H128V128H0Z" fill="#252A28"/>
+  </g>
+</svg>

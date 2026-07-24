@@ -51,7 +51,9 @@ on the live workbench and committed individually with its design rationale.
    accepted east register. Opposite-diagonal `mask_40` now reuses that same pair through a whole-cell X mirror
    after omitting only the two west-boundary seam paths: northwest and southeast are solid, northeast and
    southwest remain open floor, the north outlet uses the east register, and the south outlet uses the west
-   register. Never
+   register. Fully filled `mask_46` now directly reuses the external `fully-filled-cross-junction/filled_center`
+   pair as the fully buried center of a solid wall mass: all four cardinal directions connect, all four
+   diagonal crooks are solid, and accepted perimeter cells own every visible face and seam. Never
    rotate the accepted horizontal source to manufacture a vertical end. Use composed evidence as
    the issue-finding surface. Historical
    mixed-profile room mocks are archived, not valid targets.
@@ -482,8 +484,17 @@ the Y-based reveal, arris, and contact-shadow hierarchy remains fixed. Promotion
 27 direct / 19 derived / 1 synthetic / 0 collisions; only `mask_46` remains synthetic. This adds no canonical
 production source, registration, exporter, atlas, schema, blob mapping, or Unity change.
 
-**Still outside acceptance after the single-open northeast checkpoint:** the remaining `mask_46` synthetic
-cross-junction candidate sprite;
+**Accepted fully filled cross-junction gate (owner approval, 2026-07-24):** directly reuse the external
+`fully-filled-cross-junction/filled_center` base/upper pair for `mask_46`. Preserve north/east/south/west
+connectivity and all four solid diagonal crooks without introducing a floor pocket or exposed local face.
+The source owns one full-cell charcoal underlay and one uninterrupted cream top field; surrounding accepted
+rows own every visible outline, highlight, coral/green frontage, south-facing shade, plinth, return, and
+service seam. It passes at 240/90/40 px inside solid 3×3, 4×4, and 6×6 masses on light and dark floors.
+Promotion advances the ledger to 28 direct / 19 derived / 0 synthetic / 0 unresolved, completing accepted
+proof-layer provenance for all 47 masks. This adds no canonical production source, registration, exporter,
+atlas, schema, blob mapping, or Unity change.
+
+**Still outside acceptance after the complete 47-mask proof vocabulary:**
 `topology/` and `state/`; official/production preview
 regeneration; template/catalog registration and frame identities; exporter, `CONTRACT.md`, or schema changes;
 committed production atlases; prop pilots; Unity; and `production.unity` remain locked until separately
@@ -493,7 +504,8 @@ cross-junction, southeast-filled cross-junction, east-filled slab cross-junction
 cross-junction, southwest-filled cross-junction, northwest-filled cross-junction, north-filled slab
 cross-junction, opposed-diagonal-filled cross-junction source, opposite-diagonal filtered derivation, and
 south-filled slab cross-junction source, single-open southwest cross-junction source, single-open southeast
-plain-X derivation, single-open northwest cross-junction source, and single-open northeast plain-X derivation
+plain-X derivation, single-open northwest cross-junction source, single-open northeast plain-X derivation,
+and fully filled cross-junction source
 do not
 unlock or silently promote any of those surfaces.
 Acceptance of the external T-junction proof families adds ledger provenance only and does not alter that lock.

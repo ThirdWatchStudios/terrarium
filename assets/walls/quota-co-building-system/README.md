@@ -28,10 +28,10 @@ and all four corners close as one enclosure.
 
 **Accepted mapping gate (owner approvals, 2026-07-21 through 2026-07-24):** the proof-layer ledger
 locks the unchanged canonical `mask_0` through `mask_46` order and classifies
-27 direct reuses, 19 approved derivations, 1 synthetic assembly
-candidates, and zero collisions. The remaining synthetic rows are all cross-junctions. This accepts the
-mapping structure and provenance boundaries only. It does not accept the 1 remaining synthetic
-cross-junction diagrams or create an atlas/production family.
+28 direct reuses, 19 approved derivations, zero synthetic assemblies, and zero
+unresolved rows. All 47 masks now have accepted proof-layer provenance. This
+completes the mapping vocabulary only; it does not create an atlas or production
+family.
 
 **Accepted horizontal terminus gate (owner approval, 2026-07-21):** `mask_8`
 directly reuses the socket-polished `full_terminus` pair (connected west, cap
@@ -300,6 +300,18 @@ three-cell-arm, and six-cell-arm crossings on light and dark floors. Promotion a
 27 direct / 19 derived / 1 synthetic / 0 collisions; only `mask_46` remains synthetic. It creates no canonical
 production source, frame identity, template registration, exporter, atlas, schema, blob mapping, Unity asset,
 or `production.unity` change.
+
+**Accepted fully filled cross-junction gate (owner approval, 2026-07-24):** `mask_46` directly reuses the
+external `../quota-co-building-system-proofs/fully-filled-cross-junction/filled_center` base/upper pair as
+the fully buried center of a solid wall mass. North, east, south, and west remain connected, and northeast,
+southeast, southwest, and northwest are all solid; no floor crook or exposed wall face remains. The source
+owns one full-cell charcoal underlay and one uninterrupted cream top field, while accepted perimeter cells
+own every visible outline, highlight, coral/green frontage, south-facing shade, plinth, return, and service
+seam. It passes at 240, 90, and 40 px per cell inside solid 3×3, 4×4, and 6×6 masses on light and dark
+floors. Promotion advances the proof ledger to 28 direct / 19 derived / 0 synthetic / 0 unresolved, so all
+47 equal-height rows have accepted proof-layer provenance. It creates no canonical production source, frame
+identity, template registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity`
+change.
 
 The original independently finished low-base-plus-optional-upper construction was
 rejected on 2026-07-20 because its duplicate caps and contours read as one wall

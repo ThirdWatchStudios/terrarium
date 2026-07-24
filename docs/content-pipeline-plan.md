@@ -50,13 +50,13 @@ changes the export contract except where explicitly flagged (floor variants).
 > authored single-open southwest cross-junction `mask_41`, plus its accepted plain whole-cell X-mirror
 > single-open southeast companion `mask_44`, the independently authored single-open northwest
 > cross-junction `mask_33`, and its accepted plain whole-cell X-mirror single-open northeast companion
-> `mask_45`. The ledger
-> now records 27 direct source mappings, 19 approved
-> derivations, 1 synthetic assembly
-> candidates, and zero collisions; all remaining synthetic rows are cross-junctions. `mask_8`
+> `mask_45`, plus the directly authored fully filled center `mask_46`. The ledger
+> now records 28 direct source mappings, 19 approved
+> derivations, 0 synthetic assemblies,
+> and 0 unresolved rows; all 47 masks have accepted proof-layer provenance. `mask_8`
 > directly reuses the socket-polished `full_terminus` pair and `mask_2` uses its accepted whole-cell X mirror;
-> both passed at 90/40 px in 1/3/6-cell contexts. This is not acceptance of the remaining synthetic candidate pixels or a
-> production atlas. `mask_1` and `mask_4` use separately authored vertical rollovers plus accepted east mirror-X
+> both passed at 90/40 px in 1/3/6-cell contexts. This completes the proof-layer vocabulary, not a production
+> atlas. `mask_1` and `mask_4` use separately authored vertical rollovers plus accepted east mirror-X
 > derivations. `mask_0` directly reuses one external, fixed-view `isolated_shell` pair with zero cardinal sockets;
 > mirror and rotation are prohibited. Production registration,
 > frame identities, export/`CONTRACT.md`, schema, committed atlases, Unity assets, and `production.unity` remain
@@ -271,6 +271,17 @@ changes the export contract except where explicitly flagged (floor variants).
 > 1 synthetic / 0 collisions; only `mask_46` remains synthetic. Acceptance records one approved proof-layer
 > derivation only and adds no canonical production source, frame identity, template registration, exporter,
 > atlas, schema, blob mapping, Unity asset, or `production.unity` change.
+> **Accepted fully filled cross-junction slice (owner approval, 2026-07-24):** `mask_46` directly reuses the
+> external `fully-filled-cross-junction/filled_center` base/upper pair as the fully buried center of a solid
+> wall mass. North, east, south, and west remain connected, while northeast, southeast, southwest, and
+> northwest are all solid; no floor crook or exposed wall face remains. The source owns one full-cell
+> charcoal underlay and one uninterrupted cream top field. Accepted perimeter cells retain every visible
+> outline, highlight, coral/green frontage, south-facing shade, plinth, return, and service seam. It passes
+> at 240/90/40 px inside solid 3×3, 4×4, and 6×6 masses on light and dark floors. The accepted ledger now
+> records 28 direct / 19 derived / 0 synthetic / 0 unresolved, so all 47 masks have accepted proof-layer
+> provenance. Acceptance records one direct proof-layer source only and adds no canonical production source,
+> frame identity, template registration, exporter, atlas, schema, blob mapping, Unity asset, or
+> `production.unity` change.
 
 ---
 

@@ -114,9 +114,9 @@ export function validateEqualHeightIsolatedShellGate(
   }
   if (
     JSON.stringify(EQUAL_HEIGHT_MASK_LEDGER.counts) !== JSON.stringify({
-    'direct-reuse': 27,
+    'direct-reuse': 28,
       'approved-derivation': 19,
-    'synthetic-assembly': 1,
+    'synthetic-assembly': 0,
       'unresolved-authored-geometry': 0,
     })
   ) {

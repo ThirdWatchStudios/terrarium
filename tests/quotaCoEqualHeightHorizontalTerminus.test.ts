@@ -184,9 +184,9 @@ describe('QuotaCo owner-accepted proof-layer equal-height horizontal terminus ga
       topologyClass: 'terminus', connectedEdges: ['e'], exposedEdges: ['n', 's', 'w'],
     });
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
-    'direct-reuse': 27,
+    'direct-reuse': 28,
       'approved-derivation': 19,
-    'synthetic-assembly': 1,
+    'synthetic-assembly': 0,
       'unresolved-authored-geometry': 0,
     });
   });
