@@ -1,7 +1,7 @@
 # QuotaCo High-Oblique Geometry — Production Art Ask
 
-**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** opposed-diagonal-filled cross-junction accepted
-`mask_30` is accepted as a separately authored direct source; no wall proposal is currently active and the ledger stands at 24 direct / 16 derived / 7 synthetic
+**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** opposite-diagonal mirror derivation accepted
+`mask_40` is accepted as the filtered whole-cell X mirror of `mask_30`; no wall proposal is currently active and the ledger stands at 24 direct / 17 derived / 6 synthetic
 
 Canonical direction lives in the sim repository:
 
@@ -20,9 +20,9 @@ west- and east-side single-filled-pocket T-junction states, all four horizontal 
 the all-open `mask_15`, northeast-filled `mask_19`, southeast-filled `mask_23`, east-filled slab
 `mask_25`, west-filled mirror companion `mask_43`, southwest-filled mirror companion `mask_29`,
 and the separately authored northwest-filled `mask_37`, north-filled slab `mask_39`, and
-opposed-diagonal-filled `mask_30`
+opposed-diagonal-filled `mask_30`, plus its filtered opposite-diagonal `mask_40` derivation,
 cross-junctions. The accepted proof ledger now records
-24 direct, 16 derived, 7 synthetic,
+24 direct, 17 derived, 6 synthetic,
 and zero collisions; every remaining
 synthetic assembly candidate is a cross-junction. Prop-catalog work and
 production changes remain separate decisions.
@@ -162,8 +162,9 @@ family, both thick-wall repeat families, both open-pocket T-junction pairs, and 
 single-filled-pocket T-junction pairs, the horizontal partial T-junction family, open-pocket `mask_15`, and
 single-filled `mask_19`, southeast-filled `mask_23`, east-filled slab `mask_25`, and west-filled mirror
 `mask_43`, southwest-filled mirror `mask_29`, plus the separately authored northwest-filled `mask_37`,
-north-filled slab `mask_39`, and opposed-diagonal-filled `mask_30` promoted, it records twenty-four direct
-mappings and sixteen approved derivations as source law, not the 7 remaining synthetic
+north-filled slab `mask_39`, opposed-diagonal-filled `mask_30`, and filtered opposite-diagonal mirror
+`mask_40` promoted, it records twenty-four direct
+mappings and seventeen approved derivations as source law, not the 6 remaining synthetic
 cross-junction candidate sprites.
 The ledger has zero collisions.
 
@@ -374,6 +375,17 @@ acceptance changes no canonical production source, frame identity, template regi
 schema, blob mapping, Unity asset, or `production.unity` surface. The X-mirrored `mask_40` topology remains a
 separate review decision with no implied derivation or promotion.
 
+**Accepted opposite-diagonal-filled cross-junction derivation (owner approval, 2026-07-23):** `mask_40`
+reuses the accepted `open_cross_filled_ne_sw` pair for `mask_30` through one whole-cell X mirror after
+omitting only `base-boundary-seam` and `upper-boundary-seam`. Northwest and southeast form the solid
+diagonal, northeast and southwest remain open floor, and the vertical handoff exchanges to north/east and
+south/west registers without changing fixed-light Y ownership. It passes at 240/90/40 px and in compact,
+three-cell-arm, and six-cell-arm crossings on light and dark floors. Promotion advances the ledger to
+twenty-four direct, seventeen derived, 6 synthetic, and zero collisions; all six remaining synthetic rows are
+cross-junctions. Proof-layer acceptance changes no SVG source bank, canonical production source, frame
+identity, template registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity`
+surface.
+
 ### A1a review artifact
 
 Produce both:
@@ -538,3 +550,7 @@ Acceptance of `mask_30` authorizes only its external proof bank, direct ledger p
 south-east register evidence, compact/long crossing evidence, and workbench presentation. It does not
 authorize a transform or derived companion, canonical source, production registration, or promotion of the
 separate X-mirrored `mask_40` topology.
+Acceptance of `mask_40` separately authorizes the whole-cell X-mirrored reuse of `mask_30` after omitting only
+`base-boundary-seam` and `upper-boundary-seam`, its proof-ledger provenance, compact/long crossing evidence,
+and workbench presentation. It adds no companion SVG, canonical source, exporter, atlas, schema, blob, or
+Unity registration.

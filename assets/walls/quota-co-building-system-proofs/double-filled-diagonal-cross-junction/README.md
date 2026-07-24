@@ -31,5 +31,11 @@ elbows survives in the source.
 Owner acceptance promotes this pair only as the direct proof-layer source for
 ledger row `mask_30`. It does not register a canonical source or frame identity,
 alter the blob contract, add an exporter or atlas route, change schema, or
-authorize a Unity asset. The X-mirrored `mask_40` topology remains a separate
-review decision with no implied derivation or promotion.
+authorize a Unity asset.
+
+The separately reviewed `mask_40` topology is now accepted as a proof-layer
+derivation of this same pair. It omits only `base-boundary-seam` and
+`upper-boundary-seam` before applying one whole-cell X mirror, so the adjoining
+west cell remains the sole shared-socket seam owner. That acceptance adds no
+companion SVG or source bank and does not promote either mask into canonical,
+exporter, atlas, schema, blob, or Unity registration.

@@ -45,9 +45,10 @@ changes the export contract except where explicitly flagged (floor variants).
 > west-filled whole-cell X-mirror companion `mask_43`, plus the accepted southwest-filled whole-cell X-mirror
 > companion `mask_29` to `mask_23`, plus the separately authored east-register northwest-filled
 > cross-junction `mask_37`, west-register north-filled slab cross-junction `mask_39`, and separately authored
-> opposed-diagonal-filled cross-junction `mask_30`. The ledger
-> now records 24 direct source mappings, 16 approved
-> derivations, 7 synthetic assembly
+> opposed-diagonal-filled cross-junction `mask_30`, plus its accepted filtered whole-cell X-mirror companion
+> `mask_40`. The ledger
+> now records 24 direct source mappings, 17 approved
+> derivations, 6 synthetic assembly
 > candidates, and zero collisions; all remaining synthetic rows are cross-junctions. `mask_8`
 > directly reuses the socket-polished `full_terminus` pair and `mask_2` uses its accepted whole-cell X mirror;
 > both passed at 90/40 px in 1/3/6-cell contexts. This is not acceptance of the remaining synthetic candidate pixels or a
@@ -214,6 +215,13 @@ changes the export contract except where explicitly flagged (floor variants).
 > identity, template registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity`
 > change. The X-mirrored `mask_40` topology remains a separate review decision with no implied derivation or
 > promotion.
+> **Accepted opposite-diagonal-filled cross-junction derivation (owner approval, 2026-07-23):** `mask_40`
+> reuses the accepted `mask_30` source pair through one whole-cell X mirror after omitting only
+> `base-boundary-seam` and `upper-boundary-seam`. Northwest and southeast are solid, northeast and southwest
+> remain open floor, the north outlet uses the east register, and the south outlet uses the west register.
+> The accepted ledger now records 24 direct / 17 derived / 6 synthetic / 0 collisions; all six remaining
+> synthetic rows are cross-junctions. Acceptance adds no SVG, canonical production source, frame identity,
+> template registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity` change.
 
 ---
 

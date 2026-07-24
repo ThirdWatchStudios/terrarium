@@ -134,8 +134,8 @@ export const EQUAL_HEIGHT_SINGLE_FILLED_SOUTHEAST_CROSS_JUNCTION_GATE = {
   },
   acceptedLedgerCounts: {
     'direct-reuse': 24,
-    'approved-derivation': 16,
-    'synthetic-assembly': 7,
+    'approved-derivation': 17,
+    'synthetic-assembly': 6,
     'unresolved-authored-geometry': 0,
   },
   xMirrorAllowed: false,
@@ -275,8 +275,8 @@ export function validateEqualHeightSingleFilledSoutheastCrossJunctionGate(
   if (
     JSON.stringify(gate.acceptedLedgerCounts) !== JSON.stringify(currentCounts) ||
     currentCounts['direct-reuse'] !== 24 ||
-    currentCounts['approved-derivation'] !== 16 ||
-    currentCounts['synthetic-assembly'] !== 7 ||
+    currentCounts['approved-derivation'] !== 17 ||
+    currentCounts['synthetic-assembly'] !== 6 ||
     currentCounts['unresolved-authored-geometry'] !== 0
   ) {
     throw new Error('Single-filled southeast cross-junction ledger-count boundary drift');

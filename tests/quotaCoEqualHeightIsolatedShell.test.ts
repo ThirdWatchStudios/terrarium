@@ -212,8 +212,8 @@ describe('QuotaCo owner-accepted proof-layer equal-height isolated shell', () =>
     });
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
       'direct-reuse': 24,
-      'approved-derivation': 16,
-      'synthetic-assembly': 7,
+      'approved-derivation': 17,
+      'synthetic-assembly': 6,
       'unresolved-authored-geometry': 0,
     });
     expect(EQUAL_HEIGHT_MASK_LEDGER.entries

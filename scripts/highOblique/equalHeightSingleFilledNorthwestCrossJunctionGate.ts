@@ -125,8 +125,8 @@ export const EQUAL_HEIGHT_SINGLE_FILLED_NORTHWEST_CROSS_JUNCTION_GATE = {
   },
   acceptedLedgerCounts: {
     'direct-reuse': 24,
-    'approved-derivation': 16,
-    'synthetic-assembly': 7,
+    'approved-derivation': 17,
+    'synthetic-assembly': 6,
     'unresolved-authored-geometry': 0,
   },
   directSourceAccepted: true,
@@ -298,8 +298,8 @@ export function validateEqualHeightSingleFilledNorthwestCrossJunctionGate(
     JSON.stringify(gate.acceptedLedgerCounts) !==
       JSON.stringify(EQUAL_HEIGHT_MASK_LEDGER.counts) ||
     EQUAL_HEIGHT_MASK_LEDGER.counts['direct-reuse'] !== 24 ||
-    EQUAL_HEIGHT_MASK_LEDGER.counts['approved-derivation'] !== 16 ||
-    EQUAL_HEIGHT_MASK_LEDGER.counts['synthetic-assembly'] !== 7 ||
+    EQUAL_HEIGHT_MASK_LEDGER.counts['approved-derivation'] !== 17 ||
+    EQUAL_HEIGHT_MASK_LEDGER.counts['synthetic-assembly'] !== 6 ||
     EQUAL_HEIGHT_MASK_LEDGER.counts['unresolved-authored-geometry'] !== 0
   ) {
     throw new Error(

@@ -28,9 +28,9 @@ and all four corners close as one enclosure.
 
 **Accepted mapping gate (owner approvals, 2026-07-21 through 2026-07-23):** the proof-layer ledger
 locks the unchanged canonical `mask_0` through `mask_46` order and classifies
-24 direct reuses, 16 approved derivations, 7 synthetic assembly
+24 direct reuses, 17 approved derivations, 6 synthetic assembly
 candidates, and zero collisions. The remaining synthetic rows are all cross-junctions. This accepts the
-mapping structure and provenance boundaries only. It does not accept the 7 remaining synthetic
+mapping structure and provenance boundaries only. It does not accept the 6 remaining synthetic
 cross-junction diagrams or create an atlas/production family.
 
 **Accepted horizontal terminus gate (owner approval, 2026-07-21):** `mask_8`
@@ -236,6 +236,16 @@ three-cell-arm, and six-cell-arm crossings on light and dark floors. Promotion a
 This accepts one direct proof-layer source only. It creates no canonical production source, frame identity,
 template registration, exporter, atlas, schema, blob mapping, or Unity registration. The X-mirrored
 `mask_40` topology remains a separate review decision with no implied derivation or promotion.
+
+**Accepted opposite-diagonal-filled cross-junction derivation (owner approval, 2026-07-23):** `mask_40`
+reuses the accepted `open_cross_filled_ne_sw` pair for `mask_30` through one whole-cell X mirror after
+omitting only `base-boundary-seam` and `upper-boundary-seam`. Northwest and southeast remain one continuous
+solid wall mass, northeast and southwest remain genuine floor crooks, the north outlet uses the east
+register, and the south outlet uses the west register. The accepted filter leaves the adjoining west cell as
+the sole shared-socket seam owner while preserving every other path and the fixed-light Y hierarchy.
+Promotion advances the proof ledger to 24 direct / 17 derived / 6 synthetic / 0 collisions; all six remaining
+synthetic rows are cross-junctions. It creates no new SVG, canonical source, frame identity, template
+registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity` change.
 
 The original independently finished low-base-plus-optional-upper construction was
 rejected on 2026-07-20 because its duplicate caps and contours read as one wall

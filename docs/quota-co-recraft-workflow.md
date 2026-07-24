@@ -48,7 +48,10 @@ on the live workbench and committed individually with its design rationale.
    cross-junction `mask_30` now directly reuses one separately authored fixed-light
    `open_cross_filled_ne_sw` pair: northeast and southwest are continuous solid wall, northwest and southeast
    remain open floor, the north outlet keeps the west-authored register, and the south outlet hands off to the
-   accepted east register. The X-mirrored `mask_40` topology remains a separate review decision. Never
+   accepted east register. Opposite-diagonal `mask_40` now reuses that same pair through a whole-cell X mirror
+   after omitting only the two west-boundary seam paths: northwest and southeast are solid, northeast and
+   southwest remain open floor, the north outlet uses the east register, and the south outlet uses the west
+   register. Never
    rotate the accepted horizontal source to manufacture a vertical end. Use composed evidence as
    the issue-finding surface. Historical
    mixed-profile room mocks are archived, not valid targets.
@@ -424,7 +427,15 @@ are cross-junctions. This creates no canonical production source, registration, 
 mapping, or Unity change. The X-mirrored `mask_40` topology remains a separate review decision with no implied
 derivation or promotion.
 
-**Still outside acceptance after the opposed-diagonal-filled cross-junction checkpoint:** all 7 remaining synthetic
+**Accepted opposite-diagonal-filled cross-junction derivation (owner approval, 2026-07-23):** `mask_40`
+reuses the accepted `open_cross_filled_ne_sw` pair for `mask_30` through one whole-cell X mirror after
+omitting only `base-boundary-seam` and `upper-boundary-seam`. Preserve the exact four sockets, northwest and
+southeast solid wall, northeast and southwest open floor, north/east and south/west vertical register
+handoffs, and all non-boundary source paths. Promotion advances the ledger to 24 direct / 17 derived /
+6 synthetic / 0 collisions; all six remaining synthetic rows are cross-junctions. This adds no companion
+SVG, canonical source, registration, exporter, atlas, schema, blob mapping, or Unity change.
+
+**Still outside acceptance after the opposite-diagonal derivation checkpoint:** all 6 remaining synthetic
 cross-junction candidate sprites;
 `topology/` and `state/`; official/production preview
 regeneration; template/catalog registration and frame identities; exporter, `CONTRACT.md`, or schema changes;
@@ -433,7 +444,7 @@ requested. The accepted external `mask_0`, filled-elbow, both thick-wall-repeat,
 west/east single-filled-pocket, horizontal-partial, open-pocket cross-junction, and single-filled
 cross-junction, southeast-filled cross-junction, east-filled slab cross-junction, west-filled slab
 cross-junction, southwest-filled cross-junction, northwest-filled cross-junction, north-filled slab
-cross-junction, and opposed-diagonal-filled cross-junction proof families do not
+cross-junction, opposed-diagonal-filled cross-junction source, and opposite-diagonal filtered derivation do not
 unlock or silently promote any of those surfaces.
 Acceptance of the external T-junction proof families adds ledger provenance only and does not alter that lock.
 The accepted horizontal-partial family likewise creates no canonical source, registration, exporter, atlas,

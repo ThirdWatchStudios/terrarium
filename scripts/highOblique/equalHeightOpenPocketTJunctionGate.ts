@@ -167,8 +167,8 @@ export function validateEqualHeightOpenPocketTJunctionGate(
       'open_w_t_junction-upper.svg',
     ]) ||
     EQUAL_HEIGHT_MASK_LEDGER.counts['direct-reuse'] !== 24 ||
-    EQUAL_HEIGHT_MASK_LEDGER.counts['approved-derivation'] !== 16 ||
-    EQUAL_HEIGHT_MASK_LEDGER.counts['synthetic-assembly'] !== 7 ||
+    EQUAL_HEIGHT_MASK_LEDGER.counts['approved-derivation'] !== 17 ||
+    EQUAL_HEIGHT_MASK_LEDGER.counts['synthetic-assembly'] !== 6 ||
     EQUAL_HEIGHT_MASK_LEDGER.counts['unresolved-authored-geometry'] !== 0
   ) {
     throw new Error('Open-pocket T-junction evidence boundary drift');

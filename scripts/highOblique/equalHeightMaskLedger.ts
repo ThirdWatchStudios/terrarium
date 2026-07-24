@@ -46,7 +46,10 @@ export type EqualHeightMaskTopologyClass =
 
 export type EqualHeightMaskEdge = 'n' | 'e' | 's' | 'w';
 export type EqualHeightMaskCorner = 'ne' | 'se' | 'sw' | 'nw';
-export type EqualHeightMaskDerivation = 'none' | 'accepted-southeast-seam-filter';
+export type EqualHeightMaskDerivation =
+  | 'none'
+  | 'accepted-southeast-seam-filter'
+  | 'accepted-opposite-diagonal-boundary-seam-filter';
 
 export interface EqualHeightMaskSourceVariant {
   readonly role: string;
@@ -433,6 +436,16 @@ const doubleFilledDiagonalCrossJunction: EqualHeightMaskSourceVariant = {
   transform: 'none',
   derivation: 'none',
   facingRule: 'connected north, east, south, and west with northeast and southwest solid and southeast/northwest floor crooks open; one authored fixed-light union hands the north outlet to the west register and the south outlet to the east register',
+};
+
+const doubleFilledOppositeDiagonalCrossJunction: EqualHeightMaskSourceVariant = {
+  role: 'double-filled-opposite-diagonal-cross-junction',
+  sourceStem: 'open_cross_filled_ne_sw',
+  baseFile: 'open_cross_filled_ne_sw-base.svg',
+  upperFile: 'open_cross_filled_ne_sw-upper.svg',
+  transform: 'mirror-x',
+  derivation: 'accepted-opposite-diagonal-boundary-seam-filter',
+  facingRule: 'connected north, east, south, and west with northwest and southeast solid and northeast/southwest floor crooks open; accepted whole-cell X mirror of mask_30 after omitting only the two duplicated west-boundary seam paths',
 };
 
 const singleFilledSoutheastCrossJunction: EqualHeightMaskSourceVariant = {
@@ -874,6 +887,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         variants: [doubleFilledNorthCrossJunction],
         note: 'Accepted north-filled slab cross junction directly reuses the authored west-fixed four-way union; mask_19 and mask_37 constrain geometry cues without creating stacked or derived provenance.',
       };
+    case 40:
+      return {
+        kind: 'approved-derivation',
+        status: 'accepted-source-mapping',
+        variants: [doubleFilledOppositeDiagonalCrossJunction],
+        note: 'Accepted opposite-diagonal cross junction reuses mask_30 through whole-cell mirror-X after omitting only the two duplicated west-boundary seam paths.',
+      };
     case 42:
       return {
         kind: 'approved-derivation',
@@ -1005,6 +1025,7 @@ const ACCEPTED_SOURCE_VARIANTS = new Set([
   singleFilledNorthwestCrossJunction,
   doubleFilledNorthCrossJunction,
   doubleFilledDiagonalCrossJunction,
+  doubleFilledOppositeDiagonalCrossJunction,
   singleFilledSoutheastCrossJunction,
   singleFilledSouthwestCrossJunction,
   doubleFilledEastCrossJunction,
@@ -1080,7 +1101,9 @@ export function validateEqualHeightMaskLedger(ledger: EqualHeightMaskLedger): vo
       }
       if (
         variant.derivation !== 'none' &&
-        variant.derivation !== 'accepted-southeast-seam-filter'
+        variant.derivation !== 'accepted-southeast-seam-filter' &&
+        variant.derivation !==
+          'accepted-opposite-diagonal-boundary-seam-filter'
       ) {
         throw new Error(`Equal-height mask ledger uses invalid derivation at ${entry.id}`);
       }
