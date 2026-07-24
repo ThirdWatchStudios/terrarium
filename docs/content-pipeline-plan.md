@@ -48,10 +48,11 @@ changes the export contract except where explicitly flagged (floor variants).
 > opposed-diagonal-filled cross-junction `mask_30`, plus its accepted filtered whole-cell X-mirror companion
 > `mask_40`, the independently authored south-filled slab cross-junction `mask_32`, and the independently
 > authored single-open southwest cross-junction `mask_41`, plus its accepted plain whole-cell X-mirror
-> single-open southeast companion `mask_44`, and the independently authored single-open northwest
-> cross-junction `mask_33`. The ledger
-> now records 27 direct source mappings, 18 approved
-> derivations, 2 synthetic assembly
+> single-open southeast companion `mask_44`, the independently authored single-open northwest
+> cross-junction `mask_33`, and its accepted plain whole-cell X-mirror single-open northeast companion
+> `mask_45`. The ledger
+> now records 27 direct source mappings, 19 approved
+> derivations, 1 synthetic assembly
 > candidates, and zero collisions; all remaining synthetic rows are cross-junctions. `mask_8`
 > directly reuses the socket-polished `full_terminus` pair and `mask_2` uses its accepted whole-cell X mirror;
 > both passed at 90/40 px in 1/3/6-cell contexts. This is not acceptance of the remaining synthetic candidate pixels or a
@@ -261,6 +262,15 @@ changes the export contract except where explicitly flagged (floor variants).
 > derived / 2 synthetic / 0 collisions; the two remaining synthetic rows are cross-junctions. Acceptance
 > records one direct proof-layer source only and adds no canonical production source, frame identity, template
 > registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity` change.
+> **Accepted single-open northeast cross-junction slice (owner approval, 2026-07-24):** `mask_45` reuses
+> the accepted external `open_cross_filled_ne_se_sw` pair from `mask_33` through one plain whole-cell X
+> mirror around `x=64`. Southeast, southwest, and northwest remain one continuous solid mass; northeast
+> remains genuine floor; and all four cardinal sockets stay exact. The whole pair is mirrored without a seam
+> filter, companion SVG, stacked ingredient, or second cream owner, preserving the accepted Y-based light,
+> reveal, arris, and contact-shadow hierarchy. The accepted ledger now records 27 direct / 19 derived /
+> 1 synthetic / 0 collisions; only `mask_46` remains synthetic. Acceptance records one approved proof-layer
+> derivation only and adds no canonical production source, frame identity, template registration, exporter,
+> atlas, schema, blob mapping, Unity asset, or `production.unity` change.
 
 ---
 

@@ -28,9 +28,9 @@ and all four corners close as one enclosure.
 
 **Accepted mapping gate (owner approvals, 2026-07-21 through 2026-07-24):** the proof-layer ledger
 locks the unchanged canonical `mask_0` through `mask_46` order and classifies
-27 direct reuses, 18 approved derivations, 2 synthetic assembly
+27 direct reuses, 19 approved derivations, 1 synthetic assembly
 candidates, and zero collisions. The remaining synthetic rows are all cross-junctions. This accepts the
-mapping structure and provenance boundaries only. It does not accept the 2 remaining synthetic
+mapping structure and provenance boundaries only. It does not accept the 1 remaining synthetic
 cross-junction diagrams or create an atlas/production family.
 
 **Accepted horizontal terminus gate (owner approval, 2026-07-21):** `mask_8`
@@ -289,6 +289,17 @@ It passes at 240, 90, and 40 px per cell plus compact, three-cell-arm, and six-c
 dark floors. Promotion advances the proof ledger to 27 direct / 18 derived / 2 synthetic / 0 collisions; the
 two remaining synthetic rows are cross-junctions. It creates no canonical production source, frame identity,
 template registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity` change.
+
+**Accepted single-open northeast cross-junction gate (owner approval, 2026-07-24):** `mask_45` reuses the
+accepted `open_cross_filled_ne_se_sw` pair from `mask_33` through one plain whole-cell X mirror around
+`x=64`. All four cardinal sockets remain connected; southeast, southwest, and northwest form one continuous
+solid wall mass while the northeast crook remains genuine floor. The complete source is mirrored without a
+seam filter, companion SVG, stacked ingredient, or second cream owner, preserving the accepted Y-based light,
+reveal, arris, and contact-shadow hierarchy. It passes at 240, 90, and 40 px per cell plus compact,
+three-cell-arm, and six-cell-arm crossings on light and dark floors. Promotion advances the proof ledger to
+27 direct / 19 derived / 1 synthetic / 0 collisions; only `mask_46` remains synthetic. It creates no canonical
+production source, frame identity, template registration, exporter, atlas, schema, blob mapping, Unity asset,
+or `production.unity` change.
 
 The original independently finished low-base-plus-optional-upper construction was
 rejected on 2026-07-20 because its duplicate caps and contours read as one wall

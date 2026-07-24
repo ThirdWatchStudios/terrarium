@@ -1,8 +1,8 @@
 # QuotaCo High-Oblique Geometry — Production Art Ask
 
-**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** single-open northwest cross-junction accepted
-`mask_33` is accepted as one independently authored fixed-view direct proof source; no wall proposal is
-currently active and the ledger stands at 27 direct / 18 derived / 2 synthetic
+**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** single-open northeast cross-junction accepted
+`mask_45` is accepted as the plain whole-cell X-mirror derivation of the independently authored `mask_33`
+proof source; no wall proposal is currently active and the ledger stands at 27 direct / 19 derived / 1 synthetic
 
 Canonical direction lives in the sim repository:
 
@@ -23,10 +23,11 @@ the all-open `mask_15`, northeast-filled `mask_19`, southeast-filled `mask_23`, 
 and the separately authored northwest-filled `mask_37`, north-filled slab `mask_39`, and
 opposed-diagonal-filled `mask_30`, plus its filtered opposite-diagonal `mask_40` derivation,
 the independently authored south-filled slab `mask_32`, and the independently authored single-open southwest
-`mask_41` cross-junction, plus its plain whole-cell X-mirror single-open southeast `mask_44` companion, and the
-independently authored single-open northwest `mask_33` cross-junction. The
+`mask_41` cross-junction, plus its plain whole-cell X-mirror single-open southeast `mask_44` companion, the
+independently authored single-open northwest `mask_33` cross-junction, and its plain whole-cell X-mirror
+single-open northeast `mask_45` companion. The
 accepted proof ledger now records
-27 direct, 18 derived, 2 synthetic,
+27 direct, 19 derived, 1 synthetic,
 and zero collisions; every remaining
 synthetic assembly candidate is a cross-junction. Prop-catalog work and
 production changes remain separate decisions.
@@ -169,8 +170,9 @@ single-filled `mask_19`, southeast-filled `mask_23`, east-filled slab `mask_25`,
 north-filled slab `mask_39`, opposed-diagonal-filled `mask_30`, and filtered opposite-diagonal mirror
 `mask_40`, plus the independently authored south-filled slab `mask_32` and independently authored
 single-open southwest `mask_41`, plus its plain whole-cell X-mirror single-open southeast `mask_44`
-companion and the independently authored single-open northwest `mask_33` promoted, it records twenty-seven
-direct mappings and eighteen approved derivations as source law, not the 2 remaining synthetic
+companion, the independently authored single-open northwest `mask_33`, and its plain whole-cell X-mirror
+single-open northeast `mask_45` companion promoted, it records twenty-seven direct mappings and nineteen
+approved derivations as source law, not the one remaining synthetic
 cross-junction candidate sprites.
 The ledger has zero collisions.
 
@@ -435,6 +437,17 @@ three-cell-arm, and six-cell-arm crossings on light and dark floors. Promotion a
 twenty-seven direct, eighteen derived, 2 synthetic, and zero collisions; the two remaining synthetic rows are
 cross-junctions. Proof-layer acceptance changes no canonical production source, frame identity, template
 registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity` surface.
+
+**Accepted single-open northeast cross-junction gate (owner approval, 2026-07-24):** `mask_45` reuses the
+accepted external `open_cross_filled_ne_se_sw` pair from `mask_33` through one plain whole-cell X mirror
+around `x=64`. Southeast, southwest, and northwest are one continuous solid wall mass, northeast remains
+genuine floor, and all four cardinal sockets remain exact. The whole pair is mirrored without a seam filter,
+companion SVG, stacked source, or second cream owner, preserving the accepted Y-based light, reveal, arris,
+and contact-shadow hierarchy. It passes at 240/90/40 px and in compact, three-cell-arm, and six-cell-arm
+crossings on light and dark floors. Promotion advances the ledger to twenty-seven direct, nineteen derived,
+1 synthetic, and zero collisions; only `mask_46` remains synthetic. Proof-layer acceptance changes no
+canonical production source, frame identity, template registration, exporter, atlas, schema, blob mapping,
+Unity asset, or `production.unity` surface.
 
 ### A1a review artifact
 

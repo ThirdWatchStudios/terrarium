@@ -217,8 +217,8 @@ describe('QuotaCo owner-accepted double-filled south cross-junction gate', () =>
     });
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
       'direct-reuse': 27,
-      'approved-derivation': 18,
-      'synthetic-assembly': 2,
+      'approved-derivation': 19,
+      'synthetic-assembly': 1,
       'unresolved-authored-geometry': 0,
     });
     expect(

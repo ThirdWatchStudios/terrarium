@@ -485,7 +485,17 @@ const singleOpenNorthwestCrossJunction: EqualHeightMaskSourceVariant = {
   upperFile: 'open_cross_filled_ne_se_sw-upper.svg',
   transform: 'none',
   derivation: 'none',
-  facingRule: 'connected north, east, south, and west with northeast, southeast, and southwest solid while the northwest floor crook remains open; independently authored fixed-view source with one cream-led three-crook mass',
+  facingRule: 'connected north, east, south, and west with northeast, southeast, and southwest solid while the northwest floor crook remains open; independently authored fixed-view source with one cream-led three-crook mass and accepted mirror source for mask_45',
+};
+
+const singleOpenNortheastCrossJunction: EqualHeightMaskSourceVariant = {
+  role: 'single-open-northeast-cross-junction',
+  sourceStem: 'open_cross_filled_ne_se_sw',
+  baseFile: 'open_cross_filled_ne_se_sw-base.svg',
+  upperFile: 'open_cross_filled_ne_se_sw-upper.svg',
+  transform: 'mirror-x',
+  derivation: 'none',
+  facingRule: 'connected north, east, south, and west with southeast, southwest, and northwest solid while the northeast floor crook remains open; accepted plain whole-cell X mirror of the authored mask_33 single-open northwest fixed-view source',
 };
 
 const singleFilledSoutheastCrossJunction: EqualHeightMaskSourceVariant = {
@@ -976,6 +986,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         variants: [singleOpenSoutheastCrossJunction],
         note: 'Accepted single-open southeast cross junction is the plain whole-cell mirror-X derivation of the authored mask_41 single-open southwest four-way union.',
       };
+    case 45:
+      return {
+        kind: 'approved-derivation',
+        status: 'accepted-source-mapping',
+        variants: [singleOpenNortheastCrossJunction],
+        note: 'Accepted single-open northeast cross junction is the plain whole-cell mirror-X derivation of the authored mask_33 single-open northwest four-way union.',
+      };
     default:
       return undefined;
   }
@@ -1098,6 +1115,7 @@ const ACCEPTED_SOURCE_VARIANTS = new Set([
   singleOpenSouthwestCrossJunction,
   singleOpenSoutheastCrossJunction,
   singleOpenNorthwestCrossJunction,
+  singleOpenNortheastCrossJunction,
   singleFilledSoutheastCrossJunction,
   singleFilledSouthwestCrossJunction,
   doubleFilledEastCrossJunction,

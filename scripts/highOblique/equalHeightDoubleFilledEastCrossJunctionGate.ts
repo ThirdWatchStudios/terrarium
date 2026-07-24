@@ -157,8 +157,8 @@ export const EQUAL_HEIGHT_DOUBLE_FILLED_EAST_CROSS_JUNCTION_GATE = {
   },
   acceptedLedgerCounts: {
     'direct-reuse': 27,
-    'approved-derivation': 18,
-    'synthetic-assembly': 2,
+    'approved-derivation': 19,
+    'synthetic-assembly': 1,
     'unresolved-authored-geometry': 0,
   },
   xMirrorAllowed: false,
@@ -307,8 +307,8 @@ export function validateEqualHeightDoubleFilledEastCrossJunctionGate(
   if (
     JSON.stringify(gate.acceptedLedgerCounts) !== JSON.stringify(currentCounts) ||
     currentCounts['direct-reuse'] !== 27 ||
-    currentCounts['approved-derivation'] !== 18 ||
-    currentCounts['synthetic-assembly'] !== 2 ||
+    currentCounts['approved-derivation'] !== 19 ||
+    currentCounts['synthetic-assembly'] !== 1 ||
     currentCounts['unresolved-authored-geometry'] !== 0
   ) {
     throw new Error('Double-filled east cross-junction ledger-count boundary drift');

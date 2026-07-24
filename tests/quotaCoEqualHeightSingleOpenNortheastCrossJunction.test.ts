@@ -1,4 +1,5 @@
 import {
+  existsSync,
   readFileSync,
   readdirSync,
 } from 'node:fs';
@@ -9,11 +10,16 @@ import { describe, expect, it } from 'vitest';
 
 import { A1B_AUTHORED_STEMS } from '../scripts/highOblique/a1bAuthoredProof';
 import {
-  EQUAL_HEIGHT_SINGLE_OPEN_SOUTHEAST_CROSS_JUNCTION_GATE,
-  validateEqualHeightSingleOpenSoutheastCrossJunctionGate,
-  type EqualHeightSingleOpenSoutheastCrossJunctionMatrix,
-} from '../scripts/highOblique/equalHeightSingleOpenSoutheastCrossJunctionGate';
-import { EQUAL_HEIGHT_SINGLE_OPEN_SOUTHWEST_CROSS_JUNCTION_GATE } from '../scripts/highOblique/equalHeightSingleOpenSouthwestCrossJunctionGate';
+  A1B_SINGLE_OPEN_NORTHWEST_CROSS_JUNCTION_PROPOSAL_SOURCE_INVENTORY,
+} from '../scripts/highOblique/a1bSingleOpenNorthwestCrossJunctionProposal';
+import {
+  EQUAL_HEIGHT_SINGLE_OPEN_NORTHEAST_CROSS_JUNCTION_GATE,
+  validateEqualHeightSingleOpenNortheastCrossJunctionGate,
+  type EqualHeightSingleOpenNortheastCrossJunctionMatrix,
+} from '../scripts/highOblique/equalHeightSingleOpenNortheastCrossJunctionGate';
+import {
+  EQUAL_HEIGHT_SINGLE_OPEN_NORTHWEST_CROSS_JUNCTION_GATE,
+} from '../scripts/highOblique/equalHeightSingleOpenNorthwestCrossJunctionGate';
 import { EQUAL_HEIGHT_MASK_LEDGER } from '../scripts/highOblique/equalHeightMaskLedger';
 import { wallAtlas } from '../src/core/exporter';
 import { CURRENT_SCHEMA_VERSION } from '../src/core/types';
@@ -28,8 +34,12 @@ import {
 import { WALL_TEMPLATES } from '../src/tiles/templates';
 
 const SOURCE_PREFIX =
-  'assets/walls/quota-co-building-system-proofs/single-open-southwest-cross-junction';
+  'assets/walls/quota-co-building-system-proofs/single-open-northwest-cross-junction';
 const SOURCE_DIRECTORY = path.resolve(process.cwd(), SOURCE_PREFIX);
+const FORBIDDEN_NEW_SOURCE_DIRECTORY = path.resolve(
+  process.cwd(),
+  'assets/walls/quota-co-building-system-proofs/single-open-northeast-cross-junction',
+);
 
 const source = (filename: string): string =>
   readFileSync(path.join(SOURCE_DIRECTORY, filename), 'utf8');
@@ -50,7 +60,7 @@ const NEIGHBORS = [
 
 function matrixFor(
   pattern: readonly string[],
-): EqualHeightSingleOpenSoutheastCrossJunctionMatrix {
+): EqualHeightSingleOpenNortheastCrossJunctionMatrix {
   const rows = pattern.length;
   const columns = pattern[0].length;
   const occupied = (column: number, row: number): boolean =>
@@ -67,7 +77,7 @@ function matrixFor(
         if (occupied(columnIndex + dx, rowIndex + dy)) raw |= bit;
       }
       return blobIndex(raw);
-    })) as EqualHeightSingleOpenSoutheastCrossJunctionMatrix;
+    })) as EqualHeightSingleOpenNortheastCrossJunctionMatrix;
 }
 
 const patternFor = (armLength: number): readonly string[] => {
@@ -76,9 +86,9 @@ const patternFor = (armLength: number): readonly string[] => {
     Array.from({ length: size }, (_, column) =>
       column === armLength ||
       row === armLength ||
-      (row === armLength - 1 &&
-        (column === armLength - 1 || column === armLength + 1)) ||
-      (row === armLength + 1 && column === armLength - 1)
+      (row === armLength - 1 && column === armLength - 1) ||
+      (row === armLength + 1 &&
+        (column === armLength - 1 || column === armLength + 1))
         ? '#'
         : '.',
     ).join(''),
@@ -91,8 +101,8 @@ function rasterCandidate(
   transform: 'none' | 'mirror-x',
 ): ReturnType<Resvg['render']> {
   const body =
-    stripSvgShell(source('open_cross_filled_ne_se_nw-base.svg')) +
-    stripSvgShell(source('open_cross_filled_ne_se_nw-upper.svg'));
+    stripSvgShell(source('open_cross_filled_ne_se_sw-base.svg')) +
+    stripSvgShell(source('open_cross_filled_ne_se_sw-upper.svg'));
   const transformedBody = transform === 'mirror-x'
     ? `<g transform="translate(128 0) scale(-1 1)">${body}</g>`
     : body;
@@ -181,87 +191,92 @@ const productionSignature = (): string => {
     authoredStems: A1B_AUTHORED_STEMS,
     wallTemplateIds: WALL_TEMPLATES.map(({ id }) => id),
     atlasFrameIds: Object.keys(atlas.frames),
-    mask44Frame: atlas.frames.mask_44,
+    mask45Frame: atlas.frames.mask_45,
   });
 };
 
-describe('QuotaCo accepted single-open southeast cross-junction gate', () => {
-  it('locks mask_44 as the accepted plain whole-cell X mirror of mask_41', () => {
-    expect(EQUAL_HEIGHT_SINGLE_OPEN_SOUTHEAST_CROSS_JUNCTION_GATE)
-      .toMatchObject({
-        stem:
-          'equal-height-single-open-southeast-cross-junction-gate',
-        status:
-          'owner-accepted-single-open-southeast-cross-junction-gate',
-        contract: false,
-        candidate: {
-          maskIndex: 44,
-          sourceMaskIndex: 41,
-          sourceStem: 'open_cross_filled_ne_se_nw',
-          baseFile: 'open_cross_filled_ne_se_nw-base.svg',
-          upperFile: 'open_cross_filled_ne_se_nw-upper.svg',
-          connectedEdges: ['n', 'e', 's', 'w'],
-          openPockets: ['se'],
-          solidDiagonals: ['nw', 'ne', 'sw'],
-          fixedLightRole: 'single-open-southeast-four-way-hub',
-          transform: 'mirror-x',
-          derivation: 'none',
-          resolution: 'approved-derivation',
-        },
-        sourceMaskRows: [41],
-        maskRowsUnderReview: [],
-        maskRowsAccepted: [44],
-        reviewCellSizes: [240, 90, 40],
-        reviewArmLengths: [1, 3, 6],
-        reviewGrounds: ['light', 'dark'],
-        sourceGateAccepted: true,
-        candidateAccepted: true,
-        ledgerPromotion: true,
-        xMirrorAllowed: true,
-        filteredXMirrorApplied: false,
-        productionArtMutation: false,
-        productionRegistration: false,
-        atlasMutation: false,
-        blobMappingMutation: false,
-        schemaChange: false,
-        unityRegistration: false,
-        exportable: false,
-      });
-    expect(BLOB_CONFIGS[44]).toBe(0xdf);
-    expect(configForIndex(44)).toEqual({
+describe('QuotaCo accepted single-open northeast cross-junction gate', () => {
+  it('locks mask_45 as the accepted plain whole-cell X-mirror derivation of mask_33', () => {
+    const gate =
+      EQUAL_HEIGHT_SINGLE_OPEN_NORTHEAST_CROSS_JUNCTION_GATE;
+    expect(gate).toMatchObject({
+      stem: 'equal-height-single-open-northeast-cross-junction-gate',
+      status: 'owner-accepted-single-open-northeast-cross-junction-gate',
+      contract: false,
+      candidate: {
+        maskIndex: 45,
+        sourceMaskIndex: 33,
+        sourceStem: 'open_cross_filled_ne_se_sw',
+        baseFile: 'open_cross_filled_ne_se_sw-base.svg',
+        upperFile: 'open_cross_filled_ne_se_sw-upper.svg',
+        connectedEdges: ['n', 'e', 's', 'w'],
+        openPockets: ['ne'],
+        solidDiagonals: ['se', 'sw', 'nw'],
+        fixedLightRole: 'single-open-northeast-four-way-hub',
+        transform: 'mirror-x',
+        derivation: 'none',
+        resolution: 'approved-derivation',
+      },
+      sourceMaskRows: [33],
+      controlMaskRows: [43, 32, 40],
+      maskRowsUnderReview: [],
+      maskRowsAccepted: [45],
+      reviewCellSizes: [240, 90, 40],
+      reviewArmLengths: [1, 3, 6],
+      reviewGrounds: ['light', 'dark'],
+      sourceGateAccepted: true,
+      candidateAccepted: true,
+      ledgerPromotion: true,
+      xMirrorAllowed: true,
+      filteredXMirrorApplied: false,
+      yMirrorAllowed: false,
+      rotationAllowed: false,
+      proofSourceMutation: false,
+      productionArtMutation: false,
+      productionRegistration: false,
+      productionTopologyMutation: false,
+      atlasMutation: false,
+      blobMappingMutation: false,
+      schemaChange: false,
+      unityRegistration: false,
+      exportable: false,
+      committedAtlas: false,
+      temporaryFrameIds: true,
+    });
+    expect(BLOB_CONFIGS[45]).toBe(0xef);
+    expect(configForIndex(45)).toEqual({
       n: true,
       e: true,
       s: true,
       w: true,
-      ne: 'solid',
-      se: 'concave',
+      ne: 'concave',
+      se: 'solid',
       sw: 'solid',
       nw: 'solid',
     });
     expect(
-      () =>
-        validateEqualHeightSingleOpenSoutheastCrossJunctionGate(),
+      () => validateEqualHeightSingleOpenNortheastCrossJunctionGate(),
     ).not.toThrow();
   });
 
-  it('derives compact and 3/6-cell evidence from literal southeast-open occupancy', () => {
+  it('derives compact and 3/6-cell evidence from literal northeast-open occupancy', () => {
     const gate =
-      EQUAL_HEIGHT_SINGLE_OPEN_SOUTHEAST_CROSS_JUNCTION_GATE;
-    expect(patternFor(1)).toEqual(['###', '###', '##.']);
+      EQUAL_HEIGHT_SINGLE_OPEN_NORTHEAST_CROSS_JUNCTION_GATE;
+    expect(patternFor(1)).toEqual(['##.', '###', '###']);
     expect(gate.compactMatrix).toEqual(matrixFor(patternFor(1)));
     expect(gate.threeCellArmMatrix).toEqual(matrixFor(patternFor(3)));
     expect(gate.sixCellArmMatrix).toEqual(matrixFor(patternFor(6)));
     expect(gate.compactMatrix).toEqual([
-      [20, 31, 26],
-      [24, 44, 34],
-      [16, 34, null],
+      [20, 26, null],
+      [24, 45, 26],
+      [16, 38, 34],
     ]);
     expect(gate.threeCellArmMatrix).toEqual([
       [null, null, null, 4, null, null, null],
       [null, null, null, 5, null, null, null],
-      [null, null, 20, 32, 26, null, null],
-      [2, 10, 25, 44, 35, 10, 8],
-      [null, null, 16, 36, null, null, null],
+      [null, null, 20, 27, null, null, null],
+      [2, 10, 25, 45, 28, 10, 8],
+      [null, null, 16, 39, 34, null, null],
       [null, null, null, 5, null, null, null],
       [null, null, null, 1, null, null, null],
     ]);
@@ -271,9 +286,9 @@ describe('QuotaCo accepted single-open southeast cross-junction gate', () => {
       [null, null, null, null, null, null, 5, null, null, null, null, null, null],
       [null, null, null, null, null, null, 5, null, null, null, null, null, null],
       [null, null, null, null, null, null, 5, null, null, null, null, null, null],
-      [null, null, null, null, null, 20, 32, 26, null, null, null, null, null],
-      [2, 10, 10, 10, 10, 25, 44, 35, 10, 10, 10, 10, 8],
-      [null, null, null, null, null, 16, 36, null, null, null, null, null, null],
+      [null, null, null, null, null, 20, 27, null, null, null, null, null, null],
+      [2, 10, 10, 10, 10, 25, 45, 28, 10, 10, 10, 10, 8],
+      [null, null, null, null, null, 16, 39, 34, null, null, null, null, null],
       [null, null, null, null, null, null, 5, null, null, null, null, null, null],
       [null, null, null, null, null, null, 5, null, null, null, null, null, null],
       [null, null, null, null, null, null, 5, null, null, null, null, null, null],
@@ -282,26 +297,29 @@ describe('QuotaCo accepted single-open southeast cross-junction gate', () => {
     ]);
   });
 
-  it('keeps the source and installed neighbors accepted while promoting row 44', () => {
+  it('keeps the source, controls, and installed neighbors accepted with row 45 promoted', () => {
     const gate =
-      EQUAL_HEIGHT_SINGLE_OPEN_SOUTHEAST_CROSS_JUNCTION_GATE;
+      EQUAL_HEIGHT_SINGLE_OPEN_NORTHEAST_CROSS_JUNCTION_GATE;
     const installed = new Set([
       ...gate.compactMatrix.flat(),
       ...gate.threeCellArmMatrix.flat(),
       ...gate.sixCellArmMatrix.flat(),
     ].filter((index): index is number => index !== null));
-    installed.delete(44);
+    installed.delete(45);
     expect([...installed].sort((left, right) => left - right)).toEqual(
       gate.installedNeighborMaskRows,
     );
-    for (const index of installed) {
+    for (const index of [
+      ...gate.controlMaskRows,
+      ...installed,
+    ]) {
       expect(
         EQUAL_HEIGHT_MASK_LEDGER.entries[index].resolution.status,
         `mask_${index}`,
       ).toBe('accepted-source-mapping');
     }
-    expect(EQUAL_HEIGHT_MASK_LEDGER.entries[41]).toMatchObject({
-      id: 'mask_41',
+    expect(EQUAL_HEIGHT_MASK_LEDGER.entries[33]).toMatchObject({
+      id: 'mask_33',
       resolution: {
         kind: 'direct-reuse',
         status: 'accepted-source-mapping',
@@ -314,16 +332,16 @@ describe('QuotaCo accepted single-open southeast cross-junction gate', () => {
         }],
       },
     });
-    expect(EQUAL_HEIGHT_MASK_LEDGER.entries[44]).toMatchObject({
-      id: 'mask_44',
-      canonicalMask: 0xdf,
-      pockets: ['se'],
-      solidDiagonals: ['ne', 'sw', 'nw'],
+    expect(EQUAL_HEIGHT_MASK_LEDGER.entries[45]).toMatchObject({
+      id: 'mask_45',
+      canonicalMask: 0xef,
+      pockets: ['ne'],
+      solidDiagonals: ['se', 'sw', 'nw'],
       resolution: {
         kind: 'approved-derivation',
         status: 'accepted-source-mapping',
         variants: [{
-          role: 'single-open-southeast-cross-junction',
+          role: 'single-open-northeast-cross-junction',
           sourceStem: gate.candidate.sourceStem,
           baseFile: gate.candidate.baseFile,
           upperFile: gate.candidate.upperFile,
@@ -338,39 +356,62 @@ describe('QuotaCo accepted single-open southeast cross-junction gate', () => {
       'synthetic-assembly': 1,
       'unresolved-authored-geometry': 0,
     });
-    expect(gate.acceptedLedgerCounts).toEqual(EQUAL_HEIGHT_MASK_LEDGER.counts);
+    expect(gate.acceptedLedgerCounts).toEqual(
+      EQUAL_HEIGHT_MASK_LEDGER.counts,
+    );
   });
 
-  it('uses the accepted proof files read-only and mirrors their complete raster', () => {
+  it('reuses the accepted Mask 33 inventory read-only with no filter or companion SVG', () => {
     const gate =
-      EQUAL_HEIGHT_SINGLE_OPEN_SOUTHEAST_CROSS_JUNCTION_GATE;
-    expect(readdirSync(SOURCE_DIRECTORY).sort()).toEqual([
+      EQUAL_HEIGHT_SINGLE_OPEN_NORTHEAST_CROSS_JUNCTION_GATE;
+    const inventoryBefore = readdirSync(SOURCE_DIRECTORY).sort();
+    const baseBefore = source('open_cross_filled_ne_se_sw-base.svg');
+    const upperBefore = source('open_cross_filled_ne_se_sw-upper.svg');
+
+    expect(inventoryBefore).toEqual([
       'README.md',
-      'open_cross_filled_ne_se_nw-base.svg',
-      'open_cross_filled_ne_se_nw-upper.svg',
+      'open_cross_filled_ne_se_sw-base.svg',
+      'open_cross_filled_ne_se_sw-upper.svg',
+    ]);
+    expect(
+      A1B_SINGLE_OPEN_NORTHWEST_CROSS_JUNCTION_PROPOSAL_SOURCE_INVENTORY
+        .map(({ filename }) => filename),
+    ).toEqual([
+      'open_cross_filled_ne_se_sw-base.svg',
+      'open_cross_filled_ne_se_sw-upper.svg',
     ]);
     expect(gate.renderingDecision).toMatchObject({
       kind: 'accepted-plain-whole-cell-x-mirror',
       scope: 'external-proof-source-reuse',
       sourceGate:
-        EQUAL_HEIGHT_SINGLE_OPEN_SOUTHWEST_CROSS_JUNCTION_GATE.stem,
+        EQUAL_HEIGHT_SINGLE_OPEN_NORTHWEST_CROSS_JUNCTION_GATE.stem,
+      sourceGateStatus:
+        EQUAL_HEIGHT_SINGLE_OPEN_NORTHWEST_CROSS_JUNCTION_GATE.status,
       sourceDirectory: SOURCE_PREFIX,
       reusedSourceFiles:
-        EQUAL_HEIGHT_SINGLE_OPEN_SOUTHWEST_CROSS_JUNCTION_GATE
+        EQUAL_HEIGHT_SINGLE_OPEN_NORTHWEST_CROSS_JUNCTION_GATE
           .renderingDecision.authoredSourceFiles,
       newAuthoredSourceFiles: [],
+      sourceOmissions: [],
       sourceCanvas: 128,
       mirrorAxisX: 64,
       mirrorPolicy: 'whole-cell-x-no-filter',
       seamFilter: 'none',
       sourceRelationship:
-        'read-only-x-mirror-of-owner-accepted-mask-41-proof-source',
+        'read-only-x-mirror-of-owner-accepted-mask-33-proof-source',
+      geometryControlMaskIndices: [43, 32],
+      northeastReturnControlMaskIndex: 40,
     });
-    expect(
-      source('open_cross_filled_ne_se_nw-base.svg') +
-      source('open_cross_filled_ne_se_nw-upper.svg'),
-    ).not.toMatch(/\btransform\s*=/);
+    expect(baseBefore + upperBefore).not.toMatch(
+      /\b(?:transform|href|xlink:href)\s*=/,
+    );
+    expect(existsSync(FORBIDDEN_NEW_SOURCE_DIRECTORY)).toBe(false);
+    expect(readdirSync(SOURCE_DIRECTORY).sort()).toEqual(inventoryBefore);
+    expect(source('open_cross_filled_ne_se_sw-base.svg')).toBe(baseBefore);
+    expect(source('open_cross_filled_ne_se_sw-upper.svg')).toBe(upperBefore);
+  });
 
+  it('renders the exact whole-cell mirror at 240/90/40 on both review grounds', () => {
     for (const cellPixels of [240, 90, 40] as const) {
       for (const background of ['#A8A28F', '#252A28'] as const) {
         const direct = rasterCandidate(cellPixels, background, 'none');
@@ -386,36 +427,24 @@ describe('QuotaCo accepted single-open southeast cross-junction gate', () => {
         const distance = mirrorDistance(direct, candidate);
         expect(distance.differingChannelRatio).toBeLessThanOrEqual(0.016);
         expect(distance.meanAbsoluteChannelDistance)
-          .toBeLessThanOrEqual(0.21);
+          .toBeLessThanOrEqual(0.27);
         expect(distance.maximumChannelDistance).toBeLessThanOrEqual(45);
         expect(hasOpaqueRgb(candidate, [217, 208, 185])).toBe(true);
-        expect(
-          hasOpaqueRgb(
-            candidate,
-            [182, 95, 77],
-            cellPixels === 40 ? 3 : 0,
-          ),
-        ).toBe(true);
-        expect(
-          hasOpaqueRgb(
-            candidate,
-            [41, 75, 60],
-            cellPixels === 40 ? 4 : 0,
-          ),
-        ).toBe(true);
+        expect(hasOpaqueRgb(candidate, [182, 95, 77], 4)).toBe(false);
+        expect(hasOpaqueRgb(candidate, [41, 75, 60], 4)).toBe(false);
         if (background === '#A8A28F') {
-          expect(rgbAt(candidate, 0.9, 0.98)).toEqual([168, 162, 143]);
-          expect(rgbAt(candidate, 0.1, 0.98)).not.toEqual([168, 162, 143]);
+          expect(rgbAt(candidate, 0.9, 0.1)).toEqual([168, 162, 143]);
+          expect(rgbAt(candidate, 0.1, 0.1)).not.toEqual([168, 162, 143]);
         }
       }
     }
   });
 
-  it('rejects topology, source, matrix, filter, and demotion drift', () => {
+  it('rejects topology, source, matrix, filter, demotion, and production-boundary drift', () => {
     const gate =
-      EQUAL_HEIGHT_SINGLE_OPEN_SOUTHEAST_CROSS_JUNCTION_GATE;
+      EQUAL_HEIGHT_SINGLE_OPEN_NORTHEAST_CROSS_JUNCTION_GATE;
     expect(() =>
-      validateEqualHeightSingleOpenSoutheastCrossJunctionGate({
+      validateEqualHeightSingleOpenNortheastCrossJunctionGate({
         ...gate,
         candidate: {
           ...gate.candidate,
@@ -424,7 +453,7 @@ describe('QuotaCo accepted single-open southeast cross-junction gate', () => {
       } as unknown as typeof gate),
     ).toThrow(/identity drift/);
     expect(() =>
-      validateEqualHeightSingleOpenSoutheastCrossJunctionGate({
+      validateEqualHeightSingleOpenNortheastCrossJunctionGate({
         ...gate,
         candidate: {
           ...gate.candidate,
@@ -433,41 +462,47 @@ describe('QuotaCo accepted single-open southeast cross-junction gate', () => {
       } as unknown as typeof gate),
     ).toThrow(/identity drift/);
     expect(() =>
-      validateEqualHeightSingleOpenSoutheastCrossJunctionGate({
+      validateEqualHeightSingleOpenNortheastCrossJunctionGate({
         ...gate,
-        compactMatrix: [[44]] as const,
+        compactMatrix: [[45]] as const,
       } as unknown as typeof gate),
     ).toThrow(/compact matrix must be 3x3/);
     expect(() =>
-      validateEqualHeightSingleOpenSoutheastCrossJunctionGate({
+      validateEqualHeightSingleOpenNortheastCrossJunctionGate({
         ...gate,
         filteredXMirrorApplied: true,
       } as unknown as typeof gate),
     ).toThrow(/proof-only production boundary/);
     expect(() =>
-      validateEqualHeightSingleOpenSoutheastCrossJunctionGate({
+      validateEqualHeightSingleOpenNortheastCrossJunctionGate({
         ...gate,
         candidateAccepted: false,
         ledgerPromotion: false,
-        maskRowsUnderReview: [44] as const,
+        maskRowsUnderReview: [45] as const,
         maskRowsAccepted: [] as const,
       } as unknown as typeof gate),
     ).toThrow(/identity drift/);
+    expect(() =>
+      validateEqualHeightSingleOpenNortheastCrossJunctionGate({
+        ...gate,
+        productionRegistration: true,
+      } as unknown as typeof gate),
+    ).toThrow(/proof-only production boundary/);
   });
 
   it('leaves the production/export/schema/blob signature unchanged', () => {
     const before = productionSignature();
-    validateEqualHeightSingleOpenSoutheastCrossJunctionGate();
+    validateEqualHeightSingleOpenNortheastCrossJunctionGate();
     expect(productionSignature()).toBe(before);
     expect(CURRENT_SCHEMA_VERSION).toBe(18);
     expect(BLOB_TILE_COUNT).toBe(47);
     expect(BLOB_CONFIGS).toHaveLength(47);
     expect(A1B_AUTHORED_STEMS).not.toContain(
-      EQUAL_HEIGHT_SINGLE_OPEN_SOUTHEAST_CROSS_JUNCTION_GATE
+      EQUAL_HEIGHT_SINGLE_OPEN_NORTHEAST_CROSS_JUNCTION_GATE
         .candidate.sourceStem,
     );
     expect(WALL_TEMPLATES.map(({ id }) => id)).not.toContain(
-      EQUAL_HEIGHT_SINGLE_OPEN_SOUTHEAST_CROSS_JUNCTION_GATE
+      EQUAL_HEIGHT_SINGLE_OPEN_NORTHEAST_CROSS_JUNCTION_GATE
         .candidate.sourceStem,
     );
     expect(

@@ -1,6 +1,7 @@
 # Single-open northwest cross-junction accepted proof source
 
-Owner-accepted proof-layer source bank for equal-height wall `mask_33`.
+Owner-accepted proof-layer source bank for equal-height wall `mask_33` and its
+approved whole-cell X-mirror companion `mask_45`.
 
 The accepted fixed-view source connects all four cardinal sockets, fills the
 northeast, southeast, and southwest diagonals, and leaves the northwest crook
@@ -21,7 +22,13 @@ crooks are buried by occupied neighbors, so adjoining accepted pieces remain
 the sole owners of visible frontage material. The accepted source contains no center
 post, peak, cap, patch, duplicate belt, or second cream owner.
 
+For `mask_45`, the complete pair is reused through one plain whole-cell X
+mirror around `x=64`. That derivation fills southeast, southwest, and northwest
+while leaving the northeast crook open to floor. No seam path is filtered, no
+companion SVG is authored, and the source's Y-based cream, reveal, arris, and
+contact-shadow hierarchy remains intact.
+
 This directory records the accepted direct proof-layer source for ledger row
-`mask_33`. It does not register a production sprite, change exporter or atlas
-behavior, modify the canonical blob contract or schema, or authorize Unity
-consumption.
+`mask_33` and the approved plain-X derivation for ledger row `mask_45`. It does
+not register a production sprite, change exporter or atlas behavior, modify the
+canonical blob contract or schema, or authorize Unity consumption.

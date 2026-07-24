@@ -163,8 +163,8 @@ export const EQUAL_HEIGHT_HORIZONTAL_PARTIAL_T_JUNCTION_GATE = {
   },
   acceptedLedgerCounts: {
     'direct-reuse': 27,
-    'approved-derivation': 18,
-    'synthetic-assembly': 2,
+    'approved-derivation': 19,
+    'synthetic-assembly': 1,
     'unresolved-authored-geometry': 0,
   },
   xMirrorAllowed: true,
@@ -339,8 +339,8 @@ export function validateEqualHeightHorizontalPartialTJunctionGate(
   if (
     JSON.stringify(EQUAL_HEIGHT_MASK_LEDGER.counts) !== JSON.stringify({
     'direct-reuse': 27,
-      'approved-derivation': 18,
-    'synthetic-assembly': 2,
+      'approved-derivation': 19,
+    'synthetic-assembly': 1,
       'unresolved-authored-geometry': 0,
     }) ||
     JSON.stringify(gate.acceptedLedgerCounts) !== JSON.stringify(EQUAL_HEIGHT_MASK_LEDGER.counts) ||
