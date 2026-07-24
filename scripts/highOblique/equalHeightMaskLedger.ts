@@ -458,6 +458,16 @@ const doubleFilledOppositeDiagonalCrossJunction: EqualHeightMaskSourceVariant = 
   facingRule: 'connected north, east, south, and west with northwest and southeast solid and northeast/southwest floor crooks open; accepted whole-cell X mirror of mask_30 after omitting only the two duplicated west-boundary seam paths',
 };
 
+const singleOpenSouthwestCrossJunction: EqualHeightMaskSourceVariant = {
+  role: 'single-open-southwest-cross-junction',
+  sourceStem: 'open_cross_filled_ne_se_nw',
+  baseFile: 'open_cross_filled_ne_se_nw-base.svg',
+  upperFile: 'open_cross_filled_ne_se_nw-upper.svg',
+  transform: 'none',
+  derivation: 'none',
+  facingRule: 'connected north, east, south, and west with northeast, southeast, and northwest solid while the southwest floor crook remains open; independently authored fixed-light union with one exposed southwest material return',
+};
+
 const singleFilledSoutheastCrossJunction: EqualHeightMaskSourceVariant = {
   role: 'single-filled-southeast-cross-junction',
   sourceStem: 'open_cross_filled_se',
@@ -911,6 +921,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         variants: [doubleFilledOppositeDiagonalCrossJunction],
         note: 'Accepted opposite-diagonal cross junction reuses mask_30 through whole-cell mirror-X after omitting only the two duplicated west-boundary seam paths.',
       };
+    case 41:
+      return {
+        kind: 'direct-reuse',
+        status: 'accepted-source-mapping',
+        variants: [singleOpenSouthwestCrossJunction],
+        note: 'Accepted single-open southwest cross junction directly reuses one independently authored fixed-light union; mask_25 and mask_39 constrain geometry while mask_40 constrains the exposed southwest material register without creating derived provenance.',
+      };
     case 42:
       return {
         kind: 'approved-derivation',
@@ -1044,6 +1061,7 @@ const ACCEPTED_SOURCE_VARIANTS = new Set([
   doubleFilledSouthCrossJunction,
   doubleFilledDiagonalCrossJunction,
   doubleFilledOppositeDiagonalCrossJunction,
+  singleOpenSouthwestCrossJunction,
   singleFilledSoutheastCrossJunction,
   singleFilledSouthwestCrossJunction,
   doubleFilledEastCrossJunction,

@@ -109,9 +109,9 @@ export const EQUAL_HEIGHT_SINGLE_FILLED_SOUTHWEST_CROSS_JUNCTION_GATE = {
       'preserve the source Y-based fixed-light ownership; the mirrored south-facing cream, coral, green, and shadow registers must wrap exactly once around the southwest fill',
   },
   acceptedLedgerCounts: {
-    'direct-reuse': 25,
+    'direct-reuse': 26,
     'approved-derivation': 17,
-    'synthetic-assembly': 5,
+    'synthetic-assembly': 4,
     'unresolved-authored-geometry': 0,
   },
   xMirrorAllowed: true,
@@ -266,9 +266,9 @@ export function validateEqualHeightSingleFilledSouthwestCrossJunctionGate(
   if (
     JSON.stringify(gate.acceptedLedgerCounts) !==
       JSON.stringify(currentCounts) ||
-    currentCounts['direct-reuse'] !== 25 ||
+    currentCounts['direct-reuse'] !== 26 ||
     currentCounts['approved-derivation'] !== 17 ||
-    currentCounts['synthetic-assembly'] !== 5 ||
+    currentCounts['synthetic-assembly'] !== 4 ||
     currentCounts['unresolved-authored-geometry'] !== 0
   ) {
     throw new Error(

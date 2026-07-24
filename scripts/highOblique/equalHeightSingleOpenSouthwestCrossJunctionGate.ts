@@ -7,51 +7,51 @@ import {
 import { EQUAL_HEIGHT_MASK_LEDGER } from './equalHeightMaskLedger';
 
 /**
- * Owner-accepted proof-layer gate for mask_32: all four cardinal sockets
- * connect, southeast and southwest are solid, and both northern crooks remain
- * open floor.
+ * Owner-accepted proof-layer gate for mask_41: all cardinal sockets connect,
+ * northeast/southeast/northwest are solid, and southwest remains open floor.
  */
 
-export type EqualHeightDoubleFilledSouthCrossJunctionMask = 32;
-export type EqualHeightDoubleFilledSouthCrossJunctionMatrixMask =
-  | 1 | 2 | 4 | 5 | 8 | 10 | 16 | 20 | 22 | 26 | 28 | 32 | 34 | 38 | 39;
-export type EqualHeightDoubleFilledSouthCrossJunctionMatrix =
+export type EqualHeightSingleOpenSouthwestCrossJunctionMask = 41;
+export type EqualHeightSingleOpenSouthwestCrossJunctionMatrixMask =
+  | 1 | 2 | 4 | 5 | 8 | 10 | 16 | 17 | 18
+  | 20 | 26 | 31 | 32 | 34 | 41 | 42 | 43;
+export type EqualHeightSingleOpenSouthwestCrossJunctionMatrix =
   readonly (
     readonly (
-      EqualHeightDoubleFilledSouthCrossJunctionMatrixMask | null
+      EqualHeightSingleOpenSouthwestCrossJunctionMatrixMask | null
     )[]
   )[];
 
-export interface EqualHeightDoubleFilledSouthCrossJunctionCandidate {
-  readonly maskIndex: EqualHeightDoubleFilledSouthCrossJunctionMask;
-  readonly sourceMaskIndex: EqualHeightDoubleFilledSouthCrossJunctionMask;
-  readonly sourceStem: 'open_cross_filled_s';
-  readonly baseFile: 'open_cross_filled_s-base.svg';
-  readonly upperFile: 'open_cross_filled_s-upper.svg';
+export interface EqualHeightSingleOpenSouthwestCrossJunctionCandidate {
+  readonly maskIndex: EqualHeightSingleOpenSouthwestCrossJunctionMask;
+  readonly sourceMaskIndex: EqualHeightSingleOpenSouthwestCrossJunctionMask;
+  readonly sourceStem: 'open_cross_filled_ne_se_nw';
+  readonly baseFile: 'open_cross_filled_ne_se_nw-base.svg';
+  readonly upperFile: 'open_cross_filled_ne_se_nw-upper.svg';
   readonly connectedEdges: readonly ['n', 'e', 's', 'w'];
-  readonly openPockets: readonly ['ne', 'nw'];
-  readonly solidDiagonals: readonly ['se', 'sw'];
-  readonly fixedLightRole: 'south-filled-four-way-slab-fixed-view';
+  readonly openPockets: readonly ['sw'];
+  readonly solidDiagonals: readonly ['ne', 'se', 'nw'];
+  readonly fixedLightRole: 'single-open-southwest-four-way-hub';
   readonly transform: 'none';
   readonly derivation: 'none';
   readonly resolution: 'direct-reuse';
 }
 
 const COMPACT_MATRIX = [
-  [null, 4, null],
-  [20, 32, 26],
-  [16, 38, 34],
-] as const satisfies EqualHeightDoubleFilledSouthCrossJunctionMatrix;
+  [20, 31, 26],
+  [16, 41, 42],
+  [null, 16, 34],
+] as const satisfies EqualHeightSingleOpenSouthwestCrossJunctionMatrix;
 
 const THREE_CELL_ARM_MATRIX = [
   [null, null, null, 4, null, null, null],
   [null, null, null, 5, null, null, null],
-  [null, null, null, 5, null, null, null],
-  [2, 10, 22, 32, 28, 10, 8],
-  [null, null, 16, 39, 34, null, null],
+  [null, null, 20, 32, 26, null, null],
+  [2, 10, 18, 41, 43, 10, 8],
+  [null, null, null, 17, 34, null, null],
   [null, null, null, 5, null, null, null],
   [null, null, null, 1, null, null, null],
-] as const satisfies EqualHeightDoubleFilledSouthCrossJunctionMatrix;
+] as const satisfies EqualHeightSingleOpenSouthwestCrossJunctionMatrix;
 
 const SIX_CELL_ARM_MATRIX = [
   [null, null, null, null, null, null, 4, null, null, null, null, null, null],
@@ -59,71 +59,72 @@ const SIX_CELL_ARM_MATRIX = [
   [null, null, null, null, null, null, 5, null, null, null, null, null, null],
   [null, null, null, null, null, null, 5, null, null, null, null, null, null],
   [null, null, null, null, null, null, 5, null, null, null, null, null, null],
-  [null, null, null, null, null, null, 5, null, null, null, null, null, null],
-  [2, 10, 10, 10, 10, 22, 32, 28, 10, 10, 10, 10, 8],
-  [null, null, null, null, null, 16, 39, 34, null, null, null, null, null],
+  [null, null, null, null, null, 20, 32, 26, null, null, null, null, null],
+  [2, 10, 10, 10, 10, 18, 41, 43, 10, 10, 10, 10, 8],
+  [null, null, null, null, null, null, 17, 34, null, null, null, null, null],
   [null, null, null, null, null, null, 5, null, null, null, null, null, null],
   [null, null, null, null, null, null, 5, null, null, null, null, null, null],
   [null, null, null, null, null, null, 5, null, null, null, null, null, null],
   [null, null, null, null, null, null, 5, null, null, null, null, null, null],
   [null, null, null, null, null, null, 1, null, null, null, null, null, null],
-] as const satisfies EqualHeightDoubleFilledSouthCrossJunctionMatrix;
+] as const satisfies EqualHeightSingleOpenSouthwestCrossJunctionMatrix;
 
-export const EQUAL_HEIGHT_DOUBLE_FILLED_SOUTH_CROSS_JUNCTION_GATE = {
-  stem: 'equal-height-double-filled-south-cross-junction-gate',
+export const EQUAL_HEIGHT_SINGLE_OPEN_SOUTHWEST_CROSS_JUNCTION_GATE = {
+  stem: 'equal-height-single-open-southwest-cross-junction-gate',
   version: 0,
-  status: 'owner-accepted-double-filled-south-cross-junction-gate',
+  status: 'owner-accepted-single-open-southwest-cross-junction-gate',
   contract: false,
-  topologyClass: 'double-filled-south-cross-junction',
+  topologyClass: 'single-open-southwest-cross-junction',
   candidate: {
-    maskIndex: 32,
-    sourceMaskIndex: 32,
-    sourceStem: 'open_cross_filled_s',
-    baseFile: 'open_cross_filled_s-base.svg',
-    upperFile: 'open_cross_filled_s-upper.svg',
+    maskIndex: 41,
+    sourceMaskIndex: 41,
+    sourceStem: 'open_cross_filled_ne_se_nw',
+    baseFile: 'open_cross_filled_ne_se_nw-base.svg',
+    upperFile: 'open_cross_filled_ne_se_nw-upper.svg',
     connectedEdges: ['n', 'e', 's', 'w'],
-    openPockets: ['ne', 'nw'],
-    solidDiagonals: ['se', 'sw'],
-    fixedLightRole: 'south-filled-four-way-slab-fixed-view',
+    openPockets: ['sw'],
+    solidDiagonals: ['ne', 'se', 'nw'],
+    fixedLightRole: 'single-open-southwest-four-way-hub',
     transform: 'none',
     derivation: 'none',
     resolution: 'direct-reuse',
-  } as const satisfies EqualHeightDoubleFilledSouthCrossJunctionCandidate,
+  } as const satisfies EqualHeightSingleOpenSouthwestCrossJunctionCandidate,
   compactMatrix: COMPACT_MATRIX,
   threeCellArmMatrix: THREE_CELL_ARM_MATRIX,
   sixCellArmMatrix: SIX_CELL_ARM_MATRIX,
-  baselineMaskRows: [23, 29, 38, 39] as const,
+  baselineMaskRows: [25, 39, 40] as const,
   installedNeighborMaskRows: [
-    1, 2, 4, 5, 8, 10, 16, 20, 22, 26, 28, 34, 38, 39,
+    1, 2, 4, 5, 8, 10, 16, 17, 18, 20, 26, 31, 32, 34, 42, 43,
   ] as const,
   maskRowsUnderReview: [] as const,
-  maskRowsAccepted: [32] as const,
+  maskRowsAccepted: [41] as const,
   reviewCellSizes: [240, 90, 40] as const,
   reviewArmLengths: [1, 3, 6] as const,
   renderingDecision: {
-    kind: 'one-accepted-authored-double-filled-south-four-way-hub',
+    kind: 'one-accepted-authored-single-open-southwest-four-way-hub',
     scope: 'external-proof-source-bank',
     sourceDirectory:
-      'assets/walls/quota-co-building-system-proofs/double-filled-south-cross-junction',
+      'assets/walls/quota-co-building-system-proofs/single-open-southwest-cross-junction',
     authoredSourceFiles: [
-      'open_cross_filled_s-base.svg',
-      'open_cross_filled_s-upper.svg',
+      'open_cross_filled_ne_se_nw-base.svg',
+      'open_cross_filled_ne_se_nw-upper.svg',
     ] as const,
     sourceCanvas: 128,
     sourceAuthorship: 'flattened-fixed-view-no-transform',
-    geometryCueMaskIndices: [23, 29, 38, 39] as const,
-    sourceRelationship: 'authored-cues-only-no-derived-provenance',
+    geometryCueMaskIndices: [25, 39] as const,
+    southwestReturnControlMaskIndex: 40,
+    southwestReturnControlPolicy:
+      'accepted mask_40 constrains the exposed southwest material return only; it is not geometry or source provenance',
+    sourceRelationship:
+      'authored-cues-only-no-derived-provenance',
     composition:
-      'author one flattened southeast-and-southwest-filled base and upper union; accepted single-filled controls constrain the two southern closures but must not be stacked',
+      'author one flattened north-and-east wrapped slab union; mask_25 and mask_39 constrain the three solid diagonals but must not be stacked',
     purpose:
-      'join a continuous two-cell-deep south slab to all four cardinal sockets while both northern floor crooks remain open',
+      'join all four sockets through one three-solid hub while the southwest crook remains genuine floor',
     requiredRead:
-      'one molded four-socket connector with one uninterrupted cream rear plane, two open northern crooks, and no peak, post, patch, cap, or doubled belt',
+      'one molded L-shaped cream mass with one open southwest return and no center peak, post, patch, cap, or doubled belt',
     shadePolicy:
-      'keep the candidate rear plane cream-led and buried at its south edge; installed foreground neighbors own coral, green, plinth, and south-facing shadow',
-    oppositeControlMaskIndex: 39,
-    oppositeControlPolicy:
-      'mask_39 is a geometry and fixed-light comparison only; Y mirror is forbidden',
+      'keep coral, green, and south-facing depth on the exposed southwest return only; buried northeast, southeast, and northwest joins remain cream-led',
   },
   acceptedLedgerCounts: {
     'direct-reuse': 26,
@@ -156,14 +157,15 @@ const NEIGHBORS = [
 
 function expectedMatrix(
   armLength: 1 | 3 | 6,
-): EqualHeightDoubleFilledSouthCrossJunctionMatrix {
+): EqualHeightSingleOpenSouthwestCrossJunctionMatrix {
   const size = armLength * 2 + 1;
   const center = armLength;
   const occupied = (column: number, row: number): boolean =>
     (column === center && row >= 0 && row < size) ||
     (row === center && column >= 0 && column < size) ||
-    (row === center + 1 &&
-      (column === center - 1 || column === center + 1));
+    (row === center - 1 &&
+      (column === center - 1 || column === center + 1)) ||
+    (row === center + 1 && column === center + 1);
   return Array.from({ length: size }, (_, row) =>
     Array.from({ length: size }, (_, column) => {
       if (!occupied(column, row)) return null;
@@ -172,106 +174,114 @@ function expectedMatrix(
         if (occupied(column + dx, row + dy)) raw |= bit;
       }
       return blobIndex(raw) as
-        EqualHeightDoubleFilledSouthCrossJunctionMatrixMask;
+        EqualHeightSingleOpenSouthwestCrossJunctionMatrixMask;
     }),
   );
 }
 
 function validateArmMatrix(
   label: string,
-  matrix: EqualHeightDoubleFilledSouthCrossJunctionMatrix,
+  matrix: EqualHeightSingleOpenSouthwestCrossJunctionMatrix,
   armLength: 1 | 3 | 6,
 ): void {
   const size = armLength * 2 + 1;
   if (matrix.length !== size || matrix.some((row) => row.length !== size)) {
     throw new Error(
-      `Double-filled south cross-junction ${label} matrix must be ${size}x${size}`,
+      `Single-open southwest cross-junction ${label} matrix must be ${size}x${size}`,
     );
   }
   if (JSON.stringify(matrix) !== JSON.stringify(expectedMatrix(armLength))) {
-    throw new Error(`Double-filled south cross-junction ${label} matrix drift`);
+    throw new Error(
+      `Single-open southwest cross-junction ${label} matrix drift`,
+    );
   }
 }
 
-/** Fail loudly if the accepted mask_32 proof-layer source mapping drifts. */
-export function validateEqualHeightDoubleFilledSouthCrossJunctionGate(
-  gate = EQUAL_HEIGHT_DOUBLE_FILLED_SOUTH_CROSS_JUNCTION_GATE,
+/** Fail loudly if the accepted mask_41 proof-layer source mapping drifts. */
+export function validateEqualHeightSingleOpenSouthwestCrossJunctionGate(
+  gate = EQUAL_HEIGHT_SINGLE_OPEN_SOUTHWEST_CROSS_JUNCTION_GATE,
 ): void {
   if (
-    gate.stem !== 'equal-height-double-filled-south-cross-junction-gate' ||
+    gate.stem !==
+      'equal-height-single-open-southwest-cross-junction-gate' ||
     gate.status !==
-      'owner-accepted-double-filled-south-cross-junction-gate' ||
-    gate.topologyClass !== 'double-filled-south-cross-junction' ||
-    gate.candidate.maskIndex !== 32 ||
-    gate.candidate.sourceMaskIndex !== 32 ||
-    gate.candidate.sourceStem !== 'open_cross_filled_s' ||
-    gate.candidate.baseFile !== 'open_cross_filled_s-base.svg' ||
-    gate.candidate.upperFile !== 'open_cross_filled_s-upper.svg' ||
+      'owner-accepted-single-open-southwest-cross-junction-gate' ||
+    gate.topologyClass !== 'single-open-southwest-cross-junction' ||
+    gate.candidate.maskIndex !== 41 ||
+    gate.candidate.sourceMaskIndex !== 41 ||
+    gate.candidate.sourceStem !== 'open_cross_filled_ne_se_nw' ||
+    gate.candidate.baseFile !==
+      'open_cross_filled_ne_se_nw-base.svg' ||
+    gate.candidate.upperFile !==
+      'open_cross_filled_ne_se_nw-upper.svg' ||
     JSON.stringify(gate.candidate.connectedEdges) !==
       JSON.stringify(['n', 'e', 's', 'w']) ||
     JSON.stringify(gate.candidate.openPockets) !==
-      JSON.stringify(['ne', 'nw']) ||
+      JSON.stringify(['sw']) ||
     JSON.stringify(gate.candidate.solidDiagonals) !==
-      JSON.stringify(['se', 'sw']) ||
+      JSON.stringify(['ne', 'se', 'nw']) ||
     gate.candidate.fixedLightRole !==
-      'south-filled-four-way-slab-fixed-view' ||
+      'single-open-southwest-four-way-hub' ||
     gate.candidate.transform !== 'none' ||
     gate.candidate.derivation !== 'none' ||
     gate.candidate.resolution !== 'direct-reuse' ||
     JSON.stringify(gate.baselineMaskRows) !==
-      JSON.stringify([23, 29, 38, 39]) ||
+      JSON.stringify([25, 39, 40]) ||
     JSON.stringify(gate.installedNeighborMaskRows) !==
       JSON.stringify([
-        1, 2, 4, 5, 8, 10, 16, 20, 22, 26, 28, 34, 38, 39,
+        1, 2, 4, 5, 8, 10, 16, 17, 18, 20, 26, 31, 32, 34, 42, 43,
       ]) ||
     gate.maskRowsUnderReview.length !== 0 ||
-    JSON.stringify(gate.maskRowsAccepted) !== JSON.stringify([32]) ||
+    JSON.stringify(gate.maskRowsAccepted) !== JSON.stringify([41]) ||
     JSON.stringify(gate.reviewCellSizes) !==
       JSON.stringify([240, 90, 40]) ||
     JSON.stringify(gate.reviewArmLengths) !== JSON.stringify([1, 3, 6])
   ) {
-    throw new Error('Double-filled south cross-junction gate identity drift');
+    throw new Error(
+      'Single-open southwest cross-junction gate identity drift',
+    );
   }
 
   validateArmMatrix('compact', gate.compactMatrix, 1);
   validateArmMatrix('three-cell-arm', gate.threeCellArmMatrix, 3);
   validateArmMatrix('six-cell-arm', gate.sixCellArmMatrix, 6);
 
-  const targetEntry = EQUAL_HEIGHT_MASK_LEDGER.entries[32];
+  const targetEntry = EQUAL_HEIGHT_MASK_LEDGER.entries[41];
   if (
-    BLOB_CONFIGS[32] !== 0x6f ||
-    JSON.stringify(configForIndex(32)) !== JSON.stringify({
+    BLOB_CONFIGS[41] !== 0xbf ||
+    JSON.stringify(configForIndex(41)) !== JSON.stringify({
       n: true,
       e: true,
       s: true,
       w: true,
-      ne: 'concave',
+      ne: 'solid',
       se: 'solid',
-      sw: 'solid',
-      nw: 'concave',
+      sw: 'concave',
+      nw: 'solid',
     }) ||
     targetEntry.topologyClass !== 'cross-junction' ||
     JSON.stringify(targetEntry.connectedEdges) !==
       JSON.stringify(['n', 'e', 's', 'w']) ||
     targetEntry.exposedEdges.length !== 0 ||
-    JSON.stringify(targetEntry.pockets) !== JSON.stringify(['ne', 'nw']) ||
+    JSON.stringify(targetEntry.pockets) !== JSON.stringify(['sw']) ||
     JSON.stringify(targetEntry.solidDiagonals) !==
-      JSON.stringify(['se', 'sw']) ||
+      JSON.stringify(['ne', 'se', 'nw']) ||
     targetEntry.resolution.kind !== 'direct-reuse' ||
     targetEntry.resolution.status !== 'accepted-source-mapping' ||
     targetEntry.resolution.variants.length !== 1 ||
     targetEntry.resolution.variants[0].role !==
-      'double-filled-south-cross-junction' ||
-    targetEntry.resolution.variants[0].sourceStem !== 'open_cross_filled_s' ||
+      'single-open-southwest-cross-junction' ||
+    targetEntry.resolution.variants[0].sourceStem !==
+      'open_cross_filled_ne_se_nw' ||
     targetEntry.resolution.variants[0].baseFile !==
-      'open_cross_filled_s-base.svg' ||
+      'open_cross_filled_ne_se_nw-base.svg' ||
     targetEntry.resolution.variants[0].upperFile !==
-      'open_cross_filled_s-upper.svg' ||
+      'open_cross_filled_ne_se_nw-upper.svg' ||
     targetEntry.resolution.variants[0].transform !== 'none' ||
     targetEntry.resolution.variants[0].derivation !== 'none'
   ) {
     throw new Error(
-      'Double-filled south cross-junction accepted-ledger boundary drift',
+      'Single-open southwest cross-junction accepted-ledger boundary drift',
     );
   }
 
@@ -286,7 +296,7 @@ export function validateEqualHeightDoubleFilledSouthCrossJunctionGate(
       resolution.status !== 'accepted-source-mapping'
     ) {
       throw new Error(
-        `Double-filled south cross-junction accepted-control drift at mask_${index}`,
+        `Single-open southwest cross-junction accepted-control drift at mask_${index}`,
       );
     }
   }
@@ -300,34 +310,35 @@ export function validateEqualHeightDoubleFilledSouthCrossJunctionGate(
     EQUAL_HEIGHT_MASK_LEDGER.counts['unresolved-authored-geometry'] !== 0
   ) {
     throw new Error(
-      'Double-filled south cross-junction ledger-count boundary drift',
+      'Single-open southwest cross-junction ledger-count boundary drift',
     );
   }
 
   if (
     gate.renderingDecision.kind !==
-      'one-accepted-authored-double-filled-south-four-way-hub' ||
-    gate.renderingDecision.scope !== 'external-proof-source-bank' ||
+      'one-accepted-authored-single-open-southwest-four-way-hub' ||
+    gate.renderingDecision.scope !==
+      'external-proof-source-bank' ||
     gate.renderingDecision.sourceDirectory !==
-      'assets/walls/quota-co-building-system-proofs/double-filled-south-cross-junction' ||
+      'assets/walls/quota-co-building-system-proofs/single-open-southwest-cross-junction' ||
     JSON.stringify(gate.renderingDecision.authoredSourceFiles) !==
       JSON.stringify([
-        'open_cross_filled_s-base.svg',
-        'open_cross_filled_s-upper.svg',
+        'open_cross_filled_ne_se_nw-base.svg',
+        'open_cross_filled_ne_se_nw-upper.svg',
       ]) ||
     gate.renderingDecision.sourceCanvas !== 128 ||
     gate.renderingDecision.sourceAuthorship !==
       'flattened-fixed-view-no-transform' ||
     JSON.stringify(gate.renderingDecision.geometryCueMaskIndices) !==
-      JSON.stringify([23, 29, 38, 39]) ||
+      JSON.stringify([25, 39]) ||
+    gate.renderingDecision.southwestReturnControlMaskIndex !== 40 ||
+    gate.renderingDecision.southwestReturnControlPolicy !==
+      'accepted mask_40 constrains the exposed southwest material return only; it is not geometry or source provenance' ||
     gate.renderingDecision.sourceRelationship !==
-      'authored-cues-only-no-derived-provenance' ||
-    gate.renderingDecision.oppositeControlMaskIndex !== 39 ||
-    gate.renderingDecision.oppositeControlPolicy !==
-      'mask_39 is a geometry and fixed-light comparison only; Y mirror is forbidden'
+      'authored-cues-only-no-derived-provenance'
   ) {
     throw new Error(
-      'Double-filled south cross-junction evidence boundary drift',
+      'Single-open southwest cross-junction evidence boundary drift',
     );
   }
 
@@ -345,9 +356,9 @@ export function validateEqualHeightDoubleFilledSouthCrossJunctionGate(
     !gate.temporaryFrameIds
   ) {
     throw new Error(
-      'Double-filled south cross-junction crossed the accepted proof boundary',
+      'Single-open southwest cross-junction crossed the accepted proof boundary',
     );
   }
 }
 
-validateEqualHeightDoubleFilledSouthCrossJunctionGate();
+validateEqualHeightSingleOpenSouthwestCrossJunctionGate();

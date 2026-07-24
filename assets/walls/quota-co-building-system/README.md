@@ -26,11 +26,11 @@ together as a 3×8 equal-height perimeter around a 1×6 clear aisle at 90 and
 one-cell horizontal bodies remain legible, six-cell side runs remain parallel,
 and all four corners close as one enclosure.
 
-**Accepted mapping gate (owner approvals, 2026-07-21 through 2026-07-23):** the proof-layer ledger
+**Accepted mapping gate (owner approvals, 2026-07-21 through 2026-07-24):** the proof-layer ledger
 locks the unchanged canonical `mask_0` through `mask_46` order and classifies
-25 direct reuses, 17 approved derivations, 5 synthetic assembly
+26 direct reuses, 17 approved derivations, 4 synthetic assembly
 candidates, and zero collisions. The remaining synthetic rows are all cross-junctions. This accepts the
-mapping structure and provenance boundaries only. It does not accept the 5 remaining synthetic
+mapping structure and provenance boundaries only. It does not accept the 4 remaining synthetic
 cross-junction diagrams or create an atlas/production family.
 
 **Accepted horizontal terminus gate (owner approval, 2026-07-21):** `mask_8`
@@ -256,6 +256,17 @@ control only, never a Y-mirrored source. Promotion advances the proof ledger to 
 5 synthetic / 0 collisions; all five remaining synthetic rows are cross-junctions. It creates no canonical
 source, frame identity, template registration, exporter, atlas, schema, blob mapping, Unity asset, or
 `production.unity` change.
+
+**Accepted single-open southwest cross-junction gate (owner approval, 2026-07-24):** `mask_41` directly
+reuses the external `open_cross_filled_ne_se_nw` base/upper pair as one independently authored fixed-view
+four-way union. All four cardinal sockets remain connected; northeast, southeast, and northwest form one
+continuous solid wall mass while the southwest crook remains genuine floor. Accepted `mask_25` and `mask_39`
+constrain the solid topology, and `mask_40` constrains only the exposed southwest material return; none is
+stacked or treated as source provenance. The authored union passes at 240, 90, and 40 px per cell plus
+compact, three-cell-arm, and six-cell-arm crossings on light and dark floors. Promotion advances the proof
+ledger to 26 direct / 17 derived / 4 synthetic / 0 collisions; all four remaining synthetic rows are
+cross-junctions. It creates no canonical source, frame identity, template registration, exporter, atlas,
+schema, blob mapping, Unity asset, or `production.unity` change.
 
 The original independently finished low-base-plus-optional-upper construction was
 rejected on 2026-07-20 because its duplicate caps and contours read as one wall

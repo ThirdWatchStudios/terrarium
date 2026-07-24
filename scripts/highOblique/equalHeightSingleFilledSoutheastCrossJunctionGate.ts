@@ -133,9 +133,9 @@ export const EQUAL_HEIGHT_SINGLE_FILLED_SOUTHEAST_CROSS_JUNCTION_GATE = {
       'preserve the accepted rear cream-led mask_21 and mask_22 plane laws; family-wide south-face continuity remains deferred polish',
   },
   acceptedLedgerCounts: {
-    'direct-reuse': 25,
+    'direct-reuse': 26,
     'approved-derivation': 17,
-    'synthetic-assembly': 5,
+    'synthetic-assembly': 4,
     'unresolved-authored-geometry': 0,
   },
   xMirrorAllowed: false,
@@ -274,9 +274,9 @@ export function validateEqualHeightSingleFilledSoutheastCrossJunctionGate(
   const currentCounts = EQUAL_HEIGHT_MASK_LEDGER.counts;
   if (
     JSON.stringify(gate.acceptedLedgerCounts) !== JSON.stringify(currentCounts) ||
-    currentCounts['direct-reuse'] !== 25 ||
+    currentCounts['direct-reuse'] !== 26 ||
     currentCounts['approved-derivation'] !== 17 ||
-    currentCounts['synthetic-assembly'] !== 5 ||
+    currentCounts['synthetic-assembly'] !== 4 ||
     currentCounts['unresolved-authored-geometry'] !== 0
   ) {
     throw new Error('Single-filled southeast cross-junction ledger-count boundary drift');

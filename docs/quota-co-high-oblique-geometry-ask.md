@@ -1,7 +1,7 @@
 # QuotaCo High-Oblique Geometry — Production Art Ask
 
-**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** south-filled slab cross-junction accepted
-`mask_32` is accepted as one independently authored direct proof source; no wall proposal is currently active and the ledger stands at 25 direct / 17 derived / 5 synthetic
+**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** single-open southwest cross-junction accepted
+`mask_41` is accepted as one independently authored direct proof source; no wall proposal is currently active and the ledger stands at 26 direct / 17 derived / 4 synthetic
 
 Canonical direction lives in the sim repository:
 
@@ -21,8 +21,9 @@ the all-open `mask_15`, northeast-filled `mask_19`, southeast-filled `mask_23`, 
 `mask_25`, west-filled mirror companion `mask_43`, southwest-filled mirror companion `mask_29`,
 and the separately authored northwest-filled `mask_37`, north-filled slab `mask_39`, and
 opposed-diagonal-filled `mask_30`, plus its filtered opposite-diagonal `mask_40` derivation,
-and the independently authored south-filled slab `mask_32` cross-junction. The accepted proof ledger now records
-25 direct, 17 derived, 5 synthetic,
+the independently authored south-filled slab `mask_32`, and the independently authored single-open southwest
+`mask_41` cross-junction. The accepted proof ledger now records
+26 direct, 17 derived, 4 synthetic,
 and zero collisions; every remaining
 synthetic assembly candidate is a cross-junction. Prop-catalog work and
 production changes remain separate decisions.
@@ -156,15 +157,16 @@ review results without treating them as the current production direction.
 **Corridor owner decision, 2026-07-21:** the accepted sources also pass together as a 3×8 equal-height
 perimeter around a 1×6 walkable aisle at both 90 and 40 px per cell. This closes the composition gate.
 
-**Mapping owner decisions, 2026-07-21 through 2026-07-23:** accept the 47-row proof-layer ledger structure and
+**Mapping owner decisions, 2026-07-21 through 2026-07-24:** accept the 47-row proof-layer ledger structure and
 its explicit provenance/gap accounting. With both terminus families, the isolated shell, the filled-elbow
 family, both thick-wall repeat families, both open-pocket T-junction pairs, and both west- and east-side
 single-filled-pocket T-junction pairs, the horizontal partial T-junction family, open-pocket `mask_15`, and
 single-filled `mask_19`, southeast-filled `mask_23`, east-filled slab `mask_25`, and west-filled mirror
 `mask_43`, southwest-filled mirror `mask_29`, plus the separately authored northwest-filled `mask_37`,
 north-filled slab `mask_39`, opposed-diagonal-filled `mask_30`, and filtered opposite-diagonal mirror
-`mask_40`, plus the independently authored south-filled slab `mask_32` promoted, it records twenty-five direct
-mappings and seventeen approved derivations as source law, not the 5 remaining synthetic
+`mask_40`, plus the independently authored south-filled slab `mask_32` and independently authored
+single-open southwest `mask_41` promoted, it records twenty-six direct
+mappings and seventeen approved derivations as source law, not the 4 remaining synthetic
 cross-junction candidate sprites.
 The ledger has zero collisions.
 
@@ -396,6 +398,17 @@ compact, three-cell-arm, and six-cell-arm crossings on light and dark floors. Pr
 twenty-five direct, seventeen derived, 5 synthetic, and zero collisions; all five remaining synthetic rows are
 cross-junctions. Proof-layer acceptance changes no canonical source, frame identity, template registration,
 exporter, atlas, schema, blob mapping, Unity asset, or `production.unity` surface.
+
+**Accepted single-open southwest cross-junction gate (owner approval, 2026-07-24):** `mask_41` directly
+reuses the external `open_cross_filled_ne_se_nw` pair as one independently authored fixed-view four-way union.
+Northeast, southeast, and northwest are one continuous solid wall mass, southwest remains genuine floor, and
+all four cardinal sockets remain exact. `mask_25` and `mask_39` constrain the topology; `mask_40` constrains
+only the exposed southwest material return. None is stacked or treated as source provenance. It passes at
+240/90/40 px and in compact, three-cell-arm, and six-cell-arm crossings on light and dark floors. Promotion
+advances the ledger to twenty-six direct, seventeen derived, 4 synthetic, and zero collisions; all four
+remaining synthetic rows are cross-junctions. Proof-layer acceptance changes no canonical source, frame
+identity, template registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity`
+surface.
 
 ### A1a review artifact
 

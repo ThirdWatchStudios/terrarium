@@ -444,7 +444,16 @@ Y-mirror or stack it. Promotion advances the ledger to 25 direct / 17 derived / 
 all five remaining synthetic rows are cross-junctions. This adds no canonical source, registration, exporter,
 atlas, schema, blob mapping, or Unity change.
 
-**Still outside acceptance after the south-filled slab checkpoint:** all 5 remaining synthetic
+**Accepted single-open southwest cross-junction gate (owner approval, 2026-07-24):** the external
+`single-open-southwest-cross-junction/` bank supplies the direct fixed-view
+`open_cross_filled_ne_se_nw` pair for `mask_41`. Preserve exact north/east/south/west sockets, northeast,
+southeast, and northwest as one continuous solid mass, southwest as open floor, and the sole exposed
+coral/green material return at that crook. `mask_25` and `mask_39` are topology cues and `mask_40` is a
+material/register control only; never stack them or claim derived provenance. Promotion advances the ledger
+to 26 direct / 17 derived / 4 synthetic / 0 collisions; all four remaining synthetic rows are cross-junctions.
+This adds no canonical source, registration, exporter, atlas, schema, blob mapping, or Unity change.
+
+**Still outside acceptance after the single-open southwest checkpoint:** all 4 remaining synthetic
 cross-junction candidate sprites;
 `topology/` and `state/`; official/production preview
 regeneration; template/catalog registration and frame identities; exporter, `CONTRACT.md`, or schema changes;
@@ -454,7 +463,7 @@ west/east single-filled-pocket, horizontal-partial, open-pocket cross-junction, 
 cross-junction, southeast-filled cross-junction, east-filled slab cross-junction, west-filled slab
 cross-junction, southwest-filled cross-junction, northwest-filled cross-junction, north-filled slab
 cross-junction, opposed-diagonal-filled cross-junction source, opposite-diagonal filtered derivation, and
-south-filled slab cross-junction source do not
+south-filled slab cross-junction source, and single-open southwest cross-junction source do not
 unlock or silently promote any of those surfaces.
 Acceptance of the external T-junction proof families adds ledger provenance only and does not alter that lock.
 The accepted horizontal-partial family likewise creates no canonical source, registration, exporter, atlas,
