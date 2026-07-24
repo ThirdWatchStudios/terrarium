@@ -134,8 +134,8 @@ export const EQUAL_HEIGHT_DOUBLE_FILLED_DIAGONAL_CROSS_JUNCTION_GATE = {
   },
   acceptedLedgerCounts: {
     'direct-reuse': 26,
-    'approved-derivation': 17,
-    'synthetic-assembly': 4,
+    'approved-derivation': 18,
+    'synthetic-assembly': 3,
     'unresolved-authored-geometry': 0,
   },
   directSourceAccepted: true,
@@ -341,8 +341,8 @@ export function validateEqualHeightDoubleFilledDiagonalCrossJunctionGate(
     JSON.stringify(gate.acceptedLedgerCounts) !==
       JSON.stringify(EQUAL_HEIGHT_MASK_LEDGER.counts) ||
     EQUAL_HEIGHT_MASK_LEDGER.counts['direct-reuse'] !== 26 ||
-    EQUAL_HEIGHT_MASK_LEDGER.counts['approved-derivation'] !== 17 ||
-    EQUAL_HEIGHT_MASK_LEDGER.counts['synthetic-assembly'] !== 4 ||
+    EQUAL_HEIGHT_MASK_LEDGER.counts['approved-derivation'] !== 18 ||
+    EQUAL_HEIGHT_MASK_LEDGER.counts['synthetic-assembly'] !== 3 ||
     EQUAL_HEIGHT_MASK_LEDGER.counts['unresolved-authored-geometry'] !== 0
   ) {
     throw new Error(

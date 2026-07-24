@@ -493,8 +493,8 @@ describe('QuotaCo accepted double-filled north cross-junction gate', () => {
     });
     expect(EQUAL_HEIGHT_MASK_LEDGER.counts).toEqual({
     'direct-reuse': 26,
-      'approved-derivation': 17,
-    'synthetic-assembly': 4,
+      'approved-derivation': 18,
+    'synthetic-assembly': 3,
       'unresolved-authored-geometry': 0,
     });
     expect(

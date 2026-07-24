@@ -465,7 +465,17 @@ const singleOpenSouthwestCrossJunction: EqualHeightMaskSourceVariant = {
   upperFile: 'open_cross_filled_ne_se_nw-upper.svg',
   transform: 'none',
   derivation: 'none',
-  facingRule: 'connected north, east, south, and west with northeast, southeast, and northwest solid while the southwest floor crook remains open; independently authored fixed-light union with one exposed southwest material return',
+  facingRule: 'connected north, east, south, and west with northeast, southeast, and northwest solid while the southwest floor crook remains open; independently authored fixed-light source for mask_41 and accepted mirror source for mask_44',
+};
+
+const singleOpenSoutheastCrossJunction: EqualHeightMaskSourceVariant = {
+  role: 'single-open-southeast-cross-junction',
+  sourceStem: 'open_cross_filled_ne_se_nw',
+  baseFile: 'open_cross_filled_ne_se_nw-base.svg',
+  upperFile: 'open_cross_filled_ne_se_nw-upper.svg',
+  transform: 'mirror-x',
+  derivation: 'none',
+  facingRule: 'connected north, east, south, and west with northwest, northeast, and southwest solid while the southeast floor crook remains open; accepted plain whole-cell X mirror of the authored mask_41 single-open southwest fixed-light source',
 };
 
 const singleFilledSoutheastCrossJunction: EqualHeightMaskSourceVariant = {
@@ -926,7 +936,7 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         kind: 'direct-reuse',
         status: 'accepted-source-mapping',
         variants: [singleOpenSouthwestCrossJunction],
-        note: 'Accepted single-open southwest cross junction directly reuses one independently authored fixed-light union; mask_25 and mask_39 constrain geometry while mask_40 constrains the exposed southwest material register without creating derived provenance.',
+        note: 'Accepted single-open southwest cross junction directly reuses one independently authored fixed-light union and supplies the fixed-light source for the accepted mask_44 mirror.',
       };
     case 42:
       return {
@@ -941,6 +951,13 @@ function resolvedEntry(index: number): EqualHeightMaskResolution | undefined {
         status: 'accepted-source-mapping',
         variants: [doubleFilledWestCrossJunction],
         note: 'Accepted west-filled slab junction is the plain whole-cell mirror-X derivation of the authored mask_25 east-filled four-way union.',
+      };
+    case 44:
+      return {
+        kind: 'approved-derivation',
+        status: 'accepted-source-mapping',
+        variants: [singleOpenSoutheastCrossJunction],
+        note: 'Accepted single-open southeast cross junction is the plain whole-cell mirror-X derivation of the authored mask_41 single-open southwest four-way union.',
       };
     default:
       return undefined;
@@ -1062,6 +1079,7 @@ const ACCEPTED_SOURCE_VARIANTS = new Set([
   doubleFilledDiagonalCrossJunction,
   doubleFilledOppositeDiagonalCrossJunction,
   singleOpenSouthwestCrossJunction,
+  singleOpenSoutheastCrossJunction,
   singleFilledSoutheastCrossJunction,
   singleFilledSouthwestCrossJunction,
   doubleFilledEastCrossJunction,

@@ -109,8 +109,8 @@ export const EQUAL_HEIGHT_DOUBLE_FILLED_WEST_CROSS_JUNCTION_GATE = {
   },
   acceptedLedgerCounts: {
     'direct-reuse': 26,
-    'approved-derivation': 17,
-    'synthetic-assembly': 4,
+    'approved-derivation': 18,
+    'synthetic-assembly': 3,
     'unresolved-authored-geometry': 0,
   },
   xMirrorAllowed: true,
@@ -259,8 +259,8 @@ export function validateEqualHeightDoubleFilledWestCrossJunctionGate(
     JSON.stringify(gate.acceptedLedgerCounts) !==
       JSON.stringify(currentCounts) ||
     currentCounts['direct-reuse'] !== 26 ||
-    currentCounts['approved-derivation'] !== 17 ||
-    currentCounts['synthetic-assembly'] !== 4 ||
+    currentCounts['approved-derivation'] !== 18 ||
+    currentCounts['synthetic-assembly'] !== 3 ||
     currentCounts['unresolved-authored-geometry'] !== 0
   ) {
     throw new Error(

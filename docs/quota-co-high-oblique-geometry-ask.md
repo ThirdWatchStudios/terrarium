@@ -1,7 +1,8 @@
 # QuotaCo High-Oblique Geometry — Production Art Ask
 
-**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** single-open southwest cross-junction accepted
-`mask_41` is accepted as one independently authored direct proof source; no wall proposal is currently active and the ledger stands at 26 direct / 17 derived / 4 synthetic
+**Date:** 2026-07-19 · **Requested by:** The Water Cooler · **Status:** single-open southeast cross-junction accepted
+`mask_44` is accepted as the plain whole-cell X-mirror derivation of the independently authored `mask_41`
+proof source; no wall proposal is currently active and the ledger stands at 26 direct / 18 derived / 3 synthetic
 
 Canonical direction lives in the sim repository:
 
@@ -22,8 +23,9 @@ the all-open `mask_15`, northeast-filled `mask_19`, southeast-filled `mask_23`, 
 and the separately authored northwest-filled `mask_37`, north-filled slab `mask_39`, and
 opposed-diagonal-filled `mask_30`, plus its filtered opposite-diagonal `mask_40` derivation,
 the independently authored south-filled slab `mask_32`, and the independently authored single-open southwest
-`mask_41` cross-junction. The accepted proof ledger now records
-26 direct, 17 derived, 4 synthetic,
+`mask_41` cross-junction, plus its plain whole-cell X-mirror single-open southeast `mask_44` companion. The
+accepted proof ledger now records
+26 direct, 18 derived, 3 synthetic,
 and zero collisions; every remaining
 synthetic assembly candidate is a cross-junction. Prop-catalog work and
 production changes remain separate decisions.
@@ -165,8 +167,9 @@ single-filled `mask_19`, southeast-filled `mask_23`, east-filled slab `mask_25`,
 `mask_43`, southwest-filled mirror `mask_29`, plus the separately authored northwest-filled `mask_37`,
 north-filled slab `mask_39`, opposed-diagonal-filled `mask_30`, and filtered opposite-diagonal mirror
 `mask_40`, plus the independently authored south-filled slab `mask_32` and independently authored
-single-open southwest `mask_41` promoted, it records twenty-six direct
-mappings and seventeen approved derivations as source law, not the 4 remaining synthetic
+single-open southwest `mask_41`, plus its plain whole-cell X-mirror single-open southeast `mask_44`
+companion promoted, it records twenty-six direct
+mappings and eighteen approved derivations as source law, not the 3 remaining synthetic
 cross-junction candidate sprites.
 The ledger has zero collisions.
 
@@ -409,6 +412,16 @@ advances the ledger to twenty-six direct, seventeen derived, 4 synthetic, and ze
 remaining synthetic rows are cross-junctions. Proof-layer acceptance changes no canonical source, frame
 identity, template registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity`
 surface.
+
+**Accepted single-open southeast cross-junction gate (owner approval, 2026-07-24):** `mask_44` reuses the
+accepted `open_cross_filled_ne_se_nw` pair from `mask_41` through one plain whole-cell X mirror around `x=64`.
+Northwest, northeast, and southwest remain one continuous solid wall mass, southeast remains genuine floor,
+and all four cardinal sockets remain exact. The complete source pair is mirrored without a seam filter,
+companion SVG, stacked source, or second cream owner, preserving the accepted Y-based light, material, and
+shadow hierarchy. Promotion advances the ledger to twenty-six direct, eighteen derived, 3 synthetic, and zero
+collisions; all three remaining synthetic rows are cross-junctions. Proof-layer acceptance changes no
+canonical production source, frame identity, template registration, exporter, atlas, schema, blob mapping,
+Unity asset, or `production.unity` surface.
 
 ### A1a review artifact
 
