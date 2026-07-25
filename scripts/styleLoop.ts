@@ -2799,11 +2799,11 @@ async function renderEqualHeightHorizontalOpenPocketTJunctionGate(
   root: string,
 ): Promise<void> {
   const gate = EQUAL_HEIGHT_HORIZONTAL_OPEN_POCKET_T_JUNCTION_GATE;
-  const width = 1600;
-  const height = 2122;
+  const width = 1000;
+  const height = 770;
   const panelFill = '#ECE5D5';
   const panel = (x: number, y: number, w: number, h: number): string =>
-    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="14" fill="${panelFill}" ` +
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="${panelFill}" ` +
       `stroke="${INK}" stroke-width="1.5" opacity="0.96"/>`;
   const fileOverrides: CompositionFileOverrides = {
     ...await verticalTerminusProposalFileOverrides(options, root),
@@ -2815,132 +2815,81 @@ async function renderEqualHeightHorizontalOpenPocketTJunctionGate(
   ): readonly CompositionCell[] =>
     [horizontalOpenPocketTJunctionCandidateCell(maskIndex, 'west-source', 0, 0, layer)];
   const parts: string[] = [
-    `<rect width="${width}" height="${height}" rx="18" fill="${PANEL}"/>`,
-    text(24, 38, 'QUOTACO EQUAL-HEIGHT WALLS — ACCEPTED HORIZONTAL-SPINE OPEN-POCKET T FAMILY', 23, 820),
-    text(24, 68, 'Owner-accepted proof layer · two direct fixed-light sources · lateral mirror remains registration evidence only', 13, 650, MUTED),
-    text(1576, 38, 'MASKS 11 / 14 · ACCEPTED', 11, 820, '#294B3C', 'end'),
-    text(1576, 62, '28 direct · 19 derived · 0 synthetic · 0 unresolved', 10, 700, MUTED, 'end'),
+    `<rect width="${width}" height="${height}" rx="16" fill="${PANEL}"/>`,
+    text(22, 31, 'MASK 14 — ACCEPTED SHARED TURN', 19, 840),
+    text(22, 55, 'Owner-approved proof correction: one molded cream / coral / green turn.', 10, 650, MUTED),
+    text(978, 31, 'OWNER ACCEPTED', 9, 840, '#294B3C', 'end'),
 
-    panel(20, 92, 1560, 440),
-    text(44, 126, 'AUTHORED SOURCE READ — 240 / 90 / 40 PX', 14, 820),
-    text(44, 150, 'The foreground and rear turns pick their own plane ownership. Neither is a rotated reuse of the other.', 10, 650, MUTED),
+    panel(18, 72, 964, 354),
+    text(36, 99, 'PROPOSAL — ENLARGED TURN', 11, 840, '#294B3C'),
+    text(748, 99, 'INSTALLED READ', 11, 840, '#294B3C', 'middle'),
 
-    panel(20, 552, 1560, 480),
-    text(44, 586, 'COMPACT SOCKET GATE — ONE-CELL ARMS AT 90 PX / CELL', 14, 820),
-    text(44, 610, 'Each authored candidate must join both horizontal termini and the selected west/east vertical registration without becoming a cap, post, or patch.', 10, 650, MUTED),
-
-    panel(20, 1052, 1560, 670),
-    text(44, 1086, 'SIX-CELL EXTENT GATE — 40 PX / CELL ON LIGHT AND DARK FLOOR', 14, 820),
-    text(44, 1110, 'The same hub must survive a full horizontal spine and vertical branch; the dashed cell is the only new art in each assembly.', 10, 650, MUTED),
-
-    panel(20, 1742, 1560, 360),
-    text(44, 1778, 'READING CONTRACT', 14, 820),
-    text(824, 1778, 'PROOF BOUNDARY', 14, 820),
+    panel(18, 440, 964, 282),
+    text(36, 467, 'CONFIRMATION ONLY — SAME MASK 14 IN 6-CELL RUNS AT 40 PX/CELL', 10, 840, MUTED),
   ];
 
-  parts.push(text(190, 182, 'MASK_11 · OPEN SOUTH · FOREGROUND TURN', 10, 820, '#294B3C', 'middle'));
-  parts.push(await compositionWindow(options, source(11), 1, 1, 70, 198, 240, 240, fileOverrides, undefined, false));
-  parts.push(await compositionWindow(options, source(11, 'base'), 1, 1, 338, 198, 90, 90, fileOverrides, undefined, false));
-  parts.push(text(383, 306, 'BASE · 90', 9, 760, MUTED, 'middle'));
-  parts.push(await compositionWindow(options, source(11, 'upper'), 1, 1, 338, 324, 90, 90, fileOverrides, undefined, false));
-  parts.push(text(383, 432, 'UPPER · 90', 9, 760, MUTED, 'middle'));
-  parts.push(await compositionWindow(options, source(11), 1, 1, 450, 324, 40, 40, fileOverrides, undefined, false));
-  parts.push(text(470, 382, '40 PX', 8, 760, MUTED, 'middle'));
+  parts.push(await compositionWindow(
+    options,
+    source(14),
+    1,
+    1,
+    36,
+    112,
+    480,
+    300,
+    fileOverrides,
+    '0 48 128 80',
+    false,
+  ));
+  parts.push('<rect x="379" y="258" width="139" height="156" rx="8" fill="none" stroke="#B65F4D" stroke-width="3" stroke-dasharray="9 6"/>');
+  parts.push(text(448, 248, 'ACCEPTED TURN', 9, 840, '#294B3C', 'middle'));
 
-  parts.push(text(800, 216, 'TWO AXIAL MASTERS', 14, 850, '#B65F4D', 'middle'));
-  parts.push(text(800, 254, 'mask_11: north branch passes behind the south frontage', 10, 700, MUTED, 'middle'));
-  parts.push(text(800, 286, 'mask_14: cream coping bridges into the outgoing south branch', 10, 700, MUTED, 'middle'));
-  parts.push(text(800, 334, 'PASS: one molded turn · continuous cream/coral/green hierarchy', 10, 760, '#294B3C', 'middle'));
-  parts.push(text(800, 368, 'REJECT: CENTER PYLON · BURIED RAIL · DISCONNECTED BRANCH', 10, 820, '#9A493D', 'middle'));
-  parts.push(text(800, 414, 'X mirror below is comparison evidence, not an accepted derivation.', 9, 700, '#4E7D79', 'middle'));
+  parts.push(await compositionWindow(
+    options,
+    horizontalOpenPocketTJunctionCompactCells(14, 'west-source'),
+    3,
+    3,
+    613,
+    112,
+    270,
+    270,
+    fileOverrides,
+  ));
+  parts.push('<rect x="703" y="202" width="90" height="90" fill="none" stroke="#B65F4D" stroke-width="2.5" stroke-dasharray="8 6"/>');
+  parts.push(text(748, 397, '1-CELL ARMS · 90 PX/CELL', 8, 760, MUTED, 'middle'));
+  parts.push(text(748, 414, 'SOCKETS DISAPPEAR · CENTER STAYS ONE WIDTH', 8, 760, MUTED, 'middle'));
 
-  parts.push(text(1410, 182, 'MASK_14 · OPEN NORTH · REAR TURN', 10, 820, '#294B3C', 'middle'));
-  parts.push(await compositionWindow(options, source(14), 1, 1, 1290, 198, 240, 240, fileOverrides, undefined, false));
-  parts.push(await compositionWindow(options, source(14, 'base'), 1, 1, 1172, 198, 90, 90, fileOverrides, undefined, false));
-  parts.push(text(1217, 306, 'BASE · 90', 9, 760, MUTED, 'middle'));
-  parts.push(await compositionWindow(options, source(14, 'upper'), 1, 1, 1172, 324, 90, 90, fileOverrides, undefined, false));
-  parts.push(text(1217, 432, 'UPPER · 90', 9, 760, MUTED, 'middle'));
-  parts.push(await compositionWindow(options, source(14), 1, 1, 1110, 324, 40, 40, fileOverrides, undefined, false));
-  parts.push(text(1130, 382, '40 PX', 8, 760, MUTED, 'middle'));
-
-  const compactCases: ReadonlyArray<readonly [number, HorizontalOpenPocketTJunctionMask, HorizontalOpenPocketTJunctionFacing, string]> = [
-    [45, 11, 'west-source', '11 · WEST-DIRECT'],
-    [420, 11, 'east-mirror-review', '11 · EAST-MIRROR CHECK'],
-    [835, 14, 'west-source', '14 · WEST-DIRECT'],
-    [1210, 14, 'east-mirror-review', '14 · EAST-MIRROR CHECK'],
+  const longChecks: ReadonlyArray<readonly [number, string, string]> = [
+    [130, 'LIGHT FLOOR', A1A_PALETTE.floor],
+    [630, 'DARK FLOOR', A1A_PALETTE.charcoal],
   ];
-  for (const [x, maskIndex, facing, label] of compactCases) {
-    parts.push(text(x + 135, 642, label, 9, 820, facing === 'west-source' ? '#294B3C' : '#4E7D79', 'middle'));
+  for (const [x, label, floorFill] of longChecks) {
+    parts.push(text(x + 120, 488, label, 8, 820, floorFill === A1A_PALETTE.floor ? MUTED : '#4E7D79', 'middle'));
     parts.push(await compositionWindow(
       options,
-      horizontalOpenPocketTJunctionCompactCells(maskIndex, facing),
-      3,
-      3,
+      horizontalOpenPocketTJunctionLongCells(14, 'west-source'),
+      6,
+      6,
       x,
-      660,
-      270,
-      270,
+      496,
+      240,
+      216,
       fileOverrides,
+      undefined,
+      true,
+      floorFill,
     ));
-    parts.push(`<rect x="${x + 90}" y="750" width="90" height="90" fill="none" stroke="#B65F4D" stroke-width="2" stroke-dasharray="7 5"/>`);
-    parts.push(text(x + 135, 958, maskIndex === 11 ? '02 / 11 / 08 + 04' : '02 / 14 / 08 + 01', 9, 760, MUTED, 'middle'));
-  }
-  parts.push(text(800, 998, 'Pass only if all three sockets disappear into ordinary accepted neighbors at this minimum footprint.', 9, 720, '#294B3C', 'middle'));
-
-  const longRuns: ReadonlyArray<readonly [number, HorizontalOpenPocketTJunctionFacing, string, string]> = [
-    [80, 'west-source', 'WEST · LIGHT', A1A_PALETTE.floor],
-    [460, 'east-mirror-review', 'EAST CHECK · LIGHT', A1A_PALETTE.floor],
-    [900, 'west-source', 'WEST · DARK', A1A_PALETTE.charcoal],
-    [1280, 'east-mirror-review', 'EAST CHECK · DARK', A1A_PALETTE.charcoal],
-  ];
-  for (const [rowIndex, maskIndex] of ([11, 14] as const).entries()) {
-    const y = rowIndex === 0 ? 1135 : 1425;
-    for (const [x, facing, label, floorFill] of longRuns) {
-      parts.push(await compositionWindow(
-        options,
-        horizontalOpenPocketTJunctionLongCells(maskIndex, facing),
-        6,
-        6,
-        x,
-        y,
-        240,
-        240,
-        fileOverrides,
-        undefined,
-        true,
-        floorFill,
-      ));
-      const hubY = maskIndex === 11 ? y + 200 : y;
-      parts.push(`<rect x="${x + 80}" y="${hubY}" width="40" height="40" fill="none" stroke="#B65F4D" stroke-width="1.5" stroke-dasharray="5 4"/>`);
-      parts.push(text(x + 120, y + 258, `MASK_${maskIndex} · ${label}`, 8, 820, floorFill === A1A_PALETTE.floor ? MUTED : '#A59E8F', 'middle'));
-    }
+    parts.push(`<rect x="${x + 80}" y="496" width="40" height="36" fill="none" stroke="#B65F4D" stroke-width="1.5" stroke-dasharray="5 4"/>`);
   }
 
-  const readingLines = [
-    'One continuous east-west wall before and after the branch',
-    'The vertical socket vanishes into the accepted full-height wall family',
-    'Cream, coral, and green turn once; no second cap or internal rail survives',
-    'The same silhouette reads at one-cell arms and six-cell extents',
-  ];
-  for (const [index, line] of readingLines.entries()) {
-    parts.push(text(44, 1820 + index * 42, `• ${line}`, 10, 700, index < 3 ? '#294B3C' : MUTED));
-  }
-  const boundaryLines: ReadonlyArray<readonly [string, string]> = [
-    ['OWNER ACCEPTED · HORIZONTAL OPEN-POCKET T', '#294B3C'],
-    ['mask_11 / mask_14 · accepted direct proof sources', MUTED],
-    ['two fixed-light axial masters · no rotation or Y mirror', MUTED],
-    ['X MIRROR REMAINS REGISTRATION EVIDENCE ONLY', '#4E7D79'],
-    ['PROOF LEDGER ONLY · NO EXPORT / ATLAS / SCHEMA / UNITY', '#9A493D'],
-  ];
-  for (const [index, [line, color]] of boundaryLines.entries()) {
-    parts.push(text(824, 1820 + index * 42, line, index === 0 || index >= 3 ? 10 : 9, index === 0 || index >= 3 ? 820 : 680, color));
-  }
+  parts.push(text(22, 748, 'ACCEPTED: MASK 14 INTERNAL TURN', 8, 840, '#294B3C'));
+  parts.push(text(978, 748, 'PROOF ONLY · NO LEDGER / EXPORT / UNITY CHANGE', 8, 820, '#9A493D', 'end'));
 
   const svg =
     `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" ` +
     `viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
   const png = new Resvg(svg, {
-    fitTo: { mode: 'width', value: width * CARD_RENDER_SCALE },
+    fitTo: { mode: 'width', value: width },
   }).render().asPng();
   await writeFile(path.join(options.output, `${gate.stem}.png`), png);
 }
