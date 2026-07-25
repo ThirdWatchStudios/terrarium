@@ -1,3 +1,7 @@
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+
+import { Resvg } from '@resvg/resvg-js';
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -12,6 +16,42 @@ import {
   blobIndex,
   configForIndex,
 } from '../src/tiles/blob';
+
+const SOURCE_DIRECTORY = path.resolve(
+  process.cwd(),
+  'assets/walls/quota-co-building-system-proofs/double-filled-south-cross-junction',
+);
+const CANONICAL_DIRECTORY = path.resolve(
+  process.cwd(),
+  'assets/walls/quota-co-building-system',
+);
+
+const stripSvgShell = (svg: string): string =>
+  svg.replace(/^[\s\S]*?<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '');
+
+const rasterPixels = (
+  directory: string,
+  stem: string,
+  size = 128,
+): Uint8Array => {
+  const body = ['base', 'upper']
+    .map((layer) =>
+      stripSvgShell(
+        readFileSync(path.join(directory, `${stem}-${layer}.svg`), 'utf8'),
+      ),
+    )
+    .join('');
+  const rendered = new Resvg(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" ' +
+      `viewBox="0 0 128 128">${body}</svg>`,
+    {
+      fitTo: { mode: 'width', value: size },
+      font: { loadSystemFonts: false },
+    },
+  ).render();
+  // Cache this getter exactly once: resvg copies the native pixel buffer.
+  return rendered.pixels;
+};
 
 const NEIGHBORS = [
   [NB.N, 0, -1],
@@ -255,6 +295,113 @@ describe('QuotaCo owner-accepted double-filled south cross-junction gate', () =>
     expect(
       EQUAL_HEIGHT_DOUBLE_FILLED_SOUTH_CROSS_JUNCTION_GATE.yMirrorAllowed,
     ).toBe(false);
+  });
+
+  it('keeps the north socket aligned and turns every face layer onto one shared dark ledge', () => {
+    const upper = readFileSync(
+      path.join(SOURCE_DIRECTORY, 'open_cross_filled_s-upper.svg'),
+      'utf8',
+    );
+    expect(upper.indexOf('upper-north-coral-register')).toBeLessThan(
+      upper.indexOf('upper-north-green-handoff'),
+    );
+    expect(upper.indexOf('upper-north-green-handoff')).toBeLessThan(
+      upper.indexOf('upper-north-face-shade'),
+    );
+    expect(upper.indexOf('upper-north-face-shade')).toBeLessThan(
+      upper.indexOf('upper-slab-reveal-light'),
+    );
+    expect(upper).toContain(
+      'id="upper-contour" d="M56 0H105V44A12 12 0 0 0 117 56H128V128H0V56H46A10 10 0 0 0 56 46Z"',
+    );
+    expect(upper).toContain(
+      'id="upper-shell" d="M58 0H103V46A12 12 0 0 0 115 58H128V128H0V58H48A10 10 0 0 0 58 48Z"',
+    );
+    expect(upper).toContain(
+      'id="upper-north-plane-light" d="M58 0H90.5V44A12 12 0 0 0 102.5 56H58Z"',
+    );
+    expect(upper).toContain(
+      'id="upper-north-arris-lip" d="M90.5 0H92V44A12 12 0 0 0 104 56H102.5A12 12 0 0 1 90.5 44Z"',
+    );
+    expect(upper).toContain(
+      'id="upper-north-coral-register" d="M97 0H102V44A12 12 0 0 0 114 56H109A12 12 0 0 1 97 44Z"',
+    );
+    expect(upper).toContain(
+      'id="upper-north-green-handoff" d="M102 0H105V44A12 12 0 0 0 117 56H114A12 12 0 0 1 102 44Z"',
+    );
+    expect(upper).toContain(
+      'id="upper-north-face-shade" d="M92 0H105V44A12 12 0 0 0 117 56H104A12 12 0 0 1 92 44Z"',
+    );
+    expect(upper).toContain(
+      'id="upper-arris-seam" d="M92 1V44A12 12 0 0 0 104 56H116 M1 63H127"',
+    );
+    expect(upper).toContain(
+      'id="upper-register-seam" d="M102 1V44A12 12 0 0 0 114 56"',
+    );
+
+    const straight = rasterPixels(CANONICAL_DIRECTORY, 'full_w_straight');
+    const candidate = rasterPixels(
+      SOURCE_DIRECTORY,
+      'open_cross_filled_s',
+    );
+    const rowBytes = 128 * 4;
+    const acceptedSouthSocket = straight.slice(
+      127 * rowBytes,
+      128 * rowBytes,
+    );
+    const candidateNorthSocket = candidate.slice(0, rowBytes);
+    expect(candidateNorthSocket).toEqual(acceptedSouthSocket);
+
+    const rgbaAt = (
+      pixels: Uint8Array,
+      width: number,
+      x: number,
+      y: number,
+    ): readonly number[] => {
+      const offset = (y * width + x) * 4;
+      return [...pixels.slice(offset, offset + 4)];
+    };
+
+    expect(rgbaAt(candidate, 128, 94, 50)).toEqual(
+      [136, 133, 120, 255],
+    );
+    expect(rgbaAt(candidate, 128, 102, 50)).toEqual(
+      [158, 83, 68, 255],
+    );
+    expect(rgbaAt(candidate, 128, 105, 50)).toEqual(
+      [36, 66, 53, 255],
+    );
+    expect(rgbaAt(candidate, 128, 114, 54)).toEqual(
+      [36, 66, 53, 255],
+    );
+    expect(rgbaAt(candidate, 128, 116, 56)).toEqual(
+      [37, 42, 40, 255],
+    );
+    expect(rgbaAt(candidate, 128, 105, 58)).toEqual(
+      [224, 216, 198, 255],
+    );
+    for (let y = 50; y <= 54; y += 1) {
+      expect(rgbaAt(candidate, 128, 124, y), `open crook at 124,${y}`)
+        .toEqual([0, 0, 0, 0]);
+    }
+
+    const candidate40 = rasterPixels(
+      SOURCE_DIRECTORY,
+      'open_cross_filled_s',
+      40,
+    );
+    expect(rgbaAt(candidate40, 40, 29, 14)).toEqual(
+      [178, 171, 153, 255],
+    );
+    expect(rgbaAt(candidate40, 40, 31, 15)).toEqual(
+      [157, 83, 67, 255],
+    );
+    expect(rgbaAt(candidate40, 40, 32, 15)).toEqual(
+      [65, 73, 61, 255],
+    );
+    expect(rgbaAt(candidate40, 40, 33, 16)).toEqual(
+      [47, 61, 51, 255],
+    );
   });
 
   it('rejects demotion, matrix, transform, or production-boundary drift', () => {

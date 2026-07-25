@@ -147,20 +147,41 @@ Record<
   'open_cross_filled_s-upper': [
     [
       'upper-contour',
-      'M56 0H105V46A10 10 0 0 0 115 56H128V128H0V56H46A10 10 0 0 0 56 46Z',
+      'M56 0H105V44A12 12 0 0 0 117 56H128V128H0V56H46A10 10 0 0 0 56 46Z',
     ],
     [
       'upper-shell',
-      'M58 0H103V48A10 10 0 0 0 113 58H128V128H0V58H48A10 10 0 0 0 58 48Z',
+      'M58 0H103V46A12 12 0 0 0 115 58H128V128H0V58H48A10 10 0 0 0 58 48Z',
     ],
-    ['upper-north-plane-light', 'M58 0H90.5V58H58Z'],
-    ['upper-north-arris-lip', 'M90.5 0H92V58H90.5Z'],
-    ['upper-north-face-shade', 'M92 0H105V58H92Z'],
-    ['upper-north-coral-register', 'M97 0H102V58H97Z'],
-    ['upper-north-green-handoff', 'M102 0H105V58H102Z'],
+    [
+      'upper-north-plane-light',
+      'M58 0H90.5V44A12 12 0 0 0 102.5 56H58Z',
+    ],
+    [
+      'upper-north-arris-lip',
+      'M90.5 0H92V44A12 12 0 0 0 104 56H102.5A12 12 0 0 1 90.5 44Z',
+    ],
+    [
+      'upper-north-face-shade',
+      'M92 0H105V44A12 12 0 0 0 117 56H104A12 12 0 0 1 92 44Z',
+    ],
+    [
+      'upper-north-coral-register',
+      'M97 0H102V44A12 12 0 0 0 114 56H109A12 12 0 0 1 97 44Z',
+    ],
+    [
+      'upper-north-green-handoff',
+      'M102 0H105V44A12 12 0 0 0 117 56H114A12 12 0 0 1 102 44Z',
+    ],
     ['upper-slab-reveal-light', 'M0 58H128V63H0Z'],
-    ['upper-arris-seam', 'M92 1V57 M1 63H127'],
-    ['upper-register-seam', 'M102 1V57'],
+    [
+      'upper-arris-seam',
+      'M92 1V44A12 12 0 0 0 104 56H116 M1 63H127',
+    ],
+    [
+      'upper-register-seam',
+      'M102 1V44A12 12 0 0 0 114 56',
+    ],
   ],
 };
 
