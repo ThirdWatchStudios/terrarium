@@ -1,0 +1,267 @@
+{
+  "reviewOnly": true,
+  "productionCompositorRestored": true,
+  "candidates": [
+    {
+      "label": "Column",
+      "proofCarrier": "body-tall",
+      "construction": "near-parallel flanks · tight base"
+    },
+    {
+      "label": "Block",
+      "proofCarrier": "body-compact",
+      "construction": "flat shoulder shelf · broad base"
+    },
+    {
+      "label": "Wedge",
+      "proofCarrier": "body-large-frame",
+      "construction": "wide shoulder slope · narrow base"
+    },
+    {
+      "label": "Barrel",
+      "proofCarrier": "body-balanced",
+      "construction": "full middle · pinched shoulder/base"
+    },
+    {
+      "label": "Bell",
+      "proofCarrier": "body-soft",
+      "construction": "small shoulder · low outward mass"
+    },
+    {
+      "label": "Pinch",
+      "proofCarrier": "body-soft",
+      "construction": "moderate shoulder · shallow waist · rounded hip"
+    }
+  ],
+  "coverage": {
+    "bodyCount": 6,
+    "poseCount": 15,
+    "authoredFacingCount": 3,
+    "renderedFacingCount": 4,
+    "standardGarmentCount": 11,
+    "specialGarmentCount": 1,
+    "stylePresetCount": 3,
+    "outfitRenderCount": 12960,
+    "heldAccessoryRenderCount": 5400,
+    "totalAuditedRenders": 18360
+  },
+  "hardFailures": [],
+  "adapterFindings": [],
+  "integrationGaps": [
+    {
+      "label": "Pinch / true sixth body ID",
+      "detail": "Pinch uses body-soft only as a process-local carrier; registry, picker, randomizer, export, and body-ID dispatch are intentionally not exercised."
+    },
+    {
+      "label": "Pinch / Dress profile",
+      "detail": "The proof resolves Dress through the body-soft profile. A body-pinch profile must be authored and reviewed during promotion."
+    }
+  ],
+  "silhouette": {
+    "comparedStates": 675,
+    "exactCollapses": 0,
+    "maximumIou": 0.951,
+    "closest": [
+      {
+        "pair": [
+          "Bell",
+          "Pinch"
+        ],
+        "pose": "notice",
+        "facing": "south",
+        "iou": 0.951,
+        "differingPixels": 22
+      },
+      {
+        "pair": [
+          "Bell",
+          "Pinch"
+        ],
+        "pose": "notice",
+        "facing": "north",
+        "iou": 0.951,
+        "differingPixels": 22
+      },
+      {
+        "pair": [
+          "Bell",
+          "Pinch"
+        ],
+        "pose": "walk-approach",
+        "facing": "south",
+        "iou": 0.945,
+        "differingPixels": 25
+      },
+      {
+        "pair": [
+          "Bell",
+          "Pinch"
+        ],
+        "pose": "walk-approach",
+        "facing": "north",
+        "iou": 0.945,
+        "differingPixels": 25
+      },
+      {
+        "pair": [
+          "Bell",
+          "Pinch"
+        ],
+        "pose": "walk-away",
+        "facing": "south",
+        "iou": 0.945,
+        "differingPixels": 25
+      },
+      {
+        "pair": [
+          "Bell",
+          "Pinch"
+        ],
+        "pose": "walk-away",
+        "facing": "north",
+        "iou": 0.945,
+        "differingPixels": 25
+      },
+      {
+        "pair": [
+          "Bell",
+          "Pinch"
+        ],
+        "pose": "neutral",
+        "facing": "south",
+        "iou": 0.943,
+        "differingPixels": 26
+      },
+      {
+        "pair": [
+          "Bell",
+          "Pinch"
+        ],
+        "pose": "neutral",
+        "facing": "north",
+        "iou": 0.943,
+        "differingPixels": 26
+      },
+      {
+        "pair": [
+          "Block",
+          "Barrel"
+        ],
+        "pose": "recoil",
+        "facing": "south",
+        "iou": 0.938,
+        "differingPixels": 30
+      },
+      {
+        "pair": [
+          "Block",
+          "Barrel"
+        ],
+        "pose": "glance-back",
+        "facing": "south",
+        "iou": 0.937,
+        "differingPixels": 30
+      },
+      {
+        "pair": [
+          "Block",
+          "Barrel"
+        ],
+        "pose": "glance-back",
+        "facing": "north",
+        "iou": 0.937,
+        "differingPixels": 30
+      },
+      {
+        "pair": [
+          "Block",
+          "Barrel"
+        ],
+        "pose": "recoil",
+        "facing": "north",
+        "iou": 0.936,
+        "differingPixels": 31
+      },
+      {
+        "pair": [
+          "Bell",
+          "Pinch"
+        ],
+        "pose": "lean-in",
+        "facing": "south",
+        "iou": 0.935,
+        "differingPixels": 29
+      },
+      {
+        "pair": [
+          "Bell",
+          "Pinch"
+        ],
+        "pose": "lean-in",
+        "facing": "north",
+        "iou": 0.935,
+        "differingPixels": 29
+      },
+      {
+        "pair": [
+          "Block",
+          "Barrel"
+        ],
+        "pose": "arms-crossed",
+        "facing": "south",
+        "iou": 0.93,
+        "differingPixels": 34
+      },
+      {
+        "pair": [
+          "Bell",
+          "Pinch"
+        ],
+        "pose": "laugh",
+        "facing": "south",
+        "iou": 0.929,
+        "differingPixels": 32
+      },
+      {
+        "pair": [
+          "Bell",
+          "Pinch"
+        ],
+        "pose": "laugh",
+        "facing": "north",
+        "iou": 0.929,
+        "differingPixels": 32
+      },
+      {
+        "pair": [
+          "Block",
+          "Barrel"
+        ],
+        "pose": "slump",
+        "facing": "south",
+        "iou": 0.927,
+        "differingPixels": 33
+      },
+      {
+        "pair": [
+          "Block",
+          "Barrel"
+        ],
+        "pose": "slump",
+        "facing": "north",
+        "iou": 0.927,
+        "differingPixels": 33
+      },
+      {
+        "pair": [
+          "Bell",
+          "Pinch"
+        ],
+        "pose": "recoil",
+        "facing": "east",
+        "iou": 0.919,
+        "differingPixels": 31
+      }
+    ]
+  }
+}

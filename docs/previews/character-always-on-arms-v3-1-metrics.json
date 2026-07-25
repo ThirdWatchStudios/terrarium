@@ -1,0 +1,849 @@
+{
+  "reviewOnly": true,
+  "proposedRule": "Every rigged character resolves generated neutral arms when no explicit pose is supplied; explicit poses replace the arm configuration rather than introducing arms.",
+  "productionCompositorRestored": true,
+  "coverage": {
+    "bodyCount": 6,
+    "facingCount": 4,
+    "armContributionChecks": 48,
+    "stressRenderCount": 144,
+    "crowdCharacterCount": 12,
+    "newAnimationFrames": 0
+  },
+  "armContribution": {
+    "allChecksAddVisiblePixels": false,
+    "visibleChecks": 24,
+    "profileOccludedChecks": 24,
+    "minimumAddedPixels40": 0,
+    "minimumAddedPixels48": 0,
+    "findings": [
+      {
+        "label": "Column/east/40px",
+        "detail": "neutral arms add no visible silhouette pixels"
+      },
+      {
+        "label": "Column/east/48px",
+        "detail": "neutral arms add no visible silhouette pixels"
+      },
+      {
+        "label": "Column/west/40px",
+        "detail": "neutral arms add no visible silhouette pixels"
+      },
+      {
+        "label": "Column/west/48px",
+        "detail": "neutral arms add no visible silhouette pixels"
+      },
+      {
+        "label": "Block/east/40px",
+        "detail": "neutral arms add no visible silhouette pixels"
+      },
+      {
+        "label": "Block/east/48px",
+        "detail": "neutral arms add no visible silhouette pixels"
+      },
+      {
+        "label": "Block/west/40px",
+        "detail": "neutral arms add no visible silhouette pixels"
+      },
+      {
+        "label": "Block/west/48px",
+        "detail": "neutral arms add no visible silhouette pixels"
+      },
+      {
+        "label": "Wedge/east/40px",
+        "detail": "neutral arms add no visible silhouette pixels"
+      },
+      {
+        "label": "Wedge/east/48px",
+        "detail": "neutral arms add no visible silhouette pixels"
+      },
+      {
+        "label": "Wedge/west/40px",
+        "detail": "neutral arms add no visible silhouette pixels"
+      },
+      {
+        "label": "Wedge/west/48px",
+        "detail": "neutral arms add no visible silhouette pixels"
+      },
+      {
+        "label": "Barrel/east/40px",
+        "detail": "neutral arms add no visible silhouette pixels"
+      },
+      {
+        "label": "Barrel/east/48px",
+        "detail": "neutral arms add no visible silhouette pixels"
+      },
+      {
+        "label": "Barrel/west/40px",
+        "detail": "neutral arms add no visible silhouette pixels"
+      },
+      {
+        "label": "Barrel/west/48px",
+        "detail": "neutral arms add no visible silhouette pixels"
+      },
+      {
+        "label": "Bell/east/40px",
+        "detail": "neutral arms add no visible silhouette pixels"
+      },
+      {
+        "label": "Bell/east/48px",
+        "detail": "neutral arms add no visible silhouette pixels"
+      },
+      {
+        "label": "Bell/west/40px",
+        "detail": "neutral arms add no visible silhouette pixels"
+      },
+      {
+        "label": "Bell/west/48px",
+        "detail": "neutral arms add no visible silhouette pixels"
+      },
+      {
+        "label": "Pinch/east/40px",
+        "detail": "neutral arms add no visible silhouette pixels"
+      },
+      {
+        "label": "Pinch/east/48px",
+        "detail": "neutral arms add no visible silhouette pixels"
+      },
+      {
+        "label": "Pinch/west/40px",
+        "detail": "neutral arms add no visible silhouette pixels"
+      },
+      {
+        "label": "Pinch/west/48px",
+        "detail": "neutral arms add no visible silhouette pixels"
+      }
+    ],
+    "checks": [
+      {
+        "body": "Column",
+        "facing": "south",
+        "pixelSize": 40,
+        "currentPixels": 342,
+        "alwaysOnPixels": 398,
+        "addedPixels": 56,
+        "removedPixels": 0,
+        "iou": 0.859
+      },
+      {
+        "body": "Column",
+        "facing": "south",
+        "pixelSize": 48,
+        "currentPixels": 488,
+        "alwaysOnPixels": 578,
+        "addedPixels": 90,
+        "removedPixels": 0,
+        "iou": 0.844
+      },
+      {
+        "body": "Column",
+        "facing": "east",
+        "pixelSize": 40,
+        "currentPixels": 320,
+        "alwaysOnPixels": 320,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Column",
+        "facing": "east",
+        "pixelSize": 48,
+        "currentPixels": 455,
+        "alwaysOnPixels": 455,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Column",
+        "facing": "north",
+        "pixelSize": 40,
+        "currentPixels": 342,
+        "alwaysOnPixels": 398,
+        "addedPixels": 56,
+        "removedPixels": 0,
+        "iou": 0.859
+      },
+      {
+        "body": "Column",
+        "facing": "north",
+        "pixelSize": 48,
+        "currentPixels": 488,
+        "alwaysOnPixels": 578,
+        "addedPixels": 90,
+        "removedPixels": 0,
+        "iou": 0.844
+      },
+      {
+        "body": "Column",
+        "facing": "west",
+        "pixelSize": 40,
+        "currentPixels": 320,
+        "alwaysOnPixels": 320,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Column",
+        "facing": "west",
+        "pixelSize": 48,
+        "currentPixels": 455,
+        "alwaysOnPixels": 455,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Block",
+        "facing": "south",
+        "pixelSize": 40,
+        "currentPixels": 472,
+        "alwaysOnPixels": 516,
+        "addedPixels": 44,
+        "removedPixels": 0,
+        "iou": 0.915
+      },
+      {
+        "body": "Block",
+        "facing": "south",
+        "pixelSize": 48,
+        "currentPixels": 660,
+        "alwaysOnPixels": 728,
+        "addedPixels": 68,
+        "removedPixels": 0,
+        "iou": 0.907
+      },
+      {
+        "body": "Block",
+        "facing": "east",
+        "pixelSize": 40,
+        "currentPixels": 391,
+        "alwaysOnPixels": 391,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Block",
+        "facing": "east",
+        "pixelSize": 48,
+        "currentPixels": 563,
+        "alwaysOnPixels": 563,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Block",
+        "facing": "north",
+        "pixelSize": 40,
+        "currentPixels": 472,
+        "alwaysOnPixels": 516,
+        "addedPixels": 44,
+        "removedPixels": 0,
+        "iou": 0.915
+      },
+      {
+        "body": "Block",
+        "facing": "north",
+        "pixelSize": 48,
+        "currentPixels": 660,
+        "alwaysOnPixels": 728,
+        "addedPixels": 68,
+        "removedPixels": 0,
+        "iou": 0.907
+      },
+      {
+        "body": "Block",
+        "facing": "west",
+        "pixelSize": 40,
+        "currentPixels": 390,
+        "alwaysOnPixels": 390,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Block",
+        "facing": "west",
+        "pixelSize": 48,
+        "currentPixels": 548,
+        "alwaysOnPixels": 548,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Wedge",
+        "facing": "south",
+        "pixelSize": 40,
+        "currentPixels": 440,
+        "alwaysOnPixels": 515,
+        "addedPixels": 75,
+        "removedPixels": 0,
+        "iou": 0.854
+      },
+      {
+        "body": "Wedge",
+        "facing": "south",
+        "pixelSize": 48,
+        "currentPixels": 632,
+        "alwaysOnPixels": 744,
+        "addedPixels": 112,
+        "removedPixels": 0,
+        "iou": 0.849
+      },
+      {
+        "body": "Wedge",
+        "facing": "east",
+        "pixelSize": 40,
+        "currentPixels": 356,
+        "alwaysOnPixels": 356,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Wedge",
+        "facing": "east",
+        "pixelSize": 48,
+        "currentPixels": 513,
+        "alwaysOnPixels": 513,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Wedge",
+        "facing": "north",
+        "pixelSize": 40,
+        "currentPixels": 440,
+        "alwaysOnPixels": 515,
+        "addedPixels": 75,
+        "removedPixels": 0,
+        "iou": 0.854
+      },
+      {
+        "body": "Wedge",
+        "facing": "north",
+        "pixelSize": 48,
+        "currentPixels": 632,
+        "alwaysOnPixels": 744,
+        "addedPixels": 112,
+        "removedPixels": 0,
+        "iou": 0.849
+      },
+      {
+        "body": "Wedge",
+        "facing": "west",
+        "pixelSize": 40,
+        "currentPixels": 356,
+        "alwaysOnPixels": 356,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Wedge",
+        "facing": "west",
+        "pixelSize": 48,
+        "currentPixels": 513,
+        "alwaysOnPixels": 513,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Barrel",
+        "facing": "south",
+        "pixelSize": 40,
+        "currentPixels": 448,
+        "alwaysOnPixels": 470,
+        "addedPixels": 22,
+        "removedPixels": 0,
+        "iou": 0.953
+      },
+      {
+        "body": "Barrel",
+        "facing": "south",
+        "pixelSize": 48,
+        "currentPixels": 636,
+        "alwaysOnPixels": 668,
+        "addedPixels": 32,
+        "removedPixels": 0,
+        "iou": 0.952
+      },
+      {
+        "body": "Barrel",
+        "facing": "east",
+        "pixelSize": 40,
+        "currentPixels": 379,
+        "alwaysOnPixels": 379,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Barrel",
+        "facing": "east",
+        "pixelSize": 48,
+        "currentPixels": 540,
+        "alwaysOnPixels": 540,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Barrel",
+        "facing": "north",
+        "pixelSize": 40,
+        "currentPixels": 448,
+        "alwaysOnPixels": 470,
+        "addedPixels": 22,
+        "removedPixels": 0,
+        "iou": 0.953
+      },
+      {
+        "body": "Barrel",
+        "facing": "north",
+        "pixelSize": 48,
+        "currentPixels": 636,
+        "alwaysOnPixels": 668,
+        "addedPixels": 32,
+        "removedPixels": 0,
+        "iou": 0.952
+      },
+      {
+        "body": "Barrel",
+        "facing": "west",
+        "pixelSize": 40,
+        "currentPixels": 379,
+        "alwaysOnPixels": 379,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Barrel",
+        "facing": "west",
+        "pixelSize": 48,
+        "currentPixels": 540,
+        "alwaysOnPixels": 540,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Bell",
+        "facing": "south",
+        "pixelSize": 40,
+        "currentPixels": 414,
+        "alwaysOnPixels": 440,
+        "addedPixels": 26,
+        "removedPixels": 0,
+        "iou": 0.941
+      },
+      {
+        "body": "Bell",
+        "facing": "south",
+        "pixelSize": 48,
+        "currentPixels": 585,
+        "alwaysOnPixels": 624,
+        "addedPixels": 39,
+        "removedPixels": 0,
+        "iou": 0.938
+      },
+      {
+        "body": "Bell",
+        "facing": "east",
+        "pixelSize": 40,
+        "currentPixels": 375,
+        "alwaysOnPixels": 375,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Bell",
+        "facing": "east",
+        "pixelSize": 48,
+        "currentPixels": 537,
+        "alwaysOnPixels": 537,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Bell",
+        "facing": "north",
+        "pixelSize": 40,
+        "currentPixels": 414,
+        "alwaysOnPixels": 440,
+        "addedPixels": 26,
+        "removedPixels": 0,
+        "iou": 0.941
+      },
+      {
+        "body": "Bell",
+        "facing": "north",
+        "pixelSize": 48,
+        "currentPixels": 585,
+        "alwaysOnPixels": 624,
+        "addedPixels": 39,
+        "removedPixels": 0,
+        "iou": 0.938
+      },
+      {
+        "body": "Bell",
+        "facing": "west",
+        "pixelSize": 40,
+        "currentPixels": 375,
+        "alwaysOnPixels": 375,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Bell",
+        "facing": "west",
+        "pixelSize": 48,
+        "currentPixels": 536,
+        "alwaysOnPixels": 536,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Pinch",
+        "facing": "south",
+        "pixelSize": 40,
+        "currentPixels": 402,
+        "alwaysOnPixels": 442,
+        "addedPixels": 40,
+        "removedPixels": 0,
+        "iou": 0.91
+      },
+      {
+        "body": "Pinch",
+        "facing": "south",
+        "pixelSize": 48,
+        "currentPixels": 566,
+        "alwaysOnPixels": 628,
+        "addedPixels": 62,
+        "removedPixels": 0,
+        "iou": 0.901
+      },
+      {
+        "body": "Pinch",
+        "facing": "east",
+        "pixelSize": 40,
+        "currentPixels": 368,
+        "alwaysOnPixels": 368,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Pinch",
+        "facing": "east",
+        "pixelSize": 48,
+        "currentPixels": 517,
+        "alwaysOnPixels": 517,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Pinch",
+        "facing": "north",
+        "pixelSize": 40,
+        "currentPixels": 402,
+        "alwaysOnPixels": 442,
+        "addedPixels": 40,
+        "removedPixels": 0,
+        "iou": 0.91
+      },
+      {
+        "body": "Pinch",
+        "facing": "north",
+        "pixelSize": 48,
+        "currentPixels": 566,
+        "alwaysOnPixels": 628,
+        "addedPixels": 62,
+        "removedPixels": 0,
+        "iou": 0.901
+      },
+      {
+        "body": "Pinch",
+        "facing": "west",
+        "pixelSize": 40,
+        "currentPixels": 368,
+        "alwaysOnPixels": 368,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Pinch",
+        "facing": "west",
+        "pixelSize": 48,
+        "currentPixels": 517,
+        "alwaysOnPixels": 517,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      }
+    ]
+  },
+  "silhouette": {
+    "comparisonCount": 60,
+    "exactCollapses": 0,
+    "highSimilarityThreshold": 0.93,
+    "highSimilarityFindings": [
+      {
+        "label": "Bell / Pinch/south",
+        "detail": "always-on IoU 0.943 (armless 0.880, collapse delta +0.063)"
+      },
+      {
+        "label": "Bell / Pinch/north",
+        "detail": "always-on IoU 0.943 (armless 0.880, collapse delta +0.063)"
+      }
+    ],
+    "maximumIou": 0.943,
+    "maximumCollapseDelta": 0.069,
+    "closest": [
+      {
+        "pair": [
+          "Bell",
+          "Pinch"
+        ],
+        "facing": "south",
+        "armlessIou": 0.88,
+        "iou": 0.943,
+        "collapseDelta": 0.063,
+        "differingPixels": 26
+      },
+      {
+        "pair": [
+          "Bell",
+          "Pinch"
+        ],
+        "facing": "north",
+        "armlessIou": 0.88,
+        "iou": 0.943,
+        "collapseDelta": 0.063,
+        "differingPixels": 26
+      },
+      {
+        "pair": [
+          "Bell",
+          "Pinch"
+        ],
+        "facing": "east",
+        "armlessIou": 0.905,
+        "iou": 0.905,
+        "collapseDelta": 0,
+        "differingPixels": 37
+      },
+      {
+        "pair": [
+          "Bell",
+          "Pinch"
+        ],
+        "facing": "west",
+        "armlessIou": 0.905,
+        "iou": 0.905,
+        "collapseDelta": 0,
+        "differingPixels": 37
+      },
+      {
+        "pair": [
+          "Block",
+          "Barrel"
+        ],
+        "facing": "west",
+        "armlessIou": 0.899,
+        "iou": 0.899,
+        "collapseDelta": 0,
+        "differingPixels": 41
+      },
+      {
+        "pair": [
+          "Block",
+          "Barrel"
+        ],
+        "facing": "east",
+        "armlessIou": 0.897,
+        "iou": 0.897,
+        "collapseDelta": 0,
+        "differingPixels": 42
+      },
+      {
+        "pair": [
+          "Block",
+          "Barrel"
+        ],
+        "facing": "south",
+        "armlessIou": 0.925,
+        "iou": 0.889,
+        "collapseDelta": -0.036,
+        "differingPixels": 58
+      },
+      {
+        "pair": [
+          "Block",
+          "Barrel"
+        ],
+        "facing": "north",
+        "armlessIou": 0.925,
+        "iou": 0.889,
+        "collapseDelta": -0.036,
+        "differingPixels": 58
+      },
+      {
+        "pair": [
+          "Barrel",
+          "Pinch"
+        ],
+        "facing": "south",
+        "armlessIou": 0.84,
+        "iou": 0.884,
+        "collapseDelta": 0.044,
+        "differingPixels": 56
+      },
+      {
+        "pair": [
+          "Barrel",
+          "Pinch"
+        ],
+        "facing": "north",
+        "armlessIou": 0.84,
+        "iou": 0.884,
+        "collapseDelta": 0.044,
+        "differingPixels": 56
+      },
+      {
+        "pair": [
+          "Block",
+          "Bell"
+        ],
+        "facing": "west",
+        "armlessIou": 0.875,
+        "iou": 0.875,
+        "collapseDelta": 0,
+        "differingPixels": 51
+      },
+      {
+        "pair": [
+          "Block",
+          "Bell"
+        ],
+        "facing": "east",
+        "armlessIou": 0.873,
+        "iou": 0.873,
+        "collapseDelta": 0,
+        "differingPixels": 52
+      },
+      {
+        "pair": [
+          "Column",
+          "Wedge"
+        ],
+        "facing": "east",
+        "armlessIou": 0.867,
+        "iou": 0.867,
+        "collapseDelta": 0,
+        "differingPixels": 48
+      },
+      {
+        "pair": [
+          "Column",
+          "Wedge"
+        ],
+        "facing": "west",
+        "armlessIou": 0.867,
+        "iou": 0.867,
+        "collapseDelta": 0,
+        "differingPixels": 48
+      },
+      {
+        "pair": [
+          "Barrel",
+          "Pinch"
+        ],
+        "facing": "east",
+        "armlessIou": 0.863,
+        "iou": 0.863,
+        "collapseDelta": 0,
+        "differingPixels": 55
+      },
+      {
+        "pair": [
+          "Barrel",
+          "Pinch"
+        ],
+        "facing": "west",
+        "armlessIou": 0.863,
+        "iou": 0.863,
+        "collapseDelta": 0,
+        "differingPixels": 55
+      },
+      {
+        "pair": [
+          "Block",
+          "Pinch"
+        ],
+        "facing": "west",
+        "armlessIou": 0.862,
+        "iou": 0.862,
+        "collapseDelta": 0,
+        "differingPixels": 56
+      },
+      {
+        "pair": [
+          "Block",
+          "Pinch"
+        ],
+        "facing": "east",
+        "armlessIou": 0.86,
+        "iou": 0.86,
+        "collapseDelta": 0,
+        "differingPixels": 57
+      },
+      {
+        "pair": [
+          "Barrel",
+          "Bell"
+        ],
+        "facing": "east",
+        "armlessIou": 0.857,
+        "iou": 0.857,
+        "collapseDelta": 0,
+        "differingPixels": 58
+      },
+      {
+        "pair": [
+          "Barrel",
+          "Bell"
+        ],
+        "facing": "west",
+        "armlessIou": 0.857,
+        "iou": 0.857,
+        "collapseDelta": 0,
+        "differingPixels": 58
+      }
+    ]
+  },
+  "stress": {
+    "minimumCanvasMargin40": 1,
+    "failures": []
+  },
+  "promotionGaps": [
+    "composeCharacter must resolve neutral pose art when opts.pose is absent for a rigged body",
+    "composePortrait, characterLayers, and base character atlas policy must be decided explicitly",
+    "Unity/runtime consumers must treat neutral as the base visible arm state without adding a new animation state",
+    "Pinch still requires a true sixth production body ID and dedicated Dress profile"
+  ]
+}

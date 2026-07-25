@@ -1,0 +1,592 @@
+{
+  "note": "Pairwise intersection-over-union on transparent 40 px compositor renders. Lower overlap supports distinction; the composed visual review remains authoritative.",
+  "currentBodyOnly": {
+    "south": [
+      {
+        "pair": [
+          "body-compact",
+          "body-balanced"
+        ],
+        "iou": 0.869
+      },
+      {
+        "pair": [
+          "body-compact",
+          "body-soft"
+        ],
+        "iou": 0.859
+      },
+      {
+        "pair": [
+          "body-balanced",
+          "body-large-frame"
+        ],
+        "iou": 0.852
+      },
+      {
+        "pair": [
+          "body-balanced",
+          "body-tall"
+        ],
+        "iou": 0.846
+      },
+      {
+        "pair": [
+          "body-balanced",
+          "body-soft"
+        ],
+        "iou": 0.844
+      },
+      {
+        "pair": [
+          "body-compact",
+          "body-large-frame"
+        ],
+        "iou": 0.819
+      },
+      {
+        "pair": [
+          "body-large-frame",
+          "body-soft"
+        ],
+        "iou": 0.806
+      },
+      {
+        "pair": [
+          "body-large-frame",
+          "body-tall"
+        ],
+        "iou": 0.761
+      },
+      {
+        "pair": [
+          "body-compact",
+          "body-tall"
+        ],
+        "iou": 0.753
+      },
+      {
+        "pair": [
+          "body-tall",
+          "body-soft"
+        ],
+        "iou": 0.749
+      }
+    ],
+    "east": [
+      {
+        "pair": [
+          "body-large-frame",
+          "body-soft"
+        ],
+        "iou": 0.892
+      },
+      {
+        "pair": [
+          "body-balanced",
+          "body-tall"
+        ],
+        "iou": 0.852
+      },
+      {
+        "pair": [
+          "body-compact",
+          "body-balanced"
+        ],
+        "iou": 0.847
+      },
+      {
+        "pair": [
+          "body-compact",
+          "body-soft"
+        ],
+        "iou": 0.847
+      },
+      {
+        "pair": [
+          "body-balanced",
+          "body-large-frame"
+        ],
+        "iou": 0.836
+      },
+      {
+        "pair": [
+          "body-balanced",
+          "body-soft"
+        ],
+        "iou": 0.832
+      },
+      {
+        "pair": [
+          "body-compact",
+          "body-large-frame"
+        ],
+        "iou": 0.827
+      },
+      {
+        "pair": [
+          "body-large-frame",
+          "body-tall"
+        ],
+        "iou": 0.749
+      },
+      {
+        "pair": [
+          "body-compact",
+          "body-tall"
+        ],
+        "iou": 0.728
+      },
+      {
+        "pair": [
+          "body-tall",
+          "body-soft"
+        ],
+        "iou": 0.714
+      }
+    ]
+  },
+  "combined": {
+    "neutral": {
+      "south": [
+        {
+          "pair": [
+            "wide-cap",
+            "jaw-drop"
+          ],
+          "iou": 0.794
+        },
+        {
+          "pair": [
+            "high-crown",
+            "crest"
+          ],
+          "iou": 0.786
+        },
+        {
+          "pair": [
+            "wide-cap",
+            "cloud"
+          ],
+          "iou": 0.775
+        },
+        {
+          "pair": [
+            "twin-mass",
+            "crest"
+          ],
+          "iou": 0.766
+        },
+        {
+          "pair": [
+            "twin-mass",
+            "cloud"
+          ],
+          "iou": 0.733
+        },
+        {
+          "pair": [
+            "jaw-drop",
+            "crest"
+          ],
+          "iou": 0.727
+        },
+        {
+          "pair": [
+            "wide-cap",
+            "high-crown"
+          ],
+          "iou": 0.698
+        },
+        {
+          "pair": [
+            "high-crown",
+            "cloud"
+          ],
+          "iou": 0.695
+        },
+        {
+          "pair": [
+            "wide-cap",
+            "twin-mass"
+          ],
+          "iou": 0.67
+        },
+        {
+          "pair": [
+            "wide-cap",
+            "crest"
+          ],
+          "iou": 0.67
+        },
+        {
+          "pair": [
+            "crest",
+            "cloud"
+          ],
+          "iou": 0.65
+        },
+        {
+          "pair": [
+            "jaw-drop",
+            "cloud"
+          ],
+          "iou": 0.636
+        },
+        {
+          "pair": [
+            "twin-mass",
+            "jaw-drop"
+          ],
+          "iou": 0.634
+        },
+        {
+          "pair": [
+            "twin-mass",
+            "high-crown"
+          ],
+          "iou": 0.632
+        },
+        {
+          "pair": [
+            "high-crown",
+            "jaw-drop"
+          ],
+          "iou": 0.625
+        }
+      ],
+      "east": [
+        {
+          "pair": [
+            "jaw-drop",
+            "crest"
+          ],
+          "iou": 0.798
+        },
+        {
+          "pair": [
+            "twin-mass",
+            "crest"
+          ],
+          "iou": 0.777
+        },
+        {
+          "pair": [
+            "wide-cap",
+            "cloud"
+          ],
+          "iou": 0.772
+        },
+        {
+          "pair": [
+            "high-crown",
+            "crest"
+          ],
+          "iou": 0.772
+        },
+        {
+          "pair": [
+            "wide-cap",
+            "jaw-drop"
+          ],
+          "iou": 0.758
+        },
+        {
+          "pair": [
+            "twin-mass",
+            "jaw-drop"
+          ],
+          "iou": 0.733
+        },
+        {
+          "pair": [
+            "wide-cap",
+            "high-crown"
+          ],
+          "iou": 0.712
+        },
+        {
+          "pair": [
+            "high-crown",
+            "jaw-drop"
+          ],
+          "iou": 0.709
+        },
+        {
+          "pair": [
+            "high-crown",
+            "cloud"
+          ],
+          "iou": 0.69
+        },
+        {
+          "pair": [
+            "wide-cap",
+            "twin-mass"
+          ],
+          "iou": 0.689
+        },
+        {
+          "pair": [
+            "twin-mass",
+            "cloud"
+          ],
+          "iou": 0.675
+        },
+        {
+          "pair": [
+            "jaw-drop",
+            "cloud"
+          ],
+          "iou": 0.667
+        },
+        {
+          "pair": [
+            "wide-cap",
+            "crest"
+          ],
+          "iou": 0.662
+        },
+        {
+          "pair": [
+            "crest",
+            "cloud"
+          ],
+          "iou": 0.662
+        },
+        {
+          "pair": [
+            "twin-mass",
+            "high-crown"
+          ],
+          "iou": 0.623
+        }
+      ]
+    },
+    "walk-approach": {
+      "south": [
+        {
+          "pair": [
+            "high-crown",
+            "crest"
+          ],
+          "iou": 0.798
+        },
+        {
+          "pair": [
+            "wide-cap",
+            "jaw-drop"
+          ],
+          "iou": 0.796
+        },
+        {
+          "pair": [
+            "wide-cap",
+            "cloud"
+          ],
+          "iou": 0.778
+        },
+        {
+          "pair": [
+            "twin-mass",
+            "crest"
+          ],
+          "iou": 0.769
+        },
+        {
+          "pair": [
+            "twin-mass",
+            "cloud"
+          ],
+          "iou": 0.742
+        },
+        {
+          "pair": [
+            "jaw-drop",
+            "crest"
+          ],
+          "iou": 0.736
+        },
+        {
+          "pair": [
+            "wide-cap",
+            "high-crown"
+          ],
+          "iou": 0.701
+        },
+        {
+          "pair": [
+            "high-crown",
+            "cloud"
+          ],
+          "iou": 0.696
+        },
+        {
+          "pair": [
+            "wide-cap",
+            "crest"
+          ],
+          "iou": 0.683
+        },
+        {
+          "pair": [
+            "wide-cap",
+            "twin-mass"
+          ],
+          "iou": 0.682
+        },
+        {
+          "pair": [
+            "crest",
+            "cloud"
+          ],
+          "iou": 0.66
+        },
+        {
+          "pair": [
+            "twin-mass",
+            "high-crown"
+          ],
+          "iou": 0.643
+        },
+        {
+          "pair": [
+            "twin-mass",
+            "jaw-drop"
+          ],
+          "iou": 0.642
+        },
+        {
+          "pair": [
+            "jaw-drop",
+            "cloud"
+          ],
+          "iou": 0.636
+        },
+        {
+          "pair": [
+            "high-crown",
+            "jaw-drop"
+          ],
+          "iou": 0.634
+        }
+      ],
+      "east": [
+        {
+          "pair": [
+            "jaw-drop",
+            "crest"
+          ],
+          "iou": 0.797
+        },
+        {
+          "pair": [
+            "twin-mass",
+            "crest"
+          ],
+          "iou": 0.777
+        },
+        {
+          "pair": [
+            "wide-cap",
+            "cloud"
+          ],
+          "iou": 0.774
+        },
+        {
+          "pair": [
+            "high-crown",
+            "crest"
+          ],
+          "iou": 0.774
+        },
+        {
+          "pair": [
+            "wide-cap",
+            "jaw-drop"
+          ],
+          "iou": 0.767
+        },
+        {
+          "pair": [
+            "twin-mass",
+            "jaw-drop"
+          ],
+          "iou": 0.733
+        },
+        {
+          "pair": [
+            "high-crown",
+            "jaw-drop"
+          ],
+          "iou": 0.717
+        },
+        {
+          "pair": [
+            "wide-cap",
+            "high-crown"
+          ],
+          "iou": 0.711
+        },
+        {
+          "pair": [
+            "wide-cap",
+            "twin-mass"
+          ],
+          "iou": 0.693
+        },
+        {
+          "pair": [
+            "high-crown",
+            "cloud"
+          ],
+          "iou": 0.692
+        },
+        {
+          "pair": [
+            "jaw-drop",
+            "cloud"
+          ],
+          "iou": 0.674
+        },
+        {
+          "pair": [
+            "twin-mass",
+            "cloud"
+          ],
+          "iou": 0.672
+        },
+        {
+          "pair": [
+            "wide-cap",
+            "crest"
+          ],
+          "iou": 0.669
+        },
+        {
+          "pair": [
+            "crest",
+            "cloud"
+          ],
+          "iou": 0.659
+        },
+        {
+          "pair": [
+            "twin-mass",
+            "high-crown"
+          ],
+          "iou": 0.623
+        }
+      ]
+    }
+  },
+  "repeatedBodyPair": {
+    "body": "body-tall / Column",
+    "recipes": [
+      "twin-mass",
+      "crest"
+    ],
+    "neutralSouthIou": 0.766,
+    "neutralEastIou": 0.777
+  }
+}
