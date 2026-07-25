@@ -120,7 +120,6 @@ Record<A1bHorizontalOpenPocketTJunctionProposalSourceId, readonly string[]>
     'upper-coral-band',
     'upper-band-light',
     'upper-face-shade',
-    'upper-cream-bridge',
     'upper-reveal-light',
     'upper-arris-seam',
     'upper-band-seam',
@@ -156,8 +155,68 @@ Record<A1bHorizontalOpenPocketTJunctionProposalSourceId, readonly string[]>
   ],
 };
 
+const OPEN_S_UPPER_EXACT_PATHS: readonly (readonly [string, string])[] = [
+  [
+    'upper-contour',
+    'M56 0H105V44A12 12 0 0 0 117 56H128V97H0V56H46A10 10 0 0 0 56 46Z',
+  ],
+  [
+    'upper-shell',
+    'M58 0H103V46A12 12 0 0 0 115 58H128V95H0V58H48A10 10 0 0 0 58 48Z',
+  ],
+  [
+    'upper-plane-light',
+    'M58 0H90.5V44A12 12 0 0 0 102.5 56H58Z',
+  ],
+  [
+    'upper-arris-lip',
+    'M90.5 0H92V44A12 12 0 0 0 104 56H102.5A12 12 0 0 1 90.5 44Z',
+  ],
+  [
+    'upper-coral-band',
+    'M97 0H102V44A12 12 0 0 0 114 56H109A12 12 0 0 1 97 44Z M0 88H128V94H0Z',
+  ],
+  ['upper-band-light', 'M0 88H128V89.5H0Z'],
+  [
+    'upper-green-handoff',
+    'M102 0H105V44A12 12 0 0 0 117 56H114A12 12 0 0 1 102 44Z M0 94H128V97H0Z',
+  ],
+  [
+    'upper-face-shade',
+    'M92 0H105V44A12 12 0 0 0 117 56H104A12 12 0 0 1 92 44Z',
+  ],
+  ['upper-reveal-light', 'M0 58H128V63H0Z'],
+  [
+    'upper-arris-seam',
+    'M92 1V44A12 12 0 0 0 104 56H116 M1 63H127',
+  ],
+  [
+    'upper-band-seam',
+    'M102 1V44A12 12 0 0 0 114 56 M1 94H127',
+  ],
+  ['upper-boundary-seam', 'M126 64V96'],
+];
+
+const OPEN_S_UPPER_LAYER_ORDER = OPEN_S_UPPER_EXACT_PATHS.map(
+  ([id]) => id,
+);
+
 const sourceIds = (content: string): readonly string[] =>
   [...content.matchAll(/\bid=["']([^"']+)["']/g)].map((match) => match[1]);
+
+const requiredPath = (content: string, id: string, d: string): boolean =>
+  content.includes(`id="${id}" d="${d}"`);
+
+const paintPathOwners = (
+  content: string,
+  paint: string,
+): readonly string[] =>
+  [...content.matchAll(
+    new RegExp(
+      `<path\\b(?=[^>]*\\bid=["']([^"']+)["'])(?=[^>]*\\bfill=["']${paint}["'])[^>]*>`,
+      'gi',
+    ),
+  )].map((match) => match[1]);
 
 function validateSource(
   source: A1bHorizontalOpenPocketTJunctionProposalSourceSpec,
@@ -186,6 +245,37 @@ function validateSource(
     throw new A1bHorizontalOpenPocketTJunctionProposalImportError(
       `${sourceFile} is missing required semantic ids ${missing.join(', ')}`,
     );
+  }
+  if (source.id === 'open_s_t_junction-upper') {
+    const alteredPaths = OPEN_S_UPPER_EXACT_PATHS
+      .filter(([id, d]) => !requiredPath(content, id, d))
+      .map(([id]) => id);
+    if (alteredPaths.length > 0) {
+      throw new A1bHorizontalOpenPocketTJunctionProposalImportError(
+        `${sourceFile} must retain exact shared-lip geometry for ${alteredPaths.join(', ')}`,
+      );
+    }
+    const pathOrder = OPEN_S_UPPER_LAYER_ORDER.map(
+      (id) => content.indexOf(`id="${id}"`),
+    );
+    if (pathOrder.some((position, index) =>
+      index > 0 && position <= pathOrder[index - 1])) {
+      throw new A1bHorizontalOpenPocketTJunctionProposalImportError(
+        `${sourceFile} must retain the shared-lip paint hierarchy`,
+      );
+    }
+    if (
+      JSON.stringify(paintPathOwners(content, A1A_PALETTE.cream)) !==
+        JSON.stringify(['upper-shell']) ||
+      JSON.stringify(paintPathOwners(content, A1A_PALETTE.coral)) !==
+        JSON.stringify(['upper-coral-band']) ||
+      JSON.stringify(paintPathOwners(content, A1A_PALETTE.green)) !==
+        JSON.stringify(['upper-green-handoff'])
+    ) {
+      throw new A1bHorizontalOpenPocketTJunctionProposalImportError(
+        `${sourceFile} must keep one cream, coral, and green owner across the shared lip`,
+      );
+    }
   }
   if (/\bid=["'][^"']*(?:cap|post|pylon|rollover|four-way)/i.test(content)) {
     throw new A1bHorizontalOpenPocketTJunctionProposalImportError(
