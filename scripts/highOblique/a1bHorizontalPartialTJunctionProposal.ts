@@ -150,6 +150,9 @@ Record<A1bHorizontalPartialTJunctionProposalSourceId, readonly string[]>
 const sourceIds = (content: string): readonly string[] =>
   [...content.matchAll(/\bid=["']([^"']+)["']/g)].map((match) => match[1]);
 
+const requiredPath = (content: string, id: string, d: string): boolean =>
+  content.includes(`id="${id}" d="${d}"`);
+
 function validateSource(
   source: A1bHorizontalPartialTJunctionProposalSourceSpec,
   sourceFile: string,
@@ -176,6 +179,18 @@ function validateSource(
   if (missing.length > 0) {
     throw new A1bHorizontalPartialTJunctionProposalImportError(
       `${sourceFile} is missing required semantic ids ${missing.join(', ')}`,
+    );
+  }
+  if (
+    source.id === 'open_n_t_filled_se-upper' &&
+    !requiredPath(
+      content,
+      'upper-plane-light-open-sw',
+      'M0 58H58V63H0Z',
+    )
+  ) {
+    throw new A1bHorizontalPartialTJunctionProposalImportError(
+      `${sourceFile} must stop the open-side reveal at the solid-top highlight boundary`,
     );
   }
   if (/\bid=["'][^"']*(?:cap|post|pylon|rollover|four-way|overlay|patch)/i.test(content)) {

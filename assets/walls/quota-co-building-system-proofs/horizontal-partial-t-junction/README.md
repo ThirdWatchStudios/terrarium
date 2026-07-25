@@ -19,10 +19,15 @@ source. The direct foreground master owns its east boundary seam; the filtered
 mirror leaves that shared seam to its accepted west neighbor. The rear master
 is seam-free and cream-led on its filled side.
 
-The current source geometry is owner accepted unchanged. Cross-family
-south-face plane-cue continuity is deliberately deferred until the complete
-wall family can be polished under one exposure and clipping rule; this
-acceptance does not claim a continuous shade across adjoining pieces.
+The rear master gives the cream reveal one shared exposure across its
+open-to-solid turn: `upper-plane-light-open-sw` ends exactly where
+`upper-solid-top-highlight` begins at `x=58`. This avoids a bright step without
+changing the contour, sockets, seams, or opaque geometry. The accepted plain-X
+derivation carries the same phase into `mask_28` without filtering.
+
+Cross-family south-face plane-cue continuity remains family-wide polish under
+one exposure and clipping rule; this acceptance does not claim a continuous
+shade across every adjoining piece.
 
 Acceptance records proof-layer source provenance for `mask_18`, `mask_35`,
 `mask_22`, and `mask_28` only. These files do not register canonical or

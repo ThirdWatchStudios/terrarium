@@ -112,19 +112,19 @@ describe('QuotaCo equal-height socket/register report harness', () => {
 
   it('emits a deterministic review-only discrepancy report with triage focuses', () => {
     expect(report.summary).toMatchObject({
-      exactCandidatePresentationComparisonCount: 58,
-      exactSelectedLegalPairCount: 58,
-      discrepancyCount: 280,
-      discrepantLegalPairCount: 280,
+      exactCandidatePresentationComparisonCount: 59,
+      exactSelectedLegalPairCount: 59,
+      discrepancyCount: 279,
+      discrepantLegalPairCount: 279,
       categoryCounts: {
         'contact-shadow-register-focus': 52,
-        'horizontal-reveal-opacity-focus': 60,
+        'horizontal-reveal-opacity-focus': 59,
         'open-horizontal-return-plinth-focus': 36,
-        'layer-order-brightness-focus': 9,
+        'layer-order-brightness-focus': 8,
       },
     });
     expect(report.coverage.discrepancyReportHash).toBe(
-      'f9549f36880660b46f1a2b1170ccdd77fe48467f6d81f1a5dbfa12fca864451e',
+      '1e36e6afdaf400563de77e4a48ba9a72dd161caa81e6eb1d0c29b96f57171da4',
     );
     const json = equalHeightSocketRegisterAuditJson(report);
     const text = equalHeightSocketRegisterAuditText(report);

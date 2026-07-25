@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
   <title>QuotaCo accepted open-north T-junction with filled southeast pocket upper</title>
-  <desc>One molded rear source keeps the southwest crook open while the southeast quadrant becomes a quiet cream wall top matching the filled rear spine.</desc>
+  <desc>One molded rear source keeps the southwest crook open while the southeast quadrant becomes a quiet cream wall top with one shared reveal exposure across the turn.</desc>
   <g id="detail/upper">
     <path id="upper-contour" d="M0 56H128V128H56V107A10 10 0 0 0 46 97H0Z" fill="#252A28"/>
     <path id="upper-shell" d="M0 58H128V128H58V105A10 10 0 0 0 48 95H0Z" fill="#D9D0B9"/>
-    <path id="upper-plane-light-open-sw" d="M0 58H128V63H0Z" fill="#FFFFFF" opacity="0.18"/>
+    <path id="upper-plane-light-open-sw" d="M0 58H58V63H0Z" fill="#FFFFFF" opacity="0.18"/>
     <path id="upper-coral-open-sw" d="M0 88H58V94H0Z" fill="#B65F4D"/>
     <path id="upper-band-light" d="M0 88H58V89.5H0Z" fill="#FFFFFF" opacity="0.10"/>
     <path id="upper-green-open-sw" d="M0 94H58V97H0Z" fill="#294B3C"/>

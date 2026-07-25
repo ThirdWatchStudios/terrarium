@@ -56,6 +56,9 @@ const stripSvgShell = (svg: string): string =>
 const sourceIds = (svg: string): readonly string[] =>
   [...svg.matchAll(/\bid=["']([^"']+)["']/g)].map((match) => match[1]);
 
+const pathData = (svg: string, id: string): string | undefined =>
+  svg.match(new RegExp(`<path\\b[^>]*\\bid="${id}"[^>]*\\bd="([^"]+)"`))?.[1];
+
 function rasterPair(
   pair: SourcePair,
   cellPixels: number,
@@ -73,6 +76,11 @@ function rasterPair(
     },
   ).render();
   return { width: rendered.width, height: rendered.height, pixels: rendered.pixels };
+}
+
+function rgbaAt(raster: Raster, x: number, y: number): readonly number[] {
+  const offset = (y * raster.width + x) * 4;
+  return [...raster.pixels.slice(offset, offset + 4)];
 }
 
 function candidateSourcePair(
@@ -428,6 +436,28 @@ describe('QuotaCo owner-accepted horizontal partial T-junction gate', () => {
         ).toBe(true);
       }
     }
+  });
+
+  it('gives Mask 22 one reveal exposure and carries the phase through raw-mirrored Mask 28', () => {
+    const upperSource = source('open_n_t_filled_se-upper.svg');
+    expect(pathData(upperSource, 'upper-plane-light-open-sw'))
+      .toBe('M0 58H58V63H0Z');
+    expect(pathData(upperSource, 'upper-solid-top-highlight'))
+      .toBe('M58 58H128V63H58Z');
+
+    const direct = rasterPair(candidateSourcePair(22), 128);
+    expect(rgbaAt(direct, 40, 60)).toEqual([224, 216, 198, 255]);
+    expect(rgbaAt(direct, 80, 60)).toEqual([224, 216, 198, 255]);
+    expect(rgbaAt(direct, 57, 60)).toEqual(rgbaAt(direct, 58, 60));
+
+    const mirrored = rasterPair(candidateSourcePair(28), 128);
+    expect(rgbaAt(mirrored, 48, 60)).toEqual([224, 216, 198, 255]);
+    expect(rgbaAt(mirrored, 88, 60)).toEqual([224, 216, 198, 255]);
+
+    const direct40 = rasterPair(candidateSourcePair(22), 40);
+    expect(rgbaAt(direct40, 12, 19)).toEqual(rgbaAt(direct40, 25, 19));
+    const mirrored40 = rasterPair(candidateSourcePair(28), 40);
+    expect(rgbaAt(mirrored40, 15, 19)).toEqual(rgbaAt(mirrored40, 27, 19));
   });
 
   it('filters mask_35 boundary seams before mirror-X and keeps mask_28 a raw mirror', () => {
