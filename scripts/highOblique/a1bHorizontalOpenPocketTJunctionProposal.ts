@@ -138,16 +138,13 @@ Record<A1bHorizontalOpenPocketTJunctionProposalSourceId, readonly string[]>
     'detail/upper',
     'upper-contour',
     'upper-shell',
-    'upper-horizontal-coral-band',
-    'upper-horizontal-band-light',
-    'upper-horizontal-green-handoff',
-    'upper-cream-bridge',
-    'upper-reveal-light',
     'upper-plane-light',
     'upper-arris-lip',
-    'upper-branch-coral-band',
-    'upper-branch-green-handoff',
+    'upper-coral-band',
+    'upper-band-light',
+    'upper-green-handoff',
     'upper-face-shade',
+    'upper-reveal-light',
     'upper-arris-seam',
     'upper-band-seam',
     'upper-boundary-seam',
@@ -198,6 +195,44 @@ const OPEN_S_UPPER_EXACT_PATHS: readonly (readonly [string, string])[] = [
 ];
 
 const OPEN_S_UPPER_LAYER_ORDER = OPEN_S_UPPER_EXACT_PATHS.map(
+  ([id]) => id,
+);
+
+const OPEN_N_UPPER_EXACT_PATHS: readonly (readonly [string, string])[] = [
+  [
+    'upper-contour',
+    'M0 56H128V97H115A10 10 0 0 0 105 107V128H56V107A10 10 0 0 0 46 97H0Z',
+  ],
+  [
+    'upper-shell',
+    'M0 58H128V95H113A10 10 0 0 0 103 105V128H58V105A10 10 0 0 0 48 95H0Z',
+  ],
+  ['upper-plane-light', 'M58 88H90.5V128H58Z'],
+  ['upper-arris-lip', 'M90.5 88H92V128H90.5Z'],
+  [
+    'upper-coral-band',
+    'M0 88H58V94H0Z M97 128V94H128V88H108A6 6 0 0 0 102 94V128Z',
+  ],
+  [
+    'upper-band-light',
+    'M0 88H58V89.5H0Z M108 88H128V89.5H108Z',
+  ],
+  [
+    'upper-green-handoff',
+    'M0 94H58V97H0Z M102 91H105A3 3 0 0 0 108 94H128V97H108A3 3 0 0 0 105 100V128H102Z',
+  ],
+  ['upper-face-shade', 'M92 88H105V128H92Z'],
+  ['upper-reveal-light', 'M0 58H128V63H0Z'],
+  ['upper-arris-seam', 'M1 63H127 M92 88V127'],
+  [
+    'upper-band-seam',
+    'M1 94H58 M127 94H108A6 6 0 0 0 102 100V127',
+  ],
+  ['upper-boundary-seam', 'M126 64V96'],
+  ['upper-south-service-seam', 'M58 126H104'],
+];
+
+const OPEN_N_UPPER_LAYER_ORDER = OPEN_N_UPPER_EXACT_PATHS.map(
   ([id]) => id,
 );
 
@@ -275,6 +310,50 @@ function validateSource(
       throw new A1bHorizontalOpenPocketTJunctionProposalImportError(
         `${sourceFile} must keep one cream, coral, and green owner across the shared lip`,
       );
+    }
+  }
+  if (source.id === 'open_n_t_junction-upper') {
+    const alteredPaths = OPEN_N_UPPER_EXACT_PATHS
+      .filter(([id, d]) => !requiredPath(content, id, d))
+      .map(([id]) => id);
+    if (alteredPaths.length > 0) {
+      throw new A1bHorizontalOpenPocketTJunctionProposalImportError(
+        `${sourceFile} must retain exact rear shared-turn geometry for ${alteredPaths.join(', ')}`,
+      );
+    }
+    const pathOrder = OPEN_N_UPPER_LAYER_ORDER.map(
+      (id) => content.indexOf(`id="${id}"`),
+    );
+    if (pathOrder.some((position, index) =>
+      index > 0 && position <= pathOrder[index - 1])) {
+      throw new A1bHorizontalOpenPocketTJunctionProposalImportError(
+        `${sourceFile} must retain the rear shared-turn paint hierarchy`,
+      );
+    }
+    if (
+      JSON.stringify(paintPathOwners(content, A1A_PALETTE.cream)) !==
+        JSON.stringify(['upper-shell']) ||
+      JSON.stringify(paintPathOwners(content, A1A_PALETTE.coral)) !==
+        JSON.stringify(['upper-coral-band']) ||
+      JSON.stringify(paintPathOwners(content, A1A_PALETTE.green)) !==
+        JSON.stringify(['upper-green-handoff'])
+    ) {
+      throw new A1bHorizontalOpenPocketTJunctionProposalImportError(
+        `${sourceFile} must keep one cream, coral, and green owner across the rear shared turn`,
+      );
+    }
+    for (const legacyId of [
+      'upper-cream-bridge',
+      'upper-horizontal-coral-band',
+      'upper-horizontal-green-handoff',
+      'upper-branch-coral-band',
+      'upper-branch-green-handoff',
+    ]) {
+      if (ids.includes(legacyId)) {
+        throw new A1bHorizontalOpenPocketTJunctionProposalImportError(
+          `${sourceFile} must not retain legacy split owner ${legacyId}`,
+        );
+      }
     }
   }
   if (/\bid=["'][^"']*(?:cap|post|pylon|rollover|four-way)/i.test(content)) {

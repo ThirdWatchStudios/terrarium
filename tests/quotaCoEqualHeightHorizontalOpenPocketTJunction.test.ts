@@ -34,6 +34,10 @@ const DOUBLE_FILLED_SOUTH_DIRECTORY = path.resolve(
   process.cwd(),
   'assets/walls/quota-co-building-system-proofs/double-filled-south-cross-junction',
 );
+const DOUBLE_FILLED_NORTH_DIRECTORY = path.resolve(
+  process.cwd(),
+  'assets/walls/quota-co-building-system-proofs/double-filled-north-cross-junction',
+);
 const PROPOSAL_PREFIX =
   'assets/walls/quota-co-building-system-proofs/horizontal-open-pocket-t-junction';
 const PROPOSAL_DIRECTORY = path.resolve(process.cwd(), PROPOSAL_PREFIX);
@@ -63,6 +67,9 @@ const stripSvgShell = (svg: string): string =>
 
 const sourceIds = (svg: string): readonly string[] =>
   [...svg.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]);
+
+const pathData = (svg: string, id: string): string | undefined =>
+  svg.match(new RegExp(`<path\\b[^>]*\\bid="${id}"[^>]*\\bd="([^"]+)"`))?.[1];
 
 function rasterSvg(svg: string, cellPixels = 128): Raster {
   const rendered = new Resvg(svg, {
@@ -363,9 +370,11 @@ describe('QuotaCo owner-accepted horizontal-spine open-pocket T-junction gate', 
       shapes.length > 0 && !content.includes('transform='))).toBe(true);
     expect(sourceIds(compiled[0].content)).toContain('detail/base');
     expect(sourceIds(compiled[2].content)).toContain('base-south-service-seam');
-    expect(sourceIds(compiled[3].content)).toContain('upper-branch-coral-band');
+    expect(sourceIds(compiled[3].content)).toContain('upper-coral-band');
     expect(sourceIds(compiled[1].content)).not.toContain('upper-cream-bridge');
+    expect(sourceIds(compiled[3].content)).not.toContain('upper-cream-bridge');
     expect(compiled[1].shapes).toHaveLength(12);
+    expect(compiled[3].shapes).toHaveLength(13);
     expect(compiled[0].content).not.toBe(compiled[2].content);
     expect(compiled[1].content).not.toBe(compiled[3].content);
     expect(A1B_AUTHORED_STEMS).not.toContain('open_s_t_junction');
@@ -446,6 +455,81 @@ describe('QuotaCo owner-accepted horizontal-spine open-pocket T-junction gate', 
     expect(rgbaAt(candidate40, 31, 15)).toEqual([157, 83, 67, 255]);
     expect(rgbaAt(candidate40, 32, 15)).toEqual([65, 73, 61, 255]);
     expect(rgbaAt(candidate40, 33, 16)).toEqual([47, 61, 51, 255]);
+  });
+
+  it('turns every Mask 14 face layer on the accepted rear shared-turn phase', () => {
+    const base = source(PROPOSAL_DIRECTORY, 'open_n_t_junction-base.svg');
+    const upper = source(PROPOSAL_DIRECTORY, 'open_n_t_junction-upper.svg');
+    const controlUpper = source(
+      DOUBLE_FILLED_NORTH_DIRECTORY,
+      'open_cross_filled_n-upper.svg',
+    );
+    const orderedPaths = [
+      'upper-contour',
+      'upper-shell',
+      'upper-plane-light',
+      'upper-arris-lip',
+      'upper-coral-band',
+      'upper-band-light',
+      'upper-green-handoff',
+      'upper-face-shade',
+      'upper-reveal-light',
+      'upper-arris-seam',
+      'upper-band-seam',
+      'upper-boundary-seam',
+      'upper-south-service-seam',
+    ] as const;
+    const pathPositions = orderedPaths.map((id) =>
+      upper.indexOf(`id="${id}"`));
+    expect(pathPositions.every((position, index) =>
+      position >= 0 && (index === 0 || position > pathPositions[index - 1])))
+      .toBe(true);
+
+    const owners = (paint: string): readonly string[] =>
+      [...upper.matchAll(
+        new RegExp(
+          `<path\\b(?=[^>]*\\bid="([^"]+)")(?=[^>]*\\bfill="${paint}")[^>]*>`,
+          'g',
+        ),
+      )].map((match) => match[1]);
+    expect(owners('#D9D0B9')).toEqual(['upper-shell']);
+    expect(owners('#B65F4D')).toEqual(['upper-coral-band']);
+    expect(owners('#294B3C')).toEqual(['upper-green-handoff']);
+    expect(upper).not.toMatch(
+      /upper-(?:cream-bridge|horizontal-(?:coral-band|green-handoff)|branch-(?:coral-band|green-handoff))/,
+    );
+
+    for (const [candidateId, controlId] of [
+      ['upper-plane-light', 'upper-south-plane-light'],
+      ['upper-arris-lip', 'upper-south-arris-lip'],
+      ['upper-coral-band', 'upper-coral-band'],
+      ['upper-band-light', 'upper-band-light'],
+      ['upper-green-handoff', 'upper-green-handoff'],
+      ['upper-face-shade', 'upper-south-face-shade'],
+      ['upper-band-seam', 'upper-band-seam'],
+    ] as const) {
+      expect(pathData(upper, candidateId), candidateId)
+        .toBe(pathData(controlUpper, controlId));
+    }
+    expect(pathData(upper, 'upper-arris-seam')).toBe('M1 63H127 M92 88V127');
+
+    const candidate = rasterPair(base, upper);
+    expect(perimeterDigest(candidate)).toBe(
+      '3ef9252fe7043c1a876e446e4bb7f6e635f086234c2a2e46998043dd78720d67',
+    );
+    expect(rgbaAt(candidate, 58, 88)).toEqual([224, 216, 198, 255]);
+    expect(rgbaAt(candidate, 92, 88)).toEqual([139, 135, 121, 255]);
+    expect(rgbaAt(candidate, 108, 88)).toEqual([189, 111, 95, 255]);
+    expect(rgbaAt(candidate, 97, 94)).toEqual([160, 84, 68, 255]);
+    expect(rgbaAt(candidate, 102, 94)).toEqual([36, 66, 53, 255]);
+    expect(rgbaAt(candidate, 105, 100)).toEqual([37, 42, 40, 255]);
+    expect(rgbaAt(candidate, 64, 110)).toEqual([224, 216, 198, 255]);
+
+    const candidate40 = rasterPair(base, upper, 40);
+    expect(rgbaAt(candidate40, 28, 29)).toEqual([189, 184, 169, 255]);
+    expect(rgbaAt(candidate40, 30, 31)).toEqual([167, 108, 92, 255]);
+    expect(rgbaAt(candidate40, 32, 31)).toEqual([56, 78, 65, 255]);
+    expect(rgbaAt(candidate40, 33, 31)).toEqual([39, 57, 49, 255]);
   });
 
   it('keeps the horizontal spine continuous through every compact review context', () => {
