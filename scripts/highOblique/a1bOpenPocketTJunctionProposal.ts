@@ -124,6 +124,7 @@ function validateSource(
     const required = [
       ['base-contour', 'M103 0H120V95H128V120H120V128H103V120H62V95H103Z'],
       ['base-green', 'M105 0H117V94A3 3 0 0 0 120 97H128V117H120A3 3 0 0 0 117 120V128H105Z'],
+      ['base-contact-shade', 'M120 0H123.5V95H120Z M120 120H128V123.5H123.5V128H120Z'],
       ['base-boundary-seam', 'M126 98V116'],
       ['base-south-service-seam', 'M106 126H116'],
     ] as const;

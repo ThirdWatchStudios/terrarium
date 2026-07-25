@@ -30,6 +30,10 @@ const VERTICAL_TERMINUS_DIRECTORY = path.resolve(
   process.cwd(),
   'assets/walls/quota-co-building-system-proofs/vertical-terminus',
 );
+const OPEN_CROSS_DIRECTORY = path.resolve(
+  process.cwd(),
+  'assets/walls/quota-co-building-system-proofs/open-pocket-cross-junction',
+);
 const PROPOSAL_PREFIX = 'assets/walls/quota-co-building-system-proofs/open-pocket-t-junction';
 const PROPOSAL_DIRECTORY = path.resolve(process.cwd(), PROPOSAL_PREFIX);
 
@@ -57,6 +61,9 @@ const stripSvgShell = (svg: string): string =>
 
 const sourceIds = (svg: string): readonly string[] =>
   [...svg.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]);
+
+const pathData = (svg: string, id: string): string | undefined =>
+  svg.match(new RegExp(`<path\\b[^>]*\\bid="${id}"[^>]*\\bd="([^"]+)"`))?.[1];
 
 function sourcePair(maskIndex: MatrixMask, side: TJunctionSide): SourcePair {
   if (maskIndex === 7 || maskIndex === 13) {
@@ -343,6 +350,40 @@ describe('QuotaCo owner-accepted proof-layer open-pocket T-junction pair', () =>
       transform: 'mirror-x',
       derivation: 'accepted-southeast-seam-filter',
     });
+  });
+
+  it('clips the Mask 7 contact shadow around the continuing south socket', () => {
+    const baseSource = source(PROPOSAL_DIRECTORY, 'open_w_t_junction-base.svg');
+    const controlSource = source(
+      OPEN_CROSS_DIRECTORY,
+      'open_cross_junction-base.svg',
+    );
+    expect(pathData(baseSource, 'base-contact-shade')).toBe(
+      'M120 0H123.5V95H120Z M120 120H128V123.5H123.5V128H120Z',
+    );
+    expect(pathData(controlSource, 'base-contact-shade')).toBe(
+      'M120 0H123.5V95H120Z M0 120H56V123.5H0Z M120 120H128V123.5H123.5V128H120Z',
+    );
+
+    const direct = rasterMatrix([[7]], 'west', 128);
+    expect(rgbaAt(direct, 110, 121)).toEqual([36, 66, 53, 255]);
+    expect(rgbaAt(direct, 117, 121)).toEqual([37, 42, 40, 255]);
+    expect(rgbaAt(direct, 120, 121)).toEqual([0, 0, 0, 31]);
+    expect(rgbaAt(direct, 121, 126)).toEqual([0, 0, 0, 31]);
+
+    const derived = rasterMatrix([[13]], 'east', 128);
+    expect(rgbaAt(derived, 11, 121)).toEqual([36, 66, 53, 255]);
+    expect(rgbaAt(derived, 8, 121)).toEqual([37, 42, 40, 255]);
+    expect(rgbaAt(derived, 6, 121)).toEqual([0, 0, 0, 31]);
+    expect(rgbaAt(derived, 6, 126)).toEqual([0, 0, 0, 31]);
+
+    const direct40 = rasterMatrix([[7]], 'west', 40);
+    expect(rgbaAt(direct40, 34, 38)).toEqual([36, 66, 53, 255]);
+    expect(rgbaAt(direct40, 37, 38)).toEqual([18, 20, 19, 136]);
+
+    const derived40 = rasterMatrix([[13]], 'east', 40);
+    expect(rgbaAt(derived40, 4, 38)).toEqual([36, 66, 53, 255]);
+    expect(rgbaAt(derived40, 2, 38)).toEqual([18, 20, 19, 136]);
   });
 
   it('closes each compact 3x3 socket with accepted end sources and no alpha crack', () => {
