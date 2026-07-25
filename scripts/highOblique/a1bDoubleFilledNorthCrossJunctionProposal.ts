@@ -114,11 +114,11 @@ Record<
     'upper-contour',
     'upper-shell',
     'upper-horizontal-face-shade',
+    'upper-south-plane-light',
+    'upper-south-arris-lip',
     'upper-coral-band',
     'upper-band-light',
     'upper-green-handoff',
-    'upper-south-plane-light',
-    'upper-south-arris-lip',
     'upper-south-face-shade',
     'upper-arris-seam',
     'upper-band-seam',
@@ -171,19 +171,19 @@ Record<
     ],
     [
       'upper-south-plane-light',
-      'M58 88H90.5V128H58Z',
+      'M58 88H102.5A12 12 0 0 0 90.5 100V128H58Z',
     ],
     [
       'upper-south-arris-lip',
-      'M90.5 88H92V128H90.5Z',
+      'M102.5 88H104A12 12 0 0 0 92 100V128H90.5V100A12 12 0 0 1 102.5 88Z',
     ],
     [
       'upper-south-face-shade',
-      'M92 88H105V128H92Z',
+      'M104 88H117A12 12 0 0 0 105 100V128H92V100A12 12 0 0 1 104 88Z',
     ],
     [
       'upper-arris-seam',
-      'M92 88V127',
+      'M92 127V100A12 12 0 0 1 104 88H116',
     ],
     [
       'upper-band-seam',

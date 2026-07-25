@@ -457,7 +457,7 @@ describe('QuotaCo owner-accepted horizontal-spine open-pocket T-junction gate', 
     expect(rgbaAt(candidate40, 33, 16)).toEqual([47, 61, 51, 255]);
   });
 
-  it('turns every Mask 14 face layer on the accepted rear shared-turn phase', () => {
+  it('keeps the accepted Mask 14 rear turn while sharing its material return with Mask 39', () => {
     const base = source(PROPOSAL_DIRECTORY, 'open_n_t_junction-base.svg');
     const upper = source(PROPOSAL_DIRECTORY, 'open_n_t_junction-upper.svg');
     const controlUpper = source(
@@ -500,17 +500,20 @@ describe('QuotaCo owner-accepted horizontal-spine open-pocket T-junction gate', 
     );
 
     for (const [candidateId, controlId] of [
-      ['upper-plane-light', 'upper-south-plane-light'],
-      ['upper-arris-lip', 'upper-south-arris-lip'],
       ['upper-coral-band', 'upper-coral-band'],
       ['upper-band-light', 'upper-band-light'],
       ['upper-green-handoff', 'upper-green-handoff'],
-      ['upper-face-shade', 'upper-south-face-shade'],
       ['upper-band-seam', 'upper-band-seam'],
     ] as const) {
       expect(pathData(upper, candidateId), candidateId)
         .toBe(pathData(controlUpper, controlId));
     }
+    expect(pathData(upper, 'upper-plane-light'))
+      .toBe('M58 88H90.5V128H58Z');
+    expect(pathData(upper, 'upper-arris-lip'))
+      .toBe('M90.5 88H92V128H90.5Z');
+    expect(pathData(upper, 'upper-face-shade'))
+      .toBe('M92 88H105V128H92Z');
     expect(pathData(upper, 'upper-arris-seam')).toBe('M1 63H127 M92 88V127');
 
     const candidate = rasterPair(base, upper);

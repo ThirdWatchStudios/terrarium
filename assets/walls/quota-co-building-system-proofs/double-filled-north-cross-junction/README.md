@@ -17,6 +17,10 @@ At the south socket, that cream top continues directly into the branch top:
 the horizontal frontage shade, coral belt, and green handoff stop at the
 socket instead of painting across it. Their exposed left and right runs turn
 down the west-fixed south branch while both southern crooks remain open floor.
+The accepted 2026-07-25 consistency correction phases the cream plane, light
+arris, dimensional shade, and arris seam as parallel nested curves into that
+existing coral/green return. The four socket boundaries and their raster
+fingerprint remain unchanged.
 
 ## Source ownership
 

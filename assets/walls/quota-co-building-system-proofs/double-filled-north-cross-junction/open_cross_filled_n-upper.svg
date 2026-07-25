@@ -1,17 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
-  <title>QuotaCo double-filled north cross-junction review upper</title>
+  <title>QuotaCo double-filled north cross-junction accepted upper</title>
   <desc>One fixed-view cream owner makes the filled north slab continuous through the south socket, leaves both southern crooks open, and keeps frontage shading off the top-to-top join.</desc>
   <g id="detail/upper">
     <path id="upper-contour" d="M0 0H128V97H115A10 10 0 0 0 105 107V128H56V107A10 10 0 0 0 46 97H0Z" fill="#252A28"/>
     <path id="upper-shell" d="M0 0H128V95H113A10 10 0 0 0 103 105V128H58V105A10 10 0 0 0 48 95H0Z" fill="#D9D0B9"/>
     <path id="upper-horizontal-face-shade" d="M0 63H58V88H0Z M105 63H128V88H105Z" fill="#000000" opacity="0.08"/>
+    <path id="upper-south-plane-light" d="M58 88H102.5A12 12 0 0 0 90.5 100V128H58Z" fill="#FFFFFF" opacity="0.18"/>
+    <path id="upper-south-arris-lip" d="M102.5 88H104A12 12 0 0 0 92 100V128H90.5V100A12 12 0 0 1 102.5 88Z" fill="#FFFFFF" opacity="0.30"/>
     <path id="upper-coral-band" d="M0 88H58V94H0Z M97 128V94H128V88H108A6 6 0 0 0 102 94V128Z" fill="#B65F4D"/>
     <path id="upper-band-light" d="M0 88H58V89.5H0Z M108 88H128V89.5H108Z" fill="#FFFFFF" opacity="0.10"/>
     <path id="upper-green-handoff" d="M0 94H58V97H0Z M102 91H105A3 3 0 0 0 108 94H128V97H108A3 3 0 0 0 105 100V128H102Z" fill="#294B3C"/>
-    <path id="upper-south-plane-light" d="M58 88H90.5V128H58Z" fill="#FFFFFF" opacity="0.18"/>
-    <path id="upper-south-arris-lip" d="M90.5 88H92V128H90.5Z" fill="#FFFFFF" opacity="0.30"/>
-    <path id="upper-south-face-shade" d="M92 88H105V128H92Z" fill="#000000" opacity="0.12"/>
-    <path id="upper-arris-seam" d="M92 88V127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="upper-south-face-shade" d="M104 88H117A12 12 0 0 0 105 100V128H92V100A12 12 0 0 1 104 88Z" fill="#000000" opacity="0.12"/>
+    <path id="upper-arris-seam" d="M92 127V100A12 12 0 0 1 104 88H116" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
     <path id="upper-band-seam" d="M1 94H58 M127 94H108A6 6 0 0 0 102 100V127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
     <path id="upper-boundary-seam" d="M126 64V96" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
     <path id="upper-south-service-seam" d="M58 126H104" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>

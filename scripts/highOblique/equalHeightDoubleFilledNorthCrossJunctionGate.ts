@@ -112,7 +112,7 @@ export const EQUAL_HEIGHT_DOUBLE_FILLED_NORTH_CROSS_JUNCTION_GATE = {
     requiredRead:
       'one molded four-socket connector with one uninterrupted cream north plane continuing through the south socket, never a stair-step, patch, peak, or post',
     shadePolicy:
-      'carry horizontal south-facing depth, coral, and green only across exposed frontage; yield at the top-to-top south socket and wrap the side stack down the west-fixed branch',
+      'carry horizontal south-facing depth, coral, and green only across exposed frontage; at the right south-branch turn, phase the cream plane, light arris, dimensional shade, and seam as parallel nested curves into the existing material return without moving any socket pixel',
   },
   acceptedLedgerCounts: {
     'direct-reuse': 28,

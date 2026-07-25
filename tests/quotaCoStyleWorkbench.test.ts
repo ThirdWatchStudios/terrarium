@@ -282,7 +282,7 @@ describe('QuotaCo current wall workbench', () => {
       stem: EQUAL_HEIGHT_DOUBLE_FILLED_NORTH_CROSS_JUNCTION_GATE.stem,
       state: 'accepted',
       title: 'mask_39 north-filled slab cross-junction',
-      summary: 'Accepted one authored west-fixed union for a two-row north slab with a south spur. Both northern diagonals are solid, both southern crooks remain open floor, and mask_39 now has direct proof-layer provenance.',
+      summary: 'Accepted one authored west-fixed union for a two-row north slab with a south spur. Its cream plane, light arris, dimensional shade, and seam share one parallel curve into the existing coral/green south-branch return while all socket pixels remain fixed.',
       alt: 'owner-accepted mask thirty-nine QuotaCo north-filled slab cross-junction in source compact and long installed proofs',
     });
     expect(EQUAL_HEIGHT_DOUBLE_FILLED_NORTH_CROSS_JUNCTION_GATE)
@@ -1000,7 +1000,10 @@ describe('QuotaCo current wall workbench', () => {
       'data-state="system-accepted" data-gate="double-filled-north-cross-junction"',
     );
     expect(primary).toContain('ledger row mask_39 are locked at the proof layer');
-    expect(primary).toContain('mask_39 now has direct proof-layer provenance');
+    expect(primary).toContain(
+      'approved parallel cream, arris, shade, and seam curve',
+    );
+    expect(primary).toContain('all socket pixels remain fixed');
     expect(occurrences(
       primary!,
       `data-stem="${EQUAL_HEIGHT_SINGLE_FILLED_NORTHWEST_CROSS_JUNCTION_GATE.stem}"`,
@@ -1193,6 +1196,9 @@ describe('QuotaCo current wall workbench', () => {
     expect(page).toContain('mask_40 is the accepted filtered whole-cell X mirror of mask_30');
     expect(page).toContain('mask_30 directly reuses one authored fixed-light four-way union');
     expect(page).toContain('mask_39 directly reuses one west-fixed authored four-way union');
+    expect(page).toContain(
+      'one approved parallel shared-turn curve across cream, arris, shade, and seam',
+    );
     expect(page).toContain('mask_37 directly reuses one east-fixed authored four-way union');
     expect(page).toContain('mask_29 is the accepted plain whole-cell X mirror of mask_23');
     expect(page).toContain('mask_43 is the accepted plain whole-cell X mirror of mask_25');

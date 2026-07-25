@@ -222,16 +222,16 @@ describe('QuotaCo accepted double-filled north cross-junction gate', () => {
       'id="upper-green-handoff" d="M0 94H58V97H0Z M102 91H105A3 3 0 0 0 108 94H128V97H108A3 3 0 0 0 105 100V128H102Z"',
     );
     expect(upper).toContain(
-      'id="upper-south-plane-light" d="M58 88H90.5V128H58Z"',
+      'id="upper-south-plane-light" d="M58 88H102.5A12 12 0 0 0 90.5 100V128H58Z"',
     );
     expect(upper).toContain(
-      'id="upper-south-arris-lip" d="M90.5 88H92V128H90.5Z"',
+      'id="upper-south-arris-lip" d="M102.5 88H104A12 12 0 0 0 92 100V128H90.5V100A12 12 0 0 1 102.5 88Z"',
     );
     expect(upper).toContain(
-      'id="upper-south-face-shade" d="M92 88H105V128H92Z"',
+      'id="upper-south-face-shade" d="M104 88H117A12 12 0 0 0 105 100V128H92V100A12 12 0 0 1 104 88Z"',
     );
     expect(upper).toContain(
-      'id="upper-arris-seam" d="M92 88V127"',
+      'id="upper-arris-seam" d="M92 127V100A12 12 0 0 1 104 88H116"',
     );
     expect(
       [...upper.matchAll(
@@ -506,7 +506,7 @@ describe('QuotaCo accepted double-filled north cross-junction gate', () => {
     expect(A1B_AUTHORED_STEMS).not.toContain('open_cross_filled_n');
   });
 
-  it('renders and refreshes the accepted gate and its ledger source', () => {
+  it('renders and refreshes the review proposal while preserving its ledger source', () => {
     const styleLoop = readFileSync(
       path.resolve(process.cwd(), 'scripts/styleLoop.ts'),
       'utf8',
