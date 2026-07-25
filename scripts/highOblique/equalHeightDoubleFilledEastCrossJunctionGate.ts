@@ -153,7 +153,7 @@ export const EQUAL_HEIGHT_DOUBLE_FILLED_EAST_CROSS_JUNCTION_GATE = {
     requiredRead:
       'one molded junction with continuous cream mass across the east half, never a patch, cap, peak, post, duplicate belt, or exposed buried fascia',
     shadePolicy:
-      'retain reveal, coral, green, and shade only on exposed west frontage; defer family-wide south-face normalization',
+      'retain one 0.18 reveal exposure through the open-to-solid turn with a local x=58..120 highlight, preserve the outer socket band, and keep coral, green, and shade only on exposed west frontage',
   },
   acceptedLedgerCounts: {
     'direct-reuse': 28,

@@ -10,9 +10,12 @@ remain open floor.
   carries green, shade, and contact cues.
 - `open_cross_filled_e-upper.svg` owns one continuous cream union. Its two west
   crook radii admit the west branch into the solid two-cell-wide north/south
-  slab without exposing a buried east fascia. The short upper shoulder shade
-  hands off at `y=97`, leaving the base as sole shade owner below the crook so
-  the 40 px turn does not collapse into a doubled dark bar.
+  slab without exposing a buried east fascia. The `y=58…63` reveal keeps one
+  `0.18` cream exposure through the open-to-solid turn with a local highlight
+  from `x=58…120`; stopping before the protected outer socket band preserves
+  the accepted 128 px and 40 px register fingerprint. The short upper shoulder
+  shade hands off at `y=97`, leaving the base as sole shade owner below the
+  crook so the 40 px turn does not collapse into a doubled dark bar.
 - Accepted `mask_15`, `mask_19`, `mask_23`, and `mask_24`/`mask_42` are boundary
   controls only. Their SVGs are not stacked, linked, transformed, or embedded.
 - The compact occupancy is `.## / ### / .##`, producing
@@ -28,7 +31,8 @@ This pair is accepted as `direct-reuse` / `accepted-source-mapping` proof-layer
 provenance for `mask_25` in the equal-height 47-mask ledger. Acceptance does not
 register a canonical source or frame identity, alter templates or the blob
 contract, add an exporter or atlas route, change schema, or authorize a Unity
-asset. Companion `mask_43` remains synthetic and outside this acceptance.
+asset. Companion `mask_43` is accepted separately through the derivation
+decision below.
 
 ## Later companion decision
 
@@ -36,3 +40,5 @@ Owner approval on 2026-07-23 separately accepts `mask_43` as the plain whole-cel
 X mirror of this fixed-light source pair. That later derivation adds no SVG,
 filter, canonical registration, exporter, atlas, schema, blob, or Unity change;
 the mask_25 checkpoint above remains the historical boundary of this source bank.
+Owner approval on 2026-07-25 also accepts the shared reveal exposure above;
+`mask_43` inherits it through the same unfiltered whole-cell X transform.

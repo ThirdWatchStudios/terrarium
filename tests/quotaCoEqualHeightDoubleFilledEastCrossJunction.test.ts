@@ -53,6 +53,36 @@ function rasterCandidate(cellPixels: number): ReturnType<Resvg['render']> {
   ).render();
 }
 
+function rasterCandidateFacing(
+  cellPixels: number,
+  mirrorX: boolean,
+): ReturnType<Resvg['render']> {
+  const body =
+    stripSvgShell(source('open_cross_filled_e-base.svg')) +
+    stripSvgShell(source('open_cross_filled_e-upper.svg'));
+  const renderedBody = mirrorX
+    ? `<g transform="translate(128 0) scale(-1 1)">${body}</g>`
+    : body;
+  return new Resvg(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" ' +
+      `viewBox="0 0 128 128">${renderedBody}</svg>`,
+    {
+      fitTo: { mode: 'width', value: cellPixels },
+      font: { loadSystemFonts: false },
+    },
+  ).render();
+}
+
+function rgbaAt(
+  pixels: Uint8Array,
+  width: number,
+  x: number,
+  y: number,
+): readonly number[] {
+  const offset = (y * width + x) * 4;
+  return [...pixels.slice(offset, offset + 4)];
+}
+
 function alphaRowSpan(
   raster: ReturnType<Resvg['render']>,
   row: number,
@@ -224,6 +254,9 @@ describe('QuotaCo owner-accepted double-filled east cross-junction gate', () => 
       'id="upper-shell" d="M58 0H128V128H58V105A10 10 0 0 0 48 95H0V58H48A10 10 0 0 0 58 48Z"',
     );
     expect(upper).toContain(
+      'id="upper-solid-top-highlight" d="M58 58H120V63H58Z"',
+    );
+    expect(upper).toContain(
       'id="upper-face-shade-open-sw" d="M46 95H58V97H46Z"',
     );
     expect(upper).not.toContain(
@@ -237,6 +270,32 @@ describe('QuotaCo owner-accepted double-filled east cross-junction gate', () => 
     expect(upper).not.toMatch(
       /id="[^"]*(?:open-ne|filled-east|center-seam|cap|peak|post|overlay)"/,
     );
+  });
+
+  it('gives Mask 25 one reveal exposure and carries it through plain-mirrored Mask 43', () => {
+    const direct = rasterCandidateFacing(128, false);
+    const directPixels = direct.pixels;
+    expect(rgbaAt(directPixels, direct.width, 40, 60))
+      .toEqual([224, 216, 198, 255]);
+    expect(rgbaAt(directPixels, direct.width, 80, 60))
+      .toEqual([224, 216, 198, 255]);
+
+    const mirrored = rasterCandidateFacing(128, true);
+    const mirroredPixels = mirrored.pixels;
+    expect(rgbaAt(mirroredPixels, mirrored.width, 48, 60))
+      .toEqual([224, 216, 198, 255]);
+    expect(rgbaAt(mirroredPixels, mirrored.width, 88, 60))
+      .toEqual([224, 216, 198, 255]);
+
+    const direct40 = rasterCandidateFacing(40, false);
+    const direct40Pixels = direct40.pixels;
+    expect(rgbaAt(direct40Pixels, direct40.width, 12, 19))
+      .toEqual(rgbaAt(direct40Pixels, direct40.width, 25, 19));
+
+    const mirrored40 = rasterCandidateFacing(40, true);
+    const mirrored40Pixels = mirrored40.pixels;
+    expect(rgbaAt(mirrored40Pixels, mirrored40.width, 15, 19))
+      .toEqual(rgbaAt(mirrored40Pixels, mirrored40.width, 27, 19));
   });
 
   it('keeps exact cardinal socket spans at 240, 90, and 40 pixels', () => {
@@ -382,6 +441,12 @@ describe('QuotaCo owner-accepted double-filled east cross-junction gate', () => 
       EQUAL_HEIGHT_DOUBLE_FILLED_EAST_CROSS_JUNCTION_GATE
         .renderingDecision.acceptedControlSources.map(({ maskIndex }) => maskIndex),
     ).toEqual([15, 19, 23, 24, 42]);
+    expect(
+      EQUAL_HEIGHT_DOUBLE_FILLED_EAST_CROSS_JUNCTION_GATE
+        .renderingDecision.shadePolicy,
+    ).toBe(
+      'retain one 0.18 reveal exposure through the open-to-solid turn with a local x=58..120 highlight, preserve the outer socket band, and keep coral, green, and shade only on exposed west frontage',
+    );
     expect(EQUAL_HEIGHT_MASK_LEDGER.entries[25]).toMatchObject({
       id: 'mask_25',
       topologyClass: 'cross-junction',

@@ -184,6 +184,8 @@ describe('QuotaCo accepted double-filled west cross-junction gate', () => {
       sourceCanvas: 128,
       mirrorAxisX: 64,
       mirrorPolicy: 'whole-cell-x-no-filter',
+      shadePolicy:
+        'inherit the source-owned local x=58..120 reveal exposure through plain whole-cell X with no filter while preserving outer socket bands, north/south fixed-light ownership, and the y=97 south-face handoff',
     });
   });
 

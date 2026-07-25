@@ -437,7 +437,7 @@ describe('QuotaCo current wall workbench', () => {
       stem: EQUAL_HEIGHT_DOUBLE_FILLED_WEST_CROSS_JUNCTION_GATE.stem,
       state: 'accepted',
       title: 'mask_43 west-filled slab junction',
-      summary: 'Accepted the plain whole-cell X mirror of mask_25 for an east branch entering a two-cell-wide north–south slab; both west crooks are solid while northeast and southeast remain open floor.',
+      summary: 'Accepted the plain whole-cell X mirror of mask_25 for an east branch entering a two-cell-wide north–south slab; it inherits one local cream reveal exposure through the turn while preserving the outer socket bands.',
       alt: 'owner-accepted mask forty-three QuotaCo west-filled slab junction in source compact and long installed proofs',
     });
     expect(EQUAL_HEIGHT_DOUBLE_FILLED_WEST_CROSS_JUNCTION_GATE).toMatchObject({
@@ -477,7 +477,7 @@ describe('QuotaCo current wall workbench', () => {
       stem: EQUAL_HEIGHT_DOUBLE_FILLED_EAST_CROSS_JUNCTION_GATE.stem,
       state: 'accepted',
       title: 'mask_25 east-filled slab junction',
-      summary: 'Accepted one west-fixed authored union for a west branch entering a two-cell-wide north–south slab; both east crooks are solid while northwest and southwest remain open floor.',
+      summary: 'Accepted one west-fixed authored union for a west branch entering a two-cell-wide north–south slab; its local x=58…120 highlight keeps one cream reveal exposure through the turn while preserving the outer socket bands.',
       alt: 'owner-accepted mask twenty-five QuotaCo east-filled slab junction in source compact and long installed proofs',
     });
     expect(EQUAL_HEIGHT_DOUBLE_FILLED_EAST_CROSS_JUNCTION_GATE).toMatchObject({
@@ -1031,6 +1031,7 @@ describe('QuotaCo current wall workbench', () => {
     expect(primary).toContain('Accepted derivation gate');
     expect(primary).toContain('mask_43 west-filled slab junction');
     expect(primary).toContain('ledger row mask_43 are locked at the proof layer');
+    expect(primary).toContain('approved shared reveal exposure and unchanged socket bands');
     expect(primary).toContain(
       `data-stem="${EQUAL_HEIGHT_DOUBLE_FILLED_EAST_CROSS_JUNCTION_GATE.stem}" data-refresh="double-filled-east-cross-junction"`,
     );
@@ -1038,6 +1039,7 @@ describe('QuotaCo current wall workbench', () => {
       'data-state="system-accepted" data-gate="double-filled-east-cross-junction"',
     );
     expect(primary).toContain('ledger row mask_25 are locked at the proof layer');
+    expect(primary).toContain('one local cream reveal exposure through the turn and unchanged socket bands');
     expect(primary).toContain('mask_25 east-filled slab junction');
     expect(occurrences(
       primary!,

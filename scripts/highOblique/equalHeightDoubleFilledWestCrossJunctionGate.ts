@@ -105,7 +105,7 @@ export const EQUAL_HEIGHT_DOUBLE_FILLED_WEST_CROSS_JUNCTION_GATE = {
     requiredRead:
       'one mirrored molded junction with a continuous cream west slab, never a patch, cap, peak, post, duplicate belt, or exposed buried west fascia',
     shadePolicy:
-      'preserve north/south fixed-light ownership and the y=97 south-face handoff while moving only the occupied west/east register',
+      'inherit the source-owned local x=58..120 reveal exposure through plain whole-cell X with no filter while preserving outer socket bands, north/south fixed-light ownership, and the y=97 south-face handoff',
   },
   acceptedLedgerCounts: {
     'direct-reuse': 28,
