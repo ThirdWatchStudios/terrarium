@@ -154,6 +154,9 @@ Record<A1bWestPartialTJunctionProposalSourceId, readonly string[]>
 const sourceIds = (content: string): readonly string[] =>
   [...content.matchAll(/\bid=["']([^"']+)["']/g)].map((match) => match[1]);
 
+const requiredPath = (content: string, id: string, d: string): boolean =>
+  content.includes(`id="${id}" d="${d}"`);
+
 function validateSource(
   source: A1bWestPartialTJunctionProposalSourceSpec,
   sourceFile: string,
@@ -180,6 +183,18 @@ function validateSource(
   if (missing.length > 0) {
     throw new A1bWestPartialTJunctionProposalImportError(
       `${sourceFile} is missing required semantic ids ${missing.join(', ')}`,
+    );
+  }
+  if (
+    source.id === 'open_w_t_filled_ne-base' &&
+    !requiredPath(
+      content,
+      'base-contact-shade-open-se',
+      'M120 91H123.5V95H120Z M120 120H128V123.5H123.5V128H120Z',
+    )
+  ) {
+    throw new A1bWestPartialTJunctionProposalImportError(
+      `${sourceFile} must clip the foreground contact shade around the continuing south socket`,
     );
   }
   if (/\bid=["'][^"']*(?:cap|post|pylon|rollover|four-way|overlay|patch)/i.test(content)) {

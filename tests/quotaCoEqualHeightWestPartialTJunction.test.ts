@@ -54,6 +54,9 @@ const sourceAt = (directory: string, filename: string): string =>
 const sourceIds = (svg: string): readonly string[] =>
   [...svg.matchAll(/\bid=["']([^"']+)["']/g)].map((match) => match[1]);
 
+const pathData = (svg: string, id: string): string | undefined =>
+  svg.match(new RegExp(`<path\\b[^>]*\\bid="${id}"[^>]*\\bd="([^"]+)"`))?.[1];
+
 const stripSvgShell = (svg: string): string =>
   svg.replace(/^[\s\S]*?<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '');
 
@@ -65,9 +68,13 @@ interface Raster {
 
 type Edge = 'north' | 'east' | 'south' | 'west';
 
-function rasterPair(baseSource: string, upperSource: string): Raster {
+function rasterPair(
+  baseSource: string,
+  upperSource: string,
+  size = 128,
+): Raster {
   const rendered = new Resvg(
-    '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" ' +
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" ` +
       'viewBox="0 0 128 128">' +
       `${stripSvgShell(baseSource)}${stripSvgShell(upperSource)}</svg>`,
     { font: { loadSystemFonts: false } },
@@ -378,6 +385,24 @@ describe('QuotaCo owner-accepted west partial T-junction gate', () => {
     expect(northProfile.slice(58)).toEqual(
       Array.from({ length: 70 }, () => [217, 208, 185, 255]),
     );
+  });
+
+  it('clips the Mask 17 contact shadow around the continuing south socket', () => {
+    const baseSource = source('open_w_t_filled_ne-base.svg');
+    const upperSource = source('open_w_t_filled_ne-upper.svg');
+    expect(pathData(baseSource, 'base-contact-shade-open-se')).toBe(
+      'M120 91H123.5V95H120Z M120 120H128V123.5H123.5V128H120Z',
+    );
+
+    const direct = rasterPair(baseSource, upperSource);
+    expect(rgbaAt(direct, 110, 121)).toEqual([36, 66, 53, 255]);
+    expect(rgbaAt(direct, 117, 121)).toEqual([37, 42, 40, 255]);
+    expect(rgbaAt(direct, 120, 121)).toEqual([0, 0, 0, 31]);
+    expect(rgbaAt(direct, 121, 126)).toEqual([0, 0, 0, 31]);
+
+    const direct40 = rasterPair(baseSource, upperSource, 40);
+    expect(rgbaAt(direct40, 34, 38)).toEqual([36, 66, 53, 255]);
+    expect(rgbaAt(direct40, 37, 38)).toEqual([18, 20, 19, 136]);
   });
 
   it('strictly compiles four external fixed-view sources with distinct socket roles', async () => {

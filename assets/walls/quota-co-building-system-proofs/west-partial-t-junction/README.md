@@ -22,14 +22,16 @@ seam geometry is absent rather than covered by a decorative patch. The open
 half preserves the molded branch turn and one readable concave floor pocket.
 
 The northeast-filled `mask_17` source keeps the accepted south-facing material
-shade and matches the foreground `mask_38` east socket. The southeast-filled
+shade, clips its contact shadow around the continuing south socket, and matches
+the foreground `mask_38` east socket. The southeast-filled
 `mask_21` source uses the accepted cream-only `mask_31` rear socket and rear
 solid-top highlight instead; it is separately authored and is not a Y mirror.
 
 The east-side counterparts are accepted approved derivations of this source
 bank. `mask_36` is the whole-cell X mirror of `mask_17` after the accepted
-shared-boundary seam filter; `mask_27` is the plain whole-cell X mirror of
-`mask_21`. No separate east SVG source bank is introduced.
+shared-boundary seam filter, including the clipped south-socket contact-shadow
+return; `mask_27` is the plain whole-cell X mirror of `mask_21`. No separate
+east SVG source bank is introduced.
 
 Acceptance records direct proof-layer provenance only. These files do not
 register canonical or production stems, change blob connectivity, add exporter

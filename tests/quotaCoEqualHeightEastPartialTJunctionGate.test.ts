@@ -66,27 +66,28 @@ function rasterPair(
   baseSource: string,
   upperSource: string,
   mirrorX = false,
+  size = 128,
 ): Raster {
   const content = `${stripSvgShell(baseSource)}${stripSvgShell(upperSource)}`;
   const body = mirrorX
     ? `<g transform="matrix(-1 0 0 1 128 0)">${content}</g>`
     : content;
   const rendered = new Resvg(
-    '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" ' +
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" ` +
       `viewBox="0 0 128 128">${body}</svg>`,
     { font: { loadSystemFonts: false } },
   ).render();
   return { width: rendered.width, height: rendered.height, pixels: rendered.pixels };
 }
 
-function candidateRaster(maskIndex: 36 | 27): Raster {
+function candidateRaster(maskIndex: 36 | 27, size = 128): Raster {
   const stem = maskIndex === 36 ? 'open_w_t_filled_ne' : 'open_w_t_filled_se';
   const baseSource = sourceAt(SOURCE_DIRECTORY, `${stem}-base.svg`);
   const upperSource = sourceAt(SOURCE_DIRECTORY, `${stem}-upper.svg`);
   const derived = maskIndex === 36
     ? derivePromotedSoutheastSourcePair(baseSource, upperSource)
     : { baseSource, upperSource };
-  return rasterPair(derived.baseSource, derived.upperSource, true);
+  return rasterPair(derived.baseSource, derived.upperSource, true, size);
 }
 
 function acceptedRaster(
@@ -341,6 +342,18 @@ describe('QuotaCo owner-accepted east partial T-junction gate', () => {
     expect(edgeProfile(mask27, 'west')).toEqual(edgeProfile(mask20, 'east'));
     expect(edgeProfile(mask27, 'west')).toEqual(edgeProfile(mask31, 'east'));
     expect(edgeProfile(mask27, 'south')).toEqual(edgeProfile(mask34, 'north'));
+  });
+
+  it('inherits the clipped south-socket return through the Mask 36 seam filter', () => {
+    const derived = candidateRaster(36);
+    expect(rgbaAt(derived, 17, 121)).toEqual([36, 66, 53, 255]);
+    expect(rgbaAt(derived, 10, 121)).toEqual([37, 42, 40, 255]);
+    expect(rgbaAt(derived, 6, 121)).toEqual([0, 0, 0, 31]);
+    expect(rgbaAt(derived, 6, 126)).toEqual([0, 0, 0, 31]);
+
+    const derived40 = candidateRaster(36, 40);
+    expect(rgbaAt(derived40, 5, 38)).toEqual([36, 66, 53, 255]);
+    expect(rgbaAt(derived40, 2, 38)).toEqual([18, 20, 19, 136]);
   });
 
   it('promotes both east rows as approved derivations and keeps production unchanged', () => {
