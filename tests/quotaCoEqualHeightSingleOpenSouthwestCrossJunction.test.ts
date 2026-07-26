@@ -337,6 +337,15 @@ describe('QuotaCo owner-accepted single-open southwest cross-junction gate', () 
 
   it('keeps one cream owner, one open southwest crook, and tri-tone distance read', () => {
     const upper = source('open_cross_filled_ne_se_nw-upper.svg');
+    expect(upper).toContain(
+      'id="upper-coral-sw-return" d="M0 88H48A10 10 0 0 1 58 98V128H52V98A4 4 0 0 0 48 94H0Z"',
+    );
+    expect(upper).toContain(
+      'id="upper-green-sw-return" d="M0 94H46A12 12 0 0 1 58 106V128H55V106A9 9 0 0 0 46 97H0Z"',
+    );
+    expect(upper).toContain(
+      'id="upper-band-seam" d="M1 94H46A12 12 0 0 1 58 106V127"',
+    );
     expect(
       [...upper.matchAll(
         /<path\b(?=[^>]*\bid=["']([^"']+)["'])(?=[^>]*\bfill=["']#D9D0B9["'])[^>]*>/gi,

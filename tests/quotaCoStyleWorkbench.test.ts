@@ -110,7 +110,7 @@ describe('QuotaCo current wall workbench', () => {
       state: 'accepted',
       title: 'mask_41 single-open southwest cross-junction',
       summary:
-        'Accepted one independently authored fixed-view four-way union with northeast, southeast, and northwest solid while the southwest floor crook remains open; mask_41 now has direct proof-layer provenance.',
+        'Accepted one independently authored fixed-view four-way union with northeast, southeast, and northwest solid while the southwest floor crook remains open. Its shade, coral, green, highlight, and seam share one curved return into the south socket; mask_44 inherits the same pixels through its plain X mirror.',
       alt:
         'owner-accepted mask forty-one QuotaCo single-open southwest cross-junction in source compact and long installed proofs',
     });
@@ -955,6 +955,9 @@ describe('QuotaCo current wall workbench', () => {
     );
     expect(primary).toContain('mask_41 single-open southwest cross-junction');
     expect(primary).toContain('ledger row mask_41 are locked at the proof layer');
+    expect(primary).toContain(
+      'approved shared shade, coral, green, highlight, and seam curve',
+    );
     expect(primary).toContain(
       `data-stem="${EQUAL_HEIGHT_DOUBLE_FILLED_SOUTH_CROSS_JUNCTION_GATE.stem}" data-refresh="double-filled-south-cross-junction"`,
     );

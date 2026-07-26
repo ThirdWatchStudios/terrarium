@@ -22,7 +22,9 @@ The two SVGs preserve the normal proof-layer split:
 - `open_cross_filled_ne_se_nw-base.svg` owns one lower structural mass and the
   exposed material depth around the southwest return.
 - `open_cross_filled_ne_se_nw-upper.svg` owns the sole cream shell and the
-  coral/green register visible at that one open crook.
+  coral/green register visible at that one open crook. Its shade, coral, green,
+  highlight, and seam follow the same curved southwest return into the south
+  socket instead of ending on a square interior shelf.
 
 This directory records the accepted direct proof-layer source for ledger row
 `mask_41` and the approved plain-X derivation for ledger row `mask_44`. It does

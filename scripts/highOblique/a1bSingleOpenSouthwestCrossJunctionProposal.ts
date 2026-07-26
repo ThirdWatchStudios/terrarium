@@ -153,11 +153,20 @@ Record<
       'upper-shell',
       'M0 0H128V128H58V105A10 10 0 0 0 48 95H0Z',
     ],
-    ['upper-sw-face-shade', 'M0 63H58V88H0Z'],
-    ['upper-coral-sw-return', 'M0 88H58V94H0Z'],
-    ['upper-band-light-sw-return', 'M0 88H58V89.5H0Z'],
-    ['upper-green-sw-return', 'M0 94H58V97H0Z'],
-    ['upper-band-seam', 'M1 94H57'],
+    ['upper-sw-face-shade', 'M0 63H48V88H0Z'],
+    [
+      'upper-coral-sw-return',
+      'M0 88H48A10 10 0 0 1 58 98V128H52V98A4 4 0 0 0 48 94H0Z',
+    ],
+    ['upper-band-light-sw-return', 'M0 88H48V89.5H0Z'],
+    [
+      'upper-green-sw-return',
+      'M0 94H46A12 12 0 0 1 58 106V128H55V106A9 9 0 0 0 46 97H0Z',
+    ],
+    [
+      'upper-band-seam',
+      'M1 94H46A12 12 0 0 1 58 106V127',
+    ],
   ],
 };
 

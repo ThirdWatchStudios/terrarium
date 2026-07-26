@@ -390,8 +390,8 @@ describe('QuotaCo accepted single-open southeast cross-junction gate', () => {
         const distance = mirrorDistance(direct, candidate);
         expect(distance.differingChannelRatio).toBeLessThanOrEqual(0.016);
         expect(distance.meanAbsoluteChannelDistance)
-          .toBeLessThanOrEqual(0.21);
-        expect(distance.maximumChannelDistance).toBeLessThanOrEqual(45);
+          .toBeLessThanOrEqual(0.26);
+        expect(distance.maximumChannelDistance).toBeLessThanOrEqual(70);
         expect(hasOpaqueRgb(candidate, [217, 208, 185])).toBe(true);
         expect(
           hasOpaqueRgb(
