@@ -83,7 +83,7 @@ describe('QuotaCo current wall workbench', () => {
       state: 'accepted',
       title: 'mask_45 single-open northeast cross-junction',
       summary:
-        'Accepted the plain whole-cell X mirror of mask_33; southeast, southwest, and northwest are solid while the northeast floor crook remains open.',
+        'Accepted the plain whole-cell X mirror of mask_33; southeast, southwest, and northwest are solid while the northeast floor crook remains open, with the shared outer-ledger reveal correction inherited unchanged.',
       alt:
         'owner-accepted mask forty-five QuotaCo single-open northeast cross-junction plain whole-cell X derivation in source compact and long installed proofs',
     });
@@ -92,7 +92,7 @@ describe('QuotaCo current wall workbench', () => {
       state: 'accepted',
       title: 'mask_33 single-open northwest cross-junction',
       summary:
-        'Accepted one independently authored fixed-view four-way union with northeast, southeast, and southwest solid while the northwest floor crook remains open; mask_33 now has direct proof-layer provenance.',
+        'Accepted one independently authored fixed-view four-way union with northeast, southeast, and southwest solid while the northwest floor crook remains open; its reveal band and dark arris seam now share one outer ledge.',
       alt:
         'owner-accepted mask thirty-three QuotaCo single-open northwest cross-junction in source compact and long installed proofs',
     });

@@ -350,10 +350,10 @@ describe('QuotaCo owner-accepted single-open northwest cross-junction gate', () 
       'id="upper-shell" d="M58 0H128V128H0V58H48A10 10 0 0 0 58 48Z"',
     );
     expect(upper).toContain(
-      '<path id="upper-nw-reveal-light" d="M0 58H48A10 10 0 0 0 58 48V63H0Z" fill="#FFFFFF" opacity="0.30"/>',
+      '<path id="upper-nw-reveal-light" d="M0 58H48A10 10 0 0 0 58 48V44A12 12 0 0 1 46 56H0Z" fill="#FFFFFF" opacity="0.30"/>',
     );
     expect(upper).toContain(
-      '<path id="upper-arris-seam" d="M1 63H46A12 12 0 0 0 58 51V1" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>',
+      '<path id="upper-arris-seam" d="M1 56H46A12 12 0 0 0 58 44V1" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>',
     );
     expect(
       source('open_cross_filled_ne_se_sw-base.svg') + upper,
@@ -430,8 +430,8 @@ describe('QuotaCo owner-accepted single-open northwest cross-junction gate', () 
       writeInventory(
         base,
         upper.replace(
-          'id="upper-nw-reveal-light" d="M0 58H48A10 10 0 0 0 58 48V63H0Z" fill="#FFFFFF"',
-          'id="upper-nw-reveal-light" d="M0 58H48A10 10 0 0 0 58 48V63H0Z" fill="#B65F4D"',
+          'id="upper-nw-reveal-light" d="M0 58H48A10 10 0 0 0 58 48V44A12 12 0 0 1 46 56H0Z" fill="#FFFFFF"',
+          'id="upper-nw-reveal-light" d="M0 58H48A10 10 0 0 0 58 48V44A12 12 0 0 1 46 56H0Z" fill="#B65F4D"',
         ),
       );
       await expect(compileTemporary()).rejects.toThrow(
