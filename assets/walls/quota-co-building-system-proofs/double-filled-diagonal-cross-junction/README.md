@@ -39,3 +39,8 @@ derivation of this same pair. It omits only `base-boundary-seam` and
 west cell remains the sole shared-socket seam owner. That acceptance adds no
 companion SVG or source bank and does not promote either mask into canonical,
 exporter, atlas, schema, blob, or Unity registration.
+
+The accepted 2026-07-26 consistency correction rephases the northwest reveal
+and its dark arris seam onto the outer `y44 -> y56` ledge. The contour, shell,
+center, four sockets, southeast material return, and service seams remain
+unchanged. Filtered-X `mask_40` inherits the same correction.

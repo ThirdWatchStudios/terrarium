@@ -242,7 +242,7 @@ describe('QuotaCo current wall workbench', () => {
       stem: EQUAL_HEIGHT_DOUBLE_FILLED_DIAGONAL_CROSS_JUNCTION_GATE.stem,
       state: 'accepted',
       title: 'mask_30 diagonal-filled cross-junction',
-      summary: 'Accepted one authored fixed-light union with northeast and southwest solid, northwest and southeast open floor, and source-owned north/west-to-south/east register handoff; mask_30 now has direct proof-layer provenance.',
+      summary: 'Accepted one authored fixed-light union with northeast and southwest solid, northwest and southeast open floor, and the northwest reveal plus dark arris seam phased onto one shared outer ledge; filtered-X mask_40 inherits the correction.',
       alt: 'owner-accepted mask thirty diagonal-filled QuotaCo cross-junction in source compact and long installed proofs',
     });
     expect(EQUAL_HEIGHT_DOUBLE_FILLED_DIAGONAL_CROSS_JUNCTION_GATE)
@@ -989,7 +989,9 @@ describe('QuotaCo current wall workbench', () => {
     );
     expect(primary).toContain('mask_30 diagonal-filled cross-junction');
     expect(primary).toContain('ledger row mask_30 are locked at the proof layer');
-    expect(primary).toContain('mask_30 now has direct proof-layer provenance');
+    expect(primary).toContain(
+      'filtered-X mask_40 inherits the correction',
+    );
     expect(primary).toMatch(
       new RegExp(
         `data-stem="${EQUAL_HEIGHT_DOUBLE_FILLED_DIAGONAL_CROSS_JUNCTION_GATE.stem}"[\\s\\S]*?</section><section class="current-section system-accepted" aria-labelledby="accepted-double-filled-north-cross-junction-title">`,

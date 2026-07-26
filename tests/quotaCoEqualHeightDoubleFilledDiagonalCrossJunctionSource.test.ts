@@ -154,6 +154,12 @@ describe('QuotaCo accepted double-filled diagonal cross-junction source', () => 
     expect(upper).toContain(
       'id="upper-shell" d="M58 0H128V95H80A10 10 0 0 0 70 105V128H0V58H48A10 10 0 0 0 58 48Z"',
     );
+    expect(upper).toContain(
+      'id="upper-nw-reveal-light" d="M0 58H48A10 10 0 0 0 58 48V44A12 12 0 0 1 46 56H0Z"',
+    );
+    expect(upper).toContain(
+      'id="upper-arris-seam" d="M1 56H46A12 12 0 0 0 58 44V1 M36 106V125"',
+    );
     expect(
       [...upper.matchAll(
         /<path\b(?=[^>]*\bid=["']([^"']+)["'])(?=[^>]*\bfill=["']#D9D0B9["'])[^>]*>/gi,

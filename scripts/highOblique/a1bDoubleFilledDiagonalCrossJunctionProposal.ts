@@ -162,7 +162,7 @@ Record<
     ],
     [
       'upper-nw-reveal-light',
-      'M0 58H48A10 10 0 0 0 58 48V63H0Z',
+      'M0 58H48A10 10 0 0 0 58 48V44A12 12 0 0 1 46 56H0Z',
     ],
     ['upper-se-face-shade', 'M70 63H128V88H70Z'],
     [
@@ -179,7 +179,7 @@ Record<
     ['upper-south-face-shade', 'M23 105H36V126H23Z'],
     [
       'upper-arris-seam',
-      'M1 63H46A12 12 0 0 0 58 51V1 M36 106V125',
+      'M1 56H46A12 12 0 0 0 58 44V1 M36 106V125',
     ],
     [
       'upper-band-seam',

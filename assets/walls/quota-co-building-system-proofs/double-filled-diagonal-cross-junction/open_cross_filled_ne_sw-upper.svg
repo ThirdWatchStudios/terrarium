@@ -4,7 +4,7 @@
   <g id="detail/upper">
     <path id="upper-contour" d="M56 0H128V97H82A10 10 0 0 0 72 107V128H0V56H46A10 10 0 0 0 56 46Z" fill="#252A28"/>
     <path id="upper-shell" d="M58 0H128V95H80A10 10 0 0 0 70 105V128H0V58H48A10 10 0 0 0 58 48Z" fill="#D9D0B9"/>
-    <path id="upper-nw-reveal-light" d="M0 58H48A10 10 0 0 0 58 48V63H0Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="upper-nw-reveal-light" d="M0 58H48A10 10 0 0 0 58 48V44A12 12 0 0 1 46 56H0Z" fill="#FFFFFF" opacity="0.30"/>
     <path id="upper-se-face-shade" d="M70 63H128V88H70Z" fill="#000000" opacity="0.08"/>
     <path id="upper-coral-se-return" d="M70 88H128V94H70Z" fill="#B65F4D"/>
     <path id="upper-band-light-se-return" d="M70 88H128V89.5H70Z" fill="#FFFFFF" opacity="0.10"/>
@@ -12,7 +12,7 @@
     <path id="upper-south-plane-light" d="M37.5 105H70V126H37.5Z" fill="#FFFFFF" opacity="0.18"/>
     <path id="upper-south-arris-lip" d="M36 105H37.5V126H36Z" fill="#FFFFFF" opacity="0.30"/>
     <path id="upper-south-face-shade" d="M23 105H36V126H23Z" fill="#000000" opacity="0.12"/>
-    <path id="upper-arris-seam" d="M1 63H46A12 12 0 0 0 58 51V1 M36 106V125" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="upper-arris-seam" d="M1 56H46A12 12 0 0 0 58 44V1 M36 106V125" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
     <path id="upper-band-seam" d="M127 94H70" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
     <path id="upper-boundary-seam" d="M126 64V96" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
     <path id="upper-south-service-seam" d="M24 126H69" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>

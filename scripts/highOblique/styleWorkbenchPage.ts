@@ -140,7 +140,7 @@ AcceptedSystemGate = {
   stem: EQUAL_HEIGHT_DOUBLE_FILLED_DIAGONAL_CROSS_JUNCTION_GATE.stem,
   state: 'accepted',
   title: 'mask_30 diagonal-filled cross-junction',
-  summary: 'Accepted one authored fixed-light union with northeast and southwest solid, northwest and southeast open floor, and source-owned north/west-to-south/east register handoff; mask_30 now has direct proof-layer provenance.',
+  summary: 'Accepted one authored fixed-light union with northeast and southwest solid, northwest and southeast open floor, and the northwest reveal plus dark arris seam phased onto one shared outer ledge; filtered-X mask_40 inherits the correction.',
   alt: 'owner-accepted mask thirty diagonal-filled QuotaCo cross-junction in source compact and long installed proofs',
 };
 
@@ -151,7 +151,7 @@ AcceptedSystemGate = {
     EQUAL_HEIGHT_DOUBLE_FILLED_OPPOSITE_DIAGONAL_CROSS_JUNCTION_GATE.stem,
   state: 'accepted',
   title: 'mask_40 opposite-diagonal cross-junction',
-  summary: 'Accepted the whole-cell X mirror of mask_30 after omitting only the two duplicated west-boundary seam paths. Northwest and southeast are solid while northeast and southwest remain open floor.',
+  summary: 'Accepted the whole-cell X mirror of mask_30 after omitting only the two duplicated west-boundary seam paths. Northwest and southeast are solid, northeast and southwest remain open floor, and the shared-lip correction is inherited.',
   alt: 'owner-accepted mask forty opposite-diagonal QuotaCo cross-junction filtered mirror derivation in compact and long installed proofs',
 };
 
