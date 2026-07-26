@@ -139,6 +139,10 @@ Record<A1bSingleFilledCrossJunctionProposalSourceId, readonly (readonly [string,
       'M58 0H128V95H113A10 10 0 0 0 103 105V128H58V105A10 10 0 0 0 48 95H0V58H48A10 10 0 0 0 58 48Z',
     ],
     [
+      'upper-reveal-light',
+      'M0 58H48A10 10 0 0 0 58 48V44A12 12 0 0 1 46 56H0Z',
+    ],
+    [
       'upper-south-plane-light',
       'M58 88H102.5A12 12 0 0 0 90.5 100V128H58Z',
     ],
@@ -160,7 +164,7 @@ Record<A1bSingleFilledCrossJunctionProposalSourceId, readonly (readonly [string,
     ],
     [
       'upper-arris-seam',
-      'M1 63H46A12 12 0 0 0 58 51V1 M92 127V100A12 12 0 0 1 104 88H116',
+      'M1 56H46A12 12 0 0 0 58 44V1 M92 127V100A12 12 0 0 1 104 88H116',
     ],
   ],
 };

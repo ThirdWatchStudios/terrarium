@@ -180,6 +180,9 @@ describe('QuotaCo owner-accepted single-filled cross-junction gate', () => {
     expect(upper).toContain(
       'id="upper-shell" d="M58 0H128V95H113A10 10 0 0 0 103 105V128H58V105A10 10 0 0 0 48 95H0V58H48A10 10 0 0 0 58 48Z"',
     );
+    expect(upper).toContain(
+      'id="upper-reveal-light" d="M0 58H48A10 10 0 0 0 58 48V44A12 12 0 0 1 46 56H0Z"',
+    );
     expect(upper).not.toContain('id="upper-ne-solid-top"');
     expect(upper).not.toContain('id="upper-cream-bridge"');
     expect(upper).not.toContain('id="upper-north-plane-light"');
@@ -196,7 +199,7 @@ describe('QuotaCo owner-accepted single-filled cross-junction gate', () => {
       'id="upper-south-face-shade" d="M104 88H117A12 12 0 0 0 105 100V128H92V100A12 12 0 0 1 104 88Z"',
     );
     expect(upper).toContain(
-      'id="upper-arris-seam" d="M1 63H46A12 12 0 0 0 58 51V1 M92 127V100A12 12 0 0 1 104 88H116"',
+      'id="upper-arris-seam" d="M1 56H46A12 12 0 0 0 58 44V1 M92 127V100A12 12 0 0 1 104 88H116"',
     );
     expect(
       [...upper.matchAll(

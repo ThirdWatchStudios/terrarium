@@ -557,7 +557,7 @@ describe('QuotaCo current wall workbench', () => {
       stem: EQUAL_HEIGHT_SINGLE_FILLED_CROSS_JUNCTION_GATE.stem,
       state: 'accepted',
       title: 'mask_19 single-filled-crook cross-junction',
-      summary: 'Accepted one west-fixed authored four-way union with a solid northeast crook and three genuine floor crooks. Its right-hand cream plane, light arris, dimensional shade, and seam share one parallel curve into a combined coral/green return while every full-resolution socket pixel remains fixed.',
+      summary: 'Accepted one west-fixed authored four-way union with a solid northeast crook and three genuine floor crooks. Its northwest reveal and dark arris seam now share the outer ledge, while the approved southeast cream, shade, and material return remain fixed.',
       alt: 'owner-accepted mask nineteen single-filled northeast crook QuotaCo cross-junction in source compact and long installed proofs',
     });
     expect(EQUAL_HEIGHT_SINGLE_FILLED_CROSS_JUNCTION_GATE).toMatchObject({
