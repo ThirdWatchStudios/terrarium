@@ -25,9 +25,11 @@ open-to-solid turn: `upper-plane-light-open-sw` ends exactly where
 changing the contour, sockets, seams, or opaque geometry. The accepted plain-X
 derivation carries the same phase into `mask_28` without filtering.
 
-Cross-family south-face plane-cue continuity remains family-wide polish under
-one exposure and clipping rule; this acceptance does not claim a continuous
-shade across every adjoining piece.
+On the exposed southwest face, the restrained material shade stops at `y=84`,
+leaving a cream lip above the `y=87` dark outline and the coral/green register.
+The filled southeast top stays cream-led. The accepted plain-X derivation
+carries this complete shade, cream, outline, coral, and green hierarchy into
+`mask_28`.
 
 Acceptance records proof-layer source provenance for `mask_18`, `mask_35`,
 `mask_22`, and `mask_28` only. These files do not register canonical or

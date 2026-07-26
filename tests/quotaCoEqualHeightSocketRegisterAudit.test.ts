@@ -124,7 +124,7 @@ describe('QuotaCo equal-height socket/register report harness', () => {
       },
     });
     expect(report.coverage.discrepancyReportHash).toBe(
-      'fd233c49ec47c8049755166f4b3906d72a1946184d7f5c4fb74e085ad6faa9fc',
+      '23f46549c706f04cfe98f8e9396849cb960db93501fa5a22555d2f0ed5e19b73',
     );
     const json = equalHeightSocketRegisterAuditJson(report);
     const text = equalHeightSocketRegisterAuditText(report);

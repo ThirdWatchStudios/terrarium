@@ -406,7 +406,8 @@ describe('QuotaCo owner-accepted horizontal partial T-junction gate', () => {
       ],
       [
         'detail/upper', 'upper-contour', 'upper-shell',
-        'upper-plane-light-open-sw', 'upper-coral-open-sw', 'upper-band-light',
+        'upper-plane-light-open-sw', 'upper-south-face-shade',
+        'upper-lip-seam', 'upper-coral-open-sw', 'upper-band-light',
         'upper-green-open-sw', 'upper-face-shade-open-sw',
         'upper-solid-top-highlight', 'upper-arris-seam', 'upper-band-seam',
       ],
@@ -440,6 +441,10 @@ describe('QuotaCo owner-accepted horizontal partial T-junction gate', () => {
 
   it('gives Mask 22 one reveal exposure and carries the phase through raw-mirrored Mask 28', () => {
     const upperSource = source('open_n_t_filled_se-upper.svg');
+    expect(pathData(upperSource, 'upper-south-face-shade'))
+      .toBe('M0 63H48V84H0Z');
+    expect(pathData(upperSource, 'upper-lip-seam'))
+      .toBe('M1 87H47');
     expect(pathData(upperSource, 'upper-plane-light-open-sw'))
       .toBe('M0 58H58V63H0Z');
     expect(pathData(upperSource, 'upper-solid-top-highlight'))
@@ -455,9 +460,11 @@ describe('QuotaCo owner-accepted horizontal partial T-junction gate', () => {
     expect(rgbaAt(mirrored, 88, 60)).toEqual([224, 216, 198, 255]);
 
     const direct40 = rasterPair(candidateSourcePair(22), 40);
-    expect(rgbaAt(direct40, 12, 19)).toEqual(rgbaAt(direct40, 25, 19));
+    expect(rgbaAt(direct40, 12, 19)).toEqual([187, 182, 165, 255]);
+    expect(rgbaAt(direct40, 25, 19)).toEqual([190, 185, 168, 255]);
     const mirrored40 = rasterPair(candidateSourcePair(28), 40);
-    expect(rgbaAt(mirrored40, 15, 19)).toEqual(rgbaAt(mirrored40, 27, 19));
+    expect(rgbaAt(mirrored40, 15, 19)).toEqual([190, 185, 168, 255]);
+    expect(rgbaAt(mirrored40, 27, 19)).toEqual([187, 182, 165, 255]);
   });
 
   it('filters mask_35 boundary seams before mirror-X and keeps mask_28 a raw mirror', () => {

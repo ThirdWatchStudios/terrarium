@@ -600,7 +600,7 @@ describe('QuotaCo current wall workbench', () => {
       stem: EQUAL_HEIGHT_HORIZONTAL_PARTIAL_T_JUNCTION_GATE.stem,
       state: 'accepted',
       title: 'Horizontal single-filled-pocket T-junction family',
-      summary: 'Accepted masks 18/22 as two fixed-light direct sources and masks 35/28 as approved whole-cell X derivations; masks 22/28 share one cream-reveal exposure while broader south-face continuity remains deferred polish.',
+      summary: 'Accepted masks 18/22 as two fixed-light direct sources and masks 35/28 as approved whole-cell X derivations. Masks 22/28 share the approved shade, cream lip, dark outline, coral, and green hierarchy on the exposed south face.',
       alt: 'owner-accepted horizontal single-filled-pocket T-junction masks eighteen thirty-five twenty-two and twenty-eight in compact and long wall masses',
     });
     expect(EQUAL_HEIGHT_HORIZONTAL_PARTIAL_T_JUNCTION_GATE).toMatchObject({
@@ -1101,7 +1101,7 @@ describe('QuotaCo current wall workbench', () => {
       'data-state="system-accepted" data-gate="horizontal-partial-t-junction"',
     );
     expect(primary).toContain('mask_18/mask_35/mask_22/mask_28 are locked at the proof layer');
-    expect(primary).toContain('masks 22/28 share one cream-reveal exposure while broader south-face continuity remains deferred polish');
+    expect(primary).toContain('masks 22/28 share the approved shade, cream lip, dark outline, coral, and green hierarchy');
     expect(primary).toContain('28 direct reuses, 19 approved derivations, 0 synthetic candidates');
     expect(occurrences(primary!, `data-stem="${ACCEPTED_EAST_PARTIAL_T_JUNCTION_GATE.stem}"`)).toBe(1);
     expect(primary).toContain(
@@ -1220,7 +1220,7 @@ describe('QuotaCo current wall workbench', () => {
       'approved shared right-hand curve and one combined coral/green return',
     );
     expect(page).toContain('mask_18/mask_22 are direct; mask_35/mask_28 are approved X derivations');
-    expect(page).toContain('Masks 22/28 share one cream-reveal exposure; broader south-face continuity remains deferred polish');
+    expect(page).toContain('Masks 22/28 share the approved shade, cream lip, dark outline, coral, and green hierarchy');
     expect(page).toContain('mask_17 and mask_21 are accepted direct proof sources');
     expect(page).toContain('mask_36 and mask_27 are their accepted east-side mirror derivations');
     expect(page).toContain('mask_11 and mask_14 are direct fixed-light proof sources');

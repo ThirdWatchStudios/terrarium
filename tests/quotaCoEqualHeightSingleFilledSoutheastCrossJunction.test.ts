@@ -279,7 +279,7 @@ describe('QuotaCo accepted single-filled southeast cross-junction gate', () => {
     expect(rgbaRow(candidate, 127)).toEqual(rgbaRow(mask22, 127));
     expect(alphaColumnSpan(candidate, 0)).toEqual([56, 123]);
     expect(alphaColumnSpan(candidate, 0)).toEqual(alphaColumnSpan(mask15, 0));
-    expect(rgbaColumn(candidate, 0)).toEqual(rgbaColumn(mask22, 0));
+    expect(rgbaColumn(candidate, 0)).not.toEqual(rgbaColumn(mask22, 0));
     expect(alphaColumnSpan(candidate, 127)).toEqual([56, 127]);
     expect(alphaColumnSpan(candidate, 127)).toEqual(alphaColumnSpan(mask21, 127));
     expect(rgbaColumn(candidate, 127)).toEqual(rgbaColumn(mask21, 127));

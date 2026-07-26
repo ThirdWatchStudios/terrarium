@@ -137,6 +137,8 @@ Record<A1bHorizontalPartialTJunctionProposalSourceId, readonly string[]>
     'upper-contour',
     'upper-shell',
     'upper-plane-light-open-sw',
+    'upper-south-face-shade',
+    'upper-lip-seam',
     'upper-coral-open-sw',
     'upper-band-light',
     'upper-green-open-sw',
@@ -191,6 +193,21 @@ function validateSource(
   ) {
     throw new A1bHorizontalPartialTJunctionProposalImportError(
       `${sourceFile} must stop the open-side reveal at the solid-top highlight boundary`,
+    );
+  }
+  if (
+    source.id === 'open_n_t_filled_se-upper' &&
+    (
+      !requiredPath(
+        content,
+        'upper-south-face-shade',
+        'M0 63H48V84H0Z',
+      ) ||
+      !requiredPath(content, 'upper-lip-seam', 'M1 87H47')
+    )
+  ) {
+    throw new A1bHorizontalPartialTJunctionProposalImportError(
+      `${sourceFile} must preserve the accepted shade, cream lip, and lower outline hierarchy`,
     );
   }
   if (/\bid=["'][^"']*(?:cap|post|pylon|rollover|four-way|overlay|patch)/i.test(content)) {
