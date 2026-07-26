@@ -9,12 +9,12 @@
     <path id="upper-coral-band" d="M128 88H70V94H128Z M31 128V94H0V88H20A6 6 0 0 1 26 94V128Z" fill="#B65F4D"/>
     <path id="upper-band-light" d="M128 88H70V89.5H128Z M20 88H0V89.5H20Z" fill="#FFFFFF" opacity="0.10"/>
     <path id="upper-north-face-shade" d="M25 63H0V88H25Z" fill="#000000" opacity="0.08"/>
-    <path id="upper-south-plane-light" d="M70 88H37.5V128H70Z" fill="#FFFFFF" opacity="0.18"/>
-    <path id="upper-south-arris-lip" d="M37.5 88H36V128H37.5Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="upper-south-plane-light" d="M70 88H25.5A12 12 0 0 1 37.5 100V128H70Z" fill="#FFFFFF" opacity="0.18"/>
+    <path id="upper-south-arris-lip" d="M25.5 88H24A12 12 0 0 1 36 100V128H37.5V100A12 12 0 0 0 25.5 88Z" fill="#FFFFFF" opacity="0.30"/>
     <path id="upper-south-coral-band" d="M31 88H26V128H31Z" fill="#B65F4D"/>
     <path id="upper-south-green-handoff" d="M26 94H23V128H26Z" fill="#294B3C"/>
-    <path id="upper-south-face-shade" d="M36 88H23V128H36Z" fill="#000000" opacity="0.12"/>
-    <path id="upper-arris-seam" d="M127 63H82A12 12 0 0 1 70 51V1 M36 88V127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="upper-south-face-shade" d="M24 88H11A12 12 0 0 1 23 100V128H36V100A12 12 0 0 0 24 88Z" fill="#000000" opacity="0.12"/>
+    <path id="upper-arris-seam" d="M127 63H82A12 12 0 0 1 70 51V1 M36 127V100A12 12 0 0 0 24 88H12" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
     <path id="upper-band-seam" d="M127 94H70 M1 94H20A6 6 0 0 1 26 100V127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
     <path id="upper-boundary-seam" d="M2 64V96" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
     <path id="upper-south-service-seam" d="M24 126H70" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>

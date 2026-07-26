@@ -150,6 +150,22 @@ Record<
       'upper-shell',
       'M70 0H0V95H15A10 10 0 0 1 25 105V128H70V105A10 10 0 0 1 80 95H128V58H80A10 10 0 0 1 70 48Z',
     ],
+    [
+      'upper-south-plane-light',
+      'M70 88H25.5A12 12 0 0 1 37.5 100V128H70Z',
+    ],
+    [
+      'upper-south-arris-lip',
+      'M25.5 88H24A12 12 0 0 1 36 100V128H37.5V100A12 12 0 0 0 25.5 88Z',
+    ],
+    [
+      'upper-south-face-shade',
+      'M24 88H11A12 12 0 0 1 23 100V128H36V100A12 12 0 0 0 24 88Z',
+    ],
+    [
+      'upper-arris-seam',
+      'M127 63H82A12 12 0 0 1 70 51V1 M36 127V100A12 12 0 0 0 24 88H12',
+    ],
   ],
 };
 

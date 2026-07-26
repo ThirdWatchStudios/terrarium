@@ -322,7 +322,7 @@ describe('QuotaCo current wall workbench', () => {
       stem: EQUAL_HEIGHT_SINGLE_FILLED_NORTHWEST_CROSS_JUNCTION_GATE.stem,
       state: 'accepted',
       title: 'mask_37 northwest-filled cross-junction',
-      summary: 'Accepted one separately authored east-register four-way union with a solid northwest crook and three genuine floor crooks; mask_37 now has direct proof-layer provenance.',
+      summary: 'Accepted one separately authored east-register four-way union with a solid northwest crook and three genuine floor crooks. Its southwest cream plane, light arris, dimensional shade, and seam share one nested curve into the existing coral/green return while every full-resolution socket pixel remains fixed.',
       alt: 'owner-accepted mask thirty-seven QuotaCo northwest-filled cross-junction authored east-register source in compact and long installed proofs',
     });
     expect(EQUAL_HEIGHT_SINGLE_FILLED_NORTHWEST_CROSS_JUNCTION_GATE)
@@ -1016,7 +1016,9 @@ describe('QuotaCo current wall workbench', () => {
     );
     expect(primary).toContain('mask_37 northwest-filled cross-junction');
     expect(primary).toContain('ledger row mask_37 are locked at the proof layer');
-    expect(primary).toContain('mask_37 now has direct proof-layer provenance');
+    expect(primary).toContain(
+      'approved nested southwest cream, arris, shade, and seam curve',
+    );
     expect(primary).toContain(
       `data-stem="${EQUAL_HEIGHT_SINGLE_FILLED_SOUTHWEST_CROSS_JUNCTION_GATE.stem}" data-refresh="single-filled-southwest-cross-junction"`,
     );

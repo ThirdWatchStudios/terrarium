@@ -15,6 +15,11 @@ is solid; and the northeast, southeast, and southwest crooks remain open floor.
   rotation, filtered derivative, or alternate provenance for `mask_19`.
 - No central cap, peak, post, badge, duplicate contour, duplicate material
   belt, hidden interior riser, or stacked junction survives at the hub.
+- The accepted 2026-07-26 consistency correction phases the southwest
+  cream plane, light arris, dimensional shade, and arris seam as parallel
+  nested curves into the existing coral/green return. The outer contour,
+  socket ledge, slab datum, center shape, and every full-resolution socket
+  boundary remain unchanged.
 - Acceptance was judged at 240, 90, and 40 pixels per cell in compact and
   1/3/6-cell arm compositions. Every installed neighboring row is accepted.
 
