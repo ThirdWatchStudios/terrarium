@@ -12306,6 +12306,194 @@ async function renderEqualHeightSingleFilledCrossJunctionGate(
   root: string,
 ): Promise<void> {
   const gate = EQUAL_HEIGHT_SINGLE_FILLED_CROSS_JUNCTION_GATE;
+  const width = 1000;
+  const height = 770;
+  const panelFill = '#ECE5D5';
+  const panel = (x: number, y: number, w: number, h: number): string =>
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" ` +
+      `fill="${panelFill}" stroke="${INK}" stroke-width="1.5" opacity="0.96"/>`;
+  const fileOverrides: CompositionFileOverrides = {
+    [EMPTY_WORKBENCH_FILE]: EMPTY_WORKBENCH_SOURCE,
+    ...await verticalTerminusProposalFileOverrides(options, root),
+    ...await thickWallBlockProposalFileOverrides(options, root),
+    ...await thickWallHorizontalRepeatProposalFileOverrides(options, root),
+    ...await westPartialTJunctionProposalFileOverrides(options, root),
+    ...await horizontalPartialTJunctionProposalFileOverrides(options, root),
+    ...await singleFilledCrossJunctionProposalFileOverrides(options, root),
+    ...await doubleFilledNorthCrossJunctionProposalFileOverrides(options, root),
+  };
+  const targetUpper: readonly CompositionCell[] = [
+    singleFilledCrossJunctionCandidateCell(0, 0, 'upper'),
+  ];
+  const controlUpper: readonly CompositionCell[] = [
+    doubleFilledNorthCrossJunctionCandidateCell(0, 0, 'upper'),
+  ];
+  const parts: string[] = [
+    `<rect width="${width}" height="${height}" rx="16" fill="${PANEL}"/>`,
+    text(22, 31, 'MASK 19 — ACCEPTED SHARED TURN', 19, 840),
+    text(
+      22,
+      55,
+      'Accepted proof checkpoint · cream, arris, shade, and seam curve together; one combined coral/green return closes behind',
+      10,
+      650,
+      MUTED,
+    ),
+    text(978, 31, 'OWNER ACCEPTED', 9, 840, '#294B3C', 'end'),
+
+    panel(18, 72, 964, 354),
+    text(156, 99, 'MASK 19 ACCEPTED · UPPER · 240 PX', 10, 840, '#294B3C', 'middle'),
+    text(470, 99, 'MASK 39 ACCEPTED TURN · 240 PX', 10, 840, '#4E7D79', 'middle'),
+    text(825, 99, 'INSTALLED MASK 19', 10, 840, '#294B3C', 'middle'),
+
+    panel(18, 440, 964, 296),
+    text(500, 461, '3-CELL EXTENTS', 10, 840, MUTED, 'middle'),
+    text(500, 477, 'LITERAL 40 PX/CELL', 8, 760, MUTED, 'middle'),
+  ];
+
+  parts.push(await compositionWindow(
+    options,
+    targetUpper,
+    1,
+    1,
+    36,
+    120,
+    240,
+    240,
+    fileOverrides,
+    undefined,
+    false,
+  ));
+  parts.push(
+    '<rect x="199" y="279" width="65" height="58" rx="5" fill="none" ' +
+      'stroke="#B65F4D" stroke-width="2.5" stroke-dasharray="6 4"/>',
+  );
+  parts.push(text(
+    156,
+    385,
+    'ONE CURVED HANDOFF · NO DUPLICATE BELTS',
+    8,
+    840,
+    '#B65F4D',
+    'middle',
+  ));
+
+  parts.push(await compositionWindow(
+    options,
+    controlUpper,
+    1,
+    1,
+    350,
+    120,
+    240,
+    240,
+    fileOverrides,
+    undefined,
+    false,
+  ));
+  parts.push(
+    '<rect x="513" y="279" width="65" height="58" rx="5" fill="none" ' +
+      'stroke="#4E7D79" stroke-width="2.5" stroke-dasharray="6 4"/>',
+  );
+  parts.push(text(
+    470,
+    385,
+    'ACCEPTED CREAM / ARRIS / SHADE / SEAM PHASE',
+    8,
+    820,
+    '#4E7D79',
+    'middle',
+  ));
+
+  parts.push(await singleFilledCrossJunctionMatrixWindow(
+    options,
+    gate.compactMatrix,
+    690,
+    105,
+    270,
+    270,
+    fileOverrides,
+  ));
+  parts.push(crossSourceCellFrame(780, 195, 90, 3));
+  parts.push(text(
+    825,
+    400,
+    'COMPACT OCCUPANCY · 90 PX/CELL',
+    8,
+    760,
+    MUTED,
+    'middle',
+  ));
+  parts.push(text(
+    825,
+    417,
+    'NE FILLED · SE / SW / NW FLOOR CROOKS OPEN',
+    8,
+    760,
+    MUTED,
+    'middle',
+  ));
+
+  const extentViews = [
+    [36, A1A_PALETTE.floor, 'MASK 19 · 3-CELL · LIGHT'],
+    [664, A1A_PALETTE.charcoal, 'MASK 19 · 3-CELL · DARK'],
+  ] as const;
+  for (const [x, floorFill, label] of extentViews) {
+    parts.push(await singleFilledCrossJunctionMatrixWindow(
+      options,
+      gate.threeCellArmMatrix,
+      x,
+      456,
+      280,
+      280,
+      fileOverrides,
+      floorFill,
+    ));
+    parts.push(crossSourceCellFrame(x + 120, 576, 40, 2));
+    parts.push(text(
+      x + 140,
+      478,
+      label,
+      8,
+      820,
+      floorFill === A1A_PALETTE.floor ? '#294B3C' : '#4E7D79',
+      'middle',
+    ));
+  }
+
+  parts.push(text(
+    22,
+    758,
+    'ACCEPTED: ONE PARALLEL CREAM / ARRIS / SHADE / SEAM TURN',
+    8,
+    840,
+    '#294B3C',
+  ));
+  parts.push(text(
+    978,
+    758,
+    'SOCKETS FROZEN · LEDGER 28 / 19 / 0 / 0 · NO EXPORT / UNITY CHANGE',
+    8,
+    820,
+    '#9A493D',
+    'end',
+  ));
+
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" ` +
+    `viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+  const png = new Resvg(svg, {
+    fitTo: { mode: 'width', value: width },
+  }).render().asPng();
+  await writeFile(path.join(options.output, `${gate.stem}.png`), png);
+}
+
+/** Explicit-only legacy Mask 19 archive renderer; ordinary paths use the compact accepted gate. */
+export async function renderEqualHeightSingleFilledCrossJunctionAcceptedArchive(
+  options: CliOptions,
+  root: string,
+): Promise<void> {
+  const gate = EQUAL_HEIGHT_SINGLE_FILLED_CROSS_JUNCTION_GATE;
   const width = 1600;
   const height = 3190;
   const panelFill = '#ECE5D5';

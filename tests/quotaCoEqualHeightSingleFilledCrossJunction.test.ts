@@ -173,7 +173,7 @@ describe('QuotaCo owner-accepted single-filled cross-junction gate', () => {
     }
   });
 
-  it('locks one continuous cream-plane owner and rasterizes every review size', () => {
+  it('locks one continuous shared turn and rasterizes every review size', () => {
     expect(source('open_cross_filled_ne-base.svg'))
       .toContain('id="base-buried-ne-underlay"');
     const upper = source('open_cross_filled_ne-upper.svg');
@@ -184,11 +184,35 @@ describe('QuotaCo owner-accepted single-filled cross-junction gate', () => {
     expect(upper).not.toContain('id="upper-cream-bridge"');
     expect(upper).not.toContain('id="upper-north-plane-light"');
     expect(upper).not.toContain('id="upper-north-arris-lip"');
+    expect(upper).not.toContain('id="upper-south-coral-band"');
+    expect(upper).not.toContain('id="upper-south-green-handoff"');
+    expect(upper).toContain(
+      'id="upper-south-plane-light" d="M58 88H102.5A12 12 0 0 0 90.5 100V128H58Z"',
+    );
+    expect(upper).toContain(
+      'id="upper-south-arris-lip" d="M102.5 88H104A12 12 0 0 0 92 100V128H90.5V100A12 12 0 0 1 102.5 88Z"',
+    );
+    expect(upper).toContain(
+      'id="upper-south-face-shade" d="M104 88H117A12 12 0 0 0 105 100V128H92V100A12 12 0 0 1 104 88Z"',
+    );
+    expect(upper).toContain(
+      'id="upper-arris-seam" d="M1 63H46A12 12 0 0 0 58 51V1 M92 127V100A12 12 0 0 1 104 88H116"',
+    );
     expect(
       [...upper.matchAll(
         /<path\b(?=[^>]*\bid=["']([^"']+)["'])(?=[^>]*\bfill=["']#D9D0B9["'])[^>]*>/gi,
       )].map((match) => match[1]),
     ).toEqual(['upper-shell']);
+    expect(
+      [...upper.matchAll(
+        /<path\b(?=[^>]*\bid=["']([^"']+)["'])(?=[^>]*\bfill=["']#B65F4D["'])[^>]*>/gi,
+      )].map((match) => match[1]),
+    ).toEqual(['upper-coral-band']);
+    expect(
+      [...upper.matchAll(
+        /<path\b(?=[^>]*\bid=["']([^"']+)["'])(?=[^>]*\bfill=["']#294B3C["'])[^>]*>/gi,
+      )].map((match) => match[1]),
+    ).toEqual(['upper-green-handoff']);
     for (const cellPixels of [240, 90, 40] as const) {
       const raster = rasterCandidate(cellPixels);
       expect([raster.width, raster.height]).toEqual([cellPixels, cellPixels]);
@@ -199,7 +223,7 @@ describe('QuotaCo owner-accepted single-filled cross-junction gate', () => {
     }
   });
 
-  it('rejects duplicate cream owners and drift in the continuous-plane shell', async () => {
+  it('rejects duplicate material owners and drift in the continuous shared turn', async () => {
     const temporaryDirectory = mkdtempSync(
       path.join(tmpdir(), 'quota-co-single-filled-cross-'),
     );
@@ -248,9 +272,33 @@ describe('QuotaCo owner-accepted single-filled cross-junction gate', () => {
         /buried interior riser through upper-north-plane-light/,
       );
 
+      writeInventory(upper.replace(
+        '</g>',
+        '<path id="upper-south-coral-band" d="M97 88H102V128H97Z" fill="#B65F4D"/></g>',
+      ));
+      await expect(compileTemporary()).rejects.toThrow(
+        /duplicate material-belt ownership through upper-south-coral-band/,
+      );
+
+      writeInventory(upper.replace(
+        '</g>',
+        '<path id="upper-secondary-green" d="M102 94H105V128H102Z" fill="#294B3C"/></g>',
+      ));
+      await expect(compileTemporary()).rejects.toThrow(
+        /one combined coral owner and one combined green owner/,
+      );
+
       writeInventory(upper.replace('M58 0H128V95H113', 'M58 0H127V95H113'));
       await expect(compileTemporary()).rejects.toThrow(
         /exact continuous-plane geometry for upper-shell/,
+      );
+
+      writeInventory(upper.replace(
+        'M58 88H102.5A12 12 0 0 0 90.5 100',
+        'M58 88H101.5A12 12 0 0 0 90.5 100',
+      ));
+      await expect(compileTemporary()).rejects.toThrow(
+        /exact continuous-plane geometry for upper-south-plane-light/,
       );
     } finally {
       rmSync(temporaryDirectory, { recursive: true, force: true });
@@ -290,6 +338,10 @@ describe('QuotaCo owner-accepted single-filled cross-junction gate', () => {
         ordinaryNeighborTransform: 'none',
         mixedFacingAllowed: false,
         eastFacingCompanionMaskIndex: 37,
+      },
+      renderingDecision: {
+        shadePolicy:
+          'at the right south-branch turn, phase the cream plane, light arris, dimensional shade, and seam as parallel nested curves into one combined coral/green return; forbid duplicate belt owners and preserve every full-resolution socket pixel',
       },
       xMirrorAllowed: false,
       yMirrorAllowed: false,

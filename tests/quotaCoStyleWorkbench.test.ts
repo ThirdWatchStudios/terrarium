@@ -557,7 +557,7 @@ describe('QuotaCo current wall workbench', () => {
       stem: EQUAL_HEIGHT_SINGLE_FILLED_CROSS_JUNCTION_GATE.stem,
       state: 'accepted',
       title: 'mask_19 single-filled-crook cross-junction',
-      summary: 'Accepted one west-fixed authored four-way union with a solid northeast crook and three genuine floor crooks; mask_19 now has direct proof-layer provenance.',
+      summary: 'Accepted one west-fixed authored four-way union with a solid northeast crook and three genuine floor crooks. Its right-hand cream plane, light arris, dimensional shade, and seam share one parallel curve into a combined coral/green return while every full-resolution socket pixel remains fixed.',
       alt: 'owner-accepted mask nineteen single-filled northeast crook QuotaCo cross-junction in source compact and long installed proofs',
     });
     expect(EQUAL_HEIGHT_SINGLE_FILLED_CROSS_JUNCTION_GATE).toMatchObject({
@@ -1069,7 +1069,7 @@ describe('QuotaCo current wall workbench', () => {
       'data-state="system-accepted" data-gate="single-filled-cross-junction"',
     );
     expect(primary).toContain('ledger row mask_19 are locked at the proof layer');
-    expect(primary).toContain('mask_19 now has direct proof-layer provenance');
+    expect(primary).toContain('approved parallel cream, arris, shade, and seam turn');
     expect(occurrences(
       primary!,
       `data-stem="${ACCEPTED_OPEN_POCKET_CROSS_JUNCTION_GATE.stem}"`,
@@ -1182,7 +1182,9 @@ describe('QuotaCo current wall workbench', () => {
     expect(primary).toContain('Accepted · System gate');
     expect(primary).toContain('Horizontal terminus pair');
     expect(primary).toContain('Accepted mask_8 direct source');
-    expect(page).toContain('<p class="lede">The all-47 family consistency pass is active for review.');
+    expect(page).toContain(
+      '<p class="lede">The all-47 family consistency pass is active for review.',
+    );
     expect(page).toContain('Review next · 1 piece');
     expect(page).toContain(
       'These remain active proposals and are not yet in the accepted working set.',
@@ -1205,6 +1207,9 @@ describe('QuotaCo current wall workbench', () => {
     expect(page).toContain('mask_25 directly reuses one west-fixed authored union');
     expect(page).toContain('mask_23 directly reuses one west-fixed authored four-way union');
     expect(page).toContain('mask_19 directly reuses one west-fixed authored four-way union');
+    expect(page).toContain(
+      'approved shared right-hand curve and one combined coral/green return',
+    );
     expect(page).toContain('mask_18/mask_22 are direct; mask_35/mask_28 are approved X derivations');
     expect(page).toContain('Masks 22/28 share one cream-reveal exposure; broader south-face continuity remains deferred polish');
     expect(page).toContain('mask_17 and mask_21 are accepted direct proof sources');

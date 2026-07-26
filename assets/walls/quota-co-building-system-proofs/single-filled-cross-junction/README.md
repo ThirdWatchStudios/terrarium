@@ -27,6 +27,11 @@ is solid; and the southeast, southwest, and northwest crooks remain open floor.
   vertical neighbors produces a false lateral step; the east-register
   northeast-filled cross is the separate `mask_37` topology row, not a
   transformed `mask_19` variant.
+- The accepted 2026-07-25 consistency correction phases the right-hand cream
+  plane, light arris, dimensional shade, and arris seam as parallel nested
+  curves into one combined coral/green return. Duplicate south-branch belt
+  owners are forbidden; the accepted combined paths close behind the turn
+  while all four full-resolution socket boundaries remain pixel-identical.
 
 Owner acceptance promotes this pair only as the direct proof-layer provenance
 for ledger row `mask_19`. It does not derive another facing, register a

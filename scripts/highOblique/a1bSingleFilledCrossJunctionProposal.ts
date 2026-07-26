@@ -110,15 +110,13 @@ Record<A1bSingleFilledCrossJunctionProposalSourceId, readonly string[]>
     'detail/upper',
     'upper-contour',
     'upper-shell',
-    'upper-green-handoff',
-    'upper-coral-band',
-    'upper-band-light',
-    'upper-north-face-shade',
     'upper-reveal-light',
+    'upper-north-face-shade',
     'upper-south-plane-light',
     'upper-south-arris-lip',
-    'upper-south-coral-band',
-    'upper-south-green-handoff',
+    'upper-coral-band',
+    'upper-band-light',
+    'upper-green-handoff',
     'upper-south-face-shade',
     'upper-arris-seam',
     'upper-band-seam',
@@ -140,6 +138,30 @@ Record<A1bSingleFilledCrossJunctionProposalSourceId, readonly (readonly [string,
       'upper-shell',
       'M58 0H128V95H113A10 10 0 0 0 103 105V128H58V105A10 10 0 0 0 48 95H0V58H48A10 10 0 0 0 58 48Z',
     ],
+    [
+      'upper-south-plane-light',
+      'M58 88H102.5A12 12 0 0 0 90.5 100V128H58Z',
+    ],
+    [
+      'upper-south-arris-lip',
+      'M102.5 88H104A12 12 0 0 0 92 100V128H90.5V100A12 12 0 0 1 102.5 88Z',
+    ],
+    [
+      'upper-coral-band',
+      'M0 88H58V94H0Z M97 128V94H128V88H108A6 6 0 0 0 102 94V128Z',
+    ],
+    [
+      'upper-green-handoff',
+      'M0 94H58V97H0Z M102 91H105A3 3 0 0 0 108 94H128V97H108A3 3 0 0 0 105 100V128H102Z',
+    ],
+    [
+      'upper-south-face-shade',
+      'M104 88H117A12 12 0 0 0 105 100V128H92V100A12 12 0 0 1 104 88Z',
+    ],
+    [
+      'upper-arris-seam',
+      'M1 63H46A12 12 0 0 0 58 51V1 M92 127V100A12 12 0 0 1 104 88H116',
+    ],
   ],
 };
 
@@ -153,6 +175,11 @@ const FORBIDDEN_INTERIOR_RISER_IDS = [
   'upper-north-arris-lip',
 ] as const;
 
+const FORBIDDEN_DUPLICATE_BELT_OWNER_IDS = [
+  'upper-south-coral-band',
+  'upper-south-green-handoff',
+] as const;
+
 const sourceIds = (content: string): readonly string[] =>
   [...content.matchAll(/\bid=["']([^"']+)["']/g)].map((match) => match[1]);
 
@@ -163,6 +190,19 @@ const creamPathOwners = (content: string): readonly string[] =>
   [...content.matchAll(
     /<path\b(?=[^>]*\bid=["']([^"']+)["'])(?=[^>]*\bfill=["']#D9D0B9["'])[^>]*>/gi,
   )].map((match) => match[1]);
+
+const paintPathOwners = (
+  content: string,
+  paint: string,
+): readonly string[] => {
+  const escapedPaint = paint.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return [...content.matchAll(
+    new RegExp(
+      `<path\\b(?=[^>]*\\bid=["']([^"']+)["'])(?=[^>]*\\bfill=["']${escapedPaint}["'])[^>]*>`,
+      'gi',
+    ),
+  )].map((match) => match[1]);
+};
 
 function validateSource(
   source: A1bSingleFilledCrossJunctionProposalSourceSpec,
@@ -211,6 +251,13 @@ function validateSource(
       `${sourceFile} reintroduces a buried interior riser through ${interiorRiserIds.join(', ')}`,
     );
   }
+  const duplicateBeltOwners = FORBIDDEN_DUPLICATE_BELT_OWNER_IDS
+    .filter((id) => ids.includes(id));
+  if (duplicateBeltOwners.length > 0) {
+    throw new A1bSingleFilledCrossJunctionProposalImportError(
+      `${sourceFile} reintroduces duplicate material-belt ownership through ${duplicateBeltOwners.join(', ')}`,
+    );
+  }
   const alteredPaths = EXACT_PATHS[source.id]
     .filter(([id, d]) => !requiredPath(content, id, d))
     .map(([id]) => id);
@@ -225,6 +272,19 @@ function validateSource(
   ) {
     throw new A1bSingleFilledCrossJunctionProposalImportError(
       `${sourceFile} must keep upper-shell as the sole cream path owner`,
+    );
+  }
+  if (
+    source.layer === 'upper' &&
+    (
+      JSON.stringify(paintPathOwners(content, A1A_PALETTE.coral)) !==
+        JSON.stringify(['upper-coral-band']) ||
+      JSON.stringify(paintPathOwners(content, A1A_PALETTE.green)) !==
+        JSON.stringify(['upper-green-handoff'])
+    )
+  ) {
+    throw new A1bSingleFilledCrossJunctionProposalImportError(
+      `${sourceFile} must keep one combined coral owner and one combined green owner across the shared turn`,
     );
   }
   if (/\bid=["'][^"']*(?:cap|post|pylon|rollover|overlay|patch|stacked)/i.test(content)) {

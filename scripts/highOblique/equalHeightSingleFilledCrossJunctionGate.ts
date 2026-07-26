@@ -109,7 +109,7 @@ export const EQUAL_HEIGHT_SINGLE_FILLED_CROSS_JUNCTION_GATE = {
     requiredRead:
       'the accepted open four-way connector with exactly one crook converted into continuous wall mass, never a patch, stacked T, or center post',
     shadePolicy:
-      'preserve authored fixed-light planes from the mask_15, mask_17, and mask_18 controls; family-wide south-face continuity remains deferred polish',
+      'at the right south-branch turn, phase the cream plane, light arris, dimensional shade, and seam as parallel nested curves into one combined coral/green return; forbid duplicate belt owners and preserve every full-resolution socket pixel',
   },
   acceptedLedgerCounts: {
     'direct-reuse': 28,
