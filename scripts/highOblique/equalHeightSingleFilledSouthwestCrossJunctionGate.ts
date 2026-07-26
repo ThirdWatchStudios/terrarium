@@ -106,7 +106,7 @@ export const EQUAL_HEIGHT_SINGLE_FILLED_SOUTHWEST_CROSS_JUNCTION_GATE = {
     requiredRead:
       'the accepted mask_23 connector mirrored as one molded union, never a patch, stacked T, peak, post, duplicate belt, or exposed buried fascia',
     shadePolicy:
-      'preserve the source Y-based fixed-light ownership; the mirrored south-facing cream, coral, green, and shadow registers must wrap exactly once around the southwest fill',
+      'preserve the source Y-based fixed-light ownership and its synchronized cream, arris, shade, coral, green, and seam turn; the plain-X mirror must wrap exactly once around the southwest fill without filtering or moving any socket pixel',
   },
   acceptedLedgerCounts: {
     'direct-reuse': 28,

@@ -150,6 +150,10 @@ changes the export contract except where explicitly flagged (floor variants).
 > remain open floor. The authored union preserves the fixed west socket register and applies the accepted
 > rear-facing `mask_21`/`mask_22` boundary laws without stacking either T source. It passes 240/90/40 px
 > source checks plus compact, three-cell-arm, and six-cell-arm installed crossings on light and dark floors.
+> An owner-approved consistency polish on 2026-07-25 phases the northeast cream plane, light arris,
+> dimensional shade, coral, green, and both seams through the accepted nested `mask_11` turn while preserving
+> every outer contour and socket pixel. The existing plain whole-cell X derivation carries the same correction
+> into `mask_29` without a filter or companion source.
 > The accepted ledger now records 20 direct / 14 derived / 13 synthetic / 0 collisions; all 13 remaining
 > synthetic rows are cross-junctions. Acceptance records proof-layer source provenance only. It adds no
 > canonical production source, frame identity, template registration, exporter, atlas, schema, blob mapping,

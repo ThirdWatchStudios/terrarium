@@ -365,6 +365,12 @@ six-cell-arm crossings on light and dark floors. Promotion advances the ledger t
 13 synthetic / 0 collisions; all 13 remaining synthetic rows are cross-junctions. This creates no canonical
 production source, registration, exporter, atlas, schema, blob mapping, or Unity change.
 
+**Accepted `mask_23` / `mask_29` shared-turn consistency polish (owner approval, 2026-07-25):** the northeast
+open-crook cream plane, light arris, dimensional shade, coral, green, and both seams now phase through the
+accepted nested `mask_11` curve. Every outer contour and cardinal socket pixel remains fixed. The accepted
+plain whole-cell X derivation carries the correction into `mask_29` without a filter, companion source,
+ledger-count change, or production/export/Unity boundary change.
+
 **Accepted east-filled slab cross-junction gate (owner approval, 2026-07-23):** the external
 `double-filled-east-cross-junction/` bank supplies the direct fixed-light `open_cross_filled_e` pair for
 `mask_25`. Its north/east/south/west sockets continue ordinary one-cell runs, the northeast and southeast

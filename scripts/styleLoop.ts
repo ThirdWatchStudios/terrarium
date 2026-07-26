@@ -12107,6 +12107,253 @@ async function renderEqualHeightSingleFilledSoutheastCrossJunctionProposal(
   options: CliOptions,
   root: string,
 ): Promise<void> {
+  const directGate =
+    EQUAL_HEIGHT_SINGLE_FILLED_SOUTHEAST_CROSS_JUNCTION_GATE;
+  const mirroredGate =
+    EQUAL_HEIGHT_SINGLE_FILLED_SOUTHWEST_CROSS_JUNCTION_GATE;
+  const width = 1000;
+  const height = 770;
+  const panelFill = '#ECE5D5';
+  const panel = (x: number, y: number, w: number, h: number): string =>
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" ` +
+      `fill="${panelFill}" stroke="${INK}" stroke-width="1.5" opacity="0.96"/>`;
+  const fileOverrides: CompositionFileOverrides = {
+    [EMPTY_WORKBENCH_FILE]: EMPTY_WORKBENCH_SOURCE,
+    ...await verticalTerminusProposalFileOverrides(options, root),
+    ...await horizontalOpenPocketTJunctionProposalFileOverrides(options, root),
+    ...await thickWallBlockProposalFileOverrides(options, root),
+    ...await westPartialTJunctionProposalFileOverrides(options, root),
+    ...await eastPartialTJunctionGateFileOverrides(options, root),
+    ...await horizontalPartialTJunctionProposalFileOverrides(options, root),
+    ...await singleFilledSoutheastCrossJunctionProposalFileOverrides(
+      options,
+      root,
+    ),
+  };
+  const targetUpper: readonly CompositionCell[] = [
+    singleFilledSoutheastCrossJunctionCandidateCell(0, 0, 'upper'),
+  ];
+  const controlUpper: readonly CompositionCell[] = [
+    horizontalOpenPocketTJunctionCandidateCell(
+      11,
+      'west-source',
+      0,
+      0,
+      'upper',
+    ),
+  ];
+  const parts: string[] = [
+    `<rect width="${width}" height="${height}" rx="16" fill="${PANEL}"/>`,
+    text(22, 31, 'MASKS 23 / 29 — ACCEPTED SHARED OPEN-CROOK TURN', 19, 840),
+    text(
+      22,
+      55,
+      'Accepted proof checkpoint · cream, arris, shade, coral, green, and seams follow the accepted Mask 11 curve',
+      10,
+      650,
+      MUTED,
+    ),
+    text(978, 31, 'OWNER ACCEPTED', 9, 840, '#294B3C', 'end'),
+
+    panel(18, 72, 964, 354),
+    text(
+      156,
+      99,
+      'MASK 23 ACCEPTED · UPPER · 240 PX',
+      10,
+      840,
+      '#294B3C',
+      'middle',
+    ),
+    text(
+      470,
+      99,
+      'MASK 11 ACCEPTED TURN · 240 PX',
+      10,
+      840,
+      '#4E7D79',
+      'middle',
+    ),
+    text(
+      825,
+      99,
+      'INSTALLED MASK 23',
+      10,
+      840,
+      '#294B3C',
+      'middle',
+    ),
+
+    panel(18, 440, 964, 296),
+    text(500, 461, 'DIRECT + PLAIN-X COMPANION', 10, 840, MUTED, 'middle'),
+    text(500, 477, '3-CELL EXTENTS · LITERAL 40 PX/CELL', 8, 760, MUTED, 'middle'),
+  ];
+
+  parts.push(await compositionWindow(
+    options,
+    targetUpper,
+    1,
+    1,
+    36,
+    120,
+    240,
+    240,
+    fileOverrides,
+    undefined,
+    false,
+  ));
+  parts.push(
+    '<rect x="198" y="192" width="79" height="47" rx="5" fill="none" ' +
+      'stroke="#B65F4D" stroke-width="2.5" stroke-dasharray="6 4"/>',
+  );
+  parts.push(text(
+    156,
+    385,
+    'ACCEPTED SYNCHRONIZED CURVE · NO SQUARE-CUT BELTS',
+    8,
+    840,
+    '#B65F4D',
+    'middle',
+  ));
+
+  parts.push(await compositionWindow(
+    options,
+    controlUpper,
+    1,
+    1,
+    350,
+    120,
+    240,
+    240,
+    fileOverrides,
+    undefined,
+    false,
+  ));
+  parts.push(
+    '<rect x="512" y="192" width="79" height="47" rx="5" fill="none" ' +
+      'stroke="#4E7D79" stroke-width="2.5" stroke-dasharray="6 4"/>',
+  );
+  parts.push(text(
+    470,
+    385,
+    'ACCEPTED CURVE IS THE GEOMETRIC CONTROL',
+    8,
+    820,
+    '#4E7D79',
+    'middle',
+  ));
+
+  parts.push(await singleFilledSoutheastCrossJunctionMatrixWindow(
+    options,
+    directGate.compactMatrix,
+    690,
+    105,
+    270,
+    270,
+    fileOverrides,
+  ));
+  parts.push(crossSourceCellFrame(780, 195, 90, 3));
+  parts.push(text(
+    825,
+    400,
+    'COMPACT OCCUPANCY · 90 PX/CELL',
+    8,
+    760,
+    MUTED,
+    'middle',
+  ));
+  parts.push(text(
+    825,
+    417,
+    'SE FILLED · NE / SW / NW FLOOR CROOKS OPEN',
+    8,
+    760,
+    MUTED,
+    'middle',
+  ));
+
+  const extentViews = [
+    [
+      36,
+      directGate.threeCellArmMatrix,
+      A1A_PALETTE.floor,
+      'MASK 23 · DIRECT · LIGHT',
+      false,
+    ],
+    [
+      664,
+      mirroredGate.threeCellArmMatrix,
+      A1A_PALETTE.charcoal,
+      'MASK 29 · PLAIN X · DARK',
+      true,
+    ],
+  ] as const;
+  for (const [x, matrix, floorFill, label, mirrored] of extentViews) {
+    parts.push(mirrored
+      ? await singleFilledSouthwestCrossJunctionMatrixWindow(
+        options,
+        matrix,
+        x,
+        456,
+        280,
+        280,
+        fileOverrides,
+        floorFill,
+      )
+      : await singleFilledSoutheastCrossJunctionMatrixWindow(
+        options,
+        matrix,
+        x,
+        456,
+        280,
+        280,
+        fileOverrides,
+        floorFill,
+      ));
+    parts.push(crossSourceCellFrame(x + 120, 576, 40, 2));
+    parts.push(text(
+      x + 140,
+      478,
+      label,
+      8,
+      820,
+      mirrored ? '#4E7D79' : '#294B3C',
+      'middle',
+    ));
+  }
+
+  parts.push(text(
+    22,
+    758,
+    'ACCEPTED: MASK 11 CURVE LAW, SAME FIXED SOCKETS',
+    8,
+    840,
+    '#294B3C',
+  ));
+  parts.push(text(
+    978,
+    758,
+    'PROOF-LAYER SOURCE · LEDGER 28 / 19 / 0 / 0 · NO PRODUCTION / EXPORT / UNITY CHANGE',
+    8,
+    820,
+    '#9A493D',
+    'end',
+  ));
+
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" ` +
+    `viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+  const png = new Resvg(svg, {
+    fitTo: { mode: 'width', value: width },
+  }).render().asPng();
+  await writeFile(path.join(options.output, `${directGate.stem}.png`), png);
+}
+
+/** Explicit-only archive of the original accepted Mask 23 source gate. */
+export async function renderEqualHeightSingleFilledSoutheastCrossJunctionAcceptedArchive(
+  options: CliOptions,
+  root: string,
+): Promise<void> {
   const gate = EQUAL_HEIGHT_SINGLE_FILLED_SOUTHEAST_CROSS_JUNCTION_GATE;
   const width = 1600;
   const height = 3190;

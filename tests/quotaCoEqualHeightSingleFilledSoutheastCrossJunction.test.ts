@@ -216,13 +216,34 @@ describe('QuotaCo accepted single-filled southeast cross-junction gate', () => {
     }
   });
 
-  it('keeps one continuous cream owner and all four accepted socket registers', () => {
+  it('keeps one synchronized shared turn and all four accepted socket registers', () => {
     expect(source('open_cross_filled_se-base.svg'))
       .toContain('id="base-buried-se-underlay"');
     const upper = source('open_cross_filled_se-upper.svg');
     expect(upper).toContain('id="upper-shell"');
     expect(upper).not.toMatch(
       /id="(?:upper-se-solid-top|upper-cream-bridge|upper-secondary-cream)"/,
+    );
+    expect(upper).toContain(
+      'id="upper-plane-light-open-ne" d="M58 0H90.5V44A12 12 0 0 0 102.5 56H58Z"',
+    );
+    expect(upper).toContain(
+      'id="upper-arris-lip-open-ne" d="M90.5 0H92V44A12 12 0 0 0 104 56H102.5A12 12 0 0 1 90.5 44Z"',
+    );
+    expect(upper).toContain(
+      'id="upper-green-open-ne" d="M102 0H105V44A12 12 0 0 0 117 56H114A12 12 0 0 1 102 44Z"',
+    );
+    expect(upper).toContain(
+      'id="upper-coral-open-ne" d="M97 0H102V44A12 12 0 0 0 114 56H109A12 12 0 0 1 97 44Z"',
+    );
+    expect(upper).toContain(
+      'id="upper-face-shade-open-ne" d="M92 0H105V44A12 12 0 0 0 117 56H104A12 12 0 0 1 92 44Z"',
+    );
+    expect(upper).toContain(
+      'id="upper-arris-seam" d="M92 1V44A12 12 0 0 0 104 56H116 M1 63H126"',
+    );
+    expect(upper).toContain(
+      'id="upper-band-seam" d="M102 1V44A12 12 0 0 0 114 56 M1 94H48"',
     );
     expect(
       [...upper.matchAll(
@@ -291,6 +312,10 @@ describe('QuotaCo accepted single-filled southeast cross-junction gate', () => {
         maskRowsAccepted: [23],
         reviewCellSizes: [240, 90, 40],
         reviewArmLengths: [1, 3, 6],
+        renderingDecision: {
+          shadePolicy:
+            'phase the northeast cream plane, light arris, dimensional shade, coral, green, and both seams through one nested R12 turn inherited unchanged by the plain-X mask_29 companion; preserve every full-resolution socket pixel',
+        },
         xMirrorAllowed: false,
         yMirrorAllowed: false,
         rotationAllowed: false,

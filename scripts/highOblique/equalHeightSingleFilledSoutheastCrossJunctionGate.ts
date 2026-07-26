@@ -130,7 +130,7 @@ export const EQUAL_HEIGHT_SINGLE_FILLED_SOUTHEAST_CROSS_JUNCTION_GATE = {
     requiredRead:
       'the accepted open four-way connector with exactly the southeast crook converted into continuous wall mass, never a patch, stacked T, peak, or center post',
     shadePolicy:
-      'preserve the accepted rear cream-led mask_21 and mask_22 plane laws; family-wide south-face continuity remains deferred polish',
+      'phase the northeast cream plane, light arris, dimensional shade, coral, green, and both seams through one nested R12 turn inherited unchanged by the plain-X mask_29 companion; preserve every full-resolution socket pixel',
   },
   acceptedLedgerCounts: {
     'direct-reuse': 28,

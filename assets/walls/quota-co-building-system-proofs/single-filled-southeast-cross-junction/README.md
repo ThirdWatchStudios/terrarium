@@ -19,6 +19,10 @@ is solid; and the northeast, southwest, and northwest crooks remain open floor.
 - Coral and green remain only on the exposed northeast and southwest
   frontages. They stop before the solid southeast top; no duplicate belt,
   interior riser, center cap, peak, post, patch, or hidden rail survives.
+- The accepted northeast open-crook handoff phases the cream plane, light
+  arris, dimensional shade, coral, green, and both seams through one nested
+  `R12` turn. It reuses the accepted `mask_11` curve law without moving any
+  outer contour or socket pixel.
 - The source is authored directly in the fixed west register. It is not a
   Y-mirror of `mask_19`, an X-mirror derivation, or a rotated sibling.
 
@@ -26,6 +30,12 @@ This pair is accepted as direct proof-layer provenance for `mask_23` in the
 equal-height ledger. Acceptance does not register a canonical source or frame
 identity, alter the blob contract, add an exporter or atlas route, change
 schema, or authorize a Unity asset.
+
+An owner-approved consistency polish on 2026-07-25 replaces the former
+square-cut northeast frontage termination with that synchronized shared turn.
+`mask_29` inherits the correction through its existing plain whole-cell
+X-mirror; no filter, companion source, ledger mutation, or production boundary
+is added.
 
 A separate owner approval on 2026-07-23 accepts `mask_29` as the plain
 whole-cell X-mirror derivation of this exact pair. Its four cardinal sockets

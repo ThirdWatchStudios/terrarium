@@ -398,7 +398,7 @@ describe('QuotaCo current wall workbench', () => {
         EQUAL_HEIGHT_SINGLE_FILLED_SOUTHWEST_CROSS_JUNCTION_GATE.stem,
       state: 'accepted',
       title: 'mask_29 southwest-filled cross-junction',
-      summary: 'Accepted the plain whole-cell X mirror of mask_23 as one east-register four-way union; the southwest crook is solid while northeast, southeast, and northwest remain open floor.',
+      summary: 'Accepted the plain whole-cell X mirror of mask_23 as one east-register four-way union; it inherits the synchronized cream, arris, shade, coral, green, and seam turn without filtering or moving any socket pixel.',
       alt: 'owner-accepted mask twenty-nine QuotaCo southwest-filled cross-junction mirror derivation in compact and long installed proofs',
     });
     expect(EQUAL_HEIGHT_SINGLE_FILLED_SOUTHWEST_CROSS_JUNCTION_GATE)
@@ -522,7 +522,7 @@ describe('QuotaCo current wall workbench', () => {
       stem: EQUAL_HEIGHT_SINGLE_FILLED_SOUTHEAST_CROSS_JUNCTION_GATE.stem,
       state: 'accepted',
       title: 'mask_23 southeast-filled cross-junction',
-      summary: 'Accepted one west-fixed authored four-way union with a solid southeast crook and three genuine floor crooks; mask_23 now has direct proof-layer provenance.',
+      summary: 'Accepted one west-fixed authored four-way union with a solid southeast crook and three genuine floor crooks. Its northeast cream plane, light arris, dimensional shade, coral, green, and both seams share one nested curve inherited unchanged by the plain-X mask_29 companion while every full-resolution socket pixel remains fixed.',
       alt: 'owner-accepted mask twenty-three single-filled southeast crook QuotaCo cross-junction in source compact and long installed proofs',
     });
     expect(EQUAL_HEIGHT_SINGLE_FILLED_SOUTHEAST_CROSS_JUNCTION_GATE).toMatchObject({
@@ -1055,8 +1055,12 @@ describe('QuotaCo current wall workbench', () => {
     expect(primary).toContain(
       'data-state="system-accepted" data-gate="single-filled-southeast-cross-junction"',
     );
-    expect(primary).toContain('ledger row mask_23 are locked at the proof layer');
-    expect(primary).toContain('mask_23 now has direct proof-layer provenance');
+    expect(primary).toContain(
+      'ledger row mask_23 are locked at the proof layer with the approved nested cream, arris, shade, coral, green, and seam turn',
+    );
+    expect(primary).toContain(
+      'Accepted one west-fixed authored four-way union with a solid southeast crook and three genuine floor crooks. Its northeast cream plane, light arris, dimensional shade, coral, green, and both seams share one nested curve',
+    );
     expect(occurrences(
       primary!,
       `data-stem="${ACCEPTED_SINGLE_FILLED_CROSS_JUNCTION_GATE.stem}"`,

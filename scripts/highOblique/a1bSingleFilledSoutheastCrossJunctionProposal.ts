@@ -146,6 +146,34 @@ Record<
       'upper-shell',
       'M58 0H103V48A10 10 0 0 0 113 58H128V128H58V105A10 10 0 0 0 48 95H0V58H48A10 10 0 0 0 58 48Z',
     ],
+    [
+      'upper-plane-light-open-ne',
+      'M58 0H90.5V44A12 12 0 0 0 102.5 56H58Z',
+    ],
+    [
+      'upper-arris-lip-open-ne',
+      'M90.5 0H92V44A12 12 0 0 0 104 56H102.5A12 12 0 0 1 90.5 44Z',
+    ],
+    [
+      'upper-green-open-ne',
+      'M102 0H105V44A12 12 0 0 0 117 56H114A12 12 0 0 1 102 44Z',
+    ],
+    [
+      'upper-coral-open-ne',
+      'M97 0H102V44A12 12 0 0 0 114 56H109A12 12 0 0 1 97 44Z',
+    ],
+    [
+      'upper-face-shade-open-ne',
+      'M92 0H105V44A12 12 0 0 0 117 56H104A12 12 0 0 1 92 44Z',
+    ],
+    [
+      'upper-arris-seam',
+      'M92 1V44A12 12 0 0 0 104 56H116 M1 63H126',
+    ],
+    [
+      'upper-band-seam',
+      'M102 1V44A12 12 0 0 0 114 56 M1 94H48',
+    ],
   ],
 };
 
