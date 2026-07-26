@@ -109,6 +109,7 @@ Record<A1bDoubleFilledEastCrossJunctionProposalSourceId, readonly string[]>
     'upper-contour',
     'upper-shell',
     'upper-reveal-light-open-nw',
+    'upper-arris-seam-open-nw',
     'upper-solid-top-highlight',
     'upper-coral-open-sw',
     'upper-band-light-open-sw',
@@ -136,6 +137,14 @@ Record<
     [
       'upper-shell',
       'M58 0H128V128H58V105A10 10 0 0 0 48 95H0V58H48A10 10 0 0 0 58 48Z',
+    ],
+    [
+      'upper-reveal-light-open-nw',
+      'M0 58H48A10 10 0 0 0 58 48V44A12 12 0 0 1 46 56H0Z',
+    ],
+    [
+      'upper-arris-seam-open-nw',
+      'M1 56H46A12 12 0 0 0 58 44V1',
     ],
     ['upper-solid-top-highlight', 'M58 58H120V63H58Z'],
   ],

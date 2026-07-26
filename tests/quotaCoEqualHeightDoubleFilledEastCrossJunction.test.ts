@@ -276,7 +276,7 @@ describe('QuotaCo owner-accepted double-filled east cross-junction gate', () => 
     const direct = rasterCandidateFacing(128, false);
     const directPixels = direct.pixels;
     expect(rgbaAt(directPixels, direct.width, 40, 60))
-      .toEqual([224, 216, 198, 255]);
+      .toEqual([217, 208, 185, 255]);
     expect(rgbaAt(directPixels, direct.width, 80, 60))
       .toEqual([224, 216, 198, 255]);
 
@@ -285,17 +285,21 @@ describe('QuotaCo owner-accepted double-filled east cross-junction gate', () => 
     expect(rgbaAt(mirroredPixels, mirrored.width, 48, 60))
       .toEqual([224, 216, 198, 255]);
     expect(rgbaAt(mirroredPixels, mirrored.width, 88, 60))
-      .toEqual([224, 216, 198, 255]);
+      .toEqual([217, 208, 185, 255]);
 
     const direct40 = rasterCandidateFacing(40, false);
     const direct40Pixels = direct40.pixels;
     expect(rgbaAt(direct40Pixels, direct40.width, 12, 19))
-      .toEqual(rgbaAt(direct40Pixels, direct40.width, 25, 19));
+      .toEqual([217, 208, 185, 255]);
+    expect(rgbaAt(direct40Pixels, direct40.width, 25, 19))
+      .toEqual([222, 214, 194, 255]);
 
     const mirrored40 = rasterCandidateFacing(40, true);
     const mirrored40Pixels = mirrored40.pixels;
     expect(rgbaAt(mirrored40Pixels, mirrored40.width, 15, 19))
-      .toEqual(rgbaAt(mirrored40Pixels, mirrored40.width, 27, 19));
+      .toEqual([222, 214, 194, 255]);
+    expect(rgbaAt(mirrored40Pixels, mirrored40.width, 27, 19))
+      .toEqual([217, 208, 185, 255]);
   });
 
   it('keeps exact cardinal socket spans at 240, 90, and 40 pixels', () => {
