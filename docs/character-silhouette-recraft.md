@@ -2,7 +2,8 @@
 
 Status: **review-only pawn-plus proof v2 + Bell/Pinch decision proof v2.1 +
 six-body compatibility gate v3 + locked always-on-arm decision v3.1 +
-neutral-arm revision proof v3.2**
+neutral-arm revision proof v3.2 + head silhouette/body-air direction proof v4 +
+hair/head fit and profile correction proof v5.1**
 
 This slice reopens the visual approval of the current human silhouette
 vocabulary. It does not replace production SVGs, change the character recipe
@@ -47,7 +48,7 @@ review-only and does not exercise a true sixth production ID.
 
 ## Static silhouette vocabulary
 
-The five body envelopes are construction primitives, not personality or gender
+The six body envelopes are construction primitives, not personality or gender
 labels:
 
 - **Column** — near-parallel flanks and a tight base.
@@ -55,6 +56,8 @@ labels:
 - **Wedge** — a wide shoulder slope converging on a narrow base.
 - **Barrel** — fullness concentrated at the middle.
 - **Bell** — a small shoulder line opening into a low outward mass.
+- **Pinch** — a moderate shoulder and rounded lower mass interrupted by a
+  shallow waist return.
 
 The six combined recipes test orthogonal head-envelope anchors:
 
@@ -342,3 +345,171 @@ Observed v3.3 result for Close hanging:
 This correction locks the fallback and permitted-profile-occlusion policy only.
 Default routing, layer-atlas sleeve/hand/outline rows, portrait policy, export
 surfaces, and runtime uptake remain a separate production promotion gate.
+
+## Head silhouette and body-air direction proof — review-only v4
+
+The v4 proof reopens two static head decisions without reopening the animation
+model:
+
+1. **Stronger lower-face anchors.** Hair hides much of the crown, so the six
+   review hulls put their distinction into width, cheek, jaw, and chin:
+   **Round**, **Broad**, **Long**, **Block**, **Point**, and **Lantern**.
+2. **A deliberate head/body air datum.** The neutral hair-none render targets
+   at least one fully transparent outline-to-outline raster row at both literal
+   40 and 48 pixels.
+
+The head remains one rigid group. Head art, eyes, hair, face accessories, and
+mood overlays still share `headCenter`; north is authored and west remains the
+real mirrored east. Each accepted body candidate owns one south/north and one
+east/west vertical placement, so the six heads do not require bespoke pose art
+or per-recipe animation.
+
+The current 128-unit cell is vertically tight after separation. The proof
+therefore includes a fixed five-unit bake-time view-box reframe. It is a static
+crop policy, not a runtime state. High-crown hair remains an explicit fitting
+sentinel: long or low hair may bridge the head/body air by construction, while
+hair that reaches the top of the cell may need a later static recut.
+
+The neutral gap is a datum, not a promise that every posture remains
+disconnected. `slump` deliberately drops the existing rigid head group by
+seven source units and may close it; the tilt poses continue to pivot around
+the existing neck. Preserving whitespace through every pose would be a
+different and rejected scope.
+
+Generate the two review sheets with:
+
+```bash
+npx tsx scripts/characterHeadGapPreview.ts
+```
+
+The generator writes:
+
+- `docs/previews/character-head-gap-v4.svg`
+- `docs/previews/character-head-gap-v4.png`
+- `docs/previews/character-head-gap-context-v4.svg`
+- `docs/previews/character-head-gap-context-v4.png`
+- `docs/previews/character-head-gap-v4-metrics.json`
+
+The script swaps candidate head facings through the registered imported-art
+carrier, installs one body rig at a time, and restores both exact references in
+`finally`. It requires byte-identical neutral, transformed-pose, and portrait
+sentinels after restoration.
+
+Current mechanical observations:
+
+- the closest current 40-pixel head-only pair reaches roughly `0.99`
+  intersection-over-union; the stronger proposed set lowers the closest pair
+  to roughly `0.92`;
+- all six heads use a common chin band, allowing each body to publish one
+  shared head datum rather than a head-specific offset;
+- the selected neutral hair-none system holds at least one transparent row at
+  both 40 and 48 pixels across six bodies, six heads, and all four facings;
+- the paired hair sentinels keep the deferred fitting debt visible: Bun and
+  Coils touch the cell edge in some body/facing combinations, while long or
+  low hair may intentionally bridge the air;
+- the default and corporate-cold styles remain in-cell, while the
+  `headScale: 1.12` / four-unit per-part outline of the high-contrast preset
+  still exceeds this proof crop. Profile `recoil` also remains a promotion
+  framing check for some wide heads;
+- all animation-cost counters remain zero: no frames, bones, pose IDs,
+  renderer states, or authored west facings are added.
+
+These are diagnostic results only. Visual review of the composed 40-pixel
+population remains the approval gate. Production promotion would still need
+the chosen authored head SVGs, an explicit crop policy, hair fitting, portrait
+and atlas checks, and the separately deferred neutral-arm runtime uptake.
+
+## Hair/head fit and profile correction — review-only v5.1
+
+The first v5 render established six outer-mass ideas but is rejected as a fit
+proof. It sized every hairstyle around the Round head and reused front-like
+caps for several east facings. The result varied hair internally while making
+Broad hair too small, Long hair too large, and many side views read as
+front-facing.
+
+The v5.1 correction keeps the zero-animation scope and changes the static
+construction:
+
+- every head publishes a review-only hair-fit envelope: south/north crown half
+  width, crown height, east rear-skull reach, and east forehead stop;
+- each hair family is generated from that envelope, so the same family widens
+  for Broad and narrows for Long without becoming a different hairstyle;
+- east faces screen-right. Hair must stop before the forehead/cheek/nose and
+  place its rear mass on screen-left; west remains the real mirrored east;
+- Bob is split into a rear curtain and narrow front strand so its face opening
+  remains visible rather than becoming a filled front-view oval;
+- the centered high Crown is replaced by **Knot**, an offset upper-rear mass
+  that interrupts the silhouette without requiring a taller cell.
+
+The six corrected construction families are:
+
+- **Crop** — a tight, broken cap;
+- **Sweep** — a one-sided diagonal mass;
+- **Bob** — smooth jaw-level width with an open profile face;
+- **Knot** — an offset compact upper-rear knot;
+- **Tail** — a held rear directional drop;
+- **Cloud** — a broad scalloped halo.
+
+These labels describe construction, not personality or gender. Every candidate
+is rigid art in the existing head group, uses authored south/east/north
+facings, and inherits the real west mirror. Tail does not receive secondary
+motion.
+
+Four styles preserve the neutral head/body air datum. Bob and Tail may bridge
+laterally by construction: their side or rear mass can meet the body while the
+face and central head separation remain readable. A bridge is a static
+silhouette choice, not another renderer or pose state.
+
+Generate the three review sheets with:
+
+```bash
+npx tsx scripts/characterHairSilhouettePreview.ts
+```
+
+The generator writes:
+
+- `docs/previews/character-hair-silhouette-v5.svg`
+- `docs/previews/character-hair-silhouette-v5.png`
+- `docs/previews/character-hair-silhouette-context-v5.svg`
+- `docs/previews/character-hair-silhouette-context-v5.png`
+- `docs/previews/character-hair-fit-matrix-v5-1.svg`
+- `docs/previews/character-hair-fit-matrix-v5-1.png`
+- `docs/previews/character-hair-silhouette-v5-metrics.json`
+
+The script temporarily installs each candidate through one registered hair
+carrier and restores the production facing reference in `finally`. Neutral,
+transformed-pose, portrait, carrier-facing, and production-part sentinels must
+remain byte-identical after the sweep.
+
+Current mechanical observations:
+
+- for the same Round head and Block body at literal 40 pixels, the closest
+  external-hair overlap falls from `1.000` among the six current analogs to
+  `0.683` among the corrected fitted anchors;
+- all 72 hair/head/facing comparisons at 40 and 48 pixels stay below the
+  `0.82` south/east hair-overlap gate; the closest corrected pair is
+  Knot/Long at `0.766`;
+- the forward 45 percent of every east head retains at least `0.382` of its
+  bare skin pixels, keeping a readable forehead, cheek, and nose;
+- every family adapts measurably from Broad to Long: south hair width changes
+  by 9–12 pixels and east hair width changes by 5–8 pixels at 48 pixels;
+- the 576 neutral body/head stress renders cover all six bodies, all six heads,
+  four facings, and both 40 and 48 pixels with zero candidate cell-edge
+  findings;
+- all required air-preserving cases retain at least one central transparent
+  raster row; Bob and Tail are audited under their explicit bridge policy;
+- the 360 existing-pose renders add zero hair contacts at the cell edge. Six
+  east/west `recoil` cases retain a body-foot edge contact already present in
+  the corresponding hairless render;
+- the current tall Bun remains visible as a height-debt control. A genuinely
+  tall style still needs a later static recut or framing decision rather than
+  quietly expanding the animation scope;
+- all animation-cost counters remain zero: no frames, bones, pose IDs,
+  renderer states, secondary-motion systems, or authored west facings are
+  added.
+
+This is a review-only correction. Production promotion must decide whether the
+head-fit envelopes bake concrete hair/head variants or become static authoring
+metadata. Production hair SVGs, part IDs, portraits, atlases, exports,
+compositor behavior, and runtime animation remain unchanged until that separate
+step.

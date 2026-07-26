@@ -1,0 +1,2643 @@
+{
+  "status": "review-only",
+  "hairCandidates": [
+    {
+      "id": "crop",
+      "label": "Crop",
+      "axis": "tight broken cap",
+      "gapPolicy": "preserve"
+    },
+    {
+      "id": "sweep",
+      "label": "Sweep",
+      "axis": "one-sided diagonal mass",
+      "gapPolicy": "preserve"
+    },
+    {
+      "id": "bob",
+      "label": "Bob",
+      "axis": "smooth jaw-level width",
+      "gapPolicy": "may-bridge"
+    },
+    {
+      "id": "knot",
+      "label": "Knot",
+      "axis": "offset compact knot",
+      "gapPolicy": "preserve"
+    },
+    {
+      "id": "tail",
+      "label": "Tail",
+      "axis": "rear directional drop",
+      "gapPolicy": "may-bridge"
+    },
+    {
+      "id": "cloud",
+      "label": "Cloud",
+      "axis": "broad scalloped halo",
+      "gapPolicy": "preserve"
+    }
+  ],
+  "headHairFits": {
+    "round": {
+      "southHalf": 21,
+      "northHalf": 21,
+      "crownY": -21,
+      "eastBack": -21,
+      "eastFront": 14
+    },
+    "broad": {
+      "southHalf": 27,
+      "northHalf": 27,
+      "crownY": -20,
+      "eastBack": -26,
+      "eastFront": 17
+    },
+    "long": {
+      "southHalf": 14,
+      "northHalf": 14,
+      "crownY": -22,
+      "eastBack": -16,
+      "eastFront": 10
+    },
+    "block": {
+      "southHalf": 20,
+      "northHalf": 20,
+      "crownY": -21,
+      "eastBack": -20,
+      "eastFront": 14
+    },
+    "point": {
+      "southHalf": 23,
+      "northHalf": 23,
+      "crownY": -21,
+      "eastBack": -21,
+      "eastFront": 16
+    },
+    "lantern": {
+      "southHalf": 15,
+      "northHalf": 15,
+      "crownY": -21,
+      "eastBack": -22,
+      "eastFront": 10
+    }
+  },
+  "currentAnalogs": [
+    "hair-short",
+    "hair-side-part",
+    "hair-bob",
+    "hair-bun",
+    "hair-ponytail",
+    "hair-coils"
+  ],
+  "externalHairPairwise": {
+    "south": {
+      "current": [
+        {
+          "pair": [
+            "hair-short",
+            "hair-side-part"
+          ],
+          "iou": 1,
+          "externalPixels": [
+            6,
+            6
+          ]
+        },
+        {
+          "pair": [
+            "hair-bob",
+            "hair-coils"
+          ],
+          "iou": 0.522,
+          "externalPixels": [
+            46,
+            59
+          ]
+        },
+        {
+          "pair": [
+            "hair-short",
+            "hair-bun"
+          ],
+          "iou": 0.3,
+          "externalPixels": [
+            6,
+            20
+          ]
+        },
+        {
+          "pair": [
+            "hair-side-part",
+            "hair-bun"
+          ],
+          "iou": 0.3,
+          "externalPixels": [
+            6,
+            20
+          ]
+        },
+        {
+          "pair": [
+            "hair-bob",
+            "hair-bun"
+          ],
+          "iou": 0.269,
+          "externalPixels": [
+            46,
+            20
+          ]
+        },
+        {
+          "pair": [
+            "hair-ponytail",
+            "hair-coils"
+          ],
+          "iou": 0.258,
+          "externalPixels": [
+            53,
+            59
+          ]
+        },
+        {
+          "pair": [
+            "hair-bob",
+            "hair-ponytail"
+          ],
+          "iou": 0.253,
+          "externalPixels": [
+            46,
+            53
+          ]
+        },
+        {
+          "pair": [
+            "hair-bun",
+            "hair-coils"
+          ],
+          "iou": 0.234,
+          "externalPixels": [
+            20,
+            59
+          ]
+        },
+        {
+          "pair": [
+            "hair-short",
+            "hair-bob"
+          ],
+          "iou": 0.13,
+          "externalPixels": [
+            6,
+            46
+          ]
+        },
+        {
+          "pair": [
+            "hair-side-part",
+            "hair-bob"
+          ],
+          "iou": 0.13,
+          "externalPixels": [
+            6,
+            46
+          ]
+        },
+        {
+          "pair": [
+            "hair-short",
+            "hair-ponytail"
+          ],
+          "iou": 0.113,
+          "externalPixels": [
+            6,
+            53
+          ]
+        },
+        {
+          "pair": [
+            "hair-side-part",
+            "hair-ponytail"
+          ],
+          "iou": 0.113,
+          "externalPixels": [
+            6,
+            53
+          ]
+        },
+        {
+          "pair": [
+            "hair-short",
+            "hair-coils"
+          ],
+          "iou": 0.102,
+          "externalPixels": [
+            6,
+            59
+          ]
+        },
+        {
+          "pair": [
+            "hair-side-part",
+            "hair-coils"
+          ],
+          "iou": 0.102,
+          "externalPixels": [
+            6,
+            59
+          ]
+        },
+        {
+          "pair": [
+            "hair-bun",
+            "hair-ponytail"
+          ],
+          "iou": 0.09,
+          "externalPixels": [
+            20,
+            53
+          ]
+        }
+      ],
+      "proposed": [
+        {
+          "pair": [
+            "crop",
+            "knot"
+          ],
+          "iou": 0.533,
+          "externalPixels": [
+            8,
+            15
+          ]
+        },
+        {
+          "pair": [
+            "sweep",
+            "bob"
+          ],
+          "iou": 0.49,
+          "externalPixels": [
+            27,
+            46
+          ]
+        },
+        {
+          "pair": [
+            "tail",
+            "cloud"
+          ],
+          "iou": 0.41,
+          "externalPixels": [
+            59,
+            82
+          ]
+        },
+        {
+          "pair": [
+            "sweep",
+            "knot"
+          ],
+          "iou": 0.4,
+          "externalPixels": [
+            27,
+            15
+          ]
+        },
+        {
+          "pair": [
+            "sweep",
+            "tail"
+          ],
+          "iou": 0.387,
+          "externalPixels": [
+            27,
+            59
+          ]
+        },
+        {
+          "pair": [
+            "bob",
+            "cloud"
+          ],
+          "iou": 0.362,
+          "externalPixels": [
+            46,
+            82
+          ]
+        },
+        {
+          "pair": [
+            "sweep",
+            "cloud"
+          ],
+          "iou": 0.313,
+          "externalPixels": [
+            27,
+            82
+          ]
+        },
+        {
+          "pair": [
+            "bob",
+            "tail"
+          ],
+          "iou": 0.313,
+          "externalPixels": [
+            46,
+            59
+          ]
+        },
+        {
+          "pair": [
+            "bob",
+            "knot"
+          ],
+          "iou": 0.298,
+          "externalPixels": [
+            46,
+            15
+          ]
+        },
+        {
+          "pair": [
+            "crop",
+            "sweep"
+          ],
+          "iou": 0.296,
+          "externalPixels": [
+            8,
+            27
+          ]
+        },
+        {
+          "pair": [
+            "knot",
+            "tail"
+          ],
+          "iou": 0.194,
+          "externalPixels": [
+            15,
+            59
+          ]
+        },
+        {
+          "pair": [
+            "crop",
+            "bob"
+          ],
+          "iou": 0.174,
+          "externalPixels": [
+            8,
+            46
+          ]
+        },
+        {
+          "pair": [
+            "knot",
+            "cloud"
+          ],
+          "iou": 0.155,
+          "externalPixels": [
+            15,
+            82
+          ]
+        },
+        {
+          "pair": [
+            "crop",
+            "tail"
+          ],
+          "iou": 0.136,
+          "externalPixels": [
+            8,
+            59
+          ]
+        },
+        {
+          "pair": [
+            "crop",
+            "cloud"
+          ],
+          "iou": 0.098,
+          "externalPixels": [
+            8,
+            82
+          ]
+        }
+      ]
+    },
+    "east": {
+      "current": [
+        {
+          "pair": [
+            "hair-short",
+            "hair-side-part"
+          ],
+          "iou": 0.9,
+          "externalPixels": [
+            9,
+            10
+          ]
+        },
+        {
+          "pair": [
+            "hair-bob",
+            "hair-coils"
+          ],
+          "iou": 0.528,
+          "externalPixels": [
+            42,
+            68
+          ]
+        },
+        {
+          "pair": [
+            "hair-short",
+            "hair-bun"
+          ],
+          "iou": 0.333,
+          "externalPixels": [
+            9,
+            23
+          ]
+        },
+        {
+          "pair": [
+            "hair-side-part",
+            "hair-bun"
+          ],
+          "iou": 0.32,
+          "externalPixels": [
+            10,
+            23
+          ]
+        },
+        {
+          "pair": [
+            "hair-bun",
+            "hair-coils"
+          ],
+          "iou": 0.319,
+          "externalPixels": [
+            23,
+            68
+          ]
+        },
+        {
+          "pair": [
+            "hair-ponytail",
+            "hair-coils"
+          ],
+          "iou": 0.299,
+          "externalPixels": [
+            71,
+            68
+          ]
+        },
+        {
+          "pair": [
+            "hair-bun",
+            "hair-ponytail"
+          ],
+          "iou": 0.27,
+          "externalPixels": [
+            23,
+            71
+          ]
+        },
+        {
+          "pair": [
+            "hair-bob",
+            "hair-bun"
+          ],
+          "iou": 0.25,
+          "externalPixels": [
+            42,
+            23
+          ]
+        },
+        {
+          "pair": [
+            "hair-side-part",
+            "hair-bob"
+          ],
+          "iou": 0.238,
+          "externalPixels": [
+            10,
+            42
+          ]
+        },
+        {
+          "pair": [
+            "hair-short",
+            "hair-bob"
+          ],
+          "iou": 0.214,
+          "externalPixels": [
+            9,
+            42
+          ]
+        },
+        {
+          "pair": [
+            "hair-bob",
+            "hair-ponytail"
+          ],
+          "iou": 0.202,
+          "externalPixels": [
+            42,
+            71
+          ]
+        },
+        {
+          "pair": [
+            "hair-side-part",
+            "hair-coils"
+          ],
+          "iou": 0.147,
+          "externalPixels": [
+            10,
+            68
+          ]
+        },
+        {
+          "pair": [
+            "hair-short",
+            "hair-coils"
+          ],
+          "iou": 0.132,
+          "externalPixels": [
+            9,
+            68
+          ]
+        },
+        {
+          "pair": [
+            "hair-short",
+            "hair-ponytail"
+          ],
+          "iou": 0.127,
+          "externalPixels": [
+            9,
+            71
+          ]
+        },
+        {
+          "pair": [
+            "hair-side-part",
+            "hair-ponytail"
+          ],
+          "iou": 0.125,
+          "externalPixels": [
+            10,
+            71
+          ]
+        }
+      ],
+      "proposed": [
+        {
+          "pair": [
+            "sweep",
+            "cloud"
+          ],
+          "iou": 0.683,
+          "externalPixels": [
+            29,
+            40
+          ]
+        },
+        {
+          "pair": [
+            "sweep",
+            "bob"
+          ],
+          "iou": 0.529,
+          "externalPixels": [
+            29,
+            23
+          ]
+        },
+        {
+          "pair": [
+            "bob",
+            "cloud"
+          ],
+          "iou": 0.5,
+          "externalPixels": [
+            23,
+            40
+          ]
+        },
+        {
+          "pair": [
+            "crop",
+            "bob"
+          ],
+          "iou": 0.478,
+          "externalPixels": [
+            11,
+            23
+          ]
+        },
+        {
+          "pair": [
+            "tail",
+            "cloud"
+          ],
+          "iou": 0.468,
+          "externalPixels": [
+            73,
+            40
+          ]
+        },
+        {
+          "pair": [
+            "crop",
+            "knot"
+          ],
+          "iou": 0.458,
+          "externalPixels": [
+            11,
+            24
+          ]
+        },
+        {
+          "pair": [
+            "crop",
+            "sweep"
+          ],
+          "iou": 0.379,
+          "externalPixels": [
+            11,
+            29
+          ]
+        },
+        {
+          "pair": [
+            "sweep",
+            "tail"
+          ],
+          "iou": 0.378,
+          "externalPixels": [
+            29,
+            73
+          ]
+        },
+        {
+          "pair": [
+            "bob",
+            "knot"
+          ],
+          "iou": 0.306,
+          "externalPixels": [
+            23,
+            24
+          ]
+        },
+        {
+          "pair": [
+            "knot",
+            "cloud"
+          ],
+          "iou": 0.306,
+          "externalPixels": [
+            24,
+            40
+          ]
+        },
+        {
+          "pair": [
+            "bob",
+            "tail"
+          ],
+          "iou": 0.297,
+          "externalPixels": [
+            23,
+            73
+          ]
+        },
+        {
+          "pair": [
+            "crop",
+            "cloud"
+          ],
+          "iou": 0.275,
+          "externalPixels": [
+            11,
+            40
+          ]
+        },
+        {
+          "pair": [
+            "sweep",
+            "knot"
+          ],
+          "iou": 0.262,
+          "externalPixels": [
+            29,
+            24
+          ]
+        },
+        {
+          "pair": [
+            "crop",
+            "tail"
+          ],
+          "iou": 0.151,
+          "externalPixels": [
+            11,
+            73
+          ]
+        },
+        {
+          "pair": [
+            "knot",
+            "tail"
+          ],
+          "iou": 0.128,
+          "externalPixels": [
+            24,
+            73
+          ]
+        }
+      ]
+    }
+  },
+  "profileFit": {
+    "note": "Profile findings flag south/east hair IoU above 0.82, forward-profile skin retention below 0.32, or a crown starting more than two raster rows below the bare head top. Adaptation requires Broad hair to render wider than Long hair.",
+    "rows": [
+      {
+        "hair": "Crop",
+        "head": "Round",
+        "size": 40,
+        "southEastHairIou": 0.661,
+        "eastSkinRetention": 0.582,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 14,
+          "minY": 5,
+          "maxX": 25,
+          "maxY": 9,
+          "width": 12,
+          "height": 5
+        },
+        "eastHairBounds": {
+          "minX": 14,
+          "minY": 4,
+          "maxX": 24,
+          "maxY": 10,
+          "width": 11,
+          "height": 7
+        }
+      },
+      {
+        "hair": "Sweep",
+        "head": "Round",
+        "size": 40,
+        "southEastHairIou": 0.549,
+        "eastSkinRetention": 0.582,
+        "crownTopDelta": -1,
+        "southHairBounds": {
+          "minX": 13,
+          "minY": 4,
+          "maxX": 26,
+          "maxY": 14,
+          "width": 14,
+          "height": 11
+        },
+        "eastHairBounds": {
+          "minX": 12,
+          "minY": 4,
+          "maxX": 24,
+          "maxY": 14,
+          "width": 13,
+          "height": 11
+        }
+      },
+      {
+        "hair": "Bob",
+        "head": "Round",
+        "size": 40,
+        "southEastHairIou": 0.51,
+        "eastSkinRetention": 0.382,
+        "crownTopDelta": -1,
+        "southHairBounds": {
+          "minX": 13,
+          "minY": 4,
+          "maxX": 26,
+          "maxY": 16,
+          "width": 14,
+          "height": 13
+        },
+        "eastHairBounds": {
+          "minX": 14,
+          "minY": 4,
+          "maxX": 24,
+          "maxY": 15,
+          "width": 11,
+          "height": 12
+        }
+      },
+      {
+        "hair": "Knot",
+        "head": "Round",
+        "size": 40,
+        "southEastHairIou": 0.648,
+        "eastSkinRetention": 0.582,
+        "crownTopDelta": -1,
+        "southHairBounds": {
+          "minX": 14,
+          "minY": 4,
+          "maxX": 25,
+          "maxY": 9,
+          "width": 12,
+          "height": 6
+        },
+        "eastHairBounds": {
+          "minX": 13,
+          "minY": 4,
+          "maxX": 24,
+          "maxY": 11,
+          "width": 12,
+          "height": 8
+        }
+      },
+      {
+        "hair": "Tail",
+        "head": "Round",
+        "size": 40,
+        "southEastHairIou": 0.336,
+        "eastSkinRetention": 0.6,
+        "crownTopDelta": -1,
+        "southHairBounds": {
+          "minX": 14,
+          "minY": 4,
+          "maxX": 29,
+          "maxY": 17,
+          "width": 16,
+          "height": 14
+        },
+        "eastHairBounds": {
+          "minX": 10,
+          "minY": 4,
+          "maxX": 24,
+          "maxY": 18,
+          "width": 15,
+          "height": 15
+        }
+      },
+      {
+        "hair": "Cloud",
+        "head": "Round",
+        "size": 40,
+        "southEastHairIou": 0.394,
+        "eastSkinRetention": 0.618,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 10,
+          "minY": 5,
+          "maxX": 29,
+          "maxY": 14,
+          "width": 20,
+          "height": 10
+        },
+        "eastHairBounds": {
+          "minX": 12,
+          "minY": 4,
+          "maxX": 25,
+          "maxY": 14,
+          "width": 14,
+          "height": 11
+        }
+      },
+      {
+        "hair": "Crop",
+        "head": "Round",
+        "size": 48,
+        "southEastHairIou": 0.716,
+        "eastSkinRetention": 0.597,
+        "crownTopDelta": 1,
+        "southHairBounds": {
+          "minX": 17,
+          "minY": 6,
+          "maxX": 30,
+          "maxY": 11,
+          "width": 14,
+          "height": 6
+        },
+        "eastHairBounds": {
+          "minX": 17,
+          "minY": 5,
+          "maxX": 29,
+          "maxY": 13,
+          "width": 13,
+          "height": 9
+        }
+      },
+      {
+        "hair": "Sweep",
+        "head": "Round",
+        "size": 48,
+        "southEastHairIou": 0.579,
+        "eastSkinRetention": 0.625,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 16,
+          "minY": 5,
+          "maxX": 32,
+          "maxY": 17,
+          "width": 17,
+          "height": 13
+        },
+        "eastHairBounds": {
+          "minX": 15,
+          "minY": 5,
+          "maxX": 30,
+          "maxY": 18,
+          "width": 16,
+          "height": 14
+        }
+      },
+      {
+        "hair": "Bob",
+        "head": "Round",
+        "size": 48,
+        "southEastHairIou": 0.517,
+        "eastSkinRetention": 0.444,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 15,
+          "minY": 5,
+          "maxX": 32,
+          "maxY": 19,
+          "width": 18,
+          "height": 15
+        },
+        "eastHairBounds": {
+          "minX": 16,
+          "minY": 5,
+          "maxX": 29,
+          "maxY": 18,
+          "width": 14,
+          "height": 14
+        }
+      },
+      {
+        "hair": "Knot",
+        "head": "Round",
+        "size": 48,
+        "southEastHairIou": 0.673,
+        "eastSkinRetention": 0.597,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 16,
+          "minY": 5,
+          "maxX": 31,
+          "maxY": 11,
+          "width": 16,
+          "height": 7
+        },
+        "eastHairBounds": {
+          "minX": 16,
+          "minY": 5,
+          "maxX": 29,
+          "maxY": 13,
+          "width": 14,
+          "height": 9
+        }
+      },
+      {
+        "hair": "Tail",
+        "head": "Round",
+        "size": 48,
+        "southEastHairIou": 0.328,
+        "eastSkinRetention": 0.625,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 16,
+          "minY": 5,
+          "maxX": 35,
+          "maxY": 21,
+          "width": 20,
+          "height": 17
+        },
+        "eastHairBounds": {
+          "minX": 12,
+          "minY": 5,
+          "maxX": 29,
+          "maxY": 22,
+          "width": 18,
+          "height": 18
+        }
+      },
+      {
+        "hair": "Cloud",
+        "head": "Round",
+        "size": 48,
+        "southEastHairIou": 0.413,
+        "eastSkinRetention": 0.611,
+        "crownTopDelta": 1,
+        "southHairBounds": {
+          "minX": 12,
+          "minY": 6,
+          "maxX": 35,
+          "maxY": 17,
+          "width": 24,
+          "height": 12
+        },
+        "eastHairBounds": {
+          "minX": 15,
+          "minY": 5,
+          "maxX": 31,
+          "maxY": 18,
+          "width": 17,
+          "height": 14
+        }
+      },
+      {
+        "hair": "Crop",
+        "head": "Broad",
+        "size": 40,
+        "southEastHairIou": 0.687,
+        "eastSkinRetention": 0.606,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 12,
+          "minY": 5,
+          "maxX": 27,
+          "maxY": 9,
+          "width": 16,
+          "height": 5
+        },
+        "eastHairBounds": {
+          "minX": 13,
+          "minY": 4,
+          "maxX": 25,
+          "maxY": 10,
+          "width": 13,
+          "height": 7
+        }
+      },
+      {
+        "hair": "Sweep",
+        "head": "Broad",
+        "size": 40,
+        "southEastHairIou": 0.602,
+        "eastSkinRetention": 0.621,
+        "crownTopDelta": -1,
+        "southHairBounds": {
+          "minX": 12,
+          "minY": 4,
+          "maxX": 28,
+          "maxY": 14,
+          "width": 17,
+          "height": 11
+        },
+        "eastHairBounds": {
+          "minX": 11,
+          "minY": 4,
+          "maxX": 25,
+          "maxY": 14,
+          "width": 15,
+          "height": 11
+        }
+      },
+      {
+        "hair": "Bob",
+        "head": "Broad",
+        "size": 40,
+        "southEastHairIou": 0.512,
+        "eastSkinRetention": 0.424,
+        "crownTopDelta": -1,
+        "southHairBounds": {
+          "minX": 11,
+          "minY": 4,
+          "maxX": 28,
+          "maxY": 16,
+          "width": 18,
+          "height": 13
+        },
+        "eastHairBounds": {
+          "minX": 12,
+          "minY": 4,
+          "maxX": 25,
+          "maxY": 15,
+          "width": 14,
+          "height": 12
+        }
+      },
+      {
+        "hair": "Knot",
+        "head": "Broad",
+        "size": 40,
+        "southEastHairIou": 0.651,
+        "eastSkinRetention": 0.606,
+        "crownTopDelta": -1,
+        "southHairBounds": {
+          "minX": 12,
+          "minY": 4,
+          "maxX": 27,
+          "maxY": 9,
+          "width": 16,
+          "height": 6
+        },
+        "eastHairBounds": {
+          "minX": 11,
+          "minY": 4,
+          "maxX": 25,
+          "maxY": 10,
+          "width": 15,
+          "height": 7
+        }
+      },
+      {
+        "hair": "Tail",
+        "head": "Broad",
+        "size": 40,
+        "southEastHairIou": 0.376,
+        "eastSkinRetention": 0.606,
+        "crownTopDelta": -1,
+        "southHairBounds": {
+          "minX": 12,
+          "minY": 4,
+          "maxX": 31,
+          "maxY": 17,
+          "width": 20,
+          "height": 14
+        },
+        "eastHairBounds": {
+          "minX": 8,
+          "minY": 4,
+          "maxX": 25,
+          "maxY": 18,
+          "width": 18,
+          "height": 15
+        }
+      },
+      {
+        "hair": "Cloud",
+        "head": "Broad",
+        "size": 40,
+        "southEastHairIou": 0.459,
+        "eastSkinRetention": 0.561,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 8,
+          "minY": 5,
+          "maxX": 31,
+          "maxY": 14,
+          "width": 24,
+          "height": 10
+        },
+        "eastHairBounds": {
+          "minX": 10,
+          "minY": 4,
+          "maxX": 27,
+          "maxY": 15,
+          "width": 18,
+          "height": 12
+        }
+      },
+      {
+        "hair": "Crop",
+        "head": "Broad",
+        "size": 48,
+        "southEastHairIou": 0.68,
+        "eastSkinRetention": 0.632,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 14,
+          "minY": 6,
+          "maxX": 33,
+          "maxY": 11,
+          "width": 20,
+          "height": 6
+        },
+        "eastHairBounds": {
+          "minX": 15,
+          "minY": 5,
+          "maxX": 30,
+          "maxY": 13,
+          "width": 16,
+          "height": 9
+        }
+      },
+      {
+        "hair": "Sweep",
+        "head": "Broad",
+        "size": 48,
+        "southEastHairIou": 0.59,
+        "eastSkinRetention": 0.632,
+        "crownTopDelta": -1,
+        "southHairBounds": {
+          "minX": 13,
+          "minY": 5,
+          "maxX": 34,
+          "maxY": 17,
+          "width": 22,
+          "height": 13
+        },
+        "eastHairBounds": {
+          "minX": 13,
+          "minY": 5,
+          "maxX": 31,
+          "maxY": 18,
+          "width": 19,
+          "height": 14
+        }
+      },
+      {
+        "hair": "Bob",
+        "head": "Broad",
+        "size": 48,
+        "southEastHairIou": 0.466,
+        "eastSkinRetention": 0.46,
+        "crownTopDelta": -1,
+        "southHairBounds": {
+          "minX": 13,
+          "minY": 5,
+          "maxX": 34,
+          "maxY": 20,
+          "width": 22,
+          "height": 16
+        },
+        "eastHairBounds": {
+          "minX": 15,
+          "minY": 5,
+          "maxX": 30,
+          "maxY": 18,
+          "width": 16,
+          "height": 14
+        }
+      },
+      {
+        "hair": "Knot",
+        "head": "Broad",
+        "size": 48,
+        "southEastHairIou": 0.667,
+        "eastSkinRetention": 0.632,
+        "crownTopDelta": -1,
+        "southHairBounds": {
+          "minX": 14,
+          "minY": 5,
+          "maxX": 33,
+          "maxY": 12,
+          "width": 20,
+          "height": 8
+        },
+        "eastHairBounds": {
+          "minX": 13,
+          "minY": 5,
+          "maxX": 30,
+          "maxY": 13,
+          "width": 18,
+          "height": 9
+        }
+      },
+      {
+        "hair": "Tail",
+        "head": "Broad",
+        "size": 48,
+        "southEastHairIou": 0.385,
+        "eastSkinRetention": 0.644,
+        "crownTopDelta": -1,
+        "southHairBounds": {
+          "minX": 14,
+          "minY": 5,
+          "maxX": 37,
+          "maxY": 21,
+          "width": 24,
+          "height": 17
+        },
+        "eastHairBounds": {
+          "minX": 10,
+          "minY": 5,
+          "maxX": 30,
+          "maxY": 22,
+          "width": 21,
+          "height": 18
+        }
+      },
+      {
+        "hair": "Cloud",
+        "head": "Broad",
+        "size": 48,
+        "southEastHairIou": 0.484,
+        "eastSkinRetention": 0.586,
+        "crownTopDelta": -1,
+        "southHairBounds": {
+          "minX": 9,
+          "minY": 5,
+          "maxX": 38,
+          "maxY": 17,
+          "width": 30,
+          "height": 13
+        },
+        "eastHairBounds": {
+          "minX": 12,
+          "minY": 5,
+          "maxX": 32,
+          "maxY": 18,
+          "width": 21,
+          "height": 14
+        }
+      },
+      {
+        "hair": "Crop",
+        "head": "Long",
+        "size": 40,
+        "southEastHairIou": 0.711,
+        "eastSkinRetention": 0.581,
+        "crownTopDelta": 1,
+        "southHairBounds": {
+          "minX": 16,
+          "minY": 5,
+          "maxX": 23,
+          "maxY": 9,
+          "width": 8,
+          "height": 5
+        },
+        "eastHairBounds": {
+          "minX": 16,
+          "minY": 4,
+          "maxX": 23,
+          "maxY": 10,
+          "width": 8,
+          "height": 7
+        }
+      },
+      {
+        "hair": "Sweep",
+        "head": "Long",
+        "size": 40,
+        "southEastHairIou": 0.524,
+        "eastSkinRetention": 0.581,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 15,
+          "minY": 4,
+          "maxX": 24,
+          "maxY": 14,
+          "width": 10,
+          "height": 11
+        },
+        "eastHairBounds": {
+          "minX": 14,
+          "minY": 4,
+          "maxX": 23,
+          "maxY": 14,
+          "width": 10,
+          "height": 11
+        }
+      },
+      {
+        "hair": "Bob",
+        "head": "Long",
+        "size": 40,
+        "southEastHairIou": 0.595,
+        "eastSkinRetention": 0.465,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 15,
+          "minY": 4,
+          "maxX": 24,
+          "maxY": 15,
+          "width": 10,
+          "height": 12
+        },
+        "eastHairBounds": {
+          "minX": 15,
+          "minY": 4,
+          "maxX": 23,
+          "maxY": 15,
+          "width": 9,
+          "height": 12
+        }
+      },
+      {
+        "hair": "Knot",
+        "head": "Long",
+        "size": 40,
+        "southEastHairIou": 0.766,
+        "eastSkinRetention": 0.581,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 16,
+          "minY": 4,
+          "maxX": 23,
+          "maxY": 10,
+          "width": 8,
+          "height": 7
+        },
+        "eastHairBounds": {
+          "minX": 15,
+          "minY": 4,
+          "maxX": 23,
+          "maxY": 10,
+          "width": 9,
+          "height": 7
+        }
+      },
+      {
+        "hair": "Tail",
+        "head": "Long",
+        "size": 40,
+        "southEastHairIou": 0.259,
+        "eastSkinRetention": 0.605,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 16,
+          "minY": 4,
+          "maxX": 27,
+          "maxY": 17,
+          "width": 12,
+          "height": 14
+        },
+        "eastHairBounds": {
+          "minX": 12,
+          "minY": 4,
+          "maxX": 22,
+          "maxY": 18,
+          "width": 11,
+          "height": 15
+        }
+      },
+      {
+        "hair": "Cloud",
+        "head": "Long",
+        "size": 40,
+        "southEastHairIou": 0.397,
+        "eastSkinRetention": 0.651,
+        "crownTopDelta": 1,
+        "southHairBounds": {
+          "minX": 13,
+          "minY": 5,
+          "maxX": 26,
+          "maxY": 14,
+          "width": 14,
+          "height": 10
+        },
+        "eastHairBounds": {
+          "minX": 14,
+          "minY": 5,
+          "maxX": 25,
+          "maxY": 14,
+          "width": 12,
+          "height": 10
+        }
+      },
+      {
+        "hair": "Crop",
+        "head": "Long",
+        "size": 48,
+        "southEastHairIou": 0.689,
+        "eastSkinRetention": 0.66,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 19,
+          "minY": 5,
+          "maxX": 28,
+          "maxY": 11,
+          "width": 10,
+          "height": 7
+        },
+        "eastHairBounds": {
+          "minX": 19,
+          "minY": 5,
+          "maxX": 27,
+          "maxY": 13,
+          "width": 9,
+          "height": 9
+        }
+      },
+      {
+        "hair": "Sweep",
+        "head": "Long",
+        "size": 48,
+        "southEastHairIou": 0.542,
+        "eastSkinRetention": 0.623,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 18,
+          "minY": 5,
+          "maxX": 29,
+          "maxY": 17,
+          "width": 12,
+          "height": 13
+        },
+        "eastHairBounds": {
+          "minX": 16,
+          "minY": 5,
+          "maxX": 28,
+          "maxY": 18,
+          "width": 13,
+          "height": 14
+        }
+      },
+      {
+        "hair": "Bob",
+        "head": "Long",
+        "size": 48,
+        "southEastHairIou": 0.567,
+        "eastSkinRetention": 0.623,
+        "crownTopDelta": -1,
+        "southHairBounds": {
+          "minX": 18,
+          "minY": 4,
+          "maxX": 29,
+          "maxY": 20,
+          "width": 12,
+          "height": 17
+        },
+        "eastHairBounds": {
+          "minX": 18,
+          "minY": 4,
+          "maxX": 28,
+          "maxY": 18,
+          "width": 11,
+          "height": 15
+        }
+      },
+      {
+        "hair": "Knot",
+        "head": "Long",
+        "size": 48,
+        "southEastHairIou": 0.689,
+        "eastSkinRetention": 0.66,
+        "crownTopDelta": -1,
+        "southHairBounds": {
+          "minX": 19,
+          "minY": 4,
+          "maxX": 28,
+          "maxY": 12,
+          "width": 10,
+          "height": 9
+        },
+        "eastHairBounds": {
+          "minX": 18,
+          "minY": 4,
+          "maxX": 27,
+          "maxY": 13,
+          "width": 10,
+          "height": 10
+        }
+      },
+      {
+        "hair": "Tail",
+        "head": "Long",
+        "size": 48,
+        "southEastHairIou": 0.279,
+        "eastSkinRetention": 0.66,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 19,
+          "minY": 5,
+          "maxX": 33,
+          "maxY": 21,
+          "width": 15,
+          "height": 17
+        },
+        "eastHairBounds": {
+          "minX": 14,
+          "minY": 5,
+          "maxX": 27,
+          "maxY": 22,
+          "width": 14,
+          "height": 18
+        }
+      },
+      {
+        "hair": "Cloud",
+        "head": "Long",
+        "size": 48,
+        "southEastHairIou": 0.362,
+        "eastSkinRetention": 0.66,
+        "crownTopDelta": 1,
+        "southHairBounds": {
+          "minX": 15,
+          "minY": 6,
+          "maxX": 32,
+          "maxY": 17,
+          "width": 18,
+          "height": 12
+        },
+        "eastHairBounds": {
+          "minX": 17,
+          "minY": 5,
+          "maxX": 30,
+          "maxY": 17,
+          "width": 14,
+          "height": 13
+        }
+      },
+      {
+        "hair": "Crop",
+        "head": "Block",
+        "size": 40,
+        "southEastHairIou": 0.679,
+        "eastSkinRetention": 0.638,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 14,
+          "minY": 5,
+          "maxX": 25,
+          "maxY": 9,
+          "width": 12,
+          "height": 5
+        },
+        "eastHairBounds": {
+          "minX": 15,
+          "minY": 4,
+          "maxX": 24,
+          "maxY": 10,
+          "width": 10,
+          "height": 7
+        }
+      },
+      {
+        "hair": "Sweep",
+        "head": "Block",
+        "size": 40,
+        "southEastHairIou": 0.62,
+        "eastSkinRetention": 0.638,
+        "crownTopDelta": -1,
+        "southHairBounds": {
+          "minX": 14,
+          "minY": 4,
+          "maxX": 26,
+          "maxY": 13,
+          "width": 13,
+          "height": 10
+        },
+        "eastHairBounds": {
+          "minX": 13,
+          "minY": 4,
+          "maxX": 24,
+          "maxY": 14,
+          "width": 12,
+          "height": 11
+        }
+      },
+      {
+        "hair": "Bob",
+        "head": "Block",
+        "size": 40,
+        "southEastHairIou": 0.52,
+        "eastSkinRetention": 0.532,
+        "crownTopDelta": -1,
+        "southHairBounds": {
+          "minX": 13,
+          "minY": 4,
+          "maxX": 26,
+          "maxY": 15,
+          "width": 14,
+          "height": 12
+        },
+        "eastHairBounds": {
+          "minX": 14,
+          "minY": 4,
+          "maxX": 24,
+          "maxY": 15,
+          "width": 11,
+          "height": 12
+        }
+      },
+      {
+        "hair": "Knot",
+        "head": "Block",
+        "size": 40,
+        "southEastHairIou": 0.692,
+        "eastSkinRetention": 0.638,
+        "crownTopDelta": -1,
+        "southHairBounds": {
+          "minX": 14,
+          "minY": 4,
+          "maxX": 25,
+          "maxY": 9,
+          "width": 12,
+          "height": 6
+        },
+        "eastHairBounds": {
+          "minX": 14,
+          "minY": 4,
+          "maxX": 24,
+          "maxY": 10,
+          "width": 11,
+          "height": 7
+        }
+      },
+      {
+        "hair": "Tail",
+        "head": "Block",
+        "size": 40,
+        "southEastHairIou": 0.336,
+        "eastSkinRetention": 0.66,
+        "crownTopDelta": -1,
+        "southHairBounds": {
+          "minX": 14,
+          "minY": 4,
+          "maxX": 29,
+          "maxY": 18,
+          "width": 16,
+          "height": 15
+        },
+        "eastHairBounds": {
+          "minX": 10,
+          "minY": 4,
+          "maxX": 24,
+          "maxY": 18,
+          "width": 15,
+          "height": 15
+        }
+      },
+      {
+        "hair": "Cloud",
+        "head": "Block",
+        "size": 40,
+        "southEastHairIou": 0.421,
+        "eastSkinRetention": 0.66,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 11,
+          "minY": 5,
+          "maxX": 28,
+          "maxY": 14,
+          "width": 18,
+          "height": 10
+        },
+        "eastHairBounds": {
+          "minX": 13,
+          "minY": 4,
+          "maxX": 25,
+          "maxY": 14,
+          "width": 13,
+          "height": 11
+        }
+      },
+      {
+        "hair": "Crop",
+        "head": "Block",
+        "size": 48,
+        "southEastHairIou": 0.731,
+        "eastSkinRetention": 0.636,
+        "crownTopDelta": 1,
+        "southHairBounds": {
+          "minX": 17,
+          "minY": 6,
+          "maxX": 30,
+          "maxY": 11,
+          "width": 14,
+          "height": 6
+        },
+        "eastHairBounds": {
+          "minX": 18,
+          "minY": 5,
+          "maxX": 29,
+          "maxY": 12,
+          "width": 12,
+          "height": 8
+        }
+      },
+      {
+        "hair": "Sweep",
+        "head": "Block",
+        "size": 48,
+        "southEastHairIou": 0.605,
+        "eastSkinRetention": 0.662,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 16,
+          "minY": 5,
+          "maxX": 32,
+          "maxY": 17,
+          "width": 17,
+          "height": 13
+        },
+        "eastHairBounds": {
+          "minX": 15,
+          "minY": 5,
+          "maxX": 30,
+          "maxY": 18,
+          "width": 16,
+          "height": 14
+        }
+      },
+      {
+        "hair": "Bob",
+        "head": "Block",
+        "size": 48,
+        "southEastHairIou": 0.543,
+        "eastSkinRetention": 0.494,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 16,
+          "minY": 5,
+          "maxX": 31,
+          "maxY": 19,
+          "width": 16,
+          "height": 15
+        },
+        "eastHairBounds": {
+          "minX": 17,
+          "minY": 5,
+          "maxX": 29,
+          "maxY": 18,
+          "width": 13,
+          "height": 14
+        }
+      },
+      {
+        "hair": "Knot",
+        "head": "Block",
+        "size": 48,
+        "southEastHairIou": 0.726,
+        "eastSkinRetention": 0.636,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 17,
+          "minY": 5,
+          "maxX": 30,
+          "maxY": 11,
+          "width": 14,
+          "height": 7
+        },
+        "eastHairBounds": {
+          "minX": 16,
+          "minY": 5,
+          "maxX": 29,
+          "maxY": 12,
+          "width": 14,
+          "height": 8
+        }
+      },
+      {
+        "hair": "Tail",
+        "head": "Block",
+        "size": 48,
+        "southEastHairIou": 0.323,
+        "eastSkinRetention": 0.662,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 17,
+          "minY": 5,
+          "maxX": 35,
+          "maxY": 21,
+          "width": 19,
+          "height": 17
+        },
+        "eastHairBounds": {
+          "minX": 12,
+          "minY": 5,
+          "maxX": 29,
+          "maxY": 22,
+          "width": 18,
+          "height": 18
+        }
+      },
+      {
+        "hair": "Cloud",
+        "head": "Block",
+        "size": 48,
+        "southEastHairIou": 0.42,
+        "eastSkinRetention": 0.649,
+        "crownTopDelta": 1,
+        "southHairBounds": {
+          "minX": 13,
+          "minY": 6,
+          "maxX": 34,
+          "maxY": 17,
+          "width": 22,
+          "height": 12
+        },
+        "eastHairBounds": {
+          "minX": 15,
+          "minY": 5,
+          "maxX": 30,
+          "maxY": 17,
+          "width": 16,
+          "height": 13
+        }
+      },
+      {
+        "hair": "Crop",
+        "head": "Point",
+        "size": 40,
+        "southEastHairIou": 0.635,
+        "eastSkinRetention": 0.612,
+        "crownTopDelta": 1,
+        "southHairBounds": {
+          "minX": 13,
+          "minY": 5,
+          "maxX": 26,
+          "maxY": 9,
+          "width": 14,
+          "height": 5
+        },
+        "eastHairBounds": {
+          "minX": 14,
+          "minY": 4,
+          "maxX": 24,
+          "maxY": 10,
+          "width": 11,
+          "height": 7
+        }
+      },
+      {
+        "hair": "Sweep",
+        "head": "Point",
+        "size": 40,
+        "southEastHairIou": 0.588,
+        "eastSkinRetention": 0.592,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 13,
+          "minY": 4,
+          "maxX": 27,
+          "maxY": 14,
+          "width": 15,
+          "height": 11
+        },
+        "eastHairBounds": {
+          "minX": 12,
+          "minY": 4,
+          "maxX": 25,
+          "maxY": 14,
+          "width": 14,
+          "height": 11
+        }
+      },
+      {
+        "hair": "Bob",
+        "head": "Point",
+        "size": 40,
+        "southEastHairIou": 0.438,
+        "eastSkinRetention": 0.388,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 12,
+          "minY": 4,
+          "maxX": 27,
+          "maxY": 16,
+          "width": 16,
+          "height": 13
+        },
+        "eastHairBounds": {
+          "minX": 14,
+          "minY": 4,
+          "maxX": 25,
+          "maxY": 15,
+          "width": 12,
+          "height": 12
+        }
+      },
+      {
+        "hair": "Knot",
+        "head": "Point",
+        "size": 40,
+        "southEastHairIou": 0.689,
+        "eastSkinRetention": 0.612,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 13,
+          "minY": 4,
+          "maxX": 26,
+          "maxY": 9,
+          "width": 14,
+          "height": 6
+        },
+        "eastHairBounds": {
+          "minX": 13,
+          "minY": 4,
+          "maxX": 24,
+          "maxY": 11,
+          "width": 12,
+          "height": 8
+        }
+      },
+      {
+        "hair": "Tail",
+        "head": "Point",
+        "size": 40,
+        "southEastHairIou": 0.364,
+        "eastSkinRetention": 0.633,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 13,
+          "minY": 4,
+          "maxX": 30,
+          "maxY": 18,
+          "width": 18,
+          "height": 15
+        },
+        "eastHairBounds": {
+          "minX": 10,
+          "minY": 4,
+          "maxX": 24,
+          "maxY": 18,
+          "width": 15,
+          "height": 15
+        }
+      },
+      {
+        "hair": "Cloud",
+        "head": "Point",
+        "size": 40,
+        "southEastHairIou": 0.402,
+        "eastSkinRetention": 0.551,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 9,
+          "minY": 4,
+          "maxX": 30,
+          "maxY": 14,
+          "width": 22,
+          "height": 11
+        },
+        "eastHairBounds": {
+          "minX": 12,
+          "minY": 4,
+          "maxX": 26,
+          "maxY": 15,
+          "width": 15,
+          "height": 12
+        }
+      },
+      {
+        "hair": "Crop",
+        "head": "Point",
+        "size": 48,
+        "southEastHairIou": 0.652,
+        "eastSkinRetention": 0.62,
+        "crownTopDelta": 1,
+        "southHairBounds": {
+          "minX": 16,
+          "minY": 6,
+          "maxX": 31,
+          "maxY": 11,
+          "width": 16,
+          "height": 6
+        },
+        "eastHairBounds": {
+          "minX": 17,
+          "minY": 5,
+          "maxX": 30,
+          "maxY": 13,
+          "width": 14,
+          "height": 9
+        }
+      },
+      {
+        "hair": "Sweep",
+        "head": "Point",
+        "size": 48,
+        "southEastHairIou": 0.573,
+        "eastSkinRetention": 0.62,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 15,
+          "minY": 5,
+          "maxX": 33,
+          "maxY": 17,
+          "width": 19,
+          "height": 13
+        },
+        "eastHairBounds": {
+          "minX": 15,
+          "minY": 5,
+          "maxX": 30,
+          "maxY": 18,
+          "width": 16,
+          "height": 14
+        }
+      },
+      {
+        "hair": "Bob",
+        "head": "Point",
+        "size": 48,
+        "southEastHairIou": 0.452,
+        "eastSkinRetention": 0.392,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 15,
+          "minY": 5,
+          "maxX": 32,
+          "maxY": 20,
+          "width": 18,
+          "height": 16
+        },
+        "eastHairBounds": {
+          "minX": 16,
+          "minY": 5,
+          "maxX": 30,
+          "maxY": 18,
+          "width": 15,
+          "height": 14
+        }
+      },
+      {
+        "hair": "Knot",
+        "head": "Point",
+        "size": 48,
+        "southEastHairIou": 0.74,
+        "eastSkinRetention": 0.62,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 16,
+          "minY": 5,
+          "maxX": 31,
+          "maxY": 12,
+          "width": 16,
+          "height": 8
+        },
+        "eastHairBounds": {
+          "minX": 16,
+          "minY": 5,
+          "maxX": 30,
+          "maxY": 13,
+          "width": 15,
+          "height": 9
+        }
+      },
+      {
+        "hair": "Tail",
+        "head": "Point",
+        "size": 48,
+        "southEastHairIou": 0.351,
+        "eastSkinRetention": 0.646,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 16,
+          "minY": 5,
+          "maxX": 36,
+          "maxY": 21,
+          "width": 21,
+          "height": 17
+        },
+        "eastHairBounds": {
+          "minX": 12,
+          "minY": 5,
+          "maxX": 30,
+          "maxY": 22,
+          "width": 19,
+          "height": 18
+        }
+      },
+      {
+        "hair": "Cloud",
+        "head": "Point",
+        "size": 48,
+        "southEastHairIou": 0.386,
+        "eastSkinRetention": 0.608,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 11,
+          "minY": 5,
+          "maxX": 36,
+          "maxY": 17,
+          "width": 26,
+          "height": 13
+        },
+        "eastHairBounds": {
+          "minX": 15,
+          "minY": 5,
+          "maxX": 32,
+          "maxY": 18,
+          "width": 18,
+          "height": 14
+        }
+      },
+      {
+        "hair": "Crop",
+        "head": "Lantern",
+        "size": 40,
+        "southEastHairIou": 0.587,
+        "eastSkinRetention": 0.778,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 16,
+          "minY": 5,
+          "maxX": 23,
+          "maxY": 9,
+          "width": 8,
+          "height": 5
+        },
+        "eastHairBounds": {
+          "minX": 14,
+          "minY": 4,
+          "maxX": 23,
+          "maxY": 10,
+          "width": 10,
+          "height": 7
+        }
+      },
+      {
+        "hair": "Sweep",
+        "head": "Lantern",
+        "size": 40,
+        "southEastHairIou": 0.479,
+        "eastSkinRetention": 0.756,
+        "crownTopDelta": -1,
+        "southHairBounds": {
+          "minX": 15,
+          "minY": 4,
+          "maxX": 24,
+          "maxY": 14,
+          "width": 10,
+          "height": 11
+        },
+        "eastHairBounds": {
+          "minX": 12,
+          "minY": 4,
+          "maxX": 23,
+          "maxY": 14,
+          "width": 12,
+          "height": 11
+        }
+      },
+      {
+        "hair": "Bob",
+        "head": "Lantern",
+        "size": 40,
+        "southEastHairIou": 0.461,
+        "eastSkinRetention": 0.756,
+        "crownTopDelta": -1,
+        "southHairBounds": {
+          "minX": 15,
+          "minY": 4,
+          "maxX": 24,
+          "maxY": 15,
+          "width": 10,
+          "height": 12
+        },
+        "eastHairBounds": {
+          "minX": 14,
+          "minY": 4,
+          "maxX": 23,
+          "maxY": 15,
+          "width": 10,
+          "height": 12
+        }
+      },
+      {
+        "hair": "Knot",
+        "head": "Lantern",
+        "size": 40,
+        "southEastHairIou": 0.586,
+        "eastSkinRetention": 0.778,
+        "crownTopDelta": -1,
+        "southHairBounds": {
+          "minX": 16,
+          "minY": 4,
+          "maxX": 23,
+          "maxY": 9,
+          "width": 8,
+          "height": 6
+        },
+        "eastHairBounds": {
+          "minX": 13,
+          "minY": 4,
+          "maxX": 23,
+          "maxY": 10,
+          "width": 11,
+          "height": 7
+        }
+      },
+      {
+        "hair": "Tail",
+        "head": "Lantern",
+        "size": 40,
+        "southEastHairIou": 0.261,
+        "eastSkinRetention": 0.778,
+        "crownTopDelta": -1,
+        "southHairBounds": {
+          "minX": 16,
+          "minY": 4,
+          "maxX": 27,
+          "maxY": 17,
+          "width": 12,
+          "height": 14
+        },
+        "eastHairBounds": {
+          "minX": 10,
+          "minY": 4,
+          "maxX": 22,
+          "maxY": 18,
+          "width": 13,
+          "height": 15
+        }
+      },
+      {
+        "hair": "Cloud",
+        "head": "Lantern",
+        "size": 40,
+        "southEastHairIou": 0.574,
+        "eastSkinRetention": 0.778,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 13,
+          "minY": 5,
+          "maxX": 26,
+          "maxY": 13,
+          "width": 14,
+          "height": 9
+        },
+        "eastHairBounds": {
+          "minX": 12,
+          "minY": 5,
+          "maxX": 24,
+          "maxY": 14,
+          "width": 13,
+          "height": 10
+        }
+      },
+      {
+        "hair": "Crop",
+        "head": "Lantern",
+        "size": 48,
+        "southEastHairIou": 0.609,
+        "eastSkinRetention": 0.69,
+        "crownTopDelta": 1,
+        "southHairBounds": {
+          "minX": 19,
+          "minY": 6,
+          "maxX": 28,
+          "maxY": 11,
+          "width": 10,
+          "height": 6
+        },
+        "eastHairBounds": {
+          "minX": 17,
+          "minY": 5,
+          "maxX": 27,
+          "maxY": 13,
+          "width": 11,
+          "height": 9
+        }
+      },
+      {
+        "hair": "Sweep",
+        "head": "Lantern",
+        "size": 48,
+        "southEastHairIou": 0.486,
+        "eastSkinRetention": 0.678,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 18,
+          "minY": 5,
+          "maxX": 30,
+          "maxY": 17,
+          "width": 13,
+          "height": 13
+        },
+        "eastHairBounds": {
+          "minX": 14,
+          "minY": 5,
+          "maxX": 28,
+          "maxY": 18,
+          "width": 15,
+          "height": 14
+        }
+      },
+      {
+        "hair": "Bob",
+        "head": "Lantern",
+        "size": 48,
+        "southEastHairIou": 0.441,
+        "eastSkinRetention": 0.609,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 18,
+          "minY": 5,
+          "maxX": 29,
+          "maxY": 18,
+          "width": 12,
+          "height": 14
+        },
+        "eastHairBounds": {
+          "minX": 16,
+          "minY": 5,
+          "maxX": 28,
+          "maxY": 18,
+          "width": 13,
+          "height": 14
+        }
+      },
+      {
+        "hair": "Knot",
+        "head": "Lantern",
+        "size": 48,
+        "southEastHairIou": 0.575,
+        "eastSkinRetention": 0.69,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 19,
+          "minY": 5,
+          "maxX": 28,
+          "maxY": 12,
+          "width": 10,
+          "height": 8
+        },
+        "eastHairBounds": {
+          "minX": 15,
+          "minY": 5,
+          "maxX": 27,
+          "maxY": 13,
+          "width": 13,
+          "height": 9
+        }
+      },
+      {
+        "hair": "Tail",
+        "head": "Lantern",
+        "size": 48,
+        "southEastHairIou": 0.256,
+        "eastSkinRetention": 0.701,
+        "crownTopDelta": 0,
+        "southHairBounds": {
+          "minX": 19,
+          "minY": 5,
+          "maxX": 33,
+          "maxY": 21,
+          "width": 15,
+          "height": 17
+        },
+        "eastHairBounds": {
+          "minX": 12,
+          "minY": 5,
+          "maxX": 27,
+          "maxY": 22,
+          "width": 16,
+          "height": 18
+        }
+      },
+      {
+        "hair": "Cloud",
+        "head": "Lantern",
+        "size": 48,
+        "southEastHairIou": 0.535,
+        "eastSkinRetention": 0.736,
+        "crownTopDelta": 1,
+        "southHairBounds": {
+          "minX": 15,
+          "minY": 6,
+          "maxX": 32,
+          "maxY": 16,
+          "width": 18,
+          "height": 11
+        },
+        "eastHairBounds": {
+          "minX": 15,
+          "minY": 6,
+          "maxX": 29,
+          "maxY": 17,
+          "width": 15,
+          "height": 12
+        }
+      }
+    ],
+    "profileFindings": [],
+    "adaptation": [
+      {
+        "hair": "Crop",
+        "broadSouthWidth": 20,
+        "longSouthWidth": 10,
+        "southWidthDelta": 10,
+        "broadEastWidth": 16,
+        "longEastWidth": 9,
+        "eastWidthDelta": 7,
+        "adaptsToHead": true
+      },
+      {
+        "hair": "Sweep",
+        "broadSouthWidth": 22,
+        "longSouthWidth": 12,
+        "southWidthDelta": 10,
+        "broadEastWidth": 19,
+        "longEastWidth": 13,
+        "eastWidthDelta": 6,
+        "adaptsToHead": true
+      },
+      {
+        "hair": "Bob",
+        "broadSouthWidth": 22,
+        "longSouthWidth": 12,
+        "southWidthDelta": 10,
+        "broadEastWidth": 16,
+        "longEastWidth": 11,
+        "eastWidthDelta": 5,
+        "adaptsToHead": true
+      },
+      {
+        "hair": "Knot",
+        "broadSouthWidth": 20,
+        "longSouthWidth": 10,
+        "southWidthDelta": 10,
+        "broadEastWidth": 18,
+        "longEastWidth": 10,
+        "eastWidthDelta": 8,
+        "adaptsToHead": true
+      },
+      {
+        "hair": "Tail",
+        "broadSouthWidth": 24,
+        "longSouthWidth": 15,
+        "southWidthDelta": 9,
+        "broadEastWidth": 21,
+        "longEastWidth": 14,
+        "eastWidthDelta": 7,
+        "adaptsToHead": true
+      },
+      {
+        "hair": "Cloud",
+        "broadSouthWidth": 30,
+        "longSouthWidth": 18,
+        "southWidthDelta": 12,
+        "broadEastWidth": 21,
+        "longEastWidth": 14,
+        "eastWidthDelta": 7,
+        "adaptsToHead": true
+      }
+    ],
+    "adaptationFindings": []
+  },
+  "audit": {
+    "note": "Preserve styles must retain one neutral raster row at 40/48. Bob and Tail may bridge laterally by construction. Cell-edge contact remains a static fitting failure.",
+    "bodies": {
+      "renders": 288,
+      "edgeFindings": []
+    },
+    "heads": {
+      "renders": 288,
+      "edgeFindings": []
+    },
+    "gapPolicy": {
+      "findings": []
+    },
+    "poses": {
+      "renders": 360,
+      "tokenFailures": 0,
+      "edgeFindings": [],
+      "baselineEdgeFindings": [
+        {
+          "hair": "Sweep",
+          "body": "Block",
+          "head": "Broad",
+          "pose": "recoil",
+          "facing": "east"
+        },
+        {
+          "hair": "Sweep",
+          "body": "Block",
+          "head": "Broad",
+          "pose": "recoil",
+          "facing": "west"
+        },
+        {
+          "hair": "Tail",
+          "body": "Bell",
+          "head": "Point",
+          "pose": "recoil",
+          "facing": "east"
+        },
+        {
+          "hair": "Tail",
+          "body": "Bell",
+          "head": "Point",
+          "pose": "recoil",
+          "facing": "west"
+        },
+        {
+          "hair": "Cloud",
+          "body": "Pinch",
+          "head": "Lantern",
+          "pose": "recoil",
+          "facing": "east"
+        },
+        {
+          "hair": "Cloud",
+          "body": "Pinch",
+          "head": "Lantern",
+          "pose": "recoil",
+          "facing": "west"
+        }
+      ],
+      "note": "Hair remains rigid in the existing head group; no secondary motion is generated. Candidate edge findings exclude contacts already present in the hairless body/head pose."
+    }
+  },
+  "animationCost": {
+    "frames": 0,
+    "bones": 0,
+    "poses": 0,
+    "rendererStates": 0,
+    "authoredWestFacings": 0,
+    "secondaryMotionSystems": 0
+  },
+  "restoration": {
+    "neutral": "byte-identical",
+    "transformedPose": "byte-identical",
+    "portrait": "byte-identical",
+    "carrierFacingReference": "identical",
+    "productionPartReferences": "identical"
+  }
+}

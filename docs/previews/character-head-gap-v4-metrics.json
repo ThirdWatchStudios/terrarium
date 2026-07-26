@@ -1,0 +1,4666 @@
+{
+  "status": "review-only",
+  "selectedGapRowsAt40": 1,
+  "staticCellReframe": {
+    "viewBoxY": -5,
+    "note": "Bake-time crop shift only; this is not a runtime animation state."
+  },
+  "headCandidates": [
+    {
+      "id": "round",
+      "label": "Round",
+      "axis": "circular control"
+    },
+    {
+      "id": "broad",
+      "label": "Broad",
+      "axis": "low lateral reach"
+    },
+    {
+      "id": "long",
+      "label": "Long",
+      "axis": "narrow vertical pull"
+    },
+    {
+      "id": "block",
+      "label": "Block",
+      "axis": "parallel cheek + flat jaw"
+    },
+    {
+      "id": "point",
+      "label": "Point",
+      "axis": "wide cheek → real chin"
+    },
+    {
+      "id": "lantern",
+      "label": "Lantern",
+      "axis": "narrow crown → broad jaw"
+    }
+  ],
+  "gapLadder": [
+    {
+      "targetRows": 0,
+      "lift": 0,
+      "south": {
+        "gapRows": 0,
+        "componentCount": 1,
+        "topMargin": 9,
+        "bottomMargin": 1,
+        "edgeContact": false
+      },
+      "east": {
+        "gapRows": 0,
+        "componentCount": 1,
+        "topMargin": 9,
+        "bottomMargin": 1,
+        "edgeContact": false
+      },
+      "met": true
+    },
+    {
+      "targetRows": 1,
+      "lift": 17,
+      "south": {
+        "gapRows": 1,
+        "componentCount": 2,
+        "topMargin": 4,
+        "bottomMargin": 1,
+        "edgeContact": false
+      },
+      "east": {
+        "gapRows": 1,
+        "componentCount": 2,
+        "topMargin": 4,
+        "bottomMargin": 1,
+        "edgeContact": false
+      },
+      "met": true
+    },
+    {
+      "targetRows": 2,
+      "lift": 21,
+      "south": {
+        "gapRows": 2,
+        "componentCount": 2,
+        "topMargin": 2,
+        "bottomMargin": 1,
+        "edgeContact": false
+      },
+      "east": {
+        "gapRows": 2,
+        "componentCount": 2,
+        "topMargin": 2,
+        "bottomMargin": 1,
+        "edgeContact": false
+      },
+      "met": true
+    },
+    {
+      "targetRows": 3,
+      "lift": 24,
+      "south": {
+        "gapRows": 3,
+        "componentCount": 2,
+        "topMargin": 2,
+        "bottomMargin": 1,
+        "edgeContact": false
+      },
+      "east": {
+        "gapRows": 3,
+        "componentCount": 2,
+        "topMargin": 2,
+        "bottomMargin": 1,
+        "edgeContact": false
+      },
+      "met": true
+    }
+  ],
+  "bodyPlans": [
+    {
+      "body": "Column",
+      "south": {
+        "lift": 21,
+        "targetRows": 1,
+        "minGapRows": 1,
+        "topMargin": 1,
+        "edgeContact": false,
+        "met": true
+      },
+      "east": {
+        "lift": 21,
+        "targetRows": 1,
+        "minGapRows": 1,
+        "topMargin": 1,
+        "edgeContact": false,
+        "met": true
+      },
+      "north": {
+        "lift": 21,
+        "targetRows": 1,
+        "minGapRows": 1,
+        "topMargin": 1,
+        "edgeContact": false,
+        "met": true
+      }
+    },
+    {
+      "body": "Block",
+      "south": {
+        "lift": 18,
+        "targetRows": 1,
+        "minGapRows": 1,
+        "topMargin": 3,
+        "edgeContact": false,
+        "met": true
+      },
+      "east": {
+        "lift": 18,
+        "targetRows": 1,
+        "minGapRows": 1,
+        "topMargin": 3,
+        "edgeContact": false,
+        "met": true
+      },
+      "north": {
+        "lift": 18,
+        "targetRows": 1,
+        "minGapRows": 1,
+        "topMargin": 3,
+        "edgeContact": false,
+        "met": true
+      }
+    },
+    {
+      "body": "Wedge",
+      "south": {
+        "lift": 19,
+        "targetRows": 1,
+        "minGapRows": 1,
+        "topMargin": 2,
+        "edgeContact": false,
+        "met": true
+      },
+      "east": {
+        "lift": 19,
+        "targetRows": 1,
+        "minGapRows": 1,
+        "topMargin": 2,
+        "edgeContact": false,
+        "met": true
+      },
+      "north": {
+        "lift": 19,
+        "targetRows": 1,
+        "minGapRows": 1,
+        "topMargin": 2,
+        "edgeContact": false,
+        "met": true
+      }
+    },
+    {
+      "body": "Barrel",
+      "south": {
+        "lift": 20,
+        "targetRows": 1,
+        "minGapRows": 1,
+        "topMargin": 2,
+        "edgeContact": false,
+        "met": true
+      },
+      "east": {
+        "lift": 20,
+        "targetRows": 1,
+        "minGapRows": 1,
+        "topMargin": 2,
+        "edgeContact": false,
+        "met": true
+      },
+      "north": {
+        "lift": 20,
+        "targetRows": 1,
+        "minGapRows": 1,
+        "topMargin": 2,
+        "edgeContact": false,
+        "met": true
+      }
+    },
+    {
+      "body": "Bell",
+      "south": {
+        "lift": 20,
+        "targetRows": 1,
+        "minGapRows": 1,
+        "topMargin": 2,
+        "edgeContact": false,
+        "met": true
+      },
+      "east": {
+        "lift": 20,
+        "targetRows": 1,
+        "minGapRows": 1,
+        "topMargin": 2,
+        "edgeContact": false,
+        "met": true
+      },
+      "north": {
+        "lift": 20,
+        "targetRows": 1,
+        "minGapRows": 1,
+        "topMargin": 2,
+        "edgeContact": false,
+        "met": true
+      }
+    },
+    {
+      "body": "Pinch",
+      "south": {
+        "lift": 20,
+        "targetRows": 1,
+        "minGapRows": 1,
+        "topMargin": 2,
+        "edgeContact": false,
+        "met": true
+      },
+      "east": {
+        "lift": 20,
+        "targetRows": 1,
+        "minGapRows": 1,
+        "topMargin": 2,
+        "edgeContact": false,
+        "met": true
+      },
+      "north": {
+        "lift": 20,
+        "targetRows": 1,
+        "minGapRows": 1,
+        "topMargin": 2,
+        "edgeContact": false,
+        "met": true
+      }
+    }
+  ],
+  "headOnlyPairwise": {
+    "current": {
+      "south": [
+        {
+          "pair": [
+            "head-oval",
+            "head-long"
+          ],
+          "iou": 0.99
+        },
+        {
+          "pair": [
+            "head-oval",
+            "head-angular"
+          ],
+          "iou": 0.984
+        },
+        {
+          "pair": [
+            "head-long",
+            "head-angular"
+          ],
+          "iou": 0.981
+        },
+        {
+          "pair": [
+            "head-boxy",
+            "head-soft-square"
+          ],
+          "iou": 0.978
+        },
+        {
+          "pair": [
+            "head-round",
+            "head-soft-square"
+          ],
+          "iou": 0.955
+        },
+        {
+          "pair": [
+            "head-round",
+            "head-boxy"
+          ],
+          "iou": 0.933
+        },
+        {
+          "pair": [
+            "head-round",
+            "head-oval"
+          ],
+          "iou": 0.262
+        },
+        {
+          "pair": [
+            "head-boxy",
+            "head-angular"
+          ],
+          "iou": 0.262
+        },
+        {
+          "pair": [
+            "head-angular",
+            "head-soft-square"
+          ],
+          "iou": 0.262
+        },
+        {
+          "pair": [
+            "head-round",
+            "head-angular"
+          ],
+          "iou": 0.261
+        },
+        {
+          "pair": [
+            "head-long",
+            "head-boxy"
+          ],
+          "iou": 0.26
+        },
+        {
+          "pair": [
+            "head-long",
+            "head-soft-square"
+          ],
+          "iou": 0.26
+        },
+        {
+          "pair": [
+            "head-round",
+            "head-long"
+          ],
+          "iou": 0.259
+        },
+        {
+          "pair": [
+            "head-oval",
+            "head-boxy"
+          ],
+          "iou": 0.259
+        },
+        {
+          "pair": [
+            "head-oval",
+            "head-soft-square"
+          ],
+          "iou": 0.259
+        }
+      ],
+      "east": [
+        {
+          "pair": [
+            "head-oval",
+            "head-long"
+          ],
+          "iou": 0.974
+        },
+        {
+          "pair": [
+            "head-oval",
+            "head-angular"
+          ],
+          "iou": 0.974
+        },
+        {
+          "pair": [
+            "head-long",
+            "head-angular"
+          ],
+          "iou": 0.968
+        },
+        {
+          "pair": [
+            "head-boxy",
+            "head-soft-square"
+          ],
+          "iou": 0.967
+        },
+        {
+          "pair": [
+            "head-round",
+            "head-boxy"
+          ],
+          "iou": 0.933
+        },
+        {
+          "pair": [
+            "head-round",
+            "head-soft-square"
+          ],
+          "iou": 0.923
+        },
+        {
+          "pair": [
+            "head-boxy",
+            "head-angular"
+          ],
+          "iou": 0.336
+        },
+        {
+          "pair": [
+            "head-angular",
+            "head-soft-square"
+          ],
+          "iou": 0.332
+        },
+        {
+          "pair": [
+            "head-round",
+            "head-angular"
+          ],
+          "iou": 0.331
+        },
+        {
+          "pair": [
+            "head-oval",
+            "head-soft-square"
+          ],
+          "iou": 0.331
+        },
+        {
+          "pair": [
+            "head-oval",
+            "head-boxy"
+          ],
+          "iou": 0.327
+        },
+        {
+          "pair": [
+            "head-round",
+            "head-oval"
+          ],
+          "iou": 0.325
+        },
+        {
+          "pair": [
+            "head-long",
+            "head-boxy"
+          ],
+          "iou": 0.315
+        },
+        {
+          "pair": [
+            "head-long",
+            "head-soft-square"
+          ],
+          "iou": 0.311
+        },
+        {
+          "pair": [
+            "head-round",
+            "head-long"
+          ],
+          "iou": 0.31
+        }
+      ]
+    },
+    "proposed": {
+      "south": [
+        {
+          "pair": [
+            "round",
+            "block"
+          ],
+          "iou": 0.915
+        },
+        {
+          "pair": [
+            "round",
+            "point"
+          ],
+          "iou": 0.892
+        },
+        {
+          "pair": [
+            "block",
+            "lantern"
+          ],
+          "iou": 0.866
+        },
+        {
+          "pair": [
+            "broad",
+            "point"
+          ],
+          "iou": 0.853
+        },
+        {
+          "pair": [
+            "block",
+            "point"
+          ],
+          "iou": 0.84
+        },
+        {
+          "pair": [
+            "round",
+            "lantern"
+          ],
+          "iou": 0.802
+        },
+        {
+          "pair": [
+            "round",
+            "broad"
+          ],
+          "iou": 0.779
+        },
+        {
+          "pair": [
+            "round",
+            "long"
+          ],
+          "iou": 0.759
+        },
+        {
+          "pair": [
+            "broad",
+            "block"
+          ],
+          "iou": 0.755
+        },
+        {
+          "pair": [
+            "long",
+            "lantern"
+          ],
+          "iou": 0.75
+        },
+        {
+          "pair": [
+            "point",
+            "lantern"
+          ],
+          "iou": 0.718
+        },
+        {
+          "pair": [
+            "long",
+            "point"
+          ],
+          "iou": 0.707
+        },
+        {
+          "pair": [
+            "long",
+            "block"
+          ],
+          "iou": 0.695
+        },
+        {
+          "pair": [
+            "broad",
+            "lantern"
+          ],
+          "iou": 0.661
+        },
+        {
+          "pair": [
+            "broad",
+            "long"
+          ],
+          "iou": 0.596
+        }
+      ],
+      "east": [
+        {
+          "pair": [
+            "round",
+            "point"
+          ],
+          "iou": 0.918
+        },
+        {
+          "pair": [
+            "round",
+            "block"
+          ],
+          "iou": 0.914
+        },
+        {
+          "pair": [
+            "block",
+            "point"
+          ],
+          "iou": 0.901
+        },
+        {
+          "pair": [
+            "block",
+            "lantern"
+          ],
+          "iou": 0.892
+        },
+        {
+          "pair": [
+            "broad",
+            "point"
+          ],
+          "iou": 0.851
+        },
+        {
+          "pair": [
+            "round",
+            "long"
+          ],
+          "iou": 0.85
+        },
+        {
+          "pair": [
+            "round",
+            "lantern"
+          ],
+          "iou": 0.829
+        },
+        {
+          "pair": [
+            "point",
+            "lantern"
+          ],
+          "iou": 0.81
+        },
+        {
+          "pair": [
+            "broad",
+            "block"
+          ],
+          "iou": 0.805
+        },
+        {
+          "pair": [
+            "long",
+            "block"
+          ],
+          "iou": 0.805
+        },
+        {
+          "pair": [
+            "long",
+            "lantern"
+          ],
+          "iou": 0.8
+        },
+        {
+          "pair": [
+            "round",
+            "broad"
+          ],
+          "iou": 0.798
+        },
+        {
+          "pair": [
+            "long",
+            "point"
+          ],
+          "iou": 0.798
+        },
+        {
+          "pair": [
+            "broad",
+            "lantern"
+          ],
+          "iou": 0.775
+        },
+        {
+          "pair": [
+            "broad",
+            "long"
+          ],
+          "iou": 0.683
+        }
+      ]
+    }
+  },
+  "audit": {
+    "note": "Raster separation is measured on final alpha at literal output size. A one-row neutral gap is the review target; composed visual review remains authoritative.",
+    "fullBody": {
+      "renders": 288,
+      "gapMisses": 0,
+      "edgeContacts": 0,
+      "minimumGapRows": 1,
+      "combinations": [
+        {
+          "body": "Column",
+          "head": "Round",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Round",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Round",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Round",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Round",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Round",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Round",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Round",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Broad",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Broad",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Broad",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Broad",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Broad",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Broad",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Broad",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Broad",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Long",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Long",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Long",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Long",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Long",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Long",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Long",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Long",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Block",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Block",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Block",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Block",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Block",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Block",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Block",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Block",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Point",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Point",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Point",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Point",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Point",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Point",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Point",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Point",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Lantern",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Lantern",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Lantern",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Lantern",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Lantern",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Lantern",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Lantern",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Column",
+          "head": "Lantern",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 1,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Round",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Round",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Round",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Round",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Round",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Round",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Round",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Round",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Broad",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Broad",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Broad",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Broad",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Broad",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Broad",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Broad",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Broad",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Long",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Long",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Long",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Long",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Long",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Long",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Long",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Long",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Block",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Block",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Block",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Block",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Block",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Block",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Block",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Block",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Point",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Point",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Point",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Point",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Point",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Point",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Point",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Point",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Lantern",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Lantern",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Lantern",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Lantern",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Lantern",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Lantern",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Lantern",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Block",
+          "head": "Lantern",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Round",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Round",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Round",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Round",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Round",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Round",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Round",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Round",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Broad",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Broad",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Broad",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Broad",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Broad",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Broad",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Broad",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Broad",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Long",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Long",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Long",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Long",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Long",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Long",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Long",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Long",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Block",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Block",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Block",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Block",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Block",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Block",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Block",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Block",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Point",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Point",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Point",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Point",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Point",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Point",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Point",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Point",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Lantern",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Lantern",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Lantern",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Lantern",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Lantern",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Lantern",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Lantern",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Wedge",
+          "head": "Lantern",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Round",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Round",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Round",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Round",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Round",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Round",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Round",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Round",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Broad",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Broad",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Broad",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Broad",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Broad",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Broad",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Broad",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Broad",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Long",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Long",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Long",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Long",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Long",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Long",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Long",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Long",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Block",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Block",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Block",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Block",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Block",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Block",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Block",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Block",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Point",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Point",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Point",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Point",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Point",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Point",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Point",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Point",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Lantern",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Lantern",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Lantern",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Lantern",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Lantern",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Lantern",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Lantern",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Barrel",
+          "head": "Lantern",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Round",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Round",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Round",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Round",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Round",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Round",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Round",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Round",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Broad",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Broad",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Broad",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Broad",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Broad",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Broad",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Broad",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Broad",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 4,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Long",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Long",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Long",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Long",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Long",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Long",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Long",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Long",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Block",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Block",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Block",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Block",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Block",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Block",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Block",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Block",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Point",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Point",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Point",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Point",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Point",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Point",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Point",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Point",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Lantern",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Lantern",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Lantern",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Lantern",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Lantern",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Lantern",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Lantern",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Bell",
+          "head": "Lantern",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Round",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Round",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Round",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Round",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Round",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Round",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Round",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Round",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Broad",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Broad",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Broad",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Broad",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Broad",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Broad",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Broad",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Broad",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 2,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Long",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Long",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Long",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Long",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Long",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Long",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Long",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Long",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Block",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Block",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Block",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Block",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Block",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Block",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Block",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Block",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Point",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Point",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Point",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Point",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Point",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Point",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Point",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Point",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Lantern",
+          "facing": "south",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Lantern",
+          "facing": "south",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Lantern",
+          "facing": "east",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Lantern",
+          "facing": "east",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Lantern",
+          "facing": "north",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Lantern",
+          "facing": "north",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Lantern",
+          "facing": "west",
+          "size": 40,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 2,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        },
+        {
+          "body": "Pinch",
+          "head": "Lantern",
+          "facing": "west",
+          "size": 48,
+          "stats": {
+            "gapRows": 1,
+            "componentCount": 2,
+            "topMargin": 3,
+            "bottomMargin": 1,
+            "edgeContact": false
+          }
+        }
+      ]
+    },
+    "hair": {
+      "representativeHairs": [
+        "hair-none",
+        "hair-balding",
+        "hair-short",
+        "hair-side-part",
+        "hair-bob",
+        "hair-long-straight",
+        "hair-bun",
+        "hair-coils"
+      ],
+      "availableProductionHairs": [
+        "hair-none",
+        "hair-short",
+        "hair-bob",
+        "hair-bun",
+        "hair-curly",
+        "hair-balding",
+        "hair-side-part",
+        "hair-pixie",
+        "hair-ponytail",
+        "hair-long-straight",
+        "hair-coils"
+      ],
+      "renders": 192,
+      "edgeContacts": 0,
+      "edgeDetails": [],
+      "paired": {
+        "hairs": [
+          "hair-balding",
+          "hair-short",
+          "hair-side-part",
+          "hair-bob",
+          "hair-bun",
+          "hair-coils"
+        ],
+        "renders": 48,
+        "edgeContacts": 9,
+        "edgeDetails": [
+          {
+            "body": "Bell",
+            "head": "Point",
+            "hair": "hair-bun",
+            "facing": "south",
+            "size": 40
+          },
+          {
+            "body": "Bell",
+            "head": "Point",
+            "hair": "hair-bun",
+            "facing": "south",
+            "size": 48
+          },
+          {
+            "body": "Bell",
+            "head": "Point",
+            "hair": "hair-bun",
+            "facing": "north",
+            "size": 40
+          },
+          {
+            "body": "Bell",
+            "head": "Point",
+            "hair": "hair-bun",
+            "facing": "north",
+            "size": 48
+          },
+          {
+            "body": "Pinch",
+            "head": "Lantern",
+            "hair": "hair-coils",
+            "facing": "east",
+            "size": 40
+          },
+          {
+            "body": "Pinch",
+            "head": "Lantern",
+            "hair": "hair-coils",
+            "facing": "east",
+            "size": 48
+          },
+          {
+            "body": "Pinch",
+            "head": "Lantern",
+            "hair": "hair-coils",
+            "facing": "north",
+            "size": 40
+          },
+          {
+            "body": "Pinch",
+            "head": "Lantern",
+            "hair": "hair-coils",
+            "facing": "west",
+            "size": 40
+          },
+          {
+            "body": "Pinch",
+            "head": "Lantern",
+            "hair": "hair-coils",
+            "facing": "west",
+            "size": 48
+          }
+        ]
+      },
+      "note": "Long and high hair may intentionally bridge the head/body air; edge contact remains framing debt."
+    },
+    "poses": {
+      "renders": 360,
+      "tokenFailures": 0,
+      "edgeContacts": 6,
+      "edgeDetails": [
+        {
+          "body": "Block",
+          "head": "Broad",
+          "pose": "recoil",
+          "facing": "east"
+        },
+        {
+          "body": "Block",
+          "head": "Broad",
+          "pose": "recoil",
+          "facing": "west"
+        },
+        {
+          "body": "Bell",
+          "head": "Point",
+          "pose": "recoil",
+          "facing": "east"
+        },
+        {
+          "body": "Bell",
+          "head": "Point",
+          "pose": "recoil",
+          "facing": "west"
+        },
+        {
+          "body": "Pinch",
+          "head": "Lantern",
+          "pose": "recoil",
+          "facing": "east"
+        },
+        {
+          "body": "Pinch",
+          "head": "Lantern",
+          "pose": "recoil",
+          "facing": "west"
+        }
+      ],
+      "note": "All existing poses reuse the same rigid head group. Slump may intentionally close the neutral gap."
+    },
+    "styles": [
+      {
+        "id": "preset-warm-office",
+        "outline": {
+          "width": 2.5,
+          "color": "#3A342E",
+          "mode": "silhouette"
+        },
+        "renders": 24,
+        "edgeContacts": 0
+      },
+      {
+        "id": "preset-corporate-cold",
+        "outline": {
+          "width": 2,
+          "color": "#27323A",
+          "mode": "silhouette"
+        },
+        "renders": 24,
+        "edgeContacts": 0
+      },
+      {
+        "id": "preset-high-contrast",
+        "outline": {
+          "width": 4,
+          "color": "#111111",
+          "mode": "per-part"
+        },
+        "renders": 24,
+        "edgeContacts": 24
+      }
+    ]
+  },
+  "animationCost": {
+    "frames": 0,
+    "bones": 0,
+    "poses": 0,
+    "rendererStates": 0,
+    "authoredWestFacings": 0
+  },
+  "restoration": {
+    "neutral": "byte-identical",
+    "transformedPose": "byte-identical",
+    "portrait": "byte-identical",
+    "headFacingReference": "identical"
+  }
+}
