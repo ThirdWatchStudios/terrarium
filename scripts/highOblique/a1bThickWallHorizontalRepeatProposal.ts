@@ -160,7 +160,8 @@ function validateSource(
     const required = [
       'id="upper-contour" d="M0 0H128V120H0Z"',
       'id="upper-solid-top-fill" d="M0 0H128V97H0Z"',
-      'id="upper-south-face-shade" d="M0 63H128V88H0Z" fill="#000000" opacity="0.08"',
+      'id="upper-south-face-shade" d="M0 63H128V84H0Z" fill="#000000" opacity="0.08"',
+      'id="upper-lip-seam" d="M1 87H127"',
       'id="upper-south-coral-wrap" d="M0 88H128V94H0Z"',
       'id="upper-south-green-wrap" d="M0 94H128V117H0Z"',
       'id="upper-south-plinth" d="M0 117H128V120H0Z"',

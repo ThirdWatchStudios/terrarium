@@ -123,6 +123,7 @@ Record<A1bWestPartialTJunctionProposalSourceId, readonly string[]>
     'upper-face-shade-open-se',
     'upper-cream-bridge',
     'upper-south-face-shade',
+    'upper-lip-seam',
     'upper-arris-seam',
     'upper-band-seam',
     'upper-boundary-seam',
@@ -195,6 +196,17 @@ function validateSource(
   ) {
     throw new A1bWestPartialTJunctionProposalImportError(
       `${sourceFile} must clip the foreground contact shade around the continuing south socket`,
+    );
+  }
+  if (
+    source.id === 'open_w_t_filled_ne-upper' &&
+    (
+      !requiredPath(content, 'upper-south-face-shade', 'M103 63H128V84H103Z') ||
+      !requiredPath(content, 'upper-lip-seam', 'M103 87H127')
+    )
+  ) {
+    throw new A1bWestPartialTJunctionProposalImportError(
+      `${sourceFile} must retain the accepted cream lip and dark separation line above coral`,
     );
   }
   if (/\bid=["'][^"']*(?:cap|post|pylon|rollover|four-way|overlay|patch)/i.test(content)) {

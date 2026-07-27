@@ -232,8 +232,9 @@ describe('QuotaCo owner-accepted proof-layer N×2 thick-wall horizontal repeat f
     expect(rear).toContain('id="upper-solid-top-fill" d="M0 58H128V128H0Z"');
     expect(rear).not.toMatch(/coral|green|shade|plinth|seam|cap|rollover/i);
     expect(foreground).toContain(
-      'id="upper-south-face-shade" d="M0 63H128V88H0Z" fill="#000000" opacity="0.08"',
+      'id="upper-south-face-shade" d="M0 63H128V84H0Z" fill="#000000" opacity="0.08"',
     );
+    expect(foreground).toContain('id="upper-lip-seam" d="M1 87H127"');
     expect(foreground).toContain('id="upper-south-coral-wrap" d="M0 88H128V94H0Z"');
     expect(foreground).toContain('id="upper-south-green-wrap" d="M0 94H128V117H0Z"');
     expect(foreground).toContain('id="upper-boundary-seam" d="M126 88V96 M126 98V116"');

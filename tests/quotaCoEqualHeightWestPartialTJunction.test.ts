@@ -469,6 +469,12 @@ describe('QuotaCo owner-accepted west partial T-junction gate', () => {
     expect(sourceIds(foregroundUpper)).toContain('upper-plane-light-open-se');
     expect(sourceIds(foregroundUpper)).toContain('upper-arris-lip-open-se');
     expect(sourceIds(foregroundUpper)).toContain('upper-south-face-shade');
+    expect(foregroundUpper).toContain(
+      'id="upper-south-face-shade" d="M103 63H128V84H103Z"',
+    );
+    expect(foregroundUpper).toContain(
+      'id="upper-lip-seam" d="M103 87H127"',
+    );
     expect(sourceIds(foregroundUpper)).toContain('upper-coral-open-se');
     expect(sourceIds(rearUpper)).toContain('upper-solid-top-highlight');
     expect(sourceIds(rearUpper)).not.toContain('upper-south-face-shade');
