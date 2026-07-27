@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>QuotaCo Building System full west straight base</title>
+  <desc>Lower green face under the descending-face shade, compact floor-contact plinth, and a quiet boundary service seam for the flatter-from-above west wall.</desc>
+  <g id="detail/base">
+    <path id="base-contour" d="M89.485 0L117.693 0 117.693 128 89.485 128Z" fill="#252A28"/>
+    <path id="base-field" d="M92.804 0L112.715 0 112.715 128 92.804 128Z" fill="#294B3C"/>
+    <path id="base-face-shade" d="M92.804 0L112.715 0 112.715 128 92.804 128Z" fill="#000000" opacity="0.12"/>
+    <path id="base-contact-shade" d="M117.693 0L123.5 0 123.5 128 117.693 128Z" fill="#000000" opacity="0.12"/>
+    <path id="base-boundary-seam" d="M94.463 126L111.056 126" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+  </g>
+</svg>

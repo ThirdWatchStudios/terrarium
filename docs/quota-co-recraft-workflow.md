@@ -1,0 +1,602 @@
+# QuotaCo kit recraft — workflow and state handoff
+
+> **Status:** working process doc + state ledger, written 2026-07-20 at the end of the first recraft
+> session. Read this together with [quota-co-style-bible.md](quota-co-style-bible.md) (the grammar and
+> family constants) before touching any master. Authorities, in precedence order: the sim repo's
+> `docs/design/quota-co-high-oblique-art-direction.md` (owner-locked) → `docs/quota-co-high-oblique-geometry-ask.md`
+> → the kit `assets/walls/quota-co-building-system/README.md` → the style bible → this doc.
+
+## The mission
+
+Recraft the QuotaCo Building System masters to the owner-approved reference (mirrored in
+`docs/reference/`) using the ratified family grammar, one piece at a time, each pass judged by the owner
+on the live workbench and committed individually with its design rationale.
+
+## The loop (repeat per piece)
+
+1. **Pick the active decision.** When `Review next` is present, choose one unresolved equal-height piece from
+   that lane. When every current piece is accepted, follow the named system gate instead of reopening a settled
+   piece. The corridor closure, 47-mask mapping structure, and horizontal and vertical terminus families are
+   accepted. Isolated `mask_0`, the four-piece filled-elbow family, the `mask_24`/`mask_42` 2×N thick-wall
+   repeat pair, and the `mask_31`/`mask_38` N×2 horizontal-repeat pair are also accepted as external proof
+   sources. The open-pocket T-junction pair is accepted at the same proof layer: authored open-west `mask_7`
+   is direct and `mask_13` is its approved whole-cell X mirror with the accepted southeast boundary-seam
+   omission. The horizontal-spine open-pocket pair is also accepted: separately authored fixed-light
+   `mask_11` and `mask_14` are direct proof-layer sources, while same-mask lateral X mirrors remain comparison
+   evidence rather than accepted derivations. The single-filled-pocket family is accepted on both sides:
+   west `mask_17`/`mask_21` are direct sources, east `mask_36` is the filtered whole-cell X mirror of
+   `mask_17`, and east `mask_27` is the plain whole-cell X mirror of `mask_21`. The horizontal partial family
+   is accepted too: direct `mask_18`/`mask_22`, filtered mirror `mask_35`, and plain mirror `mask_28`. Open-pocket
+   cross-junction `mask_15` now directly reuses one authored fixed-light four-way hub with all four diagonal
+   crooks open. Single-filled cross-junction `mask_19` now directly reuses one authored fixed-light four-way
+   hub with only its northeast diagonal solid; the other three crooks remain open floor in the fixed west
+   register. Southeast-filled cross-junction `mask_23` now directly reuses its own authored fixed-light
+   four-way hub with only its southeast diagonal solid; `mask_21`/`mask_22` remain boundary-law controls, not
+   stacked ingredients. East-filled slab cross-junction `mask_25` now directly reuses one authored fixed-light
+   four-way junction with its northeast and southeast diagonals joined as continuous wall mass and both west
+   crooks open. West-filled slab cross-junction `mask_43` now reuses that pair through a plain whole-cell
+   X mirror, joining the southwest and northwest diagonals while both east crooks stay open. No mirrored
+   companion SVG bank or seam filter is added. Southwest-filled cross-junction `mask_29` now reuses the
+   accepted `mask_23` source through a plain whole-cell X mirror, filling only the southwest diagonal while
+   the other three crooks remain open. No companion SVG bank or seam filter is added. Northwest-filled
+   cross-junction `mask_37` now directly reuses one separately authored east-register
+   `open_cross_filled_nw` pair, filling only the northwest diagonal while the other three crooks remain open.
+   It is not a mirror or rotation of `mask_19`. North-filled slab cross-junction `mask_39` now directly reuses
+   one separately authored west-register `open_cross_filled_n` pair: northeast and northwest are one continuous
+   cream slab, southeast and southwest remain open floor, and the south socket is a top-to-top join rather than
+   frontage paint. `mask_19` and `mask_37` are geometry controls only. Opposed-diagonal-filled
+   cross-junction `mask_30` now directly reuses one separately authored fixed-light
+   `open_cross_filled_ne_sw` pair: northeast and southwest are continuous solid wall, northwest and southeast
+   remain open floor, the north outlet keeps the west-authored register, and the south outlet hands off to the
+   accepted east register. Opposite-diagonal `mask_40` now reuses that same pair through a whole-cell X mirror
+   after omitting only the two west-boundary seam paths: northwest and southeast are solid, northeast and
+   southwest remain open floor, the north outlet uses the east register, and the south outlet uses the west
+   register. Fully filled `mask_46` now directly reuses the external `fully-filled-cross-junction/filled_center`
+   pair as the fully buried center of a solid wall mass: all four cardinal directions connect, all four
+   diagonal crooks are solid, and accepted perimeter cells own every visible face and seam. Never
+   rotate the accepted horizontal source to manufacture a vertical end. Use composed evidence as
+   the issue-finding surface. Historical
+   mixed-profile room mocks are archived, not valid targets.
+2. **Read before drawing:** the piece's current masters, the five-sheet primary wall target listed in
+   `docs/reference/README.md`, the broad geometry and golden-room references, the bible's constants, and any
+   already-solved construction that transfers (see ledger below). Start with
+   `quota-co-wall-corners-and-ends-study.png` to verify the cardinal asset, then use the long-run orthographic
+   and directional-profile sheets for projection. When a sub-kit covers the same ground (e.g.
+   `low-profile-correction/`), treat its **geometry** as authoritative only where it agrees with this newer
+   owner-approved target.
+3. **Recraft in grammar.** Nine paints only, seam registers 0.28/0.35/0.45/0.62, overlay ladder,
+   concentric radii with the r4–5 legibility floor, semantic ids, topology-generation vocabulary,
+   shading as overlays never tints (recolor law). Edit masters with the file tools, not shell scripts —
+   shell edits break the session harness's write tracking.
+4. **Judge on the bench:** `npm run style:watch` → http://localhost:5411 (one instance only — the port
+   is exclusive). The accepted southwest-filled `mask_29` cross-junction gate appears first, followed by the
+   accepted west-filled slab `mask_43` gate, with the accepted east-filled slab `mask_25` cross-junction gate
+   immediately behind it, followed by the
+   accepted southeast-filled `mask_23` cross-junction gate, followed by the
+   accepted single-filled `mask_19` cross-junction gate, the accepted open-pocket `mask_15` cross-junction
+   gate, and then the accepted
+   horizontal partial T-junction gate and then the accepted
+   east-side single-filled-pocket T-junction gate comparing filtered
+   mirror-X `mask_36` and plain mirror-X `mask_27` in compact and long light/dark compositions; the accepted
+   west `mask_17`/`mask_21` sources remain its provenance control. The accepted horizontal open-pocket
+   T-junction gate follows, comparing the separately
+   authored direct `mask_11` and `mask_14` sources in compact 3×3 and long six-cell compositions. Same-mask
+   lateral X mirrors remain registration comparisons only. The accepted open-pocket T-junction gate follows immediately, comparing direct authored
+   open-west `mask_7` with its approved, southeast-seam-filtered X-mirror `mask_13` in compact 3×3 placement
+   and long six-cell runs. The accepted N×2 horizontal-repeat gate follows, comparing the accepted 2×2 control
+   against 3×2/4×2/6×2 masses. It records `mask_31` as a direct cream-only rear middle and `mask_38` as the
+   direct foreground tri-tone middle. The accepted 2×N thick-wall repeat gate follows,
+   comparing the accepted 2×2 control
+   with accepted 2×3/2×4/2×6 masses. It adds an uninterrupted cream middle row without a belt, buried
+   rail, cap, or Y seam. The accepted 2×2 thick-wall source gate follows, comparing the true three-cell open elbow
+   against the four-cell filled block at 240/90/40 px and beside a one-cell aisle. It composes two external
+   fixed-light source pairs plus their accepted X mirrors, treats the former crook as continuous wall top, and
+   keeps all four filled rows together rather than patching `mask_16` in isolation.
+   The accepted `mask_0` source gate retains the isolated shell at 240/90/40 px plus its
+   zero-socket boundary and compact placement checks. The accepted horizontal and vertical termini, 3×8 corridor, and 47-mask ledger remain system
+   context while any next proposed slice is named without implying acceptance. The open page keeps accepted evidence separate from
+   unresolved work; old mixed-profile gates and per-stem importer cards stay under `Archived checkpoints` and
+   `Compiler diagnostics` so they cannot be mistaken for approval targets.
+5. **Iterate on the owner's eye.** Every pass this session was improved by an owner correction —
+   present honestly, name residual deltas yourself, and treat "not right yet" as a diagnosis request.
+6. **Owner blesses → commit** just that piece's files, message stating the design rationale (see git log
+   for the voice). Never bake an unblessed experiment into a baseline commit.
+
+## Transferable constructions and rejected assumptions
+
+> **Owner correction captured 2026-07-20:** the unified-envelope pass fixed duplicate internal caps and
+> outlines, but its shared cross-section/exact-transpose assumption is rejected. Only the paint-split,
+> opening, terminus, and seam-removal lessons below are transferable unchanged. Directional straight,
+> corner, and transition geometry must be reworked under the handoff lock later in this document.
+
+- **Unified straight** (`full_{n,w}_straight`, rejected directional treatment): cap plane 58–64, coral band
+  89–98 with 0.10 top-light, green lower face, plinth 117–120, continuous module seams. The root base
+  contributes the lower face; the upper contributes the high face. Neither owns a finished internal edge,
+  and the composition has no cap-light shelf or charcoal line at the handoff. Preserve that single-envelope
+  construction, but do not preserve the same/transposed cap and face proportions on both axes.
+- **Window** (8394eb1): cream product-bezel construction (concentric rings), dark venetian blind field +
+  rail bar, dark mullion, diagonal glass sheen (the one licensed non-orthogonal mark), contact shade.
+- **Door** (175f122): sliding auto-door in a **full-height break** — no wall behind the doorway; banded
+  pylon wall-ends ARE the wall; slim track rail + static coral mode lens; state twins share identical
+  framing, only leaves differ. Ring paths need opposite-winding hole subpaths.
+- **Terminus** (d400a61): the end cap is a **monolithic post to the ground** (never stacked
+  base/upper lobes — the "capital B" failure); band wraps the lit end face behind a divider seam.
+- **Corners:** the five-sheet target supersedes attempts to infer a corner from the room diagram. Use its
+  cardinal orientation map first. Each turn is a tight, continuous molded wall carrying the same cap, band,
+  body, and plinth around the joint; no oversized elbow, applied box, panel, or blanket patch. Preserve one cap
+  and one outer silhouette while authoring the directional plane change. ⚠ Never naive-mirror or transpose a
+  corner to manufacture another facing.
+- **Transitions:** the targeted module-family sheet explicitly restores dedicated **height-step** and
+  **step-corner** pieces as required product vocabulary. This does not revive the rejected full-width pylon or
+  floating capsule. The approved unit is integrated into the wall envelope, occupies only the junction, closes
+  the profile change cleanly, and continues cap/band/body/plinth into both connected runs. Preserve socket
+  occupancy and authored directional planes; N→E and W→S are not exact-transpose partners.
+- **Depth rules:** near-plane features shift down (E-W) or east (N-S); an engaged element that continues
+  the wall's bands at the same heights will camouflage — separate by plane values (shaded wall behind,
+  clean face, 0.10-lit reveal) or by construction, not by outlines.
+
+## State at handoff (2026-07-20, branch `codex/campus-art-bundles`)
+
+- **Checkpoint:** `9453532` captures the complete pre-integration workbench, source family, generated
+  review artifacts, transition iteration, and documentation exactly as they stood before this correction.
+- **Active, owner-rejected working pass:** the root nine-stem family now uses one composed envelope;
+  straight, corner, window, terminus, and door joins no longer expose an independent base cap or upper
+  bottom outline. N→E/W→S step into the 38-unit low profile without the former full-width pylon. The low
+  E/S/SE sources share the transition utility/shading registers. Those mechanical improvements remain useful,
+  but the result does not yet match the reference's directional planes or structural joints and is not an
+  acceptance candidate.
+- **Evidence:** the workbench now renders a composed-only structural envelope gate above the mixed-content
+  room. `tests/quotaCoHighObliqueEnvelope.test.ts` rejects exposed base top-light, broad internal charcoal
+  joins, incompatible edge sockets, transpose drift, and nondeterministic recompilation. Its transpose gate
+  now encodes the rejected assumption and must be replaced before the next result can be accepted; the older
+  A1a corner/transition transpose tests require the same review.
+- **Still isolated:** no topology/state source, production registry, exporter, `CONTRACT.md`, schema, or
+  Unity file has changed in this pass.
+- **Queued only after owner acceptance:** (1) resolve the superseded nested
+  `low-profile-correction/transition-n-to-e-*` pair; (2) transplant the accepted envelope constants into
+  `topology/` and `state/`; (3) regenerate the official `docs/previews` sheets for the migration A-gate;
+  (4) export the remaining campus-interior reference image.
+
+### Historical deferred correction lock — superseded, retained for the handoff record
+
+**Owner observation:** “north and south walls should be visibly flat, whereas east and west walls should be
+flatter from the top.” The reference room separates two independent axes that the current pass collapsed:
+
+- **Profile height:** north/west exterior room edges are full; south/east are the low/cutaway profile.
+- **Directional plane:** horizontal east-west runs on north/south edges read flat/front-on with only a narrow
+  coping/top reveal; vertical north-south runs on east/west edges expose the broader, flatter-from-above
+  top/side plane.
+
+The current exact-transpose construction makes both axes advertise the same cream/coral/green cross-section.
+It therefore reads as axis-aligned product strips even where all edge pixels match. At N→E the squared cream
+reveal and outboard green low arm read as separate pieces; W→S carries the corresponding butt-joint problem.
+The NW diagonal seam does not convincingly turn between directional planes, and the low SE teal crossing
+advertises the tile diagram instead of one molded perimeter.
+
+**Historical pause state:** preserve the uncommitted working tree on branch `codex/campus-art-bundles` above checkpoint
+`9453532`. Do not clean, revert, promote, or regenerate official baselines. Automated/importer checks passed
+for the previous mechanical contract; they do not override this owner visual rejection.
+
+On restart, keep the pass bounded to A1 wall geometry:
+
+1. Establish two small straight cross-section proofs before touching another junction: one flat/front-on
+   north/south treatment and one flatter-from-above east/west treatment. Judge both at 240/90/40 px over light
+   and dark grounds, with the grid ignored.
+2. Apply the approved horizontal treatment to `full_n_straight` and `low_s_straight`; apply the approved
+   vertical treatment to `full_w_straight` and `low_e_straight`. Preserve the single composed envelope, 38/64
+   profile bounds, sockets, pivot, palette, and absence of an internal base/upper shelf.
+3. Redesign NW, SE, N→E, and W→S as authored structural turns between those two cross-sections. One cap/coping
+   surface, lower shell, ground/plinth route, and material system must bend or terminate deliberately through
+   each joint; no square tab, overlapping rail, duplicate contour, or diagrammatic teal cross may remain.
+4. Replace exact-transpose assertions in `tests/quotaCoHighObliqueEnvelope.test.ts` and the older A1a
+   corner/transition tests with gates for compatible occupancy, socket continuity, band endpoints, distinct
+   axis plane proportions, deterministic compilation, and the absence of duplicate internal edges.
+5. Re-render the envelope gate and room mock, then stop for owner review. Acceptance requires one room
+   perimeter—not four joined strips—to survive at 90 and 40 px with exactly one visible cap/coping system and
+   intentional high-to-low transitions.
+
+**Historical directional checkpoint (accepted before the equal-height correction, 2026-07-21):** the
+northwest full/full corner, northeast full-to-low turn, low-east straight, low-southeast corner, and southwest
+full-to-low turn established the then-accepted side-wall rule. The east cross-section is a local,
+reanchored X-mirror inside `82..120` around `x=101`: its coral/green fascia and contact shadow face the room,
+while its cream plane faces outward. This is not permission to flip a whole tile or synthesize the facing at
+runtime. The northeast and repeated east run passed the compact header and long-drop review at gameplay
+distance. The low-southeast corner passed isolated, one-cell, and long-run review with the south-facing
+cream/coral/green stack wrapping the foreground heel and the east coping terminating behind the shallow south
+top. The southwest transition passed isolated construction, full-west ingress, low-south egress, one-cell,
+and long-run review by applying the same ownership rule at the height step: the broad west plane terminates
+behind the shallow south coping and the rounded south stack owns the foreground heel. Contact-shadow polish
+is explicitly deferred.
+
+**Promoted equal-height wall-direction checkpoint (owner approval, 2026-07-21):** the ordinary structural-wall
+contract now uses one full 64-unit profile on every room edge. South reuses the exact
+`full_n_straight-base.svg` and `full_n_straight-upper.svg` sources at the same centered pivot, with no
+transform, duplicate south SVG, or new frame identity. East reuses full west through a whole-cell X mirror;
+northeast reuses the accepted northwest pair through that same mirror, and their combined compact/long/room
+gate is owner accepted. The polished `transition_w_to_s` base/upper pair now
+owns the equal-height southwest corner: its west shaft terminates behind the full south frontage, whose
+cream/coral/green/plinth stack wraps the foreground heel. Southeast reuses that pair through a whole-cell X
+mirror around `x=64`; suppress only the two source boundary-seam paths so the adjoining south cell owns one
+service tick. This adds no SVG, stem, or frame identity. Every derived facing remains unregistered. Former
+low/full-to-low geometry survives in history and labeled comparison evidence, not
+as the current ordinary perimeter target. Do not propagate any of this into topology, state, registration,
+exporter, schema, or Unity without separate authorization.
+
+**Accepted equal-height corridor checkpoint (owner approval, 2026-07-21):** the 3×8 perimeter around a 1×6
+clear aisle passes at 90 and 40 px per cell using only the accepted source/reuse contracts. Its one-cell
+north/south bodies stay legible, six-cell west/east runs do not drift, and all four corners close as one
+manufactured envelope.
+
+**Accepted 47-mask mapping checkpoint (owner approvals, 2026-07-21 through 2026-07-23):** the unchanged
+`mask_0` through `mask_46` ordering and classification ledger is accepted with twenty-one direct reuses,
+sixteen approved derivations, 10 proof-only synthetic cross-junction candidates, and zero collisions. This
+locks the mapping structure, not the synthetic pixels or a complete production family.
+
+**Accepted horizontal terminus checkpoint (owner approval, 2026-07-21):** the socket-polished
+`full_terminus` source passes directly for `mask_8` and through a whole-cell X mirror for `mask_2`, at 90/40 px
+in 1/3/6-cell contexts and enlarged base/upper/composed socket crops. The incoming 96-unit socket inherits the
+accepted straight exactly while the molded cap remains local. It does not own the separately authored vertical
+termini and must never be rotated into them. Isolated `mask_0` remains its own separately authored product.
+
+**Accepted vertical terminus checkpoint (owner approval, 2026-07-21):** two west-authored fixed-light source pairs
+live in the external `quota-co-building-system-proofs/vertical-terminus/` bank. Both sources preserve the
+ordinary wall width and turn its same cream, coral, and green registers through shallow wall-owned closures;
+the separately authored south and north ends differ only in projected plane exposure. Each is also shown
+through an accepted whole-cell X mirror for the east wall, and ledger rows `mask_1`/`mask_4` record both facings. The focused
+sheet exposes 240/90/40 px isolates, 1/3/6-cell installed runs, exact socket crops, and two-/three-cell minimum
+segments. At that checkpoint the accepted ledger was four direct, six derived, 36 synthetic, and one unresolved;
+later source-family decisions supersede those counts.
+
+**Accepted isolated-shell checkpoint (owner approval, 2026-07-22):** isolated `mask_0` uses one
+base/upper source pair that lives outside the canonical kit in
+`assets/walls/quota-co-building-system-proofs/isolated-shell/` and reads as one full-height, zero-link
+QuotaCo structural shell rather than four capped wall ends. Its contained silhouette, 240/90/40 px readability,
+and compact placement gate are accepted. `mask_0` is a direct source mapping with no mirror or rotation;
+at that checkpoint the accepted ledger became five direct, six derived, 36 synthetic, and zero unresolved.
+No production source, frame identity, template registration, exporter, `CONTRACT.md`, schema, committed atlas,
+or Unity surface is mutated by this acceptance.
+
+**Accepted thick-wall authored-family gate (owner approval, 2026-07-22):** a fully occupied 2×2 block exercises
+`mask_20`, `mask_26`, `mask_16`, and `mask_34` together. The approved composition rule is now materialized as
+two fixed-light west source pairs in the external `thick-wall-block/` proof bank. The rear source removes the
+buried southeast pocket from the accepted northwest law; the foreground source removes the buried northeast
+pocket while retaining the complete south fascia. The east pair is derived by whole-cell X mirror, with the
+accepted southeast boundary-seam omission. The resulting four pieces create the continuous cream top without
+a block-level overlay. The foreground pair retains the fixed-light plane break as a black `0.08` material shade
+across local `y=63..88`; it separates top from south-facing cream without touching the coral/green registers.
+This is accepted proof-layer source art, not a production source. Rows `mask_16`/`mask_20` are direct mappings;
+`mask_26`/`mask_34` are approved whole-cell X-mirror derivations, with the southeast seam filter retained.
+The ledger at that checkpoint was seven direct, eight derived, 32 synthetic, and zero unresolved.
+
+**Accepted thick-wall repeat gate (owner approval, 2026-07-22):** the external `thick-wall-repeat/` bank contains
+one `filled_w_middle` base/upper pair for direct `mask_24` use; `mask_42` is its accepted whole-cell X mirror.
+The exact 2×3 matrix is `20 26 / 24 42 / 16 34`. Consecutive middle rows remain one cream mass through 2×4 and
+2×6 checks, while the final `16/34` row alone owns the south-facing shade and coral/green frontage. The ledger
+at that checkpoint stood at eight direct, nine derived, 30 synthetic, and zero unresolved; later source-family
+decisions supersede those counts. Every production surface remains unchanged.
+
+**Accepted horizontal thick-wall repeat gate (owner approval, 2026-07-22):** the external
+`thick-wall-horizontal-repeat/` bank supplies `filled_n_middle` directly for rear `mask_31` and
+`filled_s_middle` directly for
+foreground `mask_38`. The exact 3×2 matrix is `20 31 26 / 16 38 34`; both middle cells repeat through the
+4×2 and 6×2 checks. This acceptance records proof-layer source provenance only: at that checkpoint the ledger
+stood at ten direct, nine derived, 28 synthetic, and zero unresolved; the later T-junction decision supersedes
+those counts. No canonical source, frame identity, template registration, exporter, atlas, schema, or Unity
+surface is changed.
+
+**Accepted open-pocket T-junction gate (owner approval, 2026-07-22):** the external
+`open-pocket-t-junction/` bank supplies `open_w_t_junction` directly for authored open-west `mask_7`. Its
+north/east/south sockets read as one molded spine-and-branch part rather than a corner pasted onto a straight.
+`mask_13` is the approved whole-cell X-mirror derivation with the accepted southeast boundary-seam omission
+preserving adjoining-cell seam ownership. The pair passes compact 3×3 placement and long six-cell checks. At
+that checkpoint the ledger stood at eleven direct, ten derived, 26 synthetic, and zero unresolved; the later
+horizontal-spine decision supersedes those counts. No canonical source, frame
+identity, registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity` surface
+changes through this proof-layer acceptance.
+
+**Accepted horizontal open-pocket T-junction gate (owner approval, 2026-07-22):** the external
+`horizontal-open-pocket-t-junction/` bank holds two separately authored fixed-light source pairs:
+`open_s_t_junction` for `mask_11` and `open_n_t_junction` for `mask_14`. They are evaluated as horizontal
+spines with one vertical branch, two canonical open pockets, compact 3×3 placement, and six-cell horizontal
+and vertical extents. Both rows now have direct proof-layer provenance with no transform or derivation
+approved. At that checkpoint the ledger stood at thirteen direct, ten derived, 24 synthetic, and zero
+unresolved; the later single-filled-pocket decision supersedes those counts. Keep the
+proof bank, gate, workbench card, and tests outside canonical registration, export, atlas, schema, blob mapping,
+and Unity. Same-mask lateral X mirrors on the sheet remain registration comparisons only, not accepted source
+mappings.
+
+**Accepted west-side single-filled-pocket T-junction gate (owner approval, 2026-07-22):** the external
+`west-partial-t-junction/` bank directly resolves foreground `mask_17` with `open_w_t_filled_ne` and rear
+`mask_21` with separately authored `open_w_t_filled_se`. Each retains the north/east/south sockets while one
+diagonal crook becomes solid and the other remains an open floor pocket. They are sibling states between
+open-west `mask_7` and fully filled `mask_24`, not a progression or mirror pair. East-side `mask_36` and
+`mask_27` remained synthetic and no X-mirror derivation was approved at that checkpoint. The ledger then
+recorded fifteen direct, ten derived, 22 synthetic, and zero unresolved; the later east-side decision
+supersedes those totals. Keep this proof bank, gate, workbench card, and tests outside
+canonical registration, export, atlas, schema, blob mapping, and Unity.
+
+**Accepted east-side single-filled-pocket T-junction gate (owner approval, 2026-07-22):** `mask_36` reuses
+accepted foreground `mask_17` through a whole-cell X mirror after omitting only `base-boundary-seam` and
+`upper-boundary-seam`, leaving adjoining `mask_38` as the single shared-socket seam owner. `mask_27` is the
+plain whole-cell X mirror of accepted rear `mask_21`. Compact and long light/dark checks preserve the fixed-light
+roles and one open floor crook in each state. At that checkpoint the ledger recorded fifteen direct, twelve derived,
+20 synthetic, and zero unresolved. This adds no east SVG source bank and changes no canonical source,
+registration, exporter, atlas, schema, blob mapping, or Unity surface.
+
+**Accepted horizontal partial T-junction gate (owner approval, 2026-07-22):** the external
+`horizontal-partial-t-junction/` bank supplies two direct fixed-light sources and two approved derivations:
+`open_s_t_filled_ne -> mask_18`, filtered whole-cell X mirror `mask_18 -> mask_35`,
+`open_n_t_filled_se -> mask_22`, and plain whole-cell X mirror `mask_22 -> mask_28`. The filter for
+`mask_35` omits only `base-boundary-seam` and `upper-boundary-seam`. Judge the two state diamonds
+`mask_11 -> {mask_18, mask_35} -> mask_38` and `mask_14 -> {mask_22, mask_28} -> mask_31` at compact and
+long-run distance: the middle state fills exactly one crook without exposing a buried face or duplicating the
+shared-socket seam. At that checkpoint the accepted ledger stood at 17 direct / 14 derived / 16 synthetic /
+0 collisions, with every remaining synthetic row a cross-junction. South-facing shadow continuity remains deferred family-wide polish
+across the accepted sources; this checkpoint does not claim it is fixed.
+
+**Accepted open-pocket cross-junction gate (owner approval, 2026-07-22):** the external
+`open-pocket-cross-junction/` bank supplies the direct fixed-light `open_cross_junction` pair for `mask_15`.
+Its north/east/south/west sockets continue ordinary one-cell runs while all four diagonal crooks remain open
+floor. The flattened authored union replaces the rejected stacked-T overlay and keeps the horizontal cream
+coping dominant through the center without a peak, post, badge, or duplicate material belt. Judge the accepted
+hub at 240/90/40 px and in one-, three-, and six-cell crossings on light and dark floors. Promotion advances
+the ledger to 18 direct / 14 derived / 15 synthetic / 0 collisions; all 15 remaining synthetic rows are
+cross-junctions. This creates no canonical production source, registration, exporter, atlas, schema, blob
+mapping, or Unity change.
+
+**Accepted single-filled cross-junction gate (owner approval, 2026-07-23):** the external
+`single-filled-cross-junction/` bank supplies the direct fixed-light `open_cross_filled_ne` pair for
+`mask_19`. Its north/east/south/west sockets continue ordinary one-cell runs, the northeast diagonal is
+continuous wall top, and the southeast, southwest, and northwest crooks remain open floor. The source keeps
+the fixed west vertical register through its ordinary neighbors; `mask_37` owns the separate east-register
+topology instead of acting as a transformed `mask_19`. Judge the accepted source at 240/90/40 px and in
+compact, three-cell-arm, and six-cell-arm crossings on light and dark floors. Promotion advances the ledger
+to 19 direct / 14 derived / 14 synthetic / 0 collisions; all 14 remaining synthetic rows are cross-junctions.
+This creates no canonical production source, registration, exporter, atlas, schema, blob mapping, or Unity
+change.
+
+**Accepted southeast-filled cross-junction gate (owner approval, 2026-07-23):** the external
+`single-filled-southeast-cross-junction/` bank supplies the direct fixed-light `open_cross_filled_se` pair
+for `mask_23`. Its north/east/south/west sockets continue ordinary one-cell runs, the southeast diagonal is
+continuous wall top, and the northeast, southwest, and northwest crooks remain open floor. The source keeps
+the fixed west register and follows accepted rear-facing `mask_21`/`mask_22` boundary laws without stacking
+either T-junction source. Judge the accepted source at 240/90/40 px and in compact, three-cell-arm, and
+six-cell-arm crossings on light and dark floors. Promotion advances the ledger to 20 direct / 14 derived /
+13 synthetic / 0 collisions; all 13 remaining synthetic rows are cross-junctions. This creates no canonical
+production source, registration, exporter, atlas, schema, blob mapping, or Unity change.
+
+**Accepted `mask_23` / `mask_29` shared-turn consistency polish (owner approval, 2026-07-25):** the northeast
+open-crook cream plane, light arris, dimensional shade, coral, green, and both seams now phase through the
+accepted nested `mask_11` curve. Every outer contour and cardinal socket pixel remains fixed. The accepted
+plain whole-cell X derivation carries the correction into `mask_29` without a filter, companion source,
+ledger-count change, or production/export/Unity boundary change.
+
+**Accepted east-filled slab cross-junction gate (owner approval, 2026-07-23):** the external
+`double-filled-east-cross-junction/` bank supplies the direct fixed-light `open_cross_filled_e` pair for
+`mask_25`. Its north/east/south/west sockets continue ordinary one-cell runs, the northeast and southeast
+diagonals form one continuous two-cell-wide east slab, and the southwest and northwest crooks remain open
+floor. The source is one authored connector, not a stack of T-junctions. Its polished upper southwest shade
+ends at `y=97`, where the base takes over the south-facing shade, preserving a single boundary at compact
+scale. Judge the accepted source at 240/90/40 px and in compact, three-cell-arm, and six-cell-arm crossings
+on light and dark floors. Promotion advances the ledger to 21 direct / 14 derived / 12 synthetic /
+0 collisions; all 12 remaining synthetic rows are cross-junctions. `mask_43` remains a separate synthetic
+topology row. This creates no canonical production source, registration, exporter, atlas, schema, blob
+mapping, or Unity change.
+
+**Accepted west-filled slab cross-junction gate (owner approval, 2026-07-23):** `mask_43` reuses the accepted
+`open_cross_filled_e` pair from `mask_25` through one plain whole-cell X mirror. Its north/east/south/west
+sockets continue ordinary one-cell runs, the southwest and northwest diagonals form one continuous
+two-cell-wide west slab, and the northeast and southeast crooks remain open floor. The derivation preserves
+the source's Y-based fixed-light ownership and uses no seam filter or new SVG bank. Judge it at 240/90/40 px
+and in compact, three-cell-arm, and six-cell-arm crossings on light and dark floors. Promotion advances the
+ledger to 21 direct / 15 derived / 11 synthetic / 0 collisions; all 11 remaining synthetic rows are
+cross-junctions. This creates no canonical production source, registration, exporter, atlas, schema, blob
+mapping, or Unity change.
+
+**Accepted southwest-filled cross-junction gate (owner approval, 2026-07-23):** `mask_29` reuses the accepted
+`open_cross_filled_se` pair from `mask_23` through one plain whole-cell X mirror. Its north/east/south/west
+sockets continue ordinary one-cell runs, the southwest diagonal is continuous wall top, and the northeast,
+southeast, and northwest crooks remain open floor. The derivation preserves the source's Y-based fixed-light
+ownership and uses no seam filter, companion SVG, or new SVG bank. Judge it at 240/90/40 px and in compact,
+three-cell-arm, and six-cell-arm crossings on light and dark floors. Promotion advances the ledger to
+21 direct / 16 derived / 10 synthetic / 0 collisions; all 10 remaining synthetic rows are cross-junctions.
+This creates no canonical production source, registration, exporter, atlas, schema, blob mapping, or Unity
+change.
+
+**Accepted northwest-filled cross-junction gate (owner approval, 2026-07-23):** the external
+`single-filled-northwest-cross-junction/` bank supplies the direct fixed-light `open_cross_filled_nw` pair
+for `mask_37`. Its north/east/south/west sockets continue ordinary one-cell runs, the northwest diagonal is
+continuous wall top, and the northeast, southeast, and southwest crooks remain open floor. The source keeps
+the fixed east register and is separately authored rather than mirrored or rotated from `mask_19`. Judge the
+accepted source at 240/90/40 px and in compact, three-cell-arm, and six-cell-arm crossings on light and dark
+floors. Promotion advances the ledger to 22 direct / 16 derived / 9 synthetic / 0 collisions; all 9 remaining
+synthetic rows are cross-junctions. This creates no canonical production source, registration, exporter,
+atlas, schema, blob mapping, or Unity change.
+
+**Accepted north-filled slab cross-junction gate (owner approval, 2026-07-23):** the external
+`double-filled-north-cross-junction/` bank supplies the direct fixed-light `open_cross_filled_n` pair for
+`mask_39`. Its north/east/south/west sockets continue ordinary one-cell runs, northeast and northwest form one
+continuous two-row cream slab, and southeast and southwest remain open floor. The cream top crosses the south
+socket while frontage shade and belts yield at the top-to-top join. `mask_19` and `mask_37` constrain geometry
+without providing stacked or derived provenance. Judge the accepted source at 240/90/40 px and in compact,
+three-cell, and six-cell extents on light and dark floors. Promotion advances the ledger to 23 direct /
+16 derived / 8 synthetic / 0 collisions; all 8 remaining synthetic rows are cross-junctions. This creates no
+canonical production source, registration, exporter, atlas, schema, blob mapping, or Unity change.
+
+**Accepted opposed-diagonal-filled cross-junction gate (owner approval, 2026-07-23):** the external
+`double-filled-diagonal-cross-junction/` bank supplies the direct fixed-light `open_cross_filled_ne_sw` pair
+for `mask_30`. Its north/east/south/west sockets continue ordinary one-cell runs; northeast and southwest are
+continuous solid wall; and northwest and southeast remain open floor. The source keeps the west-authored
+register above the hub and hands the south outlet to the accepted east register below it, without a runtime
+transform, stacked source, center cap, peak, post, patch, or duplicate cream owner. Judge the accepted source
+at 240/90/40 px and in compact, three-cell-arm, and six-cell-arm crossings on light and dark floors. Promotion
+advances the ledger to 24 direct / 16 derived / 7 synthetic / 0 collisions; all 7 remaining synthetic rows
+are cross-junctions. This creates no canonical production source, registration, exporter, atlas, schema, blob
+mapping, or Unity change. The X-mirrored `mask_40` topology remains a separate review decision with no implied
+derivation or promotion.
+
+**Accepted opposite-diagonal-filled cross-junction derivation (owner approval, 2026-07-23):** `mask_40`
+reuses the accepted `open_cross_filled_ne_sw` pair for `mask_30` through one whole-cell X mirror after
+omitting only `base-boundary-seam` and `upper-boundary-seam`. Preserve the exact four sockets, northwest and
+southeast solid wall, northeast and southwest open floor, north/east and south/west vertical register
+handoffs, and all non-boundary source paths. Promotion advances the ledger to 24 direct / 17 derived /
+6 synthetic / 0 collisions; all six remaining synthetic rows are cross-junctions. This adds no companion
+SVG, canonical source, registration, exporter, atlas, schema, blob mapping, or Unity change.
+
+**Accepted south-filled slab cross-junction gate (owner approval, 2026-07-23):** the external
+`double-filled-south-cross-junction/` bank supplies the direct fixed-view `open_cross_filled_s` pair for
+`mask_32`. Preserve exact north/east/south/west sockets, southeast and southwest as one continuous south slab,
+northeast and northwest as open floor, one cream owner through the centered north spur, and foreground-neighbor
+ownership of the visible south-facing fascia. `mask_39` remains a geometry and fixed-light control only; never
+Y-mirror or stack it. Promotion advances the ledger to 25 direct / 17 derived / 5 synthetic / 0 collisions;
+all five remaining synthetic rows are cross-junctions. This adds no canonical source, registration, exporter,
+atlas, schema, blob mapping, or Unity change.
+
+**Accepted single-open southwest cross-junction gate (owner approval, 2026-07-24):** the external
+`single-open-southwest-cross-junction/` bank supplies the direct fixed-view
+`open_cross_filled_ne_se_nw` pair for `mask_41`. Preserve exact north/east/south/west sockets, northeast,
+southeast, and northwest as one continuous solid mass, southwest as open floor, and the sole exposed
+coral/green material return at that crook. `mask_25` and `mask_39` are topology cues and `mask_40` is a
+material/register control only; never stack them or claim derived provenance. Promotion advances the ledger
+to 26 direct / 17 derived / 4 synthetic / 0 collisions; all four remaining synthetic rows are cross-junctions.
+This adds no canonical source, registration, exporter, atlas, schema, blob mapping, or Unity change.
+
+**Accepted single-open southeast cross-junction gate (owner approval, 2026-07-24):** `mask_44` reuses the
+accepted `open_cross_filled_ne_se_nw` pair from `mask_41` through one plain whole-cell X mirror around `x=64`.
+Preserve exact north/east/south/west sockets, northwest, northeast, and southwest as one continuous solid mass,
+southeast as open floor, and the sole exposed coral/green material return at that crook. Mirror the complete
+pair without a seam filter, companion SVG, stacked ingredient, or second cream owner. Promotion advances the
+ledger to 26 direct / 18 derived / 3 synthetic / 0 collisions; all three remaining synthetic rows are
+cross-junctions. This adds no canonical production source, registration, exporter, atlas, schema, blob
+mapping, or Unity change.
+
+**Accepted single-open northwest cross-junction gate (owner approval, 2026-07-24):** the external
+`single-open-northwest-cross-junction/` bank supplies the direct fixed-view
+`open_cross_filled_ne_se_sw` pair for `mask_33`. Preserve exact north/east/south/west sockets, northeast,
+southeast, and southwest as one continuous solid mass, northwest as open floor, one cream owner across the
+three filled crooks, and no local coral or green repaint because adjoining foreground pieces own that
+frontage. `mask_25` and `mask_32` are buried-slab geometry cues and `mask_30` constrains only the exposed
+northwest reveal and arris; never stack or transform them or claim derived provenance. Promotion advances the
+ledger to 27 direct / 18 derived / 2 synthetic / 0 collisions; the two remaining synthetic rows are
+cross-junctions. This adds no canonical production source, registration, exporter, atlas, schema, blob
+mapping, or Unity change.
+
+**Accepted single-open northeast cross-junction gate (owner approval, 2026-07-24):** reuse the accepted
+`single-open-northwest-cross-junction/open_cross_filled_ne_se_sw` pair through one plain whole-cell X mirror
+around `x=64` for `mask_45`. Preserve exact north/east/south/west sockets, southeast, southwest, and northwest
+as one continuous solid mass, northeast as open floor, and one cream owner across the three filled crooks.
+Mirror the complete pair without a seam filter, companion SVG, stacked ingredient, or second cream owner;
+the Y-based reveal, arris, and contact-shadow hierarchy remains fixed. Promotion advances the ledger to
+27 direct / 19 derived / 1 synthetic / 0 collisions; only `mask_46` remains synthetic. This adds no canonical
+production source, registration, exporter, atlas, schema, blob mapping, or Unity change.
+
+**Accepted fully filled cross-junction gate (owner approval, 2026-07-24):** directly reuse the external
+`fully-filled-cross-junction/filled_center` base/upper pair for `mask_46`. Preserve north/east/south/west
+connectivity and all four solid diagonal crooks without introducing a floor pocket or exposed local face.
+The source owns one full-cell charcoal underlay and one uninterrupted cream top field; surrounding accepted
+rows own every visible outline, highlight, coral/green frontage, south-facing shade, plinth, return, and
+service seam. It passes at 240/90/40 px inside solid 3×3, 4×4, and 6×6 masses on light and dark floors.
+Promotion advances the ledger to 28 direct / 19 derived / 0 synthetic / 0 unresolved, completing accepted
+proof-layer provenance for all 47 masks. This adds no canonical production source, registration, exporter,
+atlas, schema, blob mapping, or Unity change.
+
+**Still outside acceptance after the complete 47-mask proof vocabulary:**
+`topology/` and `state/`; official/production preview
+regeneration; template/catalog registration and frame identities; exporter, `CONTRACT.md`, or schema changes;
+committed production atlases; prop pilots; Unity; and `production.unity` remain locked until separately
+requested. The accepted external `mask_0`, filled-elbow, both thick-wall-repeat, both open-pocket T-junction,
+west/east single-filled-pocket, horizontal-partial, open-pocket cross-junction, and single-filled
+cross-junction, southeast-filled cross-junction, east-filled slab cross-junction, west-filled slab
+cross-junction, southwest-filled cross-junction, northwest-filled cross-junction, north-filled slab
+cross-junction, opposed-diagonal-filled cross-junction source, opposite-diagonal filtered derivation, and
+south-filled slab cross-junction source, single-open southwest cross-junction source, single-open southeast
+plain-X derivation, single-open northwest cross-junction source, single-open northeast plain-X derivation,
+and fully filled cross-junction source
+do not
+unlock or silently promote any of those surfaces.
+Acceptance of the external T-junction proof families adds ledger provenance only and does not alter that lock.
+The accepted horizontal-partial family likewise creates no canonical source, registration, exporter, atlas,
+schema, blob mapping, or Unity change.
+
+**Historical progress 2026-07-20 (superseded by the 2026-07-21 checkpoint):** steps 1–5 were executed and
+awaited owner review. Cross-section proofs
+blessed ("good enough for now"); both treatments applied to the four straights; NW/SE corners and both
+transitions redesigned as authored turns (banded high-wall terminus at each profile drop, coping route
+turning on the outer arc, green switching sides per the plane logic at N→E / W→S, continuous green wrap at
+SE, coral fan at NW). Teal service register retired from the low family per the references. All 834 tests
+green including the master-pointed directional gates; envelope gate and room mock re-rendered. The pass was
+owner-corrected once ("single room, flush seams; south reads like north"), which re-registered the south/east
+lows onto the full coral system, re-seated the door, and finally rebuilt both transitions as **full-height
+corner turns with the profile drop on the run past the corner** (matching the golden-room structure): the
+room-side stack terminates against the standing wall's inner outline, the top surface flows through the turn,
+the exterior stack wraps in below the outer arc, and a terminus end face steps down onto the low section.
+Committed piecewise through the corner rebuild. The 2026-07-21 checkpoint supersedes this progress snapshot;
+the previously residual low-southeast corner and southwest transition are now accepted at source level, with
+propagation still isolated.
+
+### Measured reference constants (step-1 measurement pass, 2026-07-20)
+
+> **Historical measurement record — not the current visual target.** These values were measured from the two
+> older broad references before the owner restored the five targeted wall sheets on 2026-07-20. Wherever this
+> section differs from `docs/reference/README.md`—especially low-wall coral, band proportions, corner identity,
+> or transition construction—the five-sheet set wins. Re-measure an accepted master cross-section before
+> turning any value below into a production lock or test gate.
+
+Measured from crops of `docs/reference/quota-co-office-geometry-study.png` (row 2 col 1 full wall front-on,
+row 3 low walls, row 3 col 4 high-meets-low) and `-golden-room.png` (north-wall slice, west edge, south low
+edge). Proportions are of the wall's visible screen height:
+
+- **Full wall front-on (study):** top reveal ≈5–8% — a rounded lit cap lip only, behind a definite arris
+  seam. Face stack below: cream ≈35%, coral ≈22% (a true band, not a pinstripe), green ≈30%, plinth ≈7%.
+- **Golden-room north wall agrees:** narrow coping edge, tall cream face dominating. (Its teal chair-rail +
+  lower cream field is illustrative room dressing; the study's cream/coral/green stack is the kit-facing
+  version.)
+- **Golden-room west wall:** coping/top plane dominant; the face stack compresses to slivers — coral and the
+  dark register read as lines, not fields.
+- **Historical low-wall reading (superseded):** the two broad references suggested broad cream coping over a
+  green face with no coral on low straights. The newer targeted sheets instead require a thin continuous coral
+  collar across compatible full and low modules.
+
+Proposed 128-canvas constants (full envelope 56..120, low 82..120; y for horizontal pieces, x for vertical):
+
+| register | horizontal (N/S edge, E-W run) | vertical (E/W edge, N-S run) |
+| --- | --- | --- |
+| outline | 56..58 | 56..58 |
+| lit top plane | 58..63 (5u reveal, white 0.30) | 58..92 (34u plane, white 0.18) |
+| arris seam | at 63, 0.45 | at 92, 0.45 |
+| cream face | 63..85 (22u) | 92..97 (5u sliver) |
+| coral band | 85..97 (12u) | 97..105 (8u) |
+| green face | 97..116 (19u) | 105..116 (11u) |
+| plinth | 116..120 | 116..120 |
+
+Historical low-wall derivation: horizontal low = coping 82..96, green 96..116; vertical low = coping 82..108,
+green sliver 108..116. Its omitted coral register is superseded and must not be copied into current masters;
+the targeted sheets require that collar to continue through the low family.
+
+Depth overlays (added after the first owner pass — the unshaded vertical stack read flat): the coping lip is
+always white 0.30 (the horizontal's whole 5u reveal; a 1.5u arris line on the vertical, with the broad plane
+behind at 0.18); the vertical's descending face stack takes a 0.12 dark face-shade so tops stay lightest and
+the axes separate by value, not just proportion; both treatments ground through a 3.5u, 0.12 contact shade
+on the floor side of the plinth (window-master precedent). If 0.12 is not a sanctioned bible §4 step, clamp
+to the nearest step at transplant time.
+
+Machine gates derived from these numbers (now in `tests/quotaCoHighObliqueEnvelope.test.ts`): horizontal
+reveal ≤ 8u; vertical top plane ≥ 28u; vertical top plane ≥ 3× horizontal reveal; one semantic
+outside-to-room material hierarchy across treatments. The applied east facing reverses that hierarchy's
+screen-space order inside its anchored socket so its fascia still faces the room. The two cross-section proofs live in
+`assets/walls/quota-co-building-system-proofs/` (outside the importer's kit directory), render on the bench
+as the "cross-section proofs" card, and are the first artifacts those gates run against; the gates re-point
+to the masters when step 2 applies the blessed treatments.
+
+## Gotchas (each cost a pass this session)
+
+- The importer rejects stray files (even `.DS_Store`), gradients, masks, filters, images, text, unknown
+  paint, and any single path mixing two palette tokens (fill+stroke of different colors — use
+  outline-as-shape).
+- Ring/hole subpaths must wind opposite to their outer path or the hole fills solid.
+- Strict concentric arithmetic can produce sub-perceptual radii — the visible edge gets r4–5 minimum
+  (bible §5.3).
+- The bench watcher owns port 5411; kill only your own test instances by PID, never by process-name
+  pattern (a broad pkill once took down the owner's live session).
+- Bilinear sprite metas in the sim repo are per-asset-class policy, NOT drift — see the sim-repo memory
+  before "fixing" filterMode.

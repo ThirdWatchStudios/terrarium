@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>QuotaCo Building System full terminus upper</title>
+  <desc>The accepted horizontal straight upper profile flows unchanged into a monolithic banded post, with local end-plane shading confined to the molded cap.</desc>
+  <g id="detail/upper">
+    <path id="upper-contour" d="M0 11.5L103 11.5C107.971 11.5 112 18.185 112 26.433L112 117.693 96 117.693 96 79.53 0 79.53Z" fill="#252A28"/>
+    <path id="upper-shell" d="M0 14.819L102 14.819C105.866 14.819 109 20.019 109 26.433L109 112.715 98 112.715 98 79.53 0 79.53Z" fill="#D9D0B9"/>
+    <path id="upper-reveal-light" d="M0 14.819L102 14.819 102 23.115 0 23.115Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="upper-end-face-shade" d="M98 24.774L103.5 24.774 103.5 64.596 98 64.596Z" fill="#000000" opacity="0.08"/>
+    <path id="upper-coral-band" d="M0 64.596L109 64.596 109 74.552 0 74.552Z" fill="#B65F4D"/>
+    <path id="upper-band-light" d="M0 64.596L103.5 64.596 103.5 67.085 0 67.085Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="upper-green-handoff" d="M0 74.552L109 74.552 109 79.53 0 79.53Z" fill="#294B3C"/>
+    <path id="upper-post-green" d="M98 74.552L109 74.552 109 112.715 98 112.715Z" fill="#294B3C"/>
+    <path id="upper-arris-seam" d="M1 23.115L101 23.115" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="upper-band-seam" d="M1 74.552L102 74.552" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+    <path id="upper-post-edge-seam" d="M97 76.211L97 110.226" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="upper-end-reveal-light" d="M103.5 21.456L104 21.456C106.485 21.456 108.5 24.799 108.5 28.922L108.5 109.396 103.5 109.396Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="upper-end-divider-seam" d="M103.75 21.456L103.75 109.396" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+  </g>
+</svg>

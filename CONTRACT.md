@@ -75,6 +75,7 @@ Coordinate convention: scene grids are row-major `[y][x]`; anchors/spawns carry 
 | `interaction-anchors.json` | `computeInteractionAnchors` | scene | Interaction points derived from placed props. |
 | `ground/<id>/tile@Nx.png` + `atlas@Nx.json` (+ `layers@Nx.png` + `layers-manifest@Nx.json` + `ground.json`) | `groundAtlas` / `groundLayerManifest` | project | **Outdoor ground surfaces** — the DISTINCT *ground kind* (B1.5 "the build site", decision D2): grass ×3 / meadow ×2 / dirt (natural) + asphalt / sidewalk / gravel (paved) + pond-water (water). Same flat-tile machinery as floors, but its own folder + `kind:"ground"` atlas + the −20000 sort band, so the sim's `ImportGround` pulls it in as a separate layer under the interior floor and never treats it as paintable floor (§3.18). Natural and water families are clinical-exempt; paved surfaces drain (§3.18). |
 | `ground-overlays/<id>/tileset@Nx.png` + `atlas@Nx.json` + `overlay.json` | `groundOverlayAtlas` / `deriveGroundOverlays` | project (derived) | **Ground-edge transition overlays** — `grass-fringe` softens natural seams, `curb-edge` draws a poured lip on paved receivers, and `pond-shore` draws a soft earth bank inside water receivers. All use the same 8×6 / 47-frame `mask_<i>` tileset shape and blob contract as walls; sort band −19000 (above ground, below floors). Code-owned and palette-derived from their source ground families (§3.18). |
+| `walls/<id>/tileset@Nx.png` + `atlas@Nx.json` + `wall.json` | `wallTilesetDesc` / `wallAtlas` | project | **Wall autotiles** — 8×6 sheets carrying the canonical 47 `mask_<i>` blob frames. Normal `wall-office` exports use the accepted QuotaCo equal-height production bank and add atlas `meta.contextualFacing`, declaring which west-authored frames the sim may mirror for an east presentation (§3.19). |
 | `construction-crew/<id>/sheet@Nx.png` + `atlas@Nx.json` + `moods(-atlas)@Nx` + `layers@Nx.png` + `manifest@Nx.json` + `unit-layers@Nx.png` + `unit-manifest@Nx.json` + `recipe.json` + `profile.json` | character-export functions | project | **Construction persona** — an authored IRIS fabrication robot the sim spawns the build crew from (B1.5, decision D4). Its `construction-worker` recipe uses the production large-frame rig plus special machine-only head/chassis parts; those part ids remain resolvable for composition but are not ordinary authoring choices. The recipe is a code-owned ingredient in its own folder, decoupled from the editable office cast — NOT one of the four lockstep hero agents, so crew size stays dynamic (§3.18). |
 
 `buildScenarioPackage` is the assembled bundle — it runs `resolveScenarioRun` (persona baseline + scenario seeds/overrides) and emits the scenario-scoped files above.
@@ -625,6 +626,45 @@ The wild set uses asymmetrical crowns, broken contours, irregular negative space
 
 **Construction persona (decision D4).** The `construction-worker` recipe is an IRIS-operated **fabrication robot**, not a human tradesperson: production rig `body-large-frame`, machine head `head-fab`, no hair, and `outfit-fab-chassis`, on the shared sterile-grey/IRIS-green palette. `head-fab` and `outfit-fab-chassis` remain resolvable by id for this recipe and compositor coverage but are excluded from ordinary part pickers and random/seeded employee generation. The crew is an **authored persona**, deliberately **NOT** a fifth fixed default-cast agent id — that would trip the four-hero agent-id lockstep (`contract.test.ts`) and freeze crew size. It therefore ships as a code-owned ingredient in its own `construction-crew/<id>/` folder, decoupled from the editable office cast (never seated at a desk, never in the org chart). It carries the binder essentials — baked `sheet`+`atlas`, the mood-overlay atlas, the re-tintable layer atlas (`manifest`, the NPC composer's input) + IRIS's `unit-layers` rendering — plus `recipe.json` and `profile.json`, so `SpriteToolkitOfficeBinder.SyncAgentNpcs` binds a crew agent (`characterConfigId: "construction-worker"`) exactly as it binds any NPC. The sim sizes the crew dynamically (2–4) from this one template. Its current art is mechanically complete and serviceable, with silhouette/detail polish intentionally iterative.
 
+### 3.19 Contextual east/west wall presentation
+
+The accepted QuotaCo equal-height production tileset keeps the canonical
+8×6 / 47-frame wall atlas. The authored SVG and ledger bank is deterministically
+compiled into browser-safe production data by `npm run walls:import`; the
+freshness check runs before development, builds, and exports. Therefore the
+browser `Export all (zip)`, the normal headless `npm run export`, and individual
+wall downloads all use the same accepted frame registry.
+The registry's literal authored colors remain unchanged under the raw look and
+pass through the ordinary `clinicalSurfaceColor` lens for clinical exports, so
+the fixed QuotaCo bank still drains with the rest of the building.
+
+Connectivity selects the blob frame, but the
+vertical-only rows `mask_1`, `mask_4`, and `mask_5` cannot encode whether the
+wall is the west or east side of a room. Terrarium therefore bakes their
+west-authored pixels once and declares the permitted runtime mirror in every
+normal `office-wall` family atlas, including browser-created duplicates:
+
+```jsonc
+{
+  "meta": {
+    "contextualFacing": {
+      "authoredFacing": "west",
+      "mirrorXForEastPresentation": ["mask_1", "mask_4", "mask_5"]
+    }
+  }
+}
+```
+
+This block is wall-family-specific and remains absent from wall atlases that do
+not declare contextual mirroring. When present, the sim may set
+`SpriteRenderer.flipX = true` only
+for a listed frame when room or placement context selects the east
+presentation; the direct west presentation uses `flipX = false`. Terrarium
+owns the authored-facing and permitted-frame declaration. The sim owns the
+contextual east/west decision and must not infer new blob indices or duplicate
+the atlas. Contextual presentation adds no duplicate PNG frames and does not
+alter frame names, frame order, pivots, or the shared 256→47 blob mapping.
+
 ---
 
 ## 4. Formulas computed **in the tool** (authoritative)
@@ -731,6 +771,6 @@ Things the sim will likely need that the tool does **not** capture yet — decid
 ## 7. Compatibility rules
 
 - **Adding** a suggestion to a free-text vocabulary (drive, trait tag, KPI, location, activity) is **non-breaking** — it only affects authoring autocomplete, never validation or export shape. **Adding an activity badge** is likewise non-breaking: a new shared-atlas cell the sim shows for that `activity` or ignores (§3.9).
-- **Version gating:** `profile.json`, `scenario.json`, and `scenario-template.json` carry `meta.schemaVersion` (currently **18**, the project schema version; migrations remain centralized in `src/core/migrations.ts`). `office-layout.json` carries its **own** payload version (currently **4** — v2 added `rooms[].departmentId` + `wings[]`, v3 added `connectivity[]`, and v4 added optional `tenantRect`, §3.4). The campus art bundles change neither version: all new art rides existing ground, ground-overlay, prop, part, and facility-catalog paths. The sim version-gates on these — `scenario.json` gates a whole scenario package (the bundled `drives.json`/`traits.json`/`departments.json`/`org-structure.json` are resolved within that already-versioned context); `profile.json` gates the per-character visual-import path. Bare-array catalogs (and the derived `org-structure.json`) are intentionally unversioned — they never travel without a versioned `scenario.json` or `project.json`.
+- **Version gating:** `profile.json`, `scenario.json`, and `scenario-template.json` carry `meta.schemaVersion` (currently **19**, the project schema version; migrations remain centralized in `src/core/migrations.ts`). `office-layout.json` carries its **own** payload version (currently **4** — v2 added `rooms[].departmentId` + `wings[]`, v3 added `connectivity[]`, and v4 added optional `tenantRect`, §3.4). v19 adds the `wall-office` atlas `meta.contextualFacing` declaration (§3.19); it is derived at export and needs no stored-project migration. The earlier campus art inventory changes ride existing ground, ground-overlay, prop, part, and facility-catalog paths. The sim version-gates on these — `scenario.json` gates a whole scenario package (the bundled `drives.json`/`traits.json`/`departments.json`/`org-structure.json` are resolved within that already-versioned context); `profile.json` gates the per-character visual-import path. Bare-array catalogs (and the derived `org-structure.json`) are intentionally unversioned — they never travel without a versioned `scenario.json` or `project.json`.
 - **Renaming/removing a field** in §3 **is** breaking — bump `CURRENT_SCHEMA_VERSION` (which flows into `meta.schemaVersion`), add a migration step, and update the sim loader.
 - The sim should **fallback + log**, never hard-fail, on an unrecognized free-text id (drive, KPI, activity). That tolerance is what lets the tool ship a richer vocabulary without lockstep sim releases.

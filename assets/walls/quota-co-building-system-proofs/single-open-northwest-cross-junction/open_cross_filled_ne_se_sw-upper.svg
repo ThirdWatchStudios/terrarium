@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>QuotaCo single-open northwest cross-junction review upper</title>
+  <desc>One fixed-view cream owner forms the three-solid four-way union while the northwest crook remains open and no buried frontage belt is repainted.</desc>
+  <g id="detail/upper">
+    <path id="upper-contour" d="M11.5 0L128 0 128 128 0 128 0 11.5 9.446 11.5C10.581 11.5 11.5 10.581 11.5 9.446Z" fill="#252A28"/>
+    <path id="upper-shell" d="M14.819 0L128 0 128 128 0 128 0 14.819 9.857 14.819C10.991 14.819 14.819 10.991 14.819 9.857Z" fill="#D9D0B9"/>
+    <path id="upper-nw-reveal-light" d="M0 14.819L9.857 14.819C10.991 14.819 14.819 10.991 14.819 9.857L14.819 9.036C14.819 10.397 10.807 11.5 9.446 11.5L0 11.5Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="upper-arris-seam" d="M0.75 11.5L9.446 11.5C10.807 11.5 14.819 10.397 14.819 9.036L14.819 0.75" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+  </g>
+</svg>

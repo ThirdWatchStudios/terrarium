@@ -83,9 +83,11 @@ function loadProject(arg: string): ProjectState {
 }
 
 async function main() {
-  const [projectArg, outArg] = process.argv.slice(2);
+  const args = process.argv.slice(2);
+  const [projectArg, outArg] = args;
   if (!projectArg || projectArg === '--help' || projectArg === '-h') usage();
   if (!outArg) usage('missing output directory');
+  if (args.length > 2) usage(`unexpected argument: ${args[2]}`);
 
   const project = loadProject(projectArg);
   const outDir = resolve(outArg);

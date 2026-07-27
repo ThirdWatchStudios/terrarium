@@ -9,6 +9,290 @@ may be written directly, generated and curated, or edited in a compatible
 vector editor. No particular editor is a production dependency. Nothing here
 changes the export contract except where explicitly flagged (floor variants).
 
+> **Current Water Cooler art-direction amendment (owner-locked 2026-07-19):** the next environment proof is
+> [QuotaCo high-oblique geometry](quota-co-high-oblique-geometry-ask.md): a transparent production-scale
+> floor/equal-height-structural-wall/opening/junction sheet, followed only after approval by a minimum four-facing prop
+> family and isolated Unity golden room. This preserves the content-pipeline reframe and 47-blob substrate but
+> supersedes any assumption that the current strict plan presentation is the final environmental style. It does
+> not pull character phases, gameplay features, or a full catalog redraw into the geometry proof.
+> The 2026-07-20 connected-room review rejected independently finished base/upper wall halves. A later review
+> found that the unified-envelope correction still collapsed profile height and directional plane treatment:
+> north/south runs must read flat/front-on, east/west runs flatter-from-above, and their joints must mediate
+> those authored cross-sections rather than enforce transpose identity. On 2026-07-21 the owner accepted the
+> northwest full/full corner plus the reanchored northeast/low-east facing checkpoint: east and west now share
+> plane depth while reversing local handedness so both fascias face the room. The owner subsequently accepted
+> the low-southeast corner with the south cream/coral/green stack owning the foreground heel and the east coping
+> terminating behind it. The southwest full-to-low transition now applies the same ownership rule at the height
+> step: its broad west plane terminates behind the shallow south coping while the south stack wraps the complete
+> foreground heel. The accepted source checkpoint remains isolated from production templates, topology
+> propagation, schema, and Unity until that migration receives separate approval.
+> **Equal-height wall decision, 2026-07-21:** ordinary structural wall cells use one full profile on
+> every room edge. South is promoted as exact reuse of the full-north base/upper sources with no transform,
+> duplicate SVG, or new identity. The equal-height southwest molded corner is now promoted in the existing
+> `transition_w_to_s` source pair; its south frontage owns the foreground heel. Southeast is promoted as an
+> exact X-mirrored reuse of that same pair, with only its source-side boundary ticks suppressed so the
+> adjoining south cell owns one service seam. It adds no SVG or frame identity. East and northeast are also
+> owner-accepted whole-cell mirror contracts, while remaining unregistered. The former
+> low-south/east and full-to-low artifacts remain historical comparisons and may only inform a separately
+> approved partition family. This decision still changes no production template, topology, exporter, schema,
+> or Unity contract.
+> **Latest footprint decision, 2026-07-27:** the complete accepted 47-mask proof source bank now owns one
+> 112-unit ordinary-wall footprint. Direct/high profiles span `11.5..123.5`; whole-cell mirrored/low profiles
+> span `4.5..116.5`. The strict 128-unit frame, centered pivot, fixed renderer scale, palette, topology, and
+> 28-direct / 19-derived ledger remain unchanged. This promotes source geometry only; normal production
+> export, atlas, schema, blob mapping, Unity registration/PPU/tile size, props, and agent scale remain outside
+> this slice.
+> **Current mapping and source-gate result, 2026-07-24:** the owner accepted the proof-layer 47-mask
+> ledger structure plus the horizontal and vertical termini, isolated-shell, filled-elbow, 2×N thick-wall-repeat,
+> N×2 horizontal thick-wall-repeat, vertical open-pocket T-junction, horizontal-spine open-pocket T-junction,
+> both west- and east-side single-filled-pocket T-junction slices, the horizontal partial T-junction family,
+> the open-pocket cross-junction `mask_15`, the northeast-filled cross-junction `mask_19`, and the
+> southeast-filled cross-junction `mask_23`, the east-filled slab cross-junction `mask_25`, and its accepted
+> west-filled whole-cell X-mirror companion `mask_43`, plus the accepted southwest-filled whole-cell X-mirror
+> companion `mask_29` to `mask_23`, plus the separately authored east-register northwest-filled
+> cross-junction `mask_37`, west-register north-filled slab cross-junction `mask_39`, and separately authored
+> opposed-diagonal-filled cross-junction `mask_30`, plus its accepted filtered whole-cell X-mirror companion
+> `mask_40`, the independently authored south-filled slab cross-junction `mask_32`, and the independently
+> authored single-open southwest cross-junction `mask_41`, plus its accepted plain whole-cell X-mirror
+> single-open southeast companion `mask_44`, the independently authored single-open northwest
+> cross-junction `mask_33`, and its accepted plain whole-cell X-mirror single-open northeast companion
+> `mask_45`, plus the directly authored fully filled center `mask_46`. The ledger
+> now records 28 direct source mappings, 19 approved
+> derivations, 0 synthetic assemblies,
+> and 0 unresolved rows; all 47 masks have accepted proof-layer provenance. `mask_8`
+> directly reuses the socket-polished `full_terminus` pair and `mask_2` uses its accepted whole-cell X mirror;
+> both passed at 90/40 px in 1/3/6-cell contexts. This completes the proof-layer vocabulary, not a production
+> atlas. `mask_1` and `mask_4` use separately authored vertical rollovers plus accepted east mirror-X
+> derivations. `mask_0` directly reuses one external, fixed-view `isolated_shell` pair with zero cardinal sockets;
+> mirror and rotation are prohibited. Production registration,
+> frame identities, export/`CONTRACT.md`, schema, committed atlases, Unity assets, and `production.unity` remain
+> outside this authorization.
+> **Accepted vertical terminus slice, 2026-07-21:** the family has two separately authored external source
+> pairs plus west/east, 240/90/40 px, 1/3/6-run, socket, and minimum-segment evidence. Acceptance records
+> proof-layer provenance only; all production signatures remain unchanged.
+> **Accepted isolated-shell slice, 2026-07-22:** one external base/upper pair passed its 240/90/40 px,
+> contained-boundary, light/dark-ground, and compact-placement evidence. Acceptance records direct proof-layer
+> provenance for `mask_0` only; it does not register or export a production frame.
+> **Accepted filled-elbow slice, 2026-07-22:** direct external proof sources for `mask_16`/`mask_20` and
+> approved X-mirror derivations for `mask_26`/`mask_34` passed as one continuous 2×2 wall mass at 240/90/40 px,
+> on light/dark grounds and beside a clear aisle. Acceptance records proof-layer provenance only; exporter,
+> atlas, schema, and Unity surfaces remain unchanged.
+> **Accepted thick-wall repeat slice, 2026-07-22:** one external `filled_w_middle` pair directly resolves
+> `mask_24`, with `mask_42` accepted as its whole-cell X mirror. The 2×3/2×4/2×6 gate reads as one cream mass
+> without a middle belt or buried rail. At that checkpoint the proof-layer ledger stood at
+> 8 direct / 9 derived / 30 synthetic / 0 unresolved; later source-family decisions supersede those counts.
+> **Accepted horizontal thick-wall repeat slice, 2026-07-22:** the external `filled_n_middle` and
+> `filled_s_middle` pairs directly resolve rear `mask_31` and foreground `mask_38`. The 3×2/4×2/6×2 gate reads
+> as one continuous two-row wall mass, with the south-facing material stack owned only by the foreground row.
+> At that checkpoint the proof-layer ledger stood at 10 direct / 9 derived / 28 synthetic / 0 unresolved;
+> later source-family decisions supersede those counts.
+> **Accepted open-pocket T-junction slice, 2026-07-22:** the external `open_w_t_junction` pair directly resolves
+> open-west `mask_7`; `mask_13` is its accepted whole-cell X mirror after the southeast boundary-seam filter.
+> Compact 3×3 and six-cell-arm checks preserve three continuous sockets, two open floor pockets, and one molded
+> hub without a cap, post, pasted corner, or doubled seam. Acceptance records proof-layer provenance only: the
+> ledger was 11 direct / 10 derived / 26 synthetic / 0 unresolved at that checkpoint. No canonical source, frame identity,
+> template registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity` surface is
+> changed.
+> **Accepted horizontal-spine open-pocket T-junction slice, 2026-07-22:** the external `open_s_t_junction`
+> and `open_n_t_junction` pairs directly resolve `mask_11` and `mask_14` as two separately authored fixed-light
+> axial sources. Compact 3×3 and six-cell horizontal/vertical checks preserve the horizontal spine, vertical
+> branch, and both open pockets at 90 and 40 px per cell. X-mirrored branch registrations remain comparison
+> evidence only, not accepted derivations. At that checkpoint the ledger stood at
+> 13 direct / 10 derived / 24 synthetic / 0 unresolved; the later single-filled-pocket decision supersedes
+> those counts.
+> No canonical source, frame identity, template registration, exporter, atlas, schema, blob mapping, Unity
+> asset, or `production.unity` surface is changed.
+> **Accepted west-side single-filled-pocket T-junction slice, 2026-07-22:** the external
+> `open_w_t_filled_ne` and `open_w_t_filled_se` pairs directly resolve foreground `mask_17` and rear `mask_21`
+> as separately authored fixed-light transitions. Each preserves the north/east/south sockets while filling
+> exactly one diagonal crook. At that checkpoint east-side counterparts `mask_36` and `mask_27` remained
+> synthetic and no mirror derivation was approved; the ledger stood at 15 direct / 10 derived / 22 synthetic /
+> 0 unresolved. The later east-side decision supersedes those totals. No
+> canonical source, frame identity, template registration, exporter, atlas, schema, blob mapping, Unity asset,
+> or `production.unity` surface is changed.
+> **Accepted east-side single-filled-pocket T-junction slice, 2026-07-22:** `mask_36` reuses the accepted
+> foreground `mask_17` source through whole-cell mirror-X after the established omission of
+> `base-boundary-seam` and `upper-boundary-seam`; `mask_27` is the plain whole-cell mirror-X of the accepted
+> rear `mask_21` source. Compact and long light/dark checks preserve the fixed-light roles, one open floor
+> crook, and singular shared-socket seam ownership. At that checkpoint the ledger recorded 15 direct / 12 derived /
+> 20 synthetic / 0 unresolved. No east SVG source bank, canonical source, frame identity, template
+> registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity` surface is added or
+> changed.
+> **Accepted horizontal partial T-junction slice (owner approval, 2026-07-22):** the external
+> `horizontal-partial-t-junction/` proof bank supplies direct fixed-light sources `open_s_t_filled_ne` for
+> `mask_18` and `open_n_t_filled_se` for `mask_22`. `mask_35` is the whole-cell X mirror of
+> `mask_18` after omitting `base-boundary-seam` and `upper-boundary-seam`; `mask_28` is the plain
+> whole-cell X mirror of `mask_22`. The occupancy diamonds are
+> `mask_11 -> {mask_18, mask_35} -> mask_38` and `mask_14 -> {mask_22, mask_28} -> mask_31`: each accepted middle state
+> fills exactly one crook between an accepted open horizontal-spine junction and an accepted fully filled
+> horizontal repeat. At that checkpoint the accepted ledger stood at 17 direct / 14 derived / 16 synthetic /
+> 0 collisions, and all 16 remaining synthetic rows were cross-junctions. South-facing shadow continuity remains deferred
+> family-wide polish across the accepted direct and derived sources; this acceptance does not claim it is fixed.
+> No canonical source, frame identity, template registration, exporter, atlas, schema, blob mapping, Unity
+> asset, or `production.unity` surface is added or changed by this proof-layer promotion.
+> **Accepted open-pocket cross-junction slice (owner approval, 2026-07-22):** the external
+> `open-pocket-cross-junction/` proof bank supplies one direct fixed-light `open_cross_junction` source pair
+> for `mask_15`. Its four cardinal sockets continue ordinary one-cell runs while all four diagonal crooks stay
+> open floor. The authored union replaces the rejected stacked-T overlay, keeps the horizontal cream coping
+> dominant through the hub, and passes 240/90/40 px source checks plus one-, three-, and six-cell installed
+> crossings on light and dark floors. The ledger now records 18 direct / 14 derived / 15 synthetic /
+> 0 collisions; all 15 remaining synthetic rows are cross-junctions. Acceptance records proof-layer source
+> provenance only. It adds no canonical production source, frame identity, template registration, exporter,
+> atlas, schema, blob mapping, Unity asset, or `production.unity` change.
+> **Accepted single-filled cross-junction slice (owner approval, 2026-07-23):** the external
+> `single-filled-cross-junction/` proof bank supplies one direct fixed-light `open_cross_filled_ne` source pair
+> for `mask_19`. Its four cardinal sockets continue ordinary one-cell runs, the northeast diagonal becomes
+> continuous wall mass, and the southeast, southwest, and northwest crooks remain open floor. The authored
+> union preserves the fixed west socket register and replaces any stacked-T, patch, peak, or post construction.
+> It passes 240/90/40 px source checks plus compact, three-cell-arm, and six-cell-arm installed crossings on
+> light and dark floors. The accepted ledger now records 19 direct / 14 derived / 14 synthetic / 0 collisions;
+> all 14 remaining synthetic rows are cross-junctions. Acceptance records proof-layer source provenance only.
+> It adds no canonical production source, frame identity, template registration, exporter, atlas, schema, blob
+> mapping, Unity asset, or `production.unity` change.
+> **Accepted southeast-filled cross-junction slice (owner approval, 2026-07-23):** the external
+> `single-filled-southeast-cross-junction/` proof bank supplies one direct fixed-light
+> `open_cross_filled_se` source pair for `mask_23`. Its four cardinal sockets continue ordinary one-cell runs,
+> the southeast diagonal becomes continuous wall mass, and the northeast, southwest, and northwest crooks
+> remain open floor. The authored union preserves the fixed west socket register and applies the accepted
+> rear-facing `mask_21`/`mask_22` boundary laws without stacking either T source. It passes 240/90/40 px
+> source checks plus compact, three-cell-arm, and six-cell-arm installed crossings on light and dark floors.
+> An owner-approved consistency polish on 2026-07-25 phases the northeast cream plane, light arris,
+> dimensional shade, coral, green, and both seams through the accepted nested `mask_11` turn while preserving
+> every outer contour and socket pixel. The existing plain whole-cell X derivation carries the same correction
+> into `mask_29` without a filter or companion source.
+> The accepted ledger now records 20 direct / 14 derived / 13 synthetic / 0 collisions; all 13 remaining
+> synthetic rows are cross-junctions. Acceptance records proof-layer source provenance only. It adds no
+> canonical production source, frame identity, template registration, exporter, atlas, schema, blob mapping,
+> Unity asset, or `production.unity` change.
+> **Accepted east-filled slab cross-junction slice (owner approval, 2026-07-23):** the external
+> `double-filled-east-cross-junction/` proof bank supplies one direct fixed-light `open_cross_filled_e`
+> source pair for `mask_25`. Its four cardinal sockets continue ordinary one-cell runs, the northeast and
+> southeast diagonals become one continuous two-cell-wide east slab, and the southwest and northwest crooks
+> remain open floor. The west branch enters the slab as one authored union rather than stacked T-junctions.
+> A final source polish assigns the narrow southwest coping transition to the upper source only through
+> `y=95..97`, while the base owns the south-facing shade from `y=97` onward; the compact 40 px proof therefore
+> retains one clean material boundary. It passes 240/90/40 px source checks plus compact, three-cell-arm, and
+> six-cell-arm installed crossings on light and dark floors. The accepted ledger now records
+> 21 direct / 14 derived / 12 synthetic / 0 collisions; all 12 remaining synthetic rows are cross-junctions.
+> `mask_43` remains a separate synthetic topology row. Acceptance records proof-layer source provenance only.
+> It adds no canonical production source, frame identity, template registration, exporter, atlas, schema,
+> blob mapping, Unity asset, or `production.unity` change.
+> **Accepted west-filled slab cross-junction slice (owner approval, 2026-07-23):** `mask_43` reuses the
+> accepted `open_cross_filled_e` pair from `mask_25` through one plain whole-cell X mirror. Its four cardinal
+> sockets continue ordinary one-cell runs, the southwest and northwest diagonals become one continuous
+> two-cell-wide west slab, and the northeast and southeast crooks remain open floor. No seam filter or new SVG
+> bank is involved. It passes 240/90/40 px source checks plus compact, three-cell-arm, and six-cell-arm
+> installed crossings on light and dark floors. The accepted ledger now records
+> 21 direct / 15 derived / 11 synthetic / 0 collisions; all 11 remaining synthetic rows are cross-junctions.
+> Acceptance records one proof-layer derivation only. It adds no canonical production source, frame identity,
+> template registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity` change.
+> **Accepted southwest-filled cross-junction slice (owner approval, 2026-07-23):** `mask_29` reuses the
+> accepted external `open_cross_filled_se` pair from `mask_23` through one plain whole-cell X mirror. Its four
+> cardinal sockets continue ordinary one-cell runs, the southwest diagonal becomes continuous wall mass, and
+> the northeast, southeast, and northwest crooks remain open floor. The derivation preserves the source's
+> Y-based fixed-light ownership and uses no seam filter, companion SVG, or new SVG bank. It passes
+> 240/90/40 px source checks plus compact, three-cell-arm, and six-cell-arm installed crossings on light and
+> dark floors. The accepted ledger now records 21 direct / 16 derived / 10 synthetic / 0 collisions; all 10
+> remaining synthetic rows are cross-junctions. Acceptance records one proof-layer derivation only. It adds no
+> canonical production source, frame identity, template registration, exporter, atlas, schema, blob mapping,
+> Unity asset, or `production.unity` change.
+> **Accepted northwest-filled cross-junction slice (owner approval, 2026-07-23):** `mask_37` directly reuses
+> the external `open_cross_filled_nw` pair as one separately authored east-register four-way union. Its four
+> cardinal sockets continue ordinary one-cell runs, the northwest diagonal becomes continuous wall mass, and
+> the northeast, southeast, and southwest crooks remain open floor. It is not a mirror or rotation of
+> `mask_19`; no seam filter or derived companion is involved. It passes 240/90/40 px source checks plus
+> compact, three-cell-arm, and six-cell-arm installed crossings on light and dark floors. The accepted ledger
+> now records 22 direct / 16 derived / 9 synthetic / 0 collisions; all 9 remaining synthetic rows are
+> cross-junctions. Acceptance records one direct proof-layer source only. It adds no canonical production
+> source, frame identity, template registration, exporter, atlas, schema, blob mapping, Unity asset, or
+> `production.unity` change.
+> **Accepted north-filled slab cross-junction slice (owner approval, 2026-07-23):** `mask_39` directly reuses
+> the external `open_cross_filled_n` pair as one separately authored west-register four-way union. Its four
+> cardinal sockets continue ordinary one-cell runs, northeast and northwest form one continuous two-row cream
+> slab, and southeast and southwest remain open floor. The cream top continues through the south socket while
+> frontage shade and belts yield at the top-to-top join. `mask_19` and `mask_37` remain geometry controls only;
+> the accepted source is neither stacked nor derived from them. It passes 240/90/40 px source checks plus
+> compact, three-cell, and six-cell installed extents on light and dark floors. The accepted ledger now records
+> 23 direct / 16 derived / 8 synthetic / 0 collisions; all 8 remaining synthetic rows are cross-junctions.
+> Acceptance records one direct proof-layer source only. It adds no canonical production source, frame
+> identity, template registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity`
+> change.
+> **Accepted opposed-diagonal-filled cross-junction slice (owner approval, 2026-07-23):** `mask_30`
+> directly reuses the external `open_cross_filled_ne_sw` pair as one separately authored fixed-light
+> four-way union. Its four cardinal sockets continue ordinary one-cell runs; northeast and southwest are
+> continuous solid wall while northwest and southeast remain open floor. The source keeps the west-authored
+> register above the hub and hands the south outlet to the accepted east register below it, with no runtime
+> transform, stacked source, or duplicate cream owner. It passes 240/90/40 px source checks plus compact,
+> three-cell-arm, and six-cell-arm crossings on light and dark floors. The accepted ledger now records
+> 24 direct / 16 derived / 7 synthetic / 0 collisions; all 7 remaining synthetic rows are cross-junctions.
+> Acceptance records one direct proof-layer source only. It adds no canonical production source, frame
+> identity, template registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity`
+> change. The X-mirrored `mask_40` topology remains a separate review decision with no implied derivation or
+> promotion.
+> **Accepted opposite-diagonal-filled cross-junction derivation (owner approval, 2026-07-23):** `mask_40`
+> reuses the accepted `mask_30` source pair through one whole-cell X mirror after omitting only
+> `base-boundary-seam` and `upper-boundary-seam`. Northwest and southeast are solid, northeast and southwest
+> remain open floor, the north outlet uses the east register, and the south outlet uses the west register.
+> The accepted ledger now records 24 direct / 17 derived / 6 synthetic / 0 collisions; all six remaining
+> synthetic rows are cross-junctions. Acceptance adds no SVG, canonical production source, frame identity,
+> template registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity` change.
+> **Accepted south-filled slab cross-junction slice (owner approval, 2026-07-23):** `mask_32` directly reuses
+> the external `open_cross_filled_s` pair as one independently authored fixed-view four-way union. Southeast
+> and southwest form one continuous cream south slab, northeast and northwest remain open floor, and the
+> centered north spur keeps one exposed vertical register. `mask_39` is a geometry/fixed-light control only,
+> never Y-mirrored provenance. The accepted ledger now records 25 direct / 17 derived / 5 synthetic /
+> 0 collisions; all five remaining synthetic rows are cross-junctions. Acceptance records one direct
+> proof-layer source only and adds no canonical source, frame identity, template registration, exporter,
+> atlas, schema, blob mapping, Unity asset, or `production.unity` change.
+> **Accepted single-open southwest cross-junction slice (owner approval, 2026-07-24):** `mask_41` directly
+> reuses the external `open_cross_filled_ne_se_nw` pair as one independently authored fixed-view four-way
+> union. Northeast, southeast, and northwest are one continuous solid mass; southwest remains genuine floor;
+> and all four cardinal sockets stay exact. `mask_25` and `mask_39` constrain topology while `mask_40`
+> constrains only the exposed southwest material return; none supplies stacked source provenance. The accepted
+> ledger now records 26 direct / 17 derived / 4 synthetic / 0 collisions; all four remaining synthetic rows
+> are cross-junctions. Acceptance records one direct proof-layer source only and adds no canonical source,
+> frame identity, template registration, exporter, atlas, schema, blob mapping, Unity asset, or
+> `production.unity` change.
+> **Accepted single-open southeast cross-junction slice (owner approval, 2026-07-24):** `mask_44` reuses the
+> accepted `open_cross_filled_ne_se_nw` pair from `mask_41` through one plain whole-cell X mirror around
+> `x=64`. Northwest, northeast, and southwest remain one continuous solid mass; southeast remains genuine
+> floor; and all four cardinal sockets stay exact. The whole pair is mirrored without a seam filter, companion
+> SVG, stacked ingredient, or new cream owner, preserving the accepted Y-based light and shadow hierarchy.
+> The accepted ledger now records 26 direct / 18 derived / 3 synthetic / 0 collisions; all three remaining
+> synthetic rows are cross-junctions. Acceptance records one approved proof-layer derivation only and adds no
+> canonical production source, frame identity, template registration, exporter, atlas, schema, blob mapping,
+> Unity asset, or `production.unity` change.
+> **Accepted single-open northwest cross-junction slice (owner approval, 2026-07-24):** `mask_33` directly
+> reuses the external `open_cross_filled_ne_se_sw` pair as one independently authored fixed-view four-way
+> union. Northeast, southeast, and southwest remain one continuous solid mass; northwest remains genuine
+> floor; and all four cardinal sockets stay exact. `mask_25` and `mask_32` constrain the buried east and south
+> slabs while `mask_30` constrains only the exposed northwest reveal and arris; none supplies stacked or
+> transformed provenance. One cream owner spans all three filled crooks, with no local coral or green repaint
+> because adjoining foreground pieces own that frontage. The accepted ledger now records 27 direct / 18
+> derived / 2 synthetic / 0 collisions; the two remaining synthetic rows are cross-junctions. Acceptance
+> records one direct proof-layer source only and adds no canonical production source, frame identity, template
+> registration, exporter, atlas, schema, blob mapping, Unity asset, or `production.unity` change.
+> **Accepted single-open northeast cross-junction slice (owner approval, 2026-07-24):** `mask_45` reuses
+> the accepted external `open_cross_filled_ne_se_sw` pair from `mask_33` through one plain whole-cell X
+> mirror around `x=64`. Southeast, southwest, and northwest remain one continuous solid mass; northeast
+> remains genuine floor; and all four cardinal sockets stay exact. The whole pair is mirrored without a seam
+> filter, companion SVG, stacked ingredient, or second cream owner, preserving the accepted Y-based light,
+> reveal, arris, and contact-shadow hierarchy. The accepted ledger now records 27 direct / 19 derived /
+> 1 synthetic / 0 collisions; only `mask_46` remains synthetic. Acceptance records one approved proof-layer
+> derivation only and adds no canonical production source, frame identity, template registration, exporter,
+> atlas, schema, blob mapping, Unity asset, or `production.unity` change.
+> **Accepted fully filled cross-junction slice (owner approval, 2026-07-24):** `mask_46` directly reuses the
+> external `fully-filled-cross-junction/filled_center` base/upper pair as the fully buried center of a solid
+> wall mass. North, east, south, and west remain connected, while northeast, southeast, southwest, and
+> northwest are all solid; no floor crook or exposed wall face remains. The source owns one full-cell
+> charcoal underlay and one uninterrupted cream top field. Accepted perimeter cells retain every visible
+> outline, highlight, coral/green frontage, south-facing shade, plinth, return, and service seam. It passes
+> at 240/90/40 px inside solid 3×3, 4×4, and 6×6 masses on light and dark floors. The accepted ledger now
+> records 28 direct / 19 derived / 0 synthetic / 0 unresolved, so all 47 masks have accepted proof-layer
+> provenance. Acceptance records one direct proof-layer source only and adds no canonical production source,
+> frame identity, template registration, exporter, atlas, schema, blob mapping, Unity asset, or
+> `production.unity` change.
+
 ---
 
 ## 1. The reframe

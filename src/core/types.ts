@@ -451,8 +451,12 @@ export const DEFAULT_LOOK: LookId = 'raw';
  * rendering), `portrait@Nx.png` (corporate-identity badge photo), and a
  * derived `renderings.unit` palette in exported recipe.json + layer manifests.
  * All derived from the identity at export; version bump only.
+ * v19 added wall-atlas `meta.contextualFacing` for the accepted QuotaCo
+ * equal-height production wall. It declares the west-authored frames Unity may
+ * mirror for east presentation; runtime room context still selects the facing.
+ * The metadata is derived at export, so no project data migration is required.
  */
-export const CURRENT_SCHEMA_VERSION = 18;
+export const CURRENT_SCHEMA_VERSION = 19;
 
 /** Design-space canvas size. Parts are authored against this; never changes. */
 export const CANVAS = 128;

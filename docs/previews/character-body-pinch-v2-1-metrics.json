@@ -1,0 +1,299 @@
+{
+  "note": "Body-only intersection-over-union on transparent 40 px compositor renders. The visual gate remains authoritative.",
+  "bellVersusPinch": {
+    "south": 0.88,
+    "east": 0.905
+  },
+  "bellVocabulary": {
+    "south": [
+      {
+        "pair": [
+          "block",
+          "barrel"
+        ],
+        "iou": 0.925
+      },
+      {
+        "pair": [
+          "barrel",
+          "body-soft"
+        ],
+        "iou": 0.842
+      },
+      {
+        "pair": [
+          "block",
+          "body-soft"
+        ],
+        "iou": 0.831
+      },
+      {
+        "pair": [
+          "block",
+          "wedge"
+        ],
+        "iou": 0.824
+      },
+      {
+        "pair": [
+          "wedge",
+          "barrel"
+        ],
+        "iou": 0.798
+      },
+      {
+        "pair": [
+          "column",
+          "wedge"
+        ],
+        "iou": 0.777
+      },
+      {
+        "pair": [
+          "column",
+          "body-soft"
+        ],
+        "iou": 0.742
+      },
+      {
+        "pair": [
+          "column",
+          "barrel"
+        ],
+        "iou": 0.71
+      },
+      {
+        "pair": [
+          "wedge",
+          "body-soft"
+        ],
+        "iou": 0.708
+      },
+      {
+        "pair": [
+          "column",
+          "block"
+        ],
+        "iou": 0.661
+      }
+    ],
+    "east": [
+      {
+        "pair": [
+          "block",
+          "barrel"
+        ],
+        "iou": 0.897
+      },
+      {
+        "pair": [
+          "block",
+          "body-soft"
+        ],
+        "iou": 0.873
+      },
+      {
+        "pair": [
+          "column",
+          "wedge"
+        ],
+        "iou": 0.867
+      },
+      {
+        "pair": [
+          "barrel",
+          "body-soft"
+        ],
+        "iou": 0.857
+      },
+      {
+        "pair": [
+          "wedge",
+          "barrel"
+        ],
+        "iou": 0.819
+      },
+      {
+        "pair": [
+          "block",
+          "wedge"
+        ],
+        "iou": 0.8
+      },
+      {
+        "pair": [
+          "column",
+          "barrel"
+        ],
+        "iou": 0.779
+      },
+      {
+        "pair": [
+          "column",
+          "body-soft"
+        ],
+        "iou": 0.764
+      },
+      {
+        "pair": [
+          "wedge",
+          "body-soft"
+        ],
+        "iou": 0.761
+      },
+      {
+        "pair": [
+          "column",
+          "block"
+        ],
+        "iou": 0.743
+      }
+    ]
+  },
+  "pinchVocabulary": {
+    "south": [
+      {
+        "pair": [
+          "block",
+          "barrel"
+        ],
+        "iou": 0.925
+      },
+      {
+        "pair": [
+          "barrel",
+          "body-soft"
+        ],
+        "iou": 0.84
+      },
+      {
+        "pair": [
+          "block",
+          "wedge"
+        ],
+        "iou": 0.824
+      },
+      {
+        "pair": [
+          "block",
+          "body-soft"
+        ],
+        "iou": 0.806
+      },
+      {
+        "pair": [
+          "wedge",
+          "barrel"
+        ],
+        "iou": 0.798
+      },
+      {
+        "pair": [
+          "column",
+          "body-soft"
+        ],
+        "iou": 0.797
+      },
+      {
+        "pair": [
+          "column",
+          "wedge"
+        ],
+        "iou": 0.777
+      },
+      {
+        "pair": [
+          "wedge",
+          "body-soft"
+        ],
+        "iou": 0.747
+      },
+      {
+        "pair": [
+          "column",
+          "barrel"
+        ],
+        "iou": 0.71
+      },
+      {
+        "pair": [
+          "column",
+          "block"
+        ],
+        "iou": 0.661
+      }
+    ],
+    "east": [
+      {
+        "pair": [
+          "block",
+          "barrel"
+        ],
+        "iou": 0.897
+      },
+      {
+        "pair": [
+          "column",
+          "wedge"
+        ],
+        "iou": 0.867
+      },
+      {
+        "pair": [
+          "barrel",
+          "body-soft"
+        ],
+        "iou": 0.863
+      },
+      {
+        "pair": [
+          "block",
+          "body-soft"
+        ],
+        "iou": 0.86
+      },
+      {
+        "pair": [
+          "wedge",
+          "barrel"
+        ],
+        "iou": 0.819
+      },
+      {
+        "pair": [
+          "column",
+          "body-soft"
+        ],
+        "iou": 0.811
+      },
+      {
+        "pair": [
+          "block",
+          "wedge"
+        ],
+        "iou": 0.8
+      },
+      {
+        "pair": [
+          "wedge",
+          "body-soft"
+        ],
+        "iou": 0.797
+      },
+      {
+        "pair": [
+          "column",
+          "barrel"
+        ],
+        "iou": 0.779
+      },
+      {
+        "pair": [
+          "column",
+          "block"
+        ],
+        "iou": 0.743
+      }
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>QuotaCo single-filled northwest cross-junction accepted base</title>
+  <desc>One flattened lower structure joins four accepted sockets, buries the northwest diagonal, and preserves the three remaining open crooks without transformed or stacked source art.</desc>
+  <g id="detail/base">
+    <path id="base-buried-nw-underlay" d="M116.5 0L0 0 0 76.211 116.5 76.211Z" fill="#252A28"/>
+    <path id="base-contour" d="M38.515 0L10.307 0 10.307 76.211 0 76.211 0 117.693 10.307 117.693 10.307 128 38.515 128 38.515 117.693 128 117.693 128 76.211 38.515 76.211Z" fill="#252A28"/>
+    <path id="base-green" d="M35.196 0L15.285 0 15.285 74.552C15.285 77.301 13.057 79.53 10.307 79.53L0 79.53 0 112.715 10.307 112.715C13.057 112.715 15.285 114.943 15.285 117.693L15.285 128 35.196 128 35.196 117.693C35.196 114.943 37.425 112.715 40.174 112.715L128 112.715 128 79.53 40.174 79.53C37.425 79.53 35.196 77.301 35.196 74.552Z" fill="#294B3C"/>
+    <path id="base-face-shade" d="M35.196 0L15.285 0 15.285 79.53 35.196 79.53ZM35.196 112.715L15.285 112.715 15.285 128 35.196 128Z" fill="#000000" opacity="0.12"/>
+    <path id="base-contact-shade" d="M10.307 0L4.5 0 4.5 76.211 10.307 76.211ZM128 117.693L116.5 117.693 116.5 123.5 128 123.5ZM10.307 117.693L0 117.693 0 123.5 4.5 123.5 4.5 128 10.307 128Z" fill="#000000" opacity="0.12"/>
+    <path id="base-boundary-seam" d="M2 81.189L2 111.056" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+    <path id="base-south-service-seam" d="M16.944 126L33.537 126" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+  </g>
+</svg>

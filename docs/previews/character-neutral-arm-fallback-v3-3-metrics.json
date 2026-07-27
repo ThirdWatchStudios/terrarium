@@ -1,0 +1,806 @@
+{
+  "reviewOnly": true,
+  "acceptedRule": "Every full-body rigged character has generated neutral-arm geometry as its fallback. East and west neutral arms may remain wholly inside the body silhouette; explicit action poses may expose them when the action calls for it.",
+  "selectedRevision": "current",
+  "rejectedRevision": {
+    "id": "outboard-hang",
+    "reason": "The forced one-sided profile protrusion reads as though the other arm disappeared."
+  },
+  "productionNeutralRestored": true,
+  "proofPoseRemoved": true,
+  "coverage": {
+    "bodyCount": 6,
+    "facingCount": 4,
+    "revisionCount": 3,
+    "authoredArmModelChecks": 18,
+    "productionParityChecks": 24,
+    "profileSilhouetteChecks": 24,
+    "stressRenderCount": 72,
+    "crowdCharacterCount": 12,
+    "newAnimationFrames": 0
+  },
+  "armModelPresence": {
+    "allChecksPass": true,
+    "checks": [
+      {
+        "body": "Column",
+        "facing": "south",
+        "expectedSleevePaths": 2,
+        "sleevePaths": 2,
+        "expectedHands": 2,
+        "hands": 2,
+        "hasHandLeft": true,
+        "hasHandRight": true,
+        "carryHand": "right",
+        "pathsValid": true,
+        "compositorIncludesAllPaths": true,
+        "passed": true
+      },
+      {
+        "body": "Column",
+        "facing": "east",
+        "expectedSleevePaths": 1,
+        "sleevePaths": 1,
+        "expectedHands": 1,
+        "hands": 1,
+        "hasHandLeft": false,
+        "hasHandRight": true,
+        "carryHand": "right",
+        "pathsValid": true,
+        "compositorIncludesAllPaths": true,
+        "passed": true
+      },
+      {
+        "body": "Column",
+        "facing": "north",
+        "expectedSleevePaths": 2,
+        "sleevePaths": 2,
+        "expectedHands": 2,
+        "hands": 2,
+        "hasHandLeft": true,
+        "hasHandRight": true,
+        "carryHand": "right",
+        "pathsValid": true,
+        "compositorIncludesAllPaths": true,
+        "passed": true
+      },
+      {
+        "body": "Block",
+        "facing": "south",
+        "expectedSleevePaths": 2,
+        "sleevePaths": 2,
+        "expectedHands": 2,
+        "hands": 2,
+        "hasHandLeft": true,
+        "hasHandRight": true,
+        "carryHand": "right",
+        "pathsValid": true,
+        "compositorIncludesAllPaths": true,
+        "passed": true
+      },
+      {
+        "body": "Block",
+        "facing": "east",
+        "expectedSleevePaths": 1,
+        "sleevePaths": 1,
+        "expectedHands": 1,
+        "hands": 1,
+        "hasHandLeft": false,
+        "hasHandRight": true,
+        "carryHand": "right",
+        "pathsValid": true,
+        "compositorIncludesAllPaths": true,
+        "passed": true
+      },
+      {
+        "body": "Block",
+        "facing": "north",
+        "expectedSleevePaths": 2,
+        "sleevePaths": 2,
+        "expectedHands": 2,
+        "hands": 2,
+        "hasHandLeft": true,
+        "hasHandRight": true,
+        "carryHand": "right",
+        "pathsValid": true,
+        "compositorIncludesAllPaths": true,
+        "passed": true
+      },
+      {
+        "body": "Wedge",
+        "facing": "south",
+        "expectedSleevePaths": 2,
+        "sleevePaths": 2,
+        "expectedHands": 2,
+        "hands": 2,
+        "hasHandLeft": true,
+        "hasHandRight": true,
+        "carryHand": "right",
+        "pathsValid": true,
+        "compositorIncludesAllPaths": true,
+        "passed": true
+      },
+      {
+        "body": "Wedge",
+        "facing": "east",
+        "expectedSleevePaths": 1,
+        "sleevePaths": 1,
+        "expectedHands": 1,
+        "hands": 1,
+        "hasHandLeft": false,
+        "hasHandRight": true,
+        "carryHand": "right",
+        "pathsValid": true,
+        "compositorIncludesAllPaths": true,
+        "passed": true
+      },
+      {
+        "body": "Wedge",
+        "facing": "north",
+        "expectedSleevePaths": 2,
+        "sleevePaths": 2,
+        "expectedHands": 2,
+        "hands": 2,
+        "hasHandLeft": true,
+        "hasHandRight": true,
+        "carryHand": "right",
+        "pathsValid": true,
+        "compositorIncludesAllPaths": true,
+        "passed": true
+      },
+      {
+        "body": "Barrel",
+        "facing": "south",
+        "expectedSleevePaths": 2,
+        "sleevePaths": 2,
+        "expectedHands": 2,
+        "hands": 2,
+        "hasHandLeft": true,
+        "hasHandRight": true,
+        "carryHand": "right",
+        "pathsValid": true,
+        "compositorIncludesAllPaths": true,
+        "passed": true
+      },
+      {
+        "body": "Barrel",
+        "facing": "east",
+        "expectedSleevePaths": 1,
+        "sleevePaths": 1,
+        "expectedHands": 1,
+        "hands": 1,
+        "hasHandLeft": false,
+        "hasHandRight": true,
+        "carryHand": "right",
+        "pathsValid": true,
+        "compositorIncludesAllPaths": true,
+        "passed": true
+      },
+      {
+        "body": "Barrel",
+        "facing": "north",
+        "expectedSleevePaths": 2,
+        "sleevePaths": 2,
+        "expectedHands": 2,
+        "hands": 2,
+        "hasHandLeft": true,
+        "hasHandRight": true,
+        "carryHand": "right",
+        "pathsValid": true,
+        "compositorIncludesAllPaths": true,
+        "passed": true
+      },
+      {
+        "body": "Bell",
+        "facing": "south",
+        "expectedSleevePaths": 2,
+        "sleevePaths": 2,
+        "expectedHands": 2,
+        "hands": 2,
+        "hasHandLeft": true,
+        "hasHandRight": true,
+        "carryHand": "right",
+        "pathsValid": true,
+        "compositorIncludesAllPaths": true,
+        "passed": true
+      },
+      {
+        "body": "Bell",
+        "facing": "east",
+        "expectedSleevePaths": 1,
+        "sleevePaths": 1,
+        "expectedHands": 1,
+        "hands": 1,
+        "hasHandLeft": false,
+        "hasHandRight": true,
+        "carryHand": "right",
+        "pathsValid": true,
+        "compositorIncludesAllPaths": true,
+        "passed": true
+      },
+      {
+        "body": "Bell",
+        "facing": "north",
+        "expectedSleevePaths": 2,
+        "sleevePaths": 2,
+        "expectedHands": 2,
+        "hands": 2,
+        "hasHandLeft": true,
+        "hasHandRight": true,
+        "carryHand": "right",
+        "pathsValid": true,
+        "compositorIncludesAllPaths": true,
+        "passed": true
+      },
+      {
+        "body": "Pinch",
+        "facing": "south",
+        "expectedSleevePaths": 2,
+        "sleevePaths": 2,
+        "expectedHands": 2,
+        "hands": 2,
+        "hasHandLeft": true,
+        "hasHandRight": true,
+        "carryHand": "right",
+        "pathsValid": true,
+        "compositorIncludesAllPaths": true,
+        "passed": true
+      },
+      {
+        "body": "Pinch",
+        "facing": "east",
+        "expectedSleevePaths": 1,
+        "sleevePaths": 1,
+        "expectedHands": 1,
+        "hands": 1,
+        "hasHandLeft": false,
+        "hasHandRight": true,
+        "carryHand": "right",
+        "pathsValid": true,
+        "compositorIncludesAllPaths": true,
+        "passed": true
+      },
+      {
+        "body": "Pinch",
+        "facing": "north",
+        "expectedSleevePaths": 2,
+        "sleevePaths": 2,
+        "expectedHands": 2,
+        "hands": 2,
+        "hasHandLeft": true,
+        "hasHandRight": true,
+        "carryHand": "right",
+        "pathsValid": true,
+        "compositorIncludesAllPaths": true,
+        "passed": true
+      }
+    ],
+    "findings": []
+  },
+  "profileOcclusion": {
+    "allowed": true,
+    "allChecksOccluded": true,
+    "occludedChecks": 24,
+    "checks": [
+      {
+        "body": "Column",
+        "facing": "east",
+        "pixelSize": 40,
+        "currentPixels": 320,
+        "alwaysOnPixels": 320,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Column",
+        "facing": "east",
+        "pixelSize": 48,
+        "currentPixels": 455,
+        "alwaysOnPixels": 455,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Column",
+        "facing": "west",
+        "pixelSize": 40,
+        "currentPixels": 320,
+        "alwaysOnPixels": 320,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Column",
+        "facing": "west",
+        "pixelSize": 48,
+        "currentPixels": 455,
+        "alwaysOnPixels": 455,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Block",
+        "facing": "east",
+        "pixelSize": 40,
+        "currentPixels": 391,
+        "alwaysOnPixels": 391,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Block",
+        "facing": "east",
+        "pixelSize": 48,
+        "currentPixels": 563,
+        "alwaysOnPixels": 563,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Block",
+        "facing": "west",
+        "pixelSize": 40,
+        "currentPixels": 390,
+        "alwaysOnPixels": 390,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Block",
+        "facing": "west",
+        "pixelSize": 48,
+        "currentPixels": 548,
+        "alwaysOnPixels": 548,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Wedge",
+        "facing": "east",
+        "pixelSize": 40,
+        "currentPixels": 356,
+        "alwaysOnPixels": 356,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Wedge",
+        "facing": "east",
+        "pixelSize": 48,
+        "currentPixels": 513,
+        "alwaysOnPixels": 513,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Wedge",
+        "facing": "west",
+        "pixelSize": 40,
+        "currentPixels": 356,
+        "alwaysOnPixels": 356,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Wedge",
+        "facing": "west",
+        "pixelSize": 48,
+        "currentPixels": 513,
+        "alwaysOnPixels": 513,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Barrel",
+        "facing": "east",
+        "pixelSize": 40,
+        "currentPixels": 379,
+        "alwaysOnPixels": 379,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Barrel",
+        "facing": "east",
+        "pixelSize": 48,
+        "currentPixels": 540,
+        "alwaysOnPixels": 540,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Barrel",
+        "facing": "west",
+        "pixelSize": 40,
+        "currentPixels": 379,
+        "alwaysOnPixels": 379,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Barrel",
+        "facing": "west",
+        "pixelSize": 48,
+        "currentPixels": 540,
+        "alwaysOnPixels": 540,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Bell",
+        "facing": "east",
+        "pixelSize": 40,
+        "currentPixels": 375,
+        "alwaysOnPixels": 375,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Bell",
+        "facing": "east",
+        "pixelSize": 48,
+        "currentPixels": 537,
+        "alwaysOnPixels": 537,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Bell",
+        "facing": "west",
+        "pixelSize": 40,
+        "currentPixels": 375,
+        "alwaysOnPixels": 375,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Bell",
+        "facing": "west",
+        "pixelSize": 48,
+        "currentPixels": 536,
+        "alwaysOnPixels": 536,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Pinch",
+        "facing": "east",
+        "pixelSize": 40,
+        "currentPixels": 368,
+        "alwaysOnPixels": 368,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Pinch",
+        "facing": "east",
+        "pixelSize": 48,
+        "currentPixels": 517,
+        "alwaysOnPixels": 517,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Pinch",
+        "facing": "west",
+        "pixelSize": 40,
+        "currentPixels": 368,
+        "alwaysOnPixels": 368,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      },
+      {
+        "body": "Pinch",
+        "facing": "west",
+        "pixelSize": 48,
+        "currentPixels": 517,
+        "alwaysOnPixels": 517,
+        "addedPixels": 0,
+        "removedPixels": 0,
+        "iou": 1
+      }
+    ]
+  },
+  "bellPinch": {
+    "diagnosticOnly": true,
+    "comparisons": [
+      {
+        "revision": "current",
+        "pixelSize": 40,
+        "iou": 0.943,
+        "differingPixels": 26
+      },
+      {
+        "revision": "current",
+        "pixelSize": 48,
+        "iou": 0.95,
+        "differingPixels": 32
+      },
+      {
+        "revision": "tucked-cuff",
+        "pixelSize": 40,
+        "iou": 0.895,
+        "differingPixels": 48
+      },
+      {
+        "revision": "tucked-cuff",
+        "pixelSize": 48,
+        "iou": 0.884,
+        "differingPixels": 75
+      },
+      {
+        "revision": "outboard-hang",
+        "pixelSize": 40,
+        "iou": 0.893,
+        "differingPixels": 51
+      },
+      {
+        "revision": "outboard-hang",
+        "pixelSize": 48,
+        "iou": 0.908,
+        "differingPixels": 62
+      }
+    ]
+  },
+  "selectedSilhouettes": {
+    "comparisonCount": 60,
+    "exactCollapses": 0,
+    "maximumIou": 0.943,
+    "closest": [
+      {
+        "pair": [
+          "Bell",
+          "Pinch"
+        ],
+        "facing": "south",
+        "armlessIou": 0.88,
+        "iou": 0.943,
+        "collapseDelta": 0.063,
+        "differingPixels": 26
+      },
+      {
+        "pair": [
+          "Bell",
+          "Pinch"
+        ],
+        "facing": "north",
+        "armlessIou": 0.88,
+        "iou": 0.943,
+        "collapseDelta": 0.063,
+        "differingPixels": 26
+      },
+      {
+        "pair": [
+          "Bell",
+          "Pinch"
+        ],
+        "facing": "east",
+        "armlessIou": 0.905,
+        "iou": 0.905,
+        "collapseDelta": 0,
+        "differingPixels": 37
+      },
+      {
+        "pair": [
+          "Bell",
+          "Pinch"
+        ],
+        "facing": "west",
+        "armlessIou": 0.905,
+        "iou": 0.905,
+        "collapseDelta": 0,
+        "differingPixels": 37
+      },
+      {
+        "pair": [
+          "Block",
+          "Barrel"
+        ],
+        "facing": "west",
+        "armlessIou": 0.899,
+        "iou": 0.899,
+        "collapseDelta": 0,
+        "differingPixels": 41
+      },
+      {
+        "pair": [
+          "Block",
+          "Barrel"
+        ],
+        "facing": "east",
+        "armlessIou": 0.897,
+        "iou": 0.897,
+        "collapseDelta": 0,
+        "differingPixels": 42
+      },
+      {
+        "pair": [
+          "Block",
+          "Barrel"
+        ],
+        "facing": "south",
+        "armlessIou": 0.925,
+        "iou": 0.889,
+        "collapseDelta": -0.036,
+        "differingPixels": 58
+      },
+      {
+        "pair": [
+          "Block",
+          "Barrel"
+        ],
+        "facing": "north",
+        "armlessIou": 0.925,
+        "iou": 0.889,
+        "collapseDelta": -0.036,
+        "differingPixels": 58
+      },
+      {
+        "pair": [
+          "Barrel",
+          "Pinch"
+        ],
+        "facing": "south",
+        "armlessIou": 0.84,
+        "iou": 0.884,
+        "collapseDelta": 0.044,
+        "differingPixels": 56
+      },
+      {
+        "pair": [
+          "Barrel",
+          "Pinch"
+        ],
+        "facing": "north",
+        "armlessIou": 0.84,
+        "iou": 0.884,
+        "collapseDelta": 0.044,
+        "differingPixels": 56
+      },
+      {
+        "pair": [
+          "Block",
+          "Bell"
+        ],
+        "facing": "west",
+        "armlessIou": 0.875,
+        "iou": 0.875,
+        "collapseDelta": 0,
+        "differingPixels": 51
+      },
+      {
+        "pair": [
+          "Block",
+          "Bell"
+        ],
+        "facing": "east",
+        "armlessIou": 0.873,
+        "iou": 0.873,
+        "collapseDelta": 0,
+        "differingPixels": 52
+      },
+      {
+        "pair": [
+          "Column",
+          "Wedge"
+        ],
+        "facing": "east",
+        "armlessIou": 0.867,
+        "iou": 0.867,
+        "collapseDelta": 0,
+        "differingPixels": 48
+      },
+      {
+        "pair": [
+          "Column",
+          "Wedge"
+        ],
+        "facing": "west",
+        "armlessIou": 0.867,
+        "iou": 0.867,
+        "collapseDelta": 0,
+        "differingPixels": 48
+      },
+      {
+        "pair": [
+          "Barrel",
+          "Pinch"
+        ],
+        "facing": "east",
+        "armlessIou": 0.863,
+        "iou": 0.863,
+        "collapseDelta": 0,
+        "differingPixels": 55
+      },
+      {
+        "pair": [
+          "Barrel",
+          "Pinch"
+        ],
+        "facing": "west",
+        "armlessIou": 0.863,
+        "iou": 0.863,
+        "collapseDelta": 0,
+        "differingPixels": 55
+      },
+      {
+        "pair": [
+          "Block",
+          "Pinch"
+        ],
+        "facing": "west",
+        "armlessIou": 0.862,
+        "iou": 0.862,
+        "collapseDelta": 0,
+        "differingPixels": 56
+      },
+      {
+        "pair": [
+          "Block",
+          "Pinch"
+        ],
+        "facing": "east",
+        "armlessIou": 0.86,
+        "iou": 0.86,
+        "collapseDelta": 0,
+        "differingPixels": 57
+      },
+      {
+        "pair": [
+          "Barrel",
+          "Bell"
+        ],
+        "facing": "east",
+        "armlessIou": 0.857,
+        "iou": 0.857,
+        "collapseDelta": 0,
+        "differingPixels": 58
+      },
+      {
+        "pair": [
+          "Barrel",
+          "Bell"
+        ],
+        "facing": "west",
+        "armlessIou": 0.857,
+        "iou": 0.857,
+        "collapseDelta": 0,
+        "differingPixels": 58
+      }
+    ]
+  },
+  "stress": {
+    "minimumCanvasMargin40": 1,
+    "failures": []
+  },
+  "deferredProductionGates": [
+    "route omitted full-body poses to the selected neutral geometry",
+    "add matching neutral sleeve, hand, and outline rows to characterLayers",
+    "decide whether portraits are arm-bearing or explicitly exempt",
+    "regenerate base, mood, employee, unit, and construction-crew export surfaces",
+    "verify Unity/runtime neutral-base uptake without adding an animation state"
+  ]
+}

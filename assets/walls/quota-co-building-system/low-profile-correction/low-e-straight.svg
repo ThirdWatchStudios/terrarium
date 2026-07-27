@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <g id="detail/low">
+    <path id="outer-contour" fill="#252A28" d="M82 0H120V128H82Z"/>
+    <path id="cream-shell" fill="#D9D0B9" d="M96 0H118V128H96Z"/>
+    <path id="top-plane-light" fill="#FFFFFF" opacity="0.18" d="M100 0H118V128H100Z"/>
+    <path id="coping-lip" fill="#FFFFFF" opacity="0.30" d="M98.5 0H100V128H98.5Z"/>
+    <path id="coral-band" fill="#B65F4D" d="M92 0H96V128H92Z"/>
+    <path id="green-face" fill="#294B3C" d="M85 0H92V128H85Z"/>
+    <path id="face-shade" fill="#000000" opacity="0.12" d="M85 0H98.5V128H85Z"/>
+    <path id="contact-shade" fill="#000000" opacity="0.12" d="M78.5 0H82V128H78.5Z"/>
+    <path id="arris-seam" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45" d="M98.5 1V127"/>
+    <path id="band-seam" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35" d="M92 1V127"/>
+    <path id="boundary-seam" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18" d="M117 126H86"/>
+  </g>
+</svg>

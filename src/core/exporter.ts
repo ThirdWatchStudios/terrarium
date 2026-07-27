@@ -1,5 +1,11 @@
 import JSZip from 'jszip';
-import type { CharacterRecipe, ProjectState, PropInstance, StyleSheet, TileInstance } from './types';
+import type {
+  CharacterRecipe,
+  ProjectState,
+  PropInstance,
+  StyleSheet,
+  TileInstance,
+} from './types';
 import type { SceneState } from './scene';
 import { CANVAS, MOODS, type Mood, type PropPaletteToken } from './types';
 import {
@@ -47,6 +53,11 @@ import { serializeScenarioTemplateLibrary, type ScenarioTemplate } from './scena
 import { PROP_TEMPLATES } from '../props/templates';
 import { BLOB_CONFIGS, BLOB_TILE_COUNT } from '../tiles/blob';
 import { deriveGroundOverlays } from '../tiles/groundOverlays';
+import {
+  QUOTA_CO_EQUAL_HEIGHT_AUTHORED_FACING,
+  QUOTA_CO_EQUAL_HEIGHT_MIRROR_X_MASKS,
+} from '../tiles/quotaCoEqualHeightWallContract';
+import { quotaCoEqualHeightWallFramesFor } from '../tiles/quotaCoEqualHeightWall';
 import { themeUss, themeJson } from '../data/uiPalette';
 import { ICONS, CURSORS } from '../parts/icons';
 import { overlayStyleJson } from './overlayStyle';
@@ -634,7 +645,11 @@ export function cursorsManifest() {
   };
 }
 
-function wallTilesetDesc(wall: TileInstance, style: StyleSheet, scale: number): SheetDesc {
+function wallTilesetDesc(
+  wall: TileInstance,
+  style: StyleSheet,
+  scale: number,
+): SheetDesc {
   const size = style.render.baseSize * scale;
   const cells: RasterCell[] = [];
   for (let i = 0; i < BLOB_TILE_COUNT; i++) {
@@ -962,8 +977,13 @@ export async function wallTilesetPng(wall: TileInstance, style: StyleSheet, scal
   return asBlob(defaultRasterizer().rasterizeSheet(wallTilesetDesc(wall, style, scale)));
 }
 
-export function wallAtlas(wall: TileInstance, style: StyleSheet, scale: number) {
+export function wallAtlas(
+  wall: TileInstance,
+  style: StyleSheet,
+  scale: number,
+) {
   const size = style.render.baseSize * scale;
+  const productionFrames = quotaCoEqualHeightWallFramesFor(wall);
   const frames: Record<string, { x: number; y: number; w: number; h: number; name: string }> = {};
   // Frame naming stays `mask_<i>` (D3) — "mask" now means "blob index 0..46",
   // so the sim's MaskFromFrameName parse is unchanged.
@@ -991,6 +1011,17 @@ export function wallAtlas(wall: TileInstance, style: StyleSheet, scale: number) 
       autotile: '8-neighbor blob (47)',
       blobTable: 'blob-index-table.json (shared 256→47 contract; frame mask_<i> = blob index)',
       sorting: 'wall-layer',
+      ...(productionFrames
+        ? {
+          contextualFacing: {
+            authoredFacing: QUOTA_CO_EQUAL_HEIGHT_AUTHORED_FACING,
+            mirrorXForEastPresentation:
+              QUOTA_CO_EQUAL_HEIGHT_MIRROR_X_MASKS.map(
+                (mask) => `mask_${mask}` as const,
+              ),
+          },
+        }
+        : {}),
     },
   };
 }
@@ -1391,6 +1422,13 @@ export interface ExportSink {
   file(path: string, data: string | PngBytes): void | Promise<void>;
 }
 
+export interface ExportAllOptions {
+  readonly sink: ExportSink;
+  readonly rasterizer: Rasterizer;
+  readonly onProgress?: ExportProgress;
+  readonly scenarioTemplates?: ScenarioTemplate[];
+}
+
 /**
  * Regenerate the entire asset set — every character sheet/moods/layers, prop,
  * wall, and floor at 1x/2x/4x with atlas JSON, the project file, and (when a
@@ -1401,7 +1439,7 @@ export interface ExportSink {
  */
 export async function exportAll(
   rawProject: ProjectState,
-  opts: { sink: ExportSink; rasterizer: Rasterizer; onProgress?: ExportProgress; scenarioTemplates?: ScenarioTemplate[] },
+  opts: ExportAllOptions,
 ): Promise<void> {
   const { sink, rasterizer, onProgress } = opts;
   // Render every asset through the project's LOOK (a non-destructive lens over the
@@ -1548,8 +1586,14 @@ export async function exportAll(
     const dir = `walls/${slug(wall.name)}`;
     for (const scale of EXPORT_SCALES) {
       // Flat 47-blob autotile only — no re-tintable wall layer atlas (D2).
-      await write(`${dir}/tileset@${scale}x.png`, await png(wallTilesetDesc(wall, style, scale)));
-      await write(`${dir}/atlas@${scale}x.json`, JSON.stringify(wallAtlas(wall, style, scale), null, 2));
+      await write(
+        `${dir}/tileset@${scale}x.png`,
+        await png(wallTilesetDesc(wall, style, scale)),
+      );
+      await write(
+        `${dir}/atlas@${scale}x.json`,
+        JSON.stringify(wallAtlas(wall, style, scale), null, 2),
+      );
       tick(wall.name);
     }
     await write(`${dir}/wall.json`, JSON.stringify(wall, null, 2));

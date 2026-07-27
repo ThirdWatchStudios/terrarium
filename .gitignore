@@ -1,4 +1,5 @@
 node_modules/
 dist/
+.style-loop/
 .DS_Store
 *.log

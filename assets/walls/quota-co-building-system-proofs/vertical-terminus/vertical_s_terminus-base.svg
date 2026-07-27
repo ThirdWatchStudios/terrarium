@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>QuotaCo equal-height west wall — exposed south end base proposal</title>
+  <desc>Proof-only foreground wall closure base. The ordinary west-wall green face folds beneath the south rollover and closes against the existing charcoal contact edge.</desc>
+  <g id="detail/base">
+    <path id="base-contour" d="M89.485 0L117.693 0 117.693 106C117.693 113.732 107.292 120 94.463 120L34.73 120C21.9 120 11.5 113.732 11.5 106L11.5 102 89.485 102Z" fill="#252A28"/>
+    <path id="base-green-wrap" d="M92.804 0L112.715 0 112.715 106C112.715 112.075 104.543 117 94.463 117L31.411 117C22.247 117 14.819 112.523 14.819 107L92.804 107Z" fill="#294B3C"/>
+    <path id="base-face-shade" d="M92.804 0L112.715 0 112.715 106C112.715 112.075 104.543 117 94.463 117L31.411 117C22.247 117 14.819 112.523 14.819 107L92.804 107Z" fill="#000000" opacity="0.12"/>
+    <path id="base-contact-shade" d="M117.693 0L123.5 0 123.5 92 117.693 92Z" fill="#000000" opacity="0.12"/>
+  </g>
+</svg>

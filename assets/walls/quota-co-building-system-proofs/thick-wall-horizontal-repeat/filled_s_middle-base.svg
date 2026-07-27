@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>QuotaCo Building System full north straight base</title>
+  <desc>Broad lower green fascia, compact floor-contact plinth, and a quiet boundary service seam for the flat front-on north wall; the composed upper owns the reveal and thin coral register.</desc>
+  <g id="detail/base">
+    <path id="base-contour" d="M0 76.211L128 76.211 128 117.693 0 117.693Z" fill="#252A28"/>
+    <path id="base-field" d="M0 79.53L128 79.53 128 112.715 0 112.715Z" fill="#294B3C"/>
+    <path id="base-contact-shade" d="M0 117.693L128 117.693 128 123.5 0 123.5Z" fill="#000000" opacity="0.12"/>
+    <path id="base-boundary-seam" d="M126 81.189L126 111.056" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+  </g>
+</svg>

@@ -126,6 +126,10 @@ export function migrateProject(raw: unknown): ProjectState | null {
   // Derived from the identity at export — no project data changed; version
   // bump only.
 
+  // v18 → v19: wall-atlas contextual-facing metadata for the accepted QuotaCo
+  // equal-height production wall. Derived at export — no project data
+  // changed; version bump only.
+
   project.version = CURRENT_SCHEMA_VERSION;
   return project as ProjectState;
 }

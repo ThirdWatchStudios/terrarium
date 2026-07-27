@@ -103,9 +103,10 @@ function headMask(id: string, facing: Facing): Uint8Array {
     `<path transform="translate(64 44)" d="${silhouette.d}" fill="#000000"/>`,
     '</svg>',
   ].join('')).render();
+  const pixels = image.pixels;
   return Uint8Array.from(
-    { length: image.pixels.length / 4 },
-    (_, index) => image.pixels[index * 4 + 3] >= 128 ? 1 : 0,
+    { length: pixels.length / 4 },
+    (_, index) => pixels[index * 4 + 3] >= 128 ? 1 : 0,
   );
 }
 

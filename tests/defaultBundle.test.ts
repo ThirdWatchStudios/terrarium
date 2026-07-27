@@ -7,6 +7,10 @@ import { SOCIAL_STATES } from '../src/parts/socialStates';
 import { MOOD_EMOTES } from '../src/parts/moods';
 import { EMOTIONS } from '../src/parts/emotions';
 import { ATTENTION_PUFFS } from '../src/parts/attention';
+import {
+  QUOTA_CO_EQUAL_HEIGHT_AUTHORED_FACING,
+  QUOTA_CO_EQUAL_HEIGHT_MIRROR_X_MASKS,
+} from '../src/tiles/quotaCoEqualHeightWallContract';
 
 /**
  * Default-bundle coverage guard.
@@ -94,6 +98,21 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     for (const prefix of REQUIRED_PREFIXES) {
       const hit = [...paths].some((p) => p.startsWith(prefix));
       expect(hit, `default bundle has no "${prefix}*" entries`).toBe(true);
+    }
+  });
+
+  it('ships the accepted contextual-facing office wall through the ordinary bundle', async () => {
+    const { json } = await exportPaths();
+    const expected = {
+      authoredFacing: QUOTA_CO_EQUAL_HEIGHT_AUTHORED_FACING,
+      mirrorXForEastPresentation:
+        QUOTA_CO_EQUAL_HEIGHT_MIRROR_X_MASKS.map((mask) => `mask_${mask}`),
+    };
+    for (const scale of [1, 2, 4]) {
+      const atlas = JSON.parse(
+        json.get(`walls/office-wall/atlas@${scale}x.json`)!,
+      );
+      expect(atlas.meta.contextualFacing).toEqual(expected);
     }
   });
 

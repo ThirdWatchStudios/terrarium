@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>QuotaCo Building System full-height southwest corner upper</title>
+  <desc>One molded equal-height southwest upper: west planes terminate behind a full-height south frontage whose cream, coral, green, and plinth stack owns the foreground heel.</desc>
+  <g id="detail/upper">
+    <path id="upper-contour" d="M11.5 0L92.804 0 92.804 9.446C92.804 10.581 100.232 11.5 109.396 11.5L128 11.5 128 79.53 28.093 79.53C18.929 79.53 11.5 72.101 11.5 62.937Z" fill="#252A28"/>
+    <path id="upper-shell" d="M14.819 0L89.485 0 89.485 9.857C89.485 10.991 96.914 14.819 106.078 14.819L128 14.819 128 79.53 31.411 79.53C22.247 79.53 14.819 72.101 14.819 62.937Z" fill="#D9D0B9"/>
+    <path id="upper-west-plane-light" d="M14.819 0L68.744 0 68.744 10.473C68.744 14.2 77.66 23.115 88.656 23.115L14.819 23.115Z" fill="#FFFFFF" opacity="0.18"/>
+    <path id="upper-west-arris-lip" d="M68.744 0L71.233 0 71.233 10.473 68.744 10.473Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="upper-west-coral" d="M79.53 0L87.826 0 87.826 64.596 79.53 64.596Z" fill="#B65F4D"/>
+    <path id="upper-west-green" d="M87.826 0L112.715 0 112.715 74.552 87.826 74.552Z" fill="#294B3C"/>
+    <path id="upper-west-face-shade" d="M71.233 0L112.715 0 112.715 14.819 71.233 14.819Z" fill="#000000" opacity="0.12"/>
+    <path id="upper-west-plinth" d="M112.715 0L117.693 0 117.693 14.819 112.715 14.819Z" fill="#252A28"/>
+    <path id="upper-south-cream-wrap" d="M14.819 14.819L128 14.819 128 79.53 14.819 79.53Z" fill="#D9D0B9"/>
+    <path id="upper-south-reveal-light" d="M14.819 14.819L128 14.819 128 23.115 14.819 23.115Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="upper-south-coral-wrap" d="M14.819 64.596L128 64.596 128 74.552 14.819 74.552Z" fill="#B65F4D"/>
+    <path id="upper-south-band-light" d="M14.819 64.596L128 64.596 128 67.085 14.819 67.085Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="upper-south-green-wrap" d="M14.819 74.552L128 74.552 128 112.715 28.093 112.715C20.762 112.715 14.819 106.771 14.819 99.441Z" fill="#294B3C"/>
+    <path id="upper-south-plinth" d="M28.093 112.715L128 112.715 128 117.693 28.093 117.693Z" fill="#252A28"/>
+    <path id="upper-arris-seam" d="M71.233 0.75L71.233 10.473C71.233 14.2 80.149 23.115 91.144 23.115L127 23.115" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="upper-west-band-seam" d="M87.826 0.75L87.826 13.159" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+    <path id="upper-south-band-seam" d="M14.819 74.552L127 74.552" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+    <path id="upper-boundary-seam" d="M126 24.774L126 77.87M126 81.189L126 111.056" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+  </g>
+</svg>

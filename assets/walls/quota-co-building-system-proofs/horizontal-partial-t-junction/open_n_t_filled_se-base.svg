@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>QuotaCo accepted open-north T-junction with filled southeast pocket base</title>
+  <desc>The southeast quadrant is a plain buried underlay while the southwest crook retains only the accepted horizontal frontage needed by the west socket.</desc>
+  <g id="detail/base">
+    <path id="base-buried-se-underlay" d="M11.5 11.5L128 11.5 128 128 11.5 128Z" fill="#252A28"/>
+    <path id="base-contour-open-sw" d="M0 76.211L14.819 76.211 14.819 117.693 0 117.693Z" fill="#252A28"/>
+    <path id="base-green-open-sw" d="M0 79.53L14.819 79.53 14.819 112.715 0 112.715Z" fill="#294B3C"/>
+    <path id="base-face-shade-open-sw" d="M9.446 79.53L14.819 79.53 14.819 128 9.446 128Z" fill="#000000" opacity="0.12"/>
+    <path id="base-contact-shade-open-sw" d="M0 117.693L14.819 117.693 14.819 123.5 0 123.5Z" fill="#000000" opacity="0.12"/>
+  </g>
+</svg>

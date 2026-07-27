@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>QuotaCo open-south T-junction proof upper</title>
+  <desc>The separately authored foreground T keeps one uninterrupted horizontal cream, coral, and green frontage while the north branch shares one synchronized molded turn into its east-facing wall plane.</desc>
+  <g id="detail/upper">
+    <path id="upper-contour" d="M11.5 0L92.804 0 92.804 9.036C92.804 10.397 101.719 11.5 112.715 11.5L128 11.5 128 79.53 0 79.53 0 11.5 9.446 11.5C10.581 11.5 11.5 10.581 11.5 9.446Z" fill="#252A28"/>
+    <path id="upper-shell" d="M14.819 0L89.485 0 89.485 9.446C89.485 10.807 98.4 14.819 109.396 14.819L128 14.819 128 76.211 0 76.211 0 14.819 9.857 14.819C10.991 14.819 14.819 10.991 14.819 9.857Z" fill="#D9D0B9"/>
+    <path id="upper-plane-light" d="M14.819 0L68.744 0 68.744 9.036C68.744 10.397 77.66 11.5 88.656 11.5L14.819 11.5Z" fill="#FFFFFF" opacity="0.18"/>
+    <path id="upper-arris-lip" d="M68.744 0L71.233 0 71.233 9.036C71.233 10.397 80.149 11.5 91.144 11.5L88.656 11.5C77.66 11.5 68.744 10.397 68.744 9.036Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="upper-coral-band" d="M79.53 0L87.826 0 87.826 9.036C87.826 10.397 96.741 11.5 107.737 11.5L99.441 11.5C88.445 11.5 79.53 10.397 79.53 9.036ZM0 64.596L128 64.596 128 74.552 0 74.552Z" fill="#B65F4D"/>
+    <path id="upper-band-light" d="M0 64.596L128 64.596 128 67.085 0 67.085Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="upper-green-handoff" d="M87.826 0L92.804 0 92.804 9.036C92.804 10.397 101.719 11.5 112.715 11.5L107.737 11.5C96.741 11.5 87.826 10.397 87.826 9.036ZM0 74.552L128 74.552 128 79.53 0 79.53Z" fill="#294B3C"/>
+    <path id="upper-face-shade" d="M71.233 0L92.804 0 92.804 9.036C92.804 10.397 101.719 11.5 112.715 11.5L91.144 11.5C80.149 11.5 71.233 10.397 71.233 9.036Z" fill="#000000" opacity="0.12"/>
+    <path id="upper-reveal-light" d="M0 14.819L128 14.819 128 23.115 0 23.115Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="upper-arris-seam" d="M71.233 0.75L71.233 9.036C71.233 10.397 80.149 11.5 91.144 11.5L111.056 11.5M0.75 23.115L127 23.115" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="upper-band-seam" d="M87.826 0.75L87.826 9.036C87.826 10.397 96.741 11.5 107.737 11.5M0.75 74.552L127 74.552" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+    <path id="upper-boundary-seam" d="M126 24.774L126 77.87" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+  </g>
+</svg>

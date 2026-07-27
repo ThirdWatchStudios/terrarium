@@ -1,0 +1,49 @@
+# QuotaCo single-filled southeast cross-junction accepted proof source
+
+This external proof bank contains one owner-accepted fixed-light source pair for
+`mask_23`: north, east, south, and west are connected; the southeast diagonal
+is solid; and the northeast, southwest, and northwest crooks remain open floor.
+
+- `open_cross_filled_se-base.svg` owns one continuous lower four-socket
+  structure. The southeast quadrant is buried structural mass; its visible
+  northeast and southwest frontages retain the accepted `mask_21` and
+  `mask_22` material laws without stacking either T source.
+- `open_cross_filled_se-upper.svg` owns one flattened cream union through the
+  sole `upper-shell` cream path. The southeast fill removes buried east/south
+  inner faces at source while the other three crooks keep their concave floor
+  openings.
+- The north and east socket profiles follow direct rear-transition control
+  `mask_21`. The south and west socket profiles follow direct rear-transition
+  control `mask_22`. These are boundary laws, not layers or transformed source
+  art.
+- Coral and green remain only on the exposed northeast and southwest
+  frontages. They stop before the solid southeast top; no duplicate belt,
+  interior riser, center cap, peak, post, patch, or hidden rail survives.
+- The accepted northeast open-crook handoff phases the cream plane, light
+  arris, dimensional shade, coral, green, and both seams through one nested
+  `R12` turn. It reuses the accepted `mask_11` curve law without moving any
+  outer contour or socket pixel.
+- The source is authored directly in the fixed west register. It is not a
+  Y-mirror of `mask_19`, an X-mirror derivation, or a rotated sibling.
+
+This pair is accepted as direct proof-layer provenance for `mask_23` in the
+equal-height ledger. Acceptance does not register a canonical source or frame
+identity, alter the blob contract, add an exporter or atlas route, change
+schema, or authorize a Unity asset.
+
+An owner-approved consistency polish on 2026-07-25 replaces the former
+square-cut northeast frontage termination with that synchronized shared turn.
+`mask_29` inherits the correction through its existing plain whole-cell
+X-mirror; no filter, companion source, ledger mutation, or production boundary
+is added.
+
+A separate owner approval on 2026-07-23 accepts `mask_29` as the plain
+whole-cell X-mirror derivation of this exact pair. Its four cardinal sockets
+remain connected; the southwest diagonal becomes continuous wall mass while
+the northeast, southeast, and northwest crooks remain open floor. The mirror
+preserves the source pair's Y-based fixed-light ownership and adds no seam
+filter, companion SVG, or new SVG bank. That promotion advances the accepted
+ledger to 21 direct / 16 derived / 10 synthetic / 0 collisions. It records
+proof-layer provenance only and does not register a canonical source or frame
+identity, alter the blob contract, add an exporter or atlas route, change
+schema, or authorize a Unity asset.

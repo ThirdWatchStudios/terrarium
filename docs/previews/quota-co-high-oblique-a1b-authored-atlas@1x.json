@@ -1,0 +1,334 @@
+{
+  "version": 0,
+  "status": "authored-source-proof",
+  "contract": false,
+  "name": "QuotaCo high-oblique A1b authored B source pass",
+  "scale": 1,
+  "canvas": 128,
+  "frameSize": 128,
+  "padding": 8,
+  "columns": 6,
+  "rows": 5,
+  "width": 864,
+  "height": 720,
+  "pivot": {
+    "x": 0.5,
+    "y": 0.5
+  },
+  "frames": {
+    "b_full_n_straight_base": {
+      "x": 8,
+      "y": 8,
+      "w": 128,
+      "h": 128,
+      "stem": "full_n_straight",
+      "kind": "base",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/full_n_straight-base.svg"
+      ]
+    },
+    "b_full_n_straight_upper": {
+      "x": 152,
+      "y": 8,
+      "w": 128,
+      "h": 128,
+      "stem": "full_n_straight",
+      "kind": "upper",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/full_n_straight-upper.svg"
+      ]
+    },
+    "b_full_n_straight_composed": {
+      "x": 296,
+      "y": 8,
+      "w": 128,
+      "h": 128,
+      "stem": "full_n_straight",
+      "kind": "composed",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/full_n_straight-base.svg",
+        "assets/walls/quota-co-building-system/full_n_straight-upper.svg"
+      ]
+    },
+    "b_full_w_straight_base": {
+      "x": 440,
+      "y": 8,
+      "w": 128,
+      "h": 128,
+      "stem": "full_w_straight",
+      "kind": "base",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/full_w_straight-base.svg"
+      ]
+    },
+    "b_full_w_straight_upper": {
+      "x": 584,
+      "y": 8,
+      "w": 128,
+      "h": 128,
+      "stem": "full_w_straight",
+      "kind": "upper",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/full_w_straight-upper.svg"
+      ]
+    },
+    "b_full_w_straight_composed": {
+      "x": 728,
+      "y": 8,
+      "w": 128,
+      "h": 128,
+      "stem": "full_w_straight",
+      "kind": "composed",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/full_w_straight-base.svg",
+        "assets/walls/quota-co-building-system/full_w_straight-upper.svg"
+      ]
+    },
+    "b_full_exterior_corner_base": {
+      "x": 8,
+      "y": 152,
+      "w": 128,
+      "h": 128,
+      "stem": "full_exterior_corner",
+      "kind": "base",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/full_exterior_corner-base.svg"
+      ]
+    },
+    "b_full_exterior_corner_upper": {
+      "x": 152,
+      "y": 152,
+      "w": 128,
+      "h": 128,
+      "stem": "full_exterior_corner",
+      "kind": "upper",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/full_exterior_corner-upper.svg"
+      ]
+    },
+    "b_full_exterior_corner_composed": {
+      "x": 296,
+      "y": 152,
+      "w": 128,
+      "h": 128,
+      "stem": "full_exterior_corner",
+      "kind": "composed",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/full_exterior_corner-base.svg",
+        "assets/walls/quota-co-building-system/full_exterior_corner-upper.svg"
+      ]
+    },
+    "b_full_terminus_base": {
+      "x": 440,
+      "y": 152,
+      "w": 128,
+      "h": 128,
+      "stem": "full_terminus",
+      "kind": "base",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/full_terminus-base.svg"
+      ]
+    },
+    "b_full_terminus_upper": {
+      "x": 584,
+      "y": 152,
+      "w": 128,
+      "h": 128,
+      "stem": "full_terminus",
+      "kind": "upper",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/full_terminus-upper.svg"
+      ]
+    },
+    "b_full_terminus_composed": {
+      "x": 728,
+      "y": 152,
+      "w": 128,
+      "h": 128,
+      "stem": "full_terminus",
+      "kind": "composed",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/full_terminus-base.svg",
+        "assets/walls/quota-co-building-system/full_terminus-upper.svg"
+      ]
+    },
+    "b_transition_n_to_e_base": {
+      "x": 8,
+      "y": 296,
+      "w": 128,
+      "h": 128,
+      "stem": "transition_n_to_e",
+      "kind": "base",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/transition_n_to_e-base.svg"
+      ]
+    },
+    "b_transition_n_to_e_upper": {
+      "x": 152,
+      "y": 296,
+      "w": 128,
+      "h": 128,
+      "stem": "transition_n_to_e",
+      "kind": "upper",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/transition_n_to_e-upper.svg"
+      ]
+    },
+    "b_transition_n_to_e_composed": {
+      "x": 296,
+      "y": 296,
+      "w": 128,
+      "h": 128,
+      "stem": "transition_n_to_e",
+      "kind": "composed",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/transition_n_to_e-base.svg",
+        "assets/walls/quota-co-building-system/transition_n_to_e-upper.svg"
+      ]
+    },
+    "b_transition_w_to_s_base": {
+      "x": 440,
+      "y": 296,
+      "w": 128,
+      "h": 128,
+      "stem": "transition_w_to_s",
+      "kind": "base",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/transition_w_to_s-base.svg"
+      ]
+    },
+    "b_transition_w_to_s_upper": {
+      "x": 584,
+      "y": 296,
+      "w": 128,
+      "h": 128,
+      "stem": "transition_w_to_s",
+      "kind": "upper",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/transition_w_to_s-upper.svg"
+      ]
+    },
+    "b_transition_w_to_s_composed": {
+      "x": 728,
+      "y": 296,
+      "w": 128,
+      "h": 128,
+      "stem": "transition_w_to_s",
+      "kind": "composed",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/transition_w_to_s-base.svg",
+        "assets/walls/quota-co-building-system/transition_w_to_s-upper.svg"
+      ]
+    },
+    "b_door_closed_base": {
+      "x": 8,
+      "y": 440,
+      "w": 128,
+      "h": 128,
+      "stem": "door_closed",
+      "kind": "base",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/door_closed-base.svg"
+      ]
+    },
+    "b_door_closed_upper": {
+      "x": 152,
+      "y": 440,
+      "w": 128,
+      "h": 128,
+      "stem": "door_closed",
+      "kind": "upper",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/door_closed-upper.svg"
+      ]
+    },
+    "b_door_closed_composed": {
+      "x": 296,
+      "y": 440,
+      "w": 128,
+      "h": 128,
+      "stem": "door_closed",
+      "kind": "composed",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/door_closed-base.svg",
+        "assets/walls/quota-co-building-system/door_closed-upper.svg"
+      ]
+    },
+    "b_door_open_base": {
+      "x": 440,
+      "y": 440,
+      "w": 128,
+      "h": 128,
+      "stem": "door_open",
+      "kind": "base",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/door_open-base.svg"
+      ]
+    },
+    "b_door_open_upper": {
+      "x": 584,
+      "y": 440,
+      "w": 128,
+      "h": 128,
+      "stem": "door_open",
+      "kind": "upper",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/door_open-upper.svg"
+      ]
+    },
+    "b_door_open_composed": {
+      "x": 728,
+      "y": 440,
+      "w": 128,
+      "h": 128,
+      "stem": "door_open",
+      "kind": "composed",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/door_open-base.svg",
+        "assets/walls/quota-co-building-system/door_open-upper.svg"
+      ]
+    },
+    "b_window_wide_base": {
+      "x": 8,
+      "y": 584,
+      "w": 128,
+      "h": 128,
+      "stem": "window_wide",
+      "kind": "base",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/window_wide-base.svg"
+      ]
+    },
+    "b_window_wide_upper": {
+      "x": 152,
+      "y": 584,
+      "w": 128,
+      "h": 128,
+      "stem": "window_wide",
+      "kind": "upper",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/window_wide-upper.svg"
+      ]
+    },
+    "b_window_wide_composed": {
+      "x": 296,
+      "y": 584,
+      "w": 128,
+      "h": 128,
+      "stem": "window_wide",
+      "kind": "composed",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/window_wide-base.svg",
+        "assets/walls/quota-co-building-system/window_wide-upper.svg"
+      ]
+    }
+  },
+  "meta": {
+    "generator": "terrarium-authored-source-proof",
+    "temporaryFrameIds": true,
+    "productionRegistration": false,
+    "completeBlobFamily": false,
+    "directionalCastShadow": false,
+    "note": "First authored B appearance pass only. Expand through the existing 47-blob topology after source-art review; do not consume as a production contract."
+  }
+}

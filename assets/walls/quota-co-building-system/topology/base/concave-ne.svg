@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <g id="detail/base">
+    <path id="socket" fill="#252A28" d="M112 94h8v8h-8Z"/>
+    <path id="horizontal-face" fill="#294B3C" d="M112 98l4-4h4v8h-8Z"/>
+    <path id="vertical-face" fill="#294B3C" d="M112 94h4l-4 4Z"/>
+    <path id="notch-seam" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45" d="M113 99l5-4"/>
+  </g>
+</svg>

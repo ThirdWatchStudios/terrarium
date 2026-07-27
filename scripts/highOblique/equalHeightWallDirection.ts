@@ -1,0 +1,120 @@
+/**
+ * Owner-reviewed equal-height structural-wall direction.
+ *
+ * These entries describe source reuse for the isolated wall-art workbench. They
+ * do not register production templates, add exporter metadata, or replace the
+ * 47-blob connectivity contract.
+ */
+
+export type EqualHeightWallTransform = 'none' | 'mirror-x';
+
+export const PROMOTED_SOUTH_WALL_REUSE = {
+  role: 'south',
+  sourceStem: 'full_n_straight',
+  baseFile: 'full_n_straight-base.svg',
+  upperFile: 'full_n_straight-upper.svg',
+  transform: 'none' as EqualHeightWallTransform,
+  outerProfile: { start: 11.5, end: 123.5 },
+  pivot: { x: 0.5, y: 0.5 },
+  status: 'owner-accepted-working-contract',
+  productionRegistration: false,
+} as const;
+
+export const PROMOTED_EAST_WALL_REUSE = {
+  role: 'east',
+  sourceStem: 'full_w_straight',
+  baseFile: 'full_w_straight-base.svg',
+  upperFile: 'full_w_straight-upper.svg',
+  transform: 'mirror-x' as EqualHeightWallTransform,
+  mirrorAxis: 64,
+  outerProfile: { start: 4.5, end: 116.5 },
+  pivot: { x: 0.5, y: 0.5 },
+  status: 'owner-accepted-working-contract',
+  productionRegistration: false,
+} as const;
+
+export const PROMOTED_NORTHEAST_CORNER = {
+  role: 'northeast-corner',
+  sourceStem: 'full_exterior_corner',
+  baseFile: 'full_exterior_corner-base.svg',
+  upperFile: 'full_exterior_corner-upper.svg',
+  transform: 'mirror-x' as EqualHeightWallTransform,
+  mirrorAxis: 64,
+  pivot: { x: 0.5, y: 0.5 },
+  status: 'owner-accepted-working-contract',
+  productionRegistration: false,
+} as const;
+
+/**
+ * Owner-accepted southwest source pair. It adapts the earlier W-to-S scaffold
+ * into an equal-height molded turn without changing the established stem id.
+ * Production template and topology registration remain a separate decision.
+ */
+export const PROMOTED_SOUTHWEST_CORNER = {
+  role: 'southwest-corner',
+  sourceStem: 'transition_w_to_s',
+  baseFile: 'transition_w_to_s-base.svg',
+  upperFile: 'transition_w_to_s-upper.svg',
+  transform: 'none' as EqualHeightWallTransform,
+  pivot: { x: 0.5, y: 0.5 },
+  status: 'owner-accepted-working-contract',
+  productionRegistration: false,
+} as const;
+
+/**
+ * Owner-accepted southeast source reuse. The promoted southwest source pair
+ * is reflected around x=64, while its source-side boundary ticks are omitted
+ * so they do not double with the adjoining south cell. This deliberately adds
+ * no southeast SVG, authored stem, frame identity, or production registration.
+ */
+export const PROMOTED_SOUTHEAST_CORNER = {
+  role: 'southeast-corner',
+  sourceStem: PROMOTED_SOUTHWEST_CORNER.sourceStem,
+  baseFile: PROMOTED_SOUTHWEST_CORNER.baseFile,
+  upperFile: PROMOTED_SOUTHWEST_CORNER.upperFile,
+  omittedDetailIds: {
+    base: ['base-boundary-seam'],
+    upper: ['upper-boundary-seam'],
+  },
+  serviceSeamOwner: 'adjoining-south-cell',
+  transform: 'mirror-x' as EqualHeightWallTransform,
+  mirrorAxis: 64,
+  pivot: { x: 0.5, y: 0.5 },
+  status: 'owner-accepted-working-contract',
+  productionRegistration: false,
+} as const;
+
+export interface DerivedEqualHeightSourcePair {
+  readonly baseSource: string;
+  readonly upperSource: string;
+}
+
+function omitRequiredDetailPaths(source: string, ids: readonly string[]): string {
+  return ids.reduce((current, id) => {
+    const withoutPath = current.replace(
+      new RegExp(`\\s*<path\\s+id="${id}"[^>]*/>`, 'g'),
+      '',
+    );
+    if (withoutPath === current) {
+      throw new Error(`Cannot derive promoted southeast source: missing ${id}`);
+    }
+    return withoutPath;
+  }, source);
+}
+
+/** Materialize the accepted southeast detail filter before mirror-X composition. */
+export function derivePromotedSoutheastSourcePair(
+  baseSource: string,
+  upperSource: string,
+): DerivedEqualHeightSourcePair {
+  return {
+    baseSource: omitRequiredDetailPaths(
+      baseSource,
+      PROMOTED_SOUTHEAST_CORNER.omittedDetailIds.base,
+    ),
+    upperSource: omitRequiredDetailPaths(
+      upperSource,
+      PROMOTED_SOUTHEAST_CORNER.omittedDetailIds.upper,
+    ),
+  };
+}

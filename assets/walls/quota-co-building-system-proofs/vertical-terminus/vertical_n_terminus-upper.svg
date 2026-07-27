@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>QuotaCo equal-height west wall — exposed north end upper proposal</title>
+  <desc>Proof-only rear wall closure. The broad cream plane and the narrow coral and green registers remain longitudinal while the shared wall envelope rounds into one quiet north edge.</desc>
+  <g id="detail/upper">
+    <path id="upper-contour" d="M28.093 8L92.804 8 92.804 128 11.5 128 11.5 18C11.5 12.477 18.929 8 28.093 8Z" fill="#252A28"/>
+    <path id="upper-shell" d="M28.093 10L92.804 10 92.804 128 14.819 128 14.819 18C14.819 13.582 20.762 10 28.093 10Z" fill="#D9D0B9"/>
+    <path id="upper-cream-rollover-light" d="M28.093 10L79.53 10 79.53 14 28.093 14C24.427 14 21.456 15.791 21.456 18L14.819 18C14.819 13.582 20.762 10 28.093 10Z" fill="#FFFFFF" opacity="0.20"/>
+    <path id="upper-plane-light" d="M28.093 10L68.744 10 68.744 128 14.819 128 14.819 18C14.819 13.582 20.762 10 28.093 10Z" fill="#FFFFFF" opacity="0.18"/>
+    <path id="upper-arris-lip" d="M68.744 10L71.233 10 71.233 128 68.744 128Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="upper-coral-wrap" d="M79.53 15L87.826 15 87.826 128 79.53 128Z" fill="#B65F4D"/>
+    <path id="upper-green-wrap" d="M87.826 15L92.804 15 92.804 128 87.826 128Z" fill="#294B3C"/>
+    <path id="upper-face-shade" d="M71.233 15L92.804 15 92.804 128 71.233 128Z" fill="#000000" opacity="0.12"/>
+    <path id="upper-arris-seam" d="M71.233 16L71.233 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="upper-band-seam" d="M87.826 16L87.826 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+    <path id="upper-boundary-seam" d="M14.819 126L91.144 126" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+  </g>
+</svg>

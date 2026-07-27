@@ -1,0 +1,295 @@
+{
+  "note": "Pairwise intersection-over-union on a literal 40 px transparent canvas. Lower overlap supports distinction; visual review remains authoritative.",
+  "baseline": {
+    "south": [
+      {
+        "pair": [
+          "body-compact",
+          "body-balanced"
+        ],
+        "iou": 0.888
+      },
+      {
+        "pair": [
+          "body-balanced",
+          "body-soft"
+        ],
+        "iou": 0.866
+      },
+      {
+        "pair": [
+          "body-balanced",
+          "body-tall"
+        ],
+        "iou": 0.854
+      },
+      {
+        "pair": [
+          "body-compact",
+          "body-soft"
+        ],
+        "iou": 0.851
+      },
+      {
+        "pair": [
+          "body-balanced",
+          "body-large-frame"
+        ],
+        "iou": 0.839
+      },
+      {
+        "pair": [
+          "body-tall",
+          "body-soft"
+        ],
+        "iou": 0.804
+      },
+      {
+        "pair": [
+          "body-compact",
+          "body-large-frame"
+        ],
+        "iou": 0.785
+      },
+      {
+        "pair": [
+          "body-compact",
+          "body-tall"
+        ],
+        "iou": 0.774
+      },
+      {
+        "pair": [
+          "body-large-frame",
+          "body-tall"
+        ],
+        "iou": 0.764
+      },
+      {
+        "pair": [
+          "body-large-frame",
+          "body-soft"
+        ],
+        "iou": 0.762
+      }
+    ],
+    "east": [
+      {
+        "pair": [
+          "body-large-frame",
+          "body-soft"
+        ],
+        "iou": 0.9
+      },
+      {
+        "pair": [
+          "body-compact",
+          "body-balanced"
+        ],
+        "iou": 0.856
+      },
+      {
+        "pair": [
+          "body-balanced",
+          "body-soft"
+        ],
+        "iou": 0.846
+      },
+      {
+        "pair": [
+          "body-balanced",
+          "body-tall"
+        ],
+        "iou": 0.845
+      },
+      {
+        "pair": [
+          "body-compact",
+          "body-soft"
+        ],
+        "iou": 0.844
+      },
+      {
+        "pair": [
+          "body-balanced",
+          "body-large-frame"
+        ],
+        "iou": 0.836
+      },
+      {
+        "pair": [
+          "body-compact",
+          "body-large-frame"
+        ],
+        "iou": 0.83
+      },
+      {
+        "pair": [
+          "body-large-frame",
+          "body-tall"
+        ],
+        "iou": 0.743
+      },
+      {
+        "pair": [
+          "body-compact",
+          "body-tall"
+        ],
+        "iou": 0.731
+      },
+      {
+        "pair": [
+          "body-tall",
+          "body-soft"
+        ],
+        "iou": 0.722
+      }
+    ]
+  },
+  "proposal": {
+    "south": [
+      {
+        "pair": [
+          "block",
+          "bell"
+        ],
+        "iou": 0.816
+      },
+      {
+        "pair": [
+          "column",
+          "joint"
+        ],
+        "iou": 0.81
+      },
+      {
+        "pair": [
+          "bell",
+          "joint"
+        ],
+        "iou": 0.749
+      },
+      {
+        "pair": [
+          "block",
+          "wedge"
+        ],
+        "iou": 0.694
+      },
+      {
+        "pair": [
+          "block",
+          "joint"
+        ],
+        "iou": 0.681
+      },
+      {
+        "pair": [
+          "wedge",
+          "joint"
+        ],
+        "iou": 0.673
+      },
+      {
+        "pair": [
+          "column",
+          "wedge"
+        ],
+        "iou": 0.643
+      },
+      {
+        "pair": [
+          "column",
+          "bell"
+        ],
+        "iou": 0.642
+      },
+      {
+        "pair": [
+          "wedge",
+          "bell"
+        ],
+        "iou": 0.619
+      },
+      {
+        "pair": [
+          "column",
+          "block"
+        ],
+        "iou": 0.551
+      }
+    ],
+    "east": [
+      {
+        "pair": [
+          "wedge",
+          "joint"
+        ],
+        "iou": 0.77
+      },
+      {
+        "pair": [
+          "bell",
+          "joint"
+        ],
+        "iou": 0.768
+      },
+      {
+        "pair": [
+          "block",
+          "bell"
+        ],
+        "iou": 0.764
+      },
+      {
+        "pair": [
+          "column",
+          "joint"
+        ],
+        "iou": 0.722
+      },
+      {
+        "pair": [
+          "block",
+          "wedge"
+        ],
+        "iou": 0.701
+      },
+      {
+        "pair": [
+          "block",
+          "joint"
+        ],
+        "iou": 0.696
+      },
+      {
+        "pair": [
+          "wedge",
+          "bell"
+        ],
+        "iou": 0.686
+      },
+      {
+        "pair": [
+          "column",
+          "wedge"
+        ],
+        "iou": 0.651
+      },
+      {
+        "pair": [
+          "column",
+          "bell"
+        ],
+        "iou": 0.604
+      },
+      {
+        "pair": [
+          "column",
+          "block"
+        ],
+        "iou": 0.599
+      }
+    ]
+  }
+}
