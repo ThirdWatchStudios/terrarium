@@ -857,6 +857,6 @@ describe('QuotaCo high-oblique A1a proof isolation', () => {
       Array.from({ length: BLOB_TILE_COUNT }, (_, index) => `mask_${index}`),
     );
     expect(Object.keys(productionWall.frames).some((id) => id.includes('high-oblique') || id.startsWith('a_') || id.startsWith('b_'))).toBe(false);
-    expect(CURRENT_SCHEMA_VERSION).toBe(18);
+    expect(CURRENT_SCHEMA_VERSION).toBe(19);
   });
 });

@@ -151,7 +151,7 @@ export function renderTileControls(container: HTMLElement): void {
       el(
         'span',
         { className: 'projection-badge plan' },
-        kind === 'wall' ? 'Wall (16-piece autotile)' : 'Floor (seamless tile)',
+        kind === 'wall' ? 'Wall (47-piece blob autotile)' : 'Floor (seamless tile)',
       ),
     ),
   );

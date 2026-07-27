@@ -463,7 +463,7 @@ describe('QuotaCo accepted single-open southeast cross-junction gate', () => {
     const before = productionSignature();
     validateEqualHeightSingleOpenSoutheastCrossJunctionGate();
     expect(productionSignature()).toBe(before);
-    expect(CURRENT_SCHEMA_VERSION).toBe(18);
+    expect(CURRENT_SCHEMA_VERSION).toBe(19);
     expect(BLOB_TILE_COUNT).toBe(47);
     expect(BLOB_CONFIGS).toHaveLength(47);
     expect(A1B_AUTHORED_STEMS).not.toContain(

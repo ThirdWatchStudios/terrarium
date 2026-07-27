@@ -35,7 +35,7 @@ import type { BodyCandidate } from './characterPawnPlusPreview';
 
 type ReviewFacing = Facing | 'west';
 
-interface HairCandidate {
+export interface HairCandidate {
   id: string;
   label: string;
   axis: string;
@@ -233,7 +233,7 @@ function profileCap(
  * deliberately compact enough to test the current cell; the old tall Bun
  * remains beside Knot as the honest height-debt control.
  */
-const HAIR: HairCandidate[] = [
+export const HAIR: HairCandidate[] = [
   {
     id: 'crop',
     label: 'Crop',
@@ -432,13 +432,18 @@ function withCandidateHair<T>(
   }
 }
 
-function renderCandidate(
+export function renderCandidate(
   body: BodyCandidate,
   head: HeadCandidate,
   hair: HairCandidate,
   facing: ReviewFacing,
   size: number,
-  options: { black?: boolean; pose?: Pose } = {},
+  options: {
+    black?: boolean;
+    pose?: Pose;
+    outfit?: string;
+    accessories?: string[];
+  } = {},
 ): string {
   return withCandidateHair(hair, head, () => renderCharacter(
     body,
@@ -450,6 +455,8 @@ function renderCandidate(
       hair: HAIR_CARRIER,
       black: options.black,
       pose: options.pose,
+      outfit: options.outfit,
+      accessories: options.accessories,
     },
   ));
 }

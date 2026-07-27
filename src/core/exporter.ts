@@ -3,7 +3,6 @@ import type {
   CharacterRecipe,
   ProjectState,
   PropInstance,
-  ShapeSpec,
   StyleSheet,
   TileInstance,
 } from './types';
@@ -26,7 +25,6 @@ import {
   composeProp,
   composePropStatusBadge,
   composeSocialStateBadge,
-  composeWallShapes,
   composeWallTile,
   composeGroundOverlayTile,
   composePortrait,
@@ -55,6 +53,11 @@ import { serializeScenarioTemplateLibrary, type ScenarioTemplate } from './scena
 import { PROP_TEMPLATES } from '../props/templates';
 import { BLOB_CONFIGS, BLOB_TILE_COUNT } from '../tiles/blob';
 import { deriveGroundOverlays } from '../tiles/groundOverlays';
+import {
+  QUOTA_CO_EQUAL_HEIGHT_AUTHORED_FACING,
+  QUOTA_CO_EQUAL_HEIGHT_MIRROR_X_MASKS,
+} from '../tiles/quotaCoEqualHeightWallContract';
+import { quotaCoEqualHeightWallFramesFor } from '../tiles/quotaCoEqualHeightWall';
 import { themeUss, themeJson } from '../data/uiPalette';
 import { ICONS, CURSORS } from '../parts/icons';
 import { overlayStyleJson } from './overlayStyle';
@@ -642,64 +645,16 @@ export function cursorsManifest() {
   };
 }
 
-export interface WallEvaluationFrame {
-  readonly id: `mask_${number}`;
-  readonly index: number;
-  readonly canonicalMask: number;
-  readonly shapes: readonly ShapeSpec[];
-}
-
-export interface WallEvaluationOverride {
-  readonly profile: 'quota-co-equal-height-evaluation';
-  readonly wallId: 'wall-office';
-  readonly frames: readonly WallEvaluationFrame[];
-}
-
-function validatedEvaluationFrames(
-  wall: TileInstance,
-  evaluation: WallEvaluationOverride | undefined,
-): readonly WallEvaluationFrame[] | undefined {
-  if (!evaluation || wall.id !== evaluation.wallId) return undefined;
-  if (
-    evaluation.profile !== 'quota-co-equal-height-evaluation' ||
-    evaluation.wallId !== 'wall-office'
-  ) {
-    throw new Error('Unsupported wall evaluation override');
-  }
-  if (evaluation.frames.length !== BLOB_TILE_COUNT) {
-    throw new Error(
-      `Wall evaluation override has ${evaluation.frames.length} frames; expected ${BLOB_TILE_COUNT}`,
-    );
-  }
-  for (let index = 0; index < BLOB_TILE_COUNT; index += 1) {
-    const frame = evaluation.frames[index];
-    if (
-      !frame ||
-      frame.id !== `mask_${index}` ||
-      frame.index !== index ||
-      frame.canonicalMask !== BLOB_CONFIGS[index] ||
-      frame.shapes.length === 0
-    ) {
-      throw new Error(`Wall evaluation override drift at mask_${index}`);
-    }
-  }
-  return evaluation.frames;
-}
-
 function wallTilesetDesc(
   wall: TileInstance,
   style: StyleSheet,
   scale: number,
-  evaluation?: WallEvaluationOverride,
 ): SheetDesc {
   const size = style.render.baseSize * scale;
-  const evaluationFrames = validatedEvaluationFrames(wall, evaluation);
   const cells: RasterCell[] = [];
   for (let i = 0; i < BLOB_TILE_COUNT; i++) {
     cells.push({
-      svg: evaluationFrames
-        ? composeWallShapes(evaluationFrames[i].shapes, wall, style, size)
-        : composeWallTile(wall, style, BLOB_CONFIGS[i], size),
+      svg: composeWallTile(wall, style, BLOB_CONFIGS[i], size),
       dx: (i % 8) * size,
       dy: Math.floor(i / 8) * size,
       dw: size,
@@ -1022,8 +977,13 @@ export async function wallTilesetPng(wall: TileInstance, style: StyleSheet, scal
   return asBlob(defaultRasterizer().rasterizeSheet(wallTilesetDesc(wall, style, scale)));
 }
 
-export function wallAtlas(wall: TileInstance, style: StyleSheet, scale: number) {
+export function wallAtlas(
+  wall: TileInstance,
+  style: StyleSheet,
+  scale: number,
+) {
   const size = style.render.baseSize * scale;
+  const productionFrames = quotaCoEqualHeightWallFramesFor(wall);
   const frames: Record<string, { x: number; y: number; w: number; h: number; name: string }> = {};
   // Frame naming stays `mask_<i>` (D3) — "mask" now means "blob index 0..46",
   // so the sim's MaskFromFrameName parse is unchanged.
@@ -1051,6 +1011,17 @@ export function wallAtlas(wall: TileInstance, style: StyleSheet, scale: number) 
       autotile: '8-neighbor blob (47)',
       blobTable: 'blob-index-table.json (shared 256→47 contract; frame mask_<i> = blob index)',
       sorting: 'wall-layer',
+      ...(productionFrames
+        ? {
+          contextualFacing: {
+            authoredFacing: QUOTA_CO_EQUAL_HEIGHT_AUTHORED_FACING,
+            mirrorXForEastPresentation:
+              QUOTA_CO_EQUAL_HEIGHT_MIRROR_X_MASKS.map(
+                (mask) => `mask_${mask}` as const,
+              ),
+          },
+        }
+        : {}),
     },
   };
 }
@@ -1456,8 +1427,6 @@ export interface ExportAllOptions {
   readonly rasterizer: Rasterizer;
   readonly onProgress?: ExportProgress;
   readonly scenarioTemplates?: ScenarioTemplate[];
-  /** Explicit wall-only reality-check profile. Default/browser exports omit it. */
-  readonly wallEvaluation?: WallEvaluationOverride;
 }
 
 /**
@@ -1472,7 +1441,7 @@ export async function exportAll(
   rawProject: ProjectState,
   opts: ExportAllOptions,
 ): Promise<void> {
-  const { sink, rasterizer, onProgress, wallEvaluation } = opts;
+  const { sink, rasterizer, onProgress } = opts;
   // Render every asset through the project's LOOK (a non-destructive lens over the
   // authored palettes — see core/look.ts). This is what makes the look reproducible:
   // it re-derives on every export instead of depending on a one-time palette sweep.
@@ -1619,9 +1588,12 @@ export async function exportAll(
       // Flat 47-blob autotile only — no re-tintable wall layer atlas (D2).
       await write(
         `${dir}/tileset@${scale}x.png`,
-        await png(wallTilesetDesc(wall, style, scale, wallEvaluation)),
+        await png(wallTilesetDesc(wall, style, scale)),
       );
-      await write(`${dir}/atlas@${scale}x.json`, JSON.stringify(wallAtlas(wall, style, scale), null, 2));
+      await write(
+        `${dir}/atlas@${scale}x.json`,
+        JSON.stringify(wallAtlas(wall, style, scale), null, 2),
+      );
       tick(wall.name);
     }
     await write(`${dir}/wall.json`, JSON.stringify(wall, null, 2));

@@ -664,7 +664,7 @@ export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): st
     '@media(max-width:700px){body{padding:18px 12px 48px}.status-grid{grid-template-columns:1fr}.archive-grid,.diagnostic-grid{grid-template-columns:1fr}.board{padding:8px}.current-section{margin:26px 0}}' +
     '</style>' +
     '<header><h1>QuotaCo Building System — current wall workbench</h1>' +
-    '<p class="lede">The source-owned 112-unit all-47 footprint is accepted proof-layer geometry. The separate family-consistency pass is paused and remains review-only; exporter, atlas, schema, blob mapping, Unity PPU, tile size, and agent scale remain unchanged.</p></header>' +
+    '<p class="lede">The source-owned 112-unit all-47 footprint is accepted and now feeds the production office-wall exporter and atlas. The separate family-consistency pass is paused and remains review-only; blob mapping, Unity PPU, tile size, and agent scale remain unchanged.</p></header>' +
     '<div id="status">waiting for first render…</div>' +
     '<section class="kit-status" aria-labelledby="kit-status-title"><h2 id="kit-status-title">Current direction status — equal-height structural walls</h2>' +
     '<div class="status-grid">' +

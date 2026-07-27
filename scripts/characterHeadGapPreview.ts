@@ -275,6 +275,7 @@ function recipe(
   headId: string,
   hair: string,
   outfit: string,
+  accessories: string[],
   black: boolean,
 ): CharacterRecipe {
   return {
@@ -285,7 +286,7 @@ function recipe(
       head: headId,
       hair,
       outfit,
-      accessories: [],
+      accessories,
     },
     palette: black ? BLACK_PALETTE : PALETTE,
   };
@@ -311,6 +312,7 @@ function withProofParts<T>(
 export interface RenderOptions {
   hair?: string;
   outfit?: string;
+  accessories?: string[];
   pose?: Pose;
   black?: boolean;
   style?: StyleSheet;
@@ -335,7 +337,14 @@ export function renderCharacter(
   const black = options.black ?? false;
   const style = options.style ?? (black ? SILHOUETTE_STYLE : COLOR_STYLE);
   const svg = withProofParts(body, lifts, candidate, () => composeCharacter(
-    recipe(body, headId, options.hair ?? 'hair-none', options.outfit ?? NO_OUTFIT, black),
+    recipe(
+      body,
+      headId,
+      options.hair ?? 'hair-none',
+      options.outfit ?? NO_OUTFIT,
+      options.accessories ?? [],
+      black,
+    ),
     style,
     facing,
     pixelSize,
@@ -355,7 +364,14 @@ export function renderPortrait(
   const candidate = typeof head === 'string' ? undefined : head;
   const headId = typeof head === 'string' ? head : HEAD_CARRIER;
   return withProofParts(body, lifts, candidate, () => composePortrait(
-    recipe(body, headId, options.hair ?? 'hair-none', options.outfit ?? NO_OUTFIT, false),
+    recipe(
+      body,
+      headId,
+      options.hair ?? 'hair-none',
+      options.outfit ?? NO_OUTFIT,
+      [],
+      false,
+    ),
     COLOR_STYLE,
     pixelSize,
     'normal',

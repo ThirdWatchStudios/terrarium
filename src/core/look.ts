@@ -55,6 +55,18 @@ export const CLINICAL_PAPER = '#EDE9DF';
 export const CLINICAL_INK = '#3A3B38';
 
 /**
+ * Runtime-only provenance for styles produced by {@link clinicalStyle}. A
+ * WeakSet keeps the marker out of the persisted/exported StyleSheet contract
+ * while allowing fixed-color authored art to honor the same clinical lens as
+ * palette-token art.
+ */
+const clinicalStyleInstances = new WeakSet<StyleSheet>();
+
+export function isClinicalStyle(style: StyleSheet): boolean {
+  return clinicalStyleInstances.has(style);
+}
+
+/**
  * Map one surface color onto the plan. Lightness-aware: mid/light colors
  * collapse into paper (a desk is a pale outline, not furniture art); dark
  * detail colors keep contrast so equipment still reads as thin linework.
@@ -77,6 +89,7 @@ export function clinicalStyle(base: StyleSheet): StyleSheet {
   style.outline = { width: 2, color: CLINICAL_INK, mode: 'silhouette' };
   style.render.contactShadow = 0; // plans cast no shadows
   style.render.ambientTint = 0; //  and carry no mood wash — the registers do that job
+  clinicalStyleInstances.add(style);
   return style;
 }
 

@@ -1,0 +1,142 @@
+{
+  "status": "review-only",
+  "round": "2",
+  "wallSourceState": "accepted-112",
+  "cellPixels": 90,
+  "authoringCanvas": 128,
+  "currentCharacterFrameCells": 1.55,
+  "propControlFactor": 1,
+  "selectedCandidateId": "minus-35",
+  "candidates": [
+    {
+      "id": "minus-25",
+      "label": "A · −25%",
+      "factor": 0.75,
+      "note": "round-one lead · overlap reference",
+      "fill": "#F6F1E6",
+      "characterFrameCells": 1.1625,
+      "characterFramePixels": 104.625
+    },
+    {
+      "id": "minus-35",
+      "label": "B · −35%",
+      "factor": 0.65,
+      "note": "SELECTED · accepted character scale",
+      "fill": "#DCE9DD",
+      "characterFrameCells": 1.0075,
+      "characterFramePixels": 90.675
+    },
+    {
+      "id": "minus-45",
+      "label": "C · −45%",
+      "factor": 0.55,
+      "note": "strong reduction · smallest candidate",
+      "fill": "#F0DDD6",
+      "characterFrameCells": 0.8525000000000001,
+      "characterFramePixels": 76.72500000000001
+    }
+  ],
+  "agents": [
+    {
+      "body": "Column",
+      "head": "Long",
+      "hair": "Crop",
+      "facing": "south",
+      "outfit": "outfit-hoodie",
+      "accessories": [
+        "acc-clipboard"
+      ]
+    },
+    {
+      "body": "Bell",
+      "head": "Broad",
+      "hair": "Cloud",
+      "facing": "south",
+      "outfit": "outfit-dress",
+      "accessories": [
+        "acc-mug"
+      ]
+    },
+    {
+      "body": "Pinch",
+      "head": "Point",
+      "hair": "Tail",
+      "facing": "east",
+      "outfit": "outfit-suit-jacket",
+      "accessories": [
+        "acc-watch"
+      ]
+    }
+  ],
+  "props": [
+    {
+      "id": "desk",
+      "projection": "plan",
+      "gridFootprint": {
+        "w": 2,
+        "h": 1
+      },
+      "authoringCanvas": 128
+    },
+    {
+      "id": "office-chair",
+      "projection": "plan",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "authoringCanvas": 128
+    },
+    {
+      "id": "potted-tree",
+      "projection": "elevation",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "authoringCanvas": 128
+    },
+    {
+      "id": "water-cooler",
+      "projection": "elevation",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "authoringCanvas": 128
+    },
+    {
+      "id": "cubicle-workstation",
+      "projection": "plan",
+      "gridFootprint": {
+        "w": 2,
+        "h": 2
+      },
+      "authoringCanvas": 128
+    }
+  ],
+  "boundaries": {
+    "wall": {
+      "reviewOnly": false,
+      "selectedProfile": "candidate-112",
+      "acceptedSourceState": "accepted-112",
+      "acceptedSourceMutation": true,
+      "ledgerMutation": false,
+      "exporterIntegration": false,
+      "atlasMutation": false,
+      "schemaMutation": false,
+      "blobMutation": false,
+      "unityMutation": false
+    },
+    "character": [
+      "128-unit authoring canvas unchanged",
+      "v4 one-row head/body air retained",
+      "v5.1 fitted hair/head profiles retained",
+      "neutral arms retained",
+      "no new frames, bones, poses, or renderer states"
+    ],
+    "runtime": [
+      "no exporter, atlas, schema, PPU, collision, pathfinding, or Unity registration change"
+    ]
+  }
+}

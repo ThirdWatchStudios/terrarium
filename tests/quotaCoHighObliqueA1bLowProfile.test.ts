@@ -509,7 +509,7 @@ describe('QuotaCo A1b low-profile corrective mini-strip', () => {
   it('preserves the rejected 47-bank control and all production contracts', async () => {
     expect(await topologySourceHash()).toBe(REJECTED_TOPOLOGY_SOURCE_HASH);
     expect(productionSignature()).toBe(productionBefore);
-    expect(CURRENT_SCHEMA_VERSION).toBe(18);
+    expect(CURRENT_SCHEMA_VERSION).toBe(19);
     expect(blobContract()).toMatchObject({ version: 1, tileCount: 47 });
     expect(blobContract().configs).toEqual(BLOB_CONFIGS);
     const productionIds = new Set([

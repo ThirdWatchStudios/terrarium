@@ -871,7 +871,7 @@ describe('QuotaCo high-oblique A1b complete topology proof', () => {
 
   it('remains proof-only and leaves production blob, templates, atlas, and schema unchanged', () => {
     expect(productionSignature()).toBe(productionBefore);
-    expect(CURRENT_SCHEMA_VERSION).toBe(18);
+    expect(CURRENT_SCHEMA_VERSION).toBe(19);
     expect(blobContract()).toMatchObject({ version: 1, tileCount: 47 });
     expect(blobContract().configs).toEqual(BLOB_CONFIGS);
 

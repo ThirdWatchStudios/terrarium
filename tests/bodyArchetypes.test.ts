@@ -176,7 +176,7 @@ describe('production body archetypes', () => {
       ['linda', 'body-standard'],
       ['manager', 'body-broad'],
     ]);
-    expect(CURRENT_SCHEMA_VERSION).toBe(18);
+    expect(CURRENT_SCHEMA_VERSION).toBe(19);
   });
 
   it('keeps seeded random and employee generation deterministic and production-only', () => {

@@ -1194,7 +1194,7 @@ describe('QuotaCo current wall workbench', () => {
     expect(primary).toContain('Horizontal terminus pair');
     expect(primary).toContain('Accepted mask_8 direct source');
     expect(page).toContain(
-      '<p class="lede">The source-owned 112-unit all-47 footprint is accepted proof-layer geometry.',
+      '<p class="lede">The source-owned 112-unit all-47 footprint is accepted and now feeds the production office-wall exporter and atlas.',
     );
     expect(page).toContain('Paused review · 1 piece');
     expect(page).toContain(

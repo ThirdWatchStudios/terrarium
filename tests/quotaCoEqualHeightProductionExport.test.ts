@@ -13,26 +13,39 @@ import svgpath from 'svgpath';
 import { describe, expect, it } from 'vitest';
 
 import { derivePromotedSoutheastSourcePair } from '../scripts/highOblique/equalHeightWallDirection';
+import { equalHeightAllMaskSourceFootprintState } from '../scripts/highOblique/equalHeightFootprintAllMaskCalibration';
 import {
   compileEqualHeightEvaluationFrames,
-  QUOTA_CO_EQUAL_HEIGHT_EVALUATION_PROFILE,
   QUOTA_CO_EQUAL_HEIGHT_FLIP_REQUIRED_MASKS,
+  emitQuotaCoEqualHeightWallRegistry,
   type CompiledEqualHeightFrame,
 } from '../scripts/walls/equalHeightImporter';
 import {
   composeWallShapes,
   composeWallTile,
+  composeProceduralOfficeWallTile,
 } from '../src/core/compositor';
 import {
   exportAll,
+  wallAtlas,
   type SheetDesc,
 } from '../src/core/exporter';
+import {
+  clinicalSurfaceColor,
+  projectWithLook,
+} from '../src/core/look';
 import type { ShapeSpec } from '../src/core/types';
 import { defaultProject } from '../src/data/defaults';
 import {
   BLOB_CONFIGS,
   BLOB_TILE_COUNT,
+  blobIndex,
 } from '../src/tiles/blob';
+import { QUOTA_CO_EQUAL_HEIGHT_WALL_ART } from '../src/tiles/generated/importedQuotaCoEqualHeightWallArt';
+import {
+  QUOTA_CO_EQUAL_HEIGHT_AUTHORED_FACING,
+  QUOTA_CO_EQUAL_HEIGHT_MIRROR_X_MASKS,
+} from '../src/tiles/quotaCoEqualHeightWallContract';
 
 const SOURCE_ROOTS = [
   {
@@ -91,12 +104,10 @@ function acceptedSourcePixels(frame: CompiledEqualHeightFrame): Uint8Array {
   ).render().pixels;
 }
 
-describe('QuotaCo equal-height evaluation export bridge', () => {
+describe('QuotaCo equal-height production wall export', () => {
   it('compiles exactly 47 canonical frames in unchanged blob order', async () => {
     const result = await frames();
-    expect(QUOTA_CO_EQUAL_HEIGHT_EVALUATION_PROFILE).toBe(
-      'quota-co-equal-height-evaluation',
-    );
+    expect(equalHeightAllMaskSourceFootprintState(result)).toBe('accepted-112');
     expect(result).toHaveLength(BLOB_TILE_COUNT);
     expect(result.map(({ id }) => id)).toEqual(
       Array.from({ length: BLOB_TILE_COUNT }, (_, index) => `mask_${index}`),
@@ -204,7 +215,7 @@ describe('QuotaCo equal-height evaluation export bridge', () => {
     expect(result[12].shapes.map(mirrorShapeX)).toEqual(result[6].shapes);
   });
 
-  it('produces byte-stable frame records across repeated compilation', async () => {
+  it('keeps the browser-safe production registry byte-current and deterministic', async () => {
     const first = await compileEqualHeightEvaluationFrames({
       sourceRoots: SOURCE_ROOTS,
     });
@@ -212,6 +223,25 @@ describe('QuotaCo equal-height evaluation export bridge', () => {
       sourceRoots: SOURCE_ROOTS,
     });
     expect(JSON.stringify(second)).toBe(JSON.stringify(first));
+    const projection = first.map((frame) => ({
+      id: frame.id,
+      index: frame.index,
+      canonicalMask: frame.canonicalMask,
+      flipXForEastPresentation: frame.flipXForEastPresentation,
+      shapes: frame.shapes,
+    }));
+    expect(QUOTA_CO_EQUAL_HEIGHT_WALL_ART).toEqual(projection);
+
+    const emitted = emitQuotaCoEqualHeightWallRegistry(first);
+    expect(emitQuotaCoEqualHeightWallRegistry(second)).toBe(emitted);
+    expect(
+      readFileSync(
+        path.resolve(
+          'src/tiles/generated/importedQuotaCoEqualHeightWallArt.ts',
+        ),
+        'utf8',
+      ),
+    ).toBe(emitted);
   });
 
   it('matches accepted composed pixels for direct, mirror, filtered, and filled representatives', async () => {
@@ -220,10 +250,11 @@ describe('QuotaCo equal-height evaluation export bridge', () => {
     const officeWall = project.walls.find(({ id }) => id === 'wall-office');
     expect(officeWall).toBeDefined();
     for (const index of [3, 12, 9, 46]) {
-      const frame = result[index];
+      const sourceFrame = result[index];
+      const productionFrame = QUOTA_CO_EQUAL_HEIGHT_WALL_ART[index];
       const compiledPixels = new Resvg(
         composeWallShapes(
-          frame.shapes,
+          productionFrame.shapes,
           officeWall!,
           project.style,
           128,
@@ -232,17 +263,35 @@ describe('QuotaCo equal-height evaluation export bridge', () => {
       ).render().pixels;
       expect(
         Buffer.from(compiledPixels).equals(
-          Buffer.from(acceptedSourcePixels(frame)),
+          Buffer.from(acceptedSourcePixels(sourceFrame)),
         ),
-        frame.id,
+        productionFrame.id,
       ).toBe(true);
     }
   });
 
-  it('overrides only wall-office through the full export path', async () => {
-    const result = await frames();
+  it('routes every raw office-wall mask through the accepted production registry', () => {
+    const project = defaultProject();
+    const officeWall = project.walls.find(({ id }) => id === 'wall-office');
+    expect(officeWall).toBeDefined();
+    for (let raw = 0; raw < 256; raw += 1) {
+      const frame = QUOTA_CO_EQUAL_HEIGHT_WALL_ART[blobIndex(raw)];
+      expect(composeWallTile(officeWall!, project.style, raw, 128), raw)
+        .toBe(
+          composeWallShapes(
+            frame.shapes,
+            officeWall!,
+            project.style,
+            128,
+          ),
+        );
+    }
+  });
+
+  it('uses accepted wall-office art through the ordinary full export path', async () => {
     const project = defaultProject();
     const renderedSheets = new Map<string, SheetDesc>();
+    const exportedWallAtlases = new Map<string, unknown>();
     let latestSheet: SheetDesc | undefined;
 
     await exportAll(project, {
@@ -253,42 +302,70 @@ describe('QuotaCo equal-height evaluation export bridge', () => {
         },
       },
       sink: {
-        file(file) {
-          if (file.endsWith('/tileset@1x.png')) {
+        file(file, data) {
+          if (/\/tileset@[124]x\.png$/.test(file)) {
             expect(latestSheet, file).toBeDefined();
             renderedSheets.set(file, latestSheet!);
           }
+          if (
+            file.startsWith('walls/') &&
+            /\/atlas@[124]x\.json$/.test(file)
+          ) {
+            expect(typeof data, file).toBe('string');
+            if (typeof data === 'string') {
+              exportedWallAtlases.set(file, JSON.parse(data));
+            }
+          }
         },
-      },
-      wallEvaluation: {
-        profile: QUOTA_CO_EQUAL_HEIGHT_EVALUATION_PROFILE,
-        wallId: 'wall-office',
-        frames: result,
       },
     });
 
     const officeWall = project.walls.find(({ id }) => id === 'wall-office');
     expect(officeWall).toBeDefined();
-    const officeSheet = renderedSheets.get('walls/office-wall/tileset@1x.png');
-    expect(officeSheet?.cells).toHaveLength(BLOB_TILE_COUNT);
-    for (let index = 0; index < BLOB_TILE_COUNT; index += 1) {
-      expect(officeSheet!.cells[index].svg, `wall-office/mask_${index}`).toBe(
-        composeWallShapes(
-          result[index].shapes,
+    const contextualFrames = QUOTA_CO_EQUAL_HEIGHT_MIRROR_X_MASKS.map(
+      (mask) => `mask_${mask}`,
+    );
+    for (const scale of [1, 2, 4]) {
+      const officeSheet = renderedSheets.get(
+        `walls/office-wall/tileset@${scale}x.png`,
+      );
+      expect(
+        exportedWallAtlases.get(
+          `walls/office-wall/atlas@${scale}x.json`,
+        ),
+      ).toMatchObject({
+          meta: {
+            contextualFacing: {
+              authoredFacing: QUOTA_CO_EQUAL_HEIGHT_AUTHORED_FACING,
+              mirrorXForEastPresentation: contextualFrames,
+            },
+          },
+        });
+      expect(officeSheet?.cells).toHaveLength(BLOB_TILE_COUNT);
+      const size = project.style.render.baseSize * scale;
+      for (let index = 0; index < BLOB_TILE_COUNT; index += 1) {
+        expect(
+          officeSheet!.cells[index].svg,
+          `wall-office@${scale}x/mask_${index}`,
+        ).toBe(
+          composeWallShapes(
+            QUOTA_CO_EQUAL_HEIGHT_WALL_ART[index].shapes,
+            officeWall!,
+            project.style,
+            size,
+          ),
+        );
+      }
+      expect(officeSheet!.cells[0].svg).not.toBe(
+        composeProceduralOfficeWallTile(
           officeWall!,
           project.style,
-          project.style.render.baseSize,
+          BLOB_CONFIGS[0],
+          size,
         ),
       );
     }
-    expect(officeSheet!.cells[0].svg).not.toBe(
-      composeWallTile(
-        officeWall!,
-        project.style,
-        BLOB_CONFIGS[0],
-        project.style.render.baseSize,
-      ),
-    );
+    expect(contextualFrames).toEqual(['mask_1', 'mask_4', 'mask_5']);
 
     for (const wall of project.walls.filter(({ id }) => id !== 'wall-office')) {
       const slug = wall.name
@@ -296,6 +373,10 @@ describe('QuotaCo equal-height evaluation export bridge', () => {
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/^-|-$/g, '');
       const sheet = renderedSheets.get(`walls/${slug}/tileset@1x.png`);
+      for (const scale of [1, 2, 4]) {
+        expect(exportedWallAtlases.get(`walls/${slug}/atlas@${scale}x.json`))
+          .not.toHaveProperty('meta.contextualFacing');
+      }
       expect(sheet?.cells, wall.id).toHaveLength(BLOB_TILE_COUNT);
       for (let index = 0; index < BLOB_TILE_COUNT; index += 1) {
         expect(sheet!.cells[index].svg, `${wall.id}/mask_${index}`).toBe(
@@ -307,6 +388,73 @@ describe('QuotaCo equal-height evaluation export bridge', () => {
           ),
         );
       }
+    }
+
+    expect(wallAtlas(officeWall!, project.style, 1))
+      .toHaveProperty('meta.contextualFacing', {
+        authoredFacing: QUOTA_CO_EQUAL_HEIGHT_AUTHORED_FACING,
+        mirrorXForEastPresentation: contextualFrames,
+      });
+  });
+
+  it('keeps browser-created office-wall duplicates on the production family', () => {
+    const project = defaultProject();
+    const officeWall = project.walls.find(({ id }) => id === 'wall-office');
+    expect(officeWall).toBeDefined();
+    const copy = structuredClone(officeWall!);
+    copy.id = 'wall-office-copy';
+    copy.name = 'Office wall copy';
+
+    expect(composeWallTile(copy, project.style, BLOB_CONFIGS[5])).toBe(
+      composeWallShapes(
+        QUOTA_CO_EQUAL_HEIGHT_WALL_ART[5].shapes,
+        copy,
+        project.style,
+      ),
+    );
+    expect(wallAtlas(copy, project.style, 1))
+      .toHaveProperty('meta.contextualFacing', {
+        authoredFacing: QUOTA_CO_EQUAL_HEIGHT_AUTHORED_FACING,
+        mirrorXForEastPresentation: ['mask_1', 'mask_4', 'mask_5'],
+      });
+  });
+
+  it('drains literal production colors under the clinical project look', () => {
+    const raw = defaultProject();
+    raw.look = 'clinical';
+    const clinical = projectWithLook(raw);
+    const rawWall = raw.walls.find(({ id }) => id === 'wall-office');
+    const clinicalWall = clinical.walls.find(
+      ({ id }) => id === 'wall-office',
+    );
+    expect(rawWall).toBeDefined();
+    expect(clinicalWall).toBeDefined();
+
+    const rawSvg = composeWallTile(
+      rawWall!,
+      raw.style,
+      BLOB_CONFIGS[0],
+    );
+    const clinicalSvg = composeWallTile(
+      clinicalWall!,
+      clinical.style,
+      BLOB_CONFIGS[0],
+    );
+    expect(clinicalSvg).not.toBe(rawSvg);
+
+    const authoredColors = [
+      '#000000',
+      '#252A28',
+      '#294B3C',
+      '#B65F4D',
+      '#D9D0B9',
+      '#FFFFFF',
+    ];
+    for (const color of authoredColors) {
+      expect(rawSvg, color).toContain(color);
+      expect(clinicalSvg, color).toContain(
+        clinicalSurfaceColor(color),
+      );
     }
   });
 

@@ -14,7 +14,6 @@
  *              included. Real project.json files are exported verbatim.
  */
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 
 import { exportAll, type ExportSink } from '../src/core/exporter';
@@ -26,22 +25,13 @@ import { cascadeCompany, cascadeToProject } from '../src/core/companyCascade';
 import { ROLE_TEMPLATES } from '../src/data/roleTemplates';
 import { applyClinicalLook } from '../src/core/look';
 import type { ProjectState } from '../src/core/types';
-import {
-  compileEqualHeightEvaluationFrames,
-  QUOTA_CO_EQUAL_HEIGHT_EVALUATION_PROFILE,
-} from './walls/equalHeightImporter';
 
 /** Keep the CLI demo render-bounded — a real seed can have thousands of seats. */
 const COMPANY_CLI_HEADCOUNT_CAP = 16;
-const QUOTA_CO_WALL_EVALUATION_FLAG = '--quota-co-wall-evaluation';
-const REPOSITORY_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
 function usage(msg?: string): never {
   if (msg) console.error(`error: ${msg}\n`);
   console.error('usage: npm run export -- <project.json|default|company:<archetype>:<seed>> <outDir>');
-  console.error(
-    '       npm run export:quota-co-walls -- <project.json|default|company:<archetype>:<seed>> <outDir>',
-  );
   process.exit(msg ? 1 : 0);
 }
 
@@ -94,8 +84,6 @@ function loadProject(arg: string): ProjectState {
 
 async function main() {
   const args = process.argv.slice(2);
-  const quotaCoWallEvaluation = args[0] === QUOTA_CO_WALL_EVALUATION_FLAG;
-  if (quotaCoWallEvaluation) args.shift();
   const [projectArg, outArg] = args;
   if (!projectArg || projectArg === '--help' || projectArg === '-h') usage();
   if (!outArg) usage('missing output directory');
@@ -103,27 +91,6 @@ async function main() {
 
   const project = loadProject(projectArg);
   const outDir = resolve(outArg);
-  const evaluationFrames = quotaCoWallEvaluation
-    ? await compileEqualHeightEvaluationFrames({
-      sourceRoots: [
-        {
-          inputDir: resolve(
-            REPOSITORY_ROOT,
-            'assets/walls/quota-co-building-system',
-          ),
-          sourcePathPrefix: 'assets/walls/quota-co-building-system',
-        },
-        {
-          inputDir: resolve(
-            REPOSITORY_ROOT,
-            'assets/walls/quota-co-building-system-proofs',
-          ),
-          sourcePathPrefix:
-            'assets/walls/quota-co-building-system-proofs',
-        },
-      ],
-    })
-    : undefined;
 
   let fileCount = 0;
   const sink: ExportSink = {
@@ -148,13 +115,6 @@ async function main() {
     sink,
     rasterizer: createResvgRasterizer(),
     scenarioTemplates: ROLE_TEMPLATES,
-    wallEvaluation: evaluationFrames
-      ? {
-        profile: QUOTA_CO_EQUAL_HEIGHT_EVALUATION_PROFILE,
-        wallId: 'wall-office',
-        frames: evaluationFrames,
-      }
-      : undefined,
     onProgress: (done, total, label) => {
       const pct = Math.floor((done / total) * 100);
       if (pct !== lastPct) {

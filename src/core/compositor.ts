@@ -34,6 +34,8 @@ import {
   buildProceduralOfficeWall,
 } from '../tiles/templates';
 import { GROUND_OVERLAY_BUILDERS } from '../tiles/groundOverlays';
+import { quotaCoEqualHeightWallFrameFor } from '../tiles/quotaCoEqualHeightWall';
+import { clinicalSurfaceColor, isClinicalStyle } from './look';
 
 /**
  * Named attachment points in canvas coordinates, per facing. Moving an anchor
@@ -884,6 +886,26 @@ export function composeWallTile(
   neighbors: number,
   pixelSize?: number,
 ): string {
+  const productionFrame = quotaCoEqualHeightWallFrameFor(wall, neighbors);
+  if (productionFrame) {
+    const productionShapes = isClinicalStyle(style)
+      ? productionFrame.shapes.map((shape) => ({
+          ...shape,
+          fill: shape.fill
+            ? clinicalSurfaceColor(shape.fill)
+            : undefined,
+          stroke: shape.stroke
+            ? clinicalSurfaceColor(shape.stroke)
+            : undefined,
+        }))
+      : productionFrame.shapes;
+    return composeWallShapes(
+      productionShapes,
+      wall,
+      style,
+      pixelSize,
+    );
+  }
   const template = WALL_TEMPLATES.find((t) => t.id === wall.templateId);
   if (!template) return svgWrap('', pixelSize ?? style.render.baseSize);
   const shapes = template.build(neighbors, wall.params, wall.palette);

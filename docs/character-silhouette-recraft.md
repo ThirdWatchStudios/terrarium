@@ -5,6 +5,9 @@ six-body compatibility gate v3 + locked always-on-arm decision v3.1 +
 neutral-arm revision proof v3.2 + head silhouette/body-air direction proof v4 +
 hair/head fit and profile correction proof v5.1**
 
+Production restart summary:
+[character-redesign-production-handoff.md](character-redesign-production-handoff.md).
+
 This slice reopens the visual approval of the current human silhouette
 vocabulary. It does not replace production SVGs, change the character recipe
 contract, add part IDs, alter the compositor, or expand the runtime animation
