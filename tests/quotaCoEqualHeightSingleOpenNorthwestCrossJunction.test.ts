@@ -347,13 +347,13 @@ describe('QuotaCo owner-accepted single-open northwest cross-junction gate', () 
       )].map((match) => match[1]),
     ).toEqual(['upper-shell']);
     expect(upper).toContain(
-      'id="upper-shell" d="M58 0H128V128H0V58H48A10 10 0 0 0 58 48Z"',
+      'id="upper-shell" d="M14.819 0L128 0 128 128 0 128 0 14.819 9.857 14.819C10.991 14.819 14.819 10.991 14.819 9.857Z"',
     );
     expect(upper).toContain(
-      '<path id="upper-nw-reveal-light" d="M0 58H48A10 10 0 0 0 58 48V44A12 12 0 0 1 46 56H0Z" fill="#FFFFFF" opacity="0.30"/>',
+      '<path id="upper-nw-reveal-light" d="M0 14.819L9.857 14.819C10.991 14.819 14.819 10.991 14.819 9.857L14.819 9.036C14.819 10.397 10.807 11.5 9.446 11.5L0 11.5Z" fill="#FFFFFF" opacity="0.30"/>',
     );
     expect(upper).toContain(
-      '<path id="upper-arris-seam" d="M1 56H46A12 12 0 0 0 58 44V1" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>',
+      '<path id="upper-arris-seam" d="M0.75 11.5L9.446 11.5C10.807 11.5 14.819 10.397 14.819 9.036L14.819 0.75" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>',
     );
     expect(
       source('open_cross_filled_ne_se_sw-base.svg') + upper,
@@ -419,8 +419,8 @@ describe('QuotaCo owner-accepted single-open northwest cross-junction gate', () 
       writeInventory(
         base,
         upper.replace(
-          'M58 0H128V128H0V58',
-          'M59 0H128V128H0V58',
+          'M14.819 0L128 0 128 128',
+          'M15.819 0L128 0 128 128',
         ),
       );
       await expect(compileTemporary()).rejects.toThrow(
@@ -430,8 +430,8 @@ describe('QuotaCo owner-accepted single-open northwest cross-junction gate', () 
       writeInventory(
         base,
         upper.replace(
-          'id="upper-nw-reveal-light" d="M0 58H48A10 10 0 0 0 58 48V44A12 12 0 0 1 46 56H0Z" fill="#FFFFFF"',
-          'id="upper-nw-reveal-light" d="M0 58H48A10 10 0 0 0 58 48V44A12 12 0 0 1 46 56H0Z" fill="#B65F4D"',
+          'id="upper-nw-reveal-light" d="M0 14.819L9.857 14.819C10.991 14.819 14.819 10.991 14.819 9.857L14.819 9.036C14.819 10.397 10.807 11.5 9.446 11.5L0 11.5Z" fill="#FFFFFF"',
+          'id="upper-nw-reveal-light" d="M0 14.819L9.857 14.819C10.991 14.819 14.819 10.991 14.819 9.857L14.819 9.036C14.819 10.397 10.807 11.5 9.446 11.5L0 11.5Z" fill="#B65F4D"',
         ),
       );
       await expect(compileTemporary()).rejects.toThrow(

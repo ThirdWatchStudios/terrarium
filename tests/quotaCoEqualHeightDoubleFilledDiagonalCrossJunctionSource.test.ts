@@ -143,22 +143,22 @@ describe('QuotaCo accepted double-filled diagonal cross-junction source', () => 
   it('locks one S-shaped cream owner with only northwest and southeast open', () => {
     const base = source('open_cross_filled_ne_sw-base.svg');
     expect(base).toContain(
-      'id="base-structural-mass" d="M56 0H128V97H82A10 10 0 0 0 72 107V128H0V56H46A10 10 0 0 0 56 46Z"',
+      'id="base-structural-mass" d="M11.5 0L128 0 128 79.53 118.554 79.53C117.419 79.53 116.5 86.958 116.5 96.122L116.5 128 0 128 0 11.5 9.446 11.5C10.581 11.5 11.5 10.581 11.5 9.446Z"',
     );
     expect(base).not.toMatch(/id="base-buried-(?:ne|sw)-underlay"/);
 
     const upper = source('open_cross_filled_ne_sw-upper.svg');
     expect(upper).toContain(
-      'id="upper-contour" d="M56 0H128V97H82A10 10 0 0 0 72 107V128H0V56H46A10 10 0 0 0 56 46Z"',
+      'id="upper-contour" d="M11.5 0L128 0 128 79.53 118.554 79.53C117.419 79.53 116.5 86.958 116.5 96.122L116.5 128 0 128 0 11.5 9.446 11.5C10.581 11.5 11.5 10.581 11.5 9.446Z"',
     );
     expect(upper).toContain(
-      'id="upper-shell" d="M58 0H128V95H80A10 10 0 0 0 70 105V128H0V58H48A10 10 0 0 0 58 48Z"',
+      'id="upper-shell" d="M14.819 0L128 0 128 76.211 118.143 76.211C117.009 76.211 113.181 83.64 113.181 92.804L113.181 128 0 128 0 14.819 9.857 14.819C10.991 14.819 14.819 10.991 14.819 9.857Z"',
     );
     expect(upper).toContain(
-      'id="upper-nw-reveal-light" d="M0 58H48A10 10 0 0 0 58 48V44A12 12 0 0 1 46 56H0Z"',
+      'id="upper-nw-reveal-light" d="M0 14.819L9.857 14.819C10.991 14.819 14.819 10.991 14.819 9.857L14.819 9.036C14.819 10.397 10.807 11.5 9.446 11.5L0 11.5Z"',
     );
     expect(upper).toContain(
-      'id="upper-arris-seam" d="M1 56H46A12 12 0 0 0 58 44V1 M36 106V125"',
+      'id="upper-arris-seam" d="M0.75 11.5L9.446 11.5C10.807 11.5 14.819 10.397 14.819 9.036L14.819 0.75M56.767 106L56.767 125"',
     );
     expect(
       [...upper.matchAll(
@@ -178,9 +178,11 @@ describe('QuotaCo accepted double-filled diagonal cross-junction source', () => 
       (_, x) => pixels[(127 * raster.width + x) * 4 + 3],
     );
 
-    expect(alpha.slice(0, 72).every((value) => value === 255)).toBe(true);
-    expect(alpha.slice(72).every((value) => value === 0)).toBe(true);
-    expect(alpha.findLastIndex((value) => value === 255)).toBe(71);
+    expect(alpha.slice(0, 117).every((value) => value > 0)).toBe(true);
+    expect(alpha.slice(117).every((value) => value === 0)).toBe(true);
+    expect(alpha[116]).toBeGreaterThan(0);
+    expect(alpha[116]).toBeLessThan(255);
+    expect(alpha.findLastIndex((value) => value === 255)).toBe(115);
   });
 
   it('keeps coral, green, and frontage shade on the southeast return only', () => {
@@ -237,10 +239,10 @@ describe('QuotaCo accepted double-filled diagonal cross-junction source', () => 
     }
 
     const raster = rasterCandidate(128, '#A8A28F');
-    expect(opaqueRgbAt(raster, 25, 25)).toEqual([168, 162, 143]);
-    expect(opaqueRgbAt(raster, 85, 25)).toEqual([217, 208, 185]);
-    expect(opaqueRgbAt(raster, 25, 105)).toEqual([191, 183, 163]);
-    expect(opaqueRgbAt(raster, 80, 80)).toEqual([200, 191, 170]);
+    expect(opaqueRgbAt(raster, 25, 25)).toEqual([217, 208, 185]);
+    expect(opaqueRgbAt(raster, 85, 25)).toEqual([200, 191, 170]);
+    expect(opaqueRgbAt(raster, 25, 105)).toEqual([217, 208, 185]);
+    expect(opaqueRgbAt(raster, 80, 80)).toEqual([217, 208, 185]);
     expect(opaqueRgbAt(raster, 124, 105)).toEqual([41, 75, 60]);
   });
 
@@ -297,7 +299,7 @@ describe('QuotaCo accepted double-filled diagonal cross-junction source', () => 
 
       writeInventory(
         base,
-        upper.replace('M58 0H128V95H80', 'M59 0H128V95H80'),
+        upper.replace('M14.819 0L128 0', 'M15.819 0L128 0'),
       );
       await expect(compileTemporary()).rejects.toThrow(
         /exact double-filled diagonal geometry for upper-shell/,

@@ -7,7 +7,7 @@ components. The base is drawn first; the upper is composited at the same centere
 grid pivot. The composed frame—not either component alone—is the visual product.
 
 **Promoted ordinary-wall decision (owner approval, 2026-07-21):** every placed
-ordinary structural wall occupies the full 64-unit outer profile in its cell.
+ordinary structural wall occupies one full equal-height outer profile in its cell.
 South is the exact `full_n_straight-base.svg` +
 `full_n_straight-upper.svg` composed source, with the same centered pivot and no
 transform, duplicated south SVG, or new frame identity. The equal-height
@@ -32,6 +32,15 @@ locks the unchanged canonical `mask_0` through `mask_46` order and classifies
 unresolved rows. All 47 masks now have accepted proof-layer provenance. This
 completes the mapping vocabulary only; it does not create an atlas or production
 family.
+
+**Accepted all-47 footprint gate (owner approval, 2026-07-27):** the complete
+proof-layer source bank now owns one 112-unit ordinary-wall footprint. Direct/high
+profiles span `11.5..123.5`; whole-cell mirrored/low profiles span
+`4.5..116.5`. The accepted source geometry preserves the strict 128-unit frame,
+centered pivot, canonical 47-row order, and 28 direct / 19 derived provenance
+split. This is a proof-source geometry promotion only: it does not register a
+production source, change the exporter, atlas, schema, blob mapping, Unity PPU,
+runtime tile size, or agent scale.
 
 **Accepted horizontal terminus gate (owner approval, 2026-07-21):** `mask_8`
 directly reuses the socket-polished `full_terminus` pair (connected west, cap
@@ -353,9 +362,9 @@ overdraw. Do not rotate a directional frame to manufacture another facing.
 ## Art contract
 
 - fixed orthographic high-oblique/top-down-plus over the rectangular grid;
-- every ordinary structural wall cell uses one continuous 64-unit profile: the
-  accepted north/south and west source spans run `56..120`, while the accepted
-  whole-cell east mirror maps its X span to `8..72` without changing its size;
+- every ordinary structural wall cell uses one continuous 112-unit profile: the
+  accepted direct/high source span runs `11.5..123.5`, while the accepted
+  whole-cell mirrored/low span runs `4.5..116.5` without changing its size;
 - horizontal north/south room-edge runs read flat/front-on with a narrow top reveal;
 - vertical east/west room-edge runs expose the broader, flatter-from-above top/side plane;
 - north and south use the exact `full_n_straight` base/upper pair with no transform

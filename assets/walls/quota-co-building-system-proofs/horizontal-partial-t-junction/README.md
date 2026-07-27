@@ -21,12 +21,14 @@ is seam-free and cream-led on its filled side.
 
 The rear master gives the cream reveal one shared exposure across its
 open-to-solid turn: `upper-plane-light-open-sw` ends exactly where
-`upper-solid-top-highlight` begins at `x=58`. This avoids a bright step without
+`upper-solid-top-highlight` begins at `x=14.819` in the accepted 112-unit source
+geometry. This avoids a bright step without
 changing the contour, sockets, seams, or opaque geometry. The accepted plain-X
 derivation carries the same phase into `mask_28` without filtering.
 
-On the exposed southwest face, the restrained material shade stops at `y=84`,
-leaving a cream lip above the `y=87` dark outline and the coral/green register.
+On the exposed southwest face, the restrained material shade stops at
+`y=57.959`, leaving a cream lip above the `y=62.937` dark outline and the
+coral/green register.
 The filled southeast top stays cream-led. The accepted plain-X derivation
 carries this complete shade, cream, outline, coral, and green hierarchy into
 `mask_28`.

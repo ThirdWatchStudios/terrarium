@@ -26,7 +26,7 @@ changes the export contract except where explicitly flagged (floor variants).
 > step: its broad west plane terminates behind the shallow south coping while the south stack wraps the complete
 > foreground heel. The accepted source checkpoint remains isolated from production templates, topology
 > propagation, schema, and Unity until that migration receives separate approval.
-> **Latest owner decision, 2026-07-21:** ordinary structural wall cells now use one full 64-unit profile on
+> **Equal-height wall decision, 2026-07-21:** ordinary structural wall cells use one full profile on
 > every room edge. South is promoted as exact reuse of the full-north base/upper sources with no transform,
 > duplicate SVG, or new identity. The equal-height southwest molded corner is now promoted in the existing
 > `transition_w_to_s` source pair; its south frontage owns the foreground heel. Southeast is promoted as an
@@ -36,6 +36,12 @@ changes the export contract except where explicitly flagged (floor variants).
 > low-south/east and full-to-low artifacts remain historical comparisons and may only inform a separately
 > approved partition family. This decision still changes no production template, topology, exporter, schema,
 > or Unity contract.
+> **Latest footprint decision, 2026-07-27:** the complete accepted 47-mask proof source bank now owns one
+> 112-unit ordinary-wall footprint. Direct/high profiles span `11.5..123.5`; whole-cell mirrored/low profiles
+> span `4.5..116.5`. The strict 128-unit frame, centered pivot, fixed renderer scale, palette, topology, and
+> 28-direct / 19-derived ledger remain unchanged. This promotes source geometry only; normal production
+> export, atlas, schema, blob mapping, Unity registration/PPU/tile size, props, and agent scale remain outside
+> this slice.
 > **Current mapping and source-gate result, 2026-07-24:** the owner accepted the proof-layer 47-mask
 > ledger structure plus the horizontal and vertical termini, isolated-shell, filled-elbow, 2×N thick-wall-repeat,
 > N×2 horizontal thick-wall-repeat, vertical open-pocket T-junction, horizontal-spine open-pocket T-junction,

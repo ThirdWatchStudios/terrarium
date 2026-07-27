@@ -225,12 +225,12 @@ describe('QuotaCo owner-accepted proof-layer equal-height isolated shell', () =>
   it('renders one contained, connected, near-square zero-socket housing', () => {
     const raster = rasterComposed(512);
     const bounds = alphaBounds(raster);
-    expect(bounds.minX).toBeGreaterThanOrEqual(55 * 4);
-    expect(bounds.minY).toBeGreaterThanOrEqual(55 * 4);
-    expect(bounds.maxX).toBeLessThan(124 * 4);
-    expect(bounds.maxY).toBeLessThan(124 * 4);
-    expect(bounds.maxX - bounds.minX).toBeGreaterThanOrEqual(64 * 4);
-    expect(bounds.maxY - bounds.minY).toBeGreaterThanOrEqual(64 * 4);
+    expect(bounds.minX).toBe(46);
+    expect(bounds.minY).toBe(46);
+    expect(bounds.maxX).toBe(493);
+    expect(bounds.maxY).toBe(493);
+    expect(bounds.maxX - bounds.minX).toBeGreaterThanOrEqual(111 * 4);
+    expect(bounds.maxY - bounds.minY).toBeGreaterThanOrEqual(111 * 4);
     expect(Math.abs((bounds.maxX - bounds.minX) - (bounds.maxY - bounds.minY))).toBeLessThanOrEqual(2);
     expect(opaqueComponents(raster)).toBe(1);
     for (let pixel = 0; pixel < raster.width; pixel += 1) {
@@ -265,10 +265,16 @@ describe('QuotaCo owner-accepted proof-layer equal-height isolated shell', () =>
     ]) {
       expect(upper).toContain(`id="${id}"`);
     }
-    expect(upper).toContain('d="M58 63H117V88H58Z"');
-    expect(upper).toContain('d="M58 88H117V94H58Z"');
-    expect(upper).toContain('d="M58 94H117V97H58Z"');
-    expect(upper).toContain('d="M59 63H116"');
+    expect(upper).toContain(
+      'd="M14.819 23.115L112.715 23.115 112.715 64.596 14.819 64.596Z"',
+    );
+    expect(upper).toContain(
+      'd="M14.819 64.596L112.715 64.596 112.715 74.552 14.819 74.552Z"',
+    );
+    expect(upper).toContain(
+      'd="M14.819 74.552L112.715 74.552 112.715 79.53 14.819 79.53Z"',
+    );
+    expect(upper).toContain('d="M16.478 23.115L111.056 23.115"');
     expect(upper).not.toMatch(/id="upper-east-|id="upper-arris-lip|M97 58H102|M102 58H117|V71/);
     const shapeIds = [...`${base}\n${upper}`.matchAll(/\bid="([^"]+)"/g)]
       .map((match) => match[1])

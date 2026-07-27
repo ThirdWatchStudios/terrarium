@@ -420,41 +420,54 @@ describe('QuotaCo owner-accepted horizontal-spine open-pocket T-junction gate', 
     expect(owners('#294B3C')).toEqual(['upper-green-handoff']);
     expect(upper).not.toContain('upper-cream-bridge');
     expect(upper).toContain(
-      'id="upper-arris-lip" d="M90.5 0H92V44A12 12 0 0 0 104 56H102.5A12 12 0 0 1 90.5 44Z"',
+      'id="upper-arris-lip" d="M68.744 0L71.233 0 71.233 9.036C71.233 10.397 80.149 11.5 91.144 11.5L88.656 11.5C77.66 11.5 68.744 10.397 68.744 9.036Z"',
     );
     expect(upper).toContain(
-      'id="upper-coral-band" d="M97 0H102V44A12 12 0 0 0 114 56H109A12 12 0 0 1 97 44Z M0 88H128V94H0Z"',
+      'id="upper-coral-band" d="M79.53 0L87.826 0 87.826 9.036C87.826 10.397 96.741 11.5 107.737 11.5L99.441 11.5C88.445 11.5 79.53 10.397 79.53 9.036ZM0 64.596L128 64.596 128 74.552 0 74.552Z"',
     );
     expect(upper).toContain(
-      'id="upper-green-handoff" d="M102 0H105V44A12 12 0 0 0 117 56H114A12 12 0 0 1 102 44Z M0 94H128V97H0Z"',
+      'id="upper-green-handoff" d="M87.826 0L92.804 0 92.804 9.036C92.804 10.397 101.719 11.5 112.715 11.5L107.737 11.5C96.741 11.5 87.826 10.397 87.826 9.036ZM0 74.552L128 74.552 128 79.53 0 79.53Z"',
     );
 
-    const upperRaster = rasterSvg(upper);
-    const controlRaster = rasterSvg(controlUpper);
-    const sharedTurnBytes = 58 * 128 * 4;
-    expect(upperRaster.pixels.slice(0, sharedTurnBytes)).toEqual(
-      controlRaster.pixels.slice(0, sharedTurnBytes),
-    );
+    const firstClosedSubpath = (d: string | undefined): string | undefined =>
+      d?.slice(0, d.indexOf('Z') + 1);
+    for (const [candidateId, controlId] of [
+      ['upper-plane-light', 'upper-north-plane-light'],
+      ['upper-arris-lip', 'upper-north-arris-lip'],
+      ['upper-coral-band', 'upper-north-coral-register'],
+      ['upper-green-handoff', 'upper-north-green-handoff'],
+      ['upper-face-shade', 'upper-north-face-shade'],
+    ] as const) {
+      expect(firstClosedSubpath(pathData(upper, candidateId)), candidateId)
+        .toBe(firstClosedSubpath(pathData(controlUpper, controlId)));
+    }
+    expect(pathData(upper, 'upper-arris-seam'))
+      .toBe(pathData(controlUpper, 'upper-arris-seam'));
+    expect(pathData(upper, 'upper-band-seam'))
+      .toBe(
+        `${pathData(controlUpper, 'upper-register-seam')}` +
+        'M0.75 74.552L127 74.552',
+      );
 
     const candidate = rasterPair(base, upper);
     expect(perimeterDigest(candidate)).toBe(
-      '24d53a797d8ef4ebc123d6ad174a0c123fa16d98bf4c165d9309c6aadde89a39',
+      'd191c1a79f84e337bf0bf979b458001a5f21fd308a75e87f679ded6f0240ac97',
     );
-    expect(rgbaAt(candidate, 94, 50)).toEqual([136, 133, 120, 255]);
-    expect(rgbaAt(candidate, 102, 50)).toEqual([158, 83, 68, 255]);
-    expect(rgbaAt(candidate, 105, 50)).toEqual([36, 66, 53, 255]);
-    expect(rgbaAt(candidate, 114, 54)).toEqual([36, 66, 53, 255]);
-    expect(rgbaAt(candidate, 116, 56)).toEqual([37, 42, 40, 255]);
-    expect(rgbaAt(candidate, 97, 60)).toEqual([228, 222, 206, 255]);
-    expect(rgbaAt(candidate, 104, 60)).toEqual([228, 222, 206, 255]);
-    expect(rgbaAt(candidate, 64, 94)).toEqual([40, 66, 55, 255]);
+    expect(rgbaAt(candidate, 94, 50)).toEqual([217, 208, 185, 255]);
+    expect(rgbaAt(candidate, 102, 50)).toEqual([217, 208, 185, 255]);
+    expect(rgbaAt(candidate, 105, 50)).toEqual([217, 208, 185, 255]);
+    expect(rgbaAt(candidate, 114, 54)).toEqual([217, 208, 185, 255]);
+    expect(rgbaAt(candidate, 116, 56)).toEqual([217, 208, 185, 255]);
+    expect(rgbaAt(candidate, 97, 60)).toEqual([217, 208, 185, 255]);
+    expect(rgbaAt(candidate, 104, 60)).toEqual([217, 208, 185, 255]);
+    expect(rgbaAt(candidate, 64, 94)).toEqual([41, 75, 60, 255]);
     expect(rgbaAt(candidate, 64, 97)).toEqual([41, 75, 60, 255]);
 
     const candidate40 = rasterPair(base, upper, 40);
-    expect(rgbaAt(candidate40, 29, 14)).toEqual([178, 171, 153, 255]);
-    expect(rgbaAt(candidate40, 31, 15)).toEqual([157, 83, 67, 255]);
-    expect(rgbaAt(candidate40, 32, 15)).toEqual([65, 73, 61, 255]);
-    expect(rgbaAt(candidate40, 33, 16)).toEqual([47, 61, 51, 255]);
+    expect(rgbaAt(candidate40, 29, 14)).toEqual([217, 208, 185, 255]);
+    expect(rgbaAt(candidate40, 31, 15)).toEqual([217, 208, 185, 255]);
+    expect(rgbaAt(candidate40, 32, 15)).toEqual([217, 208, 185, 255]);
+    expect(rgbaAt(candidate40, 33, 16)).toEqual([217, 208, 185, 255]);
   });
 
   it('keeps the accepted Mask 14 rear turn while sharing its material return with Mask 39', () => {
@@ -509,30 +522,31 @@ describe('QuotaCo owner-accepted horizontal-spine open-pocket T-junction gate', 
         .toBe(pathData(controlUpper, controlId));
     }
     expect(pathData(upper, 'upper-plane-light'))
-      .toBe('M58 88H90.5V128H58Z');
+      .toBe('M14.819 64.596L68.744 64.596 68.744 128 14.819 128Z');
     expect(pathData(upper, 'upper-arris-lip'))
-      .toBe('M90.5 88H92V128H90.5Z');
+      .toBe('M68.744 64.596L71.233 64.596 71.233 128 68.744 128Z');
     expect(pathData(upper, 'upper-face-shade'))
-      .toBe('M92 88H105V128H92Z');
-    expect(pathData(upper, 'upper-arris-seam')).toBe('M1 63H127 M92 88V127');
+      .toBe('M71.233 64.596L92.804 64.596 92.804 128 71.233 128Z');
+    expect(pathData(upper, 'upper-arris-seam'))
+      .toBe('M0.75 23.115L127 23.115M71.233 64.596L71.233 127');
 
     const candidate = rasterPair(base, upper);
     expect(perimeterDigest(candidate)).toBe(
-      '3ef9252fe7043c1a876e446e4bb7f6e635f086234c2a2e46998043dd78720d67',
+      '513b6f71d1a798b50fda3fe5abca456d31c489ca7e6455d9112db53cd8784c81',
     );
     expect(rgbaAt(candidate, 58, 88)).toEqual([224, 216, 198, 255]);
-    expect(rgbaAt(candidate, 92, 88)).toEqual([139, 135, 121, 255]);
-    expect(rgbaAt(candidate, 108, 88)).toEqual([189, 111, 95, 255]);
-    expect(rgbaAt(candidate, 97, 94)).toEqual([160, 84, 68, 255]);
-    expect(rgbaAt(candidate, 102, 94)).toEqual([36, 66, 53, 255]);
-    expect(rgbaAt(candidate, 105, 100)).toEqual([37, 42, 40, 255]);
+    expect(rgbaAt(candidate, 92, 88)).toEqual([36, 61, 50, 255]);
+    expect(rgbaAt(candidate, 108, 88)).toEqual([41, 75, 60, 255]);
+    expect(rgbaAt(candidate, 97, 94)).toEqual([41, 75, 60, 255]);
+    expect(rgbaAt(candidate, 102, 94)).toEqual([41, 75, 60, 255]);
+    expect(rgbaAt(candidate, 105, 100)).toEqual([41, 75, 60, 255]);
     expect(rgbaAt(candidate, 64, 110)).toEqual([224, 216, 198, 255]);
 
     const candidate40 = rasterPair(base, upper, 40);
-    expect(rgbaAt(candidate40, 28, 29)).toEqual([189, 184, 169, 255]);
-    expect(rgbaAt(candidate40, 30, 31)).toEqual([167, 108, 92, 255]);
-    expect(rgbaAt(candidate40, 32, 31)).toEqual([56, 78, 65, 255]);
-    expect(rgbaAt(candidate40, 33, 31)).toEqual([39, 57, 49, 255]);
+    expect(rgbaAt(candidate40, 28, 29)).toEqual([36, 66, 53, 255]);
+    expect(rgbaAt(candidate40, 30, 31)).toEqual([41, 75, 60, 255]);
+    expect(rgbaAt(candidate40, 32, 31)).toEqual([41, 75, 60, 255]);
+    expect(rgbaAt(candidate40, 33, 31)).toEqual([41, 75, 60, 255]);
   });
 
   it('keeps the horizontal spine continuous through every compact review context', () => {

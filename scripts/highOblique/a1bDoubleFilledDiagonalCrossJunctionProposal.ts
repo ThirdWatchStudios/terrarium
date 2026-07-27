@@ -137,56 +137,56 @@ Record<
   'open_cross_filled_ne_sw-base': [
     [
       'base-structural-mass',
-      'M56 0H128V97H82A10 10 0 0 0 72 107V128H0V56H46A10 10 0 0 0 56 46Z',
+      'M11.5 0L128 0 128 79.53 118.554 79.53C117.419 79.53 116.5 86.958 116.5 96.122L116.5 128 0 128 0 11.5 9.446 11.5C10.581 11.5 11.5 10.581 11.5 9.446Z',
     ],
     [
       'base-green-se-return',
-      'M70 97H128V117H70Z',
+      'M70 79.53L128 79.53 128 112.715 70 112.715Z',
     ],
-    ['base-face-shade-se-return', 'M70 97H82V117H70Z'],
+    ['base-face-shade-se-return', 'M70 79.53L82 79.53 82 112.715 70 112.715Z'],
     [
       'base-contact-shade-se-return',
-      'M70 120H128V123.5H70Z',
+      'M70 117.693L128 117.693 128 123.5 70 123.5Z',
     ],
-    ['base-boundary-seam', 'M126 98V116'],
-    ['base-south-service-seam', 'M12 126H22'],
+    ['base-boundary-seam', 'M126 81.189L126 111.056'],
+    ['base-south-service-seam', 'M16.944 126L33.537 126'],
   ],
   'open_cross_filled_ne_sw-upper': [
     [
       'upper-contour',
-      'M56 0H128V97H82A10 10 0 0 0 72 107V128H0V56H46A10 10 0 0 0 56 46Z',
+      'M11.5 0L128 0 128 79.53 118.554 79.53C117.419 79.53 116.5 86.958 116.5 96.122L116.5 128 0 128 0 11.5 9.446 11.5C10.581 11.5 11.5 10.581 11.5 9.446Z',
     ],
     [
       'upper-shell',
-      'M58 0H128V95H80A10 10 0 0 0 70 105V128H0V58H48A10 10 0 0 0 58 48Z',
+      'M14.819 0L128 0 128 76.211 118.143 76.211C117.009 76.211 113.181 83.64 113.181 92.804L113.181 128 0 128 0 14.819 9.857 14.819C10.991 14.819 14.819 10.991 14.819 9.857Z',
     ],
     [
       'upper-nw-reveal-light',
-      'M0 58H48A10 10 0 0 0 58 48V44A12 12 0 0 1 46 56H0Z',
+      'M0 14.819L9.857 14.819C10.991 14.819 14.819 10.991 14.819 9.857L14.819 9.036C14.819 10.397 10.807 11.5 9.446 11.5L0 11.5Z',
     ],
-    ['upper-se-face-shade', 'M70 63H128V88H70Z'],
+    ['upper-se-face-shade', 'M70 23.115L128 23.115 128 64.596 70 64.596Z'],
     [
       'upper-coral-se-return',
-      'M70 88H128V94H70Z',
+      'M70 64.596L128 64.596 128 74.552 70 74.552Z',
     ],
-    ['upper-band-light-se-return', 'M70 88H128V89.5H70Z'],
+    ['upper-band-light-se-return', 'M70 64.596L128 64.596 128 67.085 70 67.085Z'],
     [
       'upper-green-se-return',
-      'M70 94H128V97H70Z',
+      'M70 74.552L128 74.552 128 79.53 70 79.53Z',
     ],
-    ['upper-south-plane-light', 'M37.5 105H70V126H37.5Z'],
-    ['upper-south-arris-lip', 'M36 105H37.5V126H36Z'],
-    ['upper-south-face-shade', 'M23 105H36V126H23Z'],
+    ['upper-south-plane-light', 'M59.256 105L113.181 105 113.181 126 59.256 126Z'],
+    ['upper-south-arris-lip', 'M56.767 105L59.256 105 59.256 126 56.767 126Z'],
+    ['upper-south-face-shade', 'M35.196 105L56.767 105 56.767 126 35.196 126Z'],
     [
       'upper-arris-seam',
-      'M1 56H46A12 12 0 0 0 58 44V1 M36 106V125',
+      'M0.75 11.5L9.446 11.5C10.807 11.5 14.819 10.397 14.819 9.036L14.819 0.75M56.767 106L56.767 125',
     ],
     [
       'upper-band-seam',
-      'M127 94H70',
+      'M127 74.552L70 74.552',
     ],
-    ['upper-boundary-seam', 'M126 64V96'],
-    ['upper-south-service-seam', 'M24 126H69'],
+    ['upper-boundary-seam', 'M126 24.774L126 77.87'],
+    ['upper-south-service-seam', 'M36.856 126L111.522 126'],
   ],
 };
 

@@ -34,7 +34,8 @@ is solid; and the southeast, southwest, and northwest crooks remain open floor.
   while all four full-resolution socket boundaries remain pixel-identical.
 - The accepted 2026-07-26 northwest consistency correction replaces the broad
   reveal wedge with one band between the shell curve and the outer
-  `y44 -> y56` ledge. Its dark arris seam follows that same curve; the approved
+  `y9.036 -> y11.5` ledge in the accepted 112-unit source geometry. Its dark
+  arris seam follows that same curve; the approved
   southeast turn, center silhouette, and every socket pixel remain unchanged.
 
 Owner acceptance promotes this pair only as the direct proof-layer provenance

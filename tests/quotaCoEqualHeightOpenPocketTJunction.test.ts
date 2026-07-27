@@ -343,8 +343,12 @@ describe('QuotaCo owner-accepted proof-layer open-pocket T-junction pair', () =>
     expect(upperSource).toContain('id="upper-boundary-seam"');
     expect(filtered.baseSource).not.toContain('id="base-boundary-seam"');
     expect(filtered.upperSource).not.toContain('id="upper-boundary-seam"');
-    expect(filtered.baseSource).toContain('id="base-south-service-seam" d="M106 126H116"');
-    expect(filtered.upperSource).toContain('id="upper-south-service-seam" d="M58 126H104"');
+    expect(filtered.baseSource).toContain(
+      'id="base-south-service-seam" d="M94.463 126L111.056 126"',
+    );
+    expect(filtered.upperSource).toContain(
+      'id="upper-south-service-seam" d="M14.819 126L91.144 126"',
+    );
     expect(EQUAL_HEIGHT_OPEN_POCKET_T_JUNCTION_GATE.candidates[1]).toMatchObject({
       maskIndex: 13,
       transform: 'mirror-x',
@@ -359,31 +363,35 @@ describe('QuotaCo owner-accepted proof-layer open-pocket T-junction pair', () =>
       'open_cross_junction-base.svg',
     );
     expect(pathData(baseSource, 'base-contact-shade')).toBe(
-      'M120 0H123.5V95H120Z M120 120H128V123.5H123.5V128H120Z',
+      'M117.693 0L123.5 0 123.5 76.211 117.693 76.211ZM117.693 117.693L128 117.693 128 123.5 123.5 123.5 123.5 128 117.693 128Z',
     );
     expect(pathData(controlSource, 'base-contact-shade')).toBe(
-      'M120 0H123.5V95H120Z M0 120H56V123.5H0Z M120 120H128V123.5H123.5V128H120Z',
+      'M117.693 0L123.5 0 123.5 76.211 117.693 76.211ZM0 117.693L11.5 117.693 11.5 123.5 0 123.5ZM117.693 117.693L128 117.693 128 123.5 123.5 123.5 123.5 128 117.693 128Z',
     );
 
     const direct = rasterMatrix([[7]], 'west', 128);
     expect(rgbaAt(direct, 110, 121)).toEqual([36, 66, 53, 255]);
-    expect(rgbaAt(direct, 117, 121)).toEqual([37, 42, 40, 255]);
+    expect(rgbaAt(direct, 116, 121)).toEqual([37, 42, 40, 255]);
+    expect(rgbaAt(direct, 117, 121)).toEqual([27, 31, 29, 194]);
     expect(rgbaAt(direct, 120, 121)).toEqual([0, 0, 0, 31]);
     expect(rgbaAt(direct, 121, 126)).toEqual([0, 0, 0, 31]);
 
     const derived = rasterMatrix([[13]], 'east', 128);
-    expect(rgbaAt(derived, 11, 121)).toEqual([36, 66, 53, 255]);
-    expect(rgbaAt(derived, 8, 121)).toEqual([37, 42, 40, 255]);
+    expect(rgbaAt(derived, 17, 121)).toEqual([36, 66, 53, 255]);
+    expect(rgbaAt(derived, 11, 121)).toEqual([37, 42, 40, 255]);
+    expect(rgbaAt(derived, 10, 121)).toEqual([27, 31, 29, 194]);
     expect(rgbaAt(derived, 6, 121)).toEqual([0, 0, 0, 31]);
     expect(rgbaAt(derived, 6, 126)).toEqual([0, 0, 0, 31]);
 
     const direct40 = rasterMatrix([[7]], 'west', 40);
     expect(rgbaAt(direct40, 34, 38)).toEqual([36, 66, 53, 255]);
-    expect(rgbaAt(direct40, 37, 38)).toEqual([18, 20, 19, 136]);
+    expect(rgbaAt(direct40, 36, 38)).toEqual([27, 31, 29, 194]);
+    expect(rgbaAt(direct40, 37, 38)).toEqual([0, 0, 0, 31]);
 
     const derived40 = rasterMatrix([[13]], 'east', 40);
-    expect(rgbaAt(derived40, 4, 38)).toEqual([36, 66, 53, 255]);
-    expect(rgbaAt(derived40, 2, 38)).toEqual([18, 20, 19, 136]);
+    expect(rgbaAt(derived40, 5, 38)).toEqual([36, 66, 53, 255]);
+    expect(rgbaAt(derived40, 3, 38)).toEqual([27, 31, 29, 194]);
+    expect(rgbaAt(derived40, 2, 38)).toEqual([0, 0, 0, 31]);
   });
 
   it('closes each compact 3x3 socket with accepted end sources and no alpha crack', () => {

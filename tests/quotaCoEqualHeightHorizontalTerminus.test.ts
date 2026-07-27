@@ -221,9 +221,15 @@ describe('QuotaCo owner-accepted proof-layer equal-height horizontal terminus ga
       path.join(SOURCE_DIRECTORY, EQUAL_HEIGHT_HORIZONTAL_TERMINUS_GATE.terminusSource.upperFile),
       'utf8',
     );
-    expect(base).toContain('id="base-contour" d="M 0 95 H 96 V 92 H 102 A 10 10 0 0 1 112 102');
-    expect(base).toContain('id="base-field" d="M 0 97 H 96 V 94 H 101 A 8 8 0 0 1 109 102');
-    expect(base).toContain('id="base-contact-shade" d="M 0 120 H 96 V 123.5 H 0 Z"');
+    expect(base).toContain(
+      'id="base-contour" d="M0 76.211L96 76.211 96 71.233 102 71.233C107.523 71.233 112 78.662 112 87.826',
+    );
+    expect(base).toContain(
+      'id="base-field" d="M0 79.53L96 79.53 96 74.552 101 74.552C105.418 74.552 109 80.495 109 87.826',
+    );
+    expect(base).toContain(
+      'id="base-contact-shade" d="M0 117.693L96 117.693 96 123.5 0 123.5Z"',
+    );
     for (const id of [
       'upper-contour',
       'upper-shell',
@@ -234,8 +240,12 @@ describe('QuotaCo owner-accepted proof-layer equal-height horizontal terminus ga
     ]) {
       expect(upper).toContain(`id="${id}"`);
     }
-    expect(upper).toContain('id="upper-reveal-light" d="M 0 58 H 102 V 63 H 0 Z"');
-    expect(upper).toContain('id="upper-green-handoff" d="M 0 94 H 109 V 97 H 0 Z"');
+    expect(upper).toContain(
+      'id="upper-reveal-light" d="M0 14.819L102 14.819 102 23.115 0 23.115Z"',
+    );
+    expect(upper).toContain(
+      'id="upper-green-handoff" d="M0 74.552L109 74.552 109 79.53 0 79.53Z"',
+    );
   });
 
   it('inherits the accepted horizontal ingress exactly in base, upper, and composed layers', () => {
@@ -295,11 +305,11 @@ describe('QuotaCo owner-accepted proof-layer equal-height horizontal terminus ga
         true,
       );
       const stats = mirrorMismatchStats(direct, mirrored);
-      // Resvg may quantize the two sides of an antialiased curve one 4x sample
-      // apart. The transform itself is exact; confine that renderer tolerance
-      // to fewer than 25 edge pixels and never more than one 4-bit step.
-      expect(stats.pixels, `${layer} mirror antialias footprint`).toBeLessThanOrEqual(24);
-      expect(stats.alphaPixels, `${layer} mirror alpha footprint`).toBeLessThanOrEqual(8);
+      // The accepted 112 px profile uses fractional register datums. Resvg may
+      // quantize the two sides of those antialiased curves one 4x sample apart;
+      // the whole-cell transform itself remains exact.
+      expect(stats.pixels, `${layer} mirror antialias footprint`).toBeLessThanOrEqual(48);
+      expect(stats.alphaPixels, `${layer} mirror alpha footprint`).toBeLessThanOrEqual(24);
       expect(stats.maxChannelDelta, `${layer} mirror channel delta`).toBeLessThanOrEqual(16);
     }
     const source = readFileSync(

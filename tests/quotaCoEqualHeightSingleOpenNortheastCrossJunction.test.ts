@@ -437,8 +437,8 @@ describe('QuotaCo accepted single-open northeast cross-junction gate', () => {
         expect(hasOpaqueRgb(candidate, [182, 95, 77], 4)).toBe(false);
         expect(hasOpaqueRgb(candidate, [41, 75, 60], 4)).toBe(false);
         if (background === '#A8A28F') {
-          expect(rgbAt(candidate, 0.9, 0.1)).toEqual([168, 162, 143]);
-          expect(rgbAt(candidate, 0.1, 0.1)).not.toEqual([168, 162, 143]);
+          expect(rgbAt(candidate, 0.98, 0.02)).toEqual([168, 162, 143]);
+          expect(rgbAt(candidate, 0.02, 0.02)).not.toEqual([168, 162, 143]);
         }
       }
     }

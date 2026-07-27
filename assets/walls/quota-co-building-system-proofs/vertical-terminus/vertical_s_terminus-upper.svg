@@ -2,14 +2,14 @@
   <title>QuotaCo equal-height west wall — exposed south end upper proposal</title>
   <desc>Proof-only foreground wall closure. The ordinary cream, coral, and green wall registers turn continuously through one shallow south rollover without a wider cap or attached housing.</desc>
   <g id="detail/upper">
-    <path id="upper-contour" d="M56 0H105V80A12 12 0 0 0 117 92H120V106A14 14 0 0 1 106 120H70A14 14 0 0 1 56 106Z" fill="#252A28"/>
-    <path id="upper-shell" d="M58 0H105V80H103V82A10 10 0 0 0 113 92H117V105A11 11 0 0 1 106 116H70A12 12 0 0 1 58 104Z" fill="#D9D0B9"/>
-    <path id="upper-cream-rollover-light" d="M58 0H90.5V80A12 12 0 0 0 102.5 92H58Z" fill="#FFFFFF" opacity="0.18"/>
-    <path id="upper-arris-lip" d="M90.5 0H92V80A12 12 0 0 0 104 92H102.5A12 12 0 0 1 90.5 80Z" fill="#FFFFFF" opacity="0.30"/>
-    <path id="upper-coral-wrap" d="M97 0H102V90A12 12 0 0 0 114 102H117V108H58V102H97Z" fill="#B65F4D"/>
-    <path id="upper-green-wrap" d="M102 0H105V95A9 9 0 0 0 114 104H117V108A9 9 0 0 1 108 117H68A10 10 0 0 1 58 107H102Z" fill="#294B3C"/>
-    <path id="upper-face-shade" d="M92 0H105V80A12 12 0 0 0 117 92V102H104A12 12 0 0 1 92 90Z" fill="#000000" opacity="0.12"/>
-    <path id="upper-arris-seam" d="M92 1V80A12 12 0 0 0 104 92H116" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
-    <path id="upper-band-seam" d="M102 1V90A12 12 0 0 0 114 102H116" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+    <path id="upper-contour" d="M11.5 0L92.804 0 92.804 80C92.804 86.627 101.719 92 112.715 92L117.693 92 117.693 106C117.693 113.732 107.292 120 94.463 120L34.73 120C21.9 120 11.5 113.732 11.5 106Z" fill="#252A28"/>
+    <path id="upper-shell" d="M14.819 0L92.804 0 92.804 80 89.485 80 89.485 82C89.485 87.523 96.914 92 106.078 92L112.715 92 112.715 105C112.715 111.075 104.543 116 94.463 116L34.73 116C23.734 116 14.819 110.627 14.819 104Z" fill="#D9D0B9"/>
+    <path id="upper-cream-rollover-light" d="M14.819 0L68.744 0 68.744 80C68.744 86.627 77.66 92 88.656 92L14.819 92Z" fill="#FFFFFF" opacity="0.18"/>
+    <path id="upper-arris-lip" d="M68.744 0L71.233 0 71.233 80C71.233 86.627 80.149 92 91.144 92L88.656 92C77.66 92 68.744 86.627 68.744 80Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="upper-coral-wrap" d="M79.53 0L87.826 0 87.826 90C87.826 96.627 96.741 102 107.737 102L112.715 102 112.715 108 14.819 108 14.819 102 79.53 102Z" fill="#B65F4D"/>
+    <path id="upper-green-wrap" d="M87.826 0L92.804 0 92.804 95C92.804 99.971 99.489 104 107.737 104L112.715 104 112.715 108C112.715 112.971 106.03 117 97.781 117L31.411 117C22.247 117 14.819 112.523 14.819 107L87.826 107Z" fill="#294B3C"/>
+    <path id="upper-face-shade" d="M71.233 0L92.804 0 92.804 80C92.804 86.627 101.719 92 112.715 92L112.715 102 91.144 102C80.149 102 71.233 96.627 71.233 90Z" fill="#000000" opacity="0.12"/>
+    <path id="upper-arris-seam" d="M71.233 1L71.233 80C71.233 86.627 80.149 92 91.144 92L111.056 92" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="upper-band-seam" d="M87.826 1L87.826 90C87.826 96.627 96.741 102 107.737 102L111.056 102" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
   </g>
 </svg>

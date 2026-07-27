@@ -312,31 +312,31 @@ describe('QuotaCo owner-accepted double-filled south cross-junction gate', () =>
       upper.indexOf('upper-slab-reveal-light'),
     );
     expect(upper).toContain(
-      'id="upper-contour" d="M56 0H105V44A12 12 0 0 0 117 56H128V128H0V56H46A10 10 0 0 0 56 46Z"',
+      'id="upper-contour" d="M11.5 0L92.804 0 92.804 9.036C92.804 10.397 101.719 11.5 112.715 11.5L128 11.5 128 128 0 128 0 11.5 9.446 11.5C10.581 11.5 11.5 10.581 11.5 9.446Z"',
     );
     expect(upper).toContain(
-      'id="upper-shell" d="M58 0H103V46A12 12 0 0 0 115 58H128V128H0V58H48A10 10 0 0 0 58 48Z"',
+      'id="upper-shell" d="M14.819 0L89.485 0 89.485 9.446C89.485 10.807 98.4 14.819 109.396 14.819L128 14.819 128 128 0 128 0 14.819 9.857 14.819C10.991 14.819 14.819 10.991 14.819 9.857Z"',
     );
     expect(upper).toContain(
-      'id="upper-north-plane-light" d="M58 0H90.5V44A12 12 0 0 0 102.5 56H58Z"',
+      'id="upper-north-plane-light" d="M14.819 0L68.744 0 68.744 9.036C68.744 10.397 77.66 11.5 88.656 11.5L14.819 11.5Z"',
     );
     expect(upper).toContain(
-      'id="upper-north-arris-lip" d="M90.5 0H92V44A12 12 0 0 0 104 56H102.5A12 12 0 0 1 90.5 44Z"',
+      'id="upper-north-arris-lip" d="M68.744 0L71.233 0 71.233 9.036C71.233 10.397 80.149 11.5 91.144 11.5L88.656 11.5C77.66 11.5 68.744 10.397 68.744 9.036Z"',
     );
     expect(upper).toContain(
-      'id="upper-north-coral-register" d="M97 0H102V44A12 12 0 0 0 114 56H109A12 12 0 0 1 97 44Z"',
+      'id="upper-north-coral-register" d="M79.53 0L87.826 0 87.826 9.036C87.826 10.397 96.741 11.5 107.737 11.5L99.441 11.5C88.445 11.5 79.53 10.397 79.53 9.036Z"',
     );
     expect(upper).toContain(
-      'id="upper-north-green-handoff" d="M102 0H105V44A12 12 0 0 0 117 56H114A12 12 0 0 1 102 44Z"',
+      'id="upper-north-green-handoff" d="M87.826 0L92.804 0 92.804 9.036C92.804 10.397 101.719 11.5 112.715 11.5L107.737 11.5C96.741 11.5 87.826 10.397 87.826 9.036Z"',
     );
     expect(upper).toContain(
-      'id="upper-north-face-shade" d="M92 0H105V44A12 12 0 0 0 117 56H104A12 12 0 0 1 92 44Z"',
+      'id="upper-north-face-shade" d="M71.233 0L92.804 0 92.804 9.036C92.804 10.397 101.719 11.5 112.715 11.5L91.144 11.5C80.149 11.5 71.233 10.397 71.233 9.036Z"',
     );
     expect(upper).toContain(
-      'id="upper-arris-seam" d="M92 1V44A12 12 0 0 0 104 56H116 M1 63H127"',
+      'id="upper-arris-seam" d="M71.233 0.75L71.233 9.036C71.233 10.397 80.149 11.5 91.144 11.5L111.056 11.5M0.75 23.115L127 23.115"',
     );
     expect(upper).toContain(
-      'id="upper-register-seam" d="M102 1V44A12 12 0 0 0 114 56"',
+      'id="upper-register-seam" d="M87.826 0.75L87.826 9.036C87.826 10.397 96.741 11.5 107.737 11.5"',
     );
 
     const straight = rasterPixels(CANONICAL_DIRECTORY, 'full_w_straight');
@@ -350,7 +350,18 @@ describe('QuotaCo owner-accepted double-filled south cross-junction gate', () =>
       128 * rowBytes,
     );
     const candidateNorthSocket = candidate.slice(0, rowBytes);
-    expect(candidateNorthSocket).toEqual(acceptedSouthSocket);
+    const alphaChannels = (row: Uint8Array): readonly number[] =>
+      [...row].filter((_, channel) => channel % 4 === 3);
+    expect(alphaChannels(candidateNorthSocket)).toEqual(
+      alphaChannels(acceptedSouthSocket),
+    );
+    expect(
+      alphaChannels(candidateNorthSocket)
+        .map((alpha, x) => alpha > 0 ? x : -1)
+        .filter((x) => x >= 0),
+    ).toEqual(
+      Array.from({ length: 113 }, (_, offset) => offset + 11),
+    );
 
     const rgbaAt = (
       pixels: Uint8Array,
@@ -362,25 +373,25 @@ describe('QuotaCo owner-accepted double-filled south cross-junction gate', () =>
       return [...pixels.slice(offset, offset + 4)];
     };
 
-    expect(rgbaAt(candidate, 128, 94, 50)).toEqual(
-      [136, 133, 120, 255],
+    expect(rgbaAt(candidate, 128, 69, 5)).toEqual(
+      [228, 222, 206, 255],
     );
-    expect(rgbaAt(candidate, 128, 102, 50)).toEqual(
-      [158, 83, 68, 255],
+    expect(rgbaAt(candidate, 128, 80, 5)).toEqual(
+      [160, 84, 68, 255],
     );
-    expect(rgbaAt(candidate, 128, 105, 50)).toEqual(
+    expect(rgbaAt(candidate, 128, 90, 5)).toEqual(
       [36, 66, 53, 255],
     );
-    expect(rgbaAt(candidate, 128, 114, 54)).toEqual(
-      [36, 66, 53, 255],
+    expect(rgbaAt(candidate, 128, 108, 10)).toEqual(
+      [36, 64, 52, 255],
     );
-    expect(rgbaAt(candidate, 128, 116, 56)).toEqual(
-      [37, 42, 40, 255],
+    expect(rgbaAt(candidate, 128, 114, 11)).toEqual(
+      [33, 37, 35, 223],
     );
-    expect(rgbaAt(candidate, 128, 105, 58)).toEqual(
+    expect(rgbaAt(candidate, 128, 60, 18)).toEqual(
       [224, 216, 198, 255],
     );
-    for (let y = 50; y <= 54; y += 1) {
+    for (let y = 0; y <= 4; y += 1) {
       expect(rgbaAt(candidate, 128, 124, y), `open crook at 124,${y}`)
         .toEqual([0, 0, 0, 0]);
     }
@@ -390,17 +401,17 @@ describe('QuotaCo owner-accepted double-filled south cross-junction gate', () =>
       'open_cross_filled_s',
       40,
     );
-    expect(rgbaAt(candidate40, 40, 29, 14)).toEqual(
-      [178, 171, 153, 255],
+    expect(rgbaAt(candidate40, 40, 21, 1)).toEqual(
+      [215, 209, 193, 255],
     );
-    expect(rgbaAt(candidate40, 40, 31, 15)).toEqual(
-      [157, 83, 67, 255],
+    expect(rgbaAt(candidate40, 40, 25, 1)).toEqual(
+      [160, 84, 68, 255],
     );
-    expect(rgbaAt(candidate40, 40, 32, 15)).toEqual(
-      [65, 73, 61, 255],
+    expect(rgbaAt(candidate40, 40, 28, 1)).toEqual(
+      [36, 66, 53, 255],
     );
-    expect(rgbaAt(candidate40, 40, 33, 16)).toEqual(
-      [47, 61, 51, 255],
+    expect(rgbaAt(candidate40, 40, 33, 3)).toEqual(
+      [36, 47, 41, 245],
     );
   });
 

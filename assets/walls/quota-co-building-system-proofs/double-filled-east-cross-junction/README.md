@@ -10,11 +10,11 @@ remain open floor.
   carries green, shade, and contact cues.
 - `open_cross_filled_e-upper.svg` owns one continuous cream union. Its two west
   crook radii admit the west branch into the solid two-cell-wide north/south
-  slab without exposing a buried east fascia. The `y=58…63` reveal keeps one
+  slab without exposing a buried east fascia. The `y=14.819…23.115` reveal keeps one
   `0.18` cream exposure through the open-to-solid turn with a local highlight
-  from `x=58…120`; stopping before the protected outer socket band preserves
+  from `x=14.819…117.693`; stopping before the protected outer socket band preserves
   the accepted 128 px and 40 px register fingerprint. The short upper shoulder
-  shade hands off at `y=97`, leaving the base as sole shade owner below the
+  shade hands off at `y=79.530`, leaving the base as sole shade owner below the
   crook so the 40 px turn does not collapse into a doubled dark bar.
 - Accepted `mask_15`, `mask_19`, `mask_23`, and `mask_24`/`mask_42` are boundary
   controls only. Their SVGs are not stacked, linked, transformed, or embedded.

@@ -442,29 +442,32 @@ describe('QuotaCo owner-accepted horizontal partial T-junction gate', () => {
   it('gives Mask 22 one reveal exposure and carries the phase through raw-mirrored Mask 28', () => {
     const upperSource = source('open_n_t_filled_se-upper.svg');
     expect(pathData(upperSource, 'upper-south-face-shade'))
-      .toBe('M0 63H48V84H0Z');
+      .toBe('M0 23.115L9.857 23.115 9.857 57.959 0 57.959Z');
     expect(pathData(upperSource, 'upper-lip-seam'))
-      .toBe('M1 87H47');
+      .toBe('M0.75 62.937L9.652 62.937');
     expect(pathData(upperSource, 'upper-plane-light-open-sw'))
-      .toBe('M0 58H58V63H0Z');
+      .toBe('M0 14.819L14.819 14.819 14.819 23.115 0 23.115Z');
     expect(pathData(upperSource, 'upper-solid-top-highlight'))
-      .toBe('M58 58H128V63H58Z');
+      .toBe('M14.819 14.819L128 14.819 128 23.115 14.819 23.115Z');
 
     const direct = rasterPair(candidateSourcePair(22), 128);
-    expect(rgbaAt(direct, 40, 60)).toEqual([224, 216, 198, 255]);
-    expect(rgbaAt(direct, 80, 60)).toEqual([224, 216, 198, 255]);
-    expect(rgbaAt(direct, 57, 60)).toEqual(rgbaAt(direct, 58, 60));
+    expect(rgbaAt(direct, 8, 18)).toEqual([224, 216, 198, 255]);
+    expect(rgbaAt(direct, 50, 18)).toEqual([224, 216, 198, 255]);
+    expect(rgbaAt(direct, 14, 18)).toEqual([223, 216, 197, 255]);
+    expect(rgbaAt(direct, 15, 18)).toEqual([224, 216, 198, 255]);
 
     const mirrored = rasterPair(candidateSourcePair(28), 128);
-    expect(rgbaAt(mirrored, 48, 60)).toEqual([224, 216, 198, 255]);
-    expect(rgbaAt(mirrored, 88, 60)).toEqual([224, 216, 198, 255]);
+    expect(rgbaAt(mirrored, 77, 18)).toEqual([224, 216, 198, 255]);
+    expect(rgbaAt(mirrored, 119, 18)).toEqual([224, 216, 198, 255]);
+    expect(rgbaAt(mirrored, 112, 18)).toEqual([224, 216, 198, 255]);
+    expect(rgbaAt(mirrored, 113, 18)).toEqual([223, 216, 197, 255]);
 
     const direct40 = rasterPair(candidateSourcePair(22), 40);
-    expect(rgbaAt(direct40, 12, 19)).toEqual([187, 182, 165, 255]);
-    expect(rgbaAt(direct40, 25, 19)).toEqual([190, 185, 168, 255]);
+    expect(rgbaAt(direct40, 2, 5)).toEqual([224, 216, 198, 255]);
+    expect(rgbaAt(direct40, 15, 5)).toEqual([224, 216, 198, 255]);
     const mirrored40 = rasterPair(candidateSourcePair(28), 40);
-    expect(rgbaAt(mirrored40, 15, 19)).toEqual([190, 185, 168, 255]);
-    expect(rgbaAt(mirrored40, 27, 19)).toEqual([187, 182, 165, 255]);
+    expect(rgbaAt(mirrored40, 24, 5)).toEqual([224, 216, 198, 255]);
+    expect(rgbaAt(mirrored40, 37, 5)).toEqual([224, 216, 198, 255]);
   });
 
   it('filters mask_35 boundary seams before mirror-X and keeps mask_28 a raw mirror', () => {

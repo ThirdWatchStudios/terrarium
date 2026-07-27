@@ -2,9 +2,9 @@
   <title>QuotaCo equal-height isolated structural shell base proposal</title>
   <desc>Proof-only zero-socket wall cell. One squat molded green housing occupies the accepted wall-envelope intersection and closes against a continuous charcoal floor-contact edge.</desc>
   <g id="detail/base">
-    <path id="base-contour" d="M66 56H110A10 10 0 0 1 120 66V106A14 14 0 0 1 106 120H70A14 14 0 0 1 56 106V66A10 10 0 0 1 66 56Z" fill="#252A28"/>
-    <path id="base-green-housing" d="M66 58H108A9 9 0 0 1 117 67V105A12 12 0 0 1 105 117H70A12 12 0 0 1 58 105V66A8 8 0 0 1 66 58Z" fill="#294B3C"/>
-    <path id="base-east-contact-shade" d="M120 67H123.5V106A14 14 0 0 1 109.5 120H106A14 14 0 0 0 120 106Z" fill="#000000" opacity="0.12"/>
-    <path id="base-south-contact-shade" d="M70 120H109.5V123.5H70A14 14 0 0 1 56 109.5V106A14 14 0 0 0 70 120Z" fill="#000000" opacity="0.12"/>
+    <path id="base-contour" d="M28.093 11.5L101.1 11.5C110.264 11.5 117.693 18.929 117.693 28.093L117.693 94.463C117.693 107.292 107.292 117.693 94.463 117.693L34.73 117.693C21.9 117.693 11.5 107.292 11.5 94.463L11.5 28.093C11.5 18.929 18.929 11.5 28.093 11.5Z" fill="#252A28"/>
+    <path id="base-green-housing" d="M28.093 14.819L97.781 14.819C106.03 14.819 112.715 21.504 112.715 29.752L112.715 92.804C112.715 103.8 103.8 112.715 92.804 112.715L34.73 112.715C23.734 112.715 14.819 103.8 14.819 92.804L14.819 28.093C14.819 20.762 20.762 14.819 28.093 14.819Z" fill="#294B3C"/>
+    <path id="base-east-contact-shade" d="M117.693 29.752L123.5 29.752 123.5 94.463C123.5 107.292 113.1 117.693 100.27 117.693L94.463 117.693C107.292 117.693 117.693 107.292 117.693 94.463Z" fill="#000000" opacity="0.12"/>
+    <path id="base-south-contact-shade" d="M34.73 117.693L100.27 117.693 100.27 123.5 34.73 123.5C21.9 123.5 11.5 113.1 11.5 100.27L11.5 94.463C11.5 107.292 21.9 117.693 34.73 117.693Z" fill="#000000" opacity="0.12"/>
   </g>
 </svg>

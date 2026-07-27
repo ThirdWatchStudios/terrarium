@@ -1,10 +1,11 @@
 /**
- * Disposable, review-only proof for the selected 112 px QuotaCo equal-height
- * wall footprint. This script reads the accepted source bank, derives the
- * selected review bank in memory, and writes only .style-loop review artifacts.
+ * Disposable proof for the selected/accepted 112 px QuotaCo equal-height wall
+ * footprint. Legacy sources are transformed in memory; accepted 112 sources
+ * are replayed byte-identically so the preview cannot apply the warp twice.
  *
- * It does not mutate accepted SVGs, the mask ledger, exporter/atlas/schema/blob
- * contracts, or Unity registration.
+ * Rendering is read-only. Source promotion is handled by the guarded migration
+ * command; this preview does not mutate the mask ledger, exporter/atlas/schema/
+ * blob contracts, or Unity registration.
  */
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -26,8 +27,12 @@ import { BLOB_CONFIGS, NB, blobIndex } from '../src/tiles/blob';
 import {
   EQUAL_HEIGHT_ALL_MASK_REVIEW_BOUNDARY,
   compileSelectedEqualHeightAllMaskFrames,
+  equalHeightAllMaskSourceFootprintState,
   type CalibratedEqualHeightFrame,
 } from './highOblique/equalHeightFootprintAllMaskCalibration';
+import type {
+  EqualHeightFootprintSourceState,
+} from './highOblique/equalHeightFootprintCalibration';
 import {
   compileEqualHeightEvaluationFrames,
   type CompiledEqualHeightFrame,
@@ -424,7 +429,7 @@ function verticalFacings90(
     text(
       x + 26,
       y + 69,
-      'Same candidate geometry; east is Unity SpriteRenderer.flipX',
+      'Same 112 geometry; east is Unity SpriteRenderer.flipX',
       13,
       600,
       MUTED,
@@ -666,8 +671,8 @@ function topologyStudy(
     text(noteX + 26, y + 265, '• no doubled turns in dense diagonal masks', 14, 620, MUTED),
     text(noteX + 26, y + 317, 'mask_46 remains the full-cell control.', 14, 760, BLUE),
     text(noteX + 26, y + 348, 'All other masks are derived in memory only.', 14, 620, MUTED),
-    text(noteX + 26, y + 411, 'REVIEW ONLY', 18, 840, CORAL),
-    text(noteX + 26, y + 439, 'No accepted/source/export/runtime mutation.', 13, 700, MUTED),
+    text(noteX + 26, y + 411, 'CONSISTENCY PROOF', 18, 840, CORAL),
+    text(noteX + 26, y + 439, 'Accepted source-owned bank; no exporter/runtime mutation.', 13, 700, MUTED),
   );
 }
 
@@ -709,7 +714,7 @@ function literalCloseups240(
     text(
       x + 500,
       y + 42,
-      'Guide-free candidate pixels · solid neutral field reveals the complete cell silhouette',
+      'Guide-free 112 pixels · solid neutral field reveals the complete cell silhouette',
       14,
       650,
       MUTED,
@@ -1108,8 +1113,8 @@ function compactCorridor(
     text(noteX + 30, noteY + 280, 'West: direct masks m06 / m05 / m03', 14, 650, MUTED),
     text(noteX + 30, noteY + 315, 'East: the same vertical source path through runtime flipX', 14, 650, MUTED),
     text(noteX + 30, noteY + 350, 'Top and foreground closures use the accepted corner and horizontal-run masks.', 14, 650, MUTED),
-    text(noteX + 30, noteY + 414, 'REVIEW ONLY', 18, 840, CORAL),
-    text(noteX + 30, noteY + 447, 'This corridor changes no accepted source, export, or Unity registration.', 14, 700, MUTED),
+    text(noteX + 30, noteY + 414, 'CONSISTENCY PROOF', 18, 840, CORAL),
+    text(noteX + 30, noteY + 447, 'This corridor replays accepted sources and changes no export or Unity registration.', 14, 700, MUTED),
   );
 }
 
@@ -1118,6 +1123,7 @@ function compactRoom(
   renderer: ReviewRenderer,
   x: number,
   y: number,
+  sourceState: EqualHeightFootprintSourceState,
 ): void {
   const width = WIDTH - MARGIN * 2;
   const height = 630;
@@ -1235,26 +1241,62 @@ function compactRoom(
     text(noteX + 30, roomY + 270, 'Boundaries held constant', 18, 820, GREEN),
     text(noteX + 30, roomY + 308, '128 px source frame · 512 PPU import · centered pivot · renderer scale', 14, 620, MUTED),
     text(noteX + 30, roomY + 341, 'Accepted source paths · mask topology · Unity selection/registration', 14, 620, MUTED),
-    text(noteX + 30, roomY + 398, 'Selected review transform', 18, 820, CORAL),
+    text(
+      noteX + 30,
+      roomY + 398,
+      sourceState === 'accepted-112'
+        ? 'Accepted source replay'
+        : 'Selected review transform',
+      18,
+      820,
+      CORAL,
+    ),
     text(noteX + 30, roomY + 436, '112 px north/west envelope with the south/east frontage datum fixed.', 14, 650, MUTED),
-    text(noteX + 30, roomY + 486, 'PROMOTION GATE', 17, 840, INK),
-    text(noteX + 30, roomY + 518, 'Review these pixels before any accepted all-47 source migration.', 14, 720, INK),
+    text(
+      noteX + 30,
+      roomY + 486,
+      sourceState === 'accepted-112' ? 'CONSISTENCY GATE' : 'PROMOTION GATE',
+      17,
+      840,
+      INK,
+    ),
+    text(
+      noteX + 30,
+      roomY + 518,
+      sourceState === 'accepted-112'
+        ? 'Verify these canonical all-47 pixels without another footprint warp.'
+        : 'Review these pixels before any accepted all-47 source migration.',
+      14,
+      720,
+      INK,
+    ),
   );
 }
 
 function reviewSheet(
   acceptedFrames: readonly CompiledEqualHeightFrame[],
   selectedFrames: readonly CalibratedEqualHeightFrame[],
+  sourceState: EqualHeightFootprintSourceState,
 ): string {
   const renderer = new ReviewRenderer(acceptedFrames, selectedFrames);
   const parts: string[] = [
     defs(),
     `<rect width="${WIDTH}" height="${HEIGHT}" fill="${PAGE}"/>`,
-    text(MARGIN, 52, 'QuotaCo equal-height wall · selected 112 all-47 proof', 31, 840),
+    text(
+      MARGIN,
+      52,
+      sourceState === 'accepted-112'
+        ? 'QuotaCo equal-height wall · accepted 112 all-47 proof'
+        : 'QuotaCo equal-height wall · selected 112 all-47 proof',
+      31,
+      840,
+    ),
     text(
       MARGIN,
       82,
-      'REVIEW ONLY · accepted source bank at left, in-memory 112 px candidate at right',
+      sourceState === 'accepted-112'
+        ? 'CONSISTENCY PROOF · canonical 112 source at left, byte-identical replay at right'
+        : 'REVIEW ONLY · accepted source bank at left, in-memory 112 px candidate at right',
       15,
       760,
       CORAL,
@@ -1262,7 +1304,9 @@ function reviewSheet(
     text(
       MARGIN,
       108,
-      'No accepted SVG, mask ledger, exporter, atlas, schema, blob mapping, or Unity registration is changed.',
+      sourceState === 'accepted-112'
+        ? 'Accepted SVG geometry now owns 112 px; mask ledger, exporter, atlas, schema, blob mapping, and Unity registration remain unchanged.'
+        : 'No accepted SVG, mask ledger, exporter, atlas, schema, blob mapping, or Unity registration is changed.',
       14,
       600,
       MUTED,
@@ -1279,8 +1323,12 @@ function reviewSheet(
     MARGIN,
     bankY,
     bankWidth,
-    'Current accepted · observed 68 px footprint',
-    'Transport/control bank · unchanged accepted geometry',
+    sourceState === 'accepted-112'
+      ? 'Canonical accepted · 112 px footprint'
+      : 'Current accepted · observed 68 px footprint',
+    sourceState === 'accepted-112'
+      ? 'Source-owned all-47 geometry'
+      : 'Transport/control bank · unchanged accepted geometry',
     CORAL,
   );
   allMaskBank(
@@ -1290,8 +1338,12 @@ function reviewSheet(
     MARGIN + bankWidth + GAP,
     bankY,
     bankWidth,
-    'Selected review · 112 px footprint',
-    'All 47 masks · coherent north/west material expansion',
+    sourceState === 'accepted-112'
+      ? 'Accepted replay · 112 px identity'
+      : 'Selected review · 112 px footprint',
+    sourceState === 'accepted-112'
+      ? 'No second warp · all 47 paths replayed byte-identically'
+      : 'All 47 masks · coherent north/west material expansion',
     GREEN,
   );
 
@@ -1304,14 +1356,16 @@ function reviewSheet(
   literalCloseups240(parts, renderer, MARGIN, 2088);
   installedLegalFixtures(parts, renderer, MARGIN, 2828);
   compactCorridor(parts, renderer, MARGIN, 3748);
-  compactRoom(parts, renderer, MARGIN, 4468);
+  compactRoom(parts, renderer, MARGIN, 4468, sourceState);
 
   parts.push(
     panel(MARGIN, 5118, WIDTH - MARGIN * 2, 50, PANEL_ALT),
     text(
       WIDTH / 2,
       5150,
-      'Decision gate: approve the selected all-47 pixels, then migrate the 112 px envelope through the permanent source-owned path.',
+      sourceState === 'accepted-112'
+        ? 'Consistency gate: verify the accepted all-47 source pixels and keep the 112 px replay byte-identical.'
+        : 'Decision gate: approve the selected all-47 pixels, then migrate the 112 px envelope through the permanent source-owned path.',
       15,
       780,
       INK,
@@ -1344,9 +1398,15 @@ async function main(): Promise<void> {
   const acceptedFrames = await compileEqualHeightEvaluationFrames({
     sourceRoots: SOURCE_ROOTS,
   });
+  const sourceState =
+    equalHeightAllMaskSourceFootprintState(acceptedFrames);
   const selectedFrames =
     compileSelectedEqualHeightAllMaskFrames(acceptedFrames);
-  const source = reviewSheet(acceptedFrames, selectedFrames);
+  const source = reviewSheet(
+    acceptedFrames,
+    selectedFrames,
+    sourceState,
+  );
   const png = new Resvg(source, {
     font: { loadSystemFonts: true },
   }).render().asPng();
@@ -1363,7 +1423,7 @@ async function main(): Promise<void> {
   await writeFile(svgPath, source, 'utf8');
   await writeFile(pngPath, png);
   process.stdout.write(
-    `Wrote review-only selected 112 all-47 proof:\n${svgPath}\n${pngPath}\n` +
+    `Wrote ${sourceState} 112 all-47 proof:\n${svgPath}\n${pngPath}\n` +
       `Boundary: ${JSON.stringify(EQUAL_HEIGHT_ALL_MASK_REVIEW_BOUNDARY)}\n`,
   );
 }

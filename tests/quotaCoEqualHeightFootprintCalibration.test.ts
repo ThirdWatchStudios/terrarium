@@ -14,9 +14,14 @@ import {
   calibrateEqualHeightFootprintShape,
   calibrateEqualHeightFootprintShapes,
   equalHeightFootprintScale,
+  equalHeightFootprintSourceBackDatum,
   transformEqualHeightFootprintPoint,
   type EqualHeightFootprintProfile,
+  type EqualHeightFootprintSourceState,
 } from '../scripts/highOblique/equalHeightFootprintCalibration';
+import {
+  equalHeightAllMaskSourceFootprintState,
+} from '../scripts/highOblique/equalHeightFootprintAllMaskCalibration';
 import {
   compileEqualHeightEvaluationFrames,
   type CompiledEqualHeightFrame,
@@ -58,6 +63,10 @@ function frames(): Promise<CompiledEqualHeightFrame[]> {
   return compiledFrames;
 }
 
+async function sourceState(): Promise<EqualHeightFootprintSourceState> {
+  return equalHeightAllMaskSourceFootprintState(await frames());
+}
+
 function stripSvgShell(source: string): string {
   return source
     .replace(/^[\s\S]*?<svg[^>]*>/, '')
@@ -97,9 +106,11 @@ describe('QuotaCo equal-height footprint calibration proof', () => {
       },
     ]);
     expect(EQUAL_HEIGHT_FOOTPRINT_BOUNDARY).toEqual({
-      reviewOnly: true,
-      modifiesAcceptedSourceSvg: false,
-      all47Propagation: false,
+      reviewOnly: false,
+      comparisonProfilesReviewOnly: true,
+      acceptedSourceState: 'accepted-112',
+      modifiesAcceptedSourceSvg: true,
+      all47Propagation: true,
       exporterIntegration: false,
       schemaChange: false,
       unityRegistration: false,
@@ -109,15 +120,19 @@ describe('QuotaCo equal-height footprint calibration proof', () => {
     );
   });
 
-  it('keeps the current profile byte-identical', async () => {
-    const current = profile('current-68');
+  it('keeps the source-matching profile byte-identical', async () => {
+    const state = await sourceState();
+    const sourceProfile = profile(
+      state === 'accepted-112' ? 'candidate-112' : 'current-68',
+    );
     const result = await frames();
     for (const mask of EQUAL_HEIGHT_FOOTPRINT_REPRESENTATIVE_MASKS) {
       const source = result[mask].shapes;
       const calibrated = calibrateEqualHeightFootprintShapes(
         source,
         EQUAL_HEIGHT_FOOTPRINT_PROOF_MASK_AXES[mask],
-        current,
+        sourceProfile,
+        state,
       );
       expect(calibrated, `mask_${mask}`).toBe(source);
       expect(JSON.stringify(calibrated), `mask_${mask}`).toBe(
@@ -244,6 +259,7 @@ describe('QuotaCo equal-height footprint calibration proof', () => {
 
   it('transforms compiled proof masks deterministically without mutating them', async () => {
     const result = await frames();
+    const state = await sourceState();
     const candidate = profile('candidate-112');
     for (const [maskText, axis] of Object.entries(
       EQUAL_HEIGHT_FOOTPRINT_PROOF_MASK_AXES,
@@ -255,11 +271,13 @@ describe('QuotaCo equal-height footprint calibration proof', () => {
         source,
         axis,
         candidate,
+        state,
       );
       const second = calibrateEqualHeightFootprintShapes(
         source,
         axis,
         candidate,
+        state,
       );
       expect(first, `mask_${mask}`).toHaveLength(source.length);
       expect(JSON.stringify(first), `mask_${mask}`).toBe(
@@ -271,15 +289,19 @@ describe('QuotaCo equal-height footprint calibration proof', () => {
 
   it('keeps the calibrated corner joined to its straight east and south runs', async () => {
     const result = await frames();
+    const state = await sourceState();
     const project = defaultProject();
     const wall = project.walls.find(({ id }) => id === 'wall-office');
     expect(wall).toBeDefined();
-    for (const candidate of EQUAL_HEIGHT_FOOTPRINT_PROFILES) {
+    for (const candidate of EQUAL_HEIGHT_FOOTPRINT_PROFILES.filter(
+      ({ id }) => id === EQUAL_HEIGHT_FOOTPRINT_SELECTED_PROFILE_ID,
+    )) {
       const markup = (mask: 5 | 6 | 10): string => {
         const shapes = calibrateEqualHeightFootprintShapes(
           result[mask].shapes,
           EQUAL_HEIGHT_FOOTPRINT_PROOF_MASK_AXES[mask],
           candidate,
+          state,
         );
         return stripSvgShell(
           composeWallShapes(shapes, wall!, project.style, 128),
@@ -298,11 +320,12 @@ describe('QuotaCo equal-height footprint calibration proof', () => {
         rendered.pixels[(y * rendered.width + x) * 4 + 3];
       const transformedBack = transformEqualHeightFootprintPoint(
         {
-          x: EQUAL_HEIGHT_FOOTPRINT_SOURCE_BACK_DATUM,
-          y: EQUAL_HEIGHT_FOOTPRINT_SOURCE_BACK_DATUM,
+          x: equalHeightFootprintSourceBackDatum(state),
+          y: equalHeightFootprintSourceBackDatum(state),
         },
         'both',
         candidate,
+        state,
       ).x;
       const start = Math.max(2, Math.ceil(transformedBack) + 2);
       for (let coordinate = start; coordinate <= 120; coordinate += 1) {
@@ -332,5 +355,14 @@ describe('QuotaCo equal-height footprint calibration proof', () => {
       128 / 67.5,
       8,
     );
+    expect(
+      equalHeightFootprintScale(
+        profile('candidate-112'),
+        'accepted-112',
+      ),
+    ).toBe(1);
+    expect(
+      equalHeightFootprintScale(profile('current-68'), 'accepted-112'),
+    ).toBeCloseTo(67.5 / 112, 8);
   });
 });

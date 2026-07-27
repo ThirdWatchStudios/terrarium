@@ -8,6 +8,7 @@ import {
   EQUAL_HEIGHT_FOOTPRINT_SELECTED_PROFILE_ID,
   EQUAL_HEIGHT_FOOTPRINT_SOURCE_BACK_DATUM,
   type EqualHeightFootprintProfile,
+  type EqualHeightFootprintSourceState,
 } from './equalHeightFootprintCalibration';
 
 export type EqualHeightAllMaskWarpMode =
@@ -35,6 +36,8 @@ export interface CalibratedEqualHeightFrame
   readonly footprintCalibration: EqualHeightAllMaskCalibration & {
     readonly profileId: EqualHeightFootprintProfile['id'];
     readonly targetThickness: EqualHeightFootprintProfile['targetThickness'];
+    readonly sourceFootprintState: EqualHeightFootprintSourceState;
+    readonly transformApplied: boolean;
   };
 }
 
@@ -53,9 +56,10 @@ export const EQUAL_HEIGHT_ALL_MASK_Y_ONLY = [2, 8, 10, 31, 38] as const;
 export const EQUAL_HEIGHT_ALL_MASK_IDENTITY = [46] as const;
 
 export const EQUAL_HEIGHT_ALL_MASK_REVIEW_BOUNDARY = {
-  reviewOnly: true,
+  reviewOnly: false,
   selectedProfile: EQUAL_HEIGHT_FOOTPRINT_SELECTED_PROFILE_ID,
-  acceptedSourceMutation: false,
+  acceptedSourceState: 'accepted-112',
+  acceptedSourceMutation: true,
   ledgerMutation: false,
   exporterIntegration: false,
   atlasMutation: false,
@@ -67,6 +71,122 @@ export const EQUAL_HEIGHT_ALL_MASK_REVIEW_BOUNDARY = {
 const X_ONLY = new Set<number>(EQUAL_HEIGHT_ALL_MASK_X_ONLY);
 const Y_ONLY = new Set<number>(EQUAL_HEIGHT_ALL_MASK_Y_ONLY);
 const IDENTITY = new Set<number>(EQUAL_HEIGHT_ALL_MASK_IDENTITY);
+
+interface SourceFootprintAnchor {
+  readonly index: 5 | 10 | 30 | 37;
+  readonly sourceStem:
+    | 'full_w_straight'
+    | 'full_n_straight'
+    | 'open_cross_filled_ne_sw'
+    | 'open_cross_filled_nw';
+  readonly shapeIndex: number;
+  readonly axis: 'x' | 'y';
+  readonly legacy: number;
+  readonly accepted: number;
+}
+
+const SOURCE_FOOTPRINT_ANCHORS: readonly SourceFootprintAnchor[] = [
+  {
+    index: 5,
+    sourceStem: 'full_w_straight',
+    shapeIndex: 5,
+    axis: 'x',
+    legacy: EQUAL_HEIGHT_FOOTPRINT_SOURCE_BACK_DATUM,
+    accepted: 11.5,
+  },
+  {
+    index: 10,
+    sourceStem: 'full_n_straight',
+    shapeIndex: 4,
+    axis: 'y',
+    legacy: EQUAL_HEIGHT_FOOTPRINT_SOURCE_BACK_DATUM,
+    accepted: 11.5,
+  },
+  {
+    index: 30,
+    sourceStem: 'open_cross_filled_ne_sw',
+    shapeIndex: 0,
+    axis: 'x',
+    legacy: EQUAL_HEIGHT_FOOTPRINT_SOURCE_BACK_DATUM,
+    accepted: 11.5,
+  },
+  {
+    index: 37,
+    sourceStem: 'open_cross_filled_nw',
+    shapeIndex: 0,
+    axis: 'x',
+    legacy: 72,
+    accepted: 116.5,
+  },
+] as const;
+
+function firstMovePoint(d: string): readonly [number, number] {
+  let point: readonly [number, number] | undefined;
+  svgpath(d)
+    .abs()
+    .iterate((segment) => {
+      if (!point && segment[0] === 'M') {
+        point = [Number(segment[1]), Number(segment[2])];
+      }
+      return undefined;
+    });
+  if (!point || !Number.isFinite(point[0]) || !Number.isFinite(point[1])) {
+    throw new Error(
+      'Equal-height footprint source anchor has no finite initial move',
+    );
+  }
+  return point;
+}
+
+/**
+ * The preview and promotion paths must agree on which authored footprint they
+ * received. Multiple independent direct-source anchors make a partial or
+ * unknown migration fail closed instead of applying the 112 warp twice.
+ */
+export function equalHeightAllMaskSourceFootprintState(
+  frames: readonly CompiledEqualHeightFrame[],
+): EqualHeightFootprintSourceState {
+  if (frames.length !== 47) {
+    throw new Error(
+      `Equal-height footprint source-state detection requires 47 frames; received ${frames.length}`,
+    );
+  }
+  const observed = SOURCE_FOOTPRINT_ANCHORS.map((anchor) => {
+    const frame = frames[anchor.index];
+    if (
+      frame?.index !== anchor.index ||
+      frame.source.sourceStem !== anchor.sourceStem
+    ) {
+      throw new Error(
+        `Equal-height footprint source anchor mask_${anchor.index} lost canonical source ${anchor.sourceStem}`,
+      );
+    }
+    const shape = frame.shapes[anchor.shapeIndex];
+    if (!shape) {
+      throw new Error(
+        `Equal-height footprint source anchor mask_${anchor.index} lost shape ${anchor.shapeIndex}`,
+      );
+    }
+    const point = firstMovePoint(shape.d);
+    return {
+      ...anchor,
+      value: point[anchor.axis === 'x' ? 0 : 1],
+    };
+  });
+  const matches = (
+    state: 'legacy' | 'accepted',
+  ): boolean => observed.every(
+    (anchor) => Math.abs(anchor.value - anchor[state]) <= 0.001,
+  );
+  if (matches('legacy')) return 'legacy-68';
+  if (matches('accepted')) return 'accepted-112';
+  throw new Error(
+    'Equal-height footprint source bank is mixed or unknown: ' +
+      observed
+        .map(({ index, axis, value }) => `mask_${index}.${axis}=${value}`)
+        .join(', '),
+  );
+}
 
 function selectedProfile(): EqualHeightFootprintProfile {
   const result = EQUAL_HEIGHT_FOOTPRINT_PROFILES.find(
@@ -292,6 +412,21 @@ export function warpEqualHeightAllMaskPath(
   );
 }
 
+function containCalibratedStroke(shape: ShapeSpec): ShapeSpec {
+  const halfStroke = (shape.strokeWidth ?? 0) / 2;
+  if (halfStroke <= 0) return shape;
+  const maximum = 128 - halfStroke;
+  const clamp = (value: number): number =>
+    Math.min(maximum, Math.max(halfStroke, value));
+  return {
+    ...shape,
+    d: warpPathPoints(
+      shape.d,
+      (x, y) => [clamp(x), clamp(y)],
+    ),
+  };
+}
+
 export function calibrateEqualHeightAllMaskShapes(
   shapes: readonly ShapeSpec[],
   calibration: EqualHeightAllMaskCalibration,
@@ -300,10 +435,11 @@ export function calibrateEqualHeightAllMaskShapes(
   if (calibration.mode === 'identity' || profile.role === 'current') {
     return shapes;
   }
-  return shapes.map((shape) => ({
-    ...shape,
-    d: warpEqualHeightAllMaskPath(shape.d, calibration, profile),
-  }));
+  return shapes.map((shape) =>
+    containCalibratedStroke({
+      ...shape,
+      d: warpEqualHeightAllMaskPath(shape.d, calibration, profile),
+    }));
 }
 
 const MASK_30_FILTERED_MIRROR_OMISSIONS = new Set([4, 18]);
@@ -411,7 +547,7 @@ function calibrateMask30Shapes(
         `Equal-height footprint mask_30 lacks a source-owned rule for shape ${index}`,
       );
     }
-    return { ...shape, d };
+    return containCalibratedStroke({ ...shape, d });
   });
 }
 
@@ -460,17 +596,14 @@ function calibrateMask40Shapes(
 export function compileSelectedEqualHeightAllMaskFrames(
   frames: readonly CompiledEqualHeightFrame[],
 ): CalibratedEqualHeightFrame[] {
-  if (frames.length !== 47) {
-    throw new Error(
-      `Equal-height footprint calibration requires 47 frames; received ${frames.length}`,
-    );
-  }
+  const sourceFootprintState =
+    equalHeightAllMaskSourceFootprintState(frames);
   const profile = selectedProfile();
   const acceptedMask30 = frames[30];
-  const calibratedMask30 = calibrateMask30Shapes(
-    acceptedMask30.shapes,
-    profile,
-  );
+  const transformApplied = sourceFootprintState === 'legacy-68';
+  const calibratedMask30 = transformApplied
+    ? calibrateMask30Shapes(acceptedMask30.shapes, profile)
+    : acceptedMask30.shapes;
   return frames.map((frame, expectedIndex) => {
     if (frame.index !== expectedIndex) {
       throw new Error(
@@ -478,19 +611,21 @@ export function compileSelectedEqualHeightAllMaskFrames(
       );
     }
     const calibration = equalHeightAllMaskCalibration(frame);
-    const shapes = frame.index === 30
-      ? calibratedMask30
-      : frame.index === 40
-        ? calibrateMask40Shapes(
-            acceptedMask30.shapes,
-            calibratedMask30,
-            frame.shapes,
-          )
-        : calibrateEqualHeightAllMaskShapes(
-            frame.shapes,
-            calibration,
-            profile,
-          );
+    const shapes = !transformApplied
+      ? frame.shapes
+      : frame.index === 30
+        ? calibratedMask30
+        : frame.index === 40
+          ? calibrateMask40Shapes(
+              acceptedMask30.shapes,
+              calibratedMask30,
+              frame.shapes,
+            )
+          : calibrateEqualHeightAllMaskShapes(
+              frame.shapes,
+              calibration,
+              profile,
+            );
     return {
       ...frame,
       shapes,
@@ -498,6 +633,8 @@ export function compileSelectedEqualHeightAllMaskFrames(
         ...calibration,
         profileId: profile.id,
         targetThickness: profile.targetThickness,
+        sourceFootprintState,
+        transformApplied,
       },
     };
   });

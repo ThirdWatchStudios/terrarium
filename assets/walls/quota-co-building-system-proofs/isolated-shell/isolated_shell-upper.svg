@@ -2,14 +2,14 @@
   <title>QuotaCo equal-height isolated structural shell upper proposal</title>
   <desc>Proof-only zero-socket wall cell. One front-on high-oblique construction: a continuous cream coping plane sits above a single horizontal coral and green wall stack without caps, collars, panels, or cardinal seams.</desc>
   <g id="detail/upper">
-    <path id="upper-contour" d="M66 56H110A10 10 0 0 1 120 66V97H56V66A10 10 0 0 1 66 56Z" fill="#252A28"/>
-    <path id="upper-shell" d="M66 58H108A9 9 0 0 1 117 67V97H58V66A8 8 0 0 1 66 58Z" fill="#D9D0B9"/>
-    <path id="upper-reveal-light" d="M66 58H108A9 9 0 0 1 116.06 63H58.58A8 8 0 0 1 66 58Z" fill="#FFFFFF" opacity="0.30"/>
-    <path id="upper-front-cream-face" d="M58 63H117V88H58Z" fill="#D9D0B9"/>
-    <path id="upper-front-coral-wrap" d="M58 88H117V94H58Z" fill="#B65F4D"/>
-    <path id="upper-front-band-light" d="M58 88H117V89.5H58Z" fill="#FFFFFF" opacity="0.10"/>
-    <path id="upper-front-green-handoff" d="M58 94H117V97H58Z" fill="#294B3C"/>
-    <path id="upper-arris-seam" d="M59 63H116" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
-    <path id="upper-band-seam" d="M59 94H116" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+    <path id="upper-contour" d="M28.093 11.5L101.1 11.5C110.264 11.5 117.693 18.929 117.693 28.093L117.693 79.53 11.5 79.53 11.5 28.093C11.5 18.929 18.929 11.5 28.093 11.5Z" fill="#252A28"/>
+    <path id="upper-shell" d="M28.093 14.819L97.781 14.819C106.03 14.819 112.715 21.504 112.715 29.752L112.715 79.53 14.819 79.53 14.819 28.093C14.819 20.762 20.762 14.819 28.093 14.819Z" fill="#D9D0B9"/>
+    <path id="upper-reveal-light" d="M28.093 14.819L97.781 14.819C103.453 14.82 108.635 18.034 111.155 23.115L15.781 23.115C17.81 18.099 22.682 14.815 28.093 14.819Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="upper-front-cream-face" d="M14.819 23.115L112.715 23.115 112.715 64.596 14.819 64.596Z" fill="#D9D0B9"/>
+    <path id="upper-front-coral-wrap" d="M14.819 64.596L112.715 64.596 112.715 74.552 14.819 74.552Z" fill="#B65F4D"/>
+    <path id="upper-front-band-light" d="M14.819 64.596L112.715 64.596 112.715 67.085 14.819 67.085Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="upper-front-green-handoff" d="M14.819 74.552L112.715 74.552 112.715 79.53 14.819 79.53Z" fill="#294B3C"/>
+    <path id="upper-arris-seam" d="M16.478 23.115L111.056 23.115" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="upper-band-seam" d="M16.478 74.552L111.056 74.552" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
   </g>
 </svg>

@@ -120,7 +120,7 @@ function validateSource(
   }
   if (
     source.layer === 'base' &&
-    !/<path\s+id=["']base-buried-underlay["']\s+d=["']M56 0H128V128H56Z["']\s+fill=["']#252A28["']\s*\/>/.test(content)
+    !/<path\s+id=["']base-buried-underlay["']\s+d=["']M11\.5 0L128 0 128 128 11\.5 128Z["']\s+fill=["']#252A28["']\s*\/>/.test(content)
   ) {
     throw new A1bThickWallRepeatProposalImportError(
       `${sourceFile} must retain the fully buried west-side underlay`,
@@ -128,8 +128,8 @@ function validateSource(
   }
   if (source.layer === 'upper') {
     if (
-      !/<path\s+id=["']upper-contour["']\s+d=["']M56 0H128V128H56Z["']\s+fill=["']#252A28["']\s*\/>/.test(content) ||
-      !/<path\s+id=["']upper-solid-top-fill["']\s+d=["']M58 0H128V128H58Z["']\s+fill=["']#D9D0B9["']\s*\/>/.test(content)
+      !/<path\s+id=["']upper-contour["']\s+d=["']M11\.5 0L128 0 128 128 11\.5 128Z["']\s+fill=["']#252A28["']\s*\/>/.test(content) ||
+      !/<path\s+id=["']upper-solid-top-fill["']\s+d=["']M14\.819 0L128 0 128 128 14\.819 128Z["']\s+fill=["']#D9D0B9["']\s*\/>/.test(content)
     ) {
       throw new A1bThickWallRepeatProposalImportError(
         `${sourceFile} must retain the exact open-Y spine contour and cream fill`,

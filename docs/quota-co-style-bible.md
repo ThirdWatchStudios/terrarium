@@ -15,15 +15,16 @@
 > continuity sheets govern vocabulary and seam rhythm. This numeric grammar constrains the drawing but does
 > not replace comparing it to those images.
 
-> **Current ordinary-wall amendment (owner approval, 2026-07-21):** ordinary structural walls use the full
-> 64-unit profile on every room edge. South is exact source reuse of the `full_n_straight` base/upper pair,
+> **Current ordinary-wall amendment (owner approvals, 2026-07-21 and 2026-07-27):** ordinary structural walls
+> use the accepted source-owned 112-unit profile on every room edge. South is exact source reuse of the
+> `full_n_straight` base/upper pair,
 > without a transform or duplicated SVG. The `transition_w_to_s` pair is the promoted equal-height southwest
 > corner. Southeast is promoted as its X-mirrored derived facing, with the adjoining south cell owning the
 > suppressed source-side service tick. No southeast SVG is added. East and northeast are owner-accepted
 > mirror/reuse contracts that remain unregistered. The measured 38-unit low family is retained below as legacy A/B evidence and is not the
 > current perimeter/cutaway target.
 
-> **Current system-gate amendment (owner approvals, 2026-07-21 through 2026-07-24):** the accepted sources close a 3×8 equal-height
+> **Current system-gate amendment (owner approvals, 2026-07-21 through 2026-07-27):** the accepted sources close a 3×8 equal-height
 > perimeter around a 1×6 clear aisle at 90 and 40 px per cell. All four turns, one-cell horizontal bodies, and
 > six-cell side runs read as one manufactured enclosure without low-profile art or a new frame identity. The
 > canonical `mask_0` through `mask_46` proof-layer mapping plus both terminus families, the isolated shell, the
@@ -297,10 +298,10 @@ expanding the grammar.
 
 - Every master is a strict `viewBox="0 0 128 128"` (70/70 in the tally). One canvas = one grid cell.
 - Fixed high-oblique / top-down-plus: rectangular, screen-aligned, no vanishing point, no diamond grid.
-- Equal-height ordinary-wall law (owner approval, 2026-07-21): every placed ordinary structural wall uses a
-  **64-unit outer profile** and fully occupies its non-walkable cell. North/south and the west source span
-  `56..120` on their profile axis; the accepted whole-cell east mirror maps X to `8..72` while preserving that
-  64-unit size. North and south share the exact `full_n_straight` base/upper source pair at the same centered
+- Equal-height ordinary-wall law (owner approvals, 2026-07-21 and 2026-07-27): every placed ordinary structural wall uses a
+  **112-unit outer profile** and fully occupies its non-walkable cell. North/south and the west source span
+  `11.5..123.5` on their profile axis; the accepted whole-cell east mirror maps X to `4.5..116.5` while preserving that
+  112-unit size. North and south share the exact `full_n_straight` base/upper source pair at the same centered
   pivot; south introduces no transform, duplicate SVG, or additional frame identity. A 38-unit wall may only
   return as a separately approved internal-partition catalog family.
 - Directional plane law (owner clarification, 2026-07-20): horizontal east-west runs on the **north and
@@ -310,7 +311,7 @@ expanding the grammar.
   identity is not a valid horizontal-versus-vertical geometry gate.
 - Promoted east-facing law (owner acceptance, 2026-07-21): east reuses the full-west base/upper
   pair through a whole-cell mirror around `x=64` (`x′ = 128 − x`) while preserving the centered pivot and
-  64-unit occupancy. This is an accepted art-direction reuse contract, not authorization to register a new
+  112-unit occupancy. This is an accepted art-direction reuse contract, not authorization to register a new
   source, runtime transform, or production facing. The former low-east local mirror around `x=101` is retained
   only as legacy evidence.
 - Promoted northeast law (owner acceptance, 2026-07-21): reuse the accepted northwest source pair through the
@@ -327,7 +328,7 @@ expanding the grammar.
   the complete foreground heel. Never extend the west top or fascia across the south front. Preserve this as
   transition evidence only; equal-height ordinary corners supersede the height step.
 - Promoted southwest law (owner acceptance, 2026-07-21): the canonical `transition_w_to_s` pair now joins
-  full west to full south. Its inner elbow uses concentric molded radii, its exact 64-unit sockets match both
+  full west to full south. Its inner elbow uses concentric molded radii, its exact 112-unit sockets match both
   masters, and the full south frontage owns the foreground heel after the west shade terminates behind it.
 - Promoted southeast law (owner acceptance, 2026-07-21): reuse the southwest source pair through a whole-cell
   X mirror around `x=64`. Suppress only `base-boundary-seam` and `upper-boundary-seam`; the adjoining south
@@ -451,7 +452,7 @@ expanding the grammar.
   the other without exposing a buried face. `mask_36` is the accepted filtered whole-cell X mirror of
   `mask_17`; `mask_27` is the accepted plain whole-cell X mirror of `mask_21`. No east SVG source bank is added,
   and the reused external west source bank remains unregistered and unexported.
-- Vertical profiles (current kit law): ordinary walls occupy one **64-unit outer profile**.
+- Vertical profiles (current kit law): ordinary walls occupy one **112-unit outer profile**.
   `base` and `upper` are technical paint passes, not two finished products: draw base first, then upper at
   the same centered pivot, and judge only their composed silhouette. The former **38-unit outer profile
   (`82..120`)** remains measured legacy evidence for a possible future partition family.

@@ -1,7 +1,8 @@
 /**
- * Render a disposable, review-only footprint comparison for the accepted
- * QuotaCo equal-height wall art. No source SVG, ledger row, export contract,
- * atlas, or Unity registration is changed by this script.
+ * Render the footprint comparison around the accepted QuotaCo 112-unit source
+ * bank. The accepted card is an identity replay; alternate profiles remain
+ * disposable comparisons. No source SVG, ledger row, export contract, atlas,
+ * or Unity registration is changed by this script.
  */
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -15,11 +16,15 @@ import {
   EQUAL_HEIGHT_FOOTPRINT_FRONT_DATUM,
   EQUAL_HEIGHT_FOOTPRINT_PROFILES,
   EQUAL_HEIGHT_FOOTPRINT_PROOF_MASK_AXES,
-  EQUAL_HEIGHT_FOOTPRINT_SOURCE_BACK_DATUM,
   calibrateEqualHeightFootprintShapes,
+  equalHeightFootprintSourceBackDatum,
   transformEqualHeightFootprintPoint,
   type EqualHeightFootprintProfile,
+  type EqualHeightFootprintSourceState,
 } from './highOblique/equalHeightFootprintCalibration';
+import {
+  equalHeightAllMaskSourceFootprintState,
+} from './highOblique/equalHeightFootprintAllMaskCalibration';
 import {
   compileEqualHeightEvaluationFrames,
   type CompiledEqualHeightFrame,
@@ -122,10 +127,21 @@ function profileAccent(profile: EqualHeightFootprintProfile): string {
   return MUTED;
 }
 
-function profileDetail(profile: EqualHeightFootprintProfile): string {
-  if (profile.role === 'current') return 'observed in-game · undersized';
+function profileDetail(
+  profile: EqualHeightFootprintProfile,
+  sourceState: EqualHeightFootprintSourceState,
+): string {
+  if (profile.role === 'current') {
+    return sourceState === 'accepted-112'
+      ? 'legacy comparison · derived from accepted source'
+      : 'observed in-game · undersized';
+  }
   if (profile.role === 'lighter-candidate') return 'credible, but visually light';
-  if (profile.role === 'selected-candidate') return 'chosen against locked agent scale';
+  if (profile.role === 'selected-candidate') {
+    return sourceState === 'accepted-112'
+      ? 'accepted source · identity replay'
+      : 'chosen against locked agent scale';
+  }
   return 'clips north/west · blue tile is the reference';
 }
 
@@ -135,7 +151,10 @@ class ProofRenderer {
   private readonly wall;
   private readonly style;
 
-  constructor(frames: readonly CompiledEqualHeightFrame[]) {
+  constructor(
+    frames: readonly CompiledEqualHeightFrame[],
+    readonly sourceState: EqualHeightFootprintSourceState,
+  ) {
     this.byMask = new Map(frames.map((frame) => [frame.index, frame]));
     const project = defaultProject();
     const wall = project.walls.find(({ id }) => id === 'wall-office');
@@ -160,6 +179,7 @@ class ProofRenderer {
       frame.shapes,
       axis,
       profile,
+      this.sourceState,
     );
     const markup = stripSvgShell(
       composeWallShapes(shapes, this.wall, this.style, 128),
@@ -195,17 +215,19 @@ class ProofRenderer {
 function datumOverlay(
   parts: string[],
   profile: EqualHeightFootprintProfile,
+  sourceState: EqualHeightFootprintSourceState,
   x: number,
   y: number,
   size: number,
 ): void {
   const sourceBack = transformEqualHeightFootprintPoint(
     {
-      x: EQUAL_HEIGHT_FOOTPRINT_SOURCE_BACK_DATUM,
-      y: EQUAL_HEIGHT_FOOTPRINT_SOURCE_BACK_DATUM,
+      x: equalHeightFootprintSourceBackDatum(sourceState),
+      y: equalHeightFootprintSourceBackDatum(sourceState),
     },
     'both',
     profile,
+    sourceState,
   );
   const back = sourceBack.x * size / 128;
   const front = EQUAL_HEIGHT_FOOTPRINT_FRONT_DATUM * size / 128;
@@ -244,7 +266,7 @@ function closeStudy(
   const y = CARD_TOP + 106;
   parts.push(text(cardX + 22, y - 14, '240 px · corner envelope', 13, 760));
   parts.push(renderer.tile(6, profile, x, y, size));
-  datumOverlay(parts, profile, x, y, size);
+  datumOverlay(parts, profile, renderer.sourceState, x, y, size);
   parts.push(
     text(
       cardX + CARD_WIDTH / 2,
@@ -406,8 +428,11 @@ function distanceStudy(
   });
 }
 
-function reviewSheet(frames: readonly CompiledEqualHeightFrame[]): string {
-  const renderer = new ProofRenderer(frames);
+function reviewSheet(
+  frames: readonly CompiledEqualHeightFrame[],
+  sourceState: EqualHeightFootprintSourceState,
+): string {
+  const renderer = new ProofRenderer(frames, sourceState);
   const parts: string[] = [
     '<defs>' +
       '<pattern id="checker" width="16" height="16" patternUnits="userSpaceOnUse">' +
@@ -422,7 +447,9 @@ function reviewSheet(frames: readonly CompiledEqualHeightFrame[]): string {
     text(
       MARGIN,
       78,
-      'REVIEW ONLY · same 128 px frame, 512 PPU import contract, pivot, renderer scale, palette, and topology',
+      sourceState === 'accepted-112'
+        ? 'ACCEPTED SOURCE GATE · same 128 px frame, 512 PPU import contract, pivot, renderer scale, palette, and topology'
+        : 'REVIEW ONLY · same 128 px frame, 512 PPU import contract, pivot, renderer scale, palette, and topology',
       15,
       650,
       MUTED,
@@ -463,7 +490,12 @@ function reviewSheet(frames: readonly CompiledEqualHeightFrame[]): string {
       text(
         x + CARD_WIDTH / 2,
         CARD_TOP + 42,
-        profile.label,
+        sourceState === 'accepted-112' &&
+            profile.role === 'selected-candidate'
+          ? '112 px · accepted source'
+          : sourceState === 'accepted-112' && profile.role === 'current'
+            ? '68 px · legacy comparison'
+            : profile.label,
         20,
         800,
         accent,
@@ -474,7 +506,7 @@ function reviewSheet(frames: readonly CompiledEqualHeightFrame[]): string {
       text(
         x + CARD_WIDTH / 2,
         CARD_TOP + 67,
-        profileDetail(profile),
+        profileDetail(profile, sourceState),
         13,
         600,
         MUTED,
@@ -492,7 +524,9 @@ function reviewSheet(frames: readonly CompiledEqualHeightFrame[]): string {
     text(
       WIDTH / 2,
       1286,
-      'Decision gate: choose the gameplay footprint first. All-47 socket rephasing and a disposable Unity wall lab come only after selection.',
+      sourceState === 'accepted-112'
+        ? 'Accepted calibration replay: the 112 px card is identity; alternate footprints derive once from the canonical source.'
+        : 'Decision gate: choose the gameplay footprint first. All-47 socket rephasing and a disposable Unity wall lab come only after selection.',
       14,
       700,
       INK,
@@ -524,7 +558,8 @@ async function main(): Promise<void> {
   const frames = await compileEqualHeightEvaluationFrames({
     sourceRoots: SOURCE_ROOTS,
   });
-  const source = reviewSheet(frames);
+  const sourceState = equalHeightAllMaskSourceFootprintState(frames);
+  const source = reviewSheet(frames, sourceState);
   const png = new Resvg(source, {
     font: { loadSystemFonts: true },
   }).render().asPng();
@@ -551,6 +586,7 @@ async function main(): Promise<void> {
     ),
     `${JSON.stringify({
       boundary: EQUAL_HEIGHT_FOOTPRINT_BOUNDARY,
+      sourceFootprintState: sourceState,
       sourceFrameSize: 128,
       fixedFrontDatum: EQUAL_HEIGHT_FOOTPRINT_FRONT_DATUM,
       profiles: EQUAL_HEIGHT_FOOTPRINT_PROFILES,
@@ -561,7 +597,7 @@ async function main(): Promise<void> {
     'utf8',
   );
   process.stdout.write(
-    `Wrote review-only QuotaCo wall footprint calibration to ${options.output}\n`,
+    `Wrote ${sourceState} QuotaCo wall footprint calibration to ${options.output}\n`,
   );
 }
 

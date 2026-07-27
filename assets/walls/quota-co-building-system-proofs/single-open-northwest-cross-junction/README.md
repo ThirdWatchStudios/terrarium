@@ -35,6 +35,7 @@ canonical blob contract or schema, or authorize Unity consumption.
 
 The accepted 2026-07-26 consistency correction replaces the broad northwest
 reveal wedge with one band between the shell curve and the outer
-`y44 -> y56` ledge. Its dark arris seam follows the same curve. The filled mass,
+`y9.036 -> y11.5` ledge in the accepted 112-unit source geometry. Its dark
+arris seam follows the same curve. The filled mass,
 center, and all socket pixels remain unchanged; plain-X `mask_45` inherits the
 correction without a filter or companion source.

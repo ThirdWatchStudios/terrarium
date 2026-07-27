@@ -124,7 +124,7 @@ function validateSource(
   }
 
   if (source.id === 'filled_n_middle-base') {
-    if (!content.includes('id="base-buried-underlay" d="M0 56H128V128H0Z"')) {
+    if (!content.includes('id="base-buried-underlay" d="M0 11.5L128 11.5 128 128 0 128Z"')) {
       throw new A1bThickWallHorizontalRepeatProposalImportError(
         `${sourceFile} must retain the rear buried underlay`,
       );
@@ -132,8 +132,8 @@ function validateSource(
   }
   if (source.id === 'filled_s_middle-base') {
     if (
-      !content.includes('id="base-contact-shade" d="M 0 120 H 128 V 123.5 H 0 Z"') ||
-      !content.includes('id="base-boundary-seam" d="M 126 98 V 116"')
+      !content.includes('id="base-contact-shade" d="M0 117.693L128 117.693 128 123.5 0 123.5Z"') ||
+      !content.includes('id="base-boundary-seam" d="M126 81.189L126 111.056"')
     ) {
       throw new A1bThickWallHorizontalRepeatProposalImportError(
         `${sourceFile} must retain the accepted frontage base and contact finish`,
@@ -142,9 +142,9 @@ function validateSource(
   }
   if (source.id === 'filled_n_middle-upper') {
     if (
-      !content.includes('id="upper-contour" d="M0 56H128V128H0Z"') ||
-      !content.includes('id="upper-solid-top-fill" d="M0 58H128V128H0Z"') ||
-      !content.includes('id="upper-solid-top-highlight" d="M0 58H128V63H0Z"')
+      !content.includes('id="upper-contour" d="M0 11.5L128 11.5 128 128 0 128Z"') ||
+      !content.includes('id="upper-solid-top-fill" d="M0 14.819L128 14.819 128 128 0 128Z"') ||
+      !content.includes('id="upper-solid-top-highlight" d="M0 14.819L128 14.819 128 23.115 0 23.115Z"')
     ) {
       throw new A1bThickWallHorizontalRepeatProposalImportError(
         `${sourceFile} must retain the exact open-X rear span`,
@@ -158,14 +158,14 @@ function validateSource(
   }
   if (source.id === 'filled_s_middle-upper') {
     const required = [
-      'id="upper-contour" d="M0 0H128V120H0Z"',
-      'id="upper-solid-top-fill" d="M0 0H128V97H0Z"',
-      'id="upper-south-face-shade" d="M0 63H128V84H0Z" fill="#000000" opacity="0.08"',
-      'id="upper-lip-seam" d="M1 87H127"',
-      'id="upper-south-coral-wrap" d="M0 88H128V94H0Z"',
-      'id="upper-south-green-wrap" d="M0 94H128V117H0Z"',
-      'id="upper-south-plinth" d="M0 117H128V120H0Z"',
-      'id="upper-boundary-seam" d="M126 88V96 M126 98V116"',
+      'id="upper-contour" d="M0 0L128 0 128 117.693 0 117.693Z"',
+      'id="upper-solid-top-fill" d="M0 0L128 0 128 79.53 0 79.53Z"',
+      'id="upper-south-face-shade" d="M0 23.115L128 23.115 128 57.959 0 57.959Z" fill="#000000" opacity="0.08"',
+      'id="upper-lip-seam" d="M1 62.937L127 62.937"',
+      'id="upper-south-coral-wrap" d="M0 64.596L128 64.596 128 74.552 0 74.552Z"',
+      'id="upper-south-green-wrap" d="M0 74.552L128 74.552 128 112.715 0 112.715Z"',
+      'id="upper-south-plinth" d="M0 112.715L128 112.715 128 117.693 0 117.693Z"',
+      'id="upper-boundary-seam" d="M126 64.596L126 77.87M126 81.189L126 111.056"',
     ];
     if (required.some((fragment) => !content.includes(fragment))) {
       throw new A1bThickWallHorizontalRepeatProposalImportError(

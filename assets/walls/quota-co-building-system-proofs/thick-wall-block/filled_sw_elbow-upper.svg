@@ -2,15 +2,15 @@
   <title>QuotaCo filled southwest elbow accepted proof upper</title>
   <desc>The accepted southwest foreground frontage wraps one solid cream quadrant with a cream lip and dark separation line above the coral and green return.</desc>
   <g id="detail/upper">
-    <path id="upper-contour" d="M56 0H128V97H66A10 10 0 0 1 56 87Z" fill="#252A28"/>
-    <path id="upper-solid-top-fill" d="M58 0H128V97H68A10 10 0 0 1 58 87Z" fill="#D9D0B9"/>
-    <path id="upper-south-face-shade" d="M58 63H128V84H58Z" fill="#000000" opacity="0.08"/>
-    <path id="upper-lip-seam" d="M59 87H127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
-    <path id="upper-south-coral-wrap" d="M58 88H128V94H58Z" fill="#B65F4D"/>
-    <path id="upper-south-band-light" d="M58 88H128V89.5H58Z" fill="#FFFFFF" opacity="0.10"/>
-    <path id="upper-south-green-wrap" d="M58 94H128V117H66A8 8 0 0 1 58 109Z" fill="#294B3C"/>
-    <path id="upper-south-plinth" d="M66 117H128V120H66Z" fill="#252A28"/>
-    <path id="upper-south-band-seam" d="M58 94H127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
-    <path id="upper-boundary-seam" d="M126 88V96 M126 98V116" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+    <path id="upper-contour" d="M11.5 0L128 0 128 79.53 28.093 79.53C18.929 79.53 11.5 72.101 11.5 62.937Z" fill="#252A28"/>
+    <path id="upper-solid-top-fill" d="M14.819 0L128 0 128 79.53 31.411 79.53C22.247 79.53 14.819 72.101 14.819 62.937Z" fill="#D9D0B9"/>
+    <path id="upper-south-face-shade" d="M14.819 23.115L128 23.115 128 57.959 14.819 57.959Z" fill="#000000" opacity="0.08"/>
+    <path id="upper-lip-seam" d="M16.478 62.937L127 62.937" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="upper-south-coral-wrap" d="M14.819 64.596L128 64.596 128 74.552 14.819 74.552Z" fill="#B65F4D"/>
+    <path id="upper-south-band-light" d="M14.819 64.596L128 64.596 128 67.085 14.819 67.085Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="upper-south-green-wrap" d="M14.819 74.552L128 74.552 128 112.715 28.093 112.715C20.762 112.715 14.819 106.771 14.819 99.441Z" fill="#294B3C"/>
+    <path id="upper-south-plinth" d="M28.093 112.715L128 112.715 128 117.693 28.093 117.693Z" fill="#252A28"/>
+    <path id="upper-south-band-seam" d="M14.819 74.552L127 74.552" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+    <path id="upper-boundary-seam" d="M126 64.596L126 77.87M126 81.189L126 111.056" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
   </g>
 </svg>

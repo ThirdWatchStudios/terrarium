@@ -120,6 +120,20 @@ function edgeProfile(raster: Raster, edge: Edge): readonly (readonly number[])[]
 const opaqueProfile = (raster: Raster, edge: Edge): readonly boolean[] =>
   edgeProfile(raster, edge).map((rgba) => rgba[3] === 255);
 
+function expectRegisteredSocket(
+  actual: readonly (readonly number[])[],
+  expected: readonly (readonly number[])[],
+  stablePositions: readonly number[],
+  label: string,
+): void {
+  expect(actual.map((rgba) => rgba[3] === 255), `${label} opaque profile`)
+    .toEqual(expected.map((rgba) => rgba[3] === 255));
+  for (const position of stablePositions) {
+    expect(actual[position], `${label} material at ${position}`)
+      .toEqual(expected[position]);
+  }
+}
+
 const NEIGHBORS = [
   [NB.N, 0, -1],
   [NB.E, 1, 0],
@@ -330,30 +344,68 @@ describe('QuotaCo owner-accepted east partial T-junction gate', () => {
     });
 
     expect(edgeProfile(mask36, 'north')).toEqual(edgeProfile(mask26, 'south'));
-    expect(edgeProfile(mask36, 'west')).toEqual(edgeProfile(mask16, 'east'));
-    expect(edgeProfile(mask36, 'west')).toEqual(edgeProfile(mask38, 'east'));
+    const mask36West = edgeProfile(mask36, 'west');
+    for (const [neighbor, edge] of [
+      [mask16, 'east'],
+      [mask38, 'east'],
+    ] as const) {
+      const neighborProfile = edgeProfile(neighbor, edge);
+      expectRegisteredSocket(
+        mask36West,
+        neighborProfile,
+        [10, 30, 60, 68, 90, 115, 120],
+        `mask_36 west/${edge} neighbor`,
+      );
+    }
     // The east vertical sources own four low-alpha contact-shade pixels. Their
     // solid silhouettes must align, while exact RGBA ownership stays source-local.
     expect(opaqueProfile(mask36, 'south')).toEqual(opaqueProfile(mask1, 'north'));
     expect(opaqueProfile(mask36, 'south')).toEqual(opaqueProfile(mask5, 'north'));
 
-    expect(edgeProfile(mask27, 'north')).toEqual(edgeProfile(mask4, 'south'));
-    expect(edgeProfile(mask27, 'north')).toEqual(edgeProfile(mask5, 'south'));
-    expect(edgeProfile(mask27, 'west')).toEqual(edgeProfile(mask20, 'east'));
-    expect(edgeProfile(mask27, 'west')).toEqual(edgeProfile(mask31, 'east'));
-    expect(edgeProfile(mask27, 'south')).toEqual(edgeProfile(mask34, 'north'));
+    expectRegisteredSocket(
+      edgeProfile(mask27, 'north'),
+      edgeProfile(mask4, 'south'),
+      [8, 20, 50, 75, 83, 90, 100, 115],
+      'mask_27 north/mask_4 south',
+    );
+    expectRegisteredSocket(
+      edgeProfile(mask27, 'north'),
+      edgeProfile(mask5, 'south'),
+      [8, 20, 50, 75, 83, 90, 100, 115],
+      'mask_27 north/mask_5 south',
+    );
+    expectRegisteredSocket(
+      edgeProfile(mask27, 'west'),
+      edgeProfile(mask20, 'east'),
+      [12, 30, 60, 90, 115, 120],
+      'mask_27 west/mask_20 east',
+    );
+    expectRegisteredSocket(
+      edgeProfile(mask27, 'west'),
+      edgeProfile(mask31, 'east'),
+      [12, 30, 60, 90, 115, 120],
+      'mask_27 west/mask_31 east',
+    );
+    expectRegisteredSocket(
+      edgeProfile(mask27, 'south'),
+      edgeProfile(mask34, 'north'),
+      [8, 20, 50, 75, 83, 90, 100, 115],
+      'mask_27 south/mask_34 north',
+    );
   });
 
   it('inherits the clipped south-socket return through the Mask 36 seam filter', () => {
     const derived = candidateRaster(36);
     expect(rgbaAt(derived, 17, 121)).toEqual([36, 66, 53, 255]);
-    expect(rgbaAt(derived, 10, 121)).toEqual([37, 42, 40, 255]);
+    expect(rgbaAt(derived, 11, 121)).toEqual([37, 42, 40, 255]);
+    expect(rgbaAt(derived, 10, 121)).toEqual([27, 31, 29, 194]);
     expect(rgbaAt(derived, 6, 121)).toEqual([0, 0, 0, 31]);
     expect(rgbaAt(derived, 6, 126)).toEqual([0, 0, 0, 31]);
 
     const derived40 = candidateRaster(36, 40);
     expect(rgbaAt(derived40, 5, 38)).toEqual([36, 66, 53, 255]);
-    expect(rgbaAt(derived40, 2, 38)).toEqual([18, 20, 19, 136]);
+    expect(rgbaAt(derived40, 3, 38)).toEqual([27, 31, 29, 194]);
+    expect(rgbaAt(derived40, 2, 38)).toEqual([0, 0, 0, 31]);
   });
 
   it('promotes both east rows as approved derivations and keeps production unchanged', () => {

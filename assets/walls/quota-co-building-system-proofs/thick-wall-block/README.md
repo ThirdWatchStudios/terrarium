@@ -11,7 +11,8 @@ southeast derivation applies the accepted boundary-seam omission before its
 mirror, so seam ownership remains with the adjoining foreground cell.
 
 The foreground upper retains the standard fixed-light south-face step: a
-black `0.08` material shade from `y=63..88`, immediately above the coral band.
+black `0.08` material shade from `y=23.115..64.596`, immediately above the
+coral band in the accepted 112-unit source geometry.
 It is a plane-separation cue, not a cast shadow, and mirrors unchanged into
 mask 34.
 

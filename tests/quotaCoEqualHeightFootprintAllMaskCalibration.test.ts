@@ -10,6 +10,7 @@ import {
   EQUAL_HEIGHT_ALL_MASK_X_ONLY,
   EQUAL_HEIGHT_ALL_MASK_Y_ONLY,
   compileSelectedEqualHeightAllMaskFrames,
+  equalHeightAllMaskSourceFootprintState,
   equalHeightAllMaskCalibration,
   equalHeightAllMaskWarpMode,
   warpEqualHeightAllMaskCoordinate,
@@ -47,11 +48,14 @@ const SOURCE_ROOTS = [
 
 let acceptedFrames: CompiledEqualHeightFrame[];
 let candidateFrames: CalibratedEqualHeightFrame[];
+let initialSourceState: 'legacy-68' | 'accepted-112';
 
 beforeAll(async () => {
   acceptedFrames = await compileEqualHeightEvaluationFrames({
     sourceRoots: SOURCE_ROOTS,
   });
+  initialSourceState =
+    equalHeightAllMaskSourceFootprintState(acceptedFrames);
   candidateFrames = compileSelectedEqualHeightAllMaskFrames(acceptedFrames);
 }, 30_000);
 
@@ -168,9 +172,10 @@ describe('QuotaCo selected 112 px all-47 footprint review bank', () => {
       identity: 1,
     });
     expect(EQUAL_HEIGHT_ALL_MASK_REVIEW_BOUNDARY).toEqual({
-      reviewOnly: true,
+      reviewOnly: false,
       selectedProfile: 'candidate-112',
-      acceptedSourceMutation: false,
+      acceptedSourceState: 'accepted-112',
+      acceptedSourceMutation: true,
       ledgerMutation: false,
       exporterIntegration: false,
       atlasMutation: false,
@@ -207,6 +212,74 @@ describe('QuotaCo selected 112 px all-47 footprint review bank', () => {
     }
   });
 
+  it('detects legacy and accepted source banks and rejects a partial migration', () => {
+    const withAnchor = (
+      index: 5 | 10 | 30 | 37,
+      shapeIndex: number,
+      d: string,
+    ): CompiledEqualHeightFrame[] => acceptedFrames.map((frame) =>
+      frame.index !== index
+        ? frame
+        : {
+            ...frame,
+            shapes: frame.shapes.map((shape, candidateIndex) =>
+              candidateIndex === shapeIndex ? { ...shape, d } : shape,
+            ),
+          },
+    );
+    const bank = (
+      values: readonly [string, string, string, string],
+    ): CompiledEqualHeightFrame[] => {
+      let result = withAnchor(5, 5, values[0]);
+      const apply = (
+        frames: CompiledEqualHeightFrame[],
+        index: 10 | 30 | 37,
+        shapeIndex: number,
+        d: string,
+      ): CompiledEqualHeightFrame[] => frames.map((frame) =>
+        frame.index !== index
+          ? frame
+          : {
+              ...frame,
+              shapes: frame.shapes.map((shape, candidateIndex) =>
+                candidateIndex === shapeIndex ? { ...shape, d } : shape,
+              ),
+            },
+      );
+      result = apply(result, 10, 4, values[1]);
+      result = apply(result, 30, 0, values[2]);
+      return apply(result, 37, 0, values[3]);
+    };
+    const legacy = bank([
+      'M56 0',
+      'M0 56',
+      'M56 0',
+      'M72 0',
+    ]);
+    const accepted = bank([
+      'M11.5 0',
+      'M0 11.5',
+      'M11.5 0',
+      'M116.5 0',
+    ]);
+    expect(equalHeightAllMaskSourceFootprintState(legacy)).toBe('legacy-68');
+    expect(equalHeightAllMaskSourceFootprintState(accepted)).toBe(
+      'accepted-112',
+    );
+    expect(equalHeightAllMaskSourceFootprintState(candidateFrames)).toBe(
+      'accepted-112',
+    );
+    const mixed = bank([
+      'M11.5 0',
+      'M0 56',
+      'M56 0',
+      'M72 0',
+    ]);
+    expect(() => equalHeightAllMaskSourceFootprintState(mixed)).toThrow(
+      /mixed or unknown/,
+    );
+  });
+
   it('compiles exactly 47 selected frames without changing blob order or provenance', () => {
     expect(candidateFrames).toHaveLength(47);
     expect(candidateFrames.map(({ id }) => id)).toEqual(
@@ -226,6 +299,8 @@ describe('QuotaCo selected 112 px all-47 footprint review bank', () => {
       expect(candidate.footprintCalibration).toMatchObject({
         profileId: 'candidate-112',
         targetThickness: 112,
+        sourceFootprintState: initialSourceState,
+        transformApplied: initialSourceState === 'legacy-68',
         ...equalHeightAllMaskCalibration(accepted),
       });
     }
@@ -235,7 +310,7 @@ describe('QuotaCo selected 112 px all-47 footprint review bank', () => {
     for (let index = 0; index < 47; index += 1) {
       const accepted = acceptedFrames[index];
       const candidate = candidateFrames[index];
-      if (index === 46) {
+      if (index === 46 || initialSourceState === 'accepted-112') {
         expect(candidate.shapes).toBe(accepted.shapes);
         continue;
       }
@@ -246,6 +321,28 @@ describe('QuotaCo selected 112 px all-47 footprint review bank', () => {
         expect({ ...candidateShape, d: sourceShape.d }).toEqual(sourceShape);
       }
     }
+  });
+
+  it('contains warped stroke centers without moving fill-only geometry', () => {
+    if (initialSourceState === 'accepted-112') {
+      expect(candidateFrames[3].shapes).toBe(acceptedFrames[3].shapes);
+      return;
+    }
+    const seam = candidateFrames[3].shapes[22];
+    expect(seam.strokeWidth).toBe(1.5);
+    expect(seam.d).toMatch(/^M71\.233 0\.75/);
+    expect(seam.d).toMatch(/L127 23\.115$/);
+    expect(candidateFrames[30].shapes[16].d).toContain('M0.75 11.5');
+    expect(candidateFrames[30].shapes[16].d).toContain('L14.819 0.75');
+
+    const fill = acceptedFrames[3].shapes[10];
+    expect(fill.strokeWidth).toBeUndefined();
+    expect(candidateFrames[3].shapes[10].d).toBe(
+      warpEqualHeightAllMaskPath(
+        fill.d,
+        equalHeightAllMaskCalibration(acceptedFrames[3]),
+      ),
+    );
   });
 
   it('matches the owner-selected 112 px envelope on its four representatives', () => {
@@ -265,6 +362,7 @@ describe('QuotaCo selected 112 px all-47 footprint review bank', () => {
         acceptedFrames[mask].shapes,
         axis,
         profile,
+        initialSourceState,
       );
       const candidatePixels = new Resvg(
         composeWallShapes(
@@ -350,6 +448,22 @@ describe('QuotaCo selected 112 px all-47 footprint review bank', () => {
     const second = compileSelectedEqualHeightAllMaskFrames(acceptedFrames);
     expect(JSON.stringify(second)).toBe(JSON.stringify(first));
     expect(JSON.stringify(acceptedFrames)).toBe(acceptedBefore);
+  });
+
+  it('replays an already accepted 112 bank as a byte-identical identity', () => {
+    const replay = compileSelectedEqualHeightAllMaskFrames(candidateFrames);
+    expect(replay).toHaveLength(47);
+    for (let index = 0; index < replay.length; index += 1) {
+      expect(replay[index].shapes, `mask_${index}`).toBe(
+        candidateFrames[index].shapes,
+      );
+      expect(replay[index].footprintCalibration).toMatchObject({
+        profileId: 'candidate-112',
+        targetThickness: 112,
+        sourceFootprintState: 'accepted-112',
+        transformApplied: false,
+      });
+    }
   });
 
   it('keeps the common core of all 338 legal cardinal joins opaque', () => {

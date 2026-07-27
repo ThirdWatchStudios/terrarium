@@ -123,7 +123,7 @@ describe('QuotaCo current wall workbench', () => {
           status: EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.status,
           refreshGroup: 'consistency',
           title: 'All-47 family consistency review',
-          summary: 'Review-only whole-vocabulary pass across all 50 accepted visual presentations, compact occupancy, direct/derived pairs, 1/3/6-cell extents, and light/dark composed environments. The accepted 28/19/0/0 ledger remains frozen.',
+          summary: 'Paused, review-only whole-vocabulary pass across all 50 accepted visual presentations, compact occupancy, direct/derived pairs, 1/3/6-cell extents, and light/dark composed environments. The accepted source-owned 112-unit footprint and 28/19/0/0 ledger remain frozen.',
           alt: 'review-only QuotaCo equal-height all forty-seven mask family consistency sheet across scales grounds derivations sockets extents and composed environments',
         },
       ]);
@@ -1194,12 +1194,15 @@ describe('QuotaCo current wall workbench', () => {
     expect(primary).toContain('Horizontal terminus pair');
     expect(primary).toContain('Accepted mask_8 direct source');
     expect(page).toContain(
-      '<p class="lede">The all-47 family consistency pass is active for review.',
+      '<p class="lede">The source-owned 112-unit all-47 footprint is accepted proof-layer geometry.',
     );
-    expect(page).toContain('Review next · 1 piece');
+    expect(page).toContain('Paused review · 1 piece');
     expect(page).toContain(
-      'These remain active proposals and are not yet in the accepted working set.',
+      'This remains review-only and is not part of the accepted working set.',
     );
+    expect(page).toContain('Accepted system geometry');
+    expect(page).toContain('112-unit all-47 wall footprint');
+    expect(page).toContain('11.5..123.5 direct/high and 4.5..116.5 mirrored/low');
     expect(page).toContain('mask_46 directly reuses one independently authored flattened buried-center pair');
     expect(page).toContain('mask_45 is the accepted plain whole-cell X mirror of mask_33');
     expect(page).toContain('mask_33 directly reuses one independently authored fixed-view union');

@@ -106,6 +106,20 @@ function edgeProfile(raster: Raster, edge: Edge): readonly (readonly number[])[]
 const opaqueProfile = (raster: Raster, edge: Edge): readonly boolean[] =>
   edgeProfile(raster, edge).map((rgba) => rgba[3] === 255);
 
+function expectRegisteredSocket(
+  actual: readonly (readonly number[])[],
+  expected: readonly (readonly number[])[],
+  stablePositions: readonly number[],
+  label: string,
+): void {
+  expect(actual.map((rgba) => rgba[3] === 255), `${label} opaque profile`)
+    .toEqual(expected.map((rgba) => rgba[3] === 255));
+  for (const position of stablePositions) {
+    expect(actual[position], `${label} material at ${position}`)
+      .toEqual(expected[position]);
+  }
+}
+
 const NEIGHBORS = [
   [NB.N, 0, -1],
   [NB.E, 1, 0],
@@ -363,27 +377,52 @@ describe('QuotaCo owner-accepted west partial T-junction gate', () => {
       sourceAt(THICK_WALL_BLOCK_DIRECTORY, 'filled_sw_elbow-upper.svg'),
     );
 
-    // Foreground mask_17 owns the complete mask_38 material stack at its east socket.
-    expect(edgeProfile(mask17, 'east')).toEqual(edgeProfile(mask38, 'west'));
+    // Foreground mask_17 owns the mask_38 socket silhouette and every stable
+    // interior material phase. The two source-local edge antialias pixels remain
+    // intentionally independent.
+    const mask17East = edgeProfile(mask17, 'east');
+    const mask38West = edgeProfile(mask38, 'west');
+    expectRegisteredSocket(
+      mask17East,
+      mask38West,
+      [10, 30, 60, 68, 90, 115, 120],
+      'mask_17/mask_38 east-west socket',
+    );
     // The continuation's low-alpha contact shade is not silhouette, but every solid
     // pixel of the south socket must register exactly with the accepted west wall.
     expect(opaqueProfile(mask17, 'south')).toEqual(opaqueProfile(westVertical, 'north'));
 
-    // Rear mask_21 keeps exact composed profiles at all three cardinal sockets.
-    expect(edgeProfile(mask21, 'north')).toEqual(edgeProfile(westVertical, 'south'));
-    expect(edgeProfile(mask21, 'east')).toEqual(edgeProfile(mask31, 'west'));
-    expect(edgeProfile(mask21, 'south')).toEqual(edgeProfile(mask16, 'north'));
+    // Rear mask_21 keeps the registered silhouette and stable material phases
+    // at all three cardinal sockets; subpixel edge ownership stays source-local.
+    expectRegisteredSocket(
+      edgeProfile(mask21, 'north'),
+      edgeProfile(westVertical, 'south'),
+      [12, 20, 50, 75, 83, 90, 100, 115, 120],
+      'mask_21 north',
+    );
+    expectRegisteredSocket(
+      edgeProfile(mask21, 'east'),
+      edgeProfile(mask31, 'west'),
+      [12, 30, 60, 90, 115, 120],
+      'mask_21 east',
+    );
+    expectRegisteredSocket(
+      edgeProfile(mask21, 'south'),
+      edgeProfile(mask16, 'north'),
+      [12, 20, 50, 75, 83, 90, 100, 115, 120],
+      'mask_21 south',
+    );
 
     // The filled NE quadrant reaches the north socket as plain cream. A lit overlay
     // here would make the transition choose a second perspective at the seam.
     const mask17Upper = rasterUpper(source('open_w_t_filled_ne-upper.svg'));
     const northProfile = edgeProfile(mask17Upper, 'north');
-    expect(northProfile.slice(56, 58)).toEqual([
+    expect(northProfile.slice(12, 14)).toEqual([
       [37, 42, 40, 255],
       [37, 42, 40, 255],
     ]);
-    expect(northProfile.slice(58)).toEqual(
-      Array.from({ length: 70 }, () => [217, 208, 185, 255]),
+    expect(northProfile.slice(15)).toEqual(
+      Array.from({ length: 113 }, () => [217, 208, 185, 255]),
     );
   });
 
@@ -391,18 +430,20 @@ describe('QuotaCo owner-accepted west partial T-junction gate', () => {
     const baseSource = source('open_w_t_filled_ne-base.svg');
     const upperSource = source('open_w_t_filled_ne-upper.svg');
     expect(pathData(baseSource, 'base-contact-shade-open-se')).toBe(
-      'M120 91H123.5V95H120Z M120 120H128V123.5H123.5V128H120Z',
+      'M117.693 69.574L123.5 69.574 123.5 76.211 117.693 76.211ZM117.693 117.693L128 117.693 128 123.5 123.5 123.5 123.5 128 117.693 128Z',
     );
 
     const direct = rasterPair(baseSource, upperSource);
     expect(rgbaAt(direct, 110, 121)).toEqual([36, 66, 53, 255]);
-    expect(rgbaAt(direct, 117, 121)).toEqual([37, 42, 40, 255]);
+    expect(rgbaAt(direct, 116, 121)).toEqual([37, 42, 40, 255]);
+    expect(rgbaAt(direct, 117, 121)).toEqual([27, 31, 29, 194]);
     expect(rgbaAt(direct, 120, 121)).toEqual([0, 0, 0, 31]);
     expect(rgbaAt(direct, 121, 126)).toEqual([0, 0, 0, 31]);
 
     const direct40 = rasterPair(baseSource, upperSource, 40);
     expect(rgbaAt(direct40, 34, 38)).toEqual([36, 66, 53, 255]);
-    expect(rgbaAt(direct40, 37, 38)).toEqual([18, 20, 19, 136]);
+    expect(rgbaAt(direct40, 36, 38)).toEqual([27, 31, 29, 194]);
+    expect(rgbaAt(direct40, 37, 38)).toEqual([0, 0, 0, 31]);
   });
 
   it('strictly compiles four external fixed-view sources with distinct socket roles', async () => {
@@ -470,10 +511,10 @@ describe('QuotaCo owner-accepted west partial T-junction gate', () => {
     expect(sourceIds(foregroundUpper)).toContain('upper-arris-lip-open-se');
     expect(sourceIds(foregroundUpper)).toContain('upper-south-face-shade');
     expect(foregroundUpper).toContain(
-      'id="upper-south-face-shade" d="M103 63H128V84H103Z"',
+      'id="upper-south-face-shade" d="M89.485 23.115L128 23.115 128 57.959 89.485 57.959Z"',
     );
     expect(foregroundUpper).toContain(
-      'id="upper-lip-seam" d="M103 87H127"',
+      'id="upper-lip-seam" d="M89.485 62.937L127 62.937"',
     );
     expect(sourceIds(foregroundUpper)).toContain('upper-coral-open-se');
     expect(sourceIds(rearUpper)).toContain('upper-solid-top-highlight');

@@ -2,16 +2,16 @@
   <title>QuotaCo Building System full exterior corner upper</title>
   <desc>One molded QuotaCo northwest outer corner: the flat north face and broad west plane share a contained return while their coral, green, and plinth registers turn without a patch arc or applied corner box.</desc>
   <g id="detail/upper">
-    <path id="upper-contour" d="M 66 56 H 128 V 97 H 105 V 128 H 56 V 66 A 10 10 0 0 1 66 56 Z" fill="#252A28"/>
-    <path id="upper-shell" d="M 66 58 H 128 V 97 H 105 V 128 H 58 V 66 A 8 8 0 0 1 66 58 Z" fill="#D9D0B9"/>
-    <path id="upper-plane-light" d="M 58 66 A 8 8 0 0 1 66 58 H 90.5 V 128 H 58 Z" fill="#FFFFFF" opacity="0.18"/>
-    <path id="upper-reveal-light" d="M 90.5 58 H 128 V 63 H 90.5 Z" fill="#FFFFFF" opacity="0.30"/>
-    <path id="upper-arris-lip" d="M 90.5 63 H 92 V 128 H 90.5 Z" fill="#FFFFFF" opacity="0.30"/>
-    <path id="upper-coral-band" d="M 128 88 H 109 A 12 12 0 0 0 97 100 V 128 H 102 V 100 A 6 6 0 0 1 108 94 H 128 Z" fill="#B65F4D"/>
-    <path id="upper-band-light" d="M 109 88 H 128 V 89.5 H 109 Z" fill="#FFFFFF" opacity="0.10"/>
-    <path id="upper-green-handoff" d="M 128 94 H 108 A 6 6 0 0 0 102 100 V 128 H 105 V 100 A 3 3 0 0 1 108 97 H 128 Z" fill="#294B3C"/>
-    <path id="upper-face-shade" d="M 92 100 H 105 V 128 H 92 Z" fill="#000000" opacity="0.12"/>
-    <path id="upper-arris-seam" d="M 127 63 H 104 A 12 12 0 0 0 92 75 V 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
-    <path id="upper-band-seam" d="M 127 94 H 108 A 6 6 0 0 0 102 100 V 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+    <path id="upper-contour" d="M28.093 11.5L128 11.5 128 79.53 92.804 79.53 92.804 128 11.5 128 11.5 28.093C11.5 18.929 18.929 11.5 28.093 11.5Z" fill="#252A28"/>
+    <path id="upper-shell" d="M28.093 14.819L128 14.819 128 79.53 92.804 79.53 92.804 128 14.819 128 14.819 28.093C14.819 20.762 20.762 14.819 28.093 14.819Z" fill="#D9D0B9"/>
+    <path id="upper-plane-light" d="M14.819 28.093C14.819 20.762 20.762 14.819 28.093 14.819L68.744 14.819 68.744 128 14.819 128Z" fill="#FFFFFF" opacity="0.18"/>
+    <path id="upper-reveal-light" d="M68.744 14.819L128 14.819 128 23.115 68.744 23.115Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="upper-arris-lip" d="M68.744 23.115L71.233 23.115 71.233 128 68.744 128Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="upper-coral-band" d="M128 64.596L99.441 64.596C88.445 64.596 79.53 73.511 79.53 84.507L79.53 128 87.826 128 87.826 84.507C87.826 79.009 92.283 74.552 97.781 74.552L128 74.552Z" fill="#B65F4D"/>
+    <path id="upper-band-light" d="M99.441 64.596L128 64.596 128 67.085 99.441 67.085Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="upper-green-handoff" d="M128 74.552L97.781 74.552C92.283 74.552 87.826 79.009 87.826 84.507L87.826 128 92.804 128 92.804 84.507C92.804 81.758 95.032 79.53 97.781 79.53L128 79.53Z" fill="#294B3C"/>
+    <path id="upper-face-shade" d="M71.233 84.507L92.804 84.507 92.804 128 71.233 128Z" fill="#000000" opacity="0.12"/>
+    <path id="upper-arris-seam" d="M127 23.115L91.144 23.115C80.149 23.115 71.233 32.03 71.233 43.026L71.233 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="upper-band-seam" d="M127 74.552L97.781 74.552C92.283 74.552 87.826 79.009 87.826 84.507L87.826 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
   </g>
 </svg>

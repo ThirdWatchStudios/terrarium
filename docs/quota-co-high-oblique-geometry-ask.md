@@ -73,8 +73,9 @@ work as actual sprites.
 ## 2. Locked visual contract
 
 - Fixed orthographic high-oblique presentation; no perspective and no diamond/isometric grid.
-- **Owner approval, 2026-07-21: every ordinary structural wall occupies its complete non-walkable cell with
-  the same full 64-unit profile.** North and south use the exact `full_n_straight` base/upper source pair at
+- **Owner approvals, 2026-07-21 and 2026-07-27: every ordinary structural wall occupies its complete
+  non-walkable cell with the same source-owned 112-unit profile.** North and south use the exact
+  `full_n_straight` base/upper source pair at
   the same centered pivot; south requires no transform, duplicated SVG, or new frame identity. The intended
   east is a whole-cell X-mirror of the accepted full-west pair around `x=64`; east and northeast are
   owner-accepted mirror contracts that remain unregistered. The promoted `transition_w_to_s` pair is the equal-height southwest
@@ -98,7 +99,7 @@ work as actual sprites.
   retain the low profile or height step as ordinary perimeter vocabulary.
 - **Promoted southwest checkpoint, 2026-07-21:** the canonical `transition_w_to_s` pair is now an
   equal-height full-west-to-full-south molded corner. The south cream/coral/green/plinth stack repaints the
-  foreground heel after the west planes terminate, and both 64-unit sockets remain pixel-continuous.
+  foreground heel after the west planes terminate, and both 112-unit sockets remain pixel-continuous.
 - **Promoted southeast checkpoint, 2026-07-21:** reuse the promoted southwest pair with a whole-cell X mirror
   around `x=64`. The derived facing suppresses `base-boundary-seam` and `upper-boundary-seam`; the adjoining
   south cell owns the remaining service tick. Full-east-to-southeast and full-south-to-southeast sockets are
@@ -542,7 +543,7 @@ Reject or revise the sheet if any of these fail:
 - one-, two-, three-, and six-cell ordinary-wall runs change apparent height or expose broken seams;
 - a compact room, narrow corridor, or corner-plus-straight composition reads as overlapping strips instead of
   one manufactured enclosure;
-- the accepted full-height east mirror changes the pivot, 64-unit envelope, or connected-run sockets;
+- the accepted full-height east mirror changes the pivot, 112-unit envelope, or connected-run sockets;
 - doorway state or walkable cell is ambiguous;
 - continuous cream/green/teal product bands jump or misalign across compatible frames;
 - corners require rotating a fixed-light/high-oblique image into an invalid view;

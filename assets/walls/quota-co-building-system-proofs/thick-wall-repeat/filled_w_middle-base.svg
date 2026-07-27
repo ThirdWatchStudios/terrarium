@@ -2,6 +2,6 @@
   <title>QuotaCo filled west middle proof base</title>
   <desc>A fully buried structural underlay for the repeatable west side of a two-cell-thick wall mass.</desc>
   <g id="detail/base">
-    <path id="base-buried-underlay" d="M56 0H128V128H56Z" fill="#252A28"/>
+    <path id="base-buried-underlay" d="M11.5 0L128 0 128 128 11.5 128Z" fill="#252A28"/>
   </g>
 </svg>

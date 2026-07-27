@@ -338,13 +338,13 @@ describe('QuotaCo owner-accepted single-open southwest cross-junction gate', () 
   it('keeps one cream owner, one open southwest crook, and tri-tone distance read', () => {
     const upper = source('open_cross_filled_ne_se_nw-upper.svg');
     expect(upper).toContain(
-      'id="upper-coral-sw-return" d="M0 88H48A10 10 0 0 1 58 98V128H52V98A4 4 0 0 0 48 94H0Z"',
+      'id="upper-coral-sw-return" d="M0 64.596L9.857 64.596C10.991 64.596 14.819 72.025 14.819 81.189L14.819 128 10.679 128 10.679 81.189C10.679 77.524 10.311 74.552 9.857 74.552L0 74.552Z"',
     );
     expect(upper).toContain(
-      'id="upper-green-sw-return" d="M0 94H46A12 12 0 0 1 58 106V128H55V106A9 9 0 0 0 46 97H0Z"',
+      'id="upper-green-sw-return" d="M0 74.552L9.446 74.552C10.807 74.552 14.819 83.467 14.819 94.463L14.819 128 11.295 128 11.295 94.463C11.295 86.215 10.467 79.53 9.446 79.53L0 79.53Z"',
     );
     expect(upper).toContain(
-      'id="upper-band-seam" d="M1 94H46A12 12 0 0 1 58 106V127"',
+      'id="upper-band-seam" d="M0.75 74.552L9.446 74.552C10.807 74.552 14.819 83.467 14.819 94.463L14.819 127"',
     );
     expect(
       [...upper.matchAll(
@@ -352,7 +352,7 @@ describe('QuotaCo owner-accepted single-open southwest cross-junction gate', () 
       )].map((match) => match[1]),
     ).toEqual(['upper-shell']);
     expect(upper).toContain(
-      'id="upper-shell" d="M0 0H128V128H58V105A10 10 0 0 0 48 95H0Z"',
+      'id="upper-shell" d="M0 0L128 0 128 128 14.819 128 14.819 92.804C14.819 83.64 10.991 76.211 9.857 76.211L0 76.211Z"',
     );
     expect(upper).not.toMatch(
       /id="[^"]*(?:cap|post|peak|pylon|rollover|overlay|patch|stacked|bridge)"/i,
@@ -421,8 +421,8 @@ describe('QuotaCo owner-accepted single-open southwest cross-junction gate', () 
       writeInventory(
         base,
         upper.replace(
-          'M0 0H128V128H58',
-          'M0 0H128V128H59',
+          'M0 0L128 0 128 128 14.819',
+          'M0 0L127 0 128 128 14.819',
         ),
       );
       await expect(compileTemporary()).rejects.toThrow(

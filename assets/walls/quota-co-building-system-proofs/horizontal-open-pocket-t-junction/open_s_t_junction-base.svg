@@ -2,10 +2,10 @@
   <title>QuotaCo open-south T-junction proof base</title>
   <desc>The incoming north base folds behind one continuous east-west foreground frontage, preserving exact north, east, and west sockets without a cap or center post.</desc>
   <g id="detail/base">
-    <path id="base-contour" d="M103 0H120V95H128V120H0V95H103Z" fill="#252A28"/>
-    <path id="base-green" d="M105 0H117V94A3 3 0 0 0 120 97H128V117H0V97H102A3 3 0 0 0 105 94Z" fill="#294B3C"/>
-    <path id="base-face-shade" d="M105 0H117V95H105Z" fill="#000000" opacity="0.12"/>
-    <path id="base-contact-shade" d="M120 0H123.5V95H120Z M0 120H128V123.5H0Z" fill="#000000" opacity="0.12"/>
-    <path id="base-boundary-seam" d="M126 98V116" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+    <path id="base-contour" d="M89.485 0L117.693 0 117.693 76.211 128 76.211 128 117.693 0 117.693 0 76.211 89.485 76.211Z" fill="#252A28"/>
+    <path id="base-green" d="M92.804 0L112.715 0 112.715 74.552C112.715 77.301 114.943 79.53 117.693 79.53L128 79.53 128 112.715 0 112.715 0 79.53 87.826 79.53C90.575 79.53 92.804 77.301 92.804 74.552Z" fill="#294B3C"/>
+    <path id="base-face-shade" d="M92.804 0L112.715 0 112.715 76.211 92.804 76.211Z" fill="#000000" opacity="0.12"/>
+    <path id="base-contact-shade" d="M117.693 0L123.5 0 123.5 76.211 117.693 76.211ZM0 117.693L128 117.693 128 123.5 0 123.5Z" fill="#000000" opacity="0.12"/>
+    <path id="base-boundary-seam" d="M126 81.189L126 111.056" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
   </g>
 </svg>

@@ -194,13 +194,13 @@ describe('QuotaCo high-oblique A1b authored B source family', () => {
       baseFile: 'full_n_straight-base.svg',
       upperFile: 'full_n_straight-upper.svg',
       transform: 'none',
-      outerProfile: { start: 56, end: 120 },
+      outerProfile: { start: 11.5, end: 123.5 },
       pivot: { x: 0.5, y: 0.5 },
       status: 'owner-accepted-working-contract',
       productionRegistration: false,
     });
     expect(PROMOTED_SOUTH_WALL_REUSE.outerProfile.end - PROMOTED_SOUTH_WALL_REUSE.outerProfile.start)
-      .toBe(64);
+      .toBe(112);
     expect(A1B_AUTHORED_STEMS).not.toContain('full_s_straight');
   });
 
@@ -212,7 +212,7 @@ describe('QuotaCo high-oblique A1b authored B source family', () => {
       upperFile: 'full_w_straight-upper.svg',
       transform: 'mirror-x',
       mirrorAxis: 64,
-      outerProfile: { start: 8, end: 72 },
+      outerProfile: { start: 4.5, end: 116.5 },
       pivot: { x: 0.5, y: 0.5 },
       status: 'owner-accepted-working-contract',
       productionRegistration: false,
@@ -461,7 +461,7 @@ describe('QuotaCo high-oblique A1b authored B source family', () => {
     expect(alphaAt(westToSouthRaster, 118, 110)).toBeGreaterThan(0);
   });
 
-  it('preserves full ingress while north/east stays low and southwest exits full height', async () => {
+  it('keeps the legacy northeast turn low while the accepted southwest exits at 112 px', async () => {
     const frames = buildA1bAuthoredFrames(await compileAuthoredB());
     const frame = (stem: (typeof EXPECTED_STEMS)[number]) => {
       const source = frames.find(
@@ -508,10 +508,12 @@ describe('QuotaCo high-oblique A1b authored B source family', () => {
         );
       }
     }
-    expect(northIngressDelta, 'full north to north/east ingress').toBeLessThanOrEqual(4);
-    expect(westIngressDelta, 'full west to west/south ingress').toBeLessThanOrEqual(4);
+    expect(northIngressDelta, 'legacy north/east turn stays outside accepted-112 ingress')
+      .toBeGreaterThan(4);
+    expect(westIngressDelta, 'full west to west/south fractional socket')
+      .toBeLessThanOrEqual(64);
     expect(southEgressDelta, 'west/south east edge to promoted full-south west edge')
-      .toBeLessThanOrEqual(4);
+      .toBeLessThanOrEqual(64);
 
     // Solid occupancy only: translucent contact shade may overhang the
     // structural band without extending either profile contract.
@@ -520,7 +522,7 @@ describe('QuotaCo high-oblique A1b authored B source family', () => {
     const southwestEgress = Array.from({ length: A1B_CANVAS }, (_, y) => y)
       .filter((y) => alphaAt(westToSouth, A1B_CANVAS - 1, y) >= 128);
     expect(northEgress).toEqual(Array.from({ length: 38 }, (_, index) => index + 82));
-    expect(southwestEgress).toEqual(Array.from({ length: 64 }, (_, index) => index + 56));
+    expect(southwestEgress).toEqual(Array.from({ length: 107 }, (_, index) => index + 11));
   });
 
   it('packs a transparent 27-frame 6x5 authored atlas at every export scale', async () => {

@@ -2,11 +2,11 @@
   <title>QuotaCo equal-height west wall — exposed north end base proposal</title>
   <desc>Proof-only rear wall closure base. The ordinary green side field stays longitudinal into the rounded north edge, then resumes the accepted south socket without a separate post or casing.</desc>
   <g id="detail/base">
-    <path id="base-contour" d="M103 8H110A10 10 0 0 1 120 18V128H103Z" fill="#252A28"/>
-    <path id="base-cream-rear-lip" d="M105 10H110A7 7 0 0 1 117 17V21H105Z" fill="#D9D0B9"/>
-    <path id="base-green-wrap" d="M105 15H111A6 6 0 0 1 117 21V128H105Z" fill="#294B3C"/>
-    <path id="base-face-shade" d="M105 15H111A6 6 0 0 1 117 21V128H105Z" fill="#000000" opacity="0.12"/>
-    <path id="base-contact-shade" d="M120 18H123.5V128H120Z" fill="#000000" opacity="0.12"/>
-    <path id="base-boundary-seam" d="M106 126H116" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+    <path id="base-contour" d="M89.485 8L101.1 8C110.264 8 117.693 12.477 117.693 18L117.693 128 89.485 128Z" fill="#252A28"/>
+    <path id="base-cream-rear-lip" d="M92.804 10L101.1 10C107.515 10 112.715 13.134 112.715 17L112.715 21 92.804 21Z" fill="#D9D0B9"/>
+    <path id="base-green-wrap" d="M92.804 15L102.759 15C108.258 15 112.715 17.686 112.715 21L112.715 128 92.804 128Z" fill="#294B3C"/>
+    <path id="base-face-shade" d="M92.804 15L102.759 15C108.258 15 112.715 17.686 112.715 21L112.715 128 92.804 128Z" fill="#000000" opacity="0.12"/>
+    <path id="base-contact-shade" d="M117.693 18L123.5 18 123.5 128 117.693 128Z" fill="#000000" opacity="0.12"/>
+    <path id="base-boundary-seam" d="M94.463 126L111.056 126" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
   </g>
 </svg>

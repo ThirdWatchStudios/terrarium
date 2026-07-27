@@ -222,11 +222,11 @@ describe('QuotaCo owner-accepted proof-layer equal-height vertical terminus fami
 
     const northCoral = pathDataForId(northUpper, 'upper-coral-wrap');
     const northGreen = pathDataForId(northUpper, 'upper-green-wrap');
-    expect(northCoral).toMatch(/^M97\b/);
-    expect(northGreen).toMatch(/^M102\b/);
+    expect(northCoral).toBe('M79.53 15L87.826 15 87.826 128 79.53 128Z');
+    expect(northGreen).toBe('M87.826 15L92.804 15 92.804 128 87.826 128Z');
     for (const register of [northCoral, northGreen]) {
       expect(register).not.toMatch(/\bM58\b|\bH117\b/);
-      expect(register).toContain('V128');
+      expect(register).toContain(' 128');
     }
   });
 

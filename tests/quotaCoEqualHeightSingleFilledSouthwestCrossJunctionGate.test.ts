@@ -274,10 +274,10 @@ describe('QuotaCo accepted single-filled southwest cross-junction gate', () => {
     }
 
     const candidate = rasterCandidate(128, true);
-    expect(alphaRowSpan(candidate, 0)).toEqual([4, 71]);
-    expect(alphaRowSpan(candidate, 127)).toEqual([0, 81]);
-    expect(alphaColumnSpan(candidate, 0)).toEqual([56, 127]);
-    expect(alphaColumnSpan(candidate, 127)).toEqual([56, 123]);
+    expect(alphaRowSpan(candidate, 0)).toEqual([4, 116]);
+    expect(alphaRowSpan(candidate, 127)).toEqual([0, 118]);
+    expect(alphaColumnSpan(candidate, 0)).toEqual([11, 127]);
+    expect(alphaColumnSpan(candidate, 127)).toEqual([11, 123]);
   });
 
   it('promotes mask_29 as the accepted whole-cell X derivation of mask_23', () => {

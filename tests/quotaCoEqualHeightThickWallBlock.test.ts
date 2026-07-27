@@ -239,16 +239,20 @@ describe('QuotaCo accepted proof-layer 2x2 thick-wall block', () => {
     const rearUpper = source(PROPOSAL_DIRECTORY, 'filled_nw_elbow-upper.svg');
     const foregroundUpper = source(PROPOSAL_DIRECTORY, 'filled_sw_elbow-upper.svg');
     expect(rearUpper).toContain('id="upper-solid-top-fill"');
-    expect(rearUpper).toContain('d="M66 56H128V128H56V66A10 10 0 0 1 66 56Z"');
+    expect(rearUpper).toContain(
+      'd="M28.093 11.5L128 11.5 128 128 11.5 128 11.5 28.093C11.5 18.929 18.929 11.5 28.093 11.5Z"',
+    );
     expect(rearUpper).not.toMatch(/upper-coral|upper-green|upper-face-shade|upper-arris-seam/);
-    expect(foregroundUpper).toContain('d="M56 0H128V97H66A10 10 0 0 1 56 87Z"');
+    expect(foregroundUpper).toContain(
+      'd="M11.5 0L128 0 128 79.53 28.093 79.53C18.929 79.53 11.5 72.101 11.5 62.937Z"',
+    );
     expect(foregroundUpper).toContain('id="upper-south-coral-wrap"');
     expect(foregroundUpper).toContain('id="upper-south-green-wrap"');
     expect(foregroundUpper).toContain(
-      'id="upper-south-face-shade" d="M58 63H128V84H58Z" fill="#000000" opacity="0.08"',
+      'id="upper-south-face-shade" d="M14.819 23.115L128 23.115 128 57.959 14.819 57.959Z" fill="#000000" opacity="0.08"',
     );
     expect(foregroundUpper).toContain(
-      'id="upper-lip-seam" d="M59 87H127"',
+      'id="upper-lip-seam" d="M16.478 62.937L127 62.937"',
     );
     expect(foregroundUpper).not.toMatch(/upper-west-|upper-south-reveal-light|upper-arris-seam/);
     const derivedSoutheast = derivePromotedSoutheastSourcePair(
@@ -268,22 +272,22 @@ describe('QuotaCo accepted proof-layer 2x2 thick-wall block', () => {
     for (const [x, y] of [
       [124, 124], [128, 124], [132, 124],
       [124, 128], [128, 128], [132, 128],
-      [124, 180], [128, 180], [132, 180],
+      [124, 146], [128, 146], [132, 146],
     ]) {
       expect(rgbaAt(pixels, 256, x, y)).toEqual(cream);
     }
     for (const x of [80, 124, 128, 132, 176]) {
-      expect(rgbaAt(pixels, 256, x, 200)).toEqual(shadedCream);
+      expect(rgbaAt(pixels, 256, x, 166)).toEqual(shadedCream);
     }
     for (const x of [80, 124, 128, 132, 176]) {
-      expect(rgbaAt(pixels, 256, x, 220)).toEqual(coral);
-      expect(rgbaAt(pixels, 256, x, 230)).toEqual(green);
+      expect(rgbaAt(pixels, 256, x, 199)).toEqual(coral);
+      expect(rgbaAt(pixels, 256, x, 216)).toEqual(green);
     }
 
     const farPixels = rasterCandidateBlock(80);
     expect(rgbaAt(farPixels, 80, 40, 40)).toEqual(cream);
-    const farCoral = rgbaAt(farPixels, 80, 40, 69);
-    const farGreen = rgbaAt(farPixels, 80, 40, 72);
+    const farCoral = rgbaAt(farPixels, 80, 40, 62);
+    const farGreen = rgbaAt(farPixels, 80, 40, 68);
     expect(farCoral[3]).toBeGreaterThan(100);
     expect(farCoral[0]).toBeGreaterThan(farCoral[1]);
     expect(farGreen[3]).toBe(255);

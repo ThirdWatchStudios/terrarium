@@ -228,16 +228,26 @@ describe('QuotaCo owner-accepted proof-layer N×2 thick-wall horizontal repeat f
     expect(source(PROPOSAL_DIRECTORY, 'filled_s_middle-base.svg')).toBe(
       source(CANONICAL_DIRECTORY, 'full_n_straight-base.svg'),
     );
-    expect(rear).toContain('id="upper-contour" d="M0 56H128V128H0Z"');
-    expect(rear).toContain('id="upper-solid-top-fill" d="M0 58H128V128H0Z"');
+    expect(rear).toContain(
+      'id="upper-contour" d="M0 11.5L128 11.5 128 128 0 128Z"',
+    );
+    expect(rear).toContain(
+      'id="upper-solid-top-fill" d="M0 14.819L128 14.819 128 128 0 128Z"',
+    );
     expect(rear).not.toMatch(/coral|green|shade|plinth|seam|cap|rollover/i);
     expect(foreground).toContain(
-      'id="upper-south-face-shade" d="M0 63H128V84H0Z" fill="#000000" opacity="0.08"',
+      'id="upper-south-face-shade" d="M0 23.115L128 23.115 128 57.959 0 57.959Z" fill="#000000" opacity="0.08"',
     );
-    expect(foreground).toContain('id="upper-lip-seam" d="M1 87H127"');
-    expect(foreground).toContain('id="upper-south-coral-wrap" d="M0 88H128V94H0Z"');
-    expect(foreground).toContain('id="upper-south-green-wrap" d="M0 94H128V117H0Z"');
-    expect(foreground).toContain('id="upper-boundary-seam" d="M126 88V96 M126 98V116"');
+    expect(foreground).toContain('id="upper-lip-seam" d="M1 62.937L127 62.937"');
+    expect(foreground).toContain(
+      'id="upper-south-coral-wrap" d="M0 64.596L128 64.596 128 74.552 0 74.552Z"',
+    );
+    expect(foreground).toContain(
+      'id="upper-south-green-wrap" d="M0 74.552L128 74.552 128 112.715 0 112.715Z"',
+    );
+    expect(foreground).toContain(
+      'id="upper-boundary-seam" d="M126 64.596L126 77.87M126 81.189L126 111.056"',
+    );
     expect(foreground).not.toMatch(/\bid=["'][^"']*(?:arris|cap|rollover)/i);
   });
 
@@ -251,10 +261,10 @@ describe('QuotaCo owner-accepted proof-layer N×2 thick-wall horizontal repeat f
       expect(rgbaAt(pixels, width, x, 100)).toEqual(cream);
       expect(rgbaAt(pixels, width, x, 127)).toEqual(cream);
       expect(rgbaAt(pixels, width, x, 128)).toEqual(cream);
-      expect(rgbaAt(pixels, width, x, 180)).toEqual(cream);
-      expect(rgbaAt(pixels, width, x, 203)).toEqual(shadedCream);
-      expect(rgbaAt(pixels, width, x, 218)).toEqual(coral);
-      expect(rgbaAt(pixels, width, x, 232)).toEqual(green);
+      expect(rgbaAt(pixels, width, x, 146)).toEqual(cream);
+      expect(rgbaAt(pixels, width, x, 166)).toEqual(shadedCream);
+      expect(rgbaAt(pixels, width, x, 199)).toEqual(coral);
+      expect(rgbaAt(pixels, width, x, 216)).toEqual(green);
     }
   });
 

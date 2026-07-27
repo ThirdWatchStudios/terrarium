@@ -2,8 +2,8 @@
   <title>QuotaCo filled north middle accepted proof upper</title>
   <desc>A cream-only rear span with exact east and west sockets and no buried foreground fascia.</desc>
   <g id="detail/upper">
-    <path id="upper-contour" d="M0 56H128V128H0Z" fill="#252A28"/>
-    <path id="upper-solid-top-fill" d="M0 58H128V128H0Z" fill="#D9D0B9"/>
-    <path id="upper-solid-top-highlight" d="M0 58H128V63H0Z" fill="#FFFFFF" opacity="0.18"/>
+    <path id="upper-contour" d="M0 11.5L128 11.5 128 128 0 128Z" fill="#252A28"/>
+    <path id="upper-solid-top-fill" d="M0 14.819L128 14.819 128 128 0 128Z" fill="#D9D0B9"/>
+    <path id="upper-solid-top-highlight" d="M0 14.819L128 14.819 128 23.115 0 23.115Z" fill="#FFFFFF" opacity="0.18"/>
   </g>
 </svg>

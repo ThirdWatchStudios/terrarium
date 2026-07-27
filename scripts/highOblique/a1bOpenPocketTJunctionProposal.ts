@@ -122,11 +122,11 @@ function validateSource(
 
   if (source.layer === 'base') {
     const required = [
-      ['base-contour', 'M103 0H120V95H128V120H120V128H103V120H62V95H103Z'],
-      ['base-green', 'M105 0H117V94A3 3 0 0 0 120 97H128V117H120A3 3 0 0 0 117 120V128H105Z'],
-      ['base-contact-shade', 'M120 0H123.5V95H120Z M120 120H128V123.5H123.5V128H120Z'],
-      ['base-boundary-seam', 'M126 98V116'],
-      ['base-south-service-seam', 'M106 126H116'],
+      ['base-contour', 'M89.485 0L117.693 0 117.693 76.211 128 76.211 128 117.693 117.693 117.693 117.693 128 89.485 128 89.485 117.693 21.456 117.693 21.456 76.211 89.485 76.211Z'],
+      ['base-green', 'M92.804 0L112.715 0 112.715 74.552C112.715 77.301 114.943 79.53 117.693 79.53L128 79.53 128 112.715 117.693 112.715C114.943 112.715 112.715 114.943 112.715 117.693L112.715 128 92.804 128Z'],
+      ['base-contact-shade', 'M117.693 0L123.5 0 123.5 76.211 117.693 76.211ZM117.693 117.693L128 117.693 128 123.5 123.5 123.5 123.5 128 117.693 128Z'],
+      ['base-boundary-seam', 'M126 81.189L126 111.056'],
+      ['base-south-service-seam', 'M94.463 126L111.056 126'],
     ] as const;
     if (required.some(([id, d]) => !requiredPath(content, id, d))) {
       throw new A1bOpenPocketTJunctionProposalImportError(
@@ -135,16 +135,16 @@ function validateSource(
     }
   } else {
     const required = [
-      ['upper-contour', 'M56 0H105V48A8 8 0 0 0 113 56H128V97H105V128H56Z'],
-      ['upper-shell', 'M58 0H103V49A9 9 0 0 0 112 58H128V95H103V128H58Z'],
-      ['upper-cream-bridge', 'M92 58H128V88H92Z'],
-      ['upper-reveal-light', 'M92 58H128V63H92Z'],
-      ['upper-coral-band', 'M97 0H102V82A6 6 0 0 0 108 88H128V94H102V128H97Z'],
-      ['upper-green-handoff', 'M102 0H105V91A3 3 0 0 0 108 94H128V97H108A3 3 0 0 0 105 100V128H102Z'],
-      ['upper-arris-seam', 'M92 1V127 M92 63H127'],
-      ['upper-band-seam', 'M102 1V58 M102 94V127 M92 94H127'],
-      ['upper-boundary-seam', 'M126 64V96'],
-      ['upper-south-service-seam', 'M58 126H104'],
+      ['upper-contour', 'M11.5 0L92.804 0 92.804 9.857C92.804 10.764 98.747 11.5 106.078 11.5L128 11.5 128 79.53 92.804 79.53 92.804 128 11.5 128Z'],
+      ['upper-shell', 'M14.819 0L89.485 0 89.485 10.063C89.485 11.083 96.17 14.819 104.419 14.819L128 14.819 128 76.211 89.485 76.211 89.485 128 14.819 128Z'],
+      ['upper-cream-bridge', 'M71.233 14.819L128 14.819 128 64.596 71.233 64.596Z'],
+      ['upper-reveal-light', 'M71.233 14.819L128 14.819 128 23.115 71.233 23.115Z'],
+      ['upper-coral-band', 'M79.53 0L87.826 0 87.826 54.641C87.826 60.14 92.283 64.596 97.781 64.596L128 64.596 128 74.552 87.826 74.552 87.826 128 79.53 128Z'],
+      ['upper-green-handoff', 'M87.826 0L92.804 0 92.804 69.574C92.804 72.323 95.032 74.552 97.781 74.552L128 74.552 128 79.53 97.781 79.53C95.032 79.53 92.804 81.758 92.804 84.507L92.804 128 87.826 128Z'],
+      ['upper-arris-seam', 'M71.233 0.75L71.233 127M71.233 23.115L127 23.115'],
+      ['upper-band-seam', 'M87.826 0.75L87.826 14.819M87.826 74.552L87.826 127M71.233 74.552L127 74.552'],
+      ['upper-boundary-seam', 'M126 24.774L126 77.87'],
+      ['upper-south-service-seam', 'M14.819 126L91.144 126'],
     ] as const;
     if (required.some(([id, d]) => !requiredPath(content, id, d))) {
       throw new A1bOpenPocketTJunctionProposalImportError(

@@ -2,8 +2,8 @@
   <title>QuotaCo filled northwest elbow accepted proof upper</title>
   <desc>The accepted northwest exterior is recut as one solid cream quadrant with no surviving southeast pocket face.</desc>
   <g id="detail/upper">
-    <path id="upper-contour" d="M66 56H128V128H56V66A10 10 0 0 1 66 56Z" fill="#252A28"/>
-    <path id="upper-solid-top-fill" d="M66 58H128V128H58V66A8 8 0 0 1 66 58Z" fill="#D9D0B9"/>
-    <path id="upper-solid-top-highlight" d="M66 58H128V63H59A8 8 0 0 1 66 58Z" fill="#FFFFFF" opacity="0.18"/>
+    <path id="upper-contour" d="M28.093 11.5L128 11.5 128 128 11.5 128 11.5 28.093C11.5 18.929 18.929 11.5 28.093 11.5Z" fill="#252A28"/>
+    <path id="upper-solid-top-fill" d="M28.093 14.819L128 14.819 128 128 14.819 128 14.819 28.093C14.819 20.762 20.762 14.819 28.093 14.819Z" fill="#D9D0B9"/>
+    <path id="upper-solid-top-highlight" d="M28.093 14.819L128 14.819 128 23.115 16.478 23.115C18.406 18.326 22.937 15.091 28.093 14.819Z" fill="#FFFFFF" opacity="0.18"/>
   </g>
 </svg>

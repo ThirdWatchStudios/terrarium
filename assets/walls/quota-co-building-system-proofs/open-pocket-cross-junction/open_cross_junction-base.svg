@@ -2,11 +2,11 @@
   <title>QuotaCo open-pocket cross-junction proposal base</title>
   <desc>One flattened lower frontage joins all four accepted sockets without a stacked T overlay, center post, or buried inner cap.</desc>
   <g id="detail/base">
-    <path id="base-contour" d="M103 0H120V95H128V120H120V128H103V120H0V95H103Z" fill="#252A28"/>
-    <path id="base-green" d="M105 0H117V94A3 3 0 0 0 120 97H128V117H120A3 3 0 0 0 117 120V128H105V120A3 3 0 0 0 102 117H0V97H102A3 3 0 0 0 105 94Z" fill="#294B3C"/>
-    <path id="base-face-shade" d="M105 0H117V97H105Z M105 117H117V128H105Z" fill="#000000" opacity="0.12"/>
-    <path id="base-contact-shade" d="M120 0H123.5V95H120Z M0 120H56V123.5H0Z M120 120H128V123.5H123.5V128H120Z" fill="#000000" opacity="0.12"/>
-    <path id="base-boundary-seam" d="M126 98V116" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
-    <path id="base-south-service-seam" d="M106 126H116" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+    <path id="base-contour" d="M89.485 0L117.693 0 117.693 76.211 128 76.211 128 117.693 117.693 117.693 117.693 128 89.485 128 89.485 117.693 0 117.693 0 76.211 89.485 76.211Z" fill="#252A28"/>
+    <path id="base-green" d="M92.804 0L112.715 0 112.715 74.552C112.715 77.301 114.943 79.53 117.693 79.53L128 79.53 128 112.715 117.693 112.715C114.943 112.715 112.715 114.943 112.715 117.693L112.715 128 92.804 128 92.804 117.693C92.804 114.943 90.575 112.715 87.826 112.715L0 112.715 0 79.53 87.826 79.53C90.575 79.53 92.804 77.301 92.804 74.552Z" fill="#294B3C"/>
+    <path id="base-face-shade" d="M92.804 0L112.715 0 112.715 79.53 92.804 79.53ZM92.804 112.715L112.715 112.715 112.715 128 92.804 128Z" fill="#000000" opacity="0.12"/>
+    <path id="base-contact-shade" d="M117.693 0L123.5 0 123.5 76.211 117.693 76.211ZM0 117.693L11.5 117.693 11.5 123.5 0 123.5ZM117.693 117.693L128 117.693 128 123.5 123.5 123.5 123.5 128 117.693 128Z" fill="#000000" opacity="0.12"/>
+    <path id="base-boundary-seam" d="M126 81.189L126 111.056" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+    <path id="base-south-service-seam" d="M94.463 126L111.056 126" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
   </g>
 </svg>

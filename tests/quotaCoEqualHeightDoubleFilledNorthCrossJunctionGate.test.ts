@@ -196,10 +196,10 @@ describe('QuotaCo accepted double-filled north cross-junction gate', () => {
   it('locks one continuous north slab, one cream owner, and one rounded south handoff', () => {
     const base = source('open_cross_filled_n-base.svg');
     expect(base).toContain(
-      'id="base-buried-north-underlay" d="M0 0H128V95H0Z"',
+      'id="base-buried-north-underlay" d="M0 0L128 0 128 76.211 0 76.211Z"',
     );
     expect(base).toContain(
-      'id="base-contour-exposed-south" d="M103 95H128V120H120V128H103V120H0V95Z"',
+      'id="base-contour-exposed-south" d="M89.485 76.211L128 76.211 128 117.693 117.693 117.693 117.693 128 89.485 128 89.485 117.693 0 117.693 0 76.211Z"',
     );
     expect(base).not.toMatch(
       /id="(?:base-contour-open-north|base-green-open-north|base-face-shade-open-north)"/,
@@ -207,31 +207,31 @@ describe('QuotaCo accepted double-filled north cross-junction gate', () => {
 
     const upper = source('open_cross_filled_n-upper.svg');
     expect(upper).toContain(
-      'id="upper-contour" d="M0 0H128V97H115A10 10 0 0 0 105 107V128H56V107A10 10 0 0 0 46 97H0Z"',
+      'id="upper-contour" d="M0 0L128 0 128 79.53 109.396 79.53C100.232 79.53 92.804 86.958 92.804 96.122L92.804 128 11.5 128 11.5 96.122C11.5 86.958 10.581 79.53 9.446 79.53L0 79.53Z"',
     );
     expect(upper).toContain(
-      'id="upper-shell" d="M0 0H128V95H113A10 10 0 0 0 103 105V128H58V105A10 10 0 0 0 48 95H0Z"',
+      'id="upper-shell" d="M0 0L128 0 128 76.211 106.078 76.211C96.914 76.211 89.485 83.64 89.485 92.804L89.485 128 14.819 128 14.819 92.804C14.819 83.64 10.991 76.211 9.857 76.211L0 76.211Z"',
     );
     expect(upper).toContain(
-      'id="upper-horizontal-face-shade" d="M0 63H58V88H0Z M105 63H128V88H105Z"',
+      'id="upper-horizontal-face-shade" d="M0 23.115L14.819 23.115 14.819 64.596 0 64.596ZM92.804 23.115L128 23.115 128 64.596 92.804 64.596Z"',
     );
     expect(upper).toContain(
-      'id="upper-coral-band" d="M0 88H58V94H0Z M97 128V94H128V88H108A6 6 0 0 0 102 94V128Z"',
+      'id="upper-coral-band" d="M0 64.596L14.819 64.596 14.819 74.552 0 74.552ZM79.53 128L79.53 74.552 128 74.552 128 64.596 97.781 64.596C92.283 64.596 87.826 69.053 87.826 74.552L87.826 128Z"',
     );
     expect(upper).toContain(
-      'id="upper-green-handoff" d="M0 94H58V97H0Z M102 91H105A3 3 0 0 0 108 94H128V97H108A3 3 0 0 0 105 100V128H102Z"',
+      'id="upper-green-handoff" d="M0 74.552L14.819 74.552 14.819 79.53 0 79.53ZM87.826 69.574L92.804 69.574C92.804 72.323 95.032 74.552 97.781 74.552L128 74.552 128 79.53 97.781 79.53C95.032 79.53 92.804 81.758 92.804 84.507L92.804 128 87.826 128Z"',
     );
     expect(upper).toContain(
-      'id="upper-south-plane-light" d="M58 88H102.5A12 12 0 0 0 90.5 100V128H58Z"',
+      'id="upper-south-plane-light" d="M14.819 64.596L88.656 64.596C77.66 64.596 68.744 73.511 68.744 84.507L68.744 128 14.819 128Z"',
     );
     expect(upper).toContain(
-      'id="upper-south-arris-lip" d="M102.5 88H104A12 12 0 0 0 92 100V128H90.5V100A12 12 0 0 1 102.5 88Z"',
+      'id="upper-south-arris-lip" d="M88.656 64.596L91.144 64.596C80.149 64.596 71.233 73.511 71.233 84.507L71.233 128 68.744 128 68.744 84.507C68.744 73.511 77.66 64.596 88.656 64.596Z"',
     );
     expect(upper).toContain(
-      'id="upper-south-face-shade" d="M104 88H117A12 12 0 0 0 105 100V128H92V100A12 12 0 0 1 104 88Z"',
+      'id="upper-south-face-shade" d="M91.144 64.596L112.715 64.596C101.719 64.596 92.804 73.511 92.804 84.507L92.804 128 71.233 128 71.233 84.507C71.233 73.511 80.149 64.596 91.144 64.596Z"',
     );
     expect(upper).toContain(
-      'id="upper-arris-seam" d="M92 127V100A12 12 0 0 1 104 88H116"',
+      'id="upper-arris-seam" d="M71.233 127L71.233 84.507C71.233 73.511 80.149 64.596 91.144 64.596L111.056 64.596"',
     );
     expect(
       [...upper.matchAll(
@@ -267,18 +267,19 @@ describe('QuotaCo accepted double-filled north cross-junction gate', () => {
     }
   });
 
-  it('keeps the cream top continuous through the south socket and shade off the join', () => {
+  it('keeps the lit cream plane continuous through the south socket and shade off the join', () => {
     const raster = rasterCandidate(128, '#A8A28F');
     const cream = [217, 208, 185] as const;
+    const litCream = [224, 216, 198] as const;
 
-    expect(opaqueRgbAt(raster, 80, 55)).toEqual(cream);
-    expect(opaqueRgbAt(raster, 80, 70)).toEqual(cream);
-    expect(opaqueRgbAt(raster, 80, 80)).toEqual(cream);
-    expect(opaqueRgbAt(raster, 80, 87)).toEqual(cream);
+    expect(opaqueRgbAt(raster, 60, 55)).toEqual(cream);
+    expect(opaqueRgbAt(raster, 60, 70)).toEqual(litCream);
+    expect(opaqueRgbAt(raster, 60, 80)).toEqual(litCream);
+    expect(opaqueRgbAt(raster, 60, 87)).toEqual(litCream);
     expect(opaqueRgbAt(raster, 30, 75)).not.toEqual(cream);
 
     for (const y of [90, 96, 110] as const) {
-      const [red, green, blue] = opaqueRgbAt(raster, 80, y);
+      const [red, green, blue] = opaqueRgbAt(raster, 60, y);
       expect(red).toBeGreaterThan(200);
       expect(green).toBeGreaterThan(190);
       expect(blue).toBeGreaterThan(170);
@@ -338,7 +339,7 @@ describe('QuotaCo accepted double-filled north cross-junction gate', () => {
 
       writeInventory(
         base,
-        upper.replace('M0 0H128V95H113', 'M1 0H128V95H113'),
+        upper.replace('M0 0L128 0 128 76.211', 'M1 0L128 0 128 76.211'),
       );
       await expect(compileTemporary()).rejects.toThrow(
         /exact double-filled north geometry for upper-shell/,

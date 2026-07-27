@@ -129,25 +129,25 @@ Record<
   'open_cross_filled_ne_se_sw-base': [
     [
       'base-structural-mass',
-      'M56 0H128V128H0V56H46A10 10 0 0 0 56 46Z',
+      'M11.5 0L128 0 128 128 0 128 0 11.5 9.446 11.5C10.581 11.5 11.5 10.581 11.5 9.446Z',
     ],
   ],
   'open_cross_filled_ne_se_sw-upper': [
     [
       'upper-contour',
-      'M56 0H128V128H0V56H46A10 10 0 0 0 56 46Z',
+      'M11.5 0L128 0 128 128 0 128 0 11.5 9.446 11.5C10.581 11.5 11.5 10.581 11.5 9.446Z',
     ],
     [
       'upper-shell',
-      'M58 0H128V128H0V58H48A10 10 0 0 0 58 48Z',
+      'M14.819 0L128 0 128 128 0 128 0 14.819 9.857 14.819C10.991 14.819 14.819 10.991 14.819 9.857Z',
     ],
     [
       'upper-nw-reveal-light',
-      'M0 58H48A10 10 0 0 0 58 48V44A12 12 0 0 1 46 56H0Z',
+      'M0 14.819L9.857 14.819C10.991 14.819 14.819 10.991 14.819 9.857L14.819 9.036C14.819 10.397 10.807 11.5 9.446 11.5L0 11.5Z',
     ],
     [
       'upper-arris-seam',
-      'M1 56H46A12 12 0 0 0 58 44V1',
+      'M0.75 11.5L9.446 11.5C10.807 11.5 14.819 10.397 14.819 9.036L14.819 0.75',
     ],
   ],
 };
@@ -163,11 +163,11 @@ Record<
   'open_cross_filled_ne_se_sw-upper': [
     [
       'upper-nw-reveal-light',
-      '<path id="upper-nw-reveal-light" d="M0 58H48A10 10 0 0 0 58 48V44A12 12 0 0 1 46 56H0Z" fill="#FFFFFF" opacity="0.30"/>',
+      '<path id="upper-nw-reveal-light" d="M0 14.819L9.857 14.819C10.991 14.819 14.819 10.991 14.819 9.857L14.819 9.036C14.819 10.397 10.807 11.5 9.446 11.5L0 11.5Z" fill="#FFFFFF" opacity="0.30"/>',
     ],
     [
       'upper-arris-seam',
-      '<path id="upper-arris-seam" d="M1 56H46A12 12 0 0 0 58 44V1" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>',
+      '<path id="upper-arris-seam" d="M0.75 11.5L9.446 11.5C10.807 11.5 14.819 10.397 14.819 9.036L14.819 0.75" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>',
     ],
   ],
 };

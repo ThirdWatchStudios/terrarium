@@ -116,8 +116,9 @@ describe('QuotaCo owner-accepted open-pocket cross-junction gate', () => {
   });
 
   it('rasterizes the composed source at every declared review size', () => {
-    expect(source('open_cross_junction-upper.svg'))
-      .toContain('id="upper-arris-seam" d="M92 1V58 M1 63H127 M92 88V127"');
+    expect(source('open_cross_junction-upper.svg')).toContain(
+      'id="upper-arris-seam" d="M71.233 0.75L71.233 14.819M0.75 23.115L127 23.115M71.233 64.596L71.233 127"',
+    );
     expect(source('open_cross_junction-upper.svg')).not.toContain('104 63');
     for (const cellPixels of [240, 90, 40] as const) {
       const raster = rasterCandidate(cellPixels);

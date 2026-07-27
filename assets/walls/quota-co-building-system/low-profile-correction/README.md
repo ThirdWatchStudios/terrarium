@@ -1,9 +1,9 @@
 # A1b low-profile corrective source strip
 
-> **Legacy comparison status (superseded for ordinary walls by owner approval, 2026-07-21):** these
+> **Legacy comparison status (superseded for ordinary walls by owner approvals, 2026-07-21 and 2026-07-27):** these
 > low-south, low-east, low-southeast, and transition sources remain intact as deterministic A/B evidence.
 > They are not the current ordinary structural-wall or perimeter/cutaway target. Ordinary walls now use the
-> full 64-unit profile on every edge, with south reusing the exact full-north pair, east retained as an
+> accepted source-owned 112-unit profile on every edge, with south reusing the exact full-north pair, east retained as an
 > owner-accepted unregistered full-west mirror, and southeast promoted as a seam-filtered X mirror of the southwest
 > source pair. Keep these sources as labeled comparison evidence; only a separately approved internal-partition
 > catalog may revive a low profile.

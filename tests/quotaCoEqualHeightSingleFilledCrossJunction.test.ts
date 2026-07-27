@@ -178,10 +178,10 @@ describe('QuotaCo owner-accepted single-filled cross-junction gate', () => {
       .toContain('id="base-buried-ne-underlay"');
     const upper = source('open_cross_filled_ne-upper.svg');
     expect(upper).toContain(
-      'id="upper-shell" d="M58 0H128V95H113A10 10 0 0 0 103 105V128H58V105A10 10 0 0 0 48 95H0V58H48A10 10 0 0 0 58 48Z"',
+      'id="upper-shell" d="M14.819 0L128 0 128 76.211 106.078 76.211C96.914 76.211 89.485 83.64 89.485 92.804L89.485 128 14.819 128 14.819 92.804C14.819 83.64 10.991 76.211 9.857 76.211L0 76.211 0 14.819 9.857 14.819C10.991 14.819 14.819 10.991 14.819 9.857Z"',
     );
     expect(upper).toContain(
-      'id="upper-reveal-light" d="M0 58H48A10 10 0 0 0 58 48V44A12 12 0 0 1 46 56H0Z"',
+      'id="upper-reveal-light" d="M0 14.819L9.857 14.819C10.991 14.819 14.819 10.991 14.819 9.857L14.819 9.036C14.819 10.397 10.807 11.5 9.446 11.5L0 11.5Z"',
     );
     expect(upper).not.toContain('id="upper-ne-solid-top"');
     expect(upper).not.toContain('id="upper-cream-bridge"');
@@ -190,16 +190,16 @@ describe('QuotaCo owner-accepted single-filled cross-junction gate', () => {
     expect(upper).not.toContain('id="upper-south-coral-band"');
     expect(upper).not.toContain('id="upper-south-green-handoff"');
     expect(upper).toContain(
-      'id="upper-south-plane-light" d="M58 88H102.5A12 12 0 0 0 90.5 100V128H58Z"',
+      'id="upper-south-plane-light" d="M14.819 64.596L88.656 64.596C77.66 64.596 68.744 73.511 68.744 84.507L68.744 128 14.819 128Z"',
     );
     expect(upper).toContain(
-      'id="upper-south-arris-lip" d="M102.5 88H104A12 12 0 0 0 92 100V128H90.5V100A12 12 0 0 1 102.5 88Z"',
+      'id="upper-south-arris-lip" d="M88.656 64.596L91.144 64.596C80.149 64.596 71.233 73.511 71.233 84.507L71.233 128 68.744 128 68.744 84.507C68.744 73.511 77.66 64.596 88.656 64.596Z"',
     );
     expect(upper).toContain(
-      'id="upper-south-face-shade" d="M104 88H117A12 12 0 0 0 105 100V128H92V100A12 12 0 0 1 104 88Z"',
+      'id="upper-south-face-shade" d="M91.144 64.596L112.715 64.596C101.719 64.596 92.804 73.511 92.804 84.507L92.804 128 71.233 128 71.233 84.507C71.233 73.511 80.149 64.596 91.144 64.596Z"',
     );
     expect(upper).toContain(
-      'id="upper-arris-seam" d="M1 56H46A12 12 0 0 0 58 44V1 M92 127V100A12 12 0 0 1 104 88H116"',
+      'id="upper-arris-seam" d="M0.75 11.5L9.446 11.5C10.807 11.5 14.819 10.397 14.819 9.036L14.819 0.75M71.233 127L71.233 84.507C71.233 73.511 80.149 64.596 91.144 64.596L111.056 64.596"',
     );
     expect(
       [...upper.matchAll(
@@ -291,14 +291,19 @@ describe('QuotaCo owner-accepted single-filled cross-junction gate', () => {
         /one combined coral owner and one combined green owner/,
       );
 
-      writeInventory(upper.replace('M58 0H128V95H113', 'M58 0H127V95H113'));
+      writeInventory(
+        upper.replace(
+          'M14.819 0L128 0 128 76.211',
+          'M14.819 0L127 0 128 76.211',
+        ),
+      );
       await expect(compileTemporary()).rejects.toThrow(
         /exact continuous-plane geometry for upper-shell/,
       );
 
       writeInventory(upper.replace(
-        'M58 88H102.5A12 12 0 0 0 90.5 100',
-        'M58 88H101.5A12 12 0 0 0 90.5 100',
+        'M14.819 64.596L88.656 64.596',
+        'M14.819 64.596L87.656 64.596',
       ));
       await expect(compileTemporary()).rejects.toThrow(
         /exact continuous-plane geometry for upper-south-plane-light/,
@@ -396,21 +401,21 @@ describe('QuotaCo owner-accepted single-filled cross-junction gate', () => {
     const mask19North = alphaSpan(mask19, 0);
     const mask19South = alphaSpan(mask19, 127);
 
-    expect(straightWestSouth).toEqual([56, 123]);
+    expect(straightWestSouth).toEqual([11, 123]);
     expect(mask21North).toEqual(straightWestSouth);
-    expect(mask21South).toEqual([56, 127]);
+    expect(mask21South).toEqual([11, 127]);
     expect(mask19North).toEqual(mask21South);
-    expect(mask19South).toEqual([56, 123]);
+    expect(mask19South).toEqual([11, 123]);
     expect(straightWestNorth).toEqual(mask19South);
 
-    expect(spanCenter(mask21North)).toBe(89.5);
-    expect(spanCenter(mask21South)).toBe(91.5);
-    expect(spanCenter(mask19North)).toBe(91.5);
-    expect(spanCenter(mask19South)).toBe(89.5);
+    expect(spanCenter(mask21North)).toBe(67);
+    expect(spanCenter(mask21South)).toBe(69);
+    expect(spanCenter(mask19North)).toBe(69);
+    expect(spanCenter(mask19South)).toBe(67);
 
-    expect(straightEastNorth).toEqual([4, 71]);
-    expect(straightEastSouth).toEqual([4, 71]);
-    expect(spanCenter(straightEastSouth)).toBe(37.5);
+    expect(straightEastNorth).toEqual([4, 116]);
+    expect(straightEastSouth).toEqual([4, 116]);
+    expect(spanCenter(straightEastSouth)).toBe(60);
     expect(straightEastSouth).not.toEqual(mask21North);
     expect(straightEastNorth).not.toEqual(mask19South);
   });

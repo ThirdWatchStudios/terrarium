@@ -188,7 +188,7 @@ function validateSource(
     !requiredPath(
       content,
       'upper-plane-light-open-sw',
-      'M0 58H58V63H0Z',
+      'M0 14.819L14.819 14.819 14.819 23.115 0 23.115Z',
     )
   ) {
     throw new A1bHorizontalPartialTJunctionProposalImportError(
@@ -201,9 +201,9 @@ function validateSource(
       !requiredPath(
         content,
         'upper-south-face-shade',
-        'M0 63H48V84H0Z',
+        'M0 23.115L9.857 23.115 9.857 57.959 0 57.959Z',
       ) ||
-      !requiredPath(content, 'upper-lip-seam', 'M1 87H47')
+      !requiredPath(content, 'upper-lip-seam', 'M0.75 62.937L9.652 62.937')
     )
   ) {
     throw new A1bHorizontalPartialTJunctionProposalImportError(

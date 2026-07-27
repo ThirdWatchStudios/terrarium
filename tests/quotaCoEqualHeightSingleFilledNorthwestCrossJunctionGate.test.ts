@@ -151,26 +151,26 @@ describe('QuotaCo accepted single-filled northwest cross-junction gate', () => {
 
   it('locks the native east-register shell and one cream owner at every review size', () => {
     expect(source('open_cross_filled_nw-base.svg')).toContain(
-      'id="base-buried-nw-underlay" d="M72 0H0V95H72Z"',
+      'id="base-buried-nw-underlay" d="M116.5 0L0 0 0 76.211 116.5 76.211Z"',
     );
     const upper = source('open_cross_filled_nw-upper.svg');
     expect(upper).toContain(
-      'id="upper-contour" d="M72 0H0V97H13A10 10 0 0 1 23 107V128H72V107A10 10 0 0 1 82 97H128V56H82A10 10 0 0 1 72 46Z"',
+      'id="upper-contour" d="M116.5 0L0 0 0 79.53 18.604 79.53C27.768 79.53 35.196 86.958 35.196 96.122L35.196 128 116.5 128 116.5 96.122C116.5 86.958 117.419 79.53 118.554 79.53L128 79.53 128 11.5 118.554 11.5C117.419 11.5 116.5 10.581 116.5 9.446Z"',
     );
     expect(upper).toContain(
-      'id="upper-shell" d="M70 0H0V95H15A10 10 0 0 1 25 105V128H70V105A10 10 0 0 1 80 95H128V58H80A10 10 0 0 1 70 48Z"',
+      'id="upper-shell" d="M113.181 0L0 0 0 76.211 21.922 76.211C31.086 76.211 38.515 83.64 38.515 92.804L38.515 128 113.181 128 113.181 92.804C113.181 83.64 117.009 76.211 118.143 76.211L128 76.211 128 14.819 118.143 14.819C117.009 14.819 113.181 10.991 113.181 9.857Z"',
     );
     expect(upper).toContain(
-      'id="upper-south-plane-light" d="M70 88H25.5A12 12 0 0 1 37.5 100V128H70Z"',
+      'id="upper-south-plane-light" d="M113.181 64.596L39.344 64.596C50.34 64.596 59.256 73.511 59.256 84.507L59.256 128 113.181 128Z"',
     );
     expect(upper).toContain(
-      'id="upper-south-arris-lip" d="M25.5 88H24A12 12 0 0 1 36 100V128H37.5V100A12 12 0 0 0 25.5 88Z"',
+      'id="upper-south-arris-lip" d="M39.344 64.596L36.856 64.596C47.851 64.596 56.767 73.511 56.767 84.507L56.767 128 59.256 128 59.256 84.507C59.256 73.511 50.34 64.596 39.344 64.596Z"',
     );
     expect(upper).toContain(
-      'id="upper-south-face-shade" d="M24 88H11A12 12 0 0 1 23 100V128H36V100A12 12 0 0 0 24 88Z"',
+      'id="upper-south-face-shade" d="M36.856 64.596L15.285 64.596C26.281 64.596 35.196 73.511 35.196 84.507L35.196 128 56.767 128 56.767 84.507C56.767 73.511 47.851 64.596 36.856 64.596Z"',
     );
     expect(upper).toContain(
-      'id="upper-arris-seam" d="M127 63H82A12 12 0 0 1 70 51V1 M36 127V100A12 12 0 0 0 24 88H12"',
+      'id="upper-arris-seam" d="M127.25 23.115L118.554 23.115C117.193 23.115 113.181 14.2 113.181 10.473L113.181 0.75M56.767 127L56.767 84.507C56.767 73.511 47.851 64.596 36.856 64.596L16.944 64.596"',
     );
     expect(upper).not.toMatch(
       /id="(?:upper-nw-solid-top|upper-cream-bridge|upper-secondary-cream)"/,
@@ -241,7 +241,13 @@ describe('QuotaCo accepted single-filled northwest cross-junction gate', () => {
         /duplicate cream ownership through upper-nw-solid-top/,
       );
 
-      writeInventory(base, upper.replace('M70 0H0V95H15', 'M70 0H1V95H15'));
+      writeInventory(
+        base,
+        upper.replace(
+          'M113.181 0L0 0 0 76.211',
+          'M113.181 0L1 0 0 76.211',
+        ),
+      );
       await expect(compileTemporary()).rejects.toThrow(
         /exact native east-register geometry for upper-shell/,
       );

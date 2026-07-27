@@ -191,7 +191,7 @@ function validateSource(
     !requiredPath(
       content,
       'base-contact-shade-open-se',
-      'M120 91H123.5V95H120Z M120 120H128V123.5H123.5V128H120Z',
+      'M117.693 69.574L123.5 69.574 123.5 76.211 117.693 76.211ZM117.693 117.693L128 117.693 128 123.5 123.5 123.5 123.5 128 117.693 128Z',
     )
   ) {
     throw new A1bWestPartialTJunctionProposalImportError(
@@ -201,8 +201,8 @@ function validateSource(
   if (
     source.id === 'open_w_t_filled_ne-upper' &&
     (
-      !requiredPath(content, 'upper-south-face-shade', 'M103 63H128V84H103Z') ||
-      !requiredPath(content, 'upper-lip-seam', 'M103 87H127')
+      !requiredPath(content, 'upper-south-face-shade', 'M89.485 23.115L128 23.115 128 57.959 89.485 57.959Z') ||
+      !requiredPath(content, 'upper-lip-seam', 'M89.485 62.937L127 62.937')
     )
   ) {
     throw new A1bWestPartialTJunctionProposalImportError(

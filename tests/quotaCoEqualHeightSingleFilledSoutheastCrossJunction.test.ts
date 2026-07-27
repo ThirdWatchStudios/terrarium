@@ -225,25 +225,25 @@ describe('QuotaCo accepted single-filled southeast cross-junction gate', () => {
       /id="(?:upper-se-solid-top|upper-cream-bridge|upper-secondary-cream)"/,
     );
     expect(upper).toContain(
-      'id="upper-plane-light-open-ne" d="M58 0H90.5V44A12 12 0 0 0 102.5 56H58Z"',
+      'id="upper-plane-light-open-ne" d="M14.819 0L68.744 0 68.744 9.036C68.744 10.397 77.66 11.5 88.656 11.5L14.819 11.5Z"',
     );
     expect(upper).toContain(
-      'id="upper-arris-lip-open-ne" d="M90.5 0H92V44A12 12 0 0 0 104 56H102.5A12 12 0 0 1 90.5 44Z"',
+      'id="upper-arris-lip-open-ne" d="M68.744 0L71.233 0 71.233 9.036C71.233 10.397 80.149 11.5 91.144 11.5L88.656 11.5C77.66 11.5 68.744 10.397 68.744 9.036Z"',
     );
     expect(upper).toContain(
-      'id="upper-green-open-ne" d="M102 0H105V44A12 12 0 0 0 117 56H114A12 12 0 0 1 102 44Z"',
+      'id="upper-green-open-ne" d="M87.826 0L92.804 0 92.804 9.036C92.804 10.397 101.719 11.5 112.715 11.5L107.737 11.5C96.741 11.5 87.826 10.397 87.826 9.036Z"',
     );
     expect(upper).toContain(
-      'id="upper-coral-open-ne" d="M97 0H102V44A12 12 0 0 0 114 56H109A12 12 0 0 1 97 44Z"',
+      'id="upper-coral-open-ne" d="M79.53 0L87.826 0 87.826 9.036C87.826 10.397 96.741 11.5 107.737 11.5L99.441 11.5C88.445 11.5 79.53 10.397 79.53 9.036Z"',
     );
     expect(upper).toContain(
-      'id="upper-face-shade-open-ne" d="M92 0H105V44A12 12 0 0 0 117 56H104A12 12 0 0 1 92 44Z"',
+      'id="upper-face-shade-open-ne" d="M71.233 0L92.804 0 92.804 9.036C92.804 10.397 101.719 11.5 112.715 11.5L91.144 11.5C80.149 11.5 71.233 10.397 71.233 9.036Z"',
     );
     expect(upper).toContain(
-      'id="upper-arris-seam" d="M92 1V44A12 12 0 0 0 104 56H116 M1 63H126"',
+      'id="upper-arris-seam" d="M71.233 0.75L71.233 9.036C71.233 10.397 80.149 11.5 91.144 11.5L111.056 11.5M0.75 23.115L126 23.115"',
     );
     expect(upper).toContain(
-      'id="upper-band-seam" d="M102 1V44A12 12 0 0 0 114 56 M1 94H48"',
+      'id="upper-band-seam" d="M87.826 0.75L87.826 9.036C87.826 10.397 96.741 11.5 107.737 11.5M0.75 74.552L9.857 74.552"',
     );
     expect(
       [...upper.matchAll(
@@ -271,16 +271,16 @@ describe('QuotaCo accepted single-filled southeast cross-junction gate', () => {
       'open_n_t_filled_se',
     );
 
-    expect(alphaRowSpan(candidate, 0)).toEqual([56, 123]);
+    expect(alphaRowSpan(candidate, 0)).toEqual([11, 123]);
     expect(alphaRowSpan(candidate, 0)).toEqual(alphaRowSpan(mask21, 0));
     expect(rgbaRow(candidate, 0)).toEqual(rgbaRow(mask21, 0));
-    expect(alphaRowSpan(candidate, 127)).toEqual([46, 127]);
+    expect(alphaRowSpan(candidate, 127)).toEqual([9, 127]);
     expect(alphaRowSpan(candidate, 127)).toEqual(alphaRowSpan(mask22, 127));
     expect(rgbaRow(candidate, 127)).toEqual(rgbaRow(mask22, 127));
-    expect(alphaColumnSpan(candidate, 0)).toEqual([56, 123]);
+    expect(alphaColumnSpan(candidate, 0)).toEqual([11, 123]);
     expect(alphaColumnSpan(candidate, 0)).toEqual(alphaColumnSpan(mask15, 0));
     expect(rgbaColumn(candidate, 0)).not.toEqual(rgbaColumn(mask22, 0));
-    expect(alphaColumnSpan(candidate, 127)).toEqual([56, 127]);
+    expect(alphaColumnSpan(candidate, 127)).toEqual([11, 127]);
     expect(alphaColumnSpan(candidate, 127)).toEqual(alphaColumnSpan(mask21, 127));
     expect(rgbaColumn(candidate, 127)).toEqual(rgbaColumn(mask21, 127));
   });

@@ -356,7 +356,7 @@ export const CURRENT_WORKBENCH_BOARDS: readonly CurrentWorkbenchBoard[] = [
     status: EQUAL_HEIGHT_ALL_MASK_CONSISTENCY_GATE.status,
     refreshGroup: 'consistency',
     title: 'All-47 family consistency review',
-    summary: 'Review-only whole-vocabulary pass across all 50 accepted visual presentations, compact occupancy, direct/derived pairs, 1/3/6-cell extents, and light/dark composed environments. The accepted 28/19/0/0 ledger remains frozen.',
+    summary: 'Paused, review-only whole-vocabulary pass across all 50 accepted visual presentations, compact occupancy, direct/derived pairs, 1/3/6-cell extents, and light/dark composed environments. The accepted source-owned 112-unit footprint and 28/19/0/0 ledger remain frozen.',
     alt: 'review-only QuotaCo equal-height all forty-seven mask family consistency sheet across scales grounds derivations sockets extents and composed environments',
   },
   {
@@ -520,8 +520,12 @@ export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): st
   const reviewNames = reviewManifest.map((board) => board.title).join(' · ');
   const acceptedNames = acceptedManifest.map((board) => board.title).join(' · ');
   const reviewStatus = reviewManifest.length > 0
-    ? `<div class="status-card review"><span>Review next · ${reviewManifest.length} ${reviewManifest.length === 1 ? 'piece' : 'pieces'}</span><strong>${escapeHtml(reviewNames)}</strong><p>These remain active proposals and are not yet in the accepted working set.</p></div>`
+    ? `<div class="status-card review"><span>Paused review · ${reviewManifest.length} ${reviewManifest.length === 1 ? 'piece' : 'pieces'}</span><strong>${escapeHtml(reviewNames)}</strong><p>This remains review-only and is not part of the accepted working set.</p></div>`
     : '';
+  const acceptedFootprintStatus =
+    '<div class="status-card accepted"><span>Accepted system geometry</span>' +
+    '<strong>112-unit all-47 wall footprint</strong>' +
+    '<p>The complete proof source bank owns the accepted 112-unit envelope: 11.5..123.5 direct/high and 4.5..116.5 mirrored/low, with the 128-unit frame, centered pivot, and runtime scale unchanged.</p></div>';
   const acceptedFullyFilledCrossJunctionStatus =
     '<div class="status-card accepted"><span>Accepted source gate</span>' +
     `<strong>${escapeHtml(ACCEPTED_FULLY_FILLED_CROSS_JUNCTION_GATE.title)}</strong>` +
@@ -660,11 +664,12 @@ export function renderStyleWorkbenchPage(diagnosticStems: readonly string[]): st
     '@media(max-width:700px){body{padding:18px 12px 48px}.status-grid{grid-template-columns:1fr}.archive-grid,.diagnostic-grid{grid-template-columns:1fr}.board{padding:8px}.current-section{margin:26px 0}}' +
     '</style>' +
     '<header><h1>QuotaCo Building System — current wall workbench</h1>' +
-    '<p class="lede">The all-47 family consistency pass is active for review. Every topology row remains accepted; this sheet audits cross-family register, socket, seam, silhouette, and south-facing shade coherence without crossing the production boundary.</p></header>' +
+    '<p class="lede">The source-owned 112-unit all-47 footprint is accepted proof-layer geometry. The separate family-consistency pass is paused and remains review-only; exporter, atlas, schema, blob mapping, Unity PPU, tile size, and agent scale remain unchanged.</p></header>' +
     '<div id="status">waiting for first render…</div>' +
     '<section class="kit-status" aria-labelledby="kit-status-title"><h2 id="kit-status-title">Current direction status — equal-height structural walls</h2>' +
     '<div class="status-grid">' +
     reviewStatus +
+    acceptedFootprintStatus +
     acceptedFullyFilledCrossJunctionStatus +
     acceptedSingleOpenNortheastCrossJunctionStatus +
     acceptedSingleOpenNorthwestCrossJunctionStatus +

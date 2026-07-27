@@ -240,7 +240,7 @@ describe('QuotaCo owner-accepted double-filled east cross-junction gate', () => 
   it('keeps one cream owner, one buried east slab, and no buried east fascia', () => {
     const base = source('open_cross_filled_e-base.svg');
     expect(base).toContain(
-      'id="base-buried-east-underlay" d="M56 0H128V128H56Z"',
+      'id="base-buried-east-underlay" d="M11.5 0L128 0 128 128 11.5 128Z"',
     );
     expect(base).not.toMatch(
       /id="(?:base-contour-open-ne|base-green-open-ne|base-face-shade-open-ne)"/,
@@ -248,19 +248,19 @@ describe('QuotaCo owner-accepted double-filled east cross-junction gate', () => 
 
     const upper = source('open_cross_filled_e-upper.svg');
     expect(upper).toContain(
-      'id="upper-contour" d="M56 0H128V128H56V107A10 10 0 0 0 46 97H0V56H46A10 10 0 0 0 56 46Z"',
+      'id="upper-contour" d="M11.5 0L128 0 128 128 11.5 128 11.5 96.122C11.5 86.958 10.581 79.53 9.446 79.53L0 79.53 0 11.5 9.446 11.5C10.581 11.5 11.5 10.581 11.5 9.446Z"',
     );
     expect(upper).toContain(
-      'id="upper-shell" d="M58 0H128V128H58V105A10 10 0 0 0 48 95H0V58H48A10 10 0 0 0 58 48Z"',
+      'id="upper-shell" d="M14.819 0L128 0 128 128 14.819 128 14.819 92.804C14.819 83.64 10.991 76.211 9.857 76.211L0 76.211 0 14.819 9.857 14.819C10.991 14.819 14.819 10.991 14.819 9.857Z"',
     );
     expect(upper).toContain(
-      'id="upper-solid-top-highlight" d="M58 58H120V63H58Z"',
+      'id="upper-solid-top-highlight" d="M14.819 14.819L117.693 14.819 117.693 23.115 14.819 23.115Z"',
     );
     expect(upper).toContain(
-      'id="upper-face-shade-open-sw" d="M46 95H58V97H46Z"',
+      'id="upper-face-shade-open-sw" d="M9.446 76.211L14.819 76.211 14.819 79.53 9.446 79.53Z"',
     );
     expect(upper).not.toContain(
-      'id="upper-face-shade-open-sw" d="M46 95H58V128H46Z"',
+      'id="upper-face-shade-open-sw" d="M9.446 76.211L14.819 76.211 14.819 128 9.446 128Z"',
     );
     expect(
       [...upper.matchAll(
@@ -275,30 +275,30 @@ describe('QuotaCo owner-accepted double-filled east cross-junction gate', () => 
   it('gives Mask 25 one reveal exposure and carries it through plain-mirrored Mask 43', () => {
     const direct = rasterCandidateFacing(128, false);
     const directPixels = direct.pixels;
-    expect(rgbaAt(directPixels, direct.width, 40, 60))
+    expect(rgbaAt(directPixels, direct.width, 5, 18))
       .toEqual([217, 208, 185, 255]);
-    expect(rgbaAt(directPixels, direct.width, 80, 60))
+    expect(rgbaAt(directPixels, direct.width, 80, 18))
       .toEqual([224, 216, 198, 255]);
 
     const mirrored = rasterCandidateFacing(128, true);
     const mirroredPixels = mirrored.pixels;
-    expect(rgbaAt(mirroredPixels, mirrored.width, 48, 60))
+    expect(rgbaAt(mirroredPixels, mirrored.width, 48, 18))
       .toEqual([224, 216, 198, 255]);
-    expect(rgbaAt(mirroredPixels, mirrored.width, 88, 60))
+    expect(rgbaAt(mirroredPixels, mirrored.width, 122, 18))
       .toEqual([217, 208, 185, 255]);
 
     const direct40 = rasterCandidateFacing(40, false);
     const direct40Pixels = direct40.pixels;
-    expect(rgbaAt(direct40Pixels, direct40.width, 12, 19))
+    expect(rgbaAt(direct40Pixels, direct40.width, 2, 6))
       .toEqual([217, 208, 185, 255]);
-    expect(rgbaAt(direct40Pixels, direct40.width, 25, 19))
-      .toEqual([222, 214, 194, 255]);
+    expect(rgbaAt(direct40Pixels, direct40.width, 25, 6))
+      .toEqual([224, 216, 198, 255]);
 
     const mirrored40 = rasterCandidateFacing(40, true);
     const mirrored40Pixels = mirrored40.pixels;
-    expect(rgbaAt(mirrored40Pixels, mirrored40.width, 15, 19))
-      .toEqual([222, 214, 194, 255]);
-    expect(rgbaAt(mirrored40Pixels, mirrored40.width, 27, 19))
+    expect(rgbaAt(mirrored40Pixels, mirrored40.width, 15, 6))
+      .toEqual([224, 216, 198, 255]);
+    expect(rgbaAt(mirrored40Pixels, mirrored40.width, 37, 6))
       .toEqual([217, 208, 185, 255]);
   });
 
@@ -313,20 +313,23 @@ describe('QuotaCo owner-accepted double-filled east cross-junction gate', () => 
       const east = alphaColumnSpan(raster, raster.width - 1);
 
       expect(
-        Math.abs(north[0] - Math.floor(cellPixels * 56 / 128)),
+        Math.abs(north[0] - Math.floor(cellPixels * 11.5 / 128)),
         `north socket start at ${cellPixels}px`,
       ).toBeLessThanOrEqual(2);
       expect(
-        Math.abs(south[0] - Math.floor(cellPixels * 46 / 128)),
+        Math.abs(south[0] - Math.floor(cellPixels * 9.446 / 128)),
         `south socket start at ${cellPixels}px`,
       ).toBeLessThanOrEqual(2);
       expect(
-        Math.abs(west[0] - Math.floor(cellPixels * 56 / 128)),
+        Math.abs(west[0] - Math.floor(cellPixels * 11.5 / 128)),
         `west socket start at ${cellPixels}px`,
       ).toBeLessThanOrEqual(2);
       expect(north[1]).toBeGreaterThanOrEqual(cellPixels - 2);
       expect(south[1]).toBeGreaterThanOrEqual(cellPixels - 2);
-      expect(west[1]).toBeGreaterThanOrEqual(Math.floor(cellPixels * 120 / 128));
+      expect(
+        Math.abs(west[1] - Math.floor(cellPixels * 123.5 / 128)),
+        `west socket end at ${cellPixels}px`,
+      ).toBeLessThanOrEqual(2);
       expect(east).toEqual([0, cellPixels - 1]);
       expect(alphaRowIsContiguous(raster, 0, north)).toBe(true);
       expect(alphaRowIsContiguous(raster, raster.height - 1, south)).toBe(true);

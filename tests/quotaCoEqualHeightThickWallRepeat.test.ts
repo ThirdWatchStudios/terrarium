@@ -204,9 +204,15 @@ describe('QuotaCo accepted proof-layer 2xN thick-wall repeat family', () => {
   it('authors only the open-Y contour and uninterrupted cream top', () => {
     const base = source(PROPOSAL_DIRECTORY, 'filled_w_middle-base.svg');
     const upper = source(PROPOSAL_DIRECTORY, 'filled_w_middle-upper.svg');
-    expect(base).toContain('id="base-buried-underlay" d="M56 0H128V128H56Z"');
-    expect(upper).toContain('id="upper-contour" d="M56 0H128V128H56Z"');
-    expect(upper).toContain('id="upper-solid-top-fill" d="M58 0H128V128H58Z"');
+    expect(base).toContain(
+      'id="base-buried-underlay" d="M11.5 0L128 0 128 128 11.5 128Z"',
+    );
+    expect(upper).toContain(
+      'id="upper-contour" d="M11.5 0L128 0 128 128 11.5 128Z"',
+    );
+    expect(upper).toContain(
+      'id="upper-solid-top-fill" d="M14.819 0L128 0 128 128 14.819 128Z"',
+    );
     expect(upper).not.toMatch(/coral|green|shade|plinth|lip|arris|seam|highlight|rollover|cap/i);
   });
 
