@@ -1,5 +1,12 @@
 import JSZip from 'jszip';
-import type { CharacterRecipe, ProjectState, PropInstance, StyleSheet, TileInstance } from './types';
+import type {
+  CharacterRecipe,
+  ProjectState,
+  PropInstance,
+  ShapeSpec,
+  StyleSheet,
+  TileInstance,
+} from './types';
 import type { SceneState } from './scene';
 import { CANVAS, MOODS, type Mood, type PropPaletteToken } from './types';
 import {
@@ -19,6 +26,7 @@ import {
   composeProp,
   composePropStatusBadge,
   composeSocialStateBadge,
+  composeWallShapes,
   composeWallTile,
   composeGroundOverlayTile,
   composePortrait,
@@ -634,12 +642,64 @@ export function cursorsManifest() {
   };
 }
 
-function wallTilesetDesc(wall: TileInstance, style: StyleSheet, scale: number): SheetDesc {
+export interface WallEvaluationFrame {
+  readonly id: `mask_${number}`;
+  readonly index: number;
+  readonly canonicalMask: number;
+  readonly shapes: readonly ShapeSpec[];
+}
+
+export interface WallEvaluationOverride {
+  readonly profile: 'quota-co-equal-height-evaluation';
+  readonly wallId: 'wall-office';
+  readonly frames: readonly WallEvaluationFrame[];
+}
+
+function validatedEvaluationFrames(
+  wall: TileInstance,
+  evaluation: WallEvaluationOverride | undefined,
+): readonly WallEvaluationFrame[] | undefined {
+  if (!evaluation || wall.id !== evaluation.wallId) return undefined;
+  if (
+    evaluation.profile !== 'quota-co-equal-height-evaluation' ||
+    evaluation.wallId !== 'wall-office'
+  ) {
+    throw new Error('Unsupported wall evaluation override');
+  }
+  if (evaluation.frames.length !== BLOB_TILE_COUNT) {
+    throw new Error(
+      `Wall evaluation override has ${evaluation.frames.length} frames; expected ${BLOB_TILE_COUNT}`,
+    );
+  }
+  for (let index = 0; index < BLOB_TILE_COUNT; index += 1) {
+    const frame = evaluation.frames[index];
+    if (
+      !frame ||
+      frame.id !== `mask_${index}` ||
+      frame.index !== index ||
+      frame.canonicalMask !== BLOB_CONFIGS[index] ||
+      frame.shapes.length === 0
+    ) {
+      throw new Error(`Wall evaluation override drift at mask_${index}`);
+    }
+  }
+  return evaluation.frames;
+}
+
+function wallTilesetDesc(
+  wall: TileInstance,
+  style: StyleSheet,
+  scale: number,
+  evaluation?: WallEvaluationOverride,
+): SheetDesc {
   const size = style.render.baseSize * scale;
+  const evaluationFrames = validatedEvaluationFrames(wall, evaluation);
   const cells: RasterCell[] = [];
   for (let i = 0; i < BLOB_TILE_COUNT; i++) {
     cells.push({
-      svg: composeWallTile(wall, style, BLOB_CONFIGS[i], size),
+      svg: evaluationFrames
+        ? composeWallShapes(evaluationFrames[i].shapes, wall, style, size)
+        : composeWallTile(wall, style, BLOB_CONFIGS[i], size),
       dx: (i % 8) * size,
       dy: Math.floor(i / 8) * size,
       dw: size,
@@ -1391,6 +1451,15 @@ export interface ExportSink {
   file(path: string, data: string | PngBytes): void | Promise<void>;
 }
 
+export interface ExportAllOptions {
+  readonly sink: ExportSink;
+  readonly rasterizer: Rasterizer;
+  readonly onProgress?: ExportProgress;
+  readonly scenarioTemplates?: ScenarioTemplate[];
+  /** Explicit wall-only reality-check profile. Default/browser exports omit it. */
+  readonly wallEvaluation?: WallEvaluationOverride;
+}
+
 /**
  * Regenerate the entire asset set — every character sheet/moods/layers, prop,
  * wall, and floor at 1x/2x/4x with atlas JSON, the project file, and (when a
@@ -1401,9 +1470,9 @@ export interface ExportSink {
  */
 export async function exportAll(
   rawProject: ProjectState,
-  opts: { sink: ExportSink; rasterizer: Rasterizer; onProgress?: ExportProgress; scenarioTemplates?: ScenarioTemplate[] },
+  opts: ExportAllOptions,
 ): Promise<void> {
-  const { sink, rasterizer, onProgress } = opts;
+  const { sink, rasterizer, onProgress, wallEvaluation } = opts;
   // Render every asset through the project's LOOK (a non-destructive lens over the
   // authored palettes — see core/look.ts). This is what makes the look reproducible:
   // it re-derives on every export instead of depending on a one-time palette sweep.
@@ -1548,7 +1617,10 @@ export async function exportAll(
     const dir = `walls/${slug(wall.name)}`;
     for (const scale of EXPORT_SCALES) {
       // Flat 47-blob autotile only — no re-tintable wall layer atlas (D2).
-      await write(`${dir}/tileset@${scale}x.png`, await png(wallTilesetDesc(wall, style, scale)));
+      await write(
+        `${dir}/tileset@${scale}x.png`,
+        await png(wallTilesetDesc(wall, style, scale, wallEvaluation)),
+      );
       await write(`${dir}/atlas@${scale}x.json`, JSON.stringify(wallAtlas(wall, style, scale), null, 2));
       tick(wall.name);
     }

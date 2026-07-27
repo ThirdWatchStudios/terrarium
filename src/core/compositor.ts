@@ -890,8 +890,8 @@ export function composeWallTile(
   return composeWallShapes(shapes, wall, style, pixelSize);
 }
 
-function composeWallShapes(
-  shapes: ShapeSpec[],
+export function composeWallShapes(
+  shapes: readonly ShapeSpec[],
   wall: TileInstance,
   style: StyleSheet,
   pixelSize?: number,

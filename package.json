@@ -12,6 +12,7 @@
     "test": "tsx scripts/runTestsSafely.ts",
     "test:update": "tsx scripts/runTestsSafely.ts --update",
     "export": "npm run assets:check && tsx scripts/export.ts",
+    "export:quota-co-walls": "npm run assets:check && tsx scripts/export.ts --quota-co-wall-evaluation",
     "parts:import": "tsx scripts/importParts.ts",
     "parts:import:check": "tsx scripts/importParts.ts --check",
     "parts:scaffolds": "tsx scripts/generatePartScaffolds.ts",
