@@ -26,6 +26,8 @@
     "high-oblique:a1b:preview": "tsx scripts/quotaCoHighObliqueA1bPreview.ts",
     "high-oblique:a1b:topology:preview": "tsx scripts/quotaCoHighObliqueA1bTopologyPreview.ts",
     "high-oblique:a1b:low-profile:preview": "tsx scripts/quotaCoHighObliqueA1bLowProfilePreview.ts",
+    "high-oblique:footprint:preview": "tsx scripts/quotaCoEqualHeightFootprintCalibrationPreview.ts",
+    "high-oblique:footprint:all47:preview": "tsx scripts/quotaCoEqualHeightFootprintAllMaskPreview.ts",
     "style:watch": "tsx scripts/styleLoop.ts",
     "style:once": "tsx scripts/styleLoop.ts --once",
     "style:consistency": "tsx scripts/styleLoop.ts --consistency",
