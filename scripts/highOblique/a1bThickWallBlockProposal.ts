@@ -141,10 +141,18 @@ function validateSource(
   }
   if (
     source.id === 'filled_sw_elbow-upper' &&
-    !/<path\s+id=["']upper-south-face-shade["']\s+d=["']M58 63H128V88H58Z["']\s+fill=["']#000000["']\s+opacity=["']0\.08["']\s*\/>/.test(content)
+    !/<path\s+id=["']upper-south-face-shade["']\s+d=["']M58 63H128V84H58Z["']\s+fill=["']#000000["']\s+opacity=["']0\.08["']\s*\/>/.test(content)
   ) {
     throw new A1bThickWallBlockProposalImportError(
       `${sourceFile} must retain the standard south-facing cream material shade`,
+    );
+  }
+  if (
+    source.id === 'filled_sw_elbow-upper' &&
+    !/<path\s+id=["']upper-lip-seam["']\s+d=["']M59 87H127["'][^>]*stroke=["']#252A28["'][^>]*stroke-width=["']1\.5["'][^>]*opacity=["']0\.45["']\s*\/>/.test(content)
+  ) {
+    throw new A1bThickWallBlockProposalImportError(
+      `${sourceFile} must retain the accepted dark lip seam above the coral return`,
     );
   }
   const shapes = compileAuthoredSvg(content, {

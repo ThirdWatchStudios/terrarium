@@ -245,7 +245,10 @@ describe('QuotaCo accepted proof-layer 2x2 thick-wall block', () => {
     expect(foregroundUpper).toContain('id="upper-south-coral-wrap"');
     expect(foregroundUpper).toContain('id="upper-south-green-wrap"');
     expect(foregroundUpper).toContain(
-      'id="upper-south-face-shade" d="M58 63H128V88H58Z" fill="#000000" opacity="0.08"',
+      'id="upper-south-face-shade" d="M58 63H128V84H58Z" fill="#000000" opacity="0.08"',
+    );
+    expect(foregroundUpper).toContain(
+      'id="upper-lip-seam" d="M59 87H127"',
     );
     expect(foregroundUpper).not.toMatch(/upper-west-|upper-south-reveal-light|upper-arris-seam/);
     const derivedSoutheast = derivePromotedSoutheastSourcePair(
