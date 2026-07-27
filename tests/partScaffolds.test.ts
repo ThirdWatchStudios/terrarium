@@ -161,6 +161,9 @@ describe('part authoring scaffold generation', () => {
       'assets/part-authoring/scaffolds/body/large-frame.east.svg',
       'assets/part-authoring/scaffolds/body/large-frame.north.svg',
       'assets/part-authoring/scaffolds/body/large-frame.south.svg',
+      'assets/part-authoring/scaffolds/body/pinch.east.svg',
+      'assets/part-authoring/scaffolds/body/pinch.north.svg',
+      'assets/part-authoring/scaffolds/body/pinch.south.svg',
       'assets/part-authoring/scaffolds/body/soft.east.svg',
       'assets/part-authoring/scaffolds/body/soft.north.svg',
       'assets/part-authoring/scaffolds/body/soft.south.svg',
@@ -221,7 +224,7 @@ describe('part authoring scaffold generation', () => {
       'assets/part-authoring/scaffolds/outfit/tee.east.svg',
       'assets/part-authoring/scaffolds/outfit/tee.south.svg',
     ]);
-    expect(first).toHaveLength(71);
+    expect(first).toHaveLength(74);
     expect(first.map(({ bytes }) => bytes)).toEqual(second.map(({ bytes }) => bytes));
     expect(PART_SCAFFOLD_SPECS.map(({ slot, referenceId }) => [slot, referenceId])).toEqual([
       ['body', 'body-compact'],
@@ -229,6 +232,7 @@ describe('part authoring scaffold generation', () => {
       ['body', 'body-large-frame'],
       ['body', 'body-tall'],
       ['body', 'body-soft'],
+      ['body', 'body-pinch'],
       ['head', 'head-round'],
       ['head', 'head-oval'],
       ['head', 'head-boxy'],
@@ -307,10 +311,10 @@ describe('part authoring scaffold generation', () => {
     }
   });
 
-  it('emits fifteen body starters with the exact eleven typed rig-anchor guides', () => {
+  it('emits eighteen body starters with the exact eleven typed rig-anchor guides', () => {
     const bodyAssets = generatePartAuthoringAssets()
       .filter(({ path: assetPath }) => assetPath.includes('/scaffolds/body/'));
-    expect(bodyAssets).toHaveLength(15);
+    expect(bodyAssets).toHaveLength(18);
 
     const typedRigAnchorIds = [
       'headCenter',
@@ -345,7 +349,7 @@ describe('part authoring scaffold generation', () => {
     }
   });
 
-  it('keeps the previously approved round and bob scaffold bytes frozen', () => {
+  it('keeps the promoted round and refitted bob scaffold bytes frozen', () => {
     const hashes = Object.fromEntries(
       generatePartAuthoringAssets()
         .filter(({ path: assetPath }) =>
@@ -353,12 +357,12 @@ describe('part authoring scaffold generation', () => {
         .map(({ path: assetPath, bytes }) => [assetPath, createHash('sha256').update(bytes).digest('hex')]),
     );
     expect(hashes).toEqual({
-      'assets/part-authoring/scaffolds/hair/bob.east.svg': 'e97dd91d8e572d6e35d192ff0a1963c7521d00cf575788ff6948b43d25ec11e8',
-      'assets/part-authoring/scaffolds/hair/bob.north.svg': '6b8e7efda21767bfdd1625b1375a22a1004e8de318b2f52d1304666d007550b0',
-      'assets/part-authoring/scaffolds/hair/bob.south.svg': 'c3dffe2eb25ef290b55fd3b56940fe8b1230e8b31d5bd3a8d9bf28b56bc8284d',
-      'assets/part-authoring/scaffolds/head/round.east.svg': 'ddfedeba87ff36788c7f45ea3184e80da09bf67215fb2b9c96d5d50c55ed71db',
-      'assets/part-authoring/scaffolds/head/round.north.svg': '843dda8a9521f0bd5d02aa66db506e37a2b3bdad24286eef25da7e3219908f48',
-      'assets/part-authoring/scaffolds/head/round.south.svg': '89d23626c3de8b4974c9f699c39eaa0cf50492a85aba7f7d3a1383d110e5c1c2',
+      'assets/part-authoring/scaffolds/hair/bob.east.svg': '31e39d5f4be35772a856b0e4af9a3c4f29e6eebdc0dba2406c02d4228566e30e',
+      'assets/part-authoring/scaffolds/hair/bob.north.svg': '74b3f63f6cec05fb8ce6e98d43da90d2e5ed41d9430572cd8a798c77eaf6317e',
+      'assets/part-authoring/scaffolds/hair/bob.south.svg': 'aa3d3ca0527255a73c15cd4b45e8223118df54ec80580569a4ab5debd919d164',
+      'assets/part-authoring/scaffolds/head/round.east.svg': '91f42ff68f06777aa4c672b24eb6df3bff523c2d6bad8a3c3223db014eaf08a5',
+      'assets/part-authoring/scaffolds/head/round.north.svg': 'bb91d6d3b35dff35612a92ebd74cbfbdf729cf82f5acb180bd958c8011c1f1bd',
+      'assets/part-authoring/scaffolds/head/round.south.svg': '5899b518faa6b65e7df06d443931e63c208ff3225ec1854498eb7ae546fd8b10',
     });
   });
 
@@ -498,7 +502,7 @@ describe('committed part authoring assets', () => {
     const root = await mkdtemp(path.join(tmpdir(), 'terrarium-authoring-assets-'));
     temporaryRoots.push(root);
     const firstWrite = await writePartAuthoringAssets(root);
-    expect(firstWrite.updated).toBe(71);
+    expect(firstWrite.updated).toBe(74);
     expect(firstWrite.removed).toBe(0);
     await expect(checkPartAuthoringAssets(root)).resolves.toBeUndefined();
 

@@ -388,7 +388,7 @@ icons), not by upfront design.
    128 grid, anchor markers, body-capsule / head-radius guides, an existing
    part on a named reference layer, and sentinel swatches. Portable ASE, GPL,
    and readable SVG palette companions support optional editors. Implemented
-   for all five production bodies, all six human-head families, `hair-bob`, and
+   for all six production bodies, all six human-head families, `hair-bob`, and
    the south/east tee kit under `assets/part-authoring` via
    `npm run parts:scaffolds`; semantic IDs, not editor-only layer state, define
    what the importer ignores. Body starters show all 11 TypeScript-owned rig
@@ -405,8 +405,10 @@ icons), not by upfront design.
    and Linda's facing/mood sheets; the approved promotion is `9e932eb`.
 5. **Production body source canonicalization**: the approved
    `body-compact`, `body-balanced`, `body-large-frame`, `body-tall`, and
-   `body-soft` silhouettes now have 15 canonical south/east/north SVG sources
-   under `assets/parts/body`. A dedicated `body-art` adapter installs their
+   `body-soft` IDs now carry the accepted Block, Barrel, Wedge, Column, and Bell
+   silhouettes; the new `body-pinch` ID carries Pinch. These six bodies have 18
+   canonical south/east/north SVG sources under `assets/parts/body`. A dedicated
+   `body-art` adapter installs their
    complete visible shapes onto the existing shared production `PartDef`
    objects in place, preserving stable selection order, exact body-rig identity,
    z-order, and all runtime metadata. Canvas geometry is strictly validated,
@@ -441,7 +443,7 @@ icons), not by upfront design.
    compact, clip-free knot distinct from Ponytail; Balding uses tapered temple
    and rear bands; Pixie owns a cropped irregular fringe; Side-part owns a
    swept cap and non-silhouette parting crease. The expanded ten-style
-   3,600-cell hair/body/head/facing/style matrix, full head-accessory matrices,
+   4,320-cell hair/body/head/facing/style matrix, full head-accessory matrices,
    and distance proof pass. These final four received visual approval on
    2026-07-10.
 8. **Anchored outfit-detail adapter**: `outfit-tee` is the first body-aware
@@ -450,7 +452,7 @@ icons), not by upfront design.
    path must compile as `detail/*` / `silhouette: false`, so the selected body's
    `$outfitPrimary` silhouette remains the conforming torso. At build time the
    importer translates that kit to each production body's neck and emits the
-   five variants in stable archetype order. The runtime overlay replaces only
+   six variants in stable archetype order. The runtime overlay replaces only
    known production detail shapes while preserving the code builder's z-order;
    legacy bodies, future body IDs, and unauthored north keep the original
    procedural/static fallback. The adapter is mechanically complete; tee art
@@ -511,7 +513,7 @@ the tweak pain without art.
 
 1. **LOD flag first**: detail tier on `ShapeSpec`; compositor drops interior
    detail below a threshold export size. Benefits procedural parts too.
-2. Re-author by silhouette priority — the approved five-body and six-head
+2. Re-author by silhouette priority — the approved six-body and six-head
    foundations are canonical SVG; Short, Bob, Long straight, Curly, Ponytail,
    and Coils are approved; Bun, Balding, Pixie, and Side-part completed the
    approved mapped set on 2026-07-10. Outfits (§4b) follow, judged against the

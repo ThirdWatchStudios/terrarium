@@ -25,7 +25,7 @@ npm run parts:scaffolds # regenerate seeded SVG starters and palette files
 `npm run build` begins with `parts:check`; builds never rewrite source files.
 
 The generated authoring assets live under `assets/part-authoring`: seeded
-scaffolds for all five production bodies, all six human-head families,
+scaffolds for all six production bodies, all six human-head families,
 all ten mapped hair families (`hair-short`, `hair-bob`, `hair-bun`,
 `hair-curly`, `hair-balding`, `hair-side-part`, `hair-pixie`,
 `hair-ponytail`, `hair-long-straight`, and `hair-coils`), and the south/east tee
@@ -171,10 +171,11 @@ Unknown, legacy-only, and internal part IDs are rejected. Duplicate imports,
 slot mismatches, missing production variants, and unadapted targets with
 `buildVariant` are rejected before the generated file changes.
 
-The five `body-art` targets own the complete visible facing shapes for
+The six `body-art` targets own the complete visible facing shapes for
 `body-compact`, `body-balanced`, `body-large-frame`, `body-tall`, and
-`body-soft`. South and east contain the `$outfitPrimary` silhouette followed
-by a literal lower-plane detail; north is silhouette-only. Installation mutates
+`body-soft`, plus the independent `body-pinch`. South and east contain the
+`$outfitPrimary` silhouette followed by a literal lower-plane detail; north is
+silhouette-only. Installation mutates
 only the shared production object's facing art and clones each imported shape.
 The exact `PartDef`, `bodyAnchors`, label, intent, z-order, and stable selection
 order are preserved. `body-standard`, `body-slim`, and `body-broad` remain
@@ -190,7 +191,7 @@ have `silhouette: false`: the selected body remains the conforming
 `$outfitPrimary` torso. The importer treats `body-balanced` as the source
 placement, translates the south/east kit from its neck to each target neck, and
 emits variants in stable order for `body-compact`, `body-balanced`,
-`body-large-frame`, `body-tall`, and `body-soft`. Every translated path is
+`body-large-frame`, `body-tall`, `body-soft`, and `body-pinch`. Every translated path is
 paint-bounds-validated again in its target canvas placement. At runtime the
 overlay replaces only those known detail variants and preserves the original
 builder's z-order. Legacy bodies, deliberately unauthored facings, and future
@@ -207,7 +208,7 @@ approval and the remaining per-part Definition of Done checks.
   must remain separately addressable and require explicit deterministic piece
   order plus neck/chest/hip/waist placement. Do not collapse that work into one
   flat per-facing Blazer file.
-- New part definitions and their labels/insertion order.
+- Further new part definitions and their labels/insertion order.
 - Accessory anchors, z-order, and hand-attachment roles.
 - Importing the full eleven-point body sub-rig from an anchor layer.
 
@@ -216,8 +217,9 @@ scaffold-to-runtime `hair-bob` proof and the first canonical head promotion
 (`head-round`) are visually approved and committed. The other five head sources
 are approved in the current production batch. The tee anchored-detail mechanics
 are complete; its visual approval remains a separate gate, and componentized
-Blazer intake remains the next outfit adapter boundary. The approved bodies
-also have canonical SVG sources and a shared-identity adapter. The first six
+Blazer intake remains the next outfit adapter boundary. The accepted six-body
+redesign, including independent Pinch, has canonical SVG sources and a
+shared-identity adapter. The first six
 hair families are approved. Bun, Balding, Pixie, and Side-part complete the
 mapped source set, pass automated production review, and received visual
 approval on 2026-07-10. Detail-only Blazer or wall work can now follow.

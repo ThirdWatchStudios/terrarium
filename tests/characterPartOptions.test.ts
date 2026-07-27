@@ -8,6 +8,7 @@ const PRODUCTION_BODY_IDS = [
   'body-large-frame',
   'body-tall',
   'body-soft',
+  'body-pinch',
 ];
 
 describe('character body picker options', () => {

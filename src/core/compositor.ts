@@ -87,6 +87,21 @@ interface ResolvedCharacterRig {
   bodyId?: string;
 }
 
+/**
+ * Static production-cell reframe selected with the one-row head/body gap.
+ * It is deliberately recipe-derived rather than a renderer state: only the
+ * six body-owned production rigs receive it, while legacy recipes retain their
+ * established framing byte-for-byte.
+ */
+export const CHARACTER_FRAME_OFFSET_Y = 5;
+
+export function characterFrameOffsetY(
+  recipe?: CharacterRecipe,
+  facing: Facing = 'south',
+): number {
+  return resolveCharacterRig(recipe, facing).bodyAnchors ? CHARACTER_FRAME_OFFSET_Y : 0;
+}
+
 const translated = (origin: { x: number; y: number }, local: { x: number; y: number }) => ({
   x: origin.x + local.x,
   y: origin.y + local.y,
@@ -213,10 +228,17 @@ function placeParts(
   pose?: Pose,
   rig: ResolvedCharacterRig = resolveCharacterRig(recipe, facing),
 ): PlacedPart[] {
-  const poseVariant = pose ? poseVariantFor(pose, facing, rig.bodyAnchors) : undefined;
-  const attachmentVariant = poseVariant ?? (
-    rig.bodyAnchors ? poseVariantFor('neutral', facing, rig.bodyAnchors) : undefined
-  );
+  // A production body is never armless: omitted pose input resolves to the
+  // existing generated Neutral state. Explicit poses replace this variant
+  // wholesale, so always-on arms add no pose id, frame, or renderer state.
+  // Legacy bodies have no body-owned rig and deliberately retain their old
+  // unposed rendering until their saved recipes are migrated.
+  const poseVariant = pose
+    ? poseVariantFor(pose, facing, rig.bodyAnchors)
+    : rig.bodyAnchors
+      ? poseVariantFor('neutral', facing, rig.bodyAnchors)
+      : undefined;
+  const attachmentVariant = poseVariant;
   const ids = [
     recipe.parts.body,
     recipe.parts.outfit,
@@ -267,8 +289,8 @@ function placeParts(
     });
   }
 
-  // Pose arm layers (parts/poses.ts) — body-local like the outfit overlays, so
-  // they ride the bodyWidth group transform and stay attached to the capsule.
+  // Resolved arm layers (parts/poses.ts) — body-local like the outfit overlays,
+  // so they ride the bodyWidth group transform and stay attached to the hull.
   if (poseVariant) {
     if (poseVariant.back && poseVariant.back.length > 0) {
       placed.push({
@@ -487,7 +509,14 @@ export function composeCharacter(
   // Contact shadow at the feet, painted first so it sits under the figure. It's
   // centered on the canvas, so the west mirror leaves it untouched.
   const shadow = contactShadow(CANVAS / 2, 113, 16, 4.5, style);
-  return svgWrap(shadow + inner, pixelSize ?? style.render.baseSize);
+  const frameOffsetY = rig.bodyAnchors ? CHARACTER_FRAME_OFFSET_Y : 0;
+  // The reframe moves the authored figure within its cell; the contact shadow
+  // remains on the established floor datum so it cannot be pushed into the
+  // lower raster edge.
+  const framedFigure = frameOffsetY
+    ? `<g transform="translate(0 ${frameOffsetY})">${inner}</g>`
+    : inner;
+  return svgWrap(shadow + framedFigure, pixelSize ?? style.render.baseSize);
 }
 
 /**
@@ -501,6 +530,8 @@ export function composeCharacter(
  * paper behind — curated, official, the forced smile. Warmth here is
  * PROXIMITY, not truth: this is the corporation's drawing of the person, and
  * the UI frames it (see the `portrait-frame` icon); the photo ships bare.
+ * Rigged identities keep their Neutral upper sleeves in this bust crop: the
+ * portrait is a crop of the same model, not a separate armless rendering.
  */
 export function composePortrait(
   recipe: CharacterRecipe,
@@ -532,8 +563,9 @@ export function composePortrait(
  * from composePortrait's badge-photo crop, but resolves from the same body rig.
  */
 export function employeePortraitCrop(recipe?: CharacterRecipe): { x: number; y: number; w: number; h: number } {
-  const head = resolveCharacterRig(recipe, 'south').anchors.headCenter;
-  return { x: head.x - 40, y: head.y - 30, w: 80, h: 80 };
+  const rig = resolveCharacterRig(recipe, 'south');
+  const frameOffsetY = rig.bodyAnchors ? CHARACTER_FRAME_OFFSET_Y : 0;
+  return { x: rig.anchors.headCenter.x - 40, y: rig.anchors.headCenter.y + frameOffsetY - 30, w: 80, h: 80 };
 }
 
 /**
@@ -547,18 +579,28 @@ export function poseRigAnchors(
   recipe?: CharacterRecipe,
 ): Record<'shoulderLeft' | 'shoulderRight' | 'hip', { x: number; y: number }> {
   if (facing === 'west') {
-    const east = resolveCharacterRig(recipe, 'east').anchors;
-    const flip = (a: { x: number; y: number }) => ({ x: CANVAS - a.x, y: a.y });
+    const rig = resolveCharacterRig(recipe, 'east');
+    const frameOffsetY = rig.bodyAnchors ? CHARACTER_FRAME_OFFSET_Y : 0;
+    const flip = (a: { x: number; y: number }) => ({ x: CANVAS - a.x, y: a.y + frameOffsetY });
+    const east = rig.anchors;
     return { shoulderLeft: flip(east.shoulderRight), shoulderRight: flip(east.shoulderLeft), hip: flip(east.hip) };
   }
-  const a = resolveCharacterRig(recipe, facing).anchors;
-  return { shoulderLeft: a.shoulderLeft, shoulderRight: a.shoulderRight, hip: a.hip };
+  const rig = resolveCharacterRig(recipe, facing);
+  const frameOffsetY = rig.bodyAnchors ? CHARACTER_FRAME_OFFSET_Y : 0;
+  const shifted = (a: { x: number; y: number }) => ({ x: a.x, y: a.y + frameOffsetY });
+  return {
+    shoulderLeft: shifted(rig.anchors.shoulderLeft),
+    shoulderRight: shifted(rig.anchors.shoulderRight),
+    hip: shifted(rig.anchors.hip),
+  };
 }
 
 export function overheadAnchor(facing: Facing | 'west', recipe?: CharacterRecipe): { x: number; y: number } {
   const actual: Facing = facing === 'west' ? 'east' : facing;
-  const a = resolveCharacterRig(recipe, actual).anchors.aboveHead;
-  return { x: facing === 'west' ? CANVAS - a.x : a.x, y: a.y };
+  const rig = resolveCharacterRig(recipe, actual);
+  const a = rig.anchors.aboveHead;
+  const frameOffsetY = rig.bodyAnchors ? CHARACTER_FRAME_OFFSET_Y : 0;
+  return { x: facing === 'west' ? CANVAS - a.x : a.x, y: a.y + frameOffsetY };
 }
 
 /**
@@ -739,7 +781,7 @@ interface IdPlaced {
 
 /** Like placeParts but retains part identity and excludes mood/neck-shadow. */
 function placeForLayers(recipe: CharacterRecipe, facing: Facing, rig: ResolvedCharacterRig): IdPlaced[] {
-  const attachmentVariant = rig.bodyAnchors
+  const neutralVariant = rig.bodyAnchors
     ? poseVariantFor('neutral', facing, rig.bodyAnchors)
     : undefined;
   const order: Array<{ id: string; slot: string }> = [
@@ -754,7 +796,7 @@ function placeForLayers(recipe: CharacterRecipe, facing: Facing, rig: ResolvedCh
     const part = getPart(id);
     const variant = part ? variantForPart(part, facing, rig) : undefined;
     if (!part || !variant) continue;
-    const anchor = anchorForPart(part, rig, attachmentVariant);
+    const anchor = anchorForPart(part, rig, neutralVariant);
     if (!anchor) continue;
     out.push({
       partId: id,
@@ -762,6 +804,29 @@ function placeForLayers(recipe: CharacterRecipe, facing: Facing, rig: ResolvedCh
       anchor,
       group: HEAD_ANCHORS.includes(part.anchor) ? 'head' : 'body',
       variant,
+    });
+  }
+
+  // Reconstructed characters must carry the same visible base arms as the
+  // flattened compositor. Keep front/back identities separate because they
+  // occupy different z bands; token bucketing below then yields independent
+  // sleeve and hand masks without inventing runtime pose state.
+  if (neutralVariant?.back && neutralVariant.back.length > 0) {
+    out.push({
+      partId: 'pose-neutral-back',
+      slot: 'pose',
+      anchor: rig.anchors.body,
+      group: 'body',
+      variant: { shapes: neutralVariant.back, z: POSE_BACK_Z },
+    });
+  }
+  if (neutralVariant?.front && neutralVariant.front.length > 0) {
+    out.push({
+      partId: 'pose-neutral-front',
+      slot: 'pose',
+      anchor: rig.anchors.body,
+      group: 'body',
+      variant: { shapes: neutralVariant.front, z: POSE_FRONT_Z },
     });
   }
   return out;
@@ -865,6 +930,16 @@ export function characterLayers(recipe: CharacterRecipe, style: StyleSheet): Cha
   }
 
   const layers = [...byKey.values()].sort((a, b) => a.z - b.z || a.order - b.order);
+  // The flat compositor reframes the complete production figure by five
+  // source units. Apply the identical static transform to every reconstructable
+  // layer so flat and layer-atlas paths remain pixel-identical.
+  for (const facing of facings) {
+    if (!resolveCharacterRig(recipe, facing).bodyAnchors) continue;
+    for (const layer of layers) {
+      const markup = layer.markup[facing];
+      if (markup) layer.markup[facing] = `<g transform="translate(0 ${CHARACTER_FRAME_OFFSET_Y})">${markup}</g>`;
+    }
+  }
   // west = mirrored east, same as composeCharacter
   for (const layer of layers) {
     if (layer.markup.east) layer.markup.west = `<g transform="translate(${CANVAS} 0) scale(-1 1)">${layer.markup.east}</g>`;

@@ -14,7 +14,7 @@ working directory, edit the copies, and place canonical review sources under
 
 The current supported starters are:
 
-- `scaffolds/body/{compact,balanced,large-frame,tall,soft}.{south,east,north}.svg`
+- `scaffolds/body/{compact,balanced,large-frame,tall,soft,pinch}.{south,east,north}.svg`
 - `scaffolds/head/{round,oval,boxy,long,angular,soft-square}.{south,east,north}.svg`
 - `scaffolds/hair/{short,bob,bun,curly,balding,side-part,pixie,ponytail,long-straight,coils}.{south,east,north}.svg`
 - `scaffolds/outfit/tee.{south,east}.svg` (seeded on `body-balanced`)

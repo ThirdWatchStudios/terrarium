@@ -4,16 +4,17 @@ Place strict-dialect SVGs here as `<slot>/<slug>.<facing>.svg`, then run
 `npm run parts:import`. The generated module is committed; builds run
 `npm run parts:check` and fail if it is stale.
 
-The current intake accepts complete facing sets for the five production bodies
+The current intake accepts complete facing sets for the six production bodies
 and existing static production parts in `head` and `hair`, plus the explicit
 `outfit-tee` anchored-detail target. Tee is authored once on `body-balanced` in
 south/east; the importer pre-expands its detail-only geometry onto the neck
-anchor of all five production bodies. The conforming torso and z-order remain
+anchor of all six production bodies. The conforming torso and z-order remain
 owned by the production part, while legacy and future bodies retain the
 procedural fallback.
 
-`body/` contains the 15 canonical production sources for `body-compact`,
-`body-balanced`, `body-large-frame`, `body-tall`, and `body-soft`. They own the
+`body/` contains the 18 canonical production sources for `body-compact`,
+`body-balanced`, `body-large-frame`, `body-tall`, `body-soft`, and
+`body-pinch`. They own the
 complete visible south/east/north art, including the south/east lower plane.
 The dedicated `body-art` adapter installs those facings onto the one shared
 production `PartDef` in place, preserving its label, order, z-order, and exact

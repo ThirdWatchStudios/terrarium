@@ -48,6 +48,7 @@ export const PART_IMPORT_TARGETS: readonly PartImportTarget[] = [
   bodyTarget('body-large-frame'),
   bodyTarget('body-tall'),
   bodyTarget('body-soft'),
+  bodyTarget('body-pinch'),
   target('head-round', 'head'),
   target('head-oval', 'head'),
   target('head-boxy', 'head'),

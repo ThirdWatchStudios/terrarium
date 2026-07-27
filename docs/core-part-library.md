@@ -19,7 +19,7 @@ full alphabet; the milestones are what "done" means.
       (`part-importer.md`; shared-identity production body art, static
       production head/hair overlays, plus the first body-aware tee detail
       adapter)
-- [x] Template scaffold SVGs for all five production bodies, all six human-head
+- [x] Template scaffold SVGs for all six production bodies, all six human-head
       families plus the special fabrication-unit head, supported hair, and
       south/east tee intake (128 grid, anchors, capsule/head guides, seeded
       editable art, named reference layer) with semantic IDs for every editable
@@ -31,9 +31,9 @@ full alphabet; the milestones are what "done" means.
       parting edit → importer → generated overlay → exactly the three expected
       compositor snapshots
 - [x] Anchored-detail mechanics proof: one south/east tee source set on
-      `body-balanced` → deterministic five-body pre-expansion. Visual approval
+      `body-balanced` → deterministic six-body pre-expansion. Visual approval
       remains part of M1 rather than an importer prerequisite.
-- [x] Body-art ownership proof: 15 canonical production SVGs → one in-place
+- [x] Body-art ownership proof: 18 canonical production SVGs → one in-place
       shared `PartDef` set with byte-stable visible geometry and unchanged typed
       rig identities
 - [x] Semantic SVG conventions compiler-tested: slash IDs, ignored guide /
@@ -43,7 +43,7 @@ Optional visual-editor interoperability is useful, but it is not an M1
 prerequisite and no named editor is a production gate.
 
 Mechanical readiness and canonical-source status do not normally imply visual
-approval. The five bodies and all six heads have now passed that separate human
+approval. The six bodies and all six heads have now passed that separate human
 review; later source additions still require both gates.
 
 ### Canonical SVG authoring notes
@@ -188,25 +188,26 @@ derivative of south.
 | angular | [x] | [x] | [x] |
 | soft-square | [x] | [x] | [x] |
 
-`head-round` has approved canonical authored SVG for all three facings,
-committed in `9e932eb`. The south
-contour adds a gentle cheek/chin treatment, east owns a readable profile, and
-north remains nearly circular for rear-hair compatibility. Eyes remain
-literal-ink `detail/*` paths owned by the head. Its inventory boxes record the
-approved drawings; broader M1 scene/crowd gates remain open. The automated
-660-cell hair / head-accessory / facing / style matrix is now strictly
-clip-free, including the lowered production Bun.
+The six stable IDs now carry the accepted redesign hulls without a recipe
+migration: `head-round` = Round, `head-oval` = Broad, `head-long` = Long,
+`head-boxy` = Block, `head-angular` = Point, and `head-soft-square` = Lantern.
+All eighteen canonical south/east/north SVGs keep literal-ink eye detail and
+one rigid `headCenter` transform group. Production bodies own their lifted
+head datum; legacy bodies retain the original fallback datum and frame.
 
-The other five IDs have one complete 15-SVG approved production batch:
-south/east/north sources for `head-oval`, `head-boxy`, `head-long`,
-`head-angular`, and `head-soft-square`. Their generated scaffolds, importer
-registration, and static overlays are production-ready. User visual approval
-on 2026-07-10 follows the automated silhouette, distance, palette, portrait,
-hair/accessory, and compatibility reviews. Broader M1 scene/crowd gates remain
-library-level work rather than head-source blockers. Run
-`npx tsx scripts/headSilhouettePreview.ts` to regenerate the previous-versus-
-production distance sheet and representative compatibility sheet under
-`docs/previews/head-silhouettes-*`.
+The promoted datum is three source units closer to the torso than the original
+one-row proof. In the complete 144-cell hairless source matrix (six heads × six
+bodies × four facings), filled head and torso silhouettes retain 4–8 clear
+pixels at 128 px. Expanded outlines may kiss after downsampling to 40 or 48 px;
+that near-touch is intentional and avoids the detached “floating head” read.
+The complete 288-cell gameplay matrix remains inside the cell. Full-body
+production sprites and reconstructable layers share the fixed five-source-unit
+reframe, matching external anchors and atlas pivots. Portraits use a separate
+head-centered crop. The intentionally oversized high-contrast preset and the
+older tall-hair extremes remain bounded calibration debt for their dedicated
+passes. Run `npx tsx scripts/headSilhouettePreview.ts` to regenerate the
+previous-versus-production distance sheet and representative compatibility
+sheet under `docs/previews/head-silhouettes-*`.
 
 ### 2b. IRIS fabrication unit — special recipe-only parts
 
@@ -290,7 +291,7 @@ mapped south/east/north sources. Bun is compact and clip-free rather than a
 second ponytail; Balding uses tapered temple/rear bands; Pixie owns an
 irregular cropped fringe; Side-part owns a swept cap plus a non-silhouette
 parting crease. Their generated scaffolds, four intentional compositor
-goldens, distance proof, 3,600-cell hair compatibility matrix, and full
+goldens, distance proof, 4,320-cell hair compatibility matrix, and full
 head/accessory matrices pass. Their inventory cells record user visual
 approval on 2026-07-10.
 
@@ -298,9 +299,10 @@ approval on 2026-07-10.
 
 Body types are **archetypes that read from orbit**, not BMI steps. Approved set:
 
-- [x] **Body-type set approved (2026-07-09): compact, balanced,
-      large-frame, tall, soft.** This replaces standard/slim/broad for new work;
-      the legacy ids remain resolvable for existing projects.
+- [x] **Six-body redesign promoted (2026-07-27): Block, Barrel, Wedge,
+      Column, Bell, and Pinch.** The first five retain the stable compact,
+      balanced, large-frame, tall, and soft IDs; Pinch adds `body-pinch`.
+      Standard/slim/broad remain resolvable for existing projects.
 - [x] Each body has a complete typed sub-rig (above-head, head center, neck,
       shoulders, chest, waist, hip, and hem). Generated scaffolds render all 11
       points plus `bodyOrigin` on an ignored anchor layer; TypeScript remains
@@ -314,12 +316,15 @@ Body types are **archetypes that read from orbit**, not BMI steps. Approved set:
 | large-frame | [x] | [x] | [x] |
 | tall | [x] | [x] | [x] |
 | soft | [x] | [x] | [x] |
+| pinch | [x] | [x] | [x] |
 
-≈ 12–15 drawings. North is usually south minus front shading.
+18 drawings. North is usually south minus front shading.
 
-> **Production body set (2026-07-10):** `src/parts/bodyArchetypes.ts` registers
+> **Production body set (redesign promoted 2026-07-27):** `src/parts/bodyArchetypes.ts` registers
 > `body-compact`, `body-balanced`, `body-large-frame`, `body-tall`, and
-> `body-soft` as the only selectable bodies, in that stable order. Pickers,
+> `body-soft` in their previous stable order, followed by the new independent
+> `body-pinch`. Their displayed families are Block, Barrel, Wedge, Column,
+> Bell, and Pinch. Pickers,
 > random characters, and seeded employee generation all consume that production
 > list. `body-standard`, `body-slim`, and `body-broad` remain resolvable for old
 > recipes and the unchanged named/default cast, but are never offered for new
@@ -331,13 +336,13 @@ Body types are **archetypes that read from orbit**, not BMI steps. Approved set:
 > poses, and pose-aware wrist/carry placement while preserving exact fallback
 > for legacy bodies. Watches follow every wrist; each normalized recipe may own
 > one bulky held prop, which renders only when the pose publishes a free carry
-> hand. The production set passes a 9,900-render body/outfit/pose/facing/style
+> hand. The production set passes an 11,880-render body/outfit/pose/facing/style
 > matrix plus a strict fitted-paint mask, while the legacy rendering digest stays
 > pinned. **Dress is mechanically complete but visually provisional;** its
 > dedicated art pass does not block the production body, rig, or compatibility
 > work.
 >
-> The same five bodies now own 15 canonical files under `assets/parts/body`.
+> The six bodies now own 18 canonical files under `assets/parts/body`.
 > Their complete visible shapes are installed through the explicit `body-art`
 > mode onto the already-shared production objects, so `BODY_ARCHETYPES`,
 > `BODY_ARCHETYPE_PARTS`, `partsForSlot('body')`, and `getPart()` continue to
@@ -368,7 +373,7 @@ behind.
 > `tee.south.svg` and `tee.east.svg` are authored over `body-balanced`, whose
 > body origin is `(64, 87)` and neck is `(64, 58)`. The importer requires every
 > visible path to be `detail/*`, then pre-expands that one source set onto the
-> neck of all five production bodies in stable order. The dynamic body remains
+> neck of all six production bodies in stable order. The dynamic body remains
 > the conforming torso and owns z-order. Legacy bodies and future body IDs keep
 > the procedural/static fallback. Tee's inventory cells stay open until its
 > render is visually approved and the remaining Definition of Done checks pass.

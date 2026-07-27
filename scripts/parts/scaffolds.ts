@@ -25,6 +25,7 @@ export const PART_SCAFFOLD_SPECS = [
   { slot: 'body', referenceId: 'body-large-frame', slug: 'large-frame', facings: FACINGS },
   { slot: 'body', referenceId: 'body-tall', slug: 'tall', facings: FACINGS },
   { slot: 'body', referenceId: 'body-soft', slug: 'soft', facings: FACINGS },
+  { slot: 'body', referenceId: 'body-pinch', slug: 'pinch', facings: FACINGS },
   { slot: 'head', referenceId: 'head-round', slug: 'round', facings: FACINGS },
   { slot: 'head', referenceId: 'head-oval', slug: 'oval', facings: FACINGS },
   { slot: 'head', referenceId: 'head-boxy', slug: 'boxy', facings: FACINGS },

@@ -23,7 +23,8 @@ export type BodyArchetypeId =
   | 'body-balanced'
   | 'body-large-frame'
   | 'body-tall'
-  | 'body-soft';
+  | 'body-soft'
+  | 'body-pinch';
 
 export interface BodyArchetype {
   id: BodyArchetypeId;
@@ -101,73 +102,87 @@ function bodyPart(
 }
 
 const COMPACT_SOUTH =
-  'M 0 -24 C -13 -24 -24 -22 -28 -16 C -30 -7 -29 5 -27 14 C -25 23 -19 28 -10 29 C -4 30 4 30 10 29 C 19 28 25 23 27 14 C 29 5 30 -7 28 -16 C 24 -22 13 -24 0 -24 Z';
+  'M -18 -29 H 18 Q 28 -29 31 -21 L 30 21 Q 29 30 18 30 H -18 Q -29 30 -30 21 L -31 -21 Q -28 -29 -18 -29 Z';
 const COMPACT_EAST =
-  'M 0 -24 C -9 -24 -17 -22 -20 -16 C -23 -7 -22 4 -20 14 C -18 23 -12 28 -4 29 C 3 30 10 29 15 26 C 21 22 23 14 22 5 C 23 -4 23 -12 20 -17 C 16 -23 9 -24 0 -24 Z';
+  'M -15 -29 H 14 Q 23 -28 25 -20 L 25 21 Q 23 30 13 30 H -14 Q -23 29 -23 20 L -24 -20 Q -22 -27 -15 -29 Z';
 
 const BALANCED_SOUTH =
-  'M 0 -29 C -12 -29 -23 -27 -27 -20 C -30 -11 -27 -1 -25 8 C -23 18 -20 26 -11 29 C -4 30 4 30 11 29 C 20 26 23 18 25 8 C 27 -1 30 -11 27 -20 C 23 -27 12 -29 0 -29 Z';
+  'M -13 -29 Q 0 -33 13 -29 Q 24 -26 27 -16 Q 35 -3 32 13 Q 30 26 19 29 Q 9 32 0 29 Q -9 32 -19 29 Q -30 26 -32 13 Q -35 -3 -27 -16 Q -24 -26 -13 -29 Z';
 const BALANCED_EAST =
-  'M 1 -29 C -8 -29 -16 -26 -18 -19 C -20 -10 -18 2 -17 12 C -16 22 -11 27 -3 29 C 4 30 11 29 15 26 C 20 21 20 13 19 6 C 21 -2 22 -11 20 -17 C 18 -25 11 -29 1 -29 Z';
+  'M -10 -29 Q 1 -33 12 -29 Q 23 -25 26 -14 Q 32 0 29 14 Q 27 26 17 29 Q 6 32 -4 29 Q -16 29 -20 20 Q -25 7 -22 -7 Q -21 -23 -10 -29 Z';
 
 const LARGE_FRAME_SOUTH =
-  'M 0 -30 C -15 -30 -28 -28 -34 -22 C -37 -17 -37 -11 -34 -5 C -32 1 -31 7 -29 12 C -27 21 -22 27 -12 29 C -4 30 4 30 12 29 C 22 27 27 21 29 12 C 31 7 32 1 34 -5 C 37 -11 37 -17 34 -22 C 28 -28 15 -30 0 -30 Z';
+  'M 0 -33 Q -18 -34 -35 -23 Q -38 -20 -34 -14 L -19 22 Q -16 30 -9 30 H 9 Q 16 30 19 22 L 34 -14 Q 38 -20 35 -23 Q 18 -34 0 -33 Z';
 const LARGE_FRAME_EAST =
-  'M 1 -30 C -10 -30 -20 -28 -23 -21 C -26 -12 -24 -1 -22 9 C -22 19 -17 26 -8 29 C 0 31 9 30 16 27 C 24 23 27 15 25 6 C 27 -3 28 -12 25 -19 C 22 -27 13 -30 1 -30 Z';
+  'M -5 -32 Q 5 -35 16 -31 L 29 -22 Q 32 -19 29 -13 L 16 22 Q 13 30 5 30 H -9 Q -17 29 -16 21 L -20 -17 Q -18 -27 -5 -32 Z';
 
 const TALL_SOUTH =
-  'M 0 -34 C -10 -34 -21 -32 -24 -25 C -27 -16 -24 -4 -22 7 C -20 18 -17 26 -9 29 C -3 30 3 30 9 29 C 17 26 20 18 22 7 C 24 -4 27 -16 24 -25 C 21 -32 10 -34 0 -34 Z';
+  'M -12 -34 Q 0 -38 12 -34 Q 18 -31 19 -23 L 18 19 Q 18 29 9 30 H -9 Q -18 29 -18 19 L -19 -23 Q -18 -31 -12 -34 Z';
 const TALL_EAST =
-  'M 1 -34 C -7 -34 -14 -31 -16 -25 C -19 -16 -17 -4 -16 8 C -15 19 -11 26 -4 29 C 2 30 8 29 12 26 C 17 22 18 15 17 7 C 19 -3 20 -15 18 -23 C 16 -31 10 -34 1 -34 Z';
+  'M -9 -34 Q 1 -38 11 -34 Q 17 -31 18 -23 L 18 19 Q 16 29 7 30 H -7 Q -14 28 -15 19 L -15 -23 Q -14 -31 -9 -34 Z';
 
 const SOFT_SOUTH =
-  'M 0 -28 C -11 -28 -20 -25 -24 -18 C -27 -10 -27 -1 -30 8 C -33 17 -30 25 -22 28 C -15 31 -6 30 0 29 C 6 30 15 31 22 28 C 30 25 33 17 30 8 C 27 -1 27 -10 24 -18 C 20 -25 11 -28 0 -28 Z';
+  'M -10 -28 Q 0 -32 10 -28 Q 20 -25 21 -16 Q 21 -5 27 6 L 34 20 Q 36 28 24 30 H -24 Q -36 28 -34 20 L -27 6 Q -21 -5 -21 -16 Q -20 -25 -10 -28 Z';
 const SOFT_EAST =
-  'M 1 -28 C -9 -28 -18 -25 -20 -18 C -23 -9 -21 0 -23 9 C -25 18 -21 26 -13 29 C -5 31 5 30 12 29 C 22 27 28 19 28 10 C 29 1 26 -7 24 -15 C 22 -23 13 -28 1 -28 Z';
+  'M -8 -28 Q 1 -32 10 -28 Q 19 -24 20 -15 Q 21 -3 27 9 L 31 20 Q 33 29 21 30 H -17 Q -29 28 -27 19 L -21 7 Q -18 -4 -18 -16 Q -17 -25 -8 -28 Z';
+
+const PINCH_SOUTH =
+  'M -11 -29 Q 0 -33 11 -29 C 20 -27 24 -24 25 -18 C 26 -11 22 -7 20 -3 C 18 1 19 6 22 10 C 25 14 29 16 31 21 C 33 26 29 30 22 30 H -22 C -29 30 -33 26 -31 21 C -29 16 -25 14 -22 10 C -19 6 -18 1 -20 -3 C -22 -7 -26 -11 -25 -18 C -24 -24 -20 -27 -11 -29 Z';
+const PINCH_EAST =
+  'M -9 -29 Q 1 -33 11 -29 C 19 -26 22 -23 22 -17 C 23 -11 20 -7 18 -3 C 17 1 18 6 21 10 C 24 14 29 17 30 21 C 32 26 28 30 20 30 H -17 C -24 30 -28 26 -26 21 C -24 17 -20 14 -18 10 C -16 6 -16 1 -18 -3 C -21 -8 -22 -12 -20 -18 C -18 -25 -15 -27 -9 -29 Z';
 
 const compactSouthAnchors = facingAnchors(
-  0, -38, 0, -24, 0, -5, 0, 13,
-  span(-27, -16, 27, -16), span(-26, 4, 26, 4), span(-19, 24, 19, 24),
+  0, -55, 0, -29, 0, -5, 0, 14,
+  span(-29, -20, 29, -20), span(-29, 5, 29, 5), span(-23, 25, 23, 25),
 );
 const compactEastAnchors = facingAnchors(
-  3, -38, 0, -24, 2, -5, 2, 13,
-  span(-3, -16, 6, -16), span(-20, 4, 22, 4), span(-14, 24, 16, 24),
+  3, -55, 0, -29, 2, -5, 2, 14,
+  span(-4, -20, 7, -20), span(-22, 5, 24, 5), span(-17, 25, 19, 25),
 );
 
 const balancedSouthAnchors = facingAnchors(
-  0, -43, 0, -29, 0, -7, 0, 13,
-  span(-26, -20, 26, -20), span(-25, 4, 25, 4), span(-18, 24, 18, 24),
+  0, -58, 0, -29, 0, -5, 0, 14,
+  span(-25, -18, 25, -18), span(-31, 4, 31, 4), span(-21, 25, 21, 25),
 );
 const balancedEastAnchors = facingAnchors(
-  3, -43, 0, -29, 2, -7, 2, 13,
-  span(-3, -20, 6, -20), span(-17, 4, 19, 4), span(-11, 24, 13, 24),
+  3, -58, 0, -29, 3, -5, 3, 14,
+  span(-3, -18, 7, -18), span(-21, 4, 27, 4), span(-14, 25, 18, 25),
 );
 
 const largeFrameSouthAnchors = facingAnchors(
-  0, -44, 0, -30, 0, -7, 0, 13,
-  span(-34, -21, 34, -21), span(-31, 4, 31, 4), span(-22, 24, 22, 24),
+  0, -60, 0, -32, 0, -8, 0, 13,
+  span(-33, -21, 33, -21), span(-24, 3, 24, 3), span(-12, 25, 12, 25),
 );
 const largeFrameEastAnchors = facingAnchors(
-  4, -44, 0, -30, 3, -7, 3, 13,
-  span(-5, -21, 8, -21), span(-23, 4, 26, 4), span(-15, 24, 18, 24),
+  3, -60, 0, -32, 3, -8, 3, 13,
+  span(-4, -21, 8, -21), span(-17, 3, 22, 3), span(-10, 25, 13, 25),
 );
 
 const tallSouthAnchors = facingAnchors(
-  0, -48, 0, -34, 0, -10, 0, 12,
-  span(-23, -25, 23, -25), span(-22, 3, 22, 3), span(-15, 24, 15, 24),
+  0, -62, 0, -34, 0, -9, 0, 13,
+  span(-18, -24, 18, -24), span(-17, 4, 17, 4), span(-10, 25, 10, 25),
 );
 const tallEastAnchors = facingAnchors(
-  3, -48, 0, -34, 1, -10, 1, 12,
-  span(-3, -25, 5, -25), span(-16, 3, 18, 3), span(-10, 24, 12, 24),
+  2, -62, 0, -34, 1, -9, 1, 13,
+  span(-2, -24, 4, -24), span(-14, 4, 16, 4), span(-8, 25, 10, 25),
 );
 
 const softSouthAnchors = facingAnchors(
-  0, -42, 0, -28, 0, -6, 0, 14,
-  span(-23, -18, 23, -18), span(-30, 8, 30, 8), span(-24, 24, 24, 24),
+  0, -57, 0, -28, 0, -4, 0, 15,
+  span(-20, -17, 20, -17), span(-28, 7, 28, 7), span(-28, 25, 28, 25),
 );
 const softEastAnchors = facingAnchors(
-  3, -42, 0, -28, 3, -6, 3, 14,
-  span(-3, -18, 6, -18), span(-23, 8, 28, 8), span(-15, 24, 20, 24),
+  3, -57, 0, -28, 3, -4, 3, 15,
+  span(-3, -17, 6, -17), span(-20, 7, 27, 7), span(-18, 25, 23, 25),
+);
+
+const pinchSouthAnchors = facingAnchors(
+  0, -58, 0, -29, 0, -6, 0, 11,
+  span(-20, -18, 20, -18), span(-19, 4, 19, 4), span(-29, 25, 29, 25),
+);
+const pinchEastAnchors = facingAnchors(
+  3, -58, 0, -29, 3, -6, 3, 12,
+  span(-3, -18, 7, -18), span(-17, 4, 20, 4), span(-24, 25, 28, 25),
 );
 
 const compactAnchors: BodyAnchors = { south: compactSouthAnchors, east: compactEastAnchors, north: compactSouthAnchors };
@@ -175,42 +190,50 @@ const balancedAnchors: BodyAnchors = { south: balancedSouthAnchors, east: balanc
 const largeFrameAnchors: BodyAnchors = { south: largeFrameSouthAnchors, east: largeFrameEastAnchors, north: largeFrameSouthAnchors };
 const tallAnchors: BodyAnchors = { south: tallSouthAnchors, east: tallEastAnchors, north: tallSouthAnchors };
 const softAnchors: BodyAnchors = { south: softSouthAnchors, east: softEastAnchors, north: softSouthAnchors };
+const pinchAnchors: BodyAnchors = { south: pinchSouthAnchors, east: pinchEastAnchors, north: pinchSouthAnchors };
 
 export const BODY_ARCHETYPES: BodyArchetype[] = [
   {
     id: 'body-compact',
-    label: 'Compact',
-    intent: 'Short vertical rhythm, grounded stance, and broad readable shoulders.',
-    part: { ...bodyPart('body-compact', 'Compact', COMPACT_SOUTH, COMPACT_EAST, COMPACT_SOUTH, 18, 13), bodyAnchors: compactAnchors },
+    label: 'Block',
+    intent: 'Flat shoulder shelf and broad base create a low, rectangular weight.',
+    part: { ...bodyPart('body-compact', 'Block', COMPACT_SOUTH, COMPACT_EAST, COMPACT_SOUTH, 23, 17), bodyAnchors: compactAnchors },
     anchors: compactAnchors,
   },
   {
     id: 'body-balanced',
-    label: 'Balanced',
-    intent: 'Neutral control silhouette without treating it as the normative body.',
-    part: { ...bodyPart('body-balanced', 'Balanced', BALANCED_SOUTH, BALANCED_EAST, BALANCED_SOUTH, 16, 11), bodyAnchors: balancedAnchors },
+    label: 'Barrel',
+    intent: 'Full middle with a pinched shoulder and base instead of a neutral capsule.',
+    part: { ...bodyPart('body-balanced', 'Barrel', BALANCED_SOUTH, BALANCED_EAST, BALANCED_SOUTH, 21, 14), bodyAnchors: balancedAnchors },
     anchors: balancedAnchors,
   },
   {
     id: 'body-large-frame',
-    label: 'Large-frame',
-    intent: 'Width concentrated at the shoulder line, with a strong taper toward the hem.',
-    part: { ...bodyPart('body-large-frame', 'Large-frame', LARGE_FRAME_SOUTH, LARGE_FRAME_EAST, LARGE_FRAME_SOUTH, 20, 15), bodyAnchors: largeFrameAnchors },
+    label: 'Wedge',
+    intent: 'Wide shoulder slope converges into a deliberately narrow base.',
+    part: { ...bodyPart('body-large-frame', 'Wedge', LARGE_FRAME_SOUTH, LARGE_FRAME_EAST, LARGE_FRAME_SOUTH, 12, 10), bodyAnchors: largeFrameAnchors },
     anchors: largeFrameAnchors,
   },
   {
     id: 'body-tall',
-    label: 'Tall',
-    intent: 'Long, narrow vertical rhythm rather than a stretched balanced capsule.',
-    part: { ...bodyPart('body-tall', 'Tall', TALL_SOUTH, TALL_EAST, TALL_SOUTH, 13, 10), bodyAnchors: tallAnchors },
+    label: 'Column',
+    intent: 'Near-parallel flanks and a tight base create a continuous narrow hull.',
+    part: { ...bodyPart('body-tall', 'Column', TALL_SOUTH, TALL_EAST, TALL_SOUTH, 10, 8), bodyAnchors: tallAnchors },
     anchors: tallAnchors,
   },
   {
     id: 'body-soft',
-    label: 'Soft',
-    intent: 'Sloped shoulders and lower-volume roundness without caricature.',
-    part: { ...bodyPart('body-soft', 'Soft', SOFT_SOUTH, SOFT_EAST, SOFT_SOUTH, 21, 16), bodyAnchors: softAnchors },
+    label: 'Bell',
+    intent: 'Small shoulder opening grows into a lower, outward mass without assigning gender.',
+    part: { ...bodyPart('body-soft', 'Bell', SOFT_SOUTH, SOFT_EAST, SOFT_SOUTH, 28, 18), bodyAnchors: softAnchors },
     anchors: softAnchors,
+  },
+  {
+    id: 'body-pinch',
+    label: 'Pinch',
+    intent: 'Moderate shoulders, a shallow waist, and rounded hips create a distinct double rhythm.',
+    part: { ...bodyPart('body-pinch', 'Pinch', PINCH_SOUTH, PINCH_EAST, PINCH_SOUTH, 29, 24), bodyAnchors: pinchAnchors },
+    anchors: pinchAnchors,
   },
 ];
 

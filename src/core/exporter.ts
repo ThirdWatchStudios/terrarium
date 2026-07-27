@@ -12,6 +12,7 @@ import {
   PALETTE_TOKENS,
   PROP_PALETTE_TOKENS,
   type TileLayer,
+  characterFrameOffsetY,
   characterLayers,
   propLayers,
   floorLayers,
@@ -72,6 +73,14 @@ import { CONSTRUCTION_CREW, CONSTRUCTION_PROFILES } from '../data/defaults';
 const SHEET_FACINGS = ['south', 'east', 'north', 'west'] as const;
 
 export const EXPORT_SCALES = [1, 2, 4];
+
+/** Normalized sprite pivot after the production-only static cell reframe. */
+function characterPivot(recipe: CharacterRecipe): { x: number; y: number } {
+  return {
+    x: 0.5,
+    y: 0.09 - characterFrameOffsetY(recipe) / CANVAS,
+  };
+}
 
 function svgToImage(svg: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
@@ -707,7 +716,7 @@ export function characterAtlas(recipe: CharacterRecipe, style: StyleSheet, scale
     scale,
     frames,
     /** Normalized pivot — feet sit near the bottom of the design canvas. */
-    pivot: { x: 0.5, y: 0.09 },
+    pivot: characterPivot(recipe),
     /**
      * Normalized attach points (same bottom-left origin as pivot). `aboveHead`
      * is where the sim hangs a *separate* overhead sprite — the shared activity
@@ -774,7 +783,7 @@ export function characterLayerManifest(recipe: CharacterRecipe, style: StyleShee
     // produced by re-tinting them — it ships as its own layer atlas beside this
     // one (`unit-layers@Nx.png` + `unit-manifest@Nx.json`, same composer path,
     // its coding hue baked into that manifest's palette).
-    pivot: { x: 0.5, y: 0.09 },
+    pivot: characterPivot(recipe),
     // Composite order: stack ascending z (ties broken by order). Multiply each
     // layer by palette[tint] (skip when tint is null). Show base layers (mood
     // null) plus the one layer whose mood === the active mood.
@@ -874,7 +883,7 @@ export function posesAtlas(recipe: CharacterRecipe, style: StyleSheet, scale: nu
     poses: [...POSES],
     facings: [...SHEET_FACINGS],
     frames,
-    pivot: { x: 0.5, y: 0.09 },
+    pivot: characterPivot(recipe),
     anchors,
     meta: {
       generator: 'sprite-character-creator',
@@ -954,7 +963,7 @@ export function moodAtlas(recipe: CharacterRecipe, style: StyleSheet, scale: num
     moods: [...MOODS],
     facings: [...SHEET_FACINGS],
     frames,
-    pivot: { x: 0.5, y: 0.09 },
+    pivot: characterPivot(recipe),
     meta: {
       generator: 'sprite-character-creator',
       westIsMirroredEast: true,

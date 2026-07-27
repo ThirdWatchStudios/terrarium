@@ -67,7 +67,7 @@ Coordinate convention: scene grids are row-major `[y][x]`; anchors/spawns carry 
 | `characters/<id>/poses@Nx.png` + `poses-atlas@Nx.json` | `poseSheetPng` / `posesAtlas` | character | **Pose sheet** — the 8 Social Theater held states × 4 facings as full posed frames, keyed `<pose>_<facing>` (§3.16). Ships the `shoulderLeft`/`shoulderRight`/`hip` rig anchors (normalized). A pose is a sim-selected state like a mood — never in the recipe. |
 | `pose-catalog.json` | `poseCatalogJson` | project | **Pose vocabulary** — ids + reads-as + presence couplings + transform hints; the beat-schedule contract's tool half (§3.16). No sequencing: beats/dwell/blocking are the sim Director's. |
 | `characters/<id>/unit@Nx.png` + `unit-atlas@Nx.json` + `unit-poses@Nx.png` + `unit-poses-atlas@Nx.json` | `unitSheetDesc` / `unitAtlas` / `unitPoseSheetDesc` / `unitPosesAtlas` | character | **Operational-unit sheets** — IRIS's own drawing (§3.17): flat coding-hue pictogram, featureless head disc, no face/hair. Same canvas/anchors/pose rig, so conduct passes through — the unit pose sheet carries all 8 held states × 4 facings. |
-| `characters/<id>/portrait@Nx.png` | `composePortrait` | character | **Corporate-identity bust** — the badge photo (§3.17): head-and-shoulders crop, full warm palette, studio paper. The UI frames it (`portrait-frame` icon). |
+| `characters/<id>/portrait@Nx.png` | `composePortrait` | character | **Corporate-identity bust** — the badge photo (§3.17): head-and-shoulders crop of the same neutral-arm identity model, full warm palette, studio paper. The UI frames it (`portrait-frame` icon). |
 | `symbol-registry.json` | `symbolRegistryJson` | project | The **symbol registry** — every symbol id in the bundle (floor badges/glyphs/puffs, overlay channels, chrome icons, reactions, cursors) resolved to its **register** (`truth` / `human` / `iris`), `kind` (`signal` / `chrome`), IRIS `provenance` (`measured` / `inferred` / `asserted`), and `mirrors` cross-links between truth↔IRIS siblings (§3.15). Derived from the code-owned vocabularies; the design law is `docs/register-constitution.md`. |
 | `theme.uss` + `theme.json` | `themeUss` / `themeJson` | project | The **shared UI palette** as UI Toolkit `:root` custom properties (`--wc-*`) and a framework-neutral map. The single color source the framing UI AND the Shapes floor layer resolve so chrome and world agree without sharing a pipeline (§3.13). `--wc-line` carries the project's actual `style.outline.color`. |
 | `icons/<id>.svg` + `icons/<id>@Nx.png` + `icons/icons-manifest.json` | `composeIcon` / `iconsManifest` | project | **UI icon set** — framing-UI glyphs. Each icon ships a resolution-independent SVG (UI Toolkit `VectorImage`) **and** a PNG ladder (uGUI `Sprite`). `tintable` icons are white masks the framework recolors from `theme.uss`; `literal` icons ship final colors (§3.13). |
@@ -429,6 +429,21 @@ bottom-left origin as `pivot`); the activity atlas echoes the south value in
 string stays **free-text, sim-owned** (§1) — the badged set is the *recommended*
 vocabulary, not a closed enum; an `activity` with no frame simply draws no badge
 (fallback+log, §7). The blank state (`none`) has no frame by design.
+
+**Production character framing.** Recipes on one of the six body-owned
+production rigs bake the accepted tightened head/body separation with a static
+five-source-unit downward figure reframe. The head datum sits three source
+units closer to the torso than the original separation proof; filled head and
+torso silhouettes remain disjoint while their expanded outlines may visually
+kiss after gameplay-scale downsampling. The contact shadow stays on the
+established floor datum. Every full-character atlas and reconstructable layer
+atlas carries the same framing; its normalized pivot is therefore
+`{x:0.5,y:0.0509375}` rather than the legacy `{x:0.5,y:0.09}`, and exported
+`aboveHead` / pose-rig anchors include the same five-unit offset. Legacy bodies
+retain the old frame, pivot, and fallback anchors. Consumers must read the
+per-atlas pivot/anchors rather than hardcoding either value. Corporate
+`portrait@` uses its own head-centered bust crop; legacy employee-profile crops
+come from the framed full sprite.
 
 **Conversation style** (`conversation-style.json`, one project-level file) — the
 look of a 1:1 conversation. The connector is drawn between two **live** world

@@ -13,35 +13,35 @@
     <path id="guide/canvas/outline-safe-area" d="M 4 4 H 124 V 124 H 4 Z" fill="none" stroke="#D68B35" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
   </g>
   <g id="reference/body-compact" opacity="0.22" transform="translate(64 87)">
-    <path id="reference/body-compact/shape-001" d="M 0 -24 C -9 -24 -17 -22 -20 -16 C -23 -7 -22 4 -20 14 C -18 23 -12 28 -4 29 C 3 30 10 29 15 26 C 21 22 23 14 22 5 C 23 -4 23 -12 20 -17 C 16 -23 9 -24 0 -24 Z" fill="#66747A" fill-rule="nonzero"/>
-    <path id="reference/body-compact/shape-002" d="M -13 20 a 13 7 0 1 0 26 0 a 13 7 0 1 0 -26 0 Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/body-compact/shape-001" d="M -15 -29 H 14 Q 23 -28 25 -20 L 25 21 Q 23 30 13 30 H -14 Q -23 29 -23 20 L -24 -20 Q -22 -27 -15 -29 Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/body-compact/shape-002" d="M -17 20 a 17 7 0 1 0 34 0 a 17 7 0 1 0 -34 0 Z" fill="#66747A" fill-rule="nonzero"/>
   </g>
   <g id="art" transform="translate(64 87)">
-    <path id="art/silhouette" d="M 0 -24 C -9 -24 -17 -22 -20 -16 C -23 -7 -22 4 -20 14 C -18 23 -12 28 -4 29 C 3 30 10 29 15 26 C 21 22 23 14 22 5 C 23 -4 23 -12 20 -17 C 16 -23 9 -24 0 -24 Z" fill="#FF0000" fill-rule="nonzero"/>
-    <path id="detail/lower-plane" d="M -13 20 a 13 7 0 1 0 26 0 a 13 7 0 1 0 -26 0 Z" fill="#00000012" fill-rule="nonzero"/>
+    <path id="art/silhouette" d="M -15 -29 H 14 Q 23 -28 25 -20 L 25 21 Q 23 30 13 30 H -14 Q -23 29 -23 20 L -24 -20 Q -22 -27 -15 -29 Z" fill="#FF0000" fill-rule="nonzero"/>
+    <path id="detail/lower-plane" d="M -17 20 a 17 7 0 1 0 34 0 a 17 7 0 1 0 -34 0 Z" fill="#00000012" fill-rule="nonzero"/>
   </g>
   <g id="guide/head-radius">
-    <path id="guide/head-radius/path" d="M 46 49 a 21 21 0 1 0 42 0 a 21 21 0 1 0 -42 0 Z" fill="none" stroke="#4F91A8" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+    <path id="guide/head-radius/path" d="M 46 32 a 21 21 0 1 0 42 0 a 21 21 0 1 0 -42 0 Z" fill="none" stroke="#4F91A8" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
   </g>
   <g id="guide/body-rig">
-    <path id="guide/body-rig/axis" d="M 67 17 L 67 49 L 64 63 L 66 82 L 66 100 L 65 111" fill="none" stroke="#9C7AB8" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.75"/>
-    <path id="guide/body-rig/shoulders" d="M 61 71 L 70 71" fill="none" stroke="#9C7AB8" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.65"/>
-    <path id="guide/body-rig/waist" d="M 44 91 L 86 91" fill="none" stroke="#9C7AB8" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
-    <path id="guide/body-rig/hem" d="M 50 111 L 80 111" fill="none" stroke="#9C7AB8" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+    <path id="guide/body-rig/axis" d="M 67 0 L 67 32 L 64 58 L 66 82 L 66 101 L 65 112" fill="none" stroke="#9C7AB8" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.75"/>
+    <path id="guide/body-rig/shoulders" d="M 60 67 L 71 67" fill="none" stroke="#9C7AB8" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.65"/>
+    <path id="guide/body-rig/waist" d="M 42 92 L 88 92" fill="none" stroke="#9C7AB8" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+    <path id="guide/body-rig/hem" d="M 47 112 L 83 112" fill="none" stroke="#9C7AB8" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
   </g>
   <g id="anchors">
     <path id="anchors/bodyOrigin" d="M 61.5 87 H 66.5 M 64 84.5 V 89.5" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
-    <path id="anchors/headCenter" d="M 64 49 H 70 M 67 46 V 52" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
-    <path id="anchors/aboveHead" d="M 64.5 17 H 69.5 M 67 14.5 V 19.5" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
-    <path id="anchors/neck" d="M 61 63 H 67 M 64 60 V 66" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="anchors/headCenter" d="M 64 32 H 70 M 67 29 V 35" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="anchors/aboveHead" d="M 64.5 0 H 69.5 M 67 -2.5 V 2.5" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="anchors/neck" d="M 61 58 H 67 M 64 55 V 61" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
     <path id="anchors/chest" d="M 63 82 H 69 M 66 79 V 85" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
-    <path id="anchors/hip" d="M 63 100 H 69 M 66 97 V 103" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
-    <path id="anchors/shoulders-left" d="M 58.5 71 H 63.5 M 61 68.5 V 73.5" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
-    <path id="anchors/shoulders-right" d="M 67.5 71 H 72.5 M 70 68.5 V 73.5" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
-    <path id="anchors/waist-left" d="M 41.5 91 H 46.5 M 44 88.5 V 93.5" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
-    <path id="anchors/waist-right" d="M 83.5 91 H 88.5 M 86 88.5 V 93.5" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
-    <path id="anchors/hem-left" d="M 47.5 111 H 52.5 M 50 108.5 V 113.5" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
-    <path id="anchors/hem-right" d="M 77.5 111 H 82.5 M 80 108.5 V 113.5" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="anchors/hip" d="M 63 101 H 69 M 66 98 V 104" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="anchors/shoulders-left" d="M 57.5 67 H 62.5 M 60 64.5 V 69.5" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="anchors/shoulders-right" d="M 68.5 67 H 73.5 M 71 64.5 V 69.5" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="anchors/waist-left" d="M 39.5 92 H 44.5 M 42 89.5 V 94.5" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="anchors/waist-right" d="M 85.5 92 H 90.5 M 88 89.5 V 94.5" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="anchors/hem-left" d="M 44.5 112 H 49.5 M 47 109.5 V 114.5" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="anchors/hem-right" d="M 80.5 112 H 85.5 M 83 109.5 V 114.5" fill="none" stroke="#C84D6F" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
   <g id="swatches">
     <path id="swatches/skin" d="M 4 4 H 12 V 12 H 4 Z" fill="#FF00FF" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>

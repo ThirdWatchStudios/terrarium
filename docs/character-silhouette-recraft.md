@@ -422,6 +422,13 @@ population remains the approval gate. Production promotion would still need
 the chosen authored head SVGs, an explicit crop policy, hair fitting, portrait
 and atlas checks, and the separately deferred neutral-arm runtime uptake.
 
+Production resolution (2026-07-27): the six head hulls and static framing were
+promoted, then the head datum was lowered three source units after composed
+review found the initial one-row target too detached. The final gate preserves
+4–8 clear pixels between the filled head and torso silhouettes at 128 px while
+allowing expanded outlines to kiss at 40/48 px. The original v4 observations
+above remain historical evidence rather than the current production spacing.
+
 ## Hair/head fit and profile correction — review-only v5.1
 
 The first v5 render established six outer-mass ideas but is rejected as a fit

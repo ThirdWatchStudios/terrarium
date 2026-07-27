@@ -1,7 +1,7 @@
 # Character Redesign Production Handoff
 
-Status: **design direction locked; review-only implementation evidence; production
-promotion not started**
+Status: **design direction locked; bodies, neutral-arm fallback, and heads
+promoted; fitted hair and runtime scale remain**
 
 Last design review: **2026-07-27**
 
@@ -18,14 +18,19 @@ instead of assuming every artifact below is committed.
 
 ## Scope boundary
 
-Everything described here is a **locked visual direction**, not a claim that
-production character parts, exported atlases, Unity renderer scale, or runtime
-fallback behavior already use it.
+The locked direction is being promoted in bounded production slices. As of
+2026-07-27, the six accepted body hulls, body-owned anchors, generated
+neutral-arm fallback, six redesigned head hulls, tightened head/body separation,
+and static production framing are live in Terrarium. Authored SVG sources,
+importer/scaffolds, picker/RNG/export registration, per-body Dress dispatch,
+flat/layer/unit/portrait routes, external anchors, and atlas pivots agree.
+Fitted hair and the Unity renderer scale do not use the new direction yet.
 
-The review scripts temporarily install candidates through real registered parts,
-render through the production compositor, and restore the original references.
-Their PNGs and metrics prove the direction and compatibility surface; they do not
-promote it.
+The remaining hair and scale review scripts temporarily install candidates
+through real registered parts, render through the production compositor, and
+restore the original references. The head-gap proof is now historical evidence
+for the promoted sources and anchors; its PNGs no longer describe an
+unpromoted candidate.
 
 Prop redesign is a separate future pass. The character scale calibration held
 real props at their current authored envelope specifically so that prop work would
@@ -36,11 +41,11 @@ not contaminate the character decision.
 | Layer | Locked decision | Production consequence |
 | --- | --- | --- |
 | Overall model | Animation-safe pawn-plus: one grounded body hull, a rigid head group, rigid hair, and generated arms | Do not introduce articulated legs, gait bones, hair physics, or bespoke animation sets |
-| Bodies | Six construction families: Column, Block, Wedge, Barrel, Bell, and Pinch | Promote real body art and body-owned sub-anchors; Pinch needs an independent production identity |
-| Arms | Arms are always part of a full-body model; `neutral` is the fallback and explicit poses replace it | Update default routing and every reconstructed/exported surface atomically |
+| Bodies | Six construction families: Column, Block, Wedge, Barrel, Bell, and Pinch | Promoted with body-owned sub-anchors and independent `body-pinch` identity |
+| Arms | Arms are always part of a rigged full-body model; `neutral` is the fallback and explicit poses replace it | Promoted across flat, layered, unit, employee, crew, scene, and portrait render routes |
 | Profile arms | East/west neutral arms may disappear inside the body silhouette | Do not add an outboard arm merely to make the profile show a limb |
 | Heads | Round, Broad, Long, Block, Point, and Lantern | Promote authored lower-face distinction while keeping one rigid head transform |
-| Head/body air | One transparent raster row at literal 40/48 px in neutral, hairless context | Implement a static body-owned head datum and an explicit bake/crop policy |
+| Head/body air | A close, designed neck break without a detached “floating head” read | Keep filled head and torso silhouettes separate; allow expanded outlines to kiss after gameplay downsampling |
 | Hair | Crop, Sweep, Bob, Knot, Tail, and Cloud, fitted to each head envelope | Author true side profiles and either bake fitted variants or carry static fit metadata |
 | World scale | **−35% from the current installed character envelope** | Apply a global factor of `0.65`; keep the 128-unit authoring canvas unchanged |
 | Props | Deferred to their own redesign pass | Handhelds follow character anchors; furniture, facilities, and decor do not inherit character scale blindly |
@@ -75,12 +80,12 @@ class labels.
 
 | Family | Silhouette anchor | Proof carrier | Production note |
 | --- | --- | --- | --- |
-| Column | Near-parallel flanks and a tight base | `body-tall` | Preserve the narrow continuous hull |
-| Block | Flat shoulder shelf and broad base | `body-compact` | Keep the low, rectangular weight |
-| Wedge | Wide shoulder slope and narrow base | `body-large-frame` | Shoulder convergence is the identity |
-| Barrel | Full middle with pinched shoulder and base | `body-balanced` | Avoid smoothing it back into a capsule |
-| Bell | Small shoulder opening into low outward mass | `body-soft` | Retain the lower-heavy read without making it a gender lock |
-| Pinch | Moderate shoulder, shallow waist, rounded hip | `body-soft` in proof only | Add a real `body-pinch`-class production part or another stable independent ID |
+| Column | Near-parallel flanks and a tight base | `body-tall` | Promoted; stable saved-recipe ID retained |
+| Block | Flat shoulder shelf and broad base | `body-compact` | Promoted; stable saved-recipe ID retained |
+| Wedge | Wide shoulder slope and narrow base | `body-large-frame` | Promoted; stable saved-recipe ID retained |
+| Barrel | Full middle with pinched shoulder and base | `body-balanced` | Promoted; stable saved-recipe ID retained |
+| Bell | Small shoulder opening into low outward mass | `body-soft` | Promoted; stable saved-recipe ID retained |
+| Pinch | Moderate shoulder, shallow waist, rounded hip | `body-pinch` | Promoted as a new independent selectable ID |
 
 Bell and Pinch provide feminine-leaning options without assigning gender to a
 body. Recognition belongs to the complete recipe.
@@ -90,16 +95,23 @@ facings, standard and silhouette-changing garments, held accessories, and all
 three built-in styles: 18,360 audited renders. Passing that mechanical matrix
 does not remove the need for eyes-on crowd review.
 
-### Body production debt
+### Body production status
 
-- Pinch currently shares the `body-soft` carrier only because the proof installs
-  one candidate at a time. Production cannot leave Bell and Pinch on one ID.
-- Every body must publish its own neck, head-center, shoulders, chest, waist,
-  hip, wrists, hand attachments, and above-head anchors.
-- Dress and other silhouette-changing garments require explicit per-body
-  profiles. Pinch needs a dedicated Dress result.
-- Conforming garments should derive from the selected body hull. Detail kits
-  should attach to body-owned anchors rather than assume one capsule.
+- The five existing production IDs retain saved-recipe compatibility while
+  carrying the accepted Column, Block, Wedge, Barrel, and Bell art.
+- Pinch owns the independent `body-pinch` ID, full facing art, typed body rig,
+  picker/RNG/export route, authored scaffolds, and a dedicated Dress profile.
+- All six bodies publish neck, head-center, shoulders, chest, waist, hip, hem,
+  wrists/hand attachments, and above-head anchors through the existing typed
+  rig and pose vocabulary.
+- Conforming garments derive from the selected hull; body-detail intake
+  pre-expands to all six bodies.
+- The promoted body slice passes 11,880 body/outfit/pose/facing/style renders,
+  6,480 pose/hand/style renders, fitted-paint containment, authored-source
+  parity, deterministic generation, legacy-body byte stability, and reviewed
+  production silhouette/Dress sheets. Legacy bodies retain their selection,
+  fallback-anchor, and unposed behavior; their shared head IDs intentionally
+  receive the promoted head art.
 
 ## Arm model and animation budget
 
@@ -131,16 +143,23 @@ The outboard-hang experiment passed several pixel metrics but failed the actual
 read. Its one-sided profile protrusion looked like the other arm had disappeared.
 Do not revive it to satisfy a profile-pixel target.
 
-### Arm production debt
+### Arm production status
 
-The production compositor currently has surfaces that rely on the unposed path.
-Default routing, base and mood sheets, employee sprites, operational-unit
-renderings, construction/fabrication variants, portraits, and layer atlases must
-receive one explicit policy.
-
-Sleeve, hand, and outline layers must enter reconstructed/layer-atlas output
-atomically. Updating only the flat compositor would make baked and reconstructed
-characters disagree.
+- Omitted pose input resolves to generated `neutral` geometry for every
+  body-owned production rig. An explicit pose replaces that geometry wholesale.
+- The same fallback flows through base and mood sheets, employee sprites,
+  operational-unit renderings, construction/fabrication variants, scenes, and
+  conversations because they share the flat compositor.
+- Reconstructed/layer-atlas output carries `pose-neutral-front` (and a
+  `pose-neutral-back` row if neutral art ever supplies one), split into sleeve
+  and hand masks with the unified outline regenerated from the same geometry.
+- Corporate portraits deliberately keep the neutral upper sleeves visible in
+  their bust crop. They are crops of the identity model, not a separate armless
+  drawing.
+- Legacy body IDs remain resolvable and retain their fallback anchors, framing,
+  and unposed behavior. Their bytes may change when a shared head ID receives
+  promoted art. The neutral-arm fallback begins when a recipe uses a body-owned
+  production rig.
 
 ## Head vocabulary and separation
 
@@ -167,19 +186,33 @@ remains disconnected. `slump` may close it, and tilt poses continue to pivot
 around the existing neck.
 
 The proof recovered the tight vertical frame with a fixed five-source-unit
-view-box shift (`viewBoxY = -5`). Production must adopt an explicit static crop
-or framing policy; it must not turn that shift into a runtime state.
+view-box shift (`viewBoxY = -5`). Production implements the equivalent static
+figure transform only for body-owned production rigs. The contact shadow stays
+on its established floor datum. Flat sprites and reconstructable layers carry
+the same transform; external anchors and normalized atlas pivots include it.
+It is not a runtime state.
 
-### Head production debt
+### Head production status and debt
 
-- Promote canonical south/east/north SVGs for all six selected hulls.
-- Preserve the shared chin band so each body can publish one head datum rather
-  than six head-specific offsets.
-- Recheck the high-contrast style, whose enlarged head and per-part outline
-  exceeded the review crop in some combinations.
-- Recheck wide heads under profile `recoil`.
-- Decide whether portraits share the full-body crop policy or use an explicit
-  portrait-only frame.
+- All eighteen canonical south/east/north SVGs are promoted under their stable
+  IDs: `head-round` = Round, `head-oval` = Broad, `head-long` = Long,
+  `head-boxy` = Block, `head-angular` = Point, and `head-soft-square` =
+  Lantern.
+- Each production body publishes one tightened head datum shared by all six
+  hulls. Relative to the original body anchors, the final lifts are Block 15,
+  Barrel 17, Wedge 16, Column 18, Bell 17, and Pinch 17 source units.
+- The accepted datum is three source units closer to the torso than the initial
+  promotion. Across the complete 144-cell hairless source matrix, filled head
+  and torso silhouettes retain 4–8 clear pixels at 128 px. Their expanded
+  outlines may kiss at 40/48 px without leaving the cell.
+- Corporate portraits use an explicit head-centered crop and do not inherit the
+  full-body five-unit frame. Employee crops do, because they crop the full
+  framed sprite.
+- The high-contrast preset remains bounded debt: its 1.12 head scale and
+  four-unit per-part outline exceed the tight frame and can close the raster gap.
+  Do not silently shrink the accepted heads to repair that separate style.
+- Tall legacy hair remains hair-pass debt. Bun, Long straight, and Coils are the
+  clearest crop-pressure sentinels.
 
 ## Hair vocabulary and fitting
 
@@ -305,19 +338,21 @@ Do not restart these without new runtime evidence:
 
 ## Recommended production order
 
-1. **Isolate the work.** Inspect the current dirty worktree and create a
-   character-only branch/worktree if needed. Do not mix wall or prop redesign
-   material into character commits.
-2. **Ratify IDs and migration mapping.** Decide which existing production body,
-   head, and hair IDs can retain identity, which receive new art, and which need
-   new stable IDs. Give Pinch an independent production route.
-3. **Promote bodies and body-owned anchors.** Land canonical body art and
-   sub-rigs before garments, neutral arms, or hair depend on them.
-4. **Promote the neutral-arm fallback atomically.** Update default routing,
-   hand attachments, flat sprites, layer atlases, and every exported/rendered
-   surface under one explicit portrait policy.
-5. **Promote heads and the static framing policy.** Land the six hulls, shared
-   chin band, body-owned head offsets, and the final crop rule.
+1. **Isolate the work.** Complete for the body slice: the wall checkpoint was
+   clean and only character files were changed. Create a character branch
+   before committing if this slice is checkpointed.
+2. **Ratify IDs and migration mapping.** Body and head mapping complete. Hair
+   mapping remains for its own promotion slice.
+3. **Promote bodies and body-owned anchors.** Complete for all six bodies,
+   including independent Pinch registration and Dress dispatch.
+4. **Promote the neutral-arm fallback atomically.** Complete in Terrarium:
+   default routing, hand attachments, flat sprites, layer atlases, and every
+   shared exported/rendered surface now agree; portraits retain the neutral
+   upper sleeves.
+5. **Promote heads and the static framing policy.** Complete in Terrarium:
+   eighteen authored sources, shared chin band, body-owned head offsets,
+   production-only five-unit frame, portrait policy, external anchors, and
+   atlas pivots agree.
 6. **Promote fitted hair.** Choose bake-time generated variants versus static
    fit metadata, then author true south/east/north sources.
 7. **Rebuild garment compatibility.** Regenerate conforming layers and
@@ -340,8 +375,8 @@ Do not restart these without new runtime evidence:
 - north plus real mirrored west checks;
 - all six bodies with representative heads and hair;
 - neutral versus existing pose states;
-- one-row neutral head/body air at 40 and 48 px where the hair policy requires
-  it;
+- separated filled head/torso silhouettes at source scale, with intentional
+  near-touching outlines permitted at 40 and 48 px;
 - true east hair profiles with visible forward skin and rear mass;
 - desk-height occlusion and held-prop attachment;
 - crowded-room reacquisition on light and dark grounds;
@@ -394,7 +429,12 @@ Do not restart these without new runtime evidence:
 - [Head/body-air sheet](previews/character-head-gap-v4.png)
 - [Head context sheet](previews/character-head-gap-context-v4.png)
 - [Head metrics](previews/character-head-gap-v4-metrics.json)
+- [Promoted head source comparison](previews/head-silhouettes-preview.png)
+- [Promoted head compatibility sheet](previews/head-silhouettes-compatibility.png)
+- [Accepted three-pixel gap tightening](previews/character-head-gap-tightening.png)
 - Generator: [`characterHeadGapPreview.ts`](../scripts/characterHeadGapPreview.ts)
+- Generator: [`headSilhouettePreview.ts`](../scripts/headSilhouettePreview.ts)
+- Generator: [`characterHeadGapTighteningPreview.ts`](../scripts/characterHeadGapTighteningPreview.ts)
 
 ### Hair
 
@@ -429,4 +469,3 @@ When production work resumes:
 6. Run raster-heavy proof/test commands sequentially.
 7. Keep prop redesign as a separate workstream, using the selected smaller
    character only as its human-scale reference.
-

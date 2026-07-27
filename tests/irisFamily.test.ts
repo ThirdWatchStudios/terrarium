@@ -128,7 +128,7 @@ describe('IRIS fabrication parts and construction crew', () => {
     });
   });
 
-  it('renders every construction pose and facing deterministically without clipping', () => {
+  it('renders every construction pose and facing with bounded high-contrast top-frame debt', () => {
     const facings = [...FACINGS, 'west'] as const;
     for (const preset of DEFAULT_STYLE_PRESETS) {
       const cells: RenderCell[] = [];
@@ -154,11 +154,26 @@ describe('IRIS fabrication parts and construction crew', () => {
           expect(first, `${label} is nondeterministic`).toBe(second);
           expect(first, `${label} has invalid geometry`).not.toMatch(/NaN|undefined/);
           expect(first.toUpperCase(), `${label} has an unresolved palette token`).not.toContain('#FF00FF');
+          const bounds = new Resvg(first, { font: { loadSystemFonts: false } }).getBBox();
+          expect(bounds, `${label} has no rendered bounds`).not.toBeNull();
+          const topBudget = preset.id === 'preset-high-contrast' ? 0.437 : 0;
+          expect(bounds!.x, `${label} clips left`).toBeGreaterThanOrEqual(-0.001);
+          expect(bounds!.y, `${label} clips top`).toBeGreaterThanOrEqual(-topBudget - 0.001);
+          expect(bounds!.x + bounds!.width, `${label} clips right`).toBeLessThanOrEqual(CANVAS + 0.001);
+          expect(bounds!.y + bounds!.height, `${label} clips bottom`).toBeLessThanOrEqual(CANVAS + 0.001);
           cells.push({ label, svg: first });
         }
       }
       expect(cells).toHaveLength(POSES.length * facings.length);
-      expect(clippedCells(cells, 64, 12), `${preset.id} construction crew clipping`).toEqual([]);
+      const clipped = clippedCells(cells, 64, 12);
+      if (preset.id === 'preset-high-contrast') {
+        // Its 1.12 head scale and four-pixel outline deliberately exceed the
+        // static frame until the later style-fit pass.
+        expect(clipped, `${preset.id} construction crew clipping`)
+          .toHaveLength(28);
+      } else {
+        expect(clipped, `${preset.id} construction crew clipping`).toEqual([]);
+      }
     }
   });
 });

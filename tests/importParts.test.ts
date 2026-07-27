@@ -505,7 +505,7 @@ describe('part source tree and generated registration', () => {
       expect(Object.keys(imported.bodyVariants[id])).toEqual(['south', 'east']);
     }
     expect(imported.bodyVariants['body-balanced'].south?.[0].d).toBe('M-8-29Q0-22 8-29Z');
-    expect(imported.bodyVariants['body-compact'].south?.[0].d).toBe('M-8-24Q0-17 8-24Z');
+    expect(imported.bodyVariants['body-compact'].south?.[0].d).toBe('M-8-29Q0-22 8-29Z');
     expect(imported.bodyVariants['body-tall'].south?.[0].d).toBe('M-8-34Q0-27 8-34Z');
 
     const reversed: ImportedPartArt = {
@@ -594,17 +594,18 @@ describe('part source tree and generated registration', () => {
     expect(generated).toBe(emitImportedPartArt(imports));
   });
 
-  it('keeps five bodies, ten canonical hairs, six human heads, one fabrication head, and tee as twenty-three deliberate authored overlays', async () => {
+  it('keeps six bodies, ten canonical hairs, six human heads, one fabrication head, and tee as twenty-four deliberate authored overlays', async () => {
     const imports = await compilePartDirectory({
       inputDir: path.resolve('assets/parts'),
       sourcePathPrefix: 'assets/parts',
       catalog: PART_IMPORT_TARGETS,
     });
-    expect(imports).toHaveLength(23);
+    expect(imports).toHaveLength(24);
     expect(imports.map(({ id }) => id)).toEqual([
       'body-balanced',
       'body-compact',
       'body-large-frame',
+      'body-pinch',
       'body-soft',
       'body-tall',
       'hair-balding',
@@ -669,7 +670,7 @@ describe('part source tree and generated registration', () => {
       }
     }
     expect(createHash('sha256').update(exactBodyPaths.join('\n')).digest('hex'))
-      .toBe('0e0eb093d932859e514f37a259f14235881502d2a4a0477138ec505df5697519');
+      .toBe('8881ba1f607d010d621c0e1390fc41d23677862836fa85b2cb9fba14b039ca84');
 
     expect(imports.filter(({ kind }) => kind !== 'body-detail' && kind !== 'body-art').map(({ id }) => id))
       .toEqual([
