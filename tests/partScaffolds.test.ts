@@ -120,13 +120,19 @@ function shapeSemantics(shape: ShapeSpec): Omit<ShapeSpec, 'd'> {
 
 type ScaffoldSlot = 'body' | 'head' | 'hair' | 'outfit';
 
-function scaffoldIdentity(assetPath: string): { slot: ScaffoldSlot; partId: string; facing: Facing } {
-  const match = /\/scaffolds\/(body|head|hair|outfit)\/([a-z-]+)\.(south|east|north)\.svg$/.exec(assetPath);
+function scaffoldIdentity(assetPath: string): {
+  slot: ScaffoldSlot;
+  partId: string;
+  facing: Facing;
+  componentId?: string;
+} {
+  const match = /\/scaffolds\/(body|head|hair|outfit)\/([a-z-]+)(?:\.([a-z-]+))?\.(south|east|north)\.svg$/.exec(assetPath);
   if (!match) throw new Error(`Not a scaffold path: ${assetPath}`);
   return {
     slot: match[1] as ScaffoldSlot,
     partId: `${match[1]}-${match[2]}`,
-    facing: match[3] as Facing,
+    ...(match[3] ? { componentId: match[3] } : {}),
+    facing: match[4] as Facing,
   };
 }
 
@@ -134,14 +140,26 @@ function seededShapes(
   slot: ScaffoldSlot,
   partId: string,
   facing: Facing,
+  componentId?: string,
 ): readonly ShapeSpec[] | undefined {
   const part = getPart(partId);
   if (slot !== 'outfit') return part?.facings[facing]?.shapes;
   const balanced = BODY_ARCHETYPES.find(({ id }) => id === 'body-balanced');
-  return balanced && part?.buildVariant?.(facing, {
+  const shapes = balanced && part?.buildVariant?.(facing, {
     bodyAnchors: balanced.anchors[facing],
     bodyId: balanced.id,
   })?.shapes;
+  if (!shapes || !componentId) return shapes;
+  const target = PART_IMPORT_TARGETS.find(({ id }) => id === partId);
+  const components = target?.components ?? [];
+  const componentIndex = components.findIndex(({ id }) => id === componentId);
+  if (componentIndex < 0) return undefined;
+  const count = components[componentIndex].facings[facing]?.shapeCount;
+  if (count === undefined) return undefined;
+  const offset = components
+    .slice(0, componentIndex)
+    .reduce((total, component) => total + (component.facings[facing]?.shapeCount ?? 0), 0);
+  return shapes.slice(offset, offset + count);
 }
 
 describe('part authoring scaffold generation', () => {
@@ -221,10 +239,16 @@ describe('part authoring scaffold generation', () => {
       'assets/part-authoring/scaffolds/head/soft-square.east.svg',
       'assets/part-authoring/scaffolds/head/soft-square.north.svg',
       'assets/part-authoring/scaffolds/head/soft-square.south.svg',
+      'assets/part-authoring/scaffolds/outfit/blazer.buttons.east.svg',
+      'assets/part-authoring/scaffolds/outfit/blazer.buttons.south.svg',
+      'assets/part-authoring/scaffolds/outfit/blazer.lapels.east.svg',
+      'assets/part-authoring/scaffolds/outfit/blazer.lapels.south.svg',
+      'assets/part-authoring/scaffolds/outfit/blazer.pocket.east.svg',
+      'assets/part-authoring/scaffolds/outfit/blazer.pocket.south.svg',
       'assets/part-authoring/scaffolds/outfit/tee.east.svg',
       'assets/part-authoring/scaffolds/outfit/tee.south.svg',
     ]);
-    expect(first).toHaveLength(74);
+    expect(first).toHaveLength(80);
     expect(first.map(({ bytes }) => bytes)).toEqual(second.map(({ bytes }) => bytes));
     expect(PART_SCAFFOLD_SPECS.map(({ slot, referenceId }) => [slot, referenceId])).toEqual([
       ['body', 'body-compact'],
@@ -251,6 +275,9 @@ describe('part authoring scaffold generation', () => {
       ['hair', 'hair-pixie'],
       ['hair', 'hair-side-part'],
       ['outfit', 'outfit-tee'],
+      ['outfit', 'outfit-blazer'],
+      ['outfit', 'outfit-blazer'],
+      ['outfit', 'outfit-blazer'],
     ]);
   });
 
@@ -266,7 +293,7 @@ describe('part authoring scaffold generation', () => {
       expect(source).toContain('id="art"');
       expect(source).not.toMatch(/<(?:rect|circle|ellipse|line|polyline|polygon|text)\b/);
 
-      const { slot: scaffoldSlot, partId, facing } = scaffoldIdentity(asset.path);
+      const { slot: scaffoldSlot, partId, facing, componentId } = scaffoldIdentity(asset.path);
       if (scaffoldSlot === 'body') {
         expect(source).toContain(`id="reference/${partId}"`);
         expect(source).toContain('id="guide/head-radius"');
@@ -282,7 +309,7 @@ describe('part authoring scaffold generation', () => {
         expect(source).toContain('id="anchors/headCenter"');
       }
 
-      const sourceShapes = seededShapes(scaffoldSlot, partId, facing);
+      const sourceShapes = seededShapes(scaffoldSlot, partId, facing, componentId);
       expect(sourceShapes, `${asset.path} source part missing`).toBeTruthy();
       const target = PART_IMPORT_TARGETS.find(({ id }) => id === partId);
       const preserveLocalPaths = target?.importMode === 'body-art' || target?.preserveLocalPaths === true;
@@ -366,9 +393,9 @@ describe('part authoring scaffold generation', () => {
     });
   });
 
-  it('seeds tee south/east against body-balanced with the complete outfit rig guide', () => {
+  it('seeds Tee and componentized Blazer sources against body-balanced with the complete outfit rig guide', () => {
     const teeAssets = generatePartAuthoringAssets()
-      .filter(({ path: assetPath }) => assetPath.includes('/scaffolds/outfit/'));
+      .filter(({ path: assetPath }) => assetPath.includes('/scaffolds/outfit/tee.'));
     expect(teeAssets.map(({ path: assetPath }) => assetPath)).toEqual([
       'assets/part-authoring/scaffolds/outfit/tee.east.svg',
       'assets/part-authoring/scaffolds/outfit/tee.south.svg',
@@ -388,6 +415,29 @@ describe('part authoring scaffold generation', () => {
       expect(source).toContain('id="anchors/hem-right"');
       expect(source).toContain('id="detail/neckline/shape-001"');
       expect(source).toContain('id="art" transform="translate(64 87)"');
+    }
+
+    const blazerAssets = generatePartAuthoringAssets()
+      .filter(({ path: assetPath }) => assetPath.includes('/scaffolds/outfit/blazer.'));
+    expect(blazerAssets.map(({ path: assetPath }) => assetPath)).toEqual([
+      'assets/part-authoring/scaffolds/outfit/blazer.buttons.east.svg',
+      'assets/part-authoring/scaffolds/outfit/blazer.buttons.south.svg',
+      'assets/part-authoring/scaffolds/outfit/blazer.lapels.east.svg',
+      'assets/part-authoring/scaffolds/outfit/blazer.lapels.south.svg',
+      'assets/part-authoring/scaffolds/outfit/blazer.pocket.east.svg',
+      'assets/part-authoring/scaffolds/outfit/blazer.pocket.south.svg',
+    ]);
+    for (const component of ['buttons', 'lapels', 'pocket']) {
+      const componentAssets = blazerAssets.filter(({ path: assetPath }) =>
+        assetPath.includes(`blazer.${component}.`));
+      expect(componentAssets).toHaveLength(2);
+      for (const { bytes } of componentAssets) {
+        const source = bytes.toString('utf8');
+        expect(source).toContain(`outfit-blazer ${component}`);
+        expect(source).toContain(`id="detail/${component}/shape-001"`);
+        expect(source).toContain('id="reference/body-balanced"');
+        expect(source).toContain('id="guide/body-rig/axis"');
+      }
     }
   });
 
@@ -502,7 +552,7 @@ describe('committed part authoring assets', () => {
     const root = await mkdtemp(path.join(tmpdir(), 'terrarium-authoring-assets-'));
     temporaryRoots.push(root);
     const firstWrite = await writePartAuthoringAssets(root);
-    expect(firstWrite.updated).toBe(74);
+    expect(firstWrite.updated).toBe(80);
     expect(firstWrite.removed).toBe(0);
     await expect(checkPartAuthoringAssets(root)).resolves.toBeUndefined();
 

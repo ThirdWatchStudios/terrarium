@@ -157,16 +157,19 @@ describe('parts', () => {
 });
 
 describe('production outfit art', () => {
-  it('outfit-tee — all production bodies and facings with authored head/hair', async () => {
+  it.each([
+    ['outfit-tee', 'tee'],
+    ['outfit-blazer', 'blazer'],
+  ])('%s — all production bodies and facings with authored head/hair', async (outfit, slug) => {
     const cells = BODY_ARCHETYPES.flatMap((body) => FACINGS_ALL.map((facing) => {
       const recipe: CharacterRecipe = {
-        id: `tee-${body.id}`,
+        id: `${slug}-${body.id}`,
         name: body.label,
         parts: {
           body: body.id,
           head: 'head-round',
           hair: 'hair-bob',
-          outfit: 'outfit-tee',
+          outfit,
           accessories: [],
         },
         palette: {
@@ -181,7 +184,7 @@ describe('production outfit art', () => {
     }));
 
     await expect(grid(cells, FACINGS_ALL.length)).toMatchFileSnapshot(
-      snap('outfits/outfit-tee__production-bodies'),
+      snap(`outfits/${outfit}__production-bodies`),
     );
   });
 });

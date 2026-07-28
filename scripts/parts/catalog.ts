@@ -1,8 +1,19 @@
 import type { Facing, Slot } from '../../src/core/types';
 import type { BodyArchetypeId } from '../../src/parts/bodyArchetypes';
 
-export type PartImportMode = 'static' | 'body-art' | 'anchored-detail';
+export type PartImportMode =
+  | 'static'
+  | 'body-art'
+  | 'anchored-detail'
+  | 'component-detail';
 export type BodyDetailPointAnchor = 'neck';
+export type BodyDetailFrame = 'upper-torso' | 'lower-torso';
+
+export interface PartImportComponent {
+  readonly id: string;
+  readonly frame: BodyDetailFrame;
+  readonly facings: Partial<Record<Facing, { readonly shapeCount: number }>>;
+}
 
 /** Minimal explicit metadata required before an existing part may accept SVG art. */
 export interface PartImportTarget {
@@ -16,6 +27,7 @@ export interface PartImportTarget {
   readonly importMode?: PartImportMode;
   readonly referenceBodyId?: BodyArchetypeId;
   readonly placementAnchor?: BodyDetailPointAnchor;
+  readonly components?: readonly PartImportComponent[];
 }
 
 const allFacings = { south: true, east: true, north: true } as const;
@@ -75,5 +87,40 @@ export const PART_IMPORT_TARGETS: readonly PartImportTarget[] = [
     importMode: 'anchored-detail',
     referenceBodyId: 'body-balanced',
     placementAnchor: 'neck',
+  },
+  {
+    id: 'outfit-blazer',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: { south: true, east: true },
+    buildVariant: true,
+    importMode: 'component-detail',
+    referenceBodyId: 'body-balanced',
+    components: [
+      {
+        id: 'lapels',
+        frame: 'upper-torso',
+        facings: {
+          south: { shapeCount: 3 },
+          east: { shapeCount: 2 },
+        },
+      },
+      {
+        id: 'buttons',
+        frame: 'lower-torso',
+        facings: {
+          south: { shapeCount: 2 },
+          east: { shapeCount: 1 },
+        },
+      },
+      {
+        id: 'pocket',
+        frame: 'lower-torso',
+        facings: {
+          south: { shapeCount: 1 },
+          east: { shapeCount: 1 },
+        },
+      },
+    ],
   },
 ];

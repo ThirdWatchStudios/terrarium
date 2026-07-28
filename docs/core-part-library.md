@@ -18,12 +18,12 @@ full alphabet; the milestones are what "done" means.
 - [x] Importer (`scripts/importParts.ts`) with strict validation
       (`part-importer.md`; shared-identity production body art, static
       production head/hair overlays, the all-ten head-aware hair fit resolver,
-      plus the first body-aware tee detail adapter)
+      the first body-aware tee adapter, and componentized Blazer detail intake)
 - [x] Template scaffold SVGs for all six production bodies, all six human-head
       families plus the special fabrication-unit head, supported hair, and
-      south/east tee intake (128 grid, anchors, capsule/head guides, seeded
-      editable art, named reference layer) with semantic IDs for every editable
-      and ignored path
+      south/east Tee/Blazer intake (128 grid, anchors, capsule/head guides,
+      seeded editable art, named reference layer) with semantic IDs for every
+      editable and ignored path
 - [x] Sentinel color palette defined and generated as ASE, GPL, and readable
       SVG companions (`npm run parts:scaffolds`); every scaffold also embeds
       the five exact swatches
@@ -33,6 +33,9 @@ full alphabet; the milestones are what "done" means.
 - [x] Anchored-detail mechanics proof: one south/east tee source set on
       `body-balanced` → deterministic six-body pre-expansion. Visual approval
       remains part of M1 rather than an importer prerequisite.
+- [x] Component-detail mechanics proof: six Blazer sources keep lapels,
+      buttons, and pocket separately addressable, aggregate in manifest order,
+      and fit upper/lower torso frames across all six production bodies.
 - [x] Body-art ownership proof: 18 canonical production SVGs → one in-place
       shared `PartDef` set with byte-stable visible geometry and unchanged typed
       rig identities
@@ -129,7 +132,7 @@ The visible core of every character is authored.
       sub-anchors
 - [x] All 6 heads
 - [x] 3 hairstyles (one per major family)
-- [ ] Tee visual approval + one more outfit detail kit (Blazer recommended)
+- [ ] Tee visual approval + one more outfit detail kit (Blazer approved)
 - [ ] Crowd pass + distance pass + stress test
 
 **Exit:** a generated office screenshot reads as hand-crafted art.
@@ -389,9 +392,17 @@ behind.
 > the conforming torso and owns z-order. Legacy bodies and future body IDs keep
 > the procedural/static fallback. Tee's inventory cells stay open until its
 > render is visually approved and the remaining Definition of Done checks pass.
-> Componentized lapels/buttons/pocket placement for Blazer is the next deferred
-> outfit adapter, scheduled after the current silhouette-bearing hair review
-> rather than ahead of it.
+>
+> **Blazer component-detail intake (approved 2026-07-27):** six canonical files
+> keep `lapels`, `buttons`, and `pocket` as three
+> independent source pieces across south/east. The manifest fixes their paint
+> order and shape counts. Lapels fit through the neck/shoulder/chest frame;
+> buttons and pocket fit through the chest/waist/hip frame. The complete
+> aggregate replaces only known production-body variants, while north, legacy,
+> and future bodies retain the handwritten fallback. The focused review sheet
+> is `character-blazer-component-fit-v1.png`; broader outfit and 32/48 px
+> sheets were regenerated from the same production compositor and received
+> visual approval.
 
 | Garment | Detail pieces | south | east | north |
 |---|---|---|---|---|

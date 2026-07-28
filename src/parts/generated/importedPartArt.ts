@@ -434,6 +434,109 @@ export const IMPORTED_PART_ART = [
   },
   {
     kind: "body-detail",
+    id: "outfit-blazer",
+    slot: "outfit",
+    bodyVariants: {
+      "body-compact": {
+        south: [
+          { d: "M-12.18-29L0-6-2.9-29Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M2.9-29L0-6 12.18-29Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M0-4L0 25", stroke: "#00000030", strokeWidth: 2, silhouette: false },
+          { d: "M-1.684 1.65C-1.684 2.293-1.363 2.887-0.842 3.209-0.321 3.53 0.321 3.53 0.842 3.209 1.363 2.887 1.684 2.293 1.684 1.65 1.684 1.007 1.363 0.413 0.842 0.091 0.321-0.23-0.321-0.23-0.842 0.091-1.363 0.413-1.684 1.007-1.684 1.65Z", fill: "#00000033", silhouette: false },
+          { d: "M-1.684 9.25C-1.684 9.893-1.363 10.487-0.842 10.809-0.321 11.13 0.321 11.13 0.842 10.809 1.363 10.487 1.684 9.893 1.684 9.25 1.684 8.607 1.363 8.013 0.842 7.691 0.321 7.37-0.321 7.37-0.842 7.691-1.363 8.013-1.684 8.607-1.684 9.25Z", fill: "#00000033", silhouette: false },
+          { d: "M13.078 3.55L20.562 3.55", stroke: "#00000030", strokeWidth: 1.6, silhouette: false },
+        ],
+        east: [
+          { d: "M-0.649-25L10.835-12.68 2.255-25Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M10.835-12.68Q19.25 2 14.85 23", stroke: "#00000030", strokeWidth: 2, silhouette: false },
+          { d: "M17.008 0C17.008 0.939 17.737 1.7 18.637 1.7 19.537 1.7 20.266 0.939 20.266 0 20.266-0.939 19.537-1.7 18.637-1.7 17.737-1.7 17.008-0.939 17.008 0Z", fill: "#0000003D", silhouette: false },
+          { d: "M17.285 4.12L22.077 5.12", stroke: "#00000030", strokeWidth: 1.6, silhouette: false },
+        ],
+      },
+      "body-balanced": {
+        south: [
+          { d: "M-10.5-29L0-6-2.5-29Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M2.5-29L0-6 10.5-29Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M0-4L0 25", stroke: "#00000030", strokeWidth: 2, silhouette: false },
+          { d: "M-1.8 1.65C-1.8 2.293-1.457 2.887-0.9 3.209-0.343 3.53 0.343 3.53 0.9 3.209 1.457 2.887 1.8 2.293 1.8 1.65 1.8 1.007 1.457 0.413 0.9 0.091 0.343-0.23-0.343-0.23-0.9 0.091-1.457 0.413-1.8 1.007-1.8 1.65Z", fill: "#00000033", silhouette: false },
+          { d: "M-1.8 9.25C-1.8 9.893-1.457 10.487-0.9 10.809-0.343 11.13 0.343 11.13 0.9 10.809 1.457 10.487 1.8 9.893 1.8 9.25 1.8 8.607 1.457 8.013 0.9 7.691 0.343 7.37-0.343 7.37-0.9 7.691-1.457 8.013-1.8 8.607-1.8 9.25Z", fill: "#00000033", silhouette: false },
+          { d: "M13.98 3.55L21.98 3.55", stroke: "#00000030", strokeWidth: 1.6, silhouette: false },
+        ],
+        east: [
+          { d: "M-0.59-25L9.85-12.68 2.05-25Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M9.85-12.68Q17.5 2 13.5 23", stroke: "#00000030", strokeWidth: 2, silhouette: false },
+          { d: "M18.66 0C18.66 0.939 19.421 1.7 20.36 1.7 21.299 1.7 22.06 0.939 22.06 0 22.06-0.939 21.299-1.7 20.36-1.7 19.421-1.7 18.66-0.939 18.66 0Z", fill: "#0000003D", silhouette: false },
+          { d: "M18.95 4.12L23.95 5.12", stroke: "#00000030", strokeWidth: 1.6, silhouette: false },
+        ],
+      },
+      "body-large-frame": {
+        south: [
+          { d: "M-13.65-32L0-9-3.25-32Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M3.25-32L0-9 13.65-32Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M0-7L0 22", stroke: "#00000030", strokeWidth: 2, silhouette: false },
+          { d: "M-1.404-0.65C-1.404 0.061-1.136 0.717-0.702 1.073-0.268 1.428 0.268 1.428 0.702 1.073 1.136 0.717 1.404 0.061 1.404-0.65 1.404-1.361 1.136-2.017 0.702-2.373 0.268-2.728-0.268-2.728-0.702-2.373-1.136-2.017-1.404-1.361-1.404-0.65Z", fill: "#00000033", silhouette: false },
+          { d: "M-1.404 7.75C-1.404 8.461-1.136 9.117-0.702 9.473-0.268 9.828 0.268 9.828 0.702 9.473 1.136 9.117 1.404 8.461 1.404 7.75 1.404 7.039 1.136 6.383 0.702 6.027 0.268 5.672-0.268 5.672-0.702 6.027-1.136 6.383-1.404 7.039-1.404 7.75Z", fill: "#00000033", silhouette: false },
+          { d: "M10.904 1.45L17.144 1.45", stroke: "#00000030", strokeWidth: 1.6, silhouette: false },
+        ],
+        east: [
+          { d: "M-0.708-28L11.82-15.68 2.46-28Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M11.82-15.68Q21-1 16.2 20", stroke: "#00000030", strokeWidth: 2, silhouette: false },
+          { d: "M15.724-2.474C15.724-1.436 16.342-0.595 17.105-0.595 17.868-0.595 18.486-1.436 18.486-2.474 18.486-3.512 17.868-4.353 17.105-4.353 16.342-4.353 15.724-3.512 15.724-2.474Z", fill: "#0000003D", silhouette: false },
+          { d: "M15.959 2.08L20.022 3.185", stroke: "#00000030", strokeWidth: 1.6, silhouette: false },
+        ],
+      },
+      "body-tall": {
+        south: [
+          { d: "M-8.19-34L0-10.042-1.95-34Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M1.95-34L0-10.042 8.19-34Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M0-7.958L0 22.25", stroke: "#00000030", strokeWidth: 2, silhouette: false },
+          { d: "M-1.404-1.3C-1.404-0.555-1.136 0.132-0.702 0.505-0.268 0.877 0.268 0.877 0.702 0.505 1.136 0.132 1.404-0.555 1.404-1.3 1.404-2.045 1.136-2.732 0.702-3.105 0.268-3.477-0.268-3.477-0.702-3.105-1.136-2.732-1.404-2.045-1.404-1.3Z", fill: "#00000033", silhouette: false },
+          { d: "M-1.404 7.5C-1.404 8.245-1.136 8.932-0.702 9.305-0.268 9.677 0.268 9.677 0.702 9.305 1.136 8.932 1.404 8.245 1.404 7.5 1.404 6.755 1.136 6.068 0.702 5.695 0.268 5.323-0.268 5.323-0.702 5.695-1.136 6.068-1.404 6.755-1.404 7.5Z", fill: "#00000033", silhouette: false },
+          { d: "M10.904 0.9L17.144 0.9", stroke: "#00000030", strokeWidth: 1.6, silhouette: false },
+        ],
+        east: [
+          { d: "M-0.46-29.833L7.683-17 1.599-29.833Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M7.683-17Q13.65-1.708 10.53 20.167", stroke: "#00000030", strokeWidth: 2, silhouette: false },
+          { d: "M13.215-3.211C13.215-2.123 13.808-1.242 14.541-1.242 15.273-1.242 15.867-2.123 15.867-3.211 15.867-4.298 15.273-5.179 14.541-5.179 13.808-5.179 13.215-4.298 13.215-3.211Z", fill: "#0000003D", silhouette: false },
+          { d: "M13.441 1.56L17.341 2.718", stroke: "#00000030", strokeWidth: 1.6, silhouette: false },
+        ],
+      },
+      "body-soft": {
+        south: [
+          { d: "M-8.4-28L0-5-2-28Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M2-28L0-5 8.4-28Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M0-3L0 26", stroke: "#00000030", strokeWidth: 2, silhouette: false },
+          { d: "M-1.626 2.65C-1.626 3.293-1.316 3.887-0.813 4.209-0.31 4.53 0.31 4.53 0.813 4.209 1.316 3.887 1.626 3.293 1.626 2.65 1.626 2.007 1.316 1.413 0.813 1.091 0.31 0.77-0.31 0.77-0.813 1.091-1.316 1.413-1.626 2.007-1.626 2.65Z", fill: "#00000033", silhouette: false },
+          { d: "M-1.626 10.25C-1.626 10.893-1.316 11.487-0.813 11.809-0.31 12.13 0.31 12.13 0.813 11.809 1.316 11.487 1.626 10.893 1.626 10.25 1.626 9.607 1.316 9.013 0.813 8.691 0.31 8.37-0.31 8.37-0.813 8.691-1.316 9.013-1.626 9.607-1.626 10.25Z", fill: "#00000033", silhouette: false },
+          { d: "M12.627 4.55L19.853 4.55", stroke: "#00000030", strokeWidth: 1.6, silhouette: false },
+        ],
+        east: [
+          { d: "M-0.531-24L8.865-11.68 1.845-24Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M8.865-11.68Q15.75 3 12.15 24", stroke: "#00000030", strokeWidth: 2, silhouette: false },
+          { d: "M18.334 1C18.334 1.939 19.079 2.7 19.998 2.7 20.918 2.7 21.663 1.939 21.663 1 21.663 0.061 20.918-0.7 19.998-0.7 19.079-0.7 18.334 0.061 18.334 1Z", fill: "#0000003D", silhouette: false },
+          { d: "M18.618 5.12L23.514 6.12", stroke: "#00000030", strokeWidth: 1.6, silhouette: false },
+        ],
+      },
+      "body-pinch": {
+        south: [
+          { d: "M-8.4-29L0-6.958-2-29Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M2-29L0-6.958 8.4-29Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M0-5.042L0 22.75", stroke: "#00000030", strokeWidth: 2, silhouette: false },
+          { d: "M-1.404-0.05C-1.404 0.525-1.136 1.057-0.702 1.345-0.268 1.632 0.268 1.632 0.702 1.345 1.136 1.057 1.404 0.525 1.404-0.05 1.404-0.625 1.136-1.157 0.702-1.445 0.268-1.732-0.268-1.732-0.702-1.445-1.136-1.157-1.404-0.625-1.404-0.05Z", fill: "#00000033", silhouette: false },
+          { d: "M-1.404 6.75C-1.404 7.325-1.136 7.857-0.702 8.145-0.268 8.432 0.268 8.432 0.702 8.145 1.136 7.857 1.404 7.325 1.404 6.75 1.404 6.175 1.136 5.643 0.702 5.355 0.268 5.068-0.268 5.068-0.702 5.355-1.136 5.643-1.404 6.175-1.404 6.75Z", fill: "#00000033", silhouette: false },
+          { d: "M10.904 1.65L17.144 1.65", stroke: "#00000030", strokeWidth: 1.6, silhouette: false },
+        ],
+        east: [
+          { d: "M-0.59-25.167L9.85-13.36 2.05-25.167Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M9.85-13.36Q17.5 0.708 13.5 20.833", stroke: "#00000030", strokeWidth: 2, silhouette: false },
+          { d: "M15.215-1.263C15.215-0.374 15.808 0.347 16.541 0.347 17.273 0.347 17.867-0.374 17.867-1.263 17.867-2.153 17.273-2.874 16.541-2.874 15.808-2.874 15.215-2.153 15.215-1.263Z", fill: "#0000003D", silhouette: false },
+          { d: "M15.441 2.64L19.341 3.587", stroke: "#00000030", strokeWidth: 1.6, silhouette: false },
+        ],
+      },
+    },
+  },
+  {
+    kind: "body-detail",
     id: "outfit-tee",
     slot: "outfit",
     bodyVariants: {
@@ -708,6 +811,18 @@ export const IMPORTED_PART_PROVENANCE = [
       "assets/parts/head/soft-square.east.svg",
       "assets/parts/head/soft-square.north.svg",
       "assets/parts/head/soft-square.south.svg",
+    ],
+  },
+  {
+    id: "outfit-blazer",
+    sourceKind: "authored",
+    sourceFiles: [
+      "assets/parts/outfit/blazer.buttons.east.svg",
+      "assets/parts/outfit/blazer.buttons.south.svg",
+      "assets/parts/outfit/blazer.lapels.east.svg",
+      "assets/parts/outfit/blazer.lapels.south.svg",
+      "assets/parts/outfit/blazer.pocket.east.svg",
+      "assets/parts/outfit/blazer.pocket.south.svg",
     ],
   },
   {

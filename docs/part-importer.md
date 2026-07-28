@@ -10,9 +10,10 @@ production part. Static head/hair registration replaces matching facing
 geometry. The dedicated `body-art` mode updates the already-shared production
 body `PartDef` in place, while the explicit `outfit-tee` adapter replaces the
 detail shapes returned by its body-aware builder for known production bodies.
-In every mode labels, picker order, seeded-generation order, anchors, z-order,
-body rigs, and other runtime metadata remain owned by the handwritten
-`PartDef`.
+The `outfit-blazer` component adapter does the same after deterministically
+aggregating separately authored lapels, buttons, and pocket pieces. In every
+mode labels, picker order, seeded-generation order, anchors, z-order, body rigs,
+and other runtime metadata remain owned by the handwritten `PartDef`.
 
 ## Commands
 
@@ -29,27 +30,29 @@ scaffolds for all six production bodies, all six human-head families,
 all ten mapped hair families (`hair-short`, `hair-bob`, `hair-bun`,
 `hair-curly`, `hair-balding`, `hair-side-part`, `hair-pixie`,
 `hair-ponytail`, `hair-long-straight`, and `hair-coils`), and the south/east tee
-starters, plus ASE, GPL, and readable SVG sentinel palette companions for
-optional editors. Their directory README defines the canonical editor-agnostic
-workflow. Layer locking is only an editing convenience; semantic IDs determine
-which groups the importer ignores.
+starters plus six componentized Blazer starters, plus ASE, GPL, and readable
+SVG sentinel palette companions for optional editors. Their directory README
+defines the canonical editor-agnostic workflow. Layer locking is only an
+editing convenience; semantic IDs determine which groups the importer ignores.
 
 ## Source convention
 
 Sources live below `assets/parts`:
 
 ```text
-assets/parts/<slot>/<slug>.<facing>.svg
+assets/parts/<slot>/<slug>[.<component>].<facing>.svg
 ```
 
 For example, `assets/parts/body/compact.south.svg` targets `body-compact`,
 `assets/parts/hair/bob.south.svg` targets `hair-bob`, and
-`assets/parts/outfit/tee.south.svg` targets `outfit-tee`. Filenames and
-directories are lowercase. Authored facings are `south`, `east`, and `north`;
-west is the runtime mirror of east. Once any facing of a part is present, the
-complete facing set declared by its explicit import target must be present.
-Body and static head/hair targets require all three source facings. Tee
-deliberately requires south and east only; its north detail remains empty.
+`assets/parts/outfit/tee.south.svg` targets `outfit-tee`.
+`assets/parts/outfit/blazer.lapels.south.svg` targets the `lapels` component
+of `outfit-blazer`. Filenames and directories are lowercase. Authored facings
+are `south`, `east`, and `north`; west is the runtime mirror of east. Once any
+facing of a part or declared component is present, its complete manifest set
+must be present. Body and static head/hair targets require all three source
+facings. Tee and each Blazer component deliberately require south/east only;
+their north detail remains on the handwritten fallback.
 Putting a valid complete set in this canonical directory makes it compiler
 input; visual acceptance remains a separate Definition of Done gate. These
 static hair overlays remain the canonical authored source and fallback
@@ -64,6 +67,9 @@ The importer currently accepts:
 - `outfit-tee` as an anchored-detail target, authored over `body-balanced`
   around the body origin `(64, 87)`. Its neck is canvas point `(64, 58)`, and
   the canonical source set is `tee.south.svg` plus `tee.east.svg`.
+- `outfit-blazer` as a component-detail target authored over the same body.
+  Its canonical source is six files: south/east for each of `lapels`,
+  `buttons`, and `pocket`.
 
 The east-facing head placement adjustment remains compositor-owned. The
 compiler always subtracts the stable `(64, 44)` authoring origin after it
@@ -212,14 +218,22 @@ body IDs continue through the original procedural builder/static fallback.
 This is a mechanical intake proof. The authored tee still requires visual
 approval and the remaining per-part Definition of Done checks.
 
+`outfit-blazer` is the first multi-piece adapter. The manifest fixes component
+order and per-facing shape counts, so missing, flattened, or extra source
+pieces fail before generated output changes. Lapels scale and translate inside
+an upper-torso frame derived from neck, shoulder, and chest anchors. Buttons
+and pocket use a lower-torso frame derived from chest, waist, and hip anchors.
+Scale is conservatively bounded, stroke widths remain stable for distance
+readability, and every fitted path is canvas-validated again. Runtime
+installation still produces an ordinary `body-detail` overlay: no component
+metadata enters recipes, exports, or Unity.
+
 ## Intentionally deferred adapters
 
-- Componentized multi-piece outfit aggregation and multi-anchor deformation.
-  Tee is one combined neckline kit per authored facing and needs only neck
-  translation. Blazer is the next adapter boundary: lapels, buttons, and pocket
-  must remain separately addressable and require explicit deterministic piece
-  order plus neck/chest/hip/waist placement. Do not collapse that work into one
-  flat per-facing Blazer file.
+- Component manifests for the remaining conforming outfits. Tee remains one
+  combined neckline kit; Blazer establishes the multi-piece boundary that
+  collars, ties, pockets, and trim can reuse where their vocabulary genuinely
+  matches.
 - Further new part definitions and their labels/insertion order.
 - Accessory anchors, z-order, and hand-attachment roles.
 - Importing the full eleven-point body sub-rig from an anchor layer.
@@ -227,11 +241,11 @@ approval and the remaining per-part Definition of Done checks.
 Those need explicit manifests/adapters. The initial headless
 scaffold-to-runtime `hair-bob` proof and the first canonical head promotion
 (`head-round`) are visually approved and committed. The other five head sources
-are approved in the current production batch. The tee anchored-detail mechanics
-are complete; its visual approval remains a separate gate, and componentized
-Blazer intake remains the next outfit adapter boundary. The accepted six-body
+are approved in the current production batch. The Tee and Blazer detail
+mechanics are complete; their visual approval remains a separate gate. The accepted six-body
 redesign, including independent Pinch, has canonical SVG sources and a
 shared-identity adapter. The first six
 hair families are approved. Bun, Balding, Pixie, and Side-part complete the
 mapped source set, pass automated production review, and received visual
-approval on 2026-07-10. Detail-only Blazer or wall work can now follow.
+approval on 2026-07-10. The remaining conforming outfits can now follow the
+component-detail contract proven by Blazer.

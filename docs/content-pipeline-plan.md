@@ -388,8 +388,9 @@ icons), not by upfront design.
    128 grid, anchor markers, body-capsule / head-radius guides, an existing
    part on a named reference layer, and sentinel swatches. Portable ASE, GPL,
    and readable SVG palette companions support optional editors. Implemented
-   for all six production bodies, all six human-head families, `hair-bob`, and
-   the south/east tee kit under `assets/part-authoring` via
+   for all six production bodies, all six human-head families, all ten hair
+   families, the south/east Tee kit, and six separately seeded south/east
+   Blazer components under `assets/part-authoring` via
    `npm run parts:scaffolds`; semantic IDs, not editor-only layer state, define
    what the importer ignores. Body starters show all 11 TypeScript-owned rig
    points as non-importing guides.
@@ -456,10 +457,18 @@ icons), not by upfront design.
    known production detail shapes while preserving the code builder's z-order;
    legacy bodies, future body IDs, and unauthored north keep the original
    procedural/static fallback. The adapter is mechanically complete; tee art
-   approval and M1 exit remain open. Componentized Blazer intake—separate
-   lapels, buttons, and pocket with explicit multi-anchor placement—is the next
-   deferred outfit adapter rather than a flat whole-garment shortcut.
-9. **Provenance**: each imported asset records source
+   approval and M1 exit remain open.
+9. **Componentized outfit-detail adapter**: `outfit-blazer` is authored as six
+   independent files—south/east lapels, buttons, and pocket—rather than one
+   flattened jacket overlay. An explicit manifest locks component order,
+   per-facing shape counts, and the body frame each piece consumes. Lapels fit
+   through the neck/shoulder/chest frame; buttons and pocket fit through
+   chest/waist/hip. All fitted paths remain detail-only, are revalidated after
+   placement on all six production bodies, and install through the existing
+   `body-detail` runtime overlay with no recipe/export metadata. North and
+   unknown bodies preserve the code builder fallback. The resulting 40/48 px
+   multi-body proof received visual approval on 2026-07-27.
+10. **Provenance**: each imported asset records source
    (`authored | generated | curated`) in its generated module, so lints and
    future audits know what's re-generatable. `authored` means deliberate
    canonical repo SVG regardless of authoring tool; `generated` means
@@ -467,9 +476,10 @@ icons), not by upfront design.
    generator output.
 
 The approved body and six-head sets plus all ten approved mapped hair source
-sets now form the canonical silhouette foundation. The Phase 3 wall kit or
-outfit work can follow. The phase numbers describe pipeline scope; they do not
-override visual-impact priority.
+sets now form the canonical silhouette foundation. The remaining outfit
+manifests and the separate runtime-scale integration can follow the
+componentized Blazer slice. The phase numbers describe pipeline scope; they do
+not override visual-impact priority.
 
 ### Phase 3 — Wall bevel piece kit (~1 week; first authoring test)
 

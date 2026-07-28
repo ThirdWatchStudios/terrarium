@@ -149,6 +149,37 @@ async function outfitSourceTree(files: Partial<Record<Facing, string>>): Promise
   return root;
 }
 
+function validComponentDetailSvg(component: string, shapeCount: number): string {
+  const paths = Array.from({ length: shapeCount }, (_, index) => {
+    const x = 60 + index * 2;
+    const y = 58 + index * 3;
+    return `<path id="detail/${component}/shape-${index + 1}" d="M${x} ${y}L${x + 2} ${y} ${x + 1} ${y + 2}Z" fill="#00000033" fill-rule="nonzero"/>`;
+  }).join('');
+  return svg(`<g id="detail/${component}">${paths}</g>`);
+}
+
+async function blazerComponentSourceTree(
+  omitted?: { component: string; facing: Facing },
+): Promise<string> {
+  const root = await mkdtemp(path.join(tmpdir(), 'terrarium-blazer-import-'));
+  roots.push(root);
+  await mkdir(path.join(root, 'outfit'), { recursive: true });
+  const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-blazer')!;
+  for (const component of target.components ?? []) {
+    for (const facing of FACINGS) {
+      const shapeCount = component.facings[facing]?.shapeCount;
+      if (shapeCount === undefined) continue;
+      if (omitted?.component === component.id && omitted.facing === facing) continue;
+      await writeFile(
+        path.join(root, 'outfit', `blazer.${component.id}.${facing}.svg`),
+        validComponentDetailSvg(component.id, shapeCount),
+        'utf8',
+      );
+    }
+  }
+  return root;
+}
+
 async function bodySourceTree(
   files: Partial<Record<Facing, string>>,
   slug = 'balanced',
@@ -522,6 +553,72 @@ describe('part source tree and generated registration', () => {
     expect(bodyOffsets).toEqual([...bodyOffsets].sort((left, right) => left - right));
   });
 
+  it('aggregates Blazer components in manifest order and fits both body frames', async () => {
+    const root = await blazerComponentSourceTree();
+    const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-blazer')!;
+    const [imported] = await compilePartDirectory({
+      inputDir: root,
+      sourcePathPrefix: 'assets/parts',
+      catalog: [target],
+    });
+    if (imported.kind !== 'body-detail') throw new Error('Expected body-detail import');
+
+    expect(imported.sourceFiles).toEqual([
+      'assets/parts/outfit/blazer.buttons.east.svg',
+      'assets/parts/outfit/blazer.buttons.south.svg',
+      'assets/parts/outfit/blazer.lapels.east.svg',
+      'assets/parts/outfit/blazer.lapels.south.svg',
+      'assets/parts/outfit/blazer.pocket.east.svg',
+      'assets/parts/outfit/blazer.pocket.south.svg',
+    ]);
+    expect(Object.keys(imported.bodyVariants)).toEqual(BODY_ARCHETYPES.map(({ id }) => id));
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(imported.bodyVariants[archetype.id].south).toHaveLength(6);
+      expect(imported.bodyVariants[archetype.id].east).toHaveLength(4);
+      expect(imported.bodyVariants[archetype.id].north).toBeUndefined();
+      expect(imported.bodyVariants[archetype.id].south?.every(({ silhouette }) => silhouette === false))
+        .toBe(true);
+    }
+    expect(imported.bodyVariants['body-balanced'].south)
+      .not.toEqual(imported.bodyVariants['body-large-frame'].south);
+    expect(imported.bodyVariants['body-balanced'].east)
+      .not.toEqual(imported.bodyVariants['body-tall'].east);
+  });
+
+  it('rejects incomplete or flattened component-detail source sets', async () => {
+    const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-blazer')!;
+    const complete = await blazerComponentSourceTree();
+    await expect(compilePartDirectory({
+      inputDir: complete,
+      sourcePathPrefix: 'assets/parts',
+      catalog: [{
+        ...target,
+        components: [...(target.components ?? []), target.components![0]],
+      }],
+    })).rejects.toThrow(/component manifest repeats lapels/);
+
+    const incomplete = await blazerComponentSourceTree({ component: 'pocket', facing: 'east' });
+    await expect(compilePartDirectory({
+      inputDir: incomplete,
+      sourcePathPrefix: 'assets/parts',
+      catalog: [target],
+    })).rejects.toThrow(/outfit-blazer\.pocket.*complete facing set/);
+
+    const flattened = await mkdtemp(path.join(tmpdir(), 'terrarium-flat-blazer-import-'));
+    roots.push(flattened);
+    await mkdir(path.join(flattened, 'outfit'), { recursive: true });
+    await writeFile(
+      path.join(flattened, 'outfit', 'blazer.south.svg'),
+      validComponentDetailSvg('lapels', 3),
+      'utf8',
+    );
+    await expect(compilePartDirectory({
+      inputDir: flattened,
+      sourcePathPrefix: 'assets/parts',
+      catalog: [target],
+    })).rejects.toThrow(/component-detail targets cannot mix flat part files/);
+  });
+
   it('rejects anchored variants that leave the canvas after body placement', async () => {
     const lowDetail = svg([
       '<g id="detail/neckline" fill="#FF00FF">',
@@ -594,13 +691,13 @@ describe('part source tree and generated registration', () => {
     expect(generated).toBe(emitImportedPartArt(imports));
   });
 
-  it('keeps six bodies, ten canonical hairs, six human heads, one fabrication head, and tee as twenty-four deliberate authored overlays', async () => {
+  it('keeps six bodies, ten canonical hairs, seven heads, Tee, and Blazer as twenty-five deliberate authored overlays', async () => {
     const imports = await compilePartDirectory({
       inputDir: path.resolve('assets/parts'),
       sourcePathPrefix: 'assets/parts',
       catalog: PART_IMPORT_TARGETS,
     });
-    expect(imports).toHaveLength(24);
+    expect(imports).toHaveLength(25);
     expect(imports.map(({ id }) => id)).toEqual([
       'body-balanced',
       'body-compact',
@@ -625,6 +722,7 @@ describe('part source tree and generated registration', () => {
       'head-oval',
       'head-round',
       'head-soft-square',
+      'outfit-blazer',
       'outfit-tee',
     ]);
 
@@ -814,6 +912,27 @@ describe('part source tree and generated registration', () => {
         ]);
       }
       expect(tee.bodyVariants[archetype.id].north).toBeUndefined();
+    }
+
+    const blazer = imports.find(({ id }) => id === 'outfit-blazer')!;
+    if (blazer.kind !== 'body-detail') throw new Error('Expected body-detail Blazer import');
+    expect(blazer).toMatchObject({
+      id: 'outfit-blazer',
+      slot: 'outfit',
+      sourceKind: 'authored',
+      sourceFiles: [
+        'assets/parts/outfit/blazer.buttons.east.svg',
+        'assets/parts/outfit/blazer.buttons.south.svg',
+        'assets/parts/outfit/blazer.lapels.east.svg',
+        'assets/parts/outfit/blazer.lapels.south.svg',
+        'assets/parts/outfit/blazer.pocket.east.svg',
+        'assets/parts/outfit/blazer.pocket.south.svg',
+      ],
+    });
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(blazer.bodyVariants[archetype.id].south).toHaveLength(6);
+      expect(blazer.bodyVariants[archetype.id].east).toHaveLength(4);
+      expect(blazer.bodyVariants[archetype.id].north).toBeUndefined();
     }
   });
 });
@@ -1064,5 +1183,20 @@ describe('imported art overlay', () => {
       placementAnchor: 'neck',
     });
     expect(productionOutfit.buildVariant).toBeTypeOf('function');
+
+    const componentTarget = PART_IMPORT_TARGETS.find(({ importMode }) => importMode === 'component-detail')!;
+    expect(componentTarget).toMatchObject({
+      id: 'outfit-blazer',
+      slot: 'outfit',
+      anchor: 'body',
+      facings: { south: true, east: true },
+      buildVariant: true,
+      referenceBodyId: 'body-balanced',
+      components: [
+        { id: 'lapels', frame: 'upper-torso' },
+        { id: 'buttons', frame: 'lower-torso' },
+        { id: 'pocket', frame: 'lower-torso' },
+      ],
+    });
   });
 });

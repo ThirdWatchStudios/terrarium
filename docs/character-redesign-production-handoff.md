@@ -1,7 +1,8 @@
 # Character Redesign Production Handoff
 
 Status: **design direction locked; bodies, neutral-arm fallback, heads, and all
-ten fitted hairstyles promoted; runtime scale remains**
+ten fitted hairstyles promoted; componentized Blazer approved; runtime
+scale remains**
 
 Last design review: **2026-07-27**
 
@@ -26,7 +27,11 @@ Terrarium. Authored SVG sources, importer/scaffolds, picker/RNG/export
 registration, per-body Dress dispatch, flat/layer/unit/portrait routes,
 external anchors, and atlas pivots agree. Every mapped hair ID now resolves one
 deterministic fitted variant for each of the six production heads and three
-authored facings. The Unity renderer scale does not use the new direction yet.
+authored facings. The first garment follow-up is now implemented as a
+componentized Blazer source set: lapels, buttons, and pocket fit all six
+production bodies without replacing their conforming silhouettes. The Unity
+renderer scale does not use the new direction yet. The componentized Blazer
+received visual approval on 2026-07-27.
 
 The promoted hair fitting is a Terrarium composition/export concern: recipes
 retain their stable hair IDs, flat and reconstructable layer output use the
@@ -371,7 +376,10 @@ Do not restart these without new runtime evidence:
    Balding through the same deterministic path.
 7. **Rebuild garment compatibility.** Regenerate conforming layers and
    body-aware detail kits; author the rare silhouette-changing variants per
-   body.
+   body. In progress: the componentized Blazer south/east kit and six-body
+   upper/lower torso fitting path are mechanically complete and visually
+   approved; Tee visual approval, remaining detail kits, and the dedicated
+   Dress art pass remain.
 8. **Implement the `0.65` world scale in the actual runtime seam.** Keep source
    geometry fixed and validate anchors/overlays in Unity.
 9. **Regenerate and verify all exports.** Base, mood, pose, unit, portrait,
@@ -462,6 +470,13 @@ Do not restart these without new runtime evidence:
 - [Hair metrics](previews/character-hair-silhouette-v5-metrics.json)
 - Generator: [`characterHairFittingPilot.ts`](../scripts/characterHairFittingPilot.ts)
 - Generator: [`characterHairSilhouettePreview.ts`](../scripts/characterHairSilhouettePreview.ts)
+
+### Garments
+
+- [Componentized Blazer fit sheet](previews/character-blazer-component-fit-v1.png)
+- [All-outfit distance sheet](previews/body-archetypes-outfit-distance.png)
+- [East-facing outfit compatibility](previews/body-archetypes-outfits-east.png)
+- Generator: [`bodyArchetypePreview.ts`](../scripts/bodyArchetypePreview.ts)
 
 ### World scale
 
