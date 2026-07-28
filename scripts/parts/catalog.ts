@@ -150,4 +150,31 @@ export const PART_IMPORT_TARGETS: readonly PartImportTarget[] = [
       },
     ],
   },
+  {
+    id: 'outfit-shirt-tie',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: { south: true, east: true },
+    buildVariant: true,
+    importMode: 'component-detail',
+    referenceBodyId: 'body-balanced',
+    components: [
+      {
+        id: 'collar',
+        frame: 'upper-torso',
+        facings: {
+          south: { shapeCount: 1 },
+          east: { shapeCount: 1 },
+        },
+      },
+      {
+        id: 'tie',
+        frame: 'upper-torso',
+        facings: {
+          south: { shapeCount: 1 },
+          east: { shapeCount: 1 },
+        },
+      },
+    ],
+  },
 ];

@@ -604,6 +604,73 @@ export const IMPORTED_PART_ART = [
   },
   {
     kind: "body-detail",
+    id: "outfit-shirt-tie",
+    slot: "outfit",
+    bodyVariants: {
+      "body-compact": {
+        south: [
+          { d: "M-12.18-29L0-9.32 12.18-29Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-3.898-28L3.898-28 4.872-6.15 0-2.15-4.872-6.15Z", fill: "$accent", silhouette: false },
+        ],
+        east: [
+          { d: "M-0.65-25L14.18-9.32 2.25-25Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M11.385-18.92L15.015-18.92 15.84-5.15 13.2-2.15 10.56-5.15Z", fill: "$accent", silhouette: false },
+        ],
+      },
+      "body-balanced": {
+        south: [
+          { d: "M-10.5-29L0-9.32 10.5-29Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-3.36-28L3.36-28 4.2-6.15 0-2.15-4.2-6.15Z", fill: "$accent", silhouette: false },
+        ],
+        east: [
+          { d: "M-0.591-25L12.891-9.32 2.045-25Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M10.35-18.92L13.65-18.92 14.4-5.15 12-2.15 9.6-5.15Z", fill: "$accent", silhouette: false },
+        ],
+      },
+      "body-large-frame": {
+        south: [
+          { d: "M-13.65-32L0-12.32 13.65-32Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-4.368-31L4.368-31 5.46-9.15 0-5.15-5.46-9.15Z", fill: "$accent", silhouette: false },
+        ],
+        east: [
+          { d: "M-0.709-28L15.469-12.32 2.454-28Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M12.42-21.92L16.38-21.92 17.28-8.15 14.4-5.15 11.52-8.15Z", fill: "$accent", silhouette: false },
+        ],
+      },
+      "body-tall": {
+        south: [
+          { d: "M-8.19-34L0-13.5 8.19-34Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-2.621-32.958L2.621-32.958 3.276-10.198 0-6.031-3.276-10.198Z", fill: "$accent", silhouette: false },
+        ],
+        east: [
+          { d: "M-0.461-29.833L10.055-13.5 1.595-29.833Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M8.073-23.5L10.647-23.5 11.232-9.156 9.36-6.031 7.488-9.156Z", fill: "$accent", silhouette: false },
+        ],
+      },
+      "body-soft": {
+        south: [
+          { d: "M-8.4-28L0-8.32 8.4-28Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-2.688-27L2.688-27 3.36-5.15 0-1.15-3.36-5.15Z", fill: "$accent", silhouette: false },
+        ],
+        east: [
+          { d: "M-0.532-24L11.602-8.32 1.841-24Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M9.315-17.92L12.285-17.92 12.96-4.15 10.8-1.15 8.64-4.15Z", fill: "$accent", silhouette: false },
+        ],
+      },
+      "body-pinch": {
+        south: [
+          { d: "M-8.4-29L0-10.14 8.4-29Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-2.688-28.042L2.688-28.042 3.36-7.102 0-3.269-3.36-7.102Z", fill: "$accent", silhouette: false },
+        ],
+        east: [
+          { d: "M-0.591-25.167L12.891-10.14 2.045-25.167Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M10.35-19.34L13.65-19.34 14.4-6.144 12-3.269 9.6-6.144Z", fill: "$accent", silhouette: false },
+        ],
+      },
+    },
+  },
+  {
+    kind: "body-detail",
     id: "outfit-tee",
     slot: "outfit",
     bodyVariants: {
@@ -900,6 +967,16 @@ export const IMPORTED_PART_PROVENANCE = [
       "assets/parts/outfit/polo.collar.south.svg",
       "assets/parts/outfit/polo.placket.east.svg",
       "assets/parts/outfit/polo.placket.south.svg",
+    ],
+  },
+  {
+    id: "outfit-shirt-tie",
+    sourceKind: "authored",
+    sourceFiles: [
+      "assets/parts/outfit/shirt-tie.collar.east.svg",
+      "assets/parts/outfit/shirt-tie.collar.south.svg",
+      "assets/parts/outfit/shirt-tie.tie.east.svg",
+      "assets/parts/outfit/shirt-tie.tie.south.svg",
     ],
   },
   {

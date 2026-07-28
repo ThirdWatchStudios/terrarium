@@ -249,10 +249,14 @@ describe('part authoring scaffold generation', () => {
       'assets/part-authoring/scaffolds/outfit/polo.collar.south.svg',
       'assets/part-authoring/scaffolds/outfit/polo.placket.east.svg',
       'assets/part-authoring/scaffolds/outfit/polo.placket.south.svg',
+      'assets/part-authoring/scaffolds/outfit/shirt-tie.collar.east.svg',
+      'assets/part-authoring/scaffolds/outfit/shirt-tie.collar.south.svg',
+      'assets/part-authoring/scaffolds/outfit/shirt-tie.tie.east.svg',
+      'assets/part-authoring/scaffolds/outfit/shirt-tie.tie.south.svg',
       'assets/part-authoring/scaffolds/outfit/tee.east.svg',
       'assets/part-authoring/scaffolds/outfit/tee.south.svg',
     ]);
-    expect(first).toHaveLength(84);
+    expect(first).toHaveLength(88);
     expect(first.map(({ bytes }) => bytes)).toEqual(second.map(({ bytes }) => bytes));
     expect(PART_SCAFFOLD_SPECS.map(({ slot, referenceId }) => [slot, referenceId])).toEqual([
       ['body', 'body-compact'],
@@ -284,6 +288,8 @@ describe('part authoring scaffold generation', () => {
       ['outfit', 'outfit-blazer'],
       ['outfit', 'outfit-polo'],
       ['outfit', 'outfit-polo'],
+      ['outfit', 'outfit-shirt-tie'],
+      ['outfit', 'outfit-shirt-tie'],
     ]);
   });
 
@@ -399,7 +405,7 @@ describe('part authoring scaffold generation', () => {
     });
   });
 
-  it('seeds Tee, Blazer, and Polo sources against body-balanced with the complete outfit rig guide', () => {
+  it('seeds Tee, Blazer, Polo, and Shirt + Tie against body-balanced with the complete outfit rig guide', () => {
     const teeAssets = generatePartAuthoringAssets()
       .filter(({ path: assetPath }) => assetPath.includes('/scaffolds/outfit/tee.'));
     expect(teeAssets.map(({ path: assetPath }) => assetPath)).toEqual([
@@ -461,6 +467,27 @@ describe('part authoring scaffold generation', () => {
       for (const { bytes } of componentAssets) {
         const source = bytes.toString('utf8');
         expect(source).toContain(`outfit-polo ${component}`);
+        expect(source).toContain(`id="detail/${component}/shape-001"`);
+        expect(source).toContain('id="reference/body-balanced"');
+        expect(source).toContain('id="guide/body-rig/axis"');
+      }
+    }
+
+    const shirtTieAssets = generatePartAuthoringAssets()
+      .filter(({ path: assetPath }) => assetPath.includes('/scaffolds/outfit/shirt-tie.'));
+    expect(shirtTieAssets.map(({ path: assetPath }) => assetPath)).toEqual([
+      'assets/part-authoring/scaffolds/outfit/shirt-tie.collar.east.svg',
+      'assets/part-authoring/scaffolds/outfit/shirt-tie.collar.south.svg',
+      'assets/part-authoring/scaffolds/outfit/shirt-tie.tie.east.svg',
+      'assets/part-authoring/scaffolds/outfit/shirt-tie.tie.south.svg',
+    ]);
+    for (const component of ['collar', 'tie']) {
+      const componentAssets = shirtTieAssets.filter(({ path: assetPath }) =>
+        assetPath.includes(`shirt-tie.${component}.`));
+      expect(componentAssets).toHaveLength(2);
+      for (const { bytes } of componentAssets) {
+        const source = bytes.toString('utf8');
+        expect(source).toContain(`outfit-shirt-tie ${component}`);
         expect(source).toContain(`id="detail/${component}/shape-001"`);
         expect(source).toContain('id="reference/body-balanced"');
         expect(source).toContain('id="guide/body-rig/axis"');
@@ -579,7 +606,7 @@ describe('committed part authoring assets', () => {
     const root = await mkdtemp(path.join(tmpdir(), 'terrarium-authoring-assets-'));
     temporaryRoots.push(root);
     const firstWrite = await writePartAuthoringAssets(root);
-    expect(firstWrite.updated).toBe(84);
+    expect(firstWrite.updated).toBe(88);
     expect(firstWrite.removed).toBe(0);
     await expect(checkPartAuthoringAssets(root)).resolves.toBeUndefined();
 

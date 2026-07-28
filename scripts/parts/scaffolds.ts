@@ -90,6 +90,22 @@ export const PART_SCAFFOLD_SPECS = [
     slug: 'polo.placket',
     facings: ['south', 'east'],
   },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-shirt-tie',
+    referenceBodyId: 'body-balanced',
+    componentId: 'collar',
+    slug: 'shirt-tie.collar',
+    facings: ['south', 'east'],
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-shirt-tie',
+    referenceBodyId: 'body-balanced',
+    componentId: 'tie',
+    slug: 'shirt-tie.tie',
+    facings: ['south', 'east'],
+  },
 ] as const satisfies readonly {
   slot: 'body' | 'head' | 'hair' | 'outfit';
   referenceId: string;

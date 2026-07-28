@@ -2,7 +2,7 @@
 
 Status: **design direction locked; bodies, neutral-arm fallback, heads, and all
 ten fitted hairstyles promoted; componentized Blazer and anchored Tee
-approved; componentized Polo approved; runtime scale remains**
+approved; componentized Polo and Shirt + Tie approved; runtime scale remains**
 
 Last design review: **2026-07-27**
 
@@ -32,6 +32,8 @@ componentized Blazer source set: lapels, buttons, and pocket fit all six
 production bodies without replacing their conforming silhouettes. The Unity
 renderer scale does not use the new direction yet. The componentized Blazer
 anchored Tee, and componentized Polo received visual approval on 2026-07-27.
+The componentized Shirt + Tie collar/tie source set received approval the same
+day, including its forward-edge east/west tie placement.
 
 The promoted hair fitting is a Terrarium composition/export concern: recipes
 retain their stable hair IDs, flat and reconstructable layer output use the
@@ -381,7 +383,9 @@ Do not restart these without new runtime evidence:
    approved. The matching six-body, four-facing, 40/48 px Tee sheet is
    mechanically complete and visually approved. The Polo collar/placket kit is
    mechanically complete and visually approved; remaining detail kits and the
-   dedicated Dress art pass remain.
+   dedicated Dress art pass remain. The Shirt + Tie collar/tie kit is
+   mechanically complete and visually approved; its east/west tie stays at the
+   forward torso edge rather than the profile center.
 8. **Implement the `0.65` world scale in the actual runtime seam.** Keep source
    geometry fixed and validate anchors/overlays in Unity.
 9. **Regenerate and verify all exports.** Base, mood, pose, unit, portrait,
@@ -478,6 +482,7 @@ Do not restart these without new runtime evidence:
 - [Componentized Blazer fit sheet](previews/character-blazer-component-fit-v1.png)
 - [Anchored Tee fit sheet](previews/character-tee-anchored-fit-v1.png)
 - [Componentized Polo fit sheet](previews/character-polo-component-fit-v1.png)
+- [Componentized Shirt + Tie fit sheet](previews/character-shirt-tie-component-fit-v1.png)
 - [All-outfit distance sheet](previews/body-archetypes-outfit-distance.png)
 - [East-facing outfit compatibility](previews/body-archetypes-outfits-east.png)
 - Generator: [`bodyArchetypePreview.ts`](../scripts/bodyArchetypePreview.ts)

@@ -159,8 +159,8 @@ function validComponentDetailSvg(component: string, shapeCount: number): string 
 }
 
 async function componentSourceTree(
-  targetId: 'outfit-blazer' | 'outfit-polo',
-  slug: 'blazer' | 'polo',
+  targetId: 'outfit-blazer' | 'outfit-polo' | 'outfit-shirt-tie',
+  slug: 'blazer' | 'polo' | 'shirt-tie',
   omitted?: { component: string; facing: Facing },
 ): Promise<string> {
   const root = await mkdtemp(path.join(tmpdir(), `terrarium-${slug}-import-`));
@@ -617,6 +617,35 @@ describe('part source tree and generated registration', () => {
       .not.toEqual(imported.bodyVariants['body-tall'].east);
   });
 
+  it('aggregates Shirt + Tie components independently through the upper-torso frame', async () => {
+    const root = await componentSourceTree('outfit-shirt-tie', 'shirt-tie');
+    const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-shirt-tie')!;
+    const [imported] = await compilePartDirectory({
+      inputDir: root,
+      sourcePathPrefix: 'assets/parts',
+      catalog: [target],
+    });
+    if (imported.kind !== 'body-detail') throw new Error('Expected body-detail import');
+
+    expect(imported.sourceFiles).toEqual([
+      'assets/parts/outfit/shirt-tie.collar.east.svg',
+      'assets/parts/outfit/shirt-tie.collar.south.svg',
+      'assets/parts/outfit/shirt-tie.tie.east.svg',
+      'assets/parts/outfit/shirt-tie.tie.south.svg',
+    ]);
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(imported.bodyVariants[archetype.id].south).toHaveLength(2);
+      expect(imported.bodyVariants[archetype.id].east).toHaveLength(2);
+      expect(imported.bodyVariants[archetype.id].north).toBeUndefined();
+      expect(imported.bodyVariants[archetype.id].east?.every(({ silhouette }) => silhouette === false))
+        .toBe(true);
+    }
+    expect(imported.bodyVariants['body-balanced'].south)
+      .not.toEqual(imported.bodyVariants['body-soft'].south);
+    expect(imported.bodyVariants['body-balanced'].east)
+      .not.toEqual(imported.bodyVariants['body-tall'].east);
+  });
+
   it('rejects incomplete or flattened component-detail source sets', async () => {
     const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-blazer')!;
     const complete = await componentSourceTree('outfit-blazer', 'blazer');
@@ -727,13 +756,13 @@ describe('part source tree and generated registration', () => {
     expect(generated).toBe(emitImportedPartArt(imports));
   });
 
-  it('keeps six bodies, ten canonical hairs, seven heads, Tee, Blazer, and Polo as twenty-six deliberate authored overlays', async () => {
+  it('keeps six bodies, ten canonical hairs, seven heads, and four authored outfits as twenty-seven deliberate overlays', async () => {
     const imports = await compilePartDirectory({
       inputDir: path.resolve('assets/parts'),
       sourcePathPrefix: 'assets/parts',
       catalog: PART_IMPORT_TARGETS,
     });
-    expect(imports).toHaveLength(26);
+    expect(imports).toHaveLength(27);
     expect(imports.map(({ id }) => id)).toEqual([
       'body-balanced',
       'body-compact',
@@ -760,6 +789,7 @@ describe('part source tree and generated registration', () => {
       'head-soft-square',
       'outfit-blazer',
       'outfit-polo',
+      'outfit-shirt-tie',
       'outfit-tee',
     ]);
 
@@ -989,6 +1019,25 @@ describe('part source tree and generated registration', () => {
       expect(polo.bodyVariants[archetype.id].south).toHaveLength(2);
       expect(polo.bodyVariants[archetype.id].east).toHaveLength(2);
       expect(polo.bodyVariants[archetype.id].north).toBeUndefined();
+    }
+
+    const shirtTie = imports.find(({ id }) => id === 'outfit-shirt-tie')!;
+    if (shirtTie.kind !== 'body-detail') throw new Error('Expected body-detail Shirt + Tie import');
+    expect(shirtTie).toMatchObject({
+      id: 'outfit-shirt-tie',
+      slot: 'outfit',
+      sourceKind: 'authored',
+      sourceFiles: [
+        'assets/parts/outfit/shirt-tie.collar.east.svg',
+        'assets/parts/outfit/shirt-tie.collar.south.svg',
+        'assets/parts/outfit/shirt-tie.tie.east.svg',
+        'assets/parts/outfit/shirt-tie.tie.south.svg',
+      ],
+    });
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(shirtTie.bodyVariants[archetype.id].south).toHaveLength(2);
+      expect(shirtTie.bodyVariants[archetype.id].east).toHaveLength(2);
+      expect(shirtTie.bodyVariants[archetype.id].north).toBeUndefined();
     }
   });
 });
@@ -1266,6 +1315,18 @@ describe('imported art overlay', () => {
         components: [
           { id: 'collar', frame: 'upper-torso' },
           { id: 'placket', frame: 'upper-torso' },
+        ],
+      },
+      {
+        id: 'outfit-shirt-tie',
+        slot: 'outfit',
+        anchor: 'body',
+        facings: { south: true, east: true },
+        buildVariant: true,
+        referenceBodyId: 'body-balanced',
+        components: [
+          { id: 'collar', frame: 'upper-torso' },
+          { id: 'tie', frame: 'upper-torso' },
         ],
       },
     ]);
