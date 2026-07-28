@@ -347,8 +347,10 @@ Body types are **archetypes that read from orbit**, not BMI steps. Approved set:
 > Bell, and Pinch. Pickers,
 > random characters, and seeded employee generation all consume that production
 > list. `body-standard`, `body-slim`, and `body-broad` remain resolvable for old
-> recipes and the unchanged named/default cast, but are never offered for new
-> selection. Run
+> recipes, but are never offered for new selection. The named/default cast now
+> uses four distinct production hulls (`body-pinch`, `body-balanced`,
+> `body-soft`, and `body-large-frame`) so an ordinary export cannot mix the
+> retired pawn silhouettes back into the live cohort. Run
 > `npx tsx scripts/bodyArchetypePreview.ts` to regenerate the
 > character, flat-silhouette, active-sub-anchor, and rigged vertical-slice sheets
 > under `docs/previews/body-archetypes-*`. The production rigs drive the head

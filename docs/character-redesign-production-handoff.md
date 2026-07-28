@@ -1,12 +1,10 @@
 # Character Redesign Production Handoff
 
-Status: **design direction locked; bodies, neutral-arm fallback, heads, and all
-ten fitted hairstyles promoted; componentized Blazer and anchored Tee
-approved; componentized Polo, Shirt + Tie, and Turtleneck approved; runtime
-scale remains; Cardigan, Suit Jacket, Hoodie, Vest, and Dress refinement
-approved**
+Status: **complete — production character redesign and Unity `0.65` runtime
+calibration accepted**
 
 Last design review: **2026-07-28**
+Completion accepted: **2026-07-28**
 
 This is the restart document for turning the accepted character direction into
 production art and runtime behavior. It records the decisions that should survive
@@ -32,8 +30,10 @@ deterministic fitted variant for each of the six production heads and three
 authored facings. The first garment follow-up is now implemented as a
 componentized Blazer source set: lapels, buttons, and pocket fit all six
 production bodies without replacing their conforming silhouettes. The Unity
-renderer scale does not use the new direction yet. The componentized Blazer
-anchored Tee, and componentized Polo received visual approval on 2026-07-27.
+renderer now applies the accepted `0.65` multiplier to the composed visual
+assembly and body-derived presentation offsets while leaving gameplay roots
+and footprints unchanged. The componentized Blazer, anchored Tee, and
+componentized Polo received visual approval on 2026-07-27.
 The componentized Shirt + Tie collar/tie source set received approval the same
 day, including its forward-edge east/west tie placement.
 A three-facing Turtleneck neck-band source set now fits the same six bodies and
@@ -69,6 +69,28 @@ installs candidates through real registered parts, renders through the
 production compositor, and restores the original references. The head-gap
 proof is now historical evidence for the promoted sources and anchors; its PNGs
 no longer describe an unpromoted candidate.
+
+The four named/default characters now use distinct production body hulls:
+Janice uses Pinch, Carl uses Barrel, Linda uses Bell, and the Manager uses
+Wedge. The legacy Standard, Slim, and Broad IDs remain import-compatible only;
+they must not appear in a newly generated default cohort.
+
+## Completion record
+
+The user accepted the integrated character read in Unity on 2026-07-28. Bodies,
+heads, hair, garments, neutral arms, the three-pixel head gap, and the `0.65`
+world scale now form one closed character baseline.
+
+- Terrarium's complete 97-file test suite and production build passed after the
+  named cast moved to production bodies.
+- The Water Cooler simulation/test assembly compiled with zero errors. Codex
+  did not substitute that compile for the user's Unity eyes-on acceptance.
+- Per-frame east/west turns now update the composed body, visual-state facing,
+  and separate facial mood overlay together.
+- Overhead badges inherit the character world scale rather than remaining at
+  the former full-size envelope.
+- Remaining social-theater presentation defects are explicitly deferred to
+  their own workstream and do not reopen the character art baseline.
 
 Prop redesign is a separate future pass. The character scale calibration held
 real props at their current authored envelope specifically so that prop work would
@@ -332,18 +354,18 @@ Collision, navigation, selection, interaction reach, and overhead indicators
 remain separate runtime concepts. Do not infer their new dimensions from the
 visible sprite without checking the Unity contracts.
 
-### Scale implementation debt
+### Scale implementation status
 
-- Prefer one pack-wide/global installed agent scale over per-character recipe
-  scale.
-- Determine whether Unity should apply the `0.65` through renderer transform,
-  importer scale/PPU, or another existing world-placement seam.
-- Avoid resizing the source SVG paths unless raster inspection proves the
-  128-unit bake is inadequate.
-- Recheck above-head indicators, selection rings, construction tints, held
-  attachments, y-sorting, and desk occlusion after scale changes.
-- Validate in the actual game against the accepted 112-wall room and corridor.
-  Terrarium proof pixels are design truth; Unity Play Mode is runtime truth.
+- `SpriteToolkitNpcComposer.WorldVisualScale` is the single pack-wide `0.65`
+  authority; individual recipes do not carry world scale.
+- The composed renderer hierarchy and body-derived presentation offsets use
+  that multiplier. The authoring SVGs, 128-unit canvas, PPU, gameplay root,
+  collision, navigation, selection, and interaction footprints remain fixed.
+- Idle sway and overhead indicators preserve their authored proportions at the
+  reduced scale.
+- The user validated the integrated result in Unity against the accepted world.
+  Later social-theater cue work must respect this scale but remains a separate
+  presentation concern.
 
 ## Prop boundary
 
@@ -432,13 +454,14 @@ Do not restart these without new runtime evidence:
    The body-specific Dress refinement now has a matching focused 40/48 px
    sheet and high-contrast stress sheet; both received visual approval on
    2026-07-28.
-8. **Implement the `0.65` world scale in the actual runtime seam.** Keep source
-   geometry fixed and validate anchors/overlays in Unity.
-9. **Regenerate and verify all exports.** Base, mood, pose, unit, portrait,
-   employee, layer-atlas, construction/fabrication, and any other registered
-   character surfaces must agree.
-10. **Run the full visual and runtime gates.** Mechanical success cannot
-    override a bad crowd, desk, wall, or gameplay-scale read.
+8. **Complete — implement the `0.65` world scale in the actual runtime seam.**
+   Source geometry remains fixed; body-derived anchors and overlays follow the
+   visual scale in Unity.
+9. **Complete — regenerate and verify all exports.** Base, mood, pose, unit,
+   portrait, employee, layer-atlas, construction/fabrication, and other
+   registered character surfaces agree.
+10. **Complete — run the full visual and runtime gates.** Mechanical checks and
+    the user's final Unity read both passed for the character slice.
 
 ## Acceptance gates
 

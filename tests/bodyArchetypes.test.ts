@@ -206,13 +206,14 @@ describe('production body archetypes', () => {
     }
   });
 
-  it('keeps the named default cast on its legacy bodies without migration', () => {
+  it('keeps the named default cast on distinct production bodies', () => {
     expect(DEFAULT_CAST.map(({ id, parts }) => [id, parts.body])).toEqual([
-      ['janice', 'body-standard'],
-      ['carl', 'body-broad'],
-      ['linda', 'body-standard'],
-      ['manager', 'body-broad'],
+      ['janice', 'body-pinch'],
+      ['carl', 'body-balanced'],
+      ['linda', 'body-soft'],
+      ['manager', 'body-large-frame'],
     ]);
+    expect(DEFAULT_CAST.every(({ parts }) => !LEGACY_IDS.includes(parts.body))).toBe(true);
     expect(CURRENT_SCHEMA_VERSION).toBe(19);
   });
 
@@ -377,7 +378,7 @@ describe('production body archetypes', () => {
   });
 
   it('keeps legacy recipes on the byte-stable fallback anchors and crops', () => {
-    const legacy = defaultGoldenProject().characters[0];
+    const legacy = recipe('body-standard');
     expect(overheadAnchor('south', legacy)).toEqual(overheadAnchor('south'));
     expect(poseRigAnchors('east', legacy)).toEqual(poseRigAnchors('east'));
     expect(employeePortraitCrop(legacy)).toEqual({ x: 24, y: 14, w: 80, h: 80 });

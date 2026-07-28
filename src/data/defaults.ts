@@ -117,7 +117,7 @@ export const DEFAULT_CAST: CharacterRecipe[] = [
     id: 'janice',
     name: 'Janice',
     parts: {
-      body: 'body-standard',
+      body: 'body-pinch',
       head: 'head-oval',
       hair: 'hair-bob',
       outfit: 'outfit-blazer',
@@ -135,7 +135,7 @@ export const DEFAULT_CAST: CharacterRecipe[] = [
     id: 'carl',
     name: 'Carl',
     parts: {
-      body: 'body-broad',
+      body: 'body-balanced',
       head: 'head-round',
       hair: 'hair-short',
       outfit: 'outfit-polo',
@@ -153,7 +153,7 @@ export const DEFAULT_CAST: CharacterRecipe[] = [
     id: 'linda',
     name: 'Linda',
     parts: {
-      body: 'body-standard',
+      body: 'body-soft',
       head: 'head-round',
       hair: 'hair-bun',
       outfit: 'outfit-cardigan',
@@ -171,7 +171,7 @@ export const DEFAULT_CAST: CharacterRecipe[] = [
     id: 'manager',
     name: 'The Manager',
     parts: {
-      body: 'body-broad',
+      body: 'body-large-frame',
       head: 'head-boxy',
       hair: 'hair-balding',
       outfit: 'outfit-shirt-tie',
