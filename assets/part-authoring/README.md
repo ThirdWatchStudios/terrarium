@@ -33,6 +33,8 @@ The current supported starters are:
 - `scaffolds/outfit/hoodie.hood.{south,east,north}.svg`
 - `scaffolds/outfit/hoodie.drawstrings.{south,east}.svg`
 - `scaffolds/outfit/hoodie.pocket.south.svg`
+- `scaffolds/outfit/vest.{panel,neck-inset}.south.svg`
+- `scaffolds/outfit/vest.buttons.south.svg`
 
 They are seeded with the current production geometry, so they support a true
 source/edit/import proof rather than requiring a redraw. The tee starter shows
@@ -48,7 +50,9 @@ an authored north view. Cardigan separates upper-torso neckline trim from its
 lower-torso seam and button line. Suit Jacket extends the same frame vocabulary
 to its six formal details and keeps the profile tie at the forward edge.
 Hoodie then authors only the directional pieces that exist: three hood views,
-two drawstring views, and one front pocket seam. Each body starter shows its
+two drawstring views, and one front pocket seam. Vest separates its south-only
+secondary-fabric torso panel from the V-neck inset and front buttons; east/west
+intentionally carry no overlay. Each body starter shows its
 full visible
 production art plus generated markers for all 11 typed rig points and
 `bodyOrigin`. Those
@@ -86,7 +90,8 @@ the production matrices, and received visual approval on 2026-07-10.
 1. Copy a complete scaffold set to a working directory (three facings for
    bodies, heads, and hair; south and east for the tee or for every
    Blazer/Polo/Shirt + Tie/Cardigan/Suit Jacket component, whose north kits are
-   intentionally unauthored).
+   intentionally unauthored; Hoodie and Vest follow their declared asymmetric
+   facing sets).
 2. Edit only `art/*` and `detail/*` paths. Preserve unique semantic IDs, the
    `0 0 128 128` viewBox, exact sentinel paint, and explicit nonzero fill.
    Head eyes remain literal neutral-ink paths under `detail/*`, after the
@@ -104,7 +109,7 @@ not whether a named editor preserves it.
 The approved body and head sets plus all ten mapped hair styles now have
 approved canonical sources. Tee, Blazer, Polo, Shirt + Tie, and Turtleneck are
 approved; Cardigan, Suit Jacket, and Hoodie received visual approval on
-2026-07-27.
+2026-07-27. Vest received visual approval on 2026-07-28.
 
 ## Optional visual-editor use
 

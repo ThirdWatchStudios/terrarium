@@ -280,8 +280,11 @@ describe('part authoring scaffold generation', () => {
       'assets/part-authoring/scaffolds/outfit/turtleneck.neck-band.east.svg',
       'assets/part-authoring/scaffolds/outfit/turtleneck.neck-band.north.svg',
       'assets/part-authoring/scaffolds/outfit/turtleneck.neck-band.south.svg',
+      'assets/part-authoring/scaffolds/outfit/vest.buttons.south.svg',
+      'assets/part-authoring/scaffolds/outfit/vest.neck-inset.south.svg',
+      'assets/part-authoring/scaffolds/outfit/vest.panel.south.svg',
     ]);
-    expect(first).toHaveLength(113);
+    expect(first).toHaveLength(116);
     expect(first.map(({ bytes }) => bytes)).toEqual(second.map(({ bytes }) => bytes));
     expect(PART_SCAFFOLD_SPECS.map(({ slot, referenceId }) => [slot, referenceId])).toEqual([
       ['body', 'body-compact'],
@@ -327,6 +330,9 @@ describe('part authoring scaffold generation', () => {
       ['outfit', 'outfit-hoodie'],
       ['outfit', 'outfit-hoodie'],
       ['outfit', 'outfit-hoodie'],
+      ['outfit', 'outfit-vest'],
+      ['outfit', 'outfit-vest'],
+      ['outfit', 'outfit-vest'],
     ]);
   });
 
@@ -619,6 +625,26 @@ describe('part authoring scaffold generation', () => {
         expect(source).toContain('id="guide/body-rig/axis"');
       }
     }
+
+    const vestAssets = generatePartAuthoringAssets()
+      .filter(({ path: assetPath }) => assetPath.includes('/scaffolds/outfit/vest.'));
+    expect(vestAssets.map(({ path: assetPath }) => assetPath)).toEqual([
+      'assets/part-authoring/scaffolds/outfit/vest.buttons.south.svg',
+      'assets/part-authoring/scaffolds/outfit/vest.neck-inset.south.svg',
+      'assets/part-authoring/scaffolds/outfit/vest.panel.south.svg',
+    ]);
+    for (const component of ['panel', 'neck-inset', 'buttons']) {
+      const componentAssets = vestAssets.filter(({ path: assetPath }) =>
+        assetPath.includes(`vest.${component}.`));
+      expect(componentAssets).toHaveLength(1);
+      for (const { bytes } of componentAssets) {
+        const source = bytes.toString('utf8');
+        expect(source).toContain(`outfit-vest ${component}`);
+        expect(source).toContain(`id="detail/${component}/shape-001"`);
+        expect(source).toContain('id="reference/body-balanced"');
+        expect(source).toContain('id="guide/body-rig/axis"');
+      }
+    }
   });
 
   it('keeps the east body guide narrow and left-shifted relative to the stable head origin', () => {
@@ -732,7 +758,7 @@ describe('committed part authoring assets', () => {
     const root = await mkdtemp(path.join(tmpdir(), 'terrarium-authoring-assets-'));
     temporaryRoots.push(root);
     const firstWrite = await writePartAuthoringAssets(root);
-    expect(firstWrite.updated).toBe(113);
+    expect(firstWrite.updated).toBe(116);
     expect(firstWrite.removed).toBe(0);
     await expect(checkPartAuthoringAssets(root)).resolves.toBeUndefined();
 

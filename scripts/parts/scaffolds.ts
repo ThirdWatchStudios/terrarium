@@ -202,6 +202,30 @@ export const PART_SCAFFOLD_SPECS = [
     slug: 'hoodie.pocket',
     facings: ['south'],
   },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-vest',
+    referenceBodyId: 'body-balanced',
+    componentId: 'panel',
+    slug: 'vest.panel',
+    facings: ['south'],
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-vest',
+    referenceBodyId: 'body-balanced',
+    componentId: 'neck-inset',
+    slug: 'vest.neck-inset',
+    facings: ['south'],
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-vest',
+    referenceBodyId: 'body-balanced',
+    componentId: 'buttons',
+    slug: 'vest.buttons',
+    facings: ['south'],
+  },
 ] as const satisfies readonly {
   slot: 'body' | 'head' | 'hair' | 'outfit';
   referenceId: string;

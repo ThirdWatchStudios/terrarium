@@ -3,9 +3,9 @@
 Status: **design direction locked; bodies, neutral-arm fallback, heads, and all
 ten fitted hairstyles promoted; componentized Blazer and anchored Tee
 approved; componentized Polo, Shirt + Tie, and Turtleneck approved; runtime
-scale remains; Cardigan, Suit Jacket, and Hoodie approved**
+scale remains; Cardigan, Suit Jacket, Hoodie, and Vest approved**
 
-Last design review: **2026-07-27**
+Last design review: **2026-07-28**
 
 This is the restart document for turning the accepted character direction into
 production art and runtime behavior. It records the decisions that should survive
@@ -48,6 +48,11 @@ approved forward-edge rule, and its focused sheet received visual approval on
 A componentized Hoodie source set now fits a three-facing hood, south/east
 drawstrings, and a south-only pocket seam across the same six bodies; its
 focused sheet received visual approval on 2026-07-27.
+A componentized Sweater Vest source set now fits a secondary-fabric panel,
+contrasting V-neck inset, and front buttons across the same six bodies while
+preserving the primary-fabric sleeve field. Those details are south-only;
+east/west intentionally carry no vest overlay. Its focused sheet received
+visual approval on 2026-07-28.
 
 The promoted hair fitting is a Terrarium composition/export concern: recipes
 retain their stable hair IDs, flat and reconstructable layer output use the
@@ -416,6 +421,9 @@ Do not restart these without new runtime evidence:
    The Hoodie hood/drawstrings/pocket kit is mechanically complete across its
    intentionally asymmetric facing set with a matching focused sheet and
    received visual approval on 2026-07-27.
+   The Sweater Vest panel/neck-inset/button kit is mechanically complete in
+   south only with a matching focused sheet and received visual approval on
+   2026-07-28.
 8. **Implement the `0.65` world scale in the actual runtime seam.** Keep source
    geometry fixed and validate anchors/overlays in Unity.
 9. **Regenerate and verify all exports.** Base, mood, pose, unit, portrait,

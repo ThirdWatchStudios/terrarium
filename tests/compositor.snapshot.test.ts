@@ -166,6 +166,7 @@ describe('production outfit art', () => {
     ['outfit-cardigan', 'cardigan'],
     ['outfit-suit-jacket', 'suit-jacket'],
     ['outfit-hoodie', 'hoodie'],
+    ['outfit-vest', 'vest'],
   ])('%s — all production bodies and facings with authored head/hair', async (outfit, slug) => {
     const cells = BODY_ARCHETYPES.flatMap((body) => FACINGS_ALL.map((facing) => {
       const recipe: CharacterRecipe = {

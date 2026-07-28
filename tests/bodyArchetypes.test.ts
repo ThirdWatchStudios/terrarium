@@ -671,7 +671,7 @@ describe('production body archetypes', () => {
     }
 
     expect(count).toBe(1980);
-    expect(digest.digest('hex')).toBe('f545cf41c80d49e5ad6fe168f6545659ed30122ded568df17c3a631db37450f5');
+    expect(digest.digest('hex')).toBe('a234ab7a760bc5bf42b9cee2642a073450fcc725338837483412b5d45e14da66');
   });
 
   it('keeps the original garment vertical slice deterministic and unclipped', () => {

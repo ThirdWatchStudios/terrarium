@@ -885,17 +885,7 @@ function anchoredVest(facing: Facing, body: BodyFacingAnchors): PartVariant {
   const apexY = mix(n.y, chest.y, 0.82);
 
   if (facing === 'east') {
-    const topY = spanCenter(body.shoulders).y + 2;
-    const top = bodyInteriorSpan(body, topY, 1.5);
-    const bottom = bodyInteriorSpan(body, bottomY, 2.5);
-    const apexX = bodyInteriorSpan(body, apexY, 2).right;
-    return {
-      z: 20,
-      shapes: [
-        { d: `M ${top.left} ${topY} L ${apexX} ${apexY} L ${top.right} ${topY} L ${bottom.right} ${bottomY} L ${bottom.left} ${bottomY} Z`, fill: '$outfitSecondary', silhouette: false },
-        { d: `M ${top.left + 1.5} ${topY} L ${apexX} ${mix(topY, apexY, 0.72)} L ${top.right - 1.5} ${topY} Z`, fill: '$accent', silhouette: false },
-      ],
-    };
+    return { z: 20, shapes: [] };
   }
   if (facing === 'north') {
     return {
@@ -1262,13 +1252,7 @@ const OUTFITS: PartDef[] = [
         ],
       },
       north: { z: 20, shapes: [{ d: rr(-12, -29, 24, 47, 4), fill: '$outfitSecondary', silhouette: false }] },
-      east: {
-        z: 20,
-        shapes: [
-          { d: `M 7 -29 L 12 -12 L 17 -29 L 17 18 L 7 18 Z`, fill: '$outfitSecondary', silhouette: false },
-          { d: `M 9 -29 L 12 -16 L 15 -29 Z`, fill: '$accent', silhouette: false },
-        ],
-      },
+      east: { z: 20, shapes: [] },
     },
     buildVariant: (facing, context) => context.bodyAnchors && anchoredVest(facing, context.bodyAnchors),
   },

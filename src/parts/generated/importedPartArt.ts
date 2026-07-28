@@ -1148,6 +1148,61 @@ export const IMPORTED_PART_ART = [
       },
     },
   },
+  {
+    kind: "body-detail",
+    id: "outfit-vest",
+    slot: "outfit",
+    bodyVariants: {
+      "body-compact": {
+        south: [
+          { d: "M-13.34-29L0-9.32 13.34-29 13.34 18.95-13.34 18.95Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-6.67-29L0-13.65 6.67-29Z", fill: "$accent", silhouette: false },
+          { d: "M-1.403 2.22C-1.403 3.048-0.775 3.72 0 3.72 0.775 3.72 1.403 3.048 1.403 2.22 1.403 1.392 0.775 0.72 0 0.72-0.775 0.72-1.403 1.392-1.403 2.22Z", fill: "#00000030", silhouette: false },
+          { d: "M-1.403 9.82C-1.403 10.648-0.775 11.32 0 11.32 0.775 11.32 1.403 10.648 1.403 9.82 1.403 8.992 0.775 8.32 0 8.32-0.775 8.32-1.403 8.992-1.403 9.82Z", fill: "#00000030", silhouette: false },
+        ],
+      },
+      "body-balanced": {
+        south: [
+          { d: "M-11.5-29L0-9.32 11.5-29 11.5 18.95-11.5 18.95Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-5.75-29L0-13.65 5.75-29Z", fill: "$accent", silhouette: false },
+          { d: "M-1.5 2.22C-1.5 3.048-0.828 3.72 0 3.72 0.828 3.72 1.5 3.048 1.5 2.22 1.5 1.392 0.828 0.72 0 0.72-0.828 0.72-1.5 1.392-1.5 2.22Z", fill: "#00000030", silhouette: false },
+          { d: "M-1.5 9.82C-1.5 10.648-0.828 11.32 0 11.32 0.828 11.32 1.5 10.648 1.5 9.82 1.5 8.992 0.828 8.32 0 8.32-0.828 8.32-1.5 8.992-1.5 9.82Z", fill: "#00000030", silhouette: false },
+        ],
+      },
+      "body-large-frame": {
+        south: [
+          { d: "M-14.95-32L0-12.32 14.95-32 14.95 15.95-14.95 15.95Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-7.475-32L0-16.65 7.475-32Z", fill: "$accent", silhouette: false },
+          { d: "M-1.17-0.02C-1.17 0.895-0.646 1.638 0 1.638 0.646 1.638 1.17 0.895 1.17-0.02 1.17-0.935 0.646-1.678 0-1.678-0.646-1.678-1.17-0.935-1.17-0.02Z", fill: "#00000030", silhouette: false },
+          { d: "M-1.17 8.38C-1.17 9.295-0.646 10.038 0 10.038 0.646 10.038 1.17 9.295 1.17 8.38 1.17 7.465 0.646 6.722 0 6.722-0.646 6.722-1.17 7.465-1.17 8.38Z", fill: "#00000030", silhouette: false },
+        ],
+      },
+      "body-tall": {
+        south: [
+          { d: "M-8.97-34L0-13.5 8.97-34 8.97 15.948-8.97 15.948Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-4.485-34L0-18.01 4.485-34Z", fill: "$accent", silhouette: false },
+          { d: "M-1.17-0.64C-1.17 0.319-0.646 1.097 0 1.097 0.646 1.097 1.17 0.319 1.17-0.64 1.17-1.599 0.646-2.377 0-2.377-0.646-2.377-1.17-1.599-1.17-0.64Z", fill: "#00000030", silhouette: false },
+          { d: "M-1.17 8.16C-1.17 9.119-0.646 9.897 0 9.897 0.646 9.897 1.17 9.119 1.17 8.16 1.17 7.201 0.646 6.423 0 6.423-0.646 6.423-1.17 7.201-1.17 8.16Z", fill: "#00000030", silhouette: false },
+        ],
+      },
+      "body-soft": {
+        south: [
+          { d: "M-9.2-28L0-8.32 9.2-28 9.2 19.95-9.2 19.95Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-4.6-28L0-12.65 4.6-28Z", fill: "$accent", silhouette: false },
+          { d: "M-1.355 3.22C-1.355 4.048-0.748 4.72 0 4.72 0.748 4.72 1.355 4.048 1.355 3.22 1.355 2.392 0.748 1.72 0 1.72-0.748 1.72-1.355 2.392-1.355 3.22Z", fill: "#00000030", silhouette: false },
+          { d: "M-1.355 10.82C-1.355 11.648-0.748 12.32 0 12.32 0.748 12.32 1.355 11.648 1.355 10.82 1.355 9.992 0.748 9.32 0 9.32-0.748 9.32-1.355 9.992-1.355 10.82Z", fill: "#00000030", silhouette: false },
+        ],
+      },
+      "body-pinch": {
+        south: [
+          { d: "M-9.2-29L0-10.14 9.2-29 9.2 16.952-9.2 16.952Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-4.6-29L0-14.29 4.6-29Z", fill: "$accent", silhouette: false },
+          { d: "M-1.17 0.46C-1.17 1.201-0.646 1.802 0 1.802 0.646 1.802 1.17 1.201 1.17 0.46 1.17-0.281 0.646-0.882 0-0.882-0.646-0.882-1.17-0.281-1.17 0.46Z", fill: "#00000030", silhouette: false },
+          { d: "M-1.17 7.26C-1.17 8.001-0.646 8.602 0 8.602 0.646 8.602 1.17 8.001 1.17 7.26 1.17 6.519 0.646 5.918 0 5.918-0.646 5.918-1.17 6.519-1.17 7.26Z", fill: "#00000030", silhouette: false },
+        ],
+      },
+    },
+  },
 ] as const satisfies readonly ImportedPartOverlay[];
 
 // Build-time audit data; the browser imports only IMPORTED_PART_ART.
@@ -1446,6 +1501,15 @@ export const IMPORTED_PART_PROVENANCE = [
       "assets/parts/outfit/turtleneck.neck-band.east.svg",
       "assets/parts/outfit/turtleneck.neck-band.north.svg",
       "assets/parts/outfit/turtleneck.neck-band.south.svg",
+    ],
+  },
+  {
+    id: "outfit-vest",
+    sourceKind: "authored",
+    sourceFiles: [
+      "assets/parts/outfit/vest.buttons.south.svg",
+      "assets/parts/outfit/vest.neck-inset.south.svg",
+      "assets/parts/outfit/vest.panel.south.svg",
     ],
   },
 ] as const satisfies readonly ImportedPartProvenance[];

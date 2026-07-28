@@ -9,7 +9,8 @@ The current intake accepts complete facing sets for the six production bodies
 and existing static production parts in `head` and `hair`, plus the explicit
 `outfit-tee` anchored-detail target and componentized `outfit-blazer`,
 `outfit-polo`, `outfit-shirt-tie`, `outfit-turtleneck`, and
-`outfit-cardigan`, `outfit-suit-jacket`, and `outfit-hoodie` targets.
+`outfit-cardigan`, `outfit-suit-jacket`, `outfit-hoodie`, and `outfit-vest`
+targets.
 Tee is authored once on `body-balanced` in south/east; the importer pre-expands
 its detail-only geometry onto the neck anchor of all six production bodies.
 Blazer keeps lapels, buttons, and pocket in six separate south/east files and
@@ -28,6 +29,8 @@ twelve south/east files; its profile tie follows the approved forward-edge
 placement.
 Hoodie keeps the down hood in south/east/north, drawstrings in south/east, and
 the kangaroo-pocket seam in south.
+Vest keeps its secondary-fabric panel, V-neck inset, and buttons south-only;
+east/west intentionally carry no vest overlay.
 
 `body/` contains the 18 canonical production sources for `body-compact`,
 `body-balanced`, `body-large-frame`, `body-tall`, `body-soft`, and
@@ -76,7 +79,8 @@ approved mapped hair sources now live in this tree. Detail-only Tee mechanics
 and the componentized Blazer and Polo source sets are approved. Remaining
 outfit and later asset-polish passes follow; Shirt + Tie and Turtleneck are
 approved, and Cardigan received visual approval on 2026-07-27. Suit Jacket and
-Hoodie are visually approved as of 2026-07-27.
+Hoodie are visually approved as of 2026-07-27. Vest received visual approval
+on 2026-07-28.
 
 See `docs/part-importer.md` for the SVG dialect, sentinel palette, validation
 rules, and the component-detail manifest established by Blazer.

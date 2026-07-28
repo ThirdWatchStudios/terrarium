@@ -462,6 +462,15 @@ behind.
 > across all six bodies without inventing missing directional detail. West
 > mirrors east. The focused review sheet is
 > `character-hoodie-component-fit-v1.png`.
+>
+> **Sweater Vest component-detail intake (mechanically complete and visually
+> approved):** three canonical files keep the secondary-fabric panel, contrasting
+> V-neck inset, and front buttons independently authorable. Panel and inset
+> exist only in south, as do the buttons. Upper/lower torso frames
+> fit the pieces across all six bodies while the surrounding primary fabric
+> remains visible as the shirt and sleeves. East/west intentionally carry no
+> vest overlay; north retains the handwritten rear fallback. The focused review sheet is
+> `character-vest-component-fit-v1.png`.
 
 | Garment | Detail pieces | south | east | north |
 |---|---|---|---|---|
@@ -473,7 +482,7 @@ behind.
 | blazer | lapels, buttons, pocket | [x] | [x] | — |
 | suit-jacket | lapels, buttons, pocket, tie, pocket square, notches | [x] | [x] | — |
 | hoodie | hood (down), pocket, drawstrings | [x] | [x] | [x] |
-| vest | V, sleeve color split | [ ] | [ ] | — |
+| vest | V, sleeve color split | [x] | — | — |
 
 ≈ 22–24 small drawings; lapels/collars/buttons are shared vocabulary across kits
 where they genuinely match.

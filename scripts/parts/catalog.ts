@@ -318,4 +318,36 @@ export const PART_IMPORT_TARGETS: readonly PartImportTarget[] = [
       },
     ],
   },
+  {
+    id: 'outfit-vest',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: { south: true },
+    buildVariant: true,
+    importMode: 'component-detail',
+    referenceBodyId: 'body-balanced',
+    components: [
+      {
+        id: 'panel',
+        frame: 'upper-torso',
+        facings: {
+          south: { shapeCount: 1 },
+        },
+      },
+      {
+        id: 'neck-inset',
+        frame: 'upper-torso',
+        facings: {
+          south: { shapeCount: 1 },
+        },
+      },
+      {
+        id: 'buttons',
+        frame: 'lower-torso',
+        facings: {
+          south: { shapeCount: 2 },
+        },
+      },
+    ],
+  },
 ];

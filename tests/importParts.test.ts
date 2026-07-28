@@ -166,7 +166,8 @@ async function componentSourceTree(
     | 'outfit-turtleneck'
     | 'outfit-cardigan'
     | 'outfit-suit-jacket'
-    | 'outfit-hoodie',
+    | 'outfit-hoodie'
+    | 'outfit-vest',
   slug:
     | 'blazer'
     | 'polo'
@@ -174,7 +175,8 @@ async function componentSourceTree(
     | 'turtleneck'
     | 'cardigan'
     | 'suit-jacket'
-    | 'hoodie',
+    | 'hoodie'
+    | 'vest',
   omitted?: { component: string; facing: Facing },
 ): Promise<string> {
   const root = await mkdtemp(path.join(tmpdir(), `terrarium-${slug}-import-`));
@@ -776,6 +778,28 @@ describe('part source tree and generated registration', () => {
       .not.toEqual(imported.bodyVariants['body-tall'].north);
   });
 
+  it('aggregates the sweater Vest front while leaving side profiles undecorated', async () => {
+    const root = await componentSourceTree('outfit-vest', 'vest');
+    const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-vest')!;
+    const [imported] = await compilePartDirectory({
+      inputDir: root,
+      sourcePathPrefix: 'assets/parts',
+      catalog: [target],
+    });
+    if (imported.kind !== 'body-detail') throw new Error('Expected body-detail import');
+
+    expect(imported.sourceFiles).toEqual([
+      'assets/parts/outfit/vest.buttons.south.svg',
+      'assets/parts/outfit/vest.neck-inset.south.svg',
+      'assets/parts/outfit/vest.panel.south.svg',
+    ]);
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(imported.bodyVariants[archetype.id].south).toHaveLength(4);
+      expect(imported.bodyVariants[archetype.id].east).toBeUndefined();
+      expect(imported.bodyVariants[archetype.id].north).toBeUndefined();
+    }
+  });
+
   it('rejects incomplete or flattened component-detail source sets', async () => {
     const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-blazer')!;
     const complete = await componentSourceTree('outfit-blazer', 'blazer');
@@ -886,13 +910,13 @@ describe('part source tree and generated registration', () => {
     expect(generated).toBe(emitImportedPartArt(imports));
   });
 
-  it('keeps six bodies, ten canonical hairs, seven heads, and eight authored outfits as thirty-one deliberate overlays', async () => {
+  it('keeps six bodies, ten canonical hairs, seven heads, and nine authored outfits as thirty-two deliberate overlays', async () => {
     const imports = await compilePartDirectory({
       inputDir: path.resolve('assets/parts'),
       sourcePathPrefix: 'assets/parts',
       catalog: PART_IMPORT_TARGETS,
     });
-    expect(imports).toHaveLength(31);
+    expect(imports).toHaveLength(32);
     expect(imports.map(({ id }) => id)).toEqual([
       'body-balanced',
       'body-compact',
@@ -925,6 +949,7 @@ describe('part source tree and generated registration', () => {
       'outfit-suit-jacket',
       'outfit-tee',
       'outfit-turtleneck',
+      'outfit-vest',
     ]);
 
     const bodyTargets = PART_IMPORT_TARGETS.filter(({ importMode }) => importMode === 'body-art');
@@ -1267,6 +1292,24 @@ describe('part source tree and generated registration', () => {
       expect(hoodie.bodyVariants[archetype.id].east).toHaveLength(2);
       expect(hoodie.bodyVariants[archetype.id].north).toHaveLength(1);
     }
+
+    const vest = imports.find(({ id }) => id === 'outfit-vest')!;
+    if (vest.kind !== 'body-detail') throw new Error('Expected body-detail Vest import');
+    expect(vest).toMatchObject({
+      id: 'outfit-vest',
+      slot: 'outfit',
+      sourceKind: 'authored',
+      sourceFiles: [
+        'assets/parts/outfit/vest.buttons.south.svg',
+        'assets/parts/outfit/vest.neck-inset.south.svg',
+        'assets/parts/outfit/vest.panel.south.svg',
+      ],
+    });
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(vest.bodyVariants[archetype.id].south).toHaveLength(4);
+      expect(vest.bodyVariants[archetype.id].east).toBeUndefined();
+      expect(vest.bodyVariants[archetype.id].north).toBeUndefined();
+    }
   });
 });
 
@@ -1607,6 +1650,19 @@ describe('imported art overlay', () => {
           { id: 'hood', frame: 'upper-torso' },
           { id: 'drawstrings', frame: 'upper-torso' },
           { id: 'pocket', frame: 'lower-torso' },
+        ],
+      },
+      {
+        id: 'outfit-vest',
+        slot: 'outfit',
+        anchor: 'body',
+        facings: { south: true },
+        buildVariant: true,
+        referenceBodyId: 'body-balanced',
+        components: [
+          { id: 'panel', frame: 'upper-torso' },
+          { id: 'neck-inset', frame: 'upper-torso' },
+          { id: 'buttons', frame: 'lower-torso' },
         ],
       },
     ]);
