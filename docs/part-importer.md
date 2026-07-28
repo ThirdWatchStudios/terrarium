@@ -14,8 +14,9 @@ The `outfit-blazer` component adapter does the same after deterministically
 aggregating separately authored lapels, buttons, and pocket pieces;
 `outfit-polo` reuses that contract for independent collar and placket pieces.
 `outfit-shirt-tie` then reuses it for independent collar and tie pieces. In
-every mode labels, picker order, seeded-generation order, anchors, z-order,
-body rigs, and other runtime metadata remain owned by the handwritten
+turn, `outfit-turtleneck` exercises a component with authored south/east/north
+facings. In every mode labels, picker order, seeded-generation order, anchors,
+z-order, body rigs, and other runtime metadata remain owned by the handwritten
 `PartDef`.
 
 ## Commands
@@ -33,11 +34,12 @@ scaffolds for all six production bodies, all six human-head families,
 all ten mapped hair families (`hair-short`, `hair-bob`, `hair-bun`,
 `hair-curly`, `hair-balding`, `hair-side-part`, `hair-pixie`,
 `hair-ponytail`, `hair-long-straight`, and `hair-coils`), and the south/east tee
-starters plus six componentized Blazer, four componentized Polo, and four
-componentized Shirt + Tie starters, plus ASE, GPL, and readable SVG sentinel
-palette companions for optional editors. Their directory README defines the
-canonical editor-agnostic workflow. Layer locking is only an editing
-convenience; semantic IDs determine which groups the importer ignores.
+starters plus six componentized Blazer, four componentized Polo, four
+componentized Shirt + Tie, and three Turtleneck starters, plus ASE, GPL, and
+readable SVG sentinel palette companions for optional editors. Their directory
+README defines the canonical editor-agnostic workflow. Layer locking is only
+an editing convenience; semantic IDs determine which groups the importer
+ignores.
 
 ## Source convention
 
@@ -58,7 +60,7 @@ runtime mirror of east. Once any facing of a part or declared component is
 present, its complete manifest set must be present. Body and static head/hair
 targets require all three source facings. Tee and each Blazer/Polo/Shirt + Tie
 component deliberately require south/east only; their north detail remains on
-the handwritten fallback.
+the handwritten fallback. Turtleneck explicitly requires south/east/north.
 Putting a valid complete set in this canonical directory makes it compiler
 input; visual acceptance remains a separate Definition of Done gate. These
 static hair overlays remain the canonical authored source and fallback
@@ -80,6 +82,8 @@ The importer currently accepts:
   Its canonical source is four files: south/east for `collar` and `placket`.
 - `outfit-shirt-tie` as a component-detail target authored over the same body.
   Its canonical source is four files: south/east for `collar` and `tie`.
+- `outfit-turtleneck` as a component-detail target authored over the same
+  body. Its canonical source is three `neck-band` files: south/east/north.
 
 The east-facing head placement adjustment remains compositor-owned. The
 compiler always subtracts the stable `(64, 44)` authoring origin after it
@@ -251,11 +255,19 @@ edge and west mirrors that placement; it must not run through the profile
 torso center. South/east art replaces only known production-body variants;
 north, legacy, and future bodies preserve the code-builder fallback.
 
+`outfit-turtleneck` extends that contract to a component with all three
+authored facings. Its neck band and south fold remain one semantic component;
+south/east/north are fitted through the upper-torso frame and rise behind the
+head to bridge the 3 px head/torso gap, while west mirrors east. The band must
+use `outfitPrimary`, must not collapse into a detached chest mark, and keeps a
+wider profile footprint so east/west retain comparable collar weight to
+south/north. Legacy and future bodies preserve the code-builder fallback.
+
 ## Intentionally deferred adapters
 
 - Component manifests for the remaining conforming outfits. Tee remains one
-  combined neckline kit; Blazer, Polo, and Shirt + Tie establish the
-  multi-piece boundary that pockets and trim can reuse where their vocabulary
+  combined neckline kit; Blazer, Polo, Shirt + Tie, and Turtleneck establish
+  the component boundary that pockets and trim can reuse where their vocabulary
   genuinely matches.
 - Further new part definitions and their labels/insertion order.
 - Accessory anchors, z-order, and hand-attachment roles.
@@ -267,9 +279,10 @@ scaffold-to-runtime `hair-bob` proof and the first canonical head promotion
 are approved in the current production batch. The Tee and Blazer detail
 mechanics and art are approved; Polo mechanics and art are approved as well.
 Shirt + Tie mechanics and art are approved as well. The accepted six-body
-redesign, including independent Pinch, has
-canonical SVG sources and a shared-identity adapter. The first six
+redesign, including independent Pinch, has canonical SVG sources and a
+shared-identity adapter. Turtleneck mechanics and art are approved. The first six
 hair families are approved. Bun, Balding, Pixie, and Side-part complete the
 mapped source set, pass automated production review, and received visual
 approval on 2026-07-10. The remaining conforming outfits can now follow the
-component-detail contract proven by Blazer and reused by Polo and Shirt + Tie.
+component-detail contract proven by Blazer and reused by Polo, Shirt + Tie,
+and Turtleneck.

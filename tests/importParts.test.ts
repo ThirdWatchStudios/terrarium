@@ -159,8 +159,12 @@ function validComponentDetailSvg(component: string, shapeCount: number): string 
 }
 
 async function componentSourceTree(
-  targetId: 'outfit-blazer' | 'outfit-polo' | 'outfit-shirt-tie',
-  slug: 'blazer' | 'polo' | 'shirt-tie',
+  targetId:
+    | 'outfit-blazer'
+    | 'outfit-polo'
+    | 'outfit-shirt-tie'
+    | 'outfit-turtleneck',
+  slug: 'blazer' | 'polo' | 'shirt-tie' | 'turtleneck',
   omitted?: { component: string; facing: Facing },
 ): Promise<string> {
   const root = await mkdtemp(path.join(tmpdir(), `terrarium-${slug}-import-`));
@@ -646,6 +650,33 @@ describe('part source tree and generated registration', () => {
       .not.toEqual(imported.bodyVariants['body-tall'].east);
   });
 
+  it('aggregates the three-facing Turtleneck neck band through the upper-torso frame', async () => {
+    const root = await componentSourceTree('outfit-turtleneck', 'turtleneck');
+    const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-turtleneck')!;
+    const [imported] = await compilePartDirectory({
+      inputDir: root,
+      sourcePathPrefix: 'assets/parts',
+      catalog: [target],
+    });
+    if (imported.kind !== 'body-detail') throw new Error('Expected body-detail import');
+
+    expect(imported.sourceFiles).toEqual([
+      'assets/parts/outfit/turtleneck.neck-band.east.svg',
+      'assets/parts/outfit/turtleneck.neck-band.north.svg',
+      'assets/parts/outfit/turtleneck.neck-band.south.svg',
+    ]);
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(imported.bodyVariants[archetype.id].south).toHaveLength(2);
+      expect(imported.bodyVariants[archetype.id].east).toHaveLength(1);
+      expect(imported.bodyVariants[archetype.id].north).toHaveLength(1);
+      expect(FACINGS.every((facing) =>
+        imported.bodyVariants[archetype.id][facing]?.every(({ silhouette }) => silhouette === false)))
+        .toBe(true);
+    }
+    expect(imported.bodyVariants['body-balanced'].north)
+      .not.toEqual(imported.bodyVariants['body-tall'].north);
+  });
+
   it('rejects incomplete or flattened component-detail source sets', async () => {
     const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-blazer')!;
     const complete = await componentSourceTree('outfit-blazer', 'blazer');
@@ -756,13 +787,13 @@ describe('part source tree and generated registration', () => {
     expect(generated).toBe(emitImportedPartArt(imports));
   });
 
-  it('keeps six bodies, ten canonical hairs, seven heads, and four authored outfits as twenty-seven deliberate overlays', async () => {
+  it('keeps six bodies, ten canonical hairs, seven heads, and five authored outfits as twenty-eight deliberate overlays', async () => {
     const imports = await compilePartDirectory({
       inputDir: path.resolve('assets/parts'),
       sourcePathPrefix: 'assets/parts',
       catalog: PART_IMPORT_TARGETS,
     });
-    expect(imports).toHaveLength(27);
+    expect(imports).toHaveLength(28);
     expect(imports.map(({ id }) => id)).toEqual([
       'body-balanced',
       'body-compact',
@@ -791,6 +822,7 @@ describe('part source tree and generated registration', () => {
       'outfit-polo',
       'outfit-shirt-tie',
       'outfit-tee',
+      'outfit-turtleneck',
     ]);
 
     const bodyTargets = PART_IMPORT_TARGETS.filter(({ importMode }) => importMode === 'body-art');
@@ -1038,6 +1070,31 @@ describe('part source tree and generated registration', () => {
       expect(shirtTie.bodyVariants[archetype.id].south).toHaveLength(2);
       expect(shirtTie.bodyVariants[archetype.id].east).toHaveLength(2);
       expect(shirtTie.bodyVariants[archetype.id].north).toBeUndefined();
+    }
+
+    const turtleneck = imports.find(({ id }) => id === 'outfit-turtleneck')!;
+    if (turtleneck.kind !== 'body-detail') throw new Error('Expected body-detail Turtleneck import');
+    expect(turtleneck).toMatchObject({
+      id: 'outfit-turtleneck',
+      slot: 'outfit',
+      sourceKind: 'authored',
+      sourceFiles: [
+        'assets/parts/outfit/turtleneck.neck-band.east.svg',
+        'assets/parts/outfit/turtleneck.neck-band.north.svg',
+        'assets/parts/outfit/turtleneck.neck-band.south.svg',
+      ],
+    });
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(turtleneck.bodyVariants[archetype.id].south).toHaveLength(2);
+      expect(turtleneck.bodyVariants[archetype.id].east).toHaveLength(1);
+      expect(turtleneck.bodyVariants[archetype.id].north).toHaveLength(1);
+      const filledShapes = FACINGS.flatMap(
+        (facing) => turtleneck.bodyVariants[archetype.id][facing] ?? [],
+      ).filter(({ fill }) => fill !== undefined);
+      expect(
+        filledShapes.every(({ fill }) => fill === '$outfitPrimary'),
+        `${archetype.id} Turtleneck band must use the shirt's primary fabric`,
+      ).toBe(true);
     }
   });
 });
@@ -1327,6 +1384,17 @@ describe('imported art overlay', () => {
         components: [
           { id: 'collar', frame: 'upper-torso' },
           { id: 'tie', frame: 'upper-torso' },
+        ],
+      },
+      {
+        id: 'outfit-turtleneck',
+        slot: 'outfit',
+        anchor: 'body',
+        facings: { south: true, east: true, north: true },
+        buildVariant: true,
+        referenceBodyId: 'body-balanced',
+        components: [
+          { id: 'neck-band', frame: 'upper-torso' },
         ],
       },
     ]);

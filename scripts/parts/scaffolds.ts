@@ -106,6 +106,14 @@ export const PART_SCAFFOLD_SPECS = [
     slug: 'shirt-tie.tie',
     facings: ['south', 'east'],
   },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-turtleneck',
+    referenceBodyId: 'body-balanced',
+    componentId: 'neck-band',
+    slug: 'turtleneck.neck-band',
+    facings: FACINGS,
+  },
 ] as const satisfies readonly {
   slot: 'body' | 'head' | 'hair' | 'outfit';
   referenceId: string;

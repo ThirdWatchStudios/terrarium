@@ -255,8 +255,11 @@ describe('part authoring scaffold generation', () => {
       'assets/part-authoring/scaffolds/outfit/shirt-tie.tie.south.svg',
       'assets/part-authoring/scaffolds/outfit/tee.east.svg',
       'assets/part-authoring/scaffolds/outfit/tee.south.svg',
+      'assets/part-authoring/scaffolds/outfit/turtleneck.neck-band.east.svg',
+      'assets/part-authoring/scaffolds/outfit/turtleneck.neck-band.north.svg',
+      'assets/part-authoring/scaffolds/outfit/turtleneck.neck-band.south.svg',
     ]);
-    expect(first).toHaveLength(88);
+    expect(first).toHaveLength(91);
     expect(first.map(({ bytes }) => bytes)).toEqual(second.map(({ bytes }) => bytes));
     expect(PART_SCAFFOLD_SPECS.map(({ slot, referenceId }) => [slot, referenceId])).toEqual([
       ['body', 'body-compact'],
@@ -290,6 +293,7 @@ describe('part authoring scaffold generation', () => {
       ['outfit', 'outfit-polo'],
       ['outfit', 'outfit-shirt-tie'],
       ['outfit', 'outfit-shirt-tie'],
+      ['outfit', 'outfit-turtleneck'],
     ]);
   });
 
@@ -405,7 +409,7 @@ describe('part authoring scaffold generation', () => {
     });
   });
 
-  it('seeds Tee, Blazer, Polo, and Shirt + Tie against body-balanced with the complete outfit rig guide', () => {
+  it('seeds Tee, Blazer, Polo, Shirt + Tie, and Turtleneck against body-balanced with the complete outfit rig guide', () => {
     const teeAssets = generatePartAuthoringAssets()
       .filter(({ path: assetPath }) => assetPath.includes('/scaffolds/outfit/tee.'));
     expect(teeAssets.map(({ path: assetPath }) => assetPath)).toEqual([
@@ -492,6 +496,21 @@ describe('part authoring scaffold generation', () => {
         expect(source).toContain('id="reference/body-balanced"');
         expect(source).toContain('id="guide/body-rig/axis"');
       }
+    }
+
+    const turtleneckAssets = generatePartAuthoringAssets()
+      .filter(({ path: assetPath }) => assetPath.includes('/scaffolds/outfit/turtleneck.'));
+    expect(turtleneckAssets.map(({ path: assetPath }) => assetPath)).toEqual([
+      'assets/part-authoring/scaffolds/outfit/turtleneck.neck-band.east.svg',
+      'assets/part-authoring/scaffolds/outfit/turtleneck.neck-band.north.svg',
+      'assets/part-authoring/scaffolds/outfit/turtleneck.neck-band.south.svg',
+    ]);
+    for (const { bytes } of turtleneckAssets) {
+      const source = bytes.toString('utf8');
+      expect(source).toContain('outfit-turtleneck neck-band');
+      expect(source).toContain('id="detail/neck-band/shape-001"');
+      expect(source).toContain('id="reference/body-balanced"');
+      expect(source).toContain('id="guide/body-rig/axis"');
     }
   });
 
@@ -606,7 +625,7 @@ describe('committed part authoring assets', () => {
     const root = await mkdtemp(path.join(tmpdir(), 'terrarium-authoring-assets-'));
     temporaryRoots.push(root);
     const firstWrite = await writePartAuthoringAssets(root);
-    expect(firstWrite.updated).toBe(88);
+    expect(firstWrite.updated).toBe(91);
     expect(firstWrite.removed).toBe(0);
     await expect(checkPartAuthoringAssets(root)).resolves.toBeUndefined();
 

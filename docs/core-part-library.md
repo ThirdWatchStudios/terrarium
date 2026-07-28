@@ -18,11 +18,11 @@ full alphabet; the milestones are what "done" means.
 - [x] Importer (`scripts/importParts.ts`) with strict validation
       (`part-importer.md`; shared-identity production body art, static
       production head/hair overlays, the all-ten head-aware hair fit resolver,
-      the first body-aware tee adapter, and componentized Blazer/Polo/Shirt +
-      Tie detail intake)
+      the first body-aware tee adapter, and componentized
+      Blazer/Polo/Shirt + Tie/Turtleneck detail intake)
 - [x] Template scaffold SVGs for all six production bodies, all six human-head
       families plus the special fabrication-unit head, supported hair, and
-      south/east Tee/Blazer/Polo/Shirt + Tie intake (128 grid, anchors,
+      Tee/Blazer/Polo/Shirt + Tie/Turtleneck intake (128 grid, anchors,
       capsule/head guides, seeded editable art, named reference layer) with
       semantic IDs for every editable and ignored path
 - [x] Sentinel color palette defined and generated as ASE, GPL, and readable
@@ -39,7 +39,8 @@ full alphabet; the milestones are what "done" means.
       and fit upper/lower torso frames across all six production bodies; four
       Polo sources reuse that contract for independent upper-frame collar and
       placket pieces, and four Shirt + Tie sources reuse it for independent
-      upper-frame collar and tie pieces.
+      upper-frame collar and tie pieces. Three Turtleneck sources exercise the
+      same frame across all authored facings, including north.
 - [x] Body-art ownership proof: 18 canonical production SVGs → one in-place
       shared `PartDef` set with byte-stable visible geometry and unchanged typed
       rig identities
@@ -427,13 +428,23 @@ behind.
 > north, legacy, and future bodies retain the handwritten fallback. The focused
 > review sheet is `character-shirt-tie-component-fit-v1.png` and received
 > visual approval after the profile tie moved to the forward torso edge.
+>
+> **Turtleneck component-detail intake (mechanically complete and visually
+> approved):** one `neck-band` component is authored for south, east, and north.
+> It fits through the neck/shoulder/chest frame on all six production bodies;
+> the band rises behind the head to fill the 3 px head/torso gap rather than
+> sitting as a detached chest mark. It uses `outfitPrimary`, and its widened
+> profile retains comparable collar weight against the south/north view. West
+> mirrors east while legacy and future bodies retain the handwritten fallback.
+> The focused review sheet is
+> `character-turtleneck-component-fit-v1.png`.
 
 | Garment | Detail pieces | south | east | north |
 |---|---|---|---|---|
 | tee | neckline | [x] | [x] | — |
 | polo | collar, placket | [x] | [x] | — |
 | shirt-tie | collar, tie | [x] | [x] | — |
-| turtleneck | neck band | [ ] | [ ] | [ ] |
+| turtleneck | neck band | [x] | [x] | [x] |
 | cardigan | button line, trim | [ ] | [ ] | — |
 | blazer | lapels, buttons, pocket | [x] | [x] | — |
 | suit-jacket | lapels, pocket square | [ ] | [ ] | — |

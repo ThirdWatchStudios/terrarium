@@ -177,4 +177,24 @@ export const PART_IMPORT_TARGETS: readonly PartImportTarget[] = [
       },
     ],
   },
+  {
+    id: 'outfit-turtleneck',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: { south: true, east: true, north: true },
+    buildVariant: true,
+    importMode: 'component-detail',
+    referenceBodyId: 'body-balanced',
+    components: [
+      {
+        id: 'neck-band',
+        frame: 'upper-torso',
+        facings: {
+          south: { shapeCount: 2 },
+          east: { shapeCount: 1 },
+          north: { shapeCount: 1 },
+        },
+      },
+    ],
+  },
 ];

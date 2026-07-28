@@ -350,10 +350,16 @@ const OUTFIT_PROOF_PALETTES: readonly CharacterRecipe['palette'][] = [
 ];
 
 interface FocusedOutfitProof {
-  outfit: 'outfit-tee' | 'outfit-blazer' | 'outfit-polo' | 'outfit-shirt-tie';
+  outfit:
+    | 'outfit-tee'
+    | 'outfit-blazer'
+    | 'outfit-polo'
+    | 'outfit-shirt-tie'
+    | 'outfit-turtleneck';
   title: string;
   description: string;
   sourceLabel: string;
+  northLabel?: string;
 }
 
 function focusedOutfitDetailSheet(proof: FocusedOutfitProof): string {
@@ -364,7 +370,7 @@ function focusedOutfitDetailSheet(proof: FocusedOutfitProof): string {
     { label: 'south · warm', facing: 'south', size: 112, panel: 116, style: DEFAULT_STYLE },
     { label: 'east · warm', facing: 'east', size: 112, panel: 116, style: DEFAULT_STYLE },
     { label: 'west · mirror', facing: 'west', size: 112, panel: 116, style: DEFAULT_STYLE },
-    { label: 'north · fallback', facing: 'north', size: 112, panel: 116, style: DEFAULT_STYLE },
+    { label: proof.northLabel ?? 'north · fallback', facing: 'north', size: 112, panel: 116, style: DEFAULT_STYLE },
     {
       label: 'south · cold',
       facing: 'south',
@@ -486,6 +492,16 @@ function shirtTieDetailSheet(): string {
     title: 'Componentized Shirt + Tie — production body fit',
     description: 'Collar and tie remain independent; profile ties stay at the forward torso edge. West mirrors east; north keeps the stable rear collar.',
     sourceLabel: 'Authored source set: shirt-tie.collar.* · shirt-tie.tie.*',
+  });
+}
+
+function turtleneckDetailSheet(): string {
+  return focusedOutfitDetailSheet({
+    outfit: 'outfit-turtleneck',
+    title: 'Componentized Turtleneck — production body fit',
+    description: 'The primary-fabric neck band bridges the 3 px head/torso gap, with a widened profile that preserves the south/north collar weight. West mirrors east.',
+    sourceLabel: 'Authored source set: turtleneck.neck-band.{south,east,north}.svg',
+    northLabel: 'north · authored',
   });
 }
 
@@ -765,6 +781,7 @@ function main(): void {
   writeSvgAndPng(outDir, 'character-tee-anchored-fit-v1', teeDetailSheet());
   writeSvgAndPng(outDir, 'character-polo-component-fit-v1', poloDetailSheet());
   writeSvgAndPng(outDir, 'character-shirt-tie-component-fit-v1', shirtTieDetailSheet());
+  writeSvgAndPng(outDir, 'character-turtleneck-component-fit-v1', turtleneckDetailSheet());
   writeSvgAndPng(outDir, 'body-archetypes-poses-south', poseProofSheet('south'));
   writeSvgAndPng(outDir, 'body-archetypes-poses-east', poseProofSheet('east'));
   writeSvgAndPng(outDir, 'body-archetypes-poses-north', poseProofSheet('north'));

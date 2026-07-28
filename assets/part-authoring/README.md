@@ -24,6 +24,8 @@ The current supported starters are:
   (each component seeded separately on `body-balanced`)
 - `scaffolds/outfit/shirt-tie.{collar,tie}.{south,east}.svg`
   (each component seeded separately on `body-balanced`)
+- `scaffolds/outfit/turtleneck.neck-band.{south,east,north}.svg`
+  (the three-facing component is seeded on `body-balanced`)
 
 They are seeded with the current production geometry, so they support a true
 source/edit/import proof rather than requiring a redraw. The tee starter shows
@@ -34,7 +36,8 @@ files; the importer aggregates them in manifest order and fits each component
 through its declared upper/lower torso frame. The Polo starters reuse that
 contract for separately editable collar and placket files, both fitted through
 the upper-torso frame. Shirt + Tie follows with separately editable collar and
-tie files in the same frame. Each body starter shows its full visible
+tie files in the same frame. Turtleneck adds the first component starter with
+an authored north view. Each body starter shows its full visible
 production art plus generated markers for all 11 typed rig points and
 `bodyOrigin`. Those
 `guide/*`, `reference/*`, and `anchors` paths are context only: the current rig
@@ -87,8 +90,8 @@ deterministically, changes only intended snapshots, and passes visual review —
 not whether a named editor preserves it.
 
 The approved body and head sets plus all ten mapped hair styles now have
-approved canonical sources. Tee, Blazer, Polo, and Shirt + Tie are approved;
-the remaining outfit components and later asset-polish work follow.
+approved canonical sources. Tee, Blazer, Polo, Shirt + Tie, and Turtleneck are
+approved; the remaining outfit components and later asset-polish work follow.
 
 ## Optional visual-editor use
 

@@ -736,6 +736,85 @@ export const IMPORTED_PART_ART = [
       },
     },
   },
+  {
+    kind: "body-detail",
+    id: "outfit-turtleneck",
+    slot: "outfit",
+    bodyVariants: {
+      "body-compact": {
+        south: [
+          { d: "M-3.19-34H3.19C5.752-34 7.83-32.209 7.83-30V-28.4C7.83-26.191 5.752-24.4 3.19-24.4H-3.19C-5.752-24.4-7.83-26.191-7.83-28.4V-30C-7.83-32.209-5.752-34-3.19-34Z", fill: "$outfitPrimary", silhouette: false },
+          { d: "M-7.83-27.28Q0-24.4 7.83-27.28", stroke: "#0000001E", strokeWidth: 1.4, silhouette: false },
+        ],
+        east: [
+          { d: "M0-33Q7.425-32 7.425-24.4L-4.675-24.4Q-4.675-32 0-33Z", fill: "$outfitPrimary", silhouette: false },
+        ],
+        north: [
+          { d: "M-3.19-34H3.19C5.752-34 7.83-32.209 7.83-30V-28.4C7.83-26.191 5.752-24.4 3.19-24.4H-3.19C-5.752-24.4-7.83-26.191-7.83-28.4V-30C-7.83-32.209-5.752-34-3.19-34Z", fill: "$outfitPrimary", silhouette: false },
+        ],
+      },
+      "body-balanced": {
+        south: [
+          { d: "M-2.75-34H2.75C4.959-34 6.75-32.209 6.75-30V-28.4C6.75-26.191 4.959-24.4 2.75-24.4H-2.75C-4.959-24.4-6.75-26.191-6.75-28.4V-30C-6.75-32.209-4.959-34-2.75-34Z", fill: "$outfitPrimary", silhouette: false },
+          { d: "M-6.75-27.28Q0-24.4 6.75-27.28", stroke: "#0000001E", strokeWidth: 1.4, silhouette: false },
+        ],
+        east: [
+          { d: "M0-33Q6.75-32 6.75-24.4L-4.25-24.4Q-4.25-32 0-33Z", fill: "$outfitPrimary", silhouette: false },
+        ],
+        north: [
+          { d: "M-2.75-34H2.75C4.959-34 6.75-32.209 6.75-30V-28.4C6.75-26.191 4.959-24.4 2.75-24.4H-2.75C-4.959-24.4-6.75-26.191-6.75-28.4V-30C-6.75-32.209-4.959-34-2.75-34Z", fill: "$outfitPrimary", silhouette: false },
+        ],
+      },
+      "body-large-frame": {
+        south: [
+          { d: "M-3.575-37H3.575C6.447-37 8.775-35.209 8.775-33V-31.4C8.775-29.191 6.447-27.4 3.575-27.4H-3.575C-6.447-27.4-8.775-29.191-8.775-31.4V-33C-8.775-35.209-6.447-37-3.575-37Z", fill: "$outfitPrimary", silhouette: false },
+          { d: "M-8.775-30.28Q0-27.4 8.775-30.28", stroke: "#0000001E", strokeWidth: 1.4, silhouette: false },
+        ],
+        east: [
+          { d: "M0-36Q8.1-35 8.1-27.4L-5.1-27.4Q-5.1-35 0-36Z", fill: "$outfitPrimary", silhouette: false },
+        ],
+        north: [
+          { d: "M-3.575-37H3.575C6.447-37 8.775-35.209 8.775-33V-31.4C8.775-29.191 6.447-27.4 3.575-27.4H-3.575C-6.447-27.4-8.775-29.191-8.775-31.4V-33C-8.775-35.209-6.447-37-3.575-37Z", fill: "$outfitPrimary", silhouette: false },
+        ],
+      },
+      "body-tall": {
+        south: [
+          { d: "M-2.145-39.208H2.145C3.868-39.208 5.265-37.343 5.265-35.042V-33.375C5.265-31.074 3.868-29.208 2.145-29.208H-2.145C-3.868-29.208-5.265-31.074-5.265-33.375V-35.042C-5.265-37.343-3.868-39.208-2.145-39.208Z", fill: "$outfitPrimary", silhouette: false },
+          { d: "M-5.265-32.208Q0-29.208 5.265-32.208", stroke: "#0000001E", strokeWidth: 1.4, silhouette: false },
+        ],
+        east: [
+          { d: "M0-38.167Q5.265-37.125 5.265-29.208L-3.315-29.208Q-3.315-37.125 0-38.167Z", fill: "$outfitPrimary", silhouette: false },
+        ],
+        north: [
+          { d: "M-2.145-39.208H2.145C3.868-39.208 5.265-37.343 5.265-35.042V-33.375C5.265-31.074 3.868-29.208 2.145-29.208H-2.145C-3.868-29.208-5.265-31.074-5.265-33.375V-35.042C-5.265-37.343-3.868-39.208-2.145-39.208Z", fill: "$outfitPrimary", silhouette: false },
+        ],
+      },
+      "body-soft": {
+        south: [
+          { d: "M-2.2-33H2.2C3.967-33 5.4-31.209 5.4-29V-27.4C5.4-25.191 3.967-23.4 2.2-23.4H-2.2C-3.967-23.4-5.4-25.191-5.4-27.4V-29C-5.4-31.209-3.967-33-2.2-33Z", fill: "$outfitPrimary", silhouette: false },
+          { d: "M-5.4-26.28Q0-23.4 5.4-26.28", stroke: "#0000001E", strokeWidth: 1.4, silhouette: false },
+        ],
+        east: [
+          { d: "M0-32Q6.075-31 6.075-23.4L-3.825-23.4Q-3.825-31 0-32Z", fill: "$outfitPrimary", silhouette: false },
+        ],
+        north: [
+          { d: "M-2.2-33H2.2C3.967-33 5.4-31.209 5.4-29V-27.4C5.4-25.191 3.967-23.4 2.2-23.4H-2.2C-3.967-23.4-5.4-25.191-5.4-27.4V-29C-5.4-31.209-3.967-33-2.2-33Z", fill: "$outfitPrimary", silhouette: false },
+        ],
+      },
+      "body-pinch": {
+        south: [
+          { d: "M-2.2-33.792H2.2C3.967-33.792 5.4-32.075 5.4-29.958V-28.425C5.4-26.308 3.967-24.592 2.2-24.592H-2.2C-3.967-24.592-5.4-26.308-5.4-28.425V-29.958C-5.4-32.075-3.967-33.792-2.2-33.792Z", fill: "$outfitPrimary", silhouette: false },
+          { d: "M-5.4-27.352Q0-24.592 5.4-27.352", stroke: "#0000001E", strokeWidth: 1.4, silhouette: false },
+        ],
+        east: [
+          { d: "M0-32.833Q6.75-31.875 6.75-24.592L-4.25-24.592Q-4.25-31.875 0-32.833Z", fill: "$outfitPrimary", silhouette: false },
+        ],
+        north: [
+          { d: "M-2.2-33.792H2.2C3.967-33.792 5.4-32.075 5.4-29.958V-28.425C5.4-26.308 3.967-24.592 2.2-24.592H-2.2C-3.967-24.592-5.4-26.308-5.4-28.425V-29.958C-5.4-32.075-3.967-33.792-2.2-33.792Z", fill: "$outfitPrimary", silhouette: false },
+        ],
+      },
+    },
+  },
 ] as const satisfies readonly ImportedPartOverlay[];
 
 // Build-time audit data; the browser imports only IMPORTED_PART_ART.
@@ -985,6 +1064,15 @@ export const IMPORTED_PART_PROVENANCE = [
     sourceFiles: [
       "assets/parts/outfit/tee.east.svg",
       "assets/parts/outfit/tee.south.svg",
+    ],
+  },
+  {
+    id: "outfit-turtleneck",
+    sourceKind: "authored",
+    sourceFiles: [
+      "assets/parts/outfit/turtleneck.neck-band.east.svg",
+      "assets/parts/outfit/turtleneck.neck-band.north.svg",
+      "assets/parts/outfit/turtleneck.neck-band.south.svg",
     ],
   },
 ] as const satisfies readonly ImportedPartProvenance[];

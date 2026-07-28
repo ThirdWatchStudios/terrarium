@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium outfit-turtleneck north neck band</title>
+  <desc>Balanced-body primary-fabric rear rolled collar; the component-detail importer fits this upper-torso piece to every production body.</desc>
+  <g id="art" transform="translate(64 87)">
+    <path id="detail/neck-band/rear" d="M -2.75 -34 h 5.5 a 4 4 0 0 1 4 4 v 1.6000000000000014 a 4 4 0 0 1 -4 4 h -5.5 a 4 4 0 0 1 -4 -4 v -1.6000000000000014 a 4 4 0 0 1 4 -4 Z" fill="#FF0000" fill-rule="nonzero"/>
+  </g>
+</svg>

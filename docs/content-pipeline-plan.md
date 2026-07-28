@@ -484,7 +484,18 @@ icons), not by upfront design.
    four-facing, 40/48 px proof is
    `character-shirt-tie-component-fit-v1.png` and received visual approval on
    2026-07-27 after the profile tie moved to the forward torso edge.
-12. **Provenance**: each imported asset records source
+12. **Three-facing component intake**: `outfit-turtleneck` keeps one
+   `neck-band` component in three independent south/east/north files. It fits
+   through the upper-torso frame and installs through the ordinary
+   `body-detail` overlay, rising behind the head to fill the 3 px head/torso
+   gap rather than sitting as a mark on the chest. The band uses the shirt's
+   primary fabric color, and the east profile is widened to preserve comparable
+   collar weight against south/north. West mirrors east; legacy and unknown
+   bodies retain the code-builder fallback. The focused six-body, four-facing,
+   40/48 px proof is
+   `character-turtleneck-component-fit-v1.png` and received visual approval on
+   2026-07-27.
+13. **Provenance**: each imported asset records source
    (`authored | generated | curated`) in its generated module, so lints and
    future audits know what's re-generatable. `authored` means deliberate
    canonical repo SVG regardless of authoring tool; `generated` means
@@ -494,8 +505,8 @@ icons), not by upfront design.
 The approved body and six-head sets plus all ten approved mapped hair source
 sets now form the canonical silhouette foundation. The remaining outfit
 manifests and the separate runtime-scale integration can follow the
-componentized Blazer/Polo/Shirt + Tie slices. The phase numbers describe
-pipeline scope; they do not override visual-impact priority.
+componentized Blazer/Polo/Shirt + Tie/Turtleneck slices. The phase numbers
+describe pipeline scope; they do not override visual-impact priority.
 
 ### Phase 3 — Wall bevel piece kit (~1 week; first authoring test)
 

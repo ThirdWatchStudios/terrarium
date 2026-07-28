@@ -144,25 +144,42 @@ function clippedCells(
 }
 
 /** Strong pixels added where the bare body is transparent, grouped by QA cell. */
-function outsidePaintCounts(baseCells: RenderCell[], dressedCells: RenderCell[], cellSize: number, cols: number) {
+function outsidePaintStats(baseCells: RenderCell[], dressedCells: RenderCell[], cellSize: number, cols: number) {
   expect(dressedCells.map((cell) => cell.label)).toEqual(baseCells.map((cell) => cell.label));
   const base = rasterGrid(baseCells, cellSize, cols);
   const dressed = rasterGrid(dressedCells, cellSize, cols);
-  const counts: Array<{ label: string; count: number }> = [];
+  const stats: Array<{
+    label: string;
+    count: number;
+    minX: number;
+    maxX: number;
+    minY: number;
+    maxY: number;
+  }> = [];
 
   baseCells.forEach((cell, index) => {
     const x0 = base.gap + (index % cols) * (cellSize + base.gap);
     const y0 = base.gap + Math.floor(index / cols) * (cellSize + base.gap);
     let count = 0;
+    let minX = cellSize;
+    let maxX = -1;
+    let minY = cellSize;
+    let maxY = -1;
     for (let y = y0; y < y0 + cellSize; y++) {
       for (let x = x0; x < x0 + cellSize; x++) {
         const offset = (y * base.png.width + x) * 4 + 3;
-        if (base.png.data[offset] <= 8 && dressed.png.data[offset] > 32) count++;
+        if (base.png.data[offset] <= 8 && dressed.png.data[offset] > 32) {
+          count++;
+          minX = Math.min(minX, x - x0);
+          maxX = Math.max(maxX, x - x0);
+          minY = Math.min(minY, y - y0);
+          maxY = Math.max(maxY, y - y0);
+        }
       }
     }
-    counts.push({ label: cell.label, count });
+    stats.push({ label: cell.label, count, minX, maxX, minY, maxY });
   });
-  return counts;
+  return stats;
 }
 
 describe('production body archetypes', () => {
@@ -712,15 +729,19 @@ describe('production body archetypes', () => {
 
   });
 
-  it('keeps fitted detail paint inside each body while every dress visibly expands it', () => {
+  it('keeps fitted detail paint inside each body, lets turtlenecks bridge the neck gap, and expands every dress', () => {
     const style = structuredClone(DEFAULT_STYLE);
     style.outline.width = 0;
     style.render.contactShadow = 0;
     const baseCells: RenderCell[] = [];
     const fittedCells: RenderCell[] = [];
+    const turtleneckBaseCells: RenderCell[] = [];
+    const turtleneckCells: RenderCell[] = [];
     const dressBaseCells: RenderCell[] = [];
     const dressCells: RenderCell[] = [];
-    const fittedOutfits = HUMAN_OUTFITS.filter((outfit) => outfit !== 'outfit-dress');
+    const fittedOutfits = HUMAN_OUTFITS.filter(
+      (outfit) => outfit !== 'outfit-dress' && outfit !== 'outfit-turtleneck',
+    );
 
     for (const archetype of BODY_ARCHETYPES) {
       for (const outfit of fittedOutfits) {
@@ -737,6 +758,17 @@ describe('production body archetypes', () => {
         }
       }
       for (const facing of FACINGS) {
+        const label = `${archetype.id}/outfit-turtleneck/${facing}`;
+        const bare = recipe(archetype.part.id, '__fit-none__');
+        bare.parts.head = '__fit-none__';
+        bare.parts.hair = '__fit-none__';
+        const dressed = recipe(archetype.part.id, 'outfit-turtleneck');
+        dressed.parts.head = '__fit-none__';
+        dressed.parts.hair = '__fit-none__';
+        turtleneckBaseCells.push({ label, svg: composeCharacter(bare, style, facing, 128, 'normal', { badge: false }) });
+        turtleneckCells.push({ label, svg: composeCharacter(dressed, style, facing, 128, 'normal', { badge: false }) });
+      }
+      for (const facing of FACINGS) {
         const label = `${archetype.id}/outfit-dress/${facing}`;
         const bare = recipe(archetype.part.id, '__fit-none__');
         bare.parts.head = '__fit-none__';
@@ -749,12 +781,23 @@ describe('production body archetypes', () => {
       }
     }
 
-    expect(baseCells).toHaveLength(180);
-    for (const result of outsidePaintCounts(baseCells, fittedCells, 128, 10)) {
+    expect(baseCells).toHaveLength(162);
+    for (const result of outsidePaintStats(baseCells, fittedCells, 128, 9)) {
       expect(result.count, `${result.label} paints strongly outside its fitted body`).toBeLessThanOrEqual(4);
     }
+    expect(turtleneckCells).toHaveLength(18);
+    const turtleneckStats = outsidePaintStats(turtleneckBaseCells, turtleneckCells, 128, 6);
+    for (const result of turtleneckStats) {
+      expect(result.count, `${result.label} does not bridge above its fitted body`).toBeGreaterThanOrEqual(6);
+      expect(result.count, `${result.label} extends too far beyond its fitted body`).toBeLessThanOrEqual(80);
+      expect(result.minX, `${result.label} leaves the neck corridor`).toBeGreaterThanOrEqual(54);
+      expect(result.maxX, `${result.label} leaves the neck corridor`).toBeLessThanOrEqual(73);
+      expect(result.minY, `${result.label} rises too far toward the head`).toBeGreaterThanOrEqual(51);
+      expect(result.maxY, `${result.label} falls back onto the chest`).toBeLessThanOrEqual(63);
+      expect(result.maxY - result.minY, `${result.label} is too tall for the neck gap`).toBeLessThanOrEqual(5);
+    }
     expect(dressCells).toHaveLength(18);
-    for (const result of outsidePaintCounts(dressBaseCells, dressCells, 128, 5)) {
+    for (const result of outsidePaintStats(dressBaseCells, dressCells, 128, 5)) {
       expect(result.count, `${result.label} does not visibly alter the silhouette`).toBeGreaterThanOrEqual(20);
     }
   });
