@@ -145,8 +145,8 @@ The visible core of every character is authored.
 ### M3 — Full alphabet
 
 - [x] Remaining hairstyles
-- [ ] Remaining outfit detail kits
-- [x] Dress mechanics (the per-body matrix); dedicated visual art pass remains
+- [x] Remaining outfit detail kits
+- [x] Dress mechanics and approved per-body visual refinement
 - [ ] LOD flags verified across the distance pass sizes
 
 **Exit:** every recipe the randomizer can produce is fully authored.
@@ -358,9 +358,8 @@ Body types are **archetypes that read from orbit**, not BMI steps. Approved set:
 > one bulky held prop, which renders only when the pose publishes a free carry
 > hand. The production set passes an 11,880-render body/outfit/pose/facing/style
 > matrix plus a strict fitted-paint mask, while the legacy rendering digest stays
-> pinned. **Dress is mechanically complete but visually provisional;** its
-> dedicated art pass does not block the production body, rig, or compatibility
-> work.
+> pinned. **Dress is mechanically and visually approved;** its stronger
+> waistband and skirt silhouette add no new body rig or animation surface.
 >
 > The six bodies now own 18 canonical files under `assets/parts/body`.
 > Their complete visible shapes are installed through the explicit `body-art`
@@ -493,13 +492,16 @@ The only place the body-count multiplier is paid; kept small on purpose.
 
 | Garment | Matrix | Status |
 |---|---|---|
-| dress | bodies × 3 facings | mechanically complete; visual refinement deferred |
+| dress | bodies × 3 facings | mechanically and visually approved |
 | (long coat — only if added) | bodies × 3 | deferred |
 
-> **Dress follow-up (2026-07-09):** the per-body implementation and compatibility
-> matrix are complete, but the current shape language is not approved final art.
-> Revisit the waist transition, profile read, and high-contrast outline treatment
-> in a dedicated visual pass.
+> **Dress refinement v1 (visually approved):** the per-body implementation now
+> uses a structured contrast waist, broader curved hems, continuous waist
+> curves, front-biased profiles, and reduced skirt-seam weight. It keeps the six
+> accepted upper-body rhythms and adds no
+> new rig or animation surface. `character-dress-silhouette-fit-v1.png` at
+> 40/48 px and `body-archetypes-dress-styles.png` in high contrast received
+> visual approval on 2026-07-28.
 
 ### 7. Conditional — only if the readability lints flag them
 

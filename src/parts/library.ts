@@ -767,14 +767,15 @@ function anchoredSuitJacket(facing: Facing, body: BodyFacingAnchors): PartVarian
   };
 }
 
-// Mechanically complete but visually provisional (2026-07-09 review): retain
-// these variants and revisit Dress in a dedicated art pass.
-const COMPACT_DRESS = { flareScale: 1.08, bottomDrop: 5 };
-const BALANCED_DRESS = { flareScale: 1, bottomDrop: 5 };
-const LARGE_FRAME_DRESS = { flareScale: 1.08, bottomDrop: 5 };
-const TALL_DRESS = { flareScale: 1.15, bottomDrop: 5 };
-const SOFT_DRESS = { flareScale: 1.18, bottomDrop: 5 };
-const PINCH_DRESS = { flareScale: 1.05, bottomDrop: 5 };
+// Dedicated silhouette pass: preserve each accepted upper-body rhythm, soften
+// the waist transition, and give the hem enough drop to read as a garment at
+// gameplay scale without introducing legs or a second pose rig.
+const COMPACT_DRESS = { flareScale: 1.12, bottomDrop: 8 };
+const BALANCED_DRESS = { flareScale: 1.08, bottomDrop: 9 };
+const LARGE_FRAME_DRESS = { flareScale: 1.1, bottomDrop: 8 };
+const TALL_DRESS = { flareScale: 1.2, bottomDrop: 10 };
+const SOFT_DRESS = { flareScale: 1.2, bottomDrop: 8 };
+const PINCH_DRESS = { flareScale: 1.1, bottomDrop: 9 };
 const DRESS_PROFILES: Record<string, { flareScale: number; bottomDrop: number }> = {
   'body-compact': COMPACT_DRESS,
   'body-balanced': BALANCED_DRESS,
@@ -791,23 +792,34 @@ function anchoredDress(facing: Facing, body: BodyFacingAnchors, bodyId?: string)
   const hem = spanCenter(body.hem);
   const waistHalf = spanWidth(body.waist) / 2;
   const hemHalf = spanWidth(body.hem) / 2;
-  const flareHalf = clampValue(18, 31, Math.max(hemHalf + 3, waistHalf * 0.88) * profile.flareScale);
+  const flareHalf = clampValue(
+    20,
+    40,
+    Math.max(hemHalf + 4, waistHalf + 4) * profile.flareScale,
+  );
+  const profileHalf = clampValue(18, 32, flareHalf * 0.78);
   const bottomY = hem.y + profile.bottomDrop;
   const leftBottom = facing === 'east'
-    ? Math.max(-31, hem.x - flareHalf * 0.78)
+    ? Math.max(-38, Math.min(body.waist.left.x, hem.x - profileHalf * 0.55))
     : hem.x - flareHalf;
   const rightBottom = facing === 'east'
-    ? Math.min(31, hem.x + flareHalf * 1.08)
+    ? Math.min(38, Math.max(body.waist.right.x, hem.x + profileHalf))
     : hem.x + flareHalf;
   const shoulderY = spanCenter(body.shoulders).y;
+  const leftTransitionX = body.waist.left.x
+    + (body.waist.left.x - body.shoulders.left.x) * 0.32;
+  const rightTransitionX = body.waist.right.x
+    + (body.waist.right.x - body.shoulders.right.x) * 0.32;
+  const transitionY = waist.y + (waist.y - shoulderY) * 0.32;
+  const lowerY = mix(waist.y, bottomY, 0.64);
   const skirt: PartVariant['shapes'][number] = {
-    d: `M ${body.neck.x} ${body.neck.y} Q ${body.shoulders.left.x} ${shoulderY} ${body.waist.left.x} ${waist.y} Q ${leftBottom} ${mix(waist.y, bottomY, 0.55)} ${leftBottom} ${bottomY} Q ${hem.x} ${bottomY + 2} ${rightBottom} ${bottomY} Q ${rightBottom} ${mix(waist.y, bottomY, 0.55)} ${body.waist.right.x} ${waist.y} Q ${body.shoulders.right.x} ${shoulderY} ${body.neck.x} ${body.neck.y} Z`,
+    d: `M ${body.neck.x} ${body.neck.y} Q ${body.shoulders.left.x} ${shoulderY} ${body.waist.left.x} ${waist.y} C ${leftTransitionX} ${transitionY} ${leftBottom} ${lowerY} ${leftBottom} ${bottomY} Q ${hem.x} ${bottomY + 2} ${rightBottom} ${bottomY} C ${rightBottom} ${lowerY} ${rightTransitionX} ${transitionY} ${body.waist.right.x} ${waist.y} Q ${body.shoulders.right.x} ${shoulderY} ${body.neck.x} ${body.neck.y} Z`,
     fill: '$outfitPrimary',
   };
   const waistBand: PartVariant['shapes'][number] = {
     d: `M ${body.waist.left.x} ${waist.y} L ${body.waist.right.x} ${waist.y}`,
-    stroke: '$accent',
-    strokeWidth: 2.5,
+    stroke: '$outfitSecondary',
+    strokeWidth: 4,
     silhouette: false,
   };
 
@@ -819,7 +831,7 @@ function anchoredDress(facing: Facing, body: BodyFacingAnchors, bodyId?: string)
         skirt,
         { d: rr(body.neck.x - neckHalf, body.neck.y, neckHalf * 2, 4, 2), fill: '$outfitSecondary', silhouette: false },
         waistBand,
-        { d: `M ${hem.x} ${waist.y + 3} L ${hem.x} ${bottomY - 1}`, stroke: '#00000018', strokeWidth: 1.4, silhouette: false },
+        { d: `M ${hem.x} ${waist.y + 5} L ${hem.x} ${bottomY - 3}`, stroke: '#00000018', strokeWidth: 1.2, silhouette: false },
       ],
     };
   }
@@ -832,8 +844,6 @@ function anchoredDress(facing: Facing, body: BodyFacingAnchors, bodyId?: string)
       shapes: [
         skirt,
         { d: `M ${collarSpan.left} ${collarY} Q ${bodyInteriorSpan(body, necklineY, 1.5).right} ${necklineY} ${collarSpan.right} ${collarY} Z`, fill: '$skin', silhouette: false },
-        waistBand,
-        { d: `M ${hem.x - flareHalf * 0.34} ${waist.y + 3} L ${hem.x - flareHalf * 0.48} ${bottomY - 1} M ${hem.x + flareHalf * 0.34} ${waist.y + 3} L ${hem.x + flareHalf * 0.48} ${bottomY - 1}`, stroke: '#0000001E', strokeWidth: 1.6, silhouette: false },
       ],
     };
   }
@@ -844,7 +854,7 @@ function anchoredDress(facing: Facing, body: BodyFacingAnchors, bodyId?: string)
       skirt,
       { d: `M ${body.neck.x - neckHalf} ${body.neck.y} Q ${body.neck.x} ${mix(body.neck.y, body.chest.y, 0.58)} ${body.neck.x + neckHalf} ${body.neck.y} Z`, fill: '$skin', silhouette: false },
       waistBand,
-      { d: `M ${hem.x - flareHalf * 0.34} ${waist.y + 3} L ${hem.x - flareHalf * 0.48} ${bottomY - 1} M ${hem.x + flareHalf * 0.34} ${waist.y + 3} L ${hem.x + flareHalf * 0.48} ${bottomY - 1} M ${hem.x} ${waist.y + 2} L ${hem.x} ${bottomY}`, stroke: '#0000001E', strokeWidth: 1.5, silhouette: false },
+      { d: `M ${hem.x - flareHalf * 0.25} ${waist.y + 6} L ${hem.x - flareHalf * 0.4} ${bottomY - 3} M ${hem.x + flareHalf * 0.25} ${waist.y + 6} L ${hem.x + flareHalf * 0.4} ${bottomY - 3}`, stroke: '#00000018', strokeWidth: 1.2, silhouette: false },
     ],
   };
 }

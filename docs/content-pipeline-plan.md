@@ -525,7 +525,15 @@ icons), not by upfront design.
    six-body, four-facing, 40/48 px proof is
    `character-vest-component-fit-v1.png` and received visual approval on
    2026-07-28.
-17. **Provenance**: each imported asset records source
+17. **Dress silhouette refinement**: `outfit-dress` remains the rare
+   body-specific silhouette-changing garment. Refinement v1 adds a structured
+   contrast waist and broader curved hem, keeps the transition continuous,
+   biases east/west flare toward the front, and reduces decorative skirt-seam
+   weight without adding a new rig or animation surface. The literal 40/48 px
+   `character-dress-silhouette-fit-v1.png` sheet and high-contrast
+   `body-archetypes-dress-styles.png` stress sheet received visual approval on
+   2026-07-28.
+18. **Provenance**: each imported asset records source
    (`authored | generated | curated`) in its generated module, so lints and
    future audits know what's re-generatable. `authored` means deliberate
    canonical repo SVG regardless of authoring tool; `generated` means

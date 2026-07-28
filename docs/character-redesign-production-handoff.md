@@ -3,7 +3,8 @@
 Status: **design direction locked; bodies, neutral-arm fallback, heads, and all
 ten fitted hairstyles promoted; componentized Blazer and anchored Tee
 approved; componentized Polo, Shirt + Tie, and Turtleneck approved; runtime
-scale remains; Cardigan, Suit Jacket, Hoodie, and Vest approved**
+scale remains; Cardigan, Suit Jacket, Hoodie, Vest, and Dress refinement
+approved**
 
 Last design review: **2026-07-28**
 
@@ -53,6 +54,11 @@ contrasting V-neck inset, and front buttons across the same six bodies while
 preserving the primary-fabric sleeve field. Those details are south-only;
 east/west intentionally carry no vest overlay. Its focused sheet received
 visual approval on 2026-07-28.
+A body-specific Dress refinement candidate now uses a structured contrast
+waist, broader curved hems, continuous waist transitions, front-biased
+profiles, and reduced skirt-seam weight.
+It preserves the accepted body rhythms and existing rig; its focused and
+high-contrast sheets received visual approval on 2026-07-28.
 
 The promoted hair fitting is a Terrarium composition/export concern: recipes
 retain their stable hair IDs, flat and reconstructable layer output use the
@@ -401,8 +407,7 @@ Do not restart these without new runtime evidence:
    upper/lower torso fitting path are mechanically complete and visually
    approved. The matching six-body, four-facing, 40/48 px Tee sheet is
    mechanically complete and visually approved. The Polo collar/placket kit is
-   mechanically complete and visually approved; remaining detail kits and the
-   dedicated Dress art pass remain. The Shirt + Tie collar/tie kit is
+   mechanically complete and visually approved. The Shirt + Tie collar/tie kit is
    mechanically complete and visually approved; its east/west tie stays at the
    forward torso edge rather than the profile center.
    The Turtleneck neck band is mechanically complete in south/east/north with a
@@ -423,6 +428,9 @@ Do not restart these without new runtime evidence:
    received visual approval on 2026-07-27.
    The Sweater Vest panel/neck-inset/button kit is mechanically complete in
    south only with a matching focused sheet and received visual approval on
+   2026-07-28.
+   The body-specific Dress refinement now has a matching focused 40/48 px
+   sheet and high-contrast stress sheet; both received visual approval on
    2026-07-28.
 8. **Implement the `0.65` world scale in the actual runtime seam.** Keep source
    geometry fixed and validate anchors/overlays in Unity.

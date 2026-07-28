@@ -359,7 +359,8 @@ interface FocusedOutfitProof {
     | 'outfit-cardigan'
     | 'outfit-suit-jacket'
     | 'outfit-hoodie'
-    | 'outfit-vest';
+    | 'outfit-vest'
+    | 'outfit-dress';
   title: string;
   description: string;
   sourceLabel: string;
@@ -543,6 +544,16 @@ function vestDetailSheet(): string {
     title: 'Componentized Sweater Vest — production body fit',
     description: 'The secondary-fabric panel, V-neck inset, and buttons are front-only. East/west carry no vest overlay; north keeps the clean rear fallback.',
     sourceLabel: 'Authored source set: vest.panel.south · vest.neck-inset.south · vest.buttons.south',
+  });
+}
+
+function dressSilhouetteFitSheet(): string {
+  return focusedOutfitDetailSheet({
+    outfit: 'outfit-dress',
+    title: 'Dress silhouette refinement — production body fit',
+    description: 'A structured contrast waist and broader curved skirt make the garment unmistakable at game scale. Profiles rely on the skirt envelope and otherwise stay detail-light.',
+    sourceLabel: 'Generated per-body silhouette candidate: structured waist · broad curved hem · directional profile flare',
+    northLabel: 'north · rear seam',
   });
 }
 
@@ -827,6 +838,7 @@ function main(): void {
   writeSvgAndPng(outDir, 'character-suit-jacket-component-fit-v1', suitJacketDetailSheet());
   writeSvgAndPng(outDir, 'character-hoodie-component-fit-v1', hoodieDetailSheet());
   writeSvgAndPng(outDir, 'character-vest-component-fit-v1', vestDetailSheet());
+  writeSvgAndPng(outDir, 'character-dress-silhouette-fit-v1', dressSilhouetteFitSheet());
   writeSvgAndPng(outDir, 'body-archetypes-poses-south', poseProofSheet('south'));
   writeSvgAndPng(outDir, 'body-archetypes-poses-east', poseProofSheet('east'));
   writeSvgAndPng(outDir, 'body-archetypes-poses-north', poseProofSheet('north'));
