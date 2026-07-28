@@ -197,4 +197,31 @@ export const PART_IMPORT_TARGETS: readonly PartImportTarget[] = [
       },
     ],
   },
+  {
+    id: 'outfit-cardigan',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: { south: true, east: true },
+    buildVariant: true,
+    importMode: 'component-detail',
+    referenceBodyId: 'body-balanced',
+    components: [
+      {
+        id: 'trim',
+        frame: 'upper-torso',
+        facings: {
+          south: { shapeCount: 1 },
+          east: { shapeCount: 1 },
+        },
+      },
+      {
+        id: 'button-line',
+        frame: 'lower-torso',
+        facings: {
+          south: { shapeCount: 3 },
+          east: { shapeCount: 3 },
+        },
+      },
+    ],
+  },
 ];

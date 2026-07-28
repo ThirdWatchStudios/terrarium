@@ -163,8 +163,9 @@ async function componentSourceTree(
     | 'outfit-blazer'
     | 'outfit-polo'
     | 'outfit-shirt-tie'
-    | 'outfit-turtleneck',
-  slug: 'blazer' | 'polo' | 'shirt-tie' | 'turtleneck',
+    | 'outfit-turtleneck'
+    | 'outfit-cardigan',
+  slug: 'blazer' | 'polo' | 'shirt-tie' | 'turtleneck' | 'cardigan',
   omitted?: { component: string; facing: Facing },
 ): Promise<string> {
   const root = await mkdtemp(path.join(tmpdir(), `terrarium-${slug}-import-`));
@@ -677,6 +678,37 @@ describe('part source tree and generated registration', () => {
       .not.toEqual(imported.bodyVariants['body-tall'].north);
   });
 
+  it('aggregates Cardigan trim and button-line components through independent torso frames', async () => {
+    const root = await componentSourceTree('outfit-cardigan', 'cardigan');
+    const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-cardigan')!;
+    const [imported] = await compilePartDirectory({
+      inputDir: root,
+      sourcePathPrefix: 'assets/parts',
+      catalog: [target],
+    });
+    if (imported.kind !== 'body-detail') throw new Error('Expected body-detail import');
+
+    expect(imported.sourceFiles).toEqual([
+      'assets/parts/outfit/cardigan.button-line.east.svg',
+      'assets/parts/outfit/cardigan.button-line.south.svg',
+      'assets/parts/outfit/cardigan.trim.east.svg',
+      'assets/parts/outfit/cardigan.trim.south.svg',
+    ]);
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(imported.bodyVariants[archetype.id].south).toHaveLength(4);
+      expect(imported.bodyVariants[archetype.id].east).toHaveLength(4);
+      expect(imported.bodyVariants[archetype.id].north).toBeUndefined();
+      expect(['south', 'east'].every((facing) =>
+        imported.bodyVariants[archetype.id][facing as Facing]
+          ?.every(({ silhouette }) => silhouette === false)))
+        .toBe(true);
+    }
+    expect(imported.bodyVariants['body-balanced'].south)
+      .not.toEqual(imported.bodyVariants['body-soft'].south);
+    expect(imported.bodyVariants['body-balanced'].east)
+      .not.toEqual(imported.bodyVariants['body-tall'].east);
+  });
+
   it('rejects incomplete or flattened component-detail source sets', async () => {
     const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-blazer')!;
     const complete = await componentSourceTree('outfit-blazer', 'blazer');
@@ -787,13 +819,13 @@ describe('part source tree and generated registration', () => {
     expect(generated).toBe(emitImportedPartArt(imports));
   });
 
-  it('keeps six bodies, ten canonical hairs, seven heads, and five authored outfits as twenty-eight deliberate overlays', async () => {
+  it('keeps six bodies, ten canonical hairs, seven heads, and six authored outfits as twenty-nine deliberate overlays', async () => {
     const imports = await compilePartDirectory({
       inputDir: path.resolve('assets/parts'),
       sourcePathPrefix: 'assets/parts',
       catalog: PART_IMPORT_TARGETS,
     });
-    expect(imports).toHaveLength(28);
+    expect(imports).toHaveLength(29);
     expect(imports.map(({ id }) => id)).toEqual([
       'body-balanced',
       'body-compact',
@@ -819,6 +851,7 @@ describe('part source tree and generated registration', () => {
       'head-round',
       'head-soft-square',
       'outfit-blazer',
+      'outfit-cardigan',
       'outfit-polo',
       'outfit-shirt-tie',
       'outfit-tee',
@@ -1095,6 +1128,25 @@ describe('part source tree and generated registration', () => {
         filledShapes.every(({ fill }) => fill === '$outfitPrimary'),
         `${archetype.id} Turtleneck band must use the shirt's primary fabric`,
       ).toBe(true);
+    }
+
+    const cardigan = imports.find(({ id }) => id === 'outfit-cardigan')!;
+    if (cardigan.kind !== 'body-detail') throw new Error('Expected body-detail Cardigan import');
+    expect(cardigan).toMatchObject({
+      id: 'outfit-cardigan',
+      slot: 'outfit',
+      sourceKind: 'authored',
+      sourceFiles: [
+        'assets/parts/outfit/cardigan.button-line.east.svg',
+        'assets/parts/outfit/cardigan.button-line.south.svg',
+        'assets/parts/outfit/cardigan.trim.east.svg',
+        'assets/parts/outfit/cardigan.trim.south.svg',
+      ],
+    });
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(cardigan.bodyVariants[archetype.id].south).toHaveLength(4);
+      expect(cardigan.bodyVariants[archetype.id].east).toHaveLength(4);
+      expect(cardigan.bodyVariants[archetype.id].north).toBeUndefined();
     }
   });
 });
@@ -1395,6 +1447,18 @@ describe('imported art overlay', () => {
         referenceBodyId: 'body-balanced',
         components: [
           { id: 'neck-band', frame: 'upper-torso' },
+        ],
+      },
+      {
+        id: 'outfit-cardigan',
+        slot: 'outfit',
+        anchor: 'body',
+        facings: { south: true, east: true },
+        buildVariant: true,
+        referenceBodyId: 'body-balanced',
+        components: [
+          { id: 'trim', frame: 'upper-torso' },
+          { id: 'button-line', frame: 'lower-torso' },
         ],
       },
     ]);

@@ -114,6 +114,22 @@ export const PART_SCAFFOLD_SPECS = [
     slug: 'turtleneck.neck-band',
     facings: FACINGS,
   },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-cardigan',
+    referenceBodyId: 'body-balanced',
+    componentId: 'trim',
+    slug: 'cardigan.trim',
+    facings: ['south', 'east'],
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-cardigan',
+    referenceBodyId: 'body-balanced',
+    componentId: 'button-line',
+    slug: 'cardigan.button-line',
+    facings: ['south', 'east'],
+  },
 ] as const satisfies readonly {
   slot: 'body' | 'head' | 'hair' | 'outfit';
   referenceId: string;

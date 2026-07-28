@@ -3,7 +3,7 @@
 Status: **design direction locked; bodies, neutral-arm fallback, heads, and all
 ten fitted hairstyles promoted; componentized Blazer and anchored Tee
 approved; componentized Polo, Shirt + Tie, and Turtleneck approved; runtime
-scale remains**
+scale remains; Cardigan approved**
 
 Last design review: **2026-07-27**
 
@@ -38,6 +38,9 @@ day, including its forward-edge east/west tie placement.
 A three-facing Turtleneck neck-band source set now fits the same six bodies and
 rises behind the head to bridge the 3 px head/torso gap. Its primary-fabric
 band and wider east/west profile received visual approval on 2026-07-27.
+A componentized Cardigan source set now fits upper-torso neckline trim and a
+separate lower-torso opening seam/button line across the same six bodies. Its
+focused sheet received visual approval on 2026-07-27.
 
 The promoted hair fitting is a Terrarium composition/export concern: recipes
 retain their stable hair IDs, flat and reconstructable layer output use the
@@ -395,6 +398,9 @@ Do not restart these without new runtime evidence:
    head/torso gap instead of reading as a detached chest mark. Its band uses
    the shirt's primary fabric color, with a wider east/west footprint that
    retains comparable weight to south/north, and received visual approval on
+   2026-07-27.
+   The Cardigan trim and button-line kit is mechanically complete in
+   south/east with a matching focused sheet and received visual approval on
    2026-07-27.
 8. **Implement the `0.65` world scale in the actual runtime seam.** Keep source
    geometry fixed and validate anchors/overlays in Unity.

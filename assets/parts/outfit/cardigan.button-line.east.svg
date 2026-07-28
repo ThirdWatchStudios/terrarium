@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium outfit-cardigan east button line</title>
+  <desc>Balanced-body profile opening seam and two-button line; the component-detail importer fits this lower-torso piece to every production body.</desc>
+  <g id="art" transform="translate(64 87)">
+    <path id="detail/button-line/seam" d="M 5.909090909090909 -17 Q 22.564285714285713 7.35 15.857142857142858 23" fill="none" stroke="#00000030" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="detail/button-line/button-upper" d="M 16.90909090909091 -2.15 a 1.5 1.5 0 1 0 3 0 a 1.5 1.5 0 1 0 -3 0 Z" fill="#00000033" fill-rule="nonzero"/>
+    <path id="detail/button-line/button-lower" d="M 21.064285714285713 7.35 a 1.5 1.5 0 1 0 3 0 a 1.5 1.5 0 1 0 -3 0 Z" fill="#00000033" fill-rule="nonzero"/>
+  </g>
+</svg>

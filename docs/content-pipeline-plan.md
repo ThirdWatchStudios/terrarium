@@ -495,7 +495,14 @@ icons), not by upfront design.
    40/48 px proof is
    `character-turtleneck-component-fit-v1.png` and received visual approval on
    2026-07-27.
-13. **Provenance**: each imported asset records source
+13. **Two-frame Cardigan intake**: `outfit-cardigan` keeps `trim` and
+   `button-line` in four independent south/east files. The neckline consumes
+   the upper-torso frame; the opening seam and two buttons consume the
+   lower-torso frame. West mirrors east; north, legacy, and unknown bodies
+   retain the code-builder fallback. The focused six-body, four-facing,
+   40/48 px proof is `character-cardigan-component-fit-v1.png` and received
+   visual approval on 2026-07-27.
+14. **Provenance**: each imported asset records source
    (`authored | generated | curated`) in its generated module, so lints and
    future audits know what's re-generatable. `authored` means deliberate
    canonical repo SVG regardless of authoring tool; `generated` means

@@ -438,6 +438,14 @@ behind.
 > mirrors east while legacy and future bodies retain the handwritten fallback.
 > The focused review sheet is
 > `character-turtleneck-component-fit-v1.png`.
+>
+> **Cardigan component-detail intake (mechanically complete and visually
+> approved):** four canonical files keep `trim` and `button-line` independent
+> across south/east. The neckline trim fits through the upper-torso frame;
+> the opening seam and two buttons fit through the lower-torso frame. West
+> mirrors east while north, legacy, and future bodies retain the handwritten
+> fallback. The focused review sheet is
+> `character-cardigan-component-fit-v1.png`.
 
 | Garment | Detail pieces | south | east | north |
 |---|---|---|---|---|
@@ -445,7 +453,7 @@ behind.
 | polo | collar, placket | [x] | [x] | — |
 | shirt-tie | collar, tie | [x] | [x] | — |
 | turtleneck | neck band | [x] | [x] | [x] |
-| cardigan | button line, trim | [ ] | [ ] | — |
+| cardigan | button line, trim | [x] | [x] | — |
 | blazer | lapels, buttons, pocket | [x] | [x] | — |
 | suit-jacket | lapels, pocket square | [ ] | [ ] | — |
 | hoodie | hood (down), pocket, drawstrings | [ ] | [ ] | [ ] |

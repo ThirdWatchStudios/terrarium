@@ -245,6 +245,10 @@ describe('part authoring scaffold generation', () => {
       'assets/part-authoring/scaffolds/outfit/blazer.lapels.south.svg',
       'assets/part-authoring/scaffolds/outfit/blazer.pocket.east.svg',
       'assets/part-authoring/scaffolds/outfit/blazer.pocket.south.svg',
+      'assets/part-authoring/scaffolds/outfit/cardigan.button-line.east.svg',
+      'assets/part-authoring/scaffolds/outfit/cardigan.button-line.south.svg',
+      'assets/part-authoring/scaffolds/outfit/cardigan.trim.east.svg',
+      'assets/part-authoring/scaffolds/outfit/cardigan.trim.south.svg',
       'assets/part-authoring/scaffolds/outfit/polo.collar.east.svg',
       'assets/part-authoring/scaffolds/outfit/polo.collar.south.svg',
       'assets/part-authoring/scaffolds/outfit/polo.placket.east.svg',
@@ -259,7 +263,7 @@ describe('part authoring scaffold generation', () => {
       'assets/part-authoring/scaffolds/outfit/turtleneck.neck-band.north.svg',
       'assets/part-authoring/scaffolds/outfit/turtleneck.neck-band.south.svg',
     ]);
-    expect(first).toHaveLength(91);
+    expect(first).toHaveLength(95);
     expect(first.map(({ bytes }) => bytes)).toEqual(second.map(({ bytes }) => bytes));
     expect(PART_SCAFFOLD_SPECS.map(({ slot, referenceId }) => [slot, referenceId])).toEqual([
       ['body', 'body-compact'],
@@ -294,6 +298,8 @@ describe('part authoring scaffold generation', () => {
       ['outfit', 'outfit-shirt-tie'],
       ['outfit', 'outfit-shirt-tie'],
       ['outfit', 'outfit-turtleneck'],
+      ['outfit', 'outfit-cardigan'],
+      ['outfit', 'outfit-cardigan'],
     ]);
   });
 
@@ -409,7 +415,7 @@ describe('part authoring scaffold generation', () => {
     });
   });
 
-  it('seeds Tee, Blazer, Polo, Shirt + Tie, and Turtleneck against body-balanced with the complete outfit rig guide', () => {
+  it('seeds Tee, Blazer, Polo, Shirt + Tie, Turtleneck, and Cardigan against body-balanced with the complete outfit rig guide', () => {
     const teeAssets = generatePartAuthoringAssets()
       .filter(({ path: assetPath }) => assetPath.includes('/scaffolds/outfit/tee.'));
     expect(teeAssets.map(({ path: assetPath }) => assetPath)).toEqual([
@@ -511,6 +517,27 @@ describe('part authoring scaffold generation', () => {
       expect(source).toContain('id="detail/neck-band/shape-001"');
       expect(source).toContain('id="reference/body-balanced"');
       expect(source).toContain('id="guide/body-rig/axis"');
+    }
+
+    const cardiganAssets = generatePartAuthoringAssets()
+      .filter(({ path: assetPath }) => assetPath.includes('/scaffolds/outfit/cardigan.'));
+    expect(cardiganAssets.map(({ path: assetPath }) => assetPath)).toEqual([
+      'assets/part-authoring/scaffolds/outfit/cardigan.button-line.east.svg',
+      'assets/part-authoring/scaffolds/outfit/cardigan.button-line.south.svg',
+      'assets/part-authoring/scaffolds/outfit/cardigan.trim.east.svg',
+      'assets/part-authoring/scaffolds/outfit/cardigan.trim.south.svg',
+    ]);
+    for (const component of ['trim', 'button-line']) {
+      const componentAssets = cardiganAssets.filter(({ path: assetPath }) =>
+        assetPath.includes(`cardigan.${component}.`));
+      expect(componentAssets).toHaveLength(2);
+      for (const { bytes } of componentAssets) {
+        const source = bytes.toString('utf8');
+        expect(source).toContain(`outfit-cardigan ${component}`);
+        expect(source).toContain(`id="detail/${component}/shape-001"`);
+        expect(source).toContain('id="reference/body-balanced"');
+        expect(source).toContain('id="guide/body-rig/axis"');
+      }
     }
   });
 
@@ -625,7 +652,7 @@ describe('committed part authoring assets', () => {
     const root = await mkdtemp(path.join(tmpdir(), 'terrarium-authoring-assets-'));
     temporaryRoots.push(root);
     const firstWrite = await writePartAuthoringAssets(root);
-    expect(firstWrite.updated).toBe(91);
+    expect(firstWrite.updated).toBe(95);
     expect(firstWrite.removed).toBe(0);
     await expect(checkPartAuthoringAssets(root)).resolves.toBeUndefined();
 

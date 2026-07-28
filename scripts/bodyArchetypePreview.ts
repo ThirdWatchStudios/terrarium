@@ -355,7 +355,8 @@ interface FocusedOutfitProof {
     | 'outfit-blazer'
     | 'outfit-polo'
     | 'outfit-shirt-tie'
-    | 'outfit-turtleneck';
+    | 'outfit-turtleneck'
+    | 'outfit-cardigan';
   title: string;
   description: string;
   sourceLabel: string;
@@ -502,6 +503,15 @@ function turtleneckDetailSheet(): string {
     description: 'The primary-fabric neck band bridges the 3 px head/torso gap, with a widened profile that preserves the south/north collar weight. West mirrors east.',
     sourceLabel: 'Authored source set: turtleneck.neck-band.{south,east,north}.svg',
     northLabel: 'north · authored',
+  });
+}
+
+function cardiganDetailSheet(): string {
+  return focusedOutfitDetailSheet({
+    outfit: 'outfit-cardigan',
+    title: 'Componentized Cardigan — production body fit',
+    description: 'Contrasting neckline trim stays independent from the center seam and two-button line. West mirrors east; north keeps the clean rear fallback.',
+    sourceLabel: 'Authored source set: cardigan.trim.* · cardigan.button-line.*',
   });
 }
 
@@ -782,6 +792,7 @@ function main(): void {
   writeSvgAndPng(outDir, 'character-polo-component-fit-v1', poloDetailSheet());
   writeSvgAndPng(outDir, 'character-shirt-tie-component-fit-v1', shirtTieDetailSheet());
   writeSvgAndPng(outDir, 'character-turtleneck-component-fit-v1', turtleneckDetailSheet());
+  writeSvgAndPng(outDir, 'character-cardigan-component-fit-v1', cardiganDetailSheet());
   writeSvgAndPng(outDir, 'body-archetypes-poses-south', poseProofSheet('south'));
   writeSvgAndPng(outDir, 'body-archetypes-poses-east', poseProofSheet('east'));
   writeSvgAndPng(outDir, 'body-archetypes-poses-north', poseProofSheet('north'));
