@@ -456,8 +456,10 @@ icons), not by upfront design.
    six variants in stable archetype order. The runtime overlay replaces only
    known production detail shapes while preserving the code builder's z-order;
    legacy bodies, future body IDs, and unauthored north keep the original
-   procedural/static fallback. The adapter is mechanically complete; tee art
-   approval and M1 exit remain open.
+   procedural/static fallback. The adapter and art received approval on
+   2026-07-27; the broader M1 exit remains open. Its focused six-body,
+   four-facing, 40/48 px review sheet is
+   `character-tee-anchored-fit-v1.png`.
 9. **Componentized outfit-detail adapter**: `outfit-blazer` is authored as six
    independent files—south/east lapels, buttons, and pocket—rather than one
    flattened jacket overlay. An explicit manifest locks component order,

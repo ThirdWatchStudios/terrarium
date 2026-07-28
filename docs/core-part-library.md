@@ -132,7 +132,7 @@ The visible core of every character is authored.
       sub-anchors
 - [x] All 6 heads
 - [x] 3 hairstyles (one per major family)
-- [ ] Tee visual approval + one more outfit detail kit (Blazer approved)
+- [x] Tee visual approval + one more outfit detail kit (Blazer approved)
 - [ ] Crowd pass + distance pass + stress test
 
 **Exit:** a generated office screenshot reads as hand-crafted art.
@@ -384,14 +384,16 @@ behind.
 > `body-archetypes-outfit-distance.png`. The unchecked cells remain the optional
 > authored-source SVG backlog, not a runtime compatibility gap.
 
-> **Tee anchored-detail intake (mechanically complete, visual approval open):**
+> **Tee anchored-detail intake (approved 2026-07-27):**
 > `tee.south.svg` and `tee.east.svg` are authored over `body-balanced`, whose
 > body origin is `(64, 87)` and neck is `(64, 58)`. The importer requires every
 > visible path to be `detail/*`, then pre-expands that one source set onto the
 > neck of all six production bodies in stable order. The dynamic body remains
 > the conforming torso and owns z-order. Legacy bodies and future body IDs keep
-> the procedural/static fallback. Tee's inventory cells stay open until its
-> render is visually approved and the remaining Definition of Done checks pass.
+> the procedural/static fallback. The focused review sheet is
+> `character-tee-anchored-fit-v1.png`; it received visual approval across all
+> six bodies, four facings, three palettes, two style presets, and literal
+> 40/48 px cells. The broader scene-preview and stress gates remain open.
 >
 > **Blazer component-detail intake (approved 2026-07-27):** six canonical files
 > keep `lapels`, `buttons`, and `pocket` as three
@@ -406,7 +408,7 @@ behind.
 
 | Garment | Detail pieces | south | east | north |
 |---|---|---|---|---|
-| tee | neckline | [ ] | [ ] | — |
+| tee | neckline | [x] | [x] | — |
 | polo | collar, placket | [ ] | [ ] | — |
 | shirt-tie | collar, tie | [ ] | [ ] | — |
 | turtleneck | neck band | [ ] | [ ] | [ ] |

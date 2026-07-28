@@ -325,7 +325,7 @@ function riggedSliceSheet(): string {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
 }
 
-const BLAZER_PALETTES: readonly CharacterRecipe['palette'][] = [
+const OUTFIT_PROOF_PALETTES: readonly CharacterRecipe['palette'][] = [
   {
     skin: '#C68B59',
     hair: '#2B211D',
@@ -349,7 +349,14 @@ const BLAZER_PALETTES: readonly CharacterRecipe['palette'][] = [
   },
 ];
 
-function blazerDetailSheet(): string {
+interface FocusedOutfitProof {
+  outfit: 'outfit-tee' | 'outfit-blazer';
+  title: string;
+  description: string;
+  sourceLabel: string;
+}
+
+function focusedOutfitDetailSheet(proof: FocusedOutfitProof): string {
   const header = 112;
   const labelWidth = 178;
   const rowHeight = 132;
@@ -382,11 +389,11 @@ function blazerDetailSheet(): string {
   const height = header + BODY_ARCHETYPES.length * rowHeight + 34;
   const parts: string[] = [`<rect width="${width}" height="${height}" fill="${COLORS.page}"/>`];
 
-  parts.push(text(18, 30, 'Componentized Blazer — production body fit', 20, 700));
+  parts.push(text(18, 30, proof.title, 20, 700));
   parts.push(text(
     18,
     53,
-    'Lapels use the upper-torso frame; buttons and pocket use the lower-torso frame. West mirrors east; north keeps the stable rear seam.',
+    proof.description,
     11,
     400,
     COLORS.muted,
@@ -408,11 +415,11 @@ function blazerDetailSheet(): string {
 
   BODY_ARCHETYPES.forEach((archetype, row) => {
     const y = header + row * rowHeight;
-    const palette = BLAZER_PALETTES[row % BLAZER_PALETTES.length];
+    const palette = OUTFIT_PROOF_PALETTES[row % OUTFIT_PROOF_PALETTES.length];
     parts.push(`<rect x="8" y="${y + 2}" width="${width - 16}" height="${rowHeight - 4}" rx="7" fill="${row % 2 === 0 ? COLORS.panel : COLORS.row}"/>`);
     parts.push(text(20, y + 49, archetype.label, 15, 700));
     parts.push(text(20, y + 68, archetype.id, 9, 500, COLORS.muted));
-    parts.push(text(20, y + 88, `palette ${(row % BLAZER_PALETTES.length) + 1}`, 9, 600, COLORS.muted));
+    parts.push(text(20, y + 88, `palette ${(row % OUTFIT_PROOF_PALETTES.length) + 1}`, 9, 600, COLORS.muted));
 
     let x = labelWidth;
     for (const column of columns) {
@@ -426,7 +433,7 @@ function blazerDetailSheet(): string {
         y + insetY,
         column.size,
         {
-          outfit: 'outfit-blazer',
+          outfit: proof.outfit,
           palette,
           style: column.style,
         },
@@ -438,12 +445,30 @@ function blazerDetailSheet(): string {
   parts.push(text(
     18,
     height - 12,
-    'Authored source set: blazer.lapels.* · blazer.buttons.* · blazer.pocket.*',
+    proof.sourceLabel,
     10,
     550,
     COLORS.muted,
   ));
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+}
+
+function blazerDetailSheet(): string {
+  return focusedOutfitDetailSheet({
+    outfit: 'outfit-blazer',
+    title: 'Componentized Blazer — production body fit',
+    description: 'Lapels use the upper-torso frame; buttons and pocket use the lower-torso frame. West mirrors east; north keeps the stable rear seam.',
+    sourceLabel: 'Authored source set: blazer.lapels.* · blazer.buttons.* · blazer.pocket.*',
+  });
+}
+
+function teeDetailSheet(): string {
+  return focusedOutfitDetailSheet({
+    outfit: 'outfit-tee',
+    title: 'Anchored Tee — production body fit',
+    description: 'Crew rib and neck opening follow each body’s neck anchor. West mirrors east; north keeps the stable code-builder fallback.',
+    sourceLabel: 'Authored source set: tee.south.svg · tee.east.svg',
+  });
 }
 
 const POSE_SHORT: Record<Pose, string> = {
@@ -719,6 +744,7 @@ function main(): void {
   const full = fullCharacterSheet();
   writeSvgAndPng(outDir, 'body-archetypes-rigged', riggedSliceSheet());
   writeSvgAndPng(outDir, 'character-blazer-component-fit-v1', blazerDetailSheet());
+  writeSvgAndPng(outDir, 'character-tee-anchored-fit-v1', teeDetailSheet());
   writeSvgAndPng(outDir, 'body-archetypes-poses-south', poseProofSheet('south'));
   writeSvgAndPng(outDir, 'body-archetypes-poses-east', poseProofSheet('east'));
   writeSvgAndPng(outDir, 'body-archetypes-poses-north', poseProofSheet('north'));
