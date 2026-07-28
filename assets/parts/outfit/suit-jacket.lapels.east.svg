@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium outfit-suit-jacket east lapels</title>
+  <desc>Balanced-body formal profile lapel and front seam fitted through the upper-torso frame.</desc>
+  <g id="art" transform="translate(64 87)">
+    <path id="detail/lapels/profile" d="M -0.59 -25 L 9.85 -12.68 L 2.05 -25 Z" fill="#00FF00" fill-rule="nonzero"/>
+    <path id="detail/lapels/front-seam" d="M 9.85 -12.68 Q 17.5 2 13.5 23" fill="none" stroke="#00000030" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

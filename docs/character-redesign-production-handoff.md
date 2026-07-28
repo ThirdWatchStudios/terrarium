@@ -3,7 +3,7 @@
 Status: **design direction locked; bodies, neutral-arm fallback, heads, and all
 ten fitted hairstyles promoted; componentized Blazer and anchored Tee
 approved; componentized Polo, Shirt + Tie, and Turtleneck approved; runtime
-scale remains; Cardigan approved**
+scale remains; Cardigan and Suit Jacket approved**
 
 Last design review: **2026-07-27**
 
@@ -41,6 +41,10 @@ band and wider east/west profile received visual approval on 2026-07-27.
 A componentized Cardigan source set now fits upper-torso neckline trim and a
 separate lower-torso opening seam/button line across the same six bodies. Its
 focused sheet received visual approval on 2026-07-27.
+A componentized Suit Jacket source set now fits six formal detail families
+through the established upper/lower torso frames. Its profile tie follows the
+approved forward-edge rule, and its focused sheet received visual approval on
+2026-07-27.
 
 The promoted hair fitting is a Terrarium composition/export concern: recipes
 retain their stable hair IDs, flat and reconstructable layer output use the
@@ -402,6 +406,10 @@ Do not restart these without new runtime evidence:
    The Cardigan trim and button-line kit is mechanically complete in
    south/east with a matching focused sheet and received visual approval on
    2026-07-27.
+   The Suit Jacket pocket-square/lapels/buttons/pocket/tie/notches kit is
+   mechanically complete in south/east with a matching focused sheet and
+   received visual approval on 2026-07-27. Its east/west tie stays at the
+   forward torso edge.
 8. **Implement the `0.65` world scale in the actual runtime seam.** Keep source
    geometry fixed and validate anchors/overlays in Unity.
 9. **Regenerate and verify all exports.** Base, mood, pose, unit, portrait,

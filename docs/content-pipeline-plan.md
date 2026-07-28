@@ -502,7 +502,15 @@ icons), not by upfront design.
    retain the code-builder fallback. The focused six-body, four-facing,
    40/48 px proof is `character-cardigan-component-fit-v1.png` and received
    visual approval on 2026-07-27.
-14. **Provenance**: each imported asset records source
+14. **Formal Suit Jacket intake**: `outfit-suit-jacket` keeps pocket square,
+   lapels, buttons, pocket, tie, and notches in twelve independent south/east
+   files. The established upper/lower torso frames preserve body fit; the east
+   tie stays at the forward torso edge and west mirrors it. North, legacy, and
+   unknown bodies retain the code-builder fallback. The focused six-body,
+   four-facing, 40/48 px proof is
+   `character-suit-jacket-component-fit-v1.png` and received visual approval on
+   2026-07-27.
+15. **Provenance**: each imported asset records source
    (`authored | generated | curated`) in its generated module, so lints and
    future audits know what's re-generatable. `authored` means deliberate
    canonical repo SVG regardless of authoring tool; `generated` means
@@ -512,8 +520,9 @@ icons), not by upfront design.
 The approved body and six-head sets plus all ten approved mapped hair source
 sets now form the canonical silhouette foundation. The remaining outfit
 manifests and the separate runtime-scale integration can follow the
-componentized Blazer/Polo/Shirt + Tie/Turtleneck slices. The phase numbers
-describe pipeline scope; they do not override visual-impact priority.
+componentized Blazer/Polo/Shirt + Tie/Turtleneck/Cardigan/Suit Jacket slices.
+The phase numbers describe pipeline scope; they do not override visual-impact
+priority.
 
 ### Phase 3 — Wall bevel piece kit (~1 week; first authoring test)
 

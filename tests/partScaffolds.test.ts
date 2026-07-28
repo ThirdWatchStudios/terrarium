@@ -257,13 +257,25 @@ describe('part authoring scaffold generation', () => {
       'assets/part-authoring/scaffolds/outfit/shirt-tie.collar.south.svg',
       'assets/part-authoring/scaffolds/outfit/shirt-tie.tie.east.svg',
       'assets/part-authoring/scaffolds/outfit/shirt-tie.tie.south.svg',
+      'assets/part-authoring/scaffolds/outfit/suit-jacket.buttons.east.svg',
+      'assets/part-authoring/scaffolds/outfit/suit-jacket.buttons.south.svg',
+      'assets/part-authoring/scaffolds/outfit/suit-jacket.lapels.east.svg',
+      'assets/part-authoring/scaffolds/outfit/suit-jacket.lapels.south.svg',
+      'assets/part-authoring/scaffolds/outfit/suit-jacket.notches.east.svg',
+      'assets/part-authoring/scaffolds/outfit/suit-jacket.notches.south.svg',
+      'assets/part-authoring/scaffolds/outfit/suit-jacket.pocket-square.east.svg',
+      'assets/part-authoring/scaffolds/outfit/suit-jacket.pocket-square.south.svg',
+      'assets/part-authoring/scaffolds/outfit/suit-jacket.pocket.east.svg',
+      'assets/part-authoring/scaffolds/outfit/suit-jacket.pocket.south.svg',
+      'assets/part-authoring/scaffolds/outfit/suit-jacket.tie.east.svg',
+      'assets/part-authoring/scaffolds/outfit/suit-jacket.tie.south.svg',
       'assets/part-authoring/scaffolds/outfit/tee.east.svg',
       'assets/part-authoring/scaffolds/outfit/tee.south.svg',
       'assets/part-authoring/scaffolds/outfit/turtleneck.neck-band.east.svg',
       'assets/part-authoring/scaffolds/outfit/turtleneck.neck-band.north.svg',
       'assets/part-authoring/scaffolds/outfit/turtleneck.neck-band.south.svg',
     ]);
-    expect(first).toHaveLength(95);
+    expect(first).toHaveLength(107);
     expect(first.map(({ bytes }) => bytes)).toEqual(second.map(({ bytes }) => bytes));
     expect(PART_SCAFFOLD_SPECS.map(({ slot, referenceId }) => [slot, referenceId])).toEqual([
       ['body', 'body-compact'],
@@ -300,6 +312,12 @@ describe('part authoring scaffold generation', () => {
       ['outfit', 'outfit-turtleneck'],
       ['outfit', 'outfit-cardigan'],
       ['outfit', 'outfit-cardigan'],
+      ['outfit', 'outfit-suit-jacket'],
+      ['outfit', 'outfit-suit-jacket'],
+      ['outfit', 'outfit-suit-jacket'],
+      ['outfit', 'outfit-suit-jacket'],
+      ['outfit', 'outfit-suit-jacket'],
+      ['outfit', 'outfit-suit-jacket'],
     ]);
   });
 
@@ -415,7 +433,7 @@ describe('part authoring scaffold generation', () => {
     });
   });
 
-  it('seeds Tee, Blazer, Polo, Shirt + Tie, Turtleneck, and Cardigan against body-balanced with the complete outfit rig guide', () => {
+  it('seeds all componentized outfits against body-balanced with the complete outfit rig guide', () => {
     const teeAssets = generatePartAuthoringAssets()
       .filter(({ path: assetPath }) => assetPath.includes('/scaffolds/outfit/tee.'));
     expect(teeAssets.map(({ path: assetPath }) => assetPath)).toEqual([
@@ -539,6 +557,35 @@ describe('part authoring scaffold generation', () => {
         expect(source).toContain('id="guide/body-rig/axis"');
       }
     }
+
+    const suitJacketAssets = generatePartAuthoringAssets()
+      .filter(({ path: assetPath }) => assetPath.includes('/scaffolds/outfit/suit-jacket.'));
+    expect(suitJacketAssets.map(({ path: assetPath }) => assetPath)).toEqual([
+      'assets/part-authoring/scaffolds/outfit/suit-jacket.buttons.east.svg',
+      'assets/part-authoring/scaffolds/outfit/suit-jacket.buttons.south.svg',
+      'assets/part-authoring/scaffolds/outfit/suit-jacket.lapels.east.svg',
+      'assets/part-authoring/scaffolds/outfit/suit-jacket.lapels.south.svg',
+      'assets/part-authoring/scaffolds/outfit/suit-jacket.notches.east.svg',
+      'assets/part-authoring/scaffolds/outfit/suit-jacket.notches.south.svg',
+      'assets/part-authoring/scaffolds/outfit/suit-jacket.pocket-square.east.svg',
+      'assets/part-authoring/scaffolds/outfit/suit-jacket.pocket-square.south.svg',
+      'assets/part-authoring/scaffolds/outfit/suit-jacket.pocket.east.svg',
+      'assets/part-authoring/scaffolds/outfit/suit-jacket.pocket.south.svg',
+      'assets/part-authoring/scaffolds/outfit/suit-jacket.tie.east.svg',
+      'assets/part-authoring/scaffolds/outfit/suit-jacket.tie.south.svg',
+    ]);
+    for (const component of ['pocket-square', 'lapels', 'buttons', 'pocket', 'tie', 'notches']) {
+      const componentAssets = suitJacketAssets.filter(({ path: assetPath }) =>
+        assetPath.includes(`suit-jacket.${component}.`));
+      expect(componentAssets).toHaveLength(2);
+      for (const { bytes } of componentAssets) {
+        const source = bytes.toString('utf8');
+        expect(source).toContain(`outfit-suit-jacket ${component}`);
+        expect(source).toContain(`id="detail/${component}/shape-001"`);
+        expect(source).toContain('id="reference/body-balanced"');
+        expect(source).toContain('id="guide/body-rig/axis"');
+      }
+    }
   });
 
   it('keeps the east body guide narrow and left-shifted relative to the stable head origin', () => {
@@ -652,7 +699,7 @@ describe('committed part authoring assets', () => {
     const root = await mkdtemp(path.join(tmpdir(), 'terrarium-authoring-assets-'));
     temporaryRoots.push(root);
     const firstWrite = await writePartAuthoringAssets(root);
-    expect(firstWrite.updated).toBe(95);
+    expect(firstWrite.updated).toBe(107);
     expect(firstWrite.removed).toBe(0);
     await expect(checkPartAuthoringAssets(root)).resolves.toBeUndefined();
 

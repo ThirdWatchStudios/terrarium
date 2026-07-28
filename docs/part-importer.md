@@ -16,9 +16,11 @@ aggregating separately authored lapels, buttons, and pocket pieces;
 `outfit-shirt-tie` then reuses it for independent collar and tie pieces. In
 turn, `outfit-turtleneck` exercises a component with authored south/east/north
 facings. `outfit-cardigan` then separates upper-torso trim from its lower-torso
-opening seam and button line. In every mode labels, picker order,
-seeded-generation order, anchors, z-order, body rigs, and other runtime
-metadata remain owned by the handwritten `PartDef`.
+opening seam and button line. `outfit-suit-jacket` extends the same component
+frames to formal lapels, buttons, pocket, tie, pocket square, and notches. In
+every mode labels, picker order, seeded-generation order, anchors, z-order,
+body rigs, and other runtime metadata remain owned by the handwritten
+`PartDef`.
 
 ## Commands
 
@@ -36,11 +38,11 @@ all ten mapped hair families (`hair-short`, `hair-bob`, `hair-bun`,
 `hair-curly`, `hair-balding`, `hair-side-part`, `hair-pixie`,
 `hair-ponytail`, `hair-long-straight`, and `hair-coils`), and the south/east tee
 starters plus six componentized Blazer, four componentized Polo, four
-componentized Shirt + Tie, and three Turtleneck starters, plus ASE, GPL, and
-four Cardigan starters, plus ASE, GPL, and readable SVG sentinel palette
-companions for optional editors. Their directory README defines the canonical
-editor-agnostic workflow. Layer locking is only an editing convenience;
-semantic IDs determine which groups the importer ignores.
+componentized Shirt + Tie, three Turtleneck starters, four Cardigan starters,
+and twelve Suit Jacket starters, plus ASE, GPL, and readable SVG sentinel
+palette companions for optional editors. Their directory README defines the
+canonical editor-agnostic workflow. Layer locking is only an editing
+convenience; semantic IDs determine which groups the importer ignores.
 
 ## Source convention
 
@@ -60,9 +62,9 @@ lowercase. Authored facings are `south`, `east`, and `north`; west is the
 runtime mirror of east. Once any facing of a part or declared component is
 present, its complete manifest set must be present. Body and static head/hair
 targets require all three source facings. Tee and each Blazer/Polo/Shirt + Tie
-or Cardigan component deliberately require south/east only; their north detail
-remains on the handwritten fallback. Turtleneck explicitly requires
-south/east/north.
+or Cardigan/Suit Jacket component deliberately require south/east only; their
+north detail remains on the handwritten fallback. Turtleneck explicitly
+requires south/east/north.
 Putting a valid complete set in this canonical directory makes it compiler
 input; visual acceptance remains a separate Definition of Done gate. These
 static hair overlays remain the canonical authored source and fallback
@@ -89,6 +91,9 @@ The importer currently accepts:
 - `outfit-cardigan` as a component-detail target authored over the same body.
   Its canonical source is four south/east files: upper-torso `trim` and
   lower-torso `button-line`.
+- `outfit-suit-jacket` as a component-detail target authored over the same
+  body. Its canonical source is twelve south/east files for `pocket-square`,
+  `lapels`, `buttons`, `pocket`, `tie`, and `notches`.
 
 The east-facing head placement adjustment remains compositor-owned. The
 compiler always subtracts the stable `(64, 44)` authoring origin after it
@@ -274,12 +279,19 @@ the opening seam and two buttons remain one `button-line` component fitted
 through the lower-torso frame. West mirrors east; north, legacy, and future
 bodies preserve the code-builder fallback.
 
+`outfit-suit-jacket` reuses the approved Blazer frame split while keeping its
+formal vocabulary independently authorable. Pocket square, buttons, and pocket
+use the lower-torso frame; lapels, tie, and notches use the upper-torso frame.
+The east tie stays at the forward torso edge and west mirrors it rather than
+running through the profile center. North, legacy, and future bodies preserve
+the code-builder fallback.
+
 ## Intentionally deferred adapters
 
 - Component manifests for the remaining conforming outfits. Tee remains one
-  combined neckline kit; Blazer, Polo, Shirt + Tie, Turtleneck, and Cardigan
-  establish the component boundary that pockets and trim can reuse where their
-  vocabulary genuinely matches.
+  combined neckline kit; Blazer, Polo, Shirt + Tie, Turtleneck, Cardigan, and
+  Suit Jacket establish the component boundary that pockets and trim can reuse
+  where their vocabulary genuinely matches.
 - Further new part definitions and their labels/insertion order.
 - Accessory anchors, z-order, and hand-attachment roles.
 - Importing the full eleven-point body sub-rig from an anchor layer.
@@ -296,4 +308,5 @@ hair families are approved. Bun, Balding, Pixie, and Side-part complete the
 mapped source set, pass automated production review, and received visual
 approval on 2026-07-10. The remaining conforming outfits can now follow the
 component-detail contract proven by Blazer and reused by Polo, Shirt + Tie,
-and Turtleneck. Cardigan mechanics and art are approved.
+and Turtleneck. Cardigan mechanics and art are approved. Suit Jacket mechanics
+and art are approved.

@@ -446,6 +446,14 @@ behind.
 > mirrors east while north, legacy, and future bodies retain the handwritten
 > fallback. The focused review sheet is
 > `character-cardigan-component-fit-v1.png`.
+>
+> **Suit Jacket component-detail intake (mechanically complete and visually
+> approved):** twelve canonical files keep pocket square, lapels, buttons, pocket,
+> tie, and notches independent across south/east. Each consumes the established
+> upper- or lower-torso frame; the east tie stays at the forward torso edge and
+> west mirrors it. North, legacy, and future bodies retain the handwritten
+> fallback. The focused review sheet is
+> `character-suit-jacket-component-fit-v1.png`.
 
 | Garment | Detail pieces | south | east | north |
 |---|---|---|---|---|
@@ -455,7 +463,7 @@ behind.
 | turtleneck | neck band | [x] | [x] | [x] |
 | cardigan | button line, trim | [x] | [x] | — |
 | blazer | lapels, buttons, pocket | [x] | [x] | — |
-| suit-jacket | lapels, pocket square | [ ] | [ ] | — |
+| suit-jacket | lapels, buttons, pocket, tie, pocket square, notches | [x] | [x] | — |
 | hoodie | hood (down), pocket, drawstrings | [ ] | [ ] | [ ] |
 | vest | V, sleeve color split | [ ] | [ ] | — |
 

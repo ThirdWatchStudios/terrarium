@@ -28,6 +28,8 @@ The current supported starters are:
   (the three-facing component is seeded on `body-balanced`)
 - `scaffolds/outfit/cardigan.{trim,button-line}.{south,east}.svg`
   (each component is seeded separately on `body-balanced`)
+- `scaffolds/outfit/suit-jacket.{pocket-square,lapels,buttons,pocket,tie,notches}.{south,east}.svg`
+  (each component is seeded separately on `body-balanced`)
 
 They are seeded with the current production geometry, so they support a true
 source/edit/import proof rather than requiring a redraw. The tee starter shows
@@ -40,7 +42,9 @@ contract for separately editable collar and placket files, both fitted through
 the upper-torso frame. Shirt + Tie follows with separately editable collar and
 tie files in the same frame. Turtleneck adds the first component starter with
 an authored north view. Cardigan separates upper-torso neckline trim from its
-lower-torso seam and button line. Each body starter shows its full visible
+lower-torso seam and button line. Suit Jacket extends the same frame vocabulary
+to its six formal details and keeps the profile tie at the forward edge. Each
+body starter shows its full visible
 production art plus generated markers for all 11 typed rig points and
 `bodyOrigin`. Those
 `guide/*`, `reference/*`, and `anchors` paths are context only: the current rig
@@ -76,7 +80,7 @@ the production matrices, and received visual approval on 2026-07-10.
 
 1. Copy a complete scaffold set to a working directory (three facings for
    bodies, heads, and hair; south and east for the tee or for every
-   Blazer/Polo/Shirt + Tie/Cardigan component, whose north kits are
+   Blazer/Polo/Shirt + Tie/Cardigan/Suit Jacket component, whose north kits are
    intentionally unauthored).
 2. Edit only `art/*` and `detail/*` paths. Preserve unique semantic IDs, the
    `0 0 128 128` viewBox, exact sentinel paint, and explicit nonzero fill.
@@ -94,7 +98,8 @@ not whether a named editor preserves it.
 
 The approved body and head sets plus all ten mapped hair styles now have
 approved canonical sources. Tee, Blazer, Polo, Shirt + Tie, and Turtleneck are
-approved; Cardigan received visual approval on 2026-07-27.
+approved; Cardigan received visual approval on 2026-07-27. Suit Jacket is the
+latest visually approved component set.
 
 ## Optional visual-editor use
 
