@@ -178,6 +178,30 @@ export const PART_SCAFFOLD_SPECS = [
     slug: 'suit-jacket.notches',
     facings: ['south', 'east'],
   },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-hoodie',
+    referenceBodyId: 'body-balanced',
+    componentId: 'hood',
+    slug: 'hoodie.hood',
+    facings: FACINGS,
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-hoodie',
+    referenceBodyId: 'body-balanced',
+    componentId: 'drawstrings',
+    slug: 'hoodie.drawstrings',
+    facings: ['south', 'east'],
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-hoodie',
+    referenceBodyId: 'body-balanced',
+    componentId: 'pocket',
+    slug: 'hoodie.pocket',
+    facings: ['south'],
+  },
 ] as const satisfies readonly {
   slot: 'body' | 'head' | 'hair' | 'outfit';
   referenceId: string;

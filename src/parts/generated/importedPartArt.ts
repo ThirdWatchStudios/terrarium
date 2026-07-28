@@ -628,6 +628,109 @@ export const IMPORTED_PART_ART = [
   },
   {
     kind: "body-detail",
+    id: "outfit-hoodie",
+    slot: "outfit",
+    bodyVariants: {
+      "body-compact": {
+        south: [
+          { d: "M-14.5-29Q0-16.2 14.5-29L10.15-18.2Q0-6-10.15-18.2Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-3.48-18.2L-4.64-3M3.48-18.2L4.64-3", stroke: "$accent", strokeWidth: 1.6, silhouette: false },
+          { d: "M-6.264-3C-6.264-2.5-5.954-2.038-5.452-1.788-4.95-1.537-4.33-1.537-3.828-1.788-3.326-2.038-3.016-2.5-3.016-3-3.016-3.5-3.326-3.962-3.828-4.212-4.33-4.463-4.95-4.463-5.452-4.212-5.954-3.962-6.264-3.5-6.264-3Z", fill: "$accent", silhouette: false },
+          { d: "M3.016-3C3.016-2.227 3.743-1.6 4.64-1.6 5.537-1.6 6.264-2.227 6.264-3 6.264-3.773 5.537-4.4 4.64-4.4 3.743-4.4 3.016-3.773 3.016-3Z", fill: "$accent", silhouette: false },
+          { d: "M-11.6 7.5Q0 11.5 11.6 7.5", stroke: "#00000026", strokeWidth: 2, silhouette: false },
+        ],
+        east: [
+          { d: "M2.2-29Q23.936-25 21.736-18.2L17.6-20.2Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M17.6-18.2L18.7-3", stroke: "$accent", strokeWidth: 1.6, silhouette: false },
+        ],
+        north: [
+          { d: "M-14.5-29Q0-16.2 14.5-29L14.5-18.2Q0-7-14.5-18.2Z", fill: "$outfitSecondary", silhouette: false },
+        ],
+      },
+      "body-balanced": {
+        south: [
+          { d: "M-12.5-29Q0-16.2 12.5-29L8.75-18.2Q0-6-8.75-18.2Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-3-18.2L-4-3M3-18.2L4-3", stroke: "$accent", strokeWidth: 1.6, silhouette: false },
+          { d: "M-5.4-3C-5.4-2.5-5.133-2.038-4.7-1.788-4.267-1.537-3.733-1.537-3.3-1.788-2.867-2.038-2.6-2.5-2.6-3-2.6-3.5-2.867-3.962-3.3-4.212-3.733-4.463-4.267-4.463-4.7-4.212-5.133-3.962-5.4-3.5-5.4-3Z", fill: "$accent", silhouette: false },
+          { d: "M2.6-3C2.6-2.227 3.227-1.6 4-1.6 4.773-1.6 5.4-2.227 5.4-3 5.4-3.773 4.773-4.4 4-4.4 3.227-4.4 2.6-3.773 2.6-3Z", fill: "$accent", silhouette: false },
+          { d: "M-12.4 7.5Q0 11.5 12.4 7.5", stroke: "#00000026", strokeWidth: 2, silhouette: false },
+        ],
+        east: [
+          { d: "M2-29Q21.76-25 19.76-18.2L16-20.2Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M16-18.2L17-3", stroke: "$accent", strokeWidth: 1.6, silhouette: false },
+        ],
+        north: [
+          { d: "M-12.5-29Q0-16.2 12.5-29L12.5-18.2Q0-7-12.5-18.2Z", fill: "$outfitSecondary", silhouette: false },
+        ],
+      },
+      "body-large-frame": {
+        south: [
+          { d: "M-16.25-32Q0-19.2 16.25-32L11.375-21.2Q0-9-11.375-21.2Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-3.9-21.2L-5.2-6M3.9-21.2L5.2-6", stroke: "$accent", strokeWidth: 1.6, silhouette: false },
+          { d: "M-7.02-6C-7.02-5.5-6.673-5.038-6.11-4.788-5.547-4.537-4.853-4.537-4.29-4.788-3.727-5.038-3.38-5.5-3.38-6-3.38-6.5-3.727-6.962-4.29-7.212-4.853-7.463-5.547-7.463-6.11-7.212-6.673-6.962-7.02-6.5-7.02-6Z", fill: "$accent", silhouette: false },
+          { d: "M3.38-6C3.38-5.227 4.195-4.6 5.2-4.6 6.205-4.6 7.02-5.227 7.02-6 7.02-6.773 6.205-7.4 5.2-7.4 4.195-7.4 3.38-6.773 3.38-6Z", fill: "$accent", silhouette: false },
+          { d: "M-9.672 5.816Q0 10.237 9.672 5.816", stroke: "#00000026", strokeWidth: 2, silhouette: false },
+        ],
+        east: [
+          { d: "M2.4-32Q26.112-28 23.712-21.2L19.2-23.2Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M19.2-21.2L20.4-6", stroke: "$accent", strokeWidth: 1.6, silhouette: false },
+        ],
+        north: [
+          { d: "M-16.25-32Q0-19.2 16.25-32L16.25-21.2Q0-10-16.25-21.2Z", fill: "$outfitSecondary", silhouette: false },
+        ],
+      },
+      "body-tall": {
+        south: [
+          { d: "M-9.75-34Q0-20.667 9.75-34L6.825-22.75Q0-10.042-6.825-22.75Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-2.34-22.75L-3.12-6.917M2.34-22.75L3.12-6.917", stroke: "$accent", strokeWidth: 1.6, silhouette: false },
+          { d: "M-4.212-6.917C-4.212-6.396-4.004-5.915-3.666-5.654-3.328-5.393-2.912-5.393-2.574-5.654-2.236-5.915-2.028-6.396-2.028-6.917-2.028-7.437-2.236-7.919-2.574-8.179-2.912-8.441-3.328-8.441-3.666-8.179-4.004-7.919-4.212-7.437-4.212-6.917Z", fill: "$accent", silhouette: false },
+          { d: "M2.028-6.917C2.028-6.111 2.517-5.458 3.12-5.458 3.723-5.458 4.212-6.111 4.212-6.917 4.212-7.722 3.723-8.375 3.12-8.375 2.517-8.375 2.028-7.722 2.028-6.917Z", fill: "$accent", silhouette: false },
+          { d: "M-9.672 5.474Q0 10.105 9.672 5.474", stroke: "#00000026", strokeWidth: 2, silhouette: false },
+        ],
+        east: [
+          { d: "M1.56-34Q16.973-29.833 15.413-22.75L12.48-24.833Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M12.48-22.75L13.26-6.917", stroke: "$accent", strokeWidth: 1.6, silhouette: false },
+        ],
+        north: [
+          { d: "M-9.75-34Q0-20.667 9.75-34L9.75-22.75Q0-11.083-9.75-22.75Z", fill: "$outfitSecondary", silhouette: false },
+        ],
+      },
+      "body-soft": {
+        south: [
+          { d: "M-10-28Q0-15.2 10-28L7-17.2Q0-5-7-17.2Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-2.4-17.2L-3.2-2M2.4-17.2L3.2-2", stroke: "$accent", strokeWidth: 1.6, silhouette: false },
+          { d: "M-4.32-2C-4.32-1.5-4.106-1.038-3.76-0.788-3.414-0.537-2.986-0.537-2.64-0.788-2.294-1.038-2.08-1.5-2.08-2-2.08-2.5-2.294-2.962-2.64-3.212-2.986-3.463-3.414-3.463-3.76-3.212-4.106-2.962-4.32-2.5-4.32-2Z", fill: "$accent", silhouette: false },
+          { d: "M2.08-2C2.08-1.227 2.582-0.6 3.2-0.6 3.818-0.6 4.32-1.227 4.32-2 4.32-2.773 3.818-3.4 3.2-3.4 2.582-3.4 2.08-2.773 2.08-2Z", fill: "$accent", silhouette: false },
+          { d: "M-11.2 8.5Q0 12.5 11.2 8.5", stroke: "#00000026", strokeWidth: 2, silhouette: false },
+        ],
+        east: [
+          { d: "M1.8-28Q19.584-24 17.784-17.2L14.4-19.2Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M14.4-17.2L15.3-2", stroke: "$accent", strokeWidth: 1.6, silhouette: false },
+        ],
+        north: [
+          { d: "M-10-28Q0-15.2 10-28L10-17.2Q0-6-10-17.2Z", fill: "$outfitSecondary", silhouette: false },
+        ],
+      },
+      "body-pinch": {
+        south: [
+          { d: "M-10-29Q0-16.733 10-29L7-18.65Q0-6.958-7-18.65Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-2.4-18.65L-3.2-4.083M2.4-18.65L3.2-4.083", stroke: "$accent", strokeWidth: 1.6, silhouette: false },
+          { d: "M-4.32-4.083C-4.32-3.604-4.106-3.161-3.76-2.922-3.414-2.681-2.986-2.681-2.64-2.922-2.294-3.161-2.08-3.604-2.08-4.083-2.08-4.562-2.294-5.005-2.64-5.245-2.986-5.485-3.414-5.485-3.76-5.245-4.106-5.005-4.32-4.562-4.32-4.083Z", fill: "$accent", silhouette: false },
+          { d: "M2.08-4.083C2.08-3.343 2.582-2.742 3.2-2.742 3.818-2.742 4.32-3.343 4.32-4.083 4.32-4.824 3.818-5.425 3.2-5.425 2.582-5.425 2.08-4.824 2.08-4.083Z", fill: "$accent", silhouette: false },
+          { d: "M-9.672 5.184Q0 8.763 9.672 5.184", stroke: "#00000026", strokeWidth: 2, silhouette: false },
+        ],
+        east: [
+          { d: "M2-29Q21.76-25.167 19.76-18.65L16-20.567Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M16-18.65L17-4.083", stroke: "$accent", strokeWidth: 1.6, silhouette: false },
+        ],
+        north: [
+          { d: "M-10-29Q0-16.733 10-29L10-18.65Q0-7.917-10-18.65Z", fill: "$outfitSecondary", silhouette: false },
+        ],
+      },
+    },
+  },
+  {
+    kind: "body-detail",
     id: "outfit-polo",
     slot: "outfit",
     bodyVariants: {
@@ -1276,6 +1379,18 @@ export const IMPORTED_PART_PROVENANCE = [
       "assets/parts/outfit/cardigan.button-line.south.svg",
       "assets/parts/outfit/cardigan.trim.east.svg",
       "assets/parts/outfit/cardigan.trim.south.svg",
+    ],
+  },
+  {
+    id: "outfit-hoodie",
+    sourceKind: "authored",
+    sourceFiles: [
+      "assets/parts/outfit/hoodie.drawstrings.east.svg",
+      "assets/parts/outfit/hoodie.drawstrings.south.svg",
+      "assets/parts/outfit/hoodie.hood.east.svg",
+      "assets/parts/outfit/hoodie.hood.north.svg",
+      "assets/parts/outfit/hoodie.hood.south.svg",
+      "assets/parts/outfit/hoodie.pocket.south.svg",
     ],
   },
   {

@@ -165,8 +165,16 @@ async function componentSourceTree(
     | 'outfit-shirt-tie'
     | 'outfit-turtleneck'
     | 'outfit-cardigan'
-    | 'outfit-suit-jacket',
-  slug: 'blazer' | 'polo' | 'shirt-tie' | 'turtleneck' | 'cardigan' | 'suit-jacket',
+    | 'outfit-suit-jacket'
+    | 'outfit-hoodie',
+  slug:
+    | 'blazer'
+    | 'polo'
+    | 'shirt-tie'
+    | 'turtleneck'
+    | 'cardigan'
+    | 'suit-jacket'
+    | 'hoodie',
   omitted?: { component: string; facing: Facing },
 ): Promise<string> {
   const root = await mkdtemp(path.join(tmpdir(), `terrarium-${slug}-import-`));
@@ -741,6 +749,33 @@ describe('part source tree and generated registration', () => {
     }
   });
 
+  it('aggregates the Hoodie hood, drawstrings, and pocket across their authored facing sets', async () => {
+    const root = await componentSourceTree('outfit-hoodie', 'hoodie');
+    const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-hoodie')!;
+    const [imported] = await compilePartDirectory({
+      inputDir: root,
+      sourcePathPrefix: 'assets/parts',
+      catalog: [target],
+    });
+    if (imported.kind !== 'body-detail') throw new Error('Expected body-detail import');
+
+    expect(imported.sourceFiles).toEqual([
+      'assets/parts/outfit/hoodie.drawstrings.east.svg',
+      'assets/parts/outfit/hoodie.drawstrings.south.svg',
+      'assets/parts/outfit/hoodie.hood.east.svg',
+      'assets/parts/outfit/hoodie.hood.north.svg',
+      'assets/parts/outfit/hoodie.hood.south.svg',
+      'assets/parts/outfit/hoodie.pocket.south.svg',
+    ]);
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(imported.bodyVariants[archetype.id].south).toHaveLength(5);
+      expect(imported.bodyVariants[archetype.id].east).toHaveLength(2);
+      expect(imported.bodyVariants[archetype.id].north).toHaveLength(1);
+    }
+    expect(imported.bodyVariants['body-balanced'].north)
+      .not.toEqual(imported.bodyVariants['body-tall'].north);
+  });
+
   it('rejects incomplete or flattened component-detail source sets', async () => {
     const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-blazer')!;
     const complete = await componentSourceTree('outfit-blazer', 'blazer');
@@ -851,13 +886,13 @@ describe('part source tree and generated registration', () => {
     expect(generated).toBe(emitImportedPartArt(imports));
   });
 
-  it('keeps six bodies, ten canonical hairs, seven heads, and seven authored outfits as thirty deliberate overlays', async () => {
+  it('keeps six bodies, ten canonical hairs, seven heads, and eight authored outfits as thirty-one deliberate overlays', async () => {
     const imports = await compilePartDirectory({
       inputDir: path.resolve('assets/parts'),
       sourcePathPrefix: 'assets/parts',
       catalog: PART_IMPORT_TARGETS,
     });
-    expect(imports).toHaveLength(30);
+    expect(imports).toHaveLength(31);
     expect(imports.map(({ id }) => id)).toEqual([
       'body-balanced',
       'body-compact',
@@ -884,6 +919,7 @@ describe('part source tree and generated registration', () => {
       'head-soft-square',
       'outfit-blazer',
       'outfit-cardigan',
+      'outfit-hoodie',
       'outfit-polo',
       'outfit-shirt-tie',
       'outfit-suit-jacket',
@@ -1210,6 +1246,27 @@ describe('part source tree and generated registration', () => {
     }
     expect(suitJacket.bodyVariants['body-balanced'].east?.[5].d)
       .toMatch(/^M10\.44-18\.92/);
+
+    const hoodie = imports.find(({ id }) => id === 'outfit-hoodie')!;
+    if (hoodie.kind !== 'body-detail') throw new Error('Expected body-detail Hoodie import');
+    expect(hoodie).toMatchObject({
+      id: 'outfit-hoodie',
+      slot: 'outfit',
+      sourceKind: 'authored',
+      sourceFiles: [
+        'assets/parts/outfit/hoodie.drawstrings.east.svg',
+        'assets/parts/outfit/hoodie.drawstrings.south.svg',
+        'assets/parts/outfit/hoodie.hood.east.svg',
+        'assets/parts/outfit/hoodie.hood.north.svg',
+        'assets/parts/outfit/hoodie.hood.south.svg',
+        'assets/parts/outfit/hoodie.pocket.south.svg',
+      ],
+    });
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(hoodie.bodyVariants[archetype.id].south).toHaveLength(5);
+      expect(hoodie.bodyVariants[archetype.id].east).toHaveLength(2);
+      expect(hoodie.bodyVariants[archetype.id].north).toHaveLength(1);
+    }
   });
 });
 
@@ -1537,6 +1594,19 @@ describe('imported art overlay', () => {
           { id: 'pocket', frame: 'lower-torso' },
           { id: 'tie', frame: 'upper-torso' },
           { id: 'notches', frame: 'upper-torso' },
+        ],
+      },
+      {
+        id: 'outfit-hoodie',
+        slot: 'outfit',
+        anchor: 'body',
+        facings: { south: true, east: true, north: true },
+        buildVariant: true,
+        referenceBodyId: 'body-balanced',
+        components: [
+          { id: 'hood', frame: 'upper-torso' },
+          { id: 'drawstrings', frame: 'upper-torso' },
+          { id: 'pocket', frame: 'lower-torso' },
         ],
       },
     ]);

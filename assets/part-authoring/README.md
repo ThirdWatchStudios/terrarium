@@ -30,6 +30,9 @@ The current supported starters are:
   (each component is seeded separately on `body-balanced`)
 - `scaffolds/outfit/suit-jacket.{pocket-square,lapels,buttons,pocket,tie,notches}.{south,east}.svg`
   (each component is seeded separately on `body-balanced`)
+- `scaffolds/outfit/hoodie.hood.{south,east,north}.svg`
+- `scaffolds/outfit/hoodie.drawstrings.{south,east}.svg`
+- `scaffolds/outfit/hoodie.pocket.south.svg`
 
 They are seeded with the current production geometry, so they support a true
 source/edit/import proof rather than requiring a redraw. The tee starter shows
@@ -43,8 +46,10 @@ the upper-torso frame. Shirt + Tie follows with separately editable collar and
 tie files in the same frame. Turtleneck adds the first component starter with
 an authored north view. Cardigan separates upper-torso neckline trim from its
 lower-torso seam and button line. Suit Jacket extends the same frame vocabulary
-to its six formal details and keeps the profile tie at the forward edge. Each
-body starter shows its full visible
+to its six formal details and keeps the profile tie at the forward edge.
+Hoodie then authors only the directional pieces that exist: three hood views,
+two drawstring views, and one front pocket seam. Each body starter shows its
+full visible
 production art plus generated markers for all 11 typed rig points and
 `bodyOrigin`. Those
 `guide/*`, `reference/*`, and `anchors` paths are context only: the current rig
@@ -98,8 +103,8 @@ not whether a named editor preserves it.
 
 The approved body and head sets plus all ten mapped hair styles now have
 approved canonical sources. Tee, Blazer, Polo, Shirt + Tie, and Turtleneck are
-approved; Cardigan received visual approval on 2026-07-27. Suit Jacket is the
-latest visually approved component set.
+approved; Cardigan, Suit Jacket, and Hoodie received visual approval on
+2026-07-27.
 
 ## Optional visual-editor use
 

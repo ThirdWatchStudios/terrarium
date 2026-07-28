@@ -283,4 +283,39 @@ export const PART_IMPORT_TARGETS: readonly PartImportTarget[] = [
       },
     ],
   },
+  {
+    id: 'outfit-hoodie',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: { south: true, east: true, north: true },
+    buildVariant: true,
+    importMode: 'component-detail',
+    referenceBodyId: 'body-balanced',
+    components: [
+      {
+        id: 'hood',
+        frame: 'upper-torso',
+        facings: {
+          south: { shapeCount: 1 },
+          east: { shapeCount: 1 },
+          north: { shapeCount: 1 },
+        },
+      },
+      {
+        id: 'drawstrings',
+        frame: 'upper-torso',
+        facings: {
+          south: { shapeCount: 3 },
+          east: { shapeCount: 1 },
+        },
+      },
+      {
+        id: 'pocket',
+        frame: 'lower-torso',
+        facings: {
+          south: { shapeCount: 1 },
+        },
+      },
+    ],
+  },
 ];

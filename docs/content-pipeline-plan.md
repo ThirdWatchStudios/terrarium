@@ -510,7 +510,14 @@ icons), not by upfront design.
    four-facing, 40/48 px proof is
    `character-suit-jacket-component-fit-v1.png` and received visual approval on
    2026-07-27.
-15. **Provenance**: each imported asset records source
+15. **Directional Hoodie intake**: `outfit-hoodie` keeps its down hood in
+   south/east/north, drawstrings in south/east, and kangaroo-pocket seam in
+   south. Each component consumes its declared upper/lower torso frame; west
+   mirrors east and absent component facings intentionally paint nothing. The
+   focused six-body, four-facing, 40/48 px proof is
+   `character-hoodie-component-fit-v1.png` and received visual approval on
+   2026-07-27.
+16. **Provenance**: each imported asset records source
    (`authored | generated | curated`) in its generated module, so lints and
    future audits know what's re-generatable. `authored` means deliberate
    canonical repo SVG regardless of authoring tool; `generated` means

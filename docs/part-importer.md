@@ -18,9 +18,10 @@ turn, `outfit-turtleneck` exercises a component with authored south/east/north
 facings. `outfit-cardigan` then separates upper-torso trim from its lower-torso
 opening seam and button line. `outfit-suit-jacket` extends the same component
 frames to formal lapels, buttons, pocket, tie, pocket square, and notches. In
-every mode labels, picker order, seeded-generation order, anchors, z-order,
-body rigs, and other runtime metadata remain owned by the handwritten
-`PartDef`.
+turn, `outfit-hoodie` uses a three-facing hood plus only the directional
+drawstring and pocket pieces that exist. In every mode labels, picker order,
+seeded-generation order, anchors, z-order, body rigs, and other runtime
+metadata remain owned by the handwritten `PartDef`.
 
 ## Commands
 
@@ -39,10 +40,11 @@ all ten mapped hair families (`hair-short`, `hair-bob`, `hair-bun`,
 `hair-ponytail`, `hair-long-straight`, and `hair-coils`), and the south/east tee
 starters plus six componentized Blazer, four componentized Polo, four
 componentized Shirt + Tie, three Turtleneck starters, four Cardigan starters,
-and twelve Suit Jacket starters, plus ASE, GPL, and readable SVG sentinel
-palette companions for optional editors. Their directory README defines the
-canonical editor-agnostic workflow. Layer locking is only an editing
-convenience; semantic IDs determine which groups the importer ignores.
+and twelve Suit Jacket starters plus six Hoodie starters, plus ASE, GPL, and
+readable SVG sentinel palette companions for optional editors. Their directory
+README defines the canonical editor-agnostic workflow. Layer locking is only
+an editing convenience; semantic IDs determine which groups the importer
+ignores.
 
 ## Source convention
 
@@ -94,6 +96,9 @@ The importer currently accepts:
 - `outfit-suit-jacket` as a component-detail target authored over the same
   body. Its canonical source is twelve south/east files for `pocket-square`,
   `lapels`, `buttons`, `pocket`, `tie`, and `notches`.
+- `outfit-hoodie` as a component-detail target authored over the same body.
+  Its canonical source is six files: three-facing `hood`, south/east
+  `drawstrings`, and south-only `pocket`.
 
 The east-facing head placement adjustment remains compositor-owned. The
 compiler always subtracts the stable `(64, 44)` authoring origin after it
@@ -286,12 +291,19 @@ The east tie stays at the forward torso edge and west mirrors it rather than
 running through the profile center. North, legacy, and future bodies preserve
 the code-builder fallback.
 
+`outfit-hoodie` is the first asymmetric component-facing manifest after the
+three-facing Turtleneck. The hood is authored in south/east/north through the
+upper-torso frame; drawstrings exist only in south/east through that same
+frame; the kangaroo-pocket seam exists only in south through the lower-torso
+frame. West mirrors east. Missing directional components intentionally paint
+nothing rather than inventing rear or profile detail.
+
 ## Intentionally deferred adapters
 
 - Component manifests for the remaining conforming outfits. Tee remains one
   combined neckline kit; Blazer, Polo, Shirt + Tie, Turtleneck, Cardigan, and
-  Suit Jacket establish the component boundary that pockets and trim can reuse
-  where their vocabulary genuinely matches.
+  Suit Jacket and Hoodie establish the component boundary that pockets and
+  trim can reuse where their vocabulary genuinely matches.
 - Further new part definitions and their labels/insertion order.
 - Accessory anchors, z-order, and hand-attachment roles.
 - Importing the full eleven-point body sub-rig from an anchor layer.
@@ -308,5 +320,5 @@ hair families are approved. Bun, Balding, Pixie, and Side-part complete the
 mapped source set, pass automated production review, and received visual
 approval on 2026-07-10. The remaining conforming outfits can now follow the
 component-detail contract proven by Blazer and reused by Polo, Shirt + Tie,
-and Turtleneck. Cardigan mechanics and art are approved. Suit Jacket mechanics
-and art are approved.
+and Turtleneck. Cardigan, Suit Jacket, and Hoodie mechanics and art are
+approved.

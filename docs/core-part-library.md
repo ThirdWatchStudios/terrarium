@@ -454,6 +454,14 @@ behind.
 > west mirrors it. North, legacy, and future bodies retain the handwritten
 > fallback. The focused review sheet is
 > `character-suit-jacket-component-fit-v1.png`.
+>
+> **Hoodie component-detail intake (mechanically complete and visually
+> approved):** six canonical files keep hood, drawstrings, and pocket independent.
+> The hood is authored in south/east/north; drawstrings exist in south/east;
+> the pocket seam exists in south. Upper/lower torso frames fit those pieces
+> across all six bodies without inventing missing directional detail. West
+> mirrors east. The focused review sheet is
+> `character-hoodie-component-fit-v1.png`.
 
 | Garment | Detail pieces | south | east | north |
 |---|---|---|---|---|
@@ -464,7 +472,7 @@ behind.
 | cardigan | button line, trim | [x] | [x] | — |
 | blazer | lapels, buttons, pocket | [x] | [x] | — |
 | suit-jacket | lapels, buttons, pocket, tie, pocket square, notches | [x] | [x] | — |
-| hoodie | hood (down), pocket, drawstrings | [ ] | [ ] | [ ] |
+| hoodie | hood (down), pocket, drawstrings | [x] | [x] | [x] |
 | vest | V, sleeve color split | [ ] | [ ] | — |
 
 ≈ 22–24 small drawings; lapels/collars/buttons are shared vocabulary across kits

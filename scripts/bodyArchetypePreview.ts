@@ -357,7 +357,8 @@ interface FocusedOutfitProof {
     | 'outfit-shirt-tie'
     | 'outfit-turtleneck'
     | 'outfit-cardigan'
-    | 'outfit-suit-jacket';
+    | 'outfit-suit-jacket'
+    | 'outfit-hoodie';
   title: string;
   description: string;
   sourceLabel: string;
@@ -522,6 +523,16 @@ function suitJacketDetailSheet(): string {
     title: 'Componentized Suit Jacket — production body fit',
     description: 'Blazer structure, tie, pocket square, and notches remain independent. Profile details stay on the visible front edge; west mirrors east.',
     sourceLabel: 'Authored source set: suit-jacket.{lapels,buttons,pocket,tie,pocket-square,notches}.*',
+  });
+}
+
+function hoodieDetailSheet(): string {
+  return focusedOutfitDetailSheet({
+    outfit: 'outfit-hoodie',
+    title: 'Componentized Hoodie — production body fit',
+    description: 'The down hood, drawstrings, and kangaroo-pocket seam fit independently. Rear view authors the hood only; west mirrors east.',
+    sourceLabel: 'Authored source set: hoodie.hood.{south,east,north} · hoodie.drawstrings.{south,east} · hoodie.pocket.south',
+    northLabel: 'north · authored hood',
   });
 }
 
@@ -804,6 +815,7 @@ function main(): void {
   writeSvgAndPng(outDir, 'character-turtleneck-component-fit-v1', turtleneckDetailSheet());
   writeSvgAndPng(outDir, 'character-cardigan-component-fit-v1', cardiganDetailSheet());
   writeSvgAndPng(outDir, 'character-suit-jacket-component-fit-v1', suitJacketDetailSheet());
+  writeSvgAndPng(outDir, 'character-hoodie-component-fit-v1', hoodieDetailSheet());
   writeSvgAndPng(outDir, 'body-archetypes-poses-south', poseProofSheet('south'));
   writeSvgAndPng(outDir, 'body-archetypes-poses-east', poseProofSheet('east'));
   writeSvgAndPng(outDir, 'body-archetypes-poses-north', poseProofSheet('north'));

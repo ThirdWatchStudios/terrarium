@@ -249,6 +249,12 @@ describe('part authoring scaffold generation', () => {
       'assets/part-authoring/scaffolds/outfit/cardigan.button-line.south.svg',
       'assets/part-authoring/scaffolds/outfit/cardigan.trim.east.svg',
       'assets/part-authoring/scaffolds/outfit/cardigan.trim.south.svg',
+      'assets/part-authoring/scaffolds/outfit/hoodie.drawstrings.east.svg',
+      'assets/part-authoring/scaffolds/outfit/hoodie.drawstrings.south.svg',
+      'assets/part-authoring/scaffolds/outfit/hoodie.hood.east.svg',
+      'assets/part-authoring/scaffolds/outfit/hoodie.hood.north.svg',
+      'assets/part-authoring/scaffolds/outfit/hoodie.hood.south.svg',
+      'assets/part-authoring/scaffolds/outfit/hoodie.pocket.south.svg',
       'assets/part-authoring/scaffolds/outfit/polo.collar.east.svg',
       'assets/part-authoring/scaffolds/outfit/polo.collar.south.svg',
       'assets/part-authoring/scaffolds/outfit/polo.placket.east.svg',
@@ -275,7 +281,7 @@ describe('part authoring scaffold generation', () => {
       'assets/part-authoring/scaffolds/outfit/turtleneck.neck-band.north.svg',
       'assets/part-authoring/scaffolds/outfit/turtleneck.neck-band.south.svg',
     ]);
-    expect(first).toHaveLength(107);
+    expect(first).toHaveLength(113);
     expect(first.map(({ bytes }) => bytes)).toEqual(second.map(({ bytes }) => bytes));
     expect(PART_SCAFFOLD_SPECS.map(({ slot, referenceId }) => [slot, referenceId])).toEqual([
       ['body', 'body-compact'],
@@ -318,6 +324,9 @@ describe('part authoring scaffold generation', () => {
       ['outfit', 'outfit-suit-jacket'],
       ['outfit', 'outfit-suit-jacket'],
       ['outfit', 'outfit-suit-jacket'],
+      ['outfit', 'outfit-hoodie'],
+      ['outfit', 'outfit-hoodie'],
+      ['outfit', 'outfit-hoodie'],
     ]);
   });
 
@@ -586,6 +595,30 @@ describe('part authoring scaffold generation', () => {
         expect(source).toContain('id="guide/body-rig/axis"');
       }
     }
+
+    const hoodieAssets = generatePartAuthoringAssets()
+      .filter(({ path: assetPath }) => assetPath.includes('/scaffolds/outfit/hoodie.'));
+    expect(hoodieAssets.map(({ path: assetPath }) => assetPath)).toEqual([
+      'assets/part-authoring/scaffolds/outfit/hoodie.drawstrings.east.svg',
+      'assets/part-authoring/scaffolds/outfit/hoodie.drawstrings.south.svg',
+      'assets/part-authoring/scaffolds/outfit/hoodie.hood.east.svg',
+      'assets/part-authoring/scaffolds/outfit/hoodie.hood.north.svg',
+      'assets/part-authoring/scaffolds/outfit/hoodie.hood.south.svg',
+      'assets/part-authoring/scaffolds/outfit/hoodie.pocket.south.svg',
+    ]);
+    for (const component of ['hood', 'drawstrings', 'pocket']) {
+      const componentAssets = hoodieAssets.filter(({ path: assetPath }) =>
+        assetPath.includes(`hoodie.${component}.`));
+      const expectedCount = component === 'hood' ? 3 : component === 'drawstrings' ? 2 : 1;
+      expect(componentAssets).toHaveLength(expectedCount);
+      for (const { bytes } of componentAssets) {
+        const source = bytes.toString('utf8');
+        expect(source).toContain(`outfit-hoodie ${component}`);
+        expect(source).toContain(`id="detail/${component}/shape-001"`);
+        expect(source).toContain('id="reference/body-balanced"');
+        expect(source).toContain('id="guide/body-rig/axis"');
+      }
+    }
   });
 
   it('keeps the east body guide narrow and left-shifted relative to the stable head origin', () => {
@@ -699,7 +732,7 @@ describe('committed part authoring assets', () => {
     const root = await mkdtemp(path.join(tmpdir(), 'terrarium-authoring-assets-'));
     temporaryRoots.push(root);
     const firstWrite = await writePartAuthoringAssets(root);
-    expect(firstWrite.updated).toBe(107);
+    expect(firstWrite.updated).toBe(113);
     expect(firstWrite.removed).toBe(0);
     await expect(checkPartAuthoringAssets(root)).resolves.toBeUndefined();
 
