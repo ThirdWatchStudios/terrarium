@@ -445,6 +445,16 @@ per-atlas pivot/anchors rather than hardcoding either value. Corporate
 `portrait@` uses its own head-centered bust crop; legacy employee-profile crops
 come from the framed full sprite.
 
+**Production fitted hair.** All ten mapped stable recipe IDs (`hair-short`,
+`hair-bob`, `hair-bun`, `hair-curly`, `hair-balding`, `hair-side-part`,
+`hair-pixie`, `hair-ponytail`, `hair-long-straight`, and `hair-coils`) resolve
+one fixed head-aware variant for each of the six production human heads and
+each authored facing during Terrarium composition/export. Flat sprites and
+reconstructable hair layers resolve the same geometry. This changes baked art,
+not the recipe or payload shape: Unity receives no hair-fit metadata, the
+schema version does not change, and the canonical imported SVG remains the
+fallback for unmapped heads.
+
 **Conversation style** (`conversation-style.json`, one project-level file) — the
 look of a 1:1 conversation. The connector is drawn between two **live** world
 positions, so the tool can't author the instance, only the style.

@@ -17,6 +17,7 @@ import type { Mood, TileInstance } from './types';
 import { CANVAS, MOODS } from './types';
 import { circle, ellipse } from './geometry';
 import { getPart } from '../parts/library';
+import { fittedHairVariant } from '../parts/hairFitting';
 import { MOOD_EMOTES, MOOD_OVERLAYS } from '../parts/moods';
 import type { Activity } from '../parts/activities';
 import { ACTIVITY_BADGES } from '../parts/activities';
@@ -129,7 +130,16 @@ function resolveCharacterRig(recipe: CharacterRecipe | undefined, facing: Facing
   return { anchors, bodyAnchors, bodyId };
 }
 
-function variantForPart(part: PartDef, facing: Facing, rig: ResolvedCharacterRig): PartVariant | undefined {
+function variantForPart(
+  part: PartDef,
+  facing: Facing,
+  rig: ResolvedCharacterRig,
+  headId?: string,
+): PartVariant | undefined {
+  const fittedHair = headId && part.slot === 'hair'
+    ? fittedHairVariant(part.id, headId, facing)
+    : undefined;
+  if (fittedHair) return fittedHair;
   return part.buildVariant?.(facing, { bodyAnchors: rig.bodyAnchors, bodyId: rig.bodyId }) ?? part.facings[facing];
 }
 
@@ -250,7 +260,7 @@ function placeParts(
   for (const id of ids) {
     const part = getPart(id);
     if (!part) continue;
-    const variant = variantForPart(part, facing, rig);
+    const variant = variantForPart(part, facing, rig, recipe.parts.head);
     if (!variant) continue;
     const anchor = anchorForPart(part, rig, attachmentVariant);
     if (!anchor) continue;
@@ -794,7 +804,7 @@ function placeForLayers(recipe: CharacterRecipe, facing: Facing, rig: ResolvedCh
   const out: IdPlaced[] = [];
   for (const { id, slot } of order) {
     const part = getPart(id);
-    const variant = part ? variantForPart(part, facing, rig) : undefined;
+    const variant = part ? variantForPart(part, facing, rig, recipe.parts.head) : undefined;
     if (!part || !variant) continue;
     const anchor = anchorForPart(part, rig, neutralVariant);
     if (!anchor) continue;

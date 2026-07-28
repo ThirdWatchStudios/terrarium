@@ -17,8 +17,8 @@ full alphabet; the milestones are what "done" means.
 
 - [x] Importer (`scripts/importParts.ts`) with strict validation
       (`part-importer.md`; shared-identity production body art, static
-      production head/hair overlays, plus the first body-aware tee detail
-      adapter)
+      production head/hair overlays, the all-ten head-aware hair fit resolver,
+      plus the first body-aware tee detail adapter)
 - [x] Template scaffold SVGs for all six production bodies, all six human-head
       families plus the special fabrication-unit head, supported hair, and
       south/east tee intake (128 grid, anchors, capsule/head guides, seeded
@@ -128,7 +128,7 @@ The visible core of every character is authored.
 - [x] Body-type set finalized (see Bodies below), all bodies drawn with
       sub-anchors
 - [x] All 6 heads
-- [ ] 3 hairstyles (one per major family)
+- [x] 3 hairstyles (one per major family)
 - [ ] Tee visual approval + one more outfit detail kit (Blazer recommended)
 - [ ] Crowd pass + distance pass + stress test
 
@@ -136,7 +136,7 @@ The visible core of every character is authored.
 
 ### M3 — Full alphabet
 
-- [ ] Remaining hairstyles
+- [x] Remaining hairstyles
 - [ ] Remaining outfit detail kits
 - [x] Dress mechanics (the per-body matrix); dedicated visual art pass remains
 - [ ] LOD flags verified across the distance pass sizes
@@ -294,6 +294,18 @@ parting crease. Their generated scaffolds, four intentional compositor
 goldens, distance proof, 4,320-cell hair compatibility matrix, and full
 head/accessory matrices pass. Their inventory cells record user visual
 approval on 2026-07-10.
+
+All ten redesigned head-aware hairstyles are now live in production. Each
+stable hair ID resolves a fixed south/east/north variant for all six production
+head IDs. Resolution happens inside the compositor, so flat sprites, portraits,
+operational units, and reconstructable hair layers agree while recipes keep the
+same IDs. The canonical imported SVGs remain source/fallback geometry. The
+first Short/Bob/Ponytail slice is byte-locked; the completion slice adds Pixie,
+Side-part, Bun, Curly, Coils, Long straight, and Balding. Every fitted pair
+remains distinct at 32 px across the authored facings. The 4,320-cell
+top-overflow audit improves from the pre-fitting 766 to 467 high-contrast-only
+cells without non-top overflow; this promotion adds no animation or
+export-schema state.
 
 ### 4. Bodies (§4b) — archetype frames, N × 3 facings
 

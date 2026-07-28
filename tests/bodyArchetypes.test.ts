@@ -637,7 +637,8 @@ describe('production body archetypes', () => {
         const accessories = accessorySets[outfitIndex % accessorySets.length];
         const r = recipe(body, outfit, [...accessories]);
         // Legacy bodies keep their fallback anchors and framing. The shared
-        // stable head id intentionally receives the promoted Round hull.
+        // stable head and Side-part IDs intentionally receive the promoted
+        // Round hull and fitted head-aware hair geometry.
         r.parts.head = 'head-round';
         for (const pose of POSES) {
           for (const facing of facings) {
@@ -653,7 +654,7 @@ describe('production body archetypes', () => {
     }
 
     expect(count).toBe(1980);
-    expect(digest.digest('hex')).toBe('2f31b10146a3b51ef23f8c07a603315b61c4308c94336d7f1e0e59c8a6ba7611');
+    expect(digest.digest('hex')).toBe('f545cf41c80d49e5ad6fe168f6545659ed30122ded568df17c3a631db37450f5');
   });
 
   it('keeps the original garment vertical slice deterministic and unclipped', () => {

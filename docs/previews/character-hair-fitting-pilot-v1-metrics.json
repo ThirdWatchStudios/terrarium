@@ -1,0 +1,80 @@
+{
+  "status": "promoted-three-carrier-slice",
+  "productionHairMappings": [
+    {
+      "partId": "hair-short",
+      "constructionId": "crop",
+      "label": "Short / Crop",
+      "note": "tight cap · central air preserved"
+    },
+    {
+      "partId": "hair-bob",
+      "constructionId": "bob",
+      "label": "Bob",
+      "note": "jaw mass · open profile face"
+    },
+    {
+      "partId": "hair-ponytail",
+      "constructionId": "tail",
+      "label": "Ponytail / Tail",
+      "note": "rigid rear drop · lateral bridge allowed"
+    }
+  ],
+  "heads": [
+    {
+      "partId": "head-round",
+      "fitId": "round",
+      "label": "Round"
+    },
+    {
+      "partId": "head-oval",
+      "fitId": "broad",
+      "label": "Broad"
+    },
+    {
+      "partId": "head-long",
+      "fitId": "long",
+      "label": "Long"
+    },
+    {
+      "partId": "head-boxy",
+      "fitId": "block",
+      "label": "Block"
+    },
+    {
+      "partId": "head-angular",
+      "fitId": "point",
+      "label": "Point"
+    },
+    {
+      "partId": "head-soft-square",
+      "fitId": "lantern",
+      "label": "Lantern"
+    }
+  ],
+  "mechanism": {
+    "phase": "Terrarium composition/export bake",
+    "recipeIdsChanged": false,
+    "exportSchemaChanged": false,
+    "runtimeMetadataAdded": false,
+    "authoredWestFacings": 0
+  },
+  "animationCost": {
+    "frames": 0,
+    "bones": 0,
+    "poses": 0,
+    "rendererStates": 0,
+    "secondaryMotionSystems": 0
+  },
+  "audit": {
+    "renderCount": 144,
+    "missingHair": [],
+    "hairEdgeContacts": [],
+    "deterministicDigest": "49f44d86c8dd20a6e47fb444ec4710cb716aaa738f38c03e4c02eb59abcae377"
+  },
+  "restoration": {
+    "productionSentinel": "byte-identical across proof generation",
+    "partReferences": "identical",
+    "facingReferences": "identical"
+  }
+}

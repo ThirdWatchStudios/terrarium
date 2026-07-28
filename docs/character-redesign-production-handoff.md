@@ -1,7 +1,7 @@
 # Character Redesign Production Handoff
 
-Status: **design direction locked; bodies, neutral-arm fallback, and heads
-promoted; fitted hair and runtime scale remain**
+Status: **design direction locked; bodies, neutral-arm fallback, heads, and all
+ten fitted hairstyles promoted; runtime scale remains**
 
 Last design review: **2026-07-27**
 
@@ -21,16 +21,22 @@ instead of assuming every artifact below is committed.
 The locked direction is being promoted in bounded production slices. As of
 2026-07-27, the six accepted body hulls, body-owned anchors, generated
 neutral-arm fallback, six redesigned head hulls, tightened head/body separation,
-and static production framing are live in Terrarium. Authored SVG sources,
-importer/scaffolds, picker/RNG/export registration, per-body Dress dispatch,
-flat/layer/unit/portrait routes, external anchors, and atlas pivots agree.
-Fitted hair and the Unity renderer scale do not use the new direction yet.
+static production framing, and all ten mapped head-aware hairstyles are live in
+Terrarium. Authored SVG sources, importer/scaffolds, picker/RNG/export
+registration, per-body Dress dispatch, flat/layer/unit/portrait routes,
+external anchors, and atlas pivots agree. Every mapped hair ID now resolves one
+deterministic fitted variant for each of the six production heads and three
+authored facings. The Unity renderer scale does not use the new direction yet.
 
-The remaining hair and scale review scripts temporarily install candidates
-through real registered parts, render through the production compositor, and
-restore the original references. The head-gap proof is now historical evidence
-for the promoted sources and anchors; its PNGs no longer describe an
-unpromoted candidate.
+The promoted hair fitting is a Terrarium composition/export concern: recipes
+retain their stable hair IDs, flat and reconstructable layer output use the
+same fixed variant, and Unity receives ordinary baked art without fit metadata
+or animation state. Canonical hair SVGs remain the authored source/fallback for
+unmapped special heads. The remaining scale review script temporarily
+installs candidates through real registered parts, renders through the
+production compositor, and restores the original references. The head-gap
+proof is now historical evidence for the promoted sources and anchors; its PNGs
+no longer describe an unpromoted candidate.
 
 Prop redesign is a separate future pass. The character scale calibration held
 real props at their current authored envelope specifically so that prop work would
@@ -46,7 +52,7 @@ not contaminate the character decision.
 | Profile arms | East/west neutral arms may disappear inside the body silhouette | Do not add an outboard arm merely to make the profile show a limb |
 | Heads | Round, Broad, Long, Block, Point, and Lantern | Promote authored lower-face distinction while keeping one rigid head transform |
 | Head/body air | A close, designed neck break without a detached “floating head” read | Keep filled head and torso silhouettes separate; allow expanded outlines to kiss after gameplay downsampling |
-| Hair | Crop, Sweep, Bob, Knot, Tail, and Cloud, fitted to each head envelope | Author true side profiles and either bake fitted variants or carry static fit metadata |
+| Hair | Crop, Sweep, Bob, Knot, Tail, Cloud, Curtain, Pixie, and temple-band constructions fitted to each head envelope | All ten mapped hairstyles are promoted as fixed head-aware variants; preserve the static resolver and treat individual strand polish as a later bounded pass |
 | World scale | **−35% from the current installed character envelope** | Apply a global factor of `0.65`; keep the 128-unit authoring canvas unchanged |
 | Props | Deferred to their own redesign pass | Handhelds follow character anchors; furniture, facilities, and decor do not inherit character scale blindly |
 
@@ -243,12 +249,18 @@ Bob and Tail may touch the body laterally or at the rear while the face and
 central head/body separation remain readable. That bridge is a static
 silhouette choice, not a pose or renderer state.
 
-### Hair production debt
+### Hair polish debt
 
-- Decide whether fit envelopes generate concrete head/hair SVG combinations at
-  bake time or become static authoring metadata.
-- Promote canonical fitted south/east/north sources and preserve the true
-  profile rule.
+- The mechanism is now locked: Terrarium resolves a fixed
+  `head × hair × facing` variant during composition/export. Stable recipe IDs
+  and the external schema do not change, and no runtime fit metadata is
+  introduced.
+- All ten mapped hairstyles are promoted for all six production heads in
+  south/east/north. Preserve their true profile rule, 32/40/48 px pair
+  distinction, and flat/layer parity.
+- The first Short/Bob/Ponytail slice remains byte-locked while the seven-style
+  completion supplies Pixie, Side-part, Bun, Curly, Coils, Long straight, and
+  Balding.
 - Keep tall styles as an explicit framing problem. Do not silently enlarge the
   runtime cell or add motion to accommodate them.
 - Perform a later polish pass on individual hair shapes without reopening the
@@ -341,8 +353,8 @@ Do not restart these without new runtime evidence:
 1. **Isolate the work.** Complete for the body slice: the wall checkpoint was
    clean and only character files were changed. Create a character branch
    before committing if this slice is checkpointed.
-2. **Ratify IDs and migration mapping.** Body and head mapping complete. Hair
-   mapping remains for its own promotion slice.
+2. **Ratify IDs and migration mapping.** Complete. Body, head, and all ten hair
+   styles keep their existing recipe IDs; no fitted-hair migration is required.
 3. **Promote bodies and body-owned anchors.** Complete for all six bodies,
    including independent Pinch registration and Dress dispatch.
 4. **Promote the neutral-arm fallback atomically.** Complete in Terrarium:
@@ -353,8 +365,10 @@ Do not restart these without new runtime evidence:
    eighteen authored sources, shared chin band, body-owned head offsets,
    production-only five-unit frame, portrait policy, external anchors, and
    atlas pivots agree.
-6. **Promote fitted hair.** Choose bake-time generated variants versus static
-   fit metadata, then author true south/east/north sources.
+6. **Promote fitted hair.** Complete for all ten mapped styles. The original
+   Short/Crop, Bob, and Ponytail/Tail pixels remain locked; the second slice
+   adds Pixie, Side-part/Sweep, Bun/Knot, Curly, Coils, Long straight, and
+   Balding through the same deterministic path.
 7. **Rebuild garment compatibility.** Regenerate conforming layers and
    body-aware detail kits; author the rare silhouette-changing variants per
    body.
@@ -438,10 +452,15 @@ Do not restart these without new runtime evidence:
 
 ### Hair
 
+- [Promoted seven-style completion proof](previews/character-hair-fitting-completion-v2.png)
+- [Promoted seven-style completion metrics](previews/character-hair-fitting-completion-v2-metrics.json)
+- [Promoted three-carrier fitting proof](previews/character-hair-fitting-pilot-v1.png)
+- [Promoted three-carrier fitting metrics](previews/character-hair-fitting-pilot-v1-metrics.json)
 - [Hair silhouette sheet](previews/character-hair-silhouette-v5.png)
 - [Hair context sheet](previews/character-hair-silhouette-context-v5.png)
 - [Head/hair fit matrix](previews/character-hair-fit-matrix-v5-1.png)
 - [Hair metrics](previews/character-hair-silhouette-v5-metrics.json)
+- Generator: [`characterHairFittingPilot.ts`](../scripts/characterHairFittingPilot.ts)
 - Generator: [`characterHairSilhouettePreview.ts`](../scripts/characterHairSilhouettePreview.ts)
 
 ### World scale
@@ -465,7 +484,9 @@ When production work resumes:
 3. Confirm the accepted 112-wall source is still the installed architectural
    reference.
 4. Confirm the production IDs and Unity scale seam before changing art.
-5. Start with body IDs and anchors, not hair polish or prop scale.
+5. Keep any later hair polish inside the locked static resolver; proceed to
+   garment compatibility or the separate runtime-scale slice without reopening
+   the accepted body/head foundation.
 6. Run raster-heavy proof/test commands sequentially.
 7. Keep prop redesign as a separate workstream, using the selected smaller
    character only as its human-scale reference.

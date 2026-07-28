@@ -51,7 +51,10 @@ complete facing set declared by its explicit import target must be present.
 Body and static head/hair targets require all three source facings. Tee
 deliberately requires south and east only; its north detail remains empty.
 Putting a valid complete set in this canonical directory makes it compiler
-input; visual acceptance remains a separate Definition of Done gate.
+input; visual acceptance remains a separate Definition of Done gate. These
+static hair overlays remain the canonical authored source and fallback
+geometry even when a production composition route applies a head-aware fitted
+variant.
 
 The importer currently accepts:
 
@@ -76,6 +79,15 @@ measurably changes under generic flattening even at production sizes, so those
 explicit targets require visible paths directly under `translate(64 44)`.
 Bob retains the normal transform-baking path as the approved interoperability
 control.
+
+For all ten mapped hair IDs, the compositor now resolves a fixed fitted variant
+from the selected production head ID after import. The importer and source
+contract remain static: no fit envelope is inferred from SVG, no
+`buildVariant` is added to imported definitions, and no recipe or export-schema
+field changes. Flat and reconstructable layer routes share this resolver.
+Editing one of these canonical hair SVGs alone therefore changes its
+fallback/source geometry, but does not replace the six promoted head-specific
+fits; update and review the deterministic fit table as part of that work.
 
 ## Sentinel palette
 
