@@ -7,13 +7,15 @@ Place strict-dialect SVGs here as
 
 The current intake accepts complete facing sets for the six production bodies
 and existing static production parts in `head` and `hair`, plus the explicit
-`outfit-tee` anchored-detail target and componentized `outfit-blazer` target.
+`outfit-tee` anchored-detail target and componentized `outfit-blazer` and
+`outfit-polo` targets.
 Tee is authored once on `body-balanced` in south/east; the importer pre-expands
 its detail-only geometry onto the neck anchor of all six production bodies.
 Blazer keeps lapels, buttons, and pocket in six separate south/east files and
-fits them through upper/lower body frames in a fixed manifest order. The
-conforming torso and z-order remain owned by the production part, while
-legacy, future, and deliberately unauthored north variants retain the
+fits them through upper/lower body frames in a fixed manifest order. Polo keeps
+collar and placket in four separate files and fits both through the upper-torso
+frame. The conforming torso and z-order remain owned by the production part,
+while legacy, future, and deliberately unauthored north variants retain the
 procedural fallback.
 
 `body/` contains the 18 canonical production sources for `body-compact`,
@@ -60,8 +62,8 @@ and received visual approval on 2026-07-10.
 
 The approved human body/head foundations, the special FAB head, and all ten
 approved mapped hair sources now live in this tree. Detail-only Tee mechanics
-and the componentized Blazer source set now join them; remaining outfit and
-later asset-polish passes follow.
+and the componentized Blazer and Polo source sets are approved. Remaining
+outfit and later asset-polish passes follow.
 
 See `docs/part-importer.md` for the SVG dialect, sentinel palette, validation
 rules, and the component-detail manifest established by Blazer.

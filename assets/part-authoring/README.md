@@ -20,6 +20,8 @@ The current supported starters are:
 - `scaffolds/outfit/tee.{south,east}.svg` (seeded on `body-balanced`)
 - `scaffolds/outfit/blazer.{lapels,buttons,pocket}.{south,east}.svg`
   (each component seeded separately on `body-balanced`)
+- `scaffolds/outfit/polo.{collar,placket}.{south,east}.svg`
+  (each component seeded separately on `body-balanced`)
 
 They are seeded with the current production geometry, so they support a true
 source/edit/import proof rather than requiring a redraw. The tee starter shows
@@ -27,11 +29,13 @@ the `body-balanced` reference silhouette plus neck, chest, waist, and hem rig
 guides; only its neckline detail is imported. The Blazer starters expose the
 same rig while keeping lapels, buttons, and pocket in separately editable
 files; the importer aggregates them in manifest order and fits each component
-through its declared upper/lower torso frame. Each body starter shows its full
-visible production art plus generated markers for all 11 typed rig points and
-`bodyOrigin`. Those `guide/*`, `reference/*`, and `anchors` paths are context
-only: the current rig remains TypeScript-owned and is never imported from the
-scaffold. Accessory starters still wait for their corresponding adapter.
+through its declared upper/lower torso frame. The Polo starters reuse that
+contract for separately editable collar and placket files, both fitted through
+the upper-torso frame. Each body starter shows its full visible production art
+plus generated markers for all 11 typed rig points and `bodyOrigin`. Those
+`guide/*`, `reference/*`, and `anchors` paths are context only: the current rig
+remains TypeScript-owned and is never imported from the scaffold. Accessory
+starters still wait for their corresponding adapter.
 
 The oval, boxy, long, angular, and soft-square head families form one complete
 15-SVG approved production batch. Their scaffolds and canonical source sets
@@ -61,7 +65,7 @@ the production matrices, and received visual approval on 2026-07-10.
 ## Canonical headless workflow
 
 1. Copy a complete scaffold set to a working directory (three facings for
-   bodies, heads, and hair; south and east for the tee or for every Blazer
+   bodies, heads, and hair; south and east for the tee or for every Blazer/Polo
    component, whose north kits are intentionally unauthored).
 2. Edit only `art/*` and `detail/*` paths. Preserve unique semantic IDs, the
    `0 0 128 128` viewBox, exact sentinel paint, and explicit nonzero fill.
@@ -78,8 +82,8 @@ deterministically, changes only intended snapshots, and passes visual review —
 not whether a named editor preserves it.
 
 The approved body and head sets plus all ten mapped hair styles now have
-approved canonical sources. Detail-only Tee refinement, the remaining outfit
-components, and later asset-polish work follow the componentized Blazer proof.
+approved canonical sources. Tee, Blazer, and Polo are approved; the remaining
+outfit components and later asset-polish work follow.
 
 ## Optional visual-editor use
 

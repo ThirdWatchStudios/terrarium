@@ -158,20 +158,22 @@ function validComponentDetailSvg(component: string, shapeCount: number): string 
   return svg(`<g id="detail/${component}">${paths}</g>`);
 }
 
-async function blazerComponentSourceTree(
+async function componentSourceTree(
+  targetId: 'outfit-blazer' | 'outfit-polo',
+  slug: 'blazer' | 'polo',
   omitted?: { component: string; facing: Facing },
 ): Promise<string> {
-  const root = await mkdtemp(path.join(tmpdir(), 'terrarium-blazer-import-'));
+  const root = await mkdtemp(path.join(tmpdir(), `terrarium-${slug}-import-`));
   roots.push(root);
   await mkdir(path.join(root, 'outfit'), { recursive: true });
-  const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-blazer')!;
+  const target = PART_IMPORT_TARGETS.find(({ id }) => id === targetId)!;
   for (const component of target.components ?? []) {
     for (const facing of FACINGS) {
       const shapeCount = component.facings[facing]?.shapeCount;
       if (shapeCount === undefined) continue;
       if (omitted?.component === component.id && omitted.facing === facing) continue;
       await writeFile(
-        path.join(root, 'outfit', `blazer.${component.id}.${facing}.svg`),
+        path.join(root, 'outfit', `${slug}.${component.id}.${facing}.svg`),
         validComponentDetailSvg(component.id, shapeCount),
         'utf8',
       );
@@ -554,7 +556,7 @@ describe('part source tree and generated registration', () => {
   });
 
   it('aggregates Blazer components in manifest order and fits both body frames', async () => {
-    const root = await blazerComponentSourceTree();
+    const root = await componentSourceTree('outfit-blazer', 'blazer');
     const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-blazer')!;
     const [imported] = await compilePartDirectory({
       inputDir: root,
@@ -585,9 +587,39 @@ describe('part source tree and generated registration', () => {
       .not.toEqual(imported.bodyVariants['body-tall'].east);
   });
 
+  it('aggregates Polo collar and placket independently through the upper-torso frame', async () => {
+    const root = await componentSourceTree('outfit-polo', 'polo');
+    const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-polo')!;
+    const [imported] = await compilePartDirectory({
+      inputDir: root,
+      sourcePathPrefix: 'assets/parts',
+      catalog: [target],
+    });
+    if (imported.kind !== 'body-detail') throw new Error('Expected body-detail import');
+
+    expect(imported.sourceFiles).toEqual([
+      'assets/parts/outfit/polo.collar.east.svg',
+      'assets/parts/outfit/polo.collar.south.svg',
+      'assets/parts/outfit/polo.placket.east.svg',
+      'assets/parts/outfit/polo.placket.south.svg',
+    ]);
+    expect(Object.keys(imported.bodyVariants)).toEqual(BODY_ARCHETYPES.map(({ id }) => id));
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(imported.bodyVariants[archetype.id].south).toHaveLength(2);
+      expect(imported.bodyVariants[archetype.id].east).toHaveLength(2);
+      expect(imported.bodyVariants[archetype.id].north).toBeUndefined();
+      expect(imported.bodyVariants[archetype.id].south?.every(({ silhouette }) => silhouette === false))
+        .toBe(true);
+    }
+    expect(imported.bodyVariants['body-balanced'].south)
+      .not.toEqual(imported.bodyVariants['body-large-frame'].south);
+    expect(imported.bodyVariants['body-balanced'].east)
+      .not.toEqual(imported.bodyVariants['body-tall'].east);
+  });
+
   it('rejects incomplete or flattened component-detail source sets', async () => {
     const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-blazer')!;
-    const complete = await blazerComponentSourceTree();
+    const complete = await componentSourceTree('outfit-blazer', 'blazer');
     await expect(compilePartDirectory({
       inputDir: complete,
       sourcePathPrefix: 'assets/parts',
@@ -597,7 +629,11 @@ describe('part source tree and generated registration', () => {
       }],
     })).rejects.toThrow(/component manifest repeats lapels/);
 
-    const incomplete = await blazerComponentSourceTree({ component: 'pocket', facing: 'east' });
+    const incomplete = await componentSourceTree(
+      'outfit-blazer',
+      'blazer',
+      { component: 'pocket', facing: 'east' },
+    );
     await expect(compilePartDirectory({
       inputDir: incomplete,
       sourcePathPrefix: 'assets/parts',
@@ -691,13 +727,13 @@ describe('part source tree and generated registration', () => {
     expect(generated).toBe(emitImportedPartArt(imports));
   });
 
-  it('keeps six bodies, ten canonical hairs, seven heads, Tee, and Blazer as twenty-five deliberate authored overlays', async () => {
+  it('keeps six bodies, ten canonical hairs, seven heads, Tee, Blazer, and Polo as twenty-six deliberate authored overlays', async () => {
     const imports = await compilePartDirectory({
       inputDir: path.resolve('assets/parts'),
       sourcePathPrefix: 'assets/parts',
       catalog: PART_IMPORT_TARGETS,
     });
-    expect(imports).toHaveLength(25);
+    expect(imports).toHaveLength(26);
     expect(imports.map(({ id }) => id)).toEqual([
       'body-balanced',
       'body-compact',
@@ -723,6 +759,7 @@ describe('part source tree and generated registration', () => {
       'head-round',
       'head-soft-square',
       'outfit-blazer',
+      'outfit-polo',
       'outfit-tee',
     ]);
 
@@ -933,6 +970,25 @@ describe('part source tree and generated registration', () => {
       expect(blazer.bodyVariants[archetype.id].south).toHaveLength(6);
       expect(blazer.bodyVariants[archetype.id].east).toHaveLength(4);
       expect(blazer.bodyVariants[archetype.id].north).toBeUndefined();
+    }
+
+    const polo = imports.find(({ id }) => id === 'outfit-polo')!;
+    if (polo.kind !== 'body-detail') throw new Error('Expected body-detail Polo import');
+    expect(polo).toMatchObject({
+      id: 'outfit-polo',
+      slot: 'outfit',
+      sourceKind: 'authored',
+      sourceFiles: [
+        'assets/parts/outfit/polo.collar.east.svg',
+        'assets/parts/outfit/polo.collar.south.svg',
+        'assets/parts/outfit/polo.placket.east.svg',
+        'assets/parts/outfit/polo.placket.south.svg',
+      ],
+    });
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(polo.bodyVariants[archetype.id].south).toHaveLength(2);
+      expect(polo.bodyVariants[archetype.id].east).toHaveLength(2);
+      expect(polo.bodyVariants[archetype.id].north).toBeUndefined();
     }
   });
 });
@@ -1184,19 +1240,38 @@ describe('imported art overlay', () => {
     });
     expect(productionOutfit.buildVariant).toBeTypeOf('function');
 
-    const componentTarget = PART_IMPORT_TARGETS.find(({ importMode }) => importMode === 'component-detail')!;
-    expect(componentTarget).toMatchObject({
-      id: 'outfit-blazer',
-      slot: 'outfit',
-      anchor: 'body',
-      facings: { south: true, east: true },
-      buildVariant: true,
-      referenceBodyId: 'body-balanced',
-      components: [
-        { id: 'lapels', frame: 'upper-torso' },
-        { id: 'buttons', frame: 'lower-torso' },
-        { id: 'pocket', frame: 'lower-torso' },
-      ],
-    });
+    const componentTargets = PART_IMPORT_TARGETS
+      .filter(({ importMode }) => importMode === 'component-detail');
+    expect(componentTargets).toMatchObject([
+      {
+        id: 'outfit-blazer',
+        slot: 'outfit',
+        anchor: 'body',
+        facings: { south: true, east: true },
+        buildVariant: true,
+        referenceBodyId: 'body-balanced',
+        components: [
+          { id: 'lapels', frame: 'upper-torso' },
+          { id: 'buttons', frame: 'lower-torso' },
+          { id: 'pocket', frame: 'lower-torso' },
+        ],
+      },
+      {
+        id: 'outfit-polo',
+        slot: 'outfit',
+        anchor: 'body',
+        facings: { south: true, east: true },
+        buildVariant: true,
+        referenceBodyId: 'body-balanced',
+        components: [
+          { id: 'collar', frame: 'upper-torso' },
+          { id: 'placket', frame: 'upper-torso' },
+        ],
+      },
+    ]);
+    for (const target of componentTargets) {
+      expect(PART_LIBRARY.find(({ id }) => id === target.id)?.buildVariant)
+        .toBeTypeOf('function');
+    }
   });
 });

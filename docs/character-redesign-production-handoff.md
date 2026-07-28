@@ -2,7 +2,7 @@
 
 Status: **design direction locked; bodies, neutral-arm fallback, heads, and all
 ten fitted hairstyles promoted; componentized Blazer and anchored Tee
-approved; runtime scale remains**
+approved; componentized Polo approved; runtime scale remains**
 
 Last design review: **2026-07-27**
 
@@ -31,7 +31,7 @@ authored facings. The first garment follow-up is now implemented as a
 componentized Blazer source set: lapels, buttons, and pocket fit all six
 production bodies without replacing their conforming silhouettes. The Unity
 renderer scale does not use the new direction yet. The componentized Blazer
-and anchored Tee received visual approval on 2026-07-27.
+anchored Tee, and componentized Polo received visual approval on 2026-07-27.
 
 The promoted hair fitting is a Terrarium composition/export concern: recipes
 retain their stable hair IDs, flat and reconstructable layer output use the
@@ -379,6 +379,7 @@ Do not restart these without new runtime evidence:
    body. In progress: the componentized Blazer south/east kit and six-body
    upper/lower torso fitting path are mechanically complete and visually
    approved. The matching six-body, four-facing, 40/48 px Tee sheet is
+   mechanically complete and visually approved. The Polo collar/placket kit is
    mechanically complete and visually approved; remaining detail kits and the
    dedicated Dress art pass remain.
 8. **Implement the `0.65` world scale in the actual runtime seam.** Keep source
@@ -476,6 +477,7 @@ Do not restart these without new runtime evidence:
 
 - [Componentized Blazer fit sheet](previews/character-blazer-component-fit-v1.png)
 - [Anchored Tee fit sheet](previews/character-tee-anchored-fit-v1.png)
+- [Componentized Polo fit sheet](previews/character-polo-component-fit-v1.png)
 - [All-outfit distance sheet](previews/body-archetypes-outfit-distance.png)
 - [East-facing outfit compatibility](previews/body-archetypes-outfits-east.png)
 - Generator: [`bodyArchetypePreview.ts`](../scripts/bodyArchetypePreview.ts)

@@ -74,6 +74,22 @@ export const PART_SCAFFOLD_SPECS = [
     slug: 'blazer.pocket',
     facings: ['south', 'east'],
   },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-polo',
+    referenceBodyId: 'body-balanced',
+    componentId: 'collar',
+    slug: 'polo.collar',
+    facings: ['south', 'east'],
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-polo',
+    referenceBodyId: 'body-balanced',
+    componentId: 'placket',
+    slug: 'polo.placket',
+    facings: ['south', 'east'],
+  },
 ] as const satisfies readonly {
   slot: 'body' | 'head' | 'hair' | 'outfit';
   referenceId: string;

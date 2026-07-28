@@ -350,7 +350,7 @@ const OUTFIT_PROOF_PALETTES: readonly CharacterRecipe['palette'][] = [
 ];
 
 interface FocusedOutfitProof {
-  outfit: 'outfit-tee' | 'outfit-blazer';
+  outfit: 'outfit-tee' | 'outfit-blazer' | 'outfit-polo';
   title: string;
   description: string;
   sourceLabel: string;
@@ -468,6 +468,15 @@ function teeDetailSheet(): string {
     title: 'Anchored Tee — production body fit',
     description: 'Crew rib and neck opening follow each body’s neck anchor. West mirrors east; north keeps the stable code-builder fallback.',
     sourceLabel: 'Authored source set: tee.south.svg · tee.east.svg',
+  });
+}
+
+function poloDetailSheet(): string {
+  return focusedOutfitDetailSheet({
+    outfit: 'outfit-polo',
+    title: 'Componentized Polo — production body fit',
+    description: 'Collar and placket share the upper-torso frame. West mirrors east; north keeps the stable code-builder collar.',
+    sourceLabel: 'Authored source set: polo.collar.* · polo.placket.*',
   });
 }
 
@@ -745,6 +754,7 @@ function main(): void {
   writeSvgAndPng(outDir, 'body-archetypes-rigged', riggedSliceSheet());
   writeSvgAndPng(outDir, 'character-blazer-component-fit-v1', blazerDetailSheet());
   writeSvgAndPng(outDir, 'character-tee-anchored-fit-v1', teeDetailSheet());
+  writeSvgAndPng(outDir, 'character-polo-component-fit-v1', poloDetailSheet());
   writeSvgAndPng(outDir, 'body-archetypes-poses-south', poseProofSheet('south'));
   writeSvgAndPng(outDir, 'body-archetypes-poses-east', poseProofSheet('east'));
   writeSvgAndPng(outDir, 'body-archetypes-poses-north', poseProofSheet('north'));

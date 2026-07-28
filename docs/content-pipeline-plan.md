@@ -470,7 +470,14 @@ icons), not by upfront design.
    `body-detail` runtime overlay with no recipe/export metadata. North and
    unknown bodies preserve the code builder fallback. The resulting 40/48 px
    multi-body proof received visual approval on 2026-07-27.
-10. **Provenance**: each imported asset records source
+10. **First component-contract reuse**: `outfit-polo` keeps collar and placket
+   in four independent south/east files. Both components fit through the
+   upper-torso frame and install through the same ordinary `body-detail`
+   overlay as Blazer. North and unknown bodies retain the code-builder
+   fallback; the focused six-body, four-facing, 40/48 px proof is
+   `character-polo-component-fit-v1.png` and received visual approval on
+   2026-07-27.
+11. **Provenance**: each imported asset records source
    (`authored | generated | curated`) in its generated module, so lints and
    future audits know what's re-generatable. `authored` means deliberate
    canonical repo SVG regardless of authoring tool; `generated` means
@@ -480,8 +487,8 @@ icons), not by upfront design.
 The approved body and six-head sets plus all ten approved mapped hair source
 sets now form the canonical silhouette foundation. The remaining outfit
 manifests and the separate runtime-scale integration can follow the
-componentized Blazer slice. The phase numbers describe pipeline scope; they do
-not override visual-impact priority.
+componentized Blazer/Polo slices. The phase numbers describe pipeline scope;
+they do not override visual-impact priority.
 
 ### Phase 3 — Wall bevel piece kit (~1 week; first authoring test)
 

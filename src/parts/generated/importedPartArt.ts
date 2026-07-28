@@ -537,6 +537,73 @@ export const IMPORTED_PART_ART = [
   },
   {
     kind: "body-detail",
+    id: "outfit-polo",
+    slot: "outfit",
+    bodyVariants: {
+      "body-compact": {
+        south: [
+          { d: "M-11.02-29L0-13.64 11.02-29Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M0-13.64L0-4.64", stroke: "#00000026", strokeWidth: 2, silhouette: false },
+        ],
+        east: [
+          { d: "M-0.65-25L9.86-13.64 2.25-25Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M9.86-13.64L18.86-4.64", stroke: "#00000026", strokeWidth: 2, silhouette: false },
+        ],
+      },
+      "body-balanced": {
+        south: [
+          { d: "M-9.5-29L0-13.64 9.5-29Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M0-13.64L0-4.64", stroke: "#00000026", strokeWidth: 2, silhouette: false },
+        ],
+        east: [
+          { d: "M-0.591-25L8.964-13.64 2.045-25Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M8.964-13.64L17.145-4.64", stroke: "#00000026", strokeWidth: 2, silhouette: false },
+        ],
+      },
+      "body-large-frame": {
+        south: [
+          { d: "M-12.35-32L0-16.64 12.35-32Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M0-16.64L0-7.64", stroke: "#00000026", strokeWidth: 2, silhouette: false },
+        ],
+        east: [
+          { d: "M-0.709-28L10.757-16.64 2.454-28Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M10.757-16.64L20.574-7.64", stroke: "#00000026", strokeWidth: 2, silhouette: false },
+        ],
+      },
+      "body-tall": {
+        south: [
+          { d: "M-7.41-34L0-18 7.41-34Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M0-18L0-8.625", stroke: "#00000026", strokeWidth: 2, silhouette: false },
+        ],
+        east: [
+          { d: "M-0.461-29.833L6.992-18 1.595-29.833Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M6.992-18L13.373-8.625", stroke: "#00000026", strokeWidth: 2, silhouette: false },
+        ],
+      },
+      "body-soft": {
+        south: [
+          { d: "M-7.6-28L0-12.64 7.6-28Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M0-12.64L0-3.64", stroke: "#00000026", strokeWidth: 2, silhouette: false },
+        ],
+        east: [
+          { d: "M-0.532-24L8.068-12.64 1.841-24Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M8.068-12.64L15.431-3.64", stroke: "#00000026", strokeWidth: 2, silhouette: false },
+        ],
+      },
+      "body-pinch": {
+        south: [
+          { d: "M-7.6-29L0-14.28 7.6-29Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M0-14.28L0-5.655", stroke: "#00000026", strokeWidth: 2, silhouette: false },
+        ],
+        east: [
+          { d: "M-0.591-25.167L8.964-14.28 2.045-25.167Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M8.964-14.28L17.145-5.655", stroke: "#00000026", strokeWidth: 2, silhouette: false },
+        ],
+      },
+    },
+  },
+  {
+    kind: "body-detail",
     id: "outfit-tee",
     slot: "outfit",
     bodyVariants: {
@@ -823,6 +890,16 @@ export const IMPORTED_PART_PROVENANCE = [
       "assets/parts/outfit/blazer.lapels.south.svg",
       "assets/parts/outfit/blazer.pocket.east.svg",
       "assets/parts/outfit/blazer.pocket.south.svg",
+    ],
+  },
+  {
+    id: "outfit-polo",
+    sourceKind: "authored",
+    sourceFiles: [
+      "assets/parts/outfit/polo.collar.east.svg",
+      "assets/parts/outfit/polo.collar.south.svg",
+      "assets/parts/outfit/polo.placket.east.svg",
+      "assets/parts/outfit/polo.placket.south.svg",
     ],
   },
   {

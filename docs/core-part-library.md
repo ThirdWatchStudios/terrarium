@@ -18,12 +18,13 @@ full alphabet; the milestones are what "done" means.
 - [x] Importer (`scripts/importParts.ts`) with strict validation
       (`part-importer.md`; shared-identity production body art, static
       production head/hair overlays, the all-ten head-aware hair fit resolver,
-      the first body-aware tee adapter, and componentized Blazer detail intake)
+      the first body-aware tee adapter, and componentized Blazer/Polo detail
+      intake)
 - [x] Template scaffold SVGs for all six production bodies, all six human-head
       families plus the special fabrication-unit head, supported hair, and
-      south/east Tee/Blazer intake (128 grid, anchors, capsule/head guides,
-      seeded editable art, named reference layer) with semantic IDs for every
-      editable and ignored path
+      south/east Tee/Blazer/Polo intake (128 grid, anchors, capsule/head
+      guides, seeded editable art, named reference layer) with semantic IDs for
+      every editable and ignored path
 - [x] Sentinel color palette defined and generated as ASE, GPL, and readable
       SVG companions (`npm run parts:scaffolds`); every scaffold also embeds
       the five exact swatches
@@ -35,7 +36,9 @@ full alphabet; the milestones are what "done" means.
       remains part of M1 rather than an importer prerequisite.
 - [x] Component-detail mechanics proof: six Blazer sources keep lapels,
       buttons, and pocket separately addressable, aggregate in manifest order,
-      and fit upper/lower torso frames across all six production bodies.
+      and fit upper/lower torso frames across all six production bodies; four
+      Polo sources reuse that contract for independent upper-frame collar and
+      placket pieces.
 - [x] Body-art ownership proof: 18 canonical production SVGs → one in-place
       shared `PartDef` set with byte-stable visible geometry and unchanged typed
       rig identities
@@ -405,15 +408,24 @@ behind.
 > is `character-blazer-component-fit-v1.png`; broader outfit and 32/48 px
 > sheets were regenerated from the same production compositor and received
 > visual approval.
+>
+> **Polo component-detail intake (approved 2026-07-27):**
+> four canonical files keep `collar` and `placket` independent across
+> south/east. Both pieces fit through the neck/shoulder/chest frame and replace
+> only known production-body variants; north, legacy, and future bodies retain
+> the handwritten fallback. The focused review sheet is
+> `character-polo-component-fit-v1.png`, which received visual approval across
+> the six bodies, four facings, palette/style variants, and literal 40/48 px
+> cells.
 
 | Garment | Detail pieces | south | east | north |
 |---|---|---|---|---|
 | tee | neckline | [x] | [x] | — |
-| polo | collar, placket | [ ] | [ ] | — |
+| polo | collar, placket | [x] | [x] | — |
 | shirt-tie | collar, tie | [ ] | [ ] | — |
 | turtleneck | neck band | [ ] | [ ] | [ ] |
 | cardigan | button line, trim | [ ] | [ ] | — |
-| blazer | lapels, buttons, pocket | [ ] | [ ] | — |
+| blazer | lapels, buttons, pocket | [x] | [x] | — |
 | suit-jacket | lapels, pocket square | [ ] | [ ] | — |
 | hoodie | hood (down), pocket, drawstrings | [ ] | [ ] | [ ] |
 | vest | V, sleeve color split | [ ] | [ ] | — |

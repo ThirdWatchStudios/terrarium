@@ -123,4 +123,31 @@ export const PART_IMPORT_TARGETS: readonly PartImportTarget[] = [
       },
     ],
   },
+  {
+    id: 'outfit-polo',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: { south: true, east: true },
+    buildVariant: true,
+    importMode: 'component-detail',
+    referenceBodyId: 'body-balanced',
+    components: [
+      {
+        id: 'collar',
+        frame: 'upper-torso',
+        facings: {
+          south: { shapeCount: 1 },
+          east: { shapeCount: 1 },
+        },
+      },
+      {
+        id: 'placket',
+        frame: 'upper-torso',
+        facings: {
+          south: { shapeCount: 1 },
+          east: { shapeCount: 1 },
+        },
+      },
+    ],
+  },
 ];
