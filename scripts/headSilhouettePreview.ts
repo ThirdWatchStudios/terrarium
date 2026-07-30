@@ -24,11 +24,11 @@ const SIZES = [128, 64, 48, 32] as const;
 
 const HEADS = [
   ['head-round', 'Round'],
-  ['head-oval', 'Oval'],
-  ['head-boxy', 'Boxy'],
+  ['head-oval', 'Broad'],
+  ['head-boxy', 'Block'],
   ['head-long', 'Long'],
-  ['head-angular', 'Angular'],
-  ['head-soft-square', 'Soft square'],
+  ['head-angular', 'Point'],
+  ['head-soft-square', 'Lantern'],
 ] as const;
 
 const COLORS = {
@@ -236,7 +236,7 @@ function compatibilitySheet(): string {
   const parts: string[] = [
     `<rect width="${width}" height="${height}" fill="${COLORS.page}"/>`,
     text(18, 28, 'Approved production heads — hair and head-accessory tangents', 20, 700),
-    text(18, 49, '80 px review cells · all geometry uses the unchanged headCenter anchor', 11, 400, COLORS.muted),
+    text(18, 49, '80 px review cells · production bodies use their accepted lifted headCenter datum', 11, 400, COLORS.muted),
   ];
 
   COMPATIBILITY_CASES.forEach(([facing, , , label], index) => {
@@ -289,7 +289,7 @@ function html(): string {
 </style>
 <main>
   <h1>Authored head silhouette review</h1>
-  <p class="notice">The approved production family keeps one stable head anchor and eye convention while separating Round, Oval, Boxy, Long, Angular, and Soft square at game scale. The sources remain easy to refine without changing their runtime ids.</p>
+  <p class="notice">The approved production family keeps stable runtime ids and one rigid head transform while separating Round, Broad, Block, Long, Point, and Lantern at game scale. Production bodies own the lifted head datum; legacy bodies retain their fallback framing.</p>
   <h2>Previous procedural geometry vs approved production art</h2>
   <img src="head-silhouettes-preview.png" alt="Previous and approved production head silhouettes across source facings and game sizes">
   <h2>Hair and head-accessory tangents</h2>

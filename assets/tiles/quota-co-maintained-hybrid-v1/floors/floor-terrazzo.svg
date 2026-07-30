@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"
+  data-surface-id="floor-terrazzo" data-kind="floor" data-template-id="terrazzo"
+  data-direction="maintained-hybrid">
+  <title>Terrazzo — QuotaCo Maintained Hybrid</title>
+  <desc>Artist-editable floor source accepted from the Maintained Hybrid complete-family proof. Flat, outline-free, and seamless on a 128-unit tile.</desc>
+  <g id="substrate">
+    <rect x="0" y="0" width="128" height="128" rx="0" fill="#E2DED3" opacity="1" id="substrate-field" data-fill-token="primary"/>
+  </g>
+  <g id="secondary-detail">
+    <ellipse cx="29" cy="31" rx="3.5" ry="2" fill="#9AA7A0" opacity="0.48" id="secondary-detail-element-002" data-fill-token="secondary"/>
+    <ellipse cx="52" cy="12" rx="1.8" ry="3" fill="#9AA7A0" opacity="0.48" id="secondary-detail-element-003" data-fill-token="secondary"/>
+    <ellipse cx="104" cy="12" rx="2.5" ry="1.8" fill="#9AA7A0" opacity="0.48" id="secondary-detail-element-005" data-fill-token="secondary"/>
+    <ellipse cx="119" cy="39" rx="3.2" ry="2.2" fill="#9AA7A0" opacity="0.48" id="secondary-detail-element-006" data-fill-token="secondary"/>
+    <ellipse cx="43" cy="79" rx="3.5" ry="2.2" fill="#9AA7A0" opacity="0.48" id="secondary-detail-element-008" data-fill-token="secondary"/>
+    <ellipse cx="68" cy="58" rx="2" ry="2.8" fill="#9AA7A0" opacity="0.48" id="secondary-detail-element-009" data-fill-token="secondary"/>
+    <ellipse cx="116" cy="92" rx="2.5" ry="3.2" fill="#9AA7A0" opacity="0.48" id="secondary-detail-element-011" data-fill-token="secondary"/>
+    <ellipse cx="12" cy="111" rx="3.4" ry="2" fill="#9AA7A0" opacity="0.48" id="secondary-detail-element-012" data-fill-token="secondary"/>
+    <ellipse cx="88" cy="119" rx="3.4" ry="1.8" fill="#9AA7A0" opacity="0.48" id="secondary-detail-element-014" data-fill-token="secondary"/>
+  </g>
+  <g id="accent-detail">
+    <ellipse cx="9" cy="14" rx="2.2" ry="1.7" fill="#C2885E" opacity="0.48" id="accent-detail-element-001" data-fill-token="accent"/>
+    <ellipse cx="76" cy="27" rx="3" ry="2.2" fill="#C2885E" opacity="0.48" id="accent-detail-element-004" data-fill-token="accent"/>
+    <ellipse cx="18" cy="61" rx="2.2" ry="3" fill="#C2885E" opacity="0.48" id="accent-detail-element-007" data-fill-token="accent"/>
+    <ellipse cx="92" cy="76" rx="3" ry="1.8" fill="#C2885E" opacity="0.48" id="accent-detail-element-010" data-fill-token="accent"/>
+    <ellipse cx="61" cy="108" rx="2.5" ry="3" fill="#C2885E" opacity="0.48" id="accent-detail-element-013" data-fill-token="accent"/>
+  </g>
+</svg>

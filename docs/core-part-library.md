@@ -17,13 +17,14 @@ full alphabet; the milestones are what "done" means.
 
 - [x] Importer (`scripts/importParts.ts`) with strict validation
       (`part-importer.md`; shared-identity production body art, static
-      production head/hair overlays, plus the first body-aware tee detail
-      adapter)
-- [x] Template scaffold SVGs for all five production bodies, all six human-head
+      production head/hair overlays, the all-ten head-aware hair fit resolver,
+      the first body-aware tee adapter, and componentized
+      Blazer/Polo/Shirt + Tie/Turtleneck detail intake)
+- [x] Template scaffold SVGs for all six production bodies, all six human-head
       families plus the special fabrication-unit head, supported hair, and
-      south/east tee intake (128 grid, anchors, capsule/head guides, seeded
-      editable art, named reference layer) with semantic IDs for every editable
-      and ignored path
+      Tee/Blazer/Polo/Shirt + Tie/Turtleneck intake (128 grid, anchors,
+      capsule/head guides, seeded editable art, named reference layer) with
+      semantic IDs for every editable and ignored path
 - [x] Sentinel color palette defined and generated as ASE, GPL, and readable
       SVG companions (`npm run parts:scaffolds`); every scaffold also embeds
       the five exact swatches
@@ -31,9 +32,16 @@ full alphabet; the milestones are what "done" means.
       parting edit → importer → generated overlay → exactly the three expected
       compositor snapshots
 - [x] Anchored-detail mechanics proof: one south/east tee source set on
-      `body-balanced` → deterministic five-body pre-expansion. Visual approval
+      `body-balanced` → deterministic six-body pre-expansion. Visual approval
       remains part of M1 rather than an importer prerequisite.
-- [x] Body-art ownership proof: 15 canonical production SVGs → one in-place
+- [x] Component-detail mechanics proof: six Blazer sources keep lapels,
+      buttons, and pocket separately addressable, aggregate in manifest order,
+      and fit upper/lower torso frames across all six production bodies; four
+      Polo sources reuse that contract for independent upper-frame collar and
+      placket pieces, and four Shirt + Tie sources reuse it for independent
+      upper-frame collar and tie pieces. Three Turtleneck sources exercise the
+      same frame across all authored facings, including north.
+- [x] Body-art ownership proof: 18 canonical production SVGs → one in-place
       shared `PartDef` set with byte-stable visible geometry and unchanged typed
       rig identities
 - [x] Semantic SVG conventions compiler-tested: slash IDs, ignored guide /
@@ -43,7 +51,7 @@ Optional visual-editor interoperability is useful, but it is not an M1
 prerequisite and no named editor is a production gate.
 
 Mechanical readiness and canonical-source status do not normally imply visual
-approval. The five bodies and all six heads have now passed that separate human
+approval. The six bodies and all six heads have now passed that separate human
 review; later source additions still require both gates.
 
 ### Canonical SVG authoring notes
@@ -128,17 +136,17 @@ The visible core of every character is authored.
 - [x] Body-type set finalized (see Bodies below), all bodies drawn with
       sub-anchors
 - [x] All 6 heads
-- [ ] 3 hairstyles (one per major family)
-- [ ] Tee visual approval + one more outfit detail kit (Blazer recommended)
+- [x] 3 hairstyles (one per major family)
+- [x] Tee visual approval + one more outfit detail kit (Blazer approved)
 - [ ] Crowd pass + distance pass + stress test
 
 **Exit:** a generated office screenshot reads as hand-crafted art.
 
 ### M3 — Full alphabet
 
-- [ ] Remaining hairstyles
-- [ ] Remaining outfit detail kits
-- [x] Dress mechanics (the per-body matrix); dedicated visual art pass remains
+- [x] Remaining hairstyles
+- [x] Remaining outfit detail kits
+- [x] Dress mechanics and approved per-body visual refinement
 - [ ] LOD flags verified across the distance pass sizes
 
 **Exit:** every recipe the randomizer can produce is fully authored.
@@ -188,25 +196,26 @@ derivative of south.
 | angular | [x] | [x] | [x] |
 | soft-square | [x] | [x] | [x] |
 
-`head-round` has approved canonical authored SVG for all three facings,
-committed in `9e932eb`. The south
-contour adds a gentle cheek/chin treatment, east owns a readable profile, and
-north remains nearly circular for rear-hair compatibility. Eyes remain
-literal-ink `detail/*` paths owned by the head. Its inventory boxes record the
-approved drawings; broader M1 scene/crowd gates remain open. The automated
-660-cell hair / head-accessory / facing / style matrix is now strictly
-clip-free, including the lowered production Bun.
+The six stable IDs now carry the accepted redesign hulls without a recipe
+migration: `head-round` = Round, `head-oval` = Broad, `head-long` = Long,
+`head-boxy` = Block, `head-angular` = Point, and `head-soft-square` = Lantern.
+All eighteen canonical south/east/north SVGs keep literal-ink eye detail and
+one rigid `headCenter` transform group. Production bodies own their lifted
+head datum; legacy bodies retain the original fallback datum and frame.
 
-The other five IDs have one complete 15-SVG approved production batch:
-south/east/north sources for `head-oval`, `head-boxy`, `head-long`,
-`head-angular`, and `head-soft-square`. Their generated scaffolds, importer
-registration, and static overlays are production-ready. User visual approval
-on 2026-07-10 follows the automated silhouette, distance, palette, portrait,
-hair/accessory, and compatibility reviews. Broader M1 scene/crowd gates remain
-library-level work rather than head-source blockers. Run
-`npx tsx scripts/headSilhouettePreview.ts` to regenerate the previous-versus-
-production distance sheet and representative compatibility sheet under
-`docs/previews/head-silhouettes-*`.
+The promoted datum is three source units closer to the torso than the original
+one-row proof. In the complete 144-cell hairless source matrix (six heads × six
+bodies × four facings), filled head and torso silhouettes retain 4–8 clear
+pixels at 128 px. Expanded outlines may kiss after downsampling to 40 or 48 px;
+that near-touch is intentional and avoids the detached “floating head” read.
+The complete 288-cell gameplay matrix remains inside the cell. Full-body
+production sprites and reconstructable layers share the fixed five-source-unit
+reframe, matching external anchors and atlas pivots. Portraits use a separate
+head-centered crop. The intentionally oversized high-contrast preset and the
+older tall-hair extremes remain bounded calibration debt for their dedicated
+passes. Run `npx tsx scripts/headSilhouettePreview.ts` to regenerate the
+previous-versus-production distance sheet and representative compatibility
+sheet under `docs/previews/head-silhouettes-*`.
 
 ### 2b. IRIS fabrication unit — special recipe-only parts
 
@@ -290,17 +299,30 @@ mapped south/east/north sources. Bun is compact and clip-free rather than a
 second ponytail; Balding uses tapered temple/rear bands; Pixie owns an
 irregular cropped fringe; Side-part owns a swept cap plus a non-silhouette
 parting crease. Their generated scaffolds, four intentional compositor
-goldens, distance proof, 3,600-cell hair compatibility matrix, and full
+goldens, distance proof, 4,320-cell hair compatibility matrix, and full
 head/accessory matrices pass. Their inventory cells record user visual
 approval on 2026-07-10.
+
+All ten redesigned head-aware hairstyles are now live in production. Each
+stable hair ID resolves a fixed south/east/north variant for all six production
+head IDs. Resolution happens inside the compositor, so flat sprites, portraits,
+operational units, and reconstructable hair layers agree while recipes keep the
+same IDs. The canonical imported SVGs remain source/fallback geometry. The
+first Short/Bob/Ponytail slice is byte-locked; the completion slice adds Pixie,
+Side-part, Bun, Curly, Coils, Long straight, and Balding. Every fitted pair
+remains distinct at 32 px across the authored facings. The 4,320-cell
+top-overflow audit improves from the pre-fitting 766 to 467 high-contrast-only
+cells without non-top overflow; this promotion adds no animation or
+export-schema state.
 
 ### 4. Bodies (§4b) — archetype frames, N × 3 facings
 
 Body types are **archetypes that read from orbit**, not BMI steps. Approved set:
 
-- [x] **Body-type set approved (2026-07-09): compact, balanced,
-      large-frame, tall, soft.** This replaces standard/slim/broad for new work;
-      the legacy ids remain resolvable for existing projects.
+- [x] **Six-body redesign promoted (2026-07-27): Block, Barrel, Wedge,
+      Column, Bell, and Pinch.** The first five retain the stable compact,
+      balanced, large-frame, tall, and soft IDs; Pinch adds `body-pinch`.
+      Standard/slim/broad remain resolvable for existing projects.
 - [x] Each body has a complete typed sub-rig (above-head, head center, neck,
       shoulders, chest, waist, hip, and hem). Generated scaffolds render all 11
       points plus `bodyOrigin` on an ignored anchor layer; TypeScript remains
@@ -314,16 +336,21 @@ Body types are **archetypes that read from orbit**, not BMI steps. Approved set:
 | large-frame | [x] | [x] | [x] |
 | tall | [x] | [x] | [x] |
 | soft | [x] | [x] | [x] |
+| pinch | [x] | [x] | [x] |
 
-≈ 12–15 drawings. North is usually south minus front shading.
+18 drawings. North is usually south minus front shading.
 
-> **Production body set (2026-07-10):** `src/parts/bodyArchetypes.ts` registers
+> **Production body set (redesign promoted 2026-07-27):** `src/parts/bodyArchetypes.ts` registers
 > `body-compact`, `body-balanced`, `body-large-frame`, `body-tall`, and
-> `body-soft` as the only selectable bodies, in that stable order. Pickers,
+> `body-soft` in their previous stable order, followed by the new independent
+> `body-pinch`. Their displayed families are Block, Barrel, Wedge, Column,
+> Bell, and Pinch. Pickers,
 > random characters, and seeded employee generation all consume that production
 > list. `body-standard`, `body-slim`, and `body-broad` remain resolvable for old
-> recipes and the unchanged named/default cast, but are never offered for new
-> selection. Run
+> recipes, but are never offered for new selection. The named/default cast now
+> uses four distinct production hulls (`body-pinch`, `body-balanced`,
+> `body-soft`, and `body-large-frame`) so an ordinary export cannot mix the
+> retired pawn silhouettes back into the live cohort. Run
 > `npx tsx scripts/bodyArchetypePreview.ts` to regenerate the
 > character, flat-silhouette, active-sub-anchor, and rigged vertical-slice sheets
 > under `docs/previews/body-archetypes-*`. The production rigs drive the head
@@ -331,13 +358,12 @@ Body types are **archetypes that read from orbit**, not BMI steps. Approved set:
 > poses, and pose-aware wrist/carry placement while preserving exact fallback
 > for legacy bodies. Watches follow every wrist; each normalized recipe may own
 > one bulky held prop, which renders only when the pose publishes a free carry
-> hand. The production set passes a 9,900-render body/outfit/pose/facing/style
+> hand. The production set passes an 11,880-render body/outfit/pose/facing/style
 > matrix plus a strict fitted-paint mask, while the legacy rendering digest stays
-> pinned. **Dress is mechanically complete but visually provisional;** its
-> dedicated art pass does not block the production body, rig, or compatibility
-> work.
+> pinned. **Dress is mechanically and visually approved;** its stronger
+> waistband and skirt silhouette add no new body rig or animation surface.
 >
-> The same five bodies now own 15 canonical files under `assets/parts/body`.
+> The six bodies now own 18 canonical files under `assets/parts/body`.
 > Their complete visible shapes are installed through the explicit `body-art`
 > mode onto the already-shared production objects, so `BODY_ARCHETYPES`,
 > `BODY_ARCHETYPE_PARTS`, `partsForSlot('body')`, and `getPart()` continue to
@@ -364,29 +390,100 @@ behind.
 > `body-archetypes-outfit-distance.png`. The unchecked cells remain the optional
 > authored-source SVG backlog, not a runtime compatibility gap.
 
-> **Tee anchored-detail intake (mechanically complete, visual approval open):**
+> **Tee anchored-detail intake (approved 2026-07-27):**
 > `tee.south.svg` and `tee.east.svg` are authored over `body-balanced`, whose
 > body origin is `(64, 87)` and neck is `(64, 58)`. The importer requires every
 > visible path to be `detail/*`, then pre-expands that one source set onto the
-> neck of all five production bodies in stable order. The dynamic body remains
+> neck of all six production bodies in stable order. The dynamic body remains
 > the conforming torso and owns z-order. Legacy bodies and future body IDs keep
-> the procedural/static fallback. Tee's inventory cells stay open until its
-> render is visually approved and the remaining Definition of Done checks pass.
-> Componentized lapels/buttons/pocket placement for Blazer is the next deferred
-> outfit adapter, scheduled after the current silhouette-bearing hair review
-> rather than ahead of it.
+> the procedural/static fallback. The focused review sheet is
+> `character-tee-anchored-fit-v1.png`; it received visual approval across all
+> six bodies, four facings, three palettes, two style presets, and literal
+> 40/48 px cells. The broader scene-preview and stress gates remain open.
+>
+> **Blazer component-detail intake (approved 2026-07-27):** six canonical files
+> keep `lapels`, `buttons`, and `pocket` as three
+> independent source pieces across south/east. The manifest fixes their paint
+> order and shape counts. Lapels fit through the neck/shoulder/chest frame;
+> buttons and pocket fit through the chest/waist/hip frame. The complete
+> aggregate replaces only known production-body variants, while north, legacy,
+> and future bodies retain the handwritten fallback. The focused review sheet
+> is `character-blazer-component-fit-v1.png`; broader outfit and 32/48 px
+> sheets were regenerated from the same production compositor and received
+> visual approval.
+>
+> **Polo component-detail intake (approved 2026-07-27):**
+> four canonical files keep `collar` and `placket` independent across
+> south/east. Both pieces fit through the neck/shoulder/chest frame and replace
+> only known production-body variants; north, legacy, and future bodies retain
+> the handwritten fallback. The focused review sheet is
+> `character-polo-component-fit-v1.png`, which received visual approval across
+> the six bodies, four facings, palette/style variants, and literal 40/48 px
+> cells.
+>
+> **Shirt + Tie component-detail intake (approved 2026-07-27):** four
+> canonical files keep `collar` and `tie` independent across
+> south/east. Both fit through the neck/shoulder/chest frame and replace only
+> known production-body variants. The east tie stays at the forward torso edge
+> and west mirrors it rather than placing the tie through the profile center;
+> north, legacy, and future bodies retain the handwritten fallback. The focused
+> review sheet is `character-shirt-tie-component-fit-v1.png` and received
+> visual approval after the profile tie moved to the forward torso edge.
+>
+> **Turtleneck component-detail intake (mechanically complete and visually
+> approved):** one `neck-band` component is authored for south, east, and north.
+> It fits through the neck/shoulder/chest frame on all six production bodies;
+> the band rises behind the head to fill the 3 px head/torso gap rather than
+> sitting as a detached chest mark. It uses `outfitPrimary`, and its widened
+> profile retains comparable collar weight against the south/north view. West
+> mirrors east while legacy and future bodies retain the handwritten fallback.
+> The focused review sheet is
+> `character-turtleneck-component-fit-v1.png`.
+>
+> **Cardigan component-detail intake (mechanically complete and visually
+> approved):** four canonical files keep `trim` and `button-line` independent
+> across south/east. The neckline trim fits through the upper-torso frame;
+> the opening seam and two buttons fit through the lower-torso frame. West
+> mirrors east while north, legacy, and future bodies retain the handwritten
+> fallback. The focused review sheet is
+> `character-cardigan-component-fit-v1.png`.
+>
+> **Suit Jacket component-detail intake (mechanically complete and visually
+> approved):** twelve canonical files keep pocket square, lapels, buttons, pocket,
+> tie, and notches independent across south/east. Each consumes the established
+> upper- or lower-torso frame; the east tie stays at the forward torso edge and
+> west mirrors it. North, legacy, and future bodies retain the handwritten
+> fallback. The focused review sheet is
+> `character-suit-jacket-component-fit-v1.png`.
+>
+> **Hoodie component-detail intake (mechanically complete and visually
+> approved):** six canonical files keep hood, drawstrings, and pocket independent.
+> The hood is authored in south/east/north; drawstrings exist in south/east;
+> the pocket seam exists in south. Upper/lower torso frames fit those pieces
+> across all six bodies without inventing missing directional detail. West
+> mirrors east. The focused review sheet is
+> `character-hoodie-component-fit-v1.png`.
+>
+> **Sweater Vest component-detail intake (mechanically complete and visually
+> approved):** three canonical files keep the secondary-fabric panel, contrasting
+> V-neck inset, and front buttons independently authorable. Panel and inset
+> exist only in south, as do the buttons. Upper/lower torso frames
+> fit the pieces across all six bodies while the surrounding primary fabric
+> remains visible as the shirt and sleeves. East/west intentionally carry no
+> vest overlay; north retains the handwritten rear fallback. The focused review sheet is
+> `character-vest-component-fit-v1.png`.
 
 | Garment | Detail pieces | south | east | north |
 |---|---|---|---|---|
-| tee | neckline | [ ] | [ ] | — |
-| polo | collar, placket | [ ] | [ ] | — |
-| shirt-tie | collar, tie | [ ] | [ ] | — |
-| turtleneck | neck band | [ ] | [ ] | [ ] |
-| cardigan | button line, trim | [ ] | [ ] | — |
-| blazer | lapels, buttons, pocket | [ ] | [ ] | — |
-| suit-jacket | lapels, pocket square | [ ] | [ ] | — |
-| hoodie | hood (down), pocket, drawstrings | [ ] | [ ] | [ ] |
-| vest | V, sleeve color split | [ ] | [ ] | — |
+| tee | neckline | [x] | [x] | — |
+| polo | collar, placket | [x] | [x] | — |
+| shirt-tie | collar, tie | [x] | [x] | — |
+| turtleneck | neck band | [x] | [x] | [x] |
+| cardigan | button line, trim | [x] | [x] | — |
+| blazer | lapels, buttons, pocket | [x] | [x] | — |
+| suit-jacket | lapels, buttons, pocket, tie, pocket square, notches | [x] | [x] | — |
+| hoodie | hood (down), pocket, drawstrings | [x] | [x] | [x] |
+| vest | V, sleeve color split | [x] | — | — |
 
 ≈ 22–24 small drawings; lapels/collars/buttons are shared vocabulary across kits
 where they genuinely match.
@@ -397,13 +494,16 @@ The only place the body-count multiplier is paid; kept small on purpose.
 
 | Garment | Matrix | Status |
 |---|---|---|
-| dress | bodies × 3 facings | mechanically complete; visual refinement deferred |
+| dress | bodies × 3 facings | mechanically and visually approved |
 | (long coat — only if added) | bodies × 3 | deferred |
 
-> **Dress follow-up (2026-07-09):** the per-body implementation and compatibility
-> matrix are complete, but the current shape language is not approved final art.
-> Revisit the waist transition, profile read, and high-contrast outline treatment
-> in a dedicated visual pass.
+> **Dress refinement v1 (visually approved):** the per-body implementation now
+> uses a structured contrast waist, broader curved hems, continuous waist
+> curves, front-biased profiles, and reduced skirt-seam weight. It keeps the six
+> accepted upper-body rhythms and adds no
+> new rig or animation surface. `character-dress-silhouette-fit-v1.png` at
+> 40/48 px and `body-archetypes-dress-styles.png` in high contrast received
+> visual approval on 2026-07-28.
 
 ### 7. Conditional — only if the readability lints flag them
 

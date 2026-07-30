@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"
+  data-surface-id="floor-accent-tile" data-kind="floor" data-template-id="accent-tile"
+  data-direction="maintained-hybrid">
+  <title>Accent tile — QuotaCo Maintained Hybrid</title>
+  <desc>Artist-editable floor source accepted from the Maintained Hybrid complete-family proof. Flat, outline-free, and seamless on a 128-unit tile.</desc>
+  <g id="substrate">
+    <rect x="0" y="0" width="128" height="128" rx="0" fill="#E8E4D8" opacity="1" id="substrate-field" data-fill-token="primary"/>
+  </g>
+  <g id="primary-detail">
+    <circle cx="16" cy="64" r="2.1" fill="#E8E4D8" opacity="0.85" id="primary-detail-element-004" data-fill-token="primary"/>
+    <circle cx="48" cy="64" r="2.1" fill="#E8E4D8" opacity="0.85" id="primary-detail-element-005" data-fill-token="primary"/>
+    <circle cx="80" cy="64" r="2.1" fill="#E8E4D8" opacity="0.85" id="primary-detail-element-006" data-fill-token="primary"/>
+    <circle cx="112" cy="64" r="2.1" fill="#E8E4D8" opacity="0.85" id="primary-detail-element-007" data-fill-token="primary"/>
+  </g>
+  <g id="secondary-detail">
+    <path d="M 0 0 V 128 M 0 0 H 128 M 32 0 V 128 M 0 32 H 128 M 64 0 V 128 M 0 64 H 128 M 96 0 V 128 M 0 96 H 128 M 128 0 V 128 M 0 128 H 128" fill="none" stroke="#3D6B8E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.15" id="secondary-detail-element-001" data-stroke-token="secondary"/>
+    <rect x="0" y="57" width="128" height="14" rx="0" fill="#3D6B8E" opacity="0.6" id="secondary-detail-element-002" data-fill-token="secondary"/>
+  </g>
+  <g id="accent-detail">
+    <rect x="0" y="61" width="128" height="6" rx="0" fill="#E0A94C" opacity="0.82" id="accent-detail-element-003" data-fill-token="accent"/>
+  </g>
+</svg>

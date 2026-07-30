@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="microwave" data-projection="elevation">
+  <title>QuotaCo service-system microwave</title>
+  <desc>Elevation counter microwave with a washable molded shell, dark door, and protected control pod.</desc>
+  <g id="art-envelope" transform="translate(64 116) scale(.85) translate(-64 -116)">
+    <g id="shadow">
+      <ellipse id="shadow-contact" cx="64" cy="117" rx="25" ry="4" fill="#000000" opacity=".094"/>
+    </g>
+    <g id="shell">
+      <rect id="shell-body" data-fill-token="primary" x="35" y="80" width="58" height="36" rx="9" fill="#DED5BD" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+      <rect id="shell-door" data-fill-token="secondary" x="40" y="85" width="36" height="25" rx="6" fill="#355247" stroke="#292C2A" stroke-width="2"/>
+      <rect id="shell-control-pod" x="79" y="85" width="10" height="25" rx="4" fill="#49685A"/>
+    </g>
+    <g id="function">
+      <rect id="function-door-window" x="44" y="88" width="28" height="19" rx="5" fill="#18211E"/>
+      <ellipse id="function-turntable" cx="58" cy="103" rx="10" ry="2.5" fill="#8E9690"/>
+      <rect id="function-display" data-fill-token="accent" x="81" y="88" width="6" height="6" rx="2" fill="#B65F4D"/>
+      <circle id="function-key-one" cx="83" cy="100" r="1.6" fill="#F3EEDA"/>
+      <circle id="function-key-two" cx="86" cy="100" r="1.6" fill="#F3EEDA"/>
+      <rect id="function-handle" data-fill-token="accent" x="37" y="87" width="4" height="21" rx="2" fill="#B65F4D"/>
+    </g>
+  </g>
+</svg>

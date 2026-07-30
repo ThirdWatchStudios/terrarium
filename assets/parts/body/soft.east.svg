@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
-  <title>Terrarium body-soft east authored art</title>
-  <desc>Production Soft profile silhouette and lower-plane detail.</desc>
+  <title>Terrarium body-soft Bell east authored art</title>
+  <desc>Production Bell profile silhouette and lower-plane detail.</desc>
   <g id="art" transform="translate(64 87)">
-    <path id="art/silhouette" d="M 1 -28 C -9 -28 -18 -25 -20 -18 C -23 -9 -21 0 -23 9 C -25 18 -21 26 -13 29 C -5 31 5 30 12 29 C 22 27 28 19 28 10 C 29 1 26 -7 24 -15 C 22 -23 13 -28 1 -28 Z" fill="#FF0000" fill-rule="nonzero"/>
-    <path id="detail/lower-plane" d="M -16 20 a 16 7 0 1 0 32 0 a 16 7 0 1 0 -32 0 Z" fill="#00000012" fill-rule="nonzero"/>
+    <path id="art/silhouette" d="M -8 -28 Q 1 -32 10 -28 Q 19 -24 20 -15 Q 21 -3 27 9 L 31 20 Q 33 29 21 30 H -17 Q -29 28 -27 19 L -21 7 Q -18 -4 -18 -16 Q -17 -25 -8 -28 Z" fill="#FF0000" fill-rule="nonzero"/>
+    <path id="detail/lower-plane" d="M -18 20 a 18 7 0 1 0 36 0 a 18 7 0 1 0 -36 0 Z" fill="#00000012" fill-rule="nonzero"/>
   </g>
 </svg>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="desk-lamp" data-projection="elevation">
+  <title>QuotaCo workhorse desk lamp</title>
+  <desc>Elevation-projected molded task lamp with a broad hood, service stem, weighted base, warm glow, and coral switch.</desc>
+  <g id="shadow">
+    <ellipse id="shadow-contact" cx="64" cy="117" rx="17" ry="3.5" fill="#000000" opacity=".1"/>
+  </g>
+  <g id="artwork" transform="translate(64 116) scale(.58) translate(-64 -116)">
+    <g id="structure">
+      <rect id="structure-base" data-fill-token="secondary" x="48" y="108" width="32" height="8" rx="4" fill="#355247" stroke="#292C2A" stroke-width="2.5" stroke-linejoin="round"/>
+      <rect id="structure-base-cap" x="53" y="103" width="22" height="7" rx="3" fill="#C7BDA7" stroke="#292C2A" stroke-width="2"/>
+      <path id="structure-stem" d="M64 104V90Q64 84 58 84" fill="none" stroke="#355247" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g id="shell">
+      <path id="shell-task-hood" data-fill-token="primary" d="M43 88Q43 80 51 75Q64 68 77 75Q85 80 85 88Z" fill="#DED5BD" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+      <path id="shell-hood-band" d="M49 85H79" fill="none" stroke="#77755D" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <g id="function">
+      <ellipse id="function-warm-glow" cx="64" cy="89" rx="13" ry="3" fill="#FFE7A0" opacity=".75"/>
+      <circle id="function-switch" data-fill-token="accent" cx="74" cy="112" r="3.5" fill="#B65F4D" stroke="#292C2A" stroke-width="1.7"/>
+      <circle id="function-switch-cap" cx="74" cy="112" r="1.2" fill="#F4F0E4"/>
+    </g>
+  </g>
+</svg>

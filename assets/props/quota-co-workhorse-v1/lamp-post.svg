@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="lamp-post" data-projection="elevation">
+  <title>QuotaCo offset-arm street light</title>
+  <desc>Elevation-projected service mast with an unmistakable offset shielded lamp head and a compact access panel.</desc>
+  <metadata>Accepted offset-service-arm exterior source. Existing 1x1 footprint remains template-owned.</metadata>
+  <g id="shadow">
+    <ellipse id="shadow-contact" cx="60" cy="118" rx="22" ry="5" fill="#000000" opacity=".14"/>
+  </g>
+  <g id="structure">
+    <rect id="structure-base" x="43" y="106" width="34" height="12" rx="6" fill="#262B29" stroke="#262B29" stroke-width="3" stroke-linejoin="round"/>
+    <path id="structure-mast-outline" d="M60 107V39Q60 27 72 27H98" fill="none" stroke="#262B29" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="structure-mast" d="M60 104V40Q60 32 72 32H97" fill="none" stroke="#355247" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="structure-base-service-stripe" d="M48 111H72" fill="none" stroke="#B65F4D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="light">
+    <rect id="light-shield" data-fill-token="primary" x="84" y="20" width="34" height="19" rx="8" fill="#DED5BD" stroke="#262B29" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="light-emitter" x="90" y="31" width="24" height="8" rx="4" fill="#FFF0B8" stroke="#262B29" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+  <g id="function">
+    <rect id="function-access-panel" data-fill-token="primary" x="51" y="69" width="18" height="24" rx="7" fill="#DED5BD" stroke="#262B29" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="function-access-latch" data-fill-token="accent" x="56" y="75" width="8" height="9" rx="3" fill="#B65F4D"/>
+  </g>
+</svg>

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="coat-rack" data-projection="elevation">
+  <title>QuotaCo compact coat rack</title>
+  <desc>Elevation-projected molded coat rack with a compact post, horizontal hook crown, coral hook tips, one employee coat, and stable base.</desc>
+  <g id="shadow">
+    <ellipse id="shadow-contact" cx="64" cy="117" rx="15" ry="4.5" fill="#000000" opacity=".14"/>
+  </g>
+  <g id="art-scale" transform="translate(64 116) scale(.72) translate(-64 -116)">
+    <g id="structure">
+      <rect id="structure-base" data-fill-token="secondary" x="52" y="109" width="24" height="7" rx="3.5" fill="#355247" stroke="#292C2A" stroke-width="2"/>
+      <rect id="structure-post" data-fill-token="primary" x="59" y="50" width="10" height="66" rx="5" fill="#DED5BD" stroke="#292C2A" stroke-width="2.5"/>
+      <rect id="structure-collar" data-fill-token="accent" x="61" y="58" width="6" height="7" rx="3" fill="#B65F4D" stroke="#292C2A" stroke-width="1.2"/>
+    </g>
+    <g id="hooks-4">
+      <rect id="crown-4" x="46" y="42" width="36" height="12" rx="6" fill="#F3EEDA" stroke="#292C2A" stroke-width="2.5"/>
+      <rect id="hook-4-1" data-fill-token="primary" x="50" y="50" width="4" height="9" rx="2" fill="#DED5BD" stroke="#292C2A" stroke-width="1.2"/>
+      <rect id="hook-4-2" data-fill-token="primary" x="58" y="50" width="4" height="9" rx="2" fill="#DED5BD" stroke="#292C2A" stroke-width="1.2"/>
+      <rect id="hook-4-3" data-fill-token="primary" x="66" y="50" width="4" height="9" rx="2" fill="#DED5BD" stroke="#292C2A" stroke-width="1.2"/>
+      <rect id="hook-4-4" data-fill-token="primary" x="74" y="50" width="4" height="9" rx="2" fill="#DED5BD" stroke="#292C2A" stroke-width="1.2"/>
+      <circle id="hook-tip-4-1" data-fill-token="accent" cx="52" cy="59" r="2.4" fill="#B65F4D" stroke="#292C2A" stroke-width=".8"/>
+      <circle id="hook-tip-4-2" data-fill-token="accent" cx="60" cy="59" r="2.4" fill="#B65F4D" stroke="#292C2A" stroke-width=".8"/>
+      <circle id="hook-tip-4-3" data-fill-token="accent" cx="68" cy="59" r="2.4" fill="#B65F4D" stroke="#292C2A" stroke-width=".8"/>
+      <circle id="hook-tip-4-4" data-fill-token="accent" cx="76" cy="59" r="2.4" fill="#B65F4D" stroke="#292C2A" stroke-width=".8"/>
+    </g>
+    <g id="hooks-2" display="none">
+      <rect id="crown-2" x="52" y="42" width="24" height="12" rx="6" fill="#F3EEDA" stroke="#292C2A" stroke-width="2.5"/>
+      <rect id="hook-2-1" data-fill-token="primary" x="56" y="50" width="4" height="9" rx="2" fill="#DED5BD" stroke="#292C2A" stroke-width="1.2"/>
+      <rect id="hook-2-2" data-fill-token="primary" x="68" y="50" width="4" height="9" rx="2" fill="#DED5BD" stroke="#292C2A" stroke-width="1.2"/>
+      <circle id="hook-tip-2-1" data-fill-token="accent" cx="58" cy="59" r="2.4" fill="#B65F4D"/>
+      <circle id="hook-tip-2-2" data-fill-token="accent" cx="70" cy="59" r="2.4" fill="#B65F4D"/>
+    </g>
+    <g id="hooks-3" display="none">
+      <rect id="crown-3" x="49" y="42" width="30" height="12" rx="6" fill="#F3EEDA" stroke="#292C2A" stroke-width="2.5"/>
+      <rect id="hook-3-1" data-fill-token="primary" x="53" y="50" width="4" height="9" rx="2" fill="#DED5BD"/>
+      <rect id="hook-3-2" data-fill-token="primary" x="62" y="50" width="4" height="9" rx="2" fill="#DED5BD"/>
+      <rect id="hook-3-3" data-fill-token="primary" x="71" y="50" width="4" height="9" rx="2" fill="#DED5BD"/>
+      <circle id="hook-tip-3-1" data-fill-token="accent" cx="55" cy="59" r="2.4" fill="#B65F4D"/>
+      <circle id="hook-tip-3-2" data-fill-token="accent" cx="64" cy="59" r="2.4" fill="#B65F4D"/>
+      <circle id="hook-tip-3-3" data-fill-token="accent" cx="73" cy="59" r="2.4" fill="#B65F4D"/>
+    </g>
+    <g id="hooks-5" display="none">
+      <rect id="crown-5" x="43" y="42" width="42" height="12" rx="6" fill="#F3EEDA" stroke="#292C2A" stroke-width="2.5"/>
+      <rect id="hook-5-1" data-fill-token="primary" x="47" y="50" width="4" height="9" rx="2" fill="#DED5BD"/>
+      <rect id="hook-5-2" data-fill-token="primary" x="54.5" y="50" width="4" height="9" rx="2" fill="#DED5BD"/>
+      <rect id="hook-5-3" data-fill-token="primary" x="62" y="50" width="4" height="9" rx="2" fill="#DED5BD"/>
+      <rect id="hook-5-4" data-fill-token="primary" x="69.5" y="50" width="4" height="9" rx="2" fill="#DED5BD"/>
+      <rect id="hook-5-5" data-fill-token="primary" x="77" y="50" width="4" height="9" rx="2" fill="#DED5BD"/>
+      <circle id="hook-tip-5-1" data-fill-token="accent" cx="49" cy="59" r="2.2" fill="#B65F4D"/>
+      <circle id="hook-tip-5-2" data-fill-token="accent" cx="56.5" cy="59" r="2.2" fill="#B65F4D"/>
+      <circle id="hook-tip-5-3" data-fill-token="accent" cx="64" cy="59" r="2.2" fill="#B65F4D"/>
+      <circle id="hook-tip-5-4" data-fill-token="accent" cx="71.5" cy="59" r="2.2" fill="#B65F4D"/>
+      <circle id="hook-tip-5-5" data-fill-token="accent" cx="79" cy="59" r="2.2" fill="#B65F4D"/>
+    </g>
+    <g id="personalization">
+      <path id="personalization-coat" d="M75 57Q88 70 87 93L80 103H72Q70 78 74 60Z" fill="#9A6846" stroke="#292C2A" stroke-width="2.1"/>
+      <rect id="personalization-coat-tab" data-fill-token="accent" x="79" y="74" width="5" height="13" rx="2" fill="#B65F4D" stroke="#292C2A" stroke-width="1"/>
+    </g>
+  </g>
+</svg>

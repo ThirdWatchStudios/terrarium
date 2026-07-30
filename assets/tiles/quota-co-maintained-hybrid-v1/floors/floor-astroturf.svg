@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"
+  data-surface-id="floor-astroturf" data-kind="floor" data-template-id="astroturf"
+  data-direction="maintained-hybrid">
+  <title>Astroturf — QuotaCo Maintained Hybrid</title>
+  <desc>Artist-editable floor source accepted from the Maintained Hybrid complete-family proof. Flat, outline-free, and seamless on a 128-unit tile.</desc>
+  <g id="substrate">
+    <rect x="0" y="0" width="128" height="128" rx="0" fill="#4E8A3E" opacity="1" id="substrate-field" data-fill-token="primary"/>
+  </g>
+  <g id="secondary-detail">
+    <rect x="32" y="0" width="32" height="128" rx="0" fill="#3B6D2F" opacity="0.13" id="secondary-detail-element-001" data-fill-token="secondary"/>
+    <rect x="96" y="0" width="32" height="128" rx="0" fill="#3B6D2F" opacity="0.13" id="secondary-detail-element-002" data-fill-token="secondary"/>
+  </g>
+  <g id="accent-detail">
+    <path d="M 5 1 v 8 M 5 65 v 8" fill="none" stroke="#7DB05A" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.25" id="accent-detail-element-003" data-stroke-token="accent"/>
+    <path d="M 14 13 v 8 M 14 77 v 8" fill="none" stroke="#7DB05A" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.25" id="accent-detail-element-004" data-stroke-token="accent"/>
+    <path d="M 23 8 v 8 M 23 72 v 8" fill="none" stroke="#7DB05A" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.25" id="accent-detail-element-005" data-stroke-token="accent"/>
+    <path d="M 32 3 v 8 M 32 67 v 8" fill="none" stroke="#7DB05A" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.25" id="accent-detail-element-006" data-stroke-token="accent"/>
+    <path d="M 41 15 v 8 M 41 79 v 8" fill="none" stroke="#7DB05A" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.25" id="accent-detail-element-007" data-stroke-token="accent"/>
+    <path d="M 50 10 v 8 M 50 74 v 8" fill="none" stroke="#7DB05A" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.25" id="accent-detail-element-008" data-stroke-token="accent"/>
+    <path d="M 59 5 v 8 M 59 69 v 8" fill="none" stroke="#7DB05A" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.25" id="accent-detail-element-009" data-stroke-token="accent"/>
+    <path d="M 68 0 v 8 M 68 64 v 8" fill="none" stroke="#7DB05A" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.25" id="accent-detail-element-010" data-stroke-token="accent"/>
+    <path d="M 77 12 v 8 M 77 76 v 8" fill="none" stroke="#7DB05A" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.25" id="accent-detail-element-011" data-stroke-token="accent"/>
+    <path d="M 86 7 v 8 M 86 71 v 8" fill="none" stroke="#7DB05A" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.25" id="accent-detail-element-012" data-stroke-token="accent"/>
+    <path d="M 95 2 v 8 M 95 66 v 8" fill="none" stroke="#7DB05A" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.25" id="accent-detail-element-013" data-stroke-token="accent"/>
+    <path d="M 104 14 v 8 M 104 78 v 8" fill="none" stroke="#7DB05A" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.25" id="accent-detail-element-014" data-stroke-token="accent"/>
+    <path d="M 113 9 v 8 M 113 73 v 8" fill="none" stroke="#7DB05A" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.25" id="accent-detail-element-015" data-stroke-token="accent"/>
+    <path d="M 122 4 v 8 M 122 68 v 8" fill="none" stroke="#7DB05A" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.25" id="accent-detail-element-016" data-stroke-token="accent"/>
+  </g>
+</svg>

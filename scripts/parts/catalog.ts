@@ -1,8 +1,19 @@
 import type { Facing, Slot } from '../../src/core/types';
 import type { BodyArchetypeId } from '../../src/parts/bodyArchetypes';
 
-export type PartImportMode = 'static' | 'body-art' | 'anchored-detail';
+export type PartImportMode =
+  | 'static'
+  | 'body-art'
+  | 'anchored-detail'
+  | 'component-detail';
 export type BodyDetailPointAnchor = 'neck';
+export type BodyDetailFrame = 'upper-torso' | 'lower-torso';
+
+export interface PartImportComponent {
+  readonly id: string;
+  readonly frame: BodyDetailFrame;
+  readonly facings: Partial<Record<Facing, { readonly shapeCount: number }>>;
+}
 
 /** Minimal explicit metadata required before an existing part may accept SVG art. */
 export interface PartImportTarget {
@@ -16,6 +27,7 @@ export interface PartImportTarget {
   readonly importMode?: PartImportMode;
   readonly referenceBodyId?: BodyArchetypeId;
   readonly placementAnchor?: BodyDetailPointAnchor;
+  readonly components?: readonly PartImportComponent[];
 }
 
 const allFacings = { south: true, east: true, north: true } as const;
@@ -48,6 +60,7 @@ export const PART_IMPORT_TARGETS: readonly PartImportTarget[] = [
   bodyTarget('body-large-frame'),
   bodyTarget('body-tall'),
   bodyTarget('body-soft'),
+  bodyTarget('body-pinch'),
   target('head-round', 'head'),
   target('head-oval', 'head'),
   target('head-boxy', 'head'),
@@ -74,5 +87,267 @@ export const PART_IMPORT_TARGETS: readonly PartImportTarget[] = [
     importMode: 'anchored-detail',
     referenceBodyId: 'body-balanced',
     placementAnchor: 'neck',
+  },
+  {
+    id: 'outfit-blazer',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: { south: true, east: true },
+    buildVariant: true,
+    importMode: 'component-detail',
+    referenceBodyId: 'body-balanced',
+    components: [
+      {
+        id: 'lapels',
+        frame: 'upper-torso',
+        facings: {
+          south: { shapeCount: 3 },
+          east: { shapeCount: 2 },
+        },
+      },
+      {
+        id: 'buttons',
+        frame: 'lower-torso',
+        facings: {
+          south: { shapeCount: 2 },
+          east: { shapeCount: 1 },
+        },
+      },
+      {
+        id: 'pocket',
+        frame: 'lower-torso',
+        facings: {
+          south: { shapeCount: 1 },
+          east: { shapeCount: 1 },
+        },
+      },
+    ],
+  },
+  {
+    id: 'outfit-polo',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: { south: true, east: true },
+    buildVariant: true,
+    importMode: 'component-detail',
+    referenceBodyId: 'body-balanced',
+    components: [
+      {
+        id: 'collar',
+        frame: 'upper-torso',
+        facings: {
+          south: { shapeCount: 1 },
+          east: { shapeCount: 1 },
+        },
+      },
+      {
+        id: 'placket',
+        frame: 'upper-torso',
+        facings: {
+          south: { shapeCount: 1 },
+          east: { shapeCount: 1 },
+        },
+      },
+    ],
+  },
+  {
+    id: 'outfit-shirt-tie',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: { south: true, east: true },
+    buildVariant: true,
+    importMode: 'component-detail',
+    referenceBodyId: 'body-balanced',
+    components: [
+      {
+        id: 'collar',
+        frame: 'upper-torso',
+        facings: {
+          south: { shapeCount: 1 },
+          east: { shapeCount: 1 },
+        },
+      },
+      {
+        id: 'tie',
+        frame: 'upper-torso',
+        facings: {
+          south: { shapeCount: 1 },
+          east: { shapeCount: 1 },
+        },
+      },
+    ],
+  },
+  {
+    id: 'outfit-turtleneck',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: { south: true, east: true, north: true },
+    buildVariant: true,
+    importMode: 'component-detail',
+    referenceBodyId: 'body-balanced',
+    components: [
+      {
+        id: 'neck-band',
+        frame: 'upper-torso',
+        facings: {
+          south: { shapeCount: 2 },
+          east: { shapeCount: 1 },
+          north: { shapeCount: 1 },
+        },
+      },
+    ],
+  },
+  {
+    id: 'outfit-cardigan',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: { south: true, east: true },
+    buildVariant: true,
+    importMode: 'component-detail',
+    referenceBodyId: 'body-balanced',
+    components: [
+      {
+        id: 'trim',
+        frame: 'upper-torso',
+        facings: {
+          south: { shapeCount: 1 },
+          east: { shapeCount: 1 },
+        },
+      },
+      {
+        id: 'button-line',
+        frame: 'lower-torso',
+        facings: {
+          south: { shapeCount: 3 },
+          east: { shapeCount: 3 },
+        },
+      },
+    ],
+  },
+  {
+    id: 'outfit-suit-jacket',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: { south: true, east: true },
+    buildVariant: true,
+    importMode: 'component-detail',
+    referenceBodyId: 'body-balanced',
+    components: [
+      {
+        id: 'pocket-square',
+        frame: 'lower-torso',
+        facings: {
+          south: { shapeCount: 1 },
+          east: { shapeCount: 1 },
+        },
+      },
+      {
+        id: 'lapels',
+        frame: 'upper-torso',
+        facings: {
+          south: { shapeCount: 3 },
+          east: { shapeCount: 2 },
+        },
+      },
+      {
+        id: 'buttons',
+        frame: 'lower-torso',
+        facings: {
+          south: { shapeCount: 2 },
+          east: { shapeCount: 1 },
+        },
+      },
+      {
+        id: 'pocket',
+        frame: 'lower-torso',
+        facings: {
+          south: { shapeCount: 1 },
+          east: { shapeCount: 1 },
+        },
+      },
+      {
+        id: 'tie',
+        frame: 'upper-torso',
+        facings: {
+          south: { shapeCount: 1 },
+          east: { shapeCount: 1 },
+        },
+      },
+      {
+        id: 'notches',
+        frame: 'upper-torso',
+        facings: {
+          south: { shapeCount: 1 },
+          east: { shapeCount: 1 },
+        },
+      },
+    ],
+  },
+  {
+    id: 'outfit-hoodie',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: { south: true, east: true, north: true },
+    buildVariant: true,
+    importMode: 'component-detail',
+    referenceBodyId: 'body-balanced',
+    components: [
+      {
+        id: 'hood',
+        frame: 'upper-torso',
+        facings: {
+          south: { shapeCount: 1 },
+          east: { shapeCount: 1 },
+          north: { shapeCount: 1 },
+        },
+      },
+      {
+        id: 'drawstrings',
+        frame: 'upper-torso',
+        facings: {
+          south: { shapeCount: 3 },
+          east: { shapeCount: 1 },
+        },
+      },
+      {
+        id: 'pocket',
+        frame: 'lower-torso',
+        facings: {
+          south: { shapeCount: 1 },
+        },
+      },
+    ],
+  },
+  {
+    id: 'outfit-vest',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: { south: true },
+    buildVariant: true,
+    importMode: 'component-detail',
+    referenceBodyId: 'body-balanced',
+    components: [
+      {
+        id: 'panel',
+        frame: 'upper-torso',
+        facings: {
+          south: { shapeCount: 1 },
+        },
+      },
+      {
+        id: 'neck-inset',
+        frame: 'upper-torso',
+        facings: {
+          south: { shapeCount: 1 },
+        },
+      },
+      {
+        id: 'buttons',
+        frame: 'lower-torso',
+        facings: {
+          south: { shapeCount: 2 },
+        },
+      },
+    ],
   },
 ];

@@ -388,8 +388,9 @@ icons), not by upfront design.
    128 grid, anchor markers, body-capsule / head-radius guides, an existing
    part on a named reference layer, and sentinel swatches. Portable ASE, GPL,
    and readable SVG palette companions support optional editors. Implemented
-   for all five production bodies, all six human-head families, `hair-bob`, and
-   the south/east tee kit under `assets/part-authoring` via
+   for all six production bodies, all six human-head families, all ten hair
+   families, the south/east Tee kit, and six separately seeded south/east
+   Blazer components under `assets/part-authoring` via
    `npm run parts:scaffolds`; semantic IDs, not editor-only layer state, define
    what the importer ignores. Body starters show all 11 TypeScript-owned rig
    points as non-importing guides.
@@ -405,8 +406,10 @@ icons), not by upfront design.
    and Linda's facing/mood sheets; the approved promotion is `9e932eb`.
 5. **Production body source canonicalization**: the approved
    `body-compact`, `body-balanced`, `body-large-frame`, `body-tall`, and
-   `body-soft` silhouettes now have 15 canonical south/east/north SVG sources
-   under `assets/parts/body`. A dedicated `body-art` adapter installs their
+   `body-soft` IDs now carry the accepted Block, Barrel, Wedge, Column, and Bell
+   silhouettes; the new `body-pinch` ID carries Pinch. These six bodies have 18
+   canonical south/east/north SVG sources under `assets/parts/body`. A dedicated
+   `body-art` adapter installs their
    complete visible shapes onto the existing shared production `PartDef`
    objects in place, preserving stable selection order, exact body-rig identity,
    z-order, and all runtime metadata. Canvas geometry is strictly validated,
@@ -441,7 +444,7 @@ icons), not by upfront design.
    compact, clip-free knot distinct from Ponytail; Balding uses tapered temple
    and rear bands; Pixie owns a cropped irregular fringe; Side-part owns a
    swept cap and non-silhouette parting crease. The expanded ten-style
-   3,600-cell hair/body/head/facing/style matrix, full head-accessory matrices,
+   4,320-cell hair/body/head/facing/style matrix, full head-accessory matrices,
    and distance proof pass. These final four received visual approval on
    2026-07-10.
 8. **Anchored outfit-detail adapter**: `outfit-tee` is the first body-aware
@@ -450,14 +453,87 @@ icons), not by upfront design.
    path must compile as `detail/*` / `silhouette: false`, so the selected body's
    `$outfitPrimary` silhouette remains the conforming torso. At build time the
    importer translates that kit to each production body's neck and emits the
-   five variants in stable archetype order. The runtime overlay replaces only
+   six variants in stable archetype order. The runtime overlay replaces only
    known production detail shapes while preserving the code builder's z-order;
    legacy bodies, future body IDs, and unauthored north keep the original
-   procedural/static fallback. The adapter is mechanically complete; tee art
-   approval and M1 exit remain open. Componentized Blazer intake—separate
-   lapels, buttons, and pocket with explicit multi-anchor placement—is the next
-   deferred outfit adapter rather than a flat whole-garment shortcut.
-9. **Provenance**: each imported asset records source
+   procedural/static fallback. The adapter and art received approval on
+   2026-07-27; the broader M1 exit remains open. Its focused six-body,
+   four-facing, 40/48 px review sheet is
+   `character-tee-anchored-fit-v1.png`.
+9. **Componentized outfit-detail adapter**: `outfit-blazer` is authored as six
+   independent files—south/east lapels, buttons, and pocket—rather than one
+   flattened jacket overlay. An explicit manifest locks component order,
+   per-facing shape counts, and the body frame each piece consumes. Lapels fit
+   through the neck/shoulder/chest frame; buttons and pocket fit through
+   chest/waist/hip. All fitted paths remain detail-only, are revalidated after
+   placement on all six production bodies, and install through the existing
+   `body-detail` runtime overlay with no recipe/export metadata. North and
+   unknown bodies preserve the code builder fallback. The resulting 40/48 px
+   multi-body proof received visual approval on 2026-07-27.
+10. **First component-contract reuse**: `outfit-polo` keeps collar and placket
+   in four independent south/east files. Both components fit through the
+   upper-torso frame and install through the same ordinary `body-detail`
+   overlay as Blazer. North and unknown bodies retain the code-builder
+   fallback; the focused six-body, four-facing, 40/48 px proof is
+   `character-polo-component-fit-v1.png` and received visual approval on
+   2026-07-27.
+11. **Second component-contract reuse**: `outfit-shirt-tie` keeps collar and
+   tie in four independent south/east files. Both consume the upper-torso frame
+   and install through the ordinary `body-detail` overlay. North and unknown
+   bodies retain the code-builder fallback; the focused six-body,
+   four-facing, 40/48 px proof is
+   `character-shirt-tie-component-fit-v1.png` and received visual approval on
+   2026-07-27 after the profile tie moved to the forward torso edge.
+12. **Three-facing component intake**: `outfit-turtleneck` keeps one
+   `neck-band` component in three independent south/east/north files. It fits
+   through the upper-torso frame and installs through the ordinary
+   `body-detail` overlay, rising behind the head to fill the 3 px head/torso
+   gap rather than sitting as a mark on the chest. The band uses the shirt's
+   primary fabric color, and the east profile is widened to preserve comparable
+   collar weight against south/north. West mirrors east; legacy and unknown
+   bodies retain the code-builder fallback. The focused six-body, four-facing,
+   40/48 px proof is
+   `character-turtleneck-component-fit-v1.png` and received visual approval on
+   2026-07-27.
+13. **Two-frame Cardigan intake**: `outfit-cardigan` keeps `trim` and
+   `button-line` in four independent south/east files. The neckline consumes
+   the upper-torso frame; the opening seam and two buttons consume the
+   lower-torso frame. West mirrors east; north, legacy, and unknown bodies
+   retain the code-builder fallback. The focused six-body, four-facing,
+   40/48 px proof is `character-cardigan-component-fit-v1.png` and received
+   visual approval on 2026-07-27.
+14. **Formal Suit Jacket intake**: `outfit-suit-jacket` keeps pocket square,
+   lapels, buttons, pocket, tie, and notches in twelve independent south/east
+   files. The established upper/lower torso frames preserve body fit; the east
+   tie stays at the forward torso edge and west mirrors it. North, legacy, and
+   unknown bodies retain the code-builder fallback. The focused six-body,
+   four-facing, 40/48 px proof is
+   `character-suit-jacket-component-fit-v1.png` and received visual approval on
+   2026-07-27.
+15. **Directional Hoodie intake**: `outfit-hoodie` keeps its down hood in
+   south/east/north, drawstrings in south/east, and kangaroo-pocket seam in
+   south. Each component consumes its declared upper/lower torso frame; west
+   mirrors east and absent component facings intentionally paint nothing. The
+   focused six-body, four-facing, 40/48 px proof is
+   `character-hoodie-component-fit-v1.png` and received visual approval on
+   2026-07-27.
+16. **Sweater Vest intake**: `outfit-vest` keeps its secondary-fabric torso
+   panel, contrasting V-neck inset, and buttons in independent south-only
+   sources. Upper/lower torso frames preserve the six accepted body hulls and
+   leave the primary-fabric sleeve field visible. East/west intentionally carry
+   no vest overlay; north retains the code-builder fallback. The focused
+   six-body, four-facing, 40/48 px proof is
+   `character-vest-component-fit-v1.png` and received visual approval on
+   2026-07-28.
+17. **Dress silhouette refinement**: `outfit-dress` remains the rare
+   body-specific silhouette-changing garment. Refinement v1 adds a structured
+   contrast waist and broader curved hem, keeps the transition continuous,
+   biases east/west flare toward the front, and reduces decorative skirt-seam
+   weight without adding a new rig or animation surface. The literal 40/48 px
+   `character-dress-silhouette-fit-v1.png` sheet and high-contrast
+   `body-archetypes-dress-styles.png` stress sheet received visual approval on
+   2026-07-28.
+18. **Provenance**: each imported asset records source
    (`authored | generated | curated`) in its generated module, so lints and
    future audits know what's re-generatable. `authored` means deliberate
    canonical repo SVG regardless of authoring tool; `generated` means
@@ -465,9 +541,12 @@ icons), not by upfront design.
    generator output.
 
 The approved body and six-head sets plus all ten approved mapped hair source
-sets now form the canonical silhouette foundation. The Phase 3 wall kit or
-outfit work can follow. The phase numbers describe pipeline scope; they do not
-override visual-impact priority.
+sets now form the canonical silhouette foundation. The remaining outfit
+manifests and the separate runtime-scale integration can follow the
+componentized Blazer/Polo/Shirt + Tie/Turtleneck/Cardigan/Suit Jacket/Hoodie/Vest
+slices.
+The phase numbers describe pipeline scope; they do not override visual-impact
+priority.
 
 ### Phase 3 — Wall bevel piece kit (~1 week; first authoring test)
 
@@ -511,7 +590,7 @@ the tweak pain without art.
 
 1. **LOD flag first**: detail tier on `ShapeSpec`; compositor drops interior
    detail below a threshold export size. Benefits procedural parts too.
-2. Re-author by silhouette priority — the approved five-body and six-head
+2. Re-author by silhouette priority — the approved six-body and six-head
    foundations are canonical SVG; Short, Bob, Long straight, Curly, Ponytail,
    and Coils are approved; Bun, Balding, Pixie, and Side-part completed the
    approved mapped set on 2026-07-10. Outfits (§4b) follow, judged against the
@@ -643,6 +722,31 @@ This slice is mechanically additive: it introduces no payload-shape change,
 migration, or schema bump. Unity scatter/import-catalog adoption remains a
 separate sync after visual approval; non-placeable nature props do not enter
 Terrarium's `facility-catalog.json`.
+
+**Maintained Hybrid floor/grass SVG slice (2026-07-30):** the 12 existing
+interior floor instances and three existing grass instances now render from
+genuine artist-editable SVG sources under
+`assets/tiles/quota-co-maintained-hybrid-v1/`. The deterministic surface
+importer retains semantic group and element ownership, and the live floor
+templates use those layers for all non-default parameter variants. Existing
+IDs, template IDs, palettes, defaults, floor/ground kinds, export contract, and
+schema remain unchanged. The 15 default compositor snapshots are promoted.
+Bundle import and Unity uptake remain a separate user-run handoff; the derived
+47-frame grass fringe stays code-owned and deferred to its own proof.
+
+**Grass-fringe deferral (2026-07-30):** the separate 47-frame transition proof,
+editable edge/corner source kit, production promotion, and Unity handoff are
+explicitly deferred. The current code-owned fringe remains unchanged. Reopen
+this only as a bounded visual-review slice after an owner decision; do not infer
+an active queue from the accepted base-grass sources.
+
+**Canonical SVG reference guide (2026-07-30):** the generated multi-sheet guide
+under `docs/reference/canonical-svg-library-v1/` is the visual inventory of
+exact editable SVG sources selected by the live import registries. It separates
+production sources, production dependencies, and deferred concepts, and shows
+the composed 47-frame wall atlas beside its active source fragments. Generated
+character scaffolds, palette sentinels, and wall proof files not referenced by
+the live mapping are documented exclusions rather than canonical art.
 
 **Open:**
 - Surveillance apparatus props (cameras, sensors — QuotaCo "tech you place");

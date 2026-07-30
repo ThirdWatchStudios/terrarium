@@ -32,7 +32,7 @@ Both need attention; §7 argues the monotony levers give more variety per unit o
 | Role | Templates |
 |---|---|
 | Workstation | desk, cubicle-workstation, office-chair, desk-clutter |
-| Amenity / interaction | water-cooler, water-station, water-fountain, coffee-machine, printer, fridge, vending-machine, mail-station, supply-cabinet, whiteboard, kitchenette-counter |
+| Amenity / interaction | water-cooler, water-fountain, coffee-machine, printer, fridge, vending-machine, mail-station, supply-cabinet, whiteboard, kitchenette-counter |
 | Meeting / social | conference-table, break-table, couch, lounge-seating |
 | Storage / service | filing-cabinet, coat-rack, trash-bin |
 | Reception | reception-desk |

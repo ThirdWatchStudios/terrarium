@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="picnic-table" data-projection="plan">
+  <title>QuotaCo lived-campus picnic table</title>
+  <desc>Plan-projected campus table with separated benches, clear structure, and restrained employee-use details.</desc>
+  <metadata>Accepted lived-campus exterior source. Existing 3x2 footprint remains template-owned.</metadata>
+  <g id="shadow">
+    <ellipse id="shadow-contact" cx="64" cy="108" rx="52" ry="7" fill="#000000" opacity=".1"/>
+  </g>
+  <g id="shell">
+    <rect id="shell-table" data-fill-token="primary" x="15" y="36" width="98" height="56" rx="13" fill="#DED5BD" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="shell-table-inset" data-fill-token="secondary" x="22" y="43" width="84" height="42" rx="9" fill="#355247" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="shell-bench-top" data-fill-token="secondary" x="24" y="9" width="80" height="20" rx="9" fill="#355247" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="shell-bench-bottom" data-fill-token="secondary" x="24" y="99" width="80" height="20" rx="9" fill="#355247" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+  <g id="structure">
+    <path id="structure-table-seams" d="M50 43V85M78 43V85" fill="none" stroke="#262B29" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".45"/>
+    <rect id="structure-rail-top" x="31" y="28" width="66" height="9" rx="4" fill="#262B29" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="structure-rail-bottom" x="31" y="91" width="66" height="9" rx="4" fill="#262B29" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+  <g id="personalization">
+    <circle id="personalization-plate" cx="45" cy="63" r="10" fill="#F4F0E4" stroke="#292C2A" stroke-width="3"/>
+    <circle id="personalization-cup" data-fill-token="accent" cx="45" cy="63" r="5" fill="#B65F4D"/>
+    <rect id="personalization-note" x="70" y="56" width="27" height="14" rx="3" fill="#D9D08E" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <path id="personalization-note-lines" d="M75 61H92M75 65H88" fill="none" stroke="#262B29" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/>
+  </g>
+</svg>

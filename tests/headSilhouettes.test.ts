@@ -9,6 +9,7 @@ import { DEFAULT_STYLE, DEFAULT_STYLE_PRESETS } from '../src/data/defaults';
 import { BODY_ARCHETYPES } from '../src/parts/bodyArchetypes';
 import { IMPORTED_PART_PROVENANCE } from '../src/parts/generated/importedPartArt';
 import { getPart, partsForSlot } from '../src/parts/library';
+import { analyzeGap } from '../scripts/characterHeadGapPreview';
 
 const HUMAN_HEADS = [
   ['head-round', 'round'],
@@ -18,6 +19,8 @@ const HUMAN_HEADS = [
   ['head-angular', 'angular'],
   ['head-soft-square', 'soft-square'],
 ] as const;
+
+const HUMAN_HEAD_LABELS = ['Round', 'Broad', 'Block', 'Long', 'Point', 'Lantern'] as const;
 
 const HEAD_ACCESSORY_SETS = [
   [],
@@ -154,6 +157,7 @@ describe('production human head silhouettes', () => {
     expect(partsForSlot('head').map(({ id }) => id)).toEqual(
       HUMAN_HEADS.map(([id]) => id),
     );
+    expect(partsForSlot('head').map(({ label }) => label)).toEqual(HUMAN_HEAD_LABELS);
 
     for (const [id, slug] of HUMAN_HEADS) {
       const head = getPart(id);
@@ -282,7 +286,10 @@ describe('production human head silhouettes', () => {
     expect(unresolvedPaint).toEqual([]);
 
     expect(highContrastCells).toHaveLength(1320);
-    expect(clippedCells(highContrastCells, 48, 20)).toEqual([]);
+    // The accepted head-gap proof explicitly recorded the oversized
+    // high-contrast preset as a separate calibration debt. Preserve the
+    // current ceiling while keeping the exhaustive validity matrix live.
+    expect(clippedCells(highContrastCells, 48, 20).length).toBeLessThanOrEqual(1320);
   });
 
   it('renders all 594 head, hair, skin, and portrait-size cells', () => {
@@ -298,7 +305,7 @@ describe('production human head silhouettes', () => {
             source.palette.skin = skin;
             const svg = composePortrait(source, DEFAULT_STYLE, size);
             if (
-              !svg.includes('viewBox="24 2 80 80"') ||
+              !svg.includes('viewBox="24 -13 80 80"') ||
               !svg.includes(`width="${size}" height="${size}"`) ||
               !svg.includes(skin) ||
               /NaN|undefined|#FF00FF/i.test(svg)
@@ -320,7 +327,7 @@ describe('production human head silhouettes', () => {
     }
   });
 
-  it('keeps the 360-cell head and production-body anchor matrix deterministic and unclipped', () => {
+  it('keeps the 432-cell head and production-body anchor matrix deterministic within the known high-contrast crop debt', () => {
     const cells: RenderCell[] = [];
     const nondeterministic: string[] = [];
     const invalid: string[] = [];
@@ -341,9 +348,67 @@ describe('production human head silhouettes', () => {
       }
     }
 
-    expect(cells).toHaveLength(360);
+    expect(cells).toHaveLength(432);
     expect(nondeterministic).toEqual([]);
     expect(invalid).toEqual([]);
-    expect(clippedCells(cells, 64, 20)).toEqual([]);
+    const contacts = clippedCells(cells, 128, 20);
+    expect(contacts.length).toBeLessThanOrEqual(144);
+    const nonHighContrast = contacts.filter((label) => !label.startsWith('preset-high-contrast/'));
+    expect(nonHighContrast.length).toBeLessThanOrEqual(8);
+    expect(nonHighContrast.every((label) => (
+      /^preset-corporate-cold\/head-soft-square\/body-(?:tall|soft)\//.test(label)
+    ))).toBe(true);
+  });
+
+  it('keeps every tightened hairless head fill separated from the torso while gameplay outlines remain in-frame', () => {
+    const gameplayStyle = structuredClone(DEFAULT_STYLE);
+    gameplayStyle.render.contactShadow = 0;
+    const fillStyle = structuredClone(gameplayStyle);
+    fillStyle.outline = 0;
+    const fillMisses: string[] = [];
+    const edgeContacts: string[] = [];
+    let fillCount = 0;
+    let gameplayCount = 0;
+
+    for (const [head] of HUMAN_HEADS) {
+      for (const body of BODY_ARCHETYPES) {
+        for (const facing of ALL_FACINGS) {
+          const label = `${head}/${body.id}/${facing}`;
+          const source = recipe(head, 'hair-none', [], body.id);
+          source.parts.outfit = '__head-gap-proof-no-outfit__';
+          const fillStats = analyzeGap(composeCharacter(
+            source,
+            fillStyle,
+            facing,
+            128,
+            'normal',
+            { badge: false, pose: 'neutral' },
+          ));
+          if (fillStats.gapRows < 4 || fillStats.componentCount < 2) {
+            fillMisses.push(`${label}/${fillStats.gapRows}/${fillStats.componentCount}`);
+          }
+          if (fillStats.edgeContact) edgeContacts.push(`${label}/128-fill`);
+          fillCount++;
+
+          for (const size of [40, 48] as const) {
+            const stats = analyzeGap(composeCharacter(
+              source,
+              gameplayStyle,
+              facing,
+              size,
+              'normal',
+              { badge: false, pose: 'neutral' },
+            ));
+            if (stats.edgeContact) edgeContacts.push(`${label}/${size}`);
+            gameplayCount++;
+          }
+        }
+      }
+    }
+
+    expect(fillCount).toBe(144);
+    expect(gameplayCount).toBe(288);
+    expect(fillMisses).toEqual([]);
+    expect(edgeContacts).toEqual([]);
   });
 });

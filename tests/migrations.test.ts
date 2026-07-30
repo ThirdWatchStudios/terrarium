@@ -32,6 +32,36 @@ describe('migrateProject', () => {
     expect(migrated!.props.some((prop) => prop.templateId === 'mail-station')).toBe(true);
   });
 
+  it('reconciles stale saved palettes for authored SVG props without changing procedural props', () => {
+    const saved = defaultProject();
+    const desk = saved.props.find((prop) => prop.templateId === 'desk')!;
+    desk.palette = {
+      primary: '#A9714B',
+      secondary: '#DCE6EC',
+      accent: '#444441',
+    };
+    const procedural = saved.props.find((prop) => prop.templateId === 'phone-booth')!;
+    procedural.palette = {
+      primary: '#111111',
+      secondary: '#222222',
+      accent: '#333333',
+    };
+
+    const migrated = migrateProject(saved)!;
+
+    expect(migrated.props.find((prop) => prop.templateId === 'desk')!.palette).toEqual({
+      primary: '#DED5BD',
+      secondary: '#355247',
+      accent: '#B65F4D',
+    });
+    expect(migrated.props.find((prop) => prop.templateId === 'phone-booth')!.palette).toEqual({
+      primary: '#111111',
+      secondary: '#222222',
+      accent: '#333333',
+    });
+    expect(migrated.version).toBe(CURRENT_SCHEMA_VERSION);
+  });
+
   it('reconciles a legacy the-manager recipe id and remaps its scene refs (v2)', () => {
     const legacy = defaultProject();
     legacy.version = 1;

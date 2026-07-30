@@ -1,0 +1,198 @@
+{
+  "status": "review-only",
+  "sourceStatus": "five standalone artist-editable SVG candidate sources loaded directly by the proof; production registration deferred",
+  "sourceValidation": {
+    "sourceCount": 5,
+    "sources": [
+      {
+        "propId": "desk",
+        "projection": "plan",
+        "path": "assets/props/quota-co-workhorse-v1/desk.svg",
+        "sha256": "3563e9bb626735923b2d970e7f256384cb314b1a8751f923a3baa732d71530d7"
+      },
+      {
+        "propId": "office-chair",
+        "projection": "plan",
+        "path": "assets/props/quota-co-workhorse-v1/office-chair.svg",
+        "sha256": "6eb82aa0542965f1c59afaa531952e9c29792aedf8b224cb6c1ad4f911263828"
+      },
+      {
+        "propId": "filing-cabinet",
+        "projection": "elevation",
+        "path": "assets/props/quota-co-workhorse-v1/filing-cabinet.svg",
+        "sha256": "c596dd32dfa5fbeef2ca7f2dd4da1cb06cb74c9170a7cba3a6389c87a3d2a036"
+      },
+      {
+        "propId": "copier",
+        "projection": "elevation",
+        "path": "assets/props/quota-co-workhorse-v1/copier.svg",
+        "sha256": "c70859095ed9c7b5c9aae24526a05792e1da01931327fcf5e5237a6efbc76118"
+      },
+      {
+        "propId": "office-plant",
+        "projection": "elevation",
+        "path": "assets/props/quota-co-workhorse-v1/office-plant.svg",
+        "sha256": "8cbb90dcca5eead7e970288042762fac9045797782b43bf079da95ae0252e4ac"
+      }
+    ]
+  },
+  "baseline": {
+    "schemaVersion": 19,
+    "authoringCanvas": 128,
+    "wallDatum": 112,
+    "normalCellPixels": 90,
+    "farCellPixels": 40,
+    "characterVisualScale": 0.65,
+    "propVisualMultiplier": null
+  },
+  "direction": {
+    "id": "hybrid",
+    "label": "SELECTED · QUOTACO WORKHORSE HYBRID",
+    "shortLabel": "WORKHORSE HYBRID",
+    "note": "Catalog Shell bodies · Service Spine function · Used Shell personalization.",
+    "evaluation": [
+      "One low, rounded institutional family remains legible before surface detail.",
+      "Service bands appear only where they explain access, output, refill, or maintenance.",
+      "Wear and personal objects stay optional and subordinate at far gameplay zoom."
+    ],
+    "panelFill": "#DCE9DD"
+  },
+  "decisions": [
+    {
+      "propId": "desk",
+      "role": "Work surface",
+      "projection": "plan",
+      "decision": "Broad desktop silhouette with inset writing surface, monitor, keyboard, papers, and mug; no front-facing console modules."
+    },
+    {
+      "propId": "office-chair",
+      "role": "Seating",
+      "projection": "plan",
+      "decision": "Top-down backrest, seat, and paired arms dominate; three tucked caster contacts imply a rolling base without an octopus silhouette."
+    },
+    {
+      "propId": "filing-cabinet",
+      "role": "Storage",
+      "projection": "elevation",
+      "decision": "One rounded cabinet hull with an unmistakable vertical drawer stack, label pulls, and grounded plinth."
+    },
+    {
+      "propId": "copier",
+      "role": "Machine",
+      "projection": "elevation",
+      "decision": "One floor-standing copier hull organized around scanner lid, control panel, output mouth, paper drawers, and base."
+    },
+    {
+      "propId": "office-plant",
+      "role": "Personalization",
+      "projection": "elevation",
+      "decision": "Organic leaf canopy rises from one molded planter; the shell treatment stays below the foliage."
+    }
+  ],
+  "projectionLocks": {
+    "desk": "plan",
+    "office-chair": "plan",
+    "filing-cabinet": "elevation",
+    "copier": "elevation",
+    "office-plant": "elevation"
+  },
+  "visualBounds": {
+    "current": {
+      "desk": {
+        "minX": 6,
+        "minY": 29,
+        "maxX": 121,
+        "maxY": 98,
+        "width": 116,
+        "height": 70
+      },
+      "office-chair": {
+        "minX": 40,
+        "minY": 43,
+        "maxX": 87,
+        "maxY": 98,
+        "width": 48,
+        "height": 56
+      },
+      "filing-cabinet": {
+        "minX": 41,
+        "minY": 45,
+        "maxX": 86,
+        "maxY": 120,
+        "width": 46,
+        "height": 76
+      },
+      "copier": {
+        "minX": 19,
+        "minY": 28,
+        "maxX": 102,
+        "maxY": 121,
+        "width": 84,
+        "height": 94
+      },
+      "office-plant": {
+        "minX": 22,
+        "minY": 21,
+        "maxX": 106,
+        "maxY": 120,
+        "width": 85,
+        "height": 100
+      }
+    },
+    "hybrid": {
+      "desk": {
+        "minX": 7,
+        "minY": 30,
+        "maxX": 120,
+        "maxY": 97,
+        "width": 114,
+        "height": 68
+      },
+      "office-chair": {
+        "minX": 40,
+        "minY": 45,
+        "maxX": 87,
+        "maxY": 104,
+        "width": 48,
+        "height": 60
+      },
+      "filing-cabinet": {
+        "minX": 41,
+        "minY": 47,
+        "maxX": 86,
+        "maxY": 120,
+        "width": 46,
+        "height": 74
+      },
+      "copier": {
+        "minX": 20,
+        "minY": 29,
+        "maxX": 101,
+        "maxY": 121,
+        "width": 82,
+        "height": 93
+      },
+      "office-plant": {
+        "minX": 23,
+        "minY": 22,
+        "maxX": 105,
+        "maxY": 120,
+        "width": 83,
+        "height": 99
+      }
+    }
+  },
+  "protectedSurfaceHashes": {
+    "CONTRACT.md": "1db92f32e263af0887f9841909fb9b82a09e5df1ac7d5d4f809adab9c0b3105d",
+    "src/core/exporter.ts": "29f1bb95a975a578f0dcc3ec5d0eee4e65e219359da6c9e84430ddf8ac15ca8a",
+    "src/core/layout.ts": "2605f283175007baa7912fa4ef05f6bac995dcd3fda3cd77ff857dc38fb49e1c",
+    "src/core/types.ts": "9d4048de93599ee977b3ebb00adcee6f29a824269c2bd3d763745604d9f9baac",
+    "src/data/defaults.ts": "7cc38f13417a60d75f515eae1af8fecaa12aac196a75c77c4bf8cfe350792049",
+    "src/props/templates.ts": "f665309737da777185486c3d0c640135550ebbb4f6fa9fd61e4b2e88f00832ae"
+  },
+  "boundaries": {
+    "character": "accepted characters, anchors, 0.65 visual scale, roots, and footprints unchanged",
+    "world": "112-unit walls plus prop footprints, pivots, navigation, collision, projection, and interaction metadata unchanged",
+    "integration": "standalone candidate SVG sources added; no production registration, exporter, CONTRACT, schema, atlas, or Unity change"
+  }
+}

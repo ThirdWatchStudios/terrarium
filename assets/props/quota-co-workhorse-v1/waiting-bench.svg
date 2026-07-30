@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="waiting-bench" data-projection="plan">
+  <title>QuotaCo institutional waiting bench</title>
+  <desc>Plan-projected full-span catalog bench with a molded beam, individually readable seat inserts, and service tab.</desc>
+  <g id="art-scale" transform="translate(64 64) scale(.9) translate(-64 -64)">
+    <g id="shell">
+      <rect id="shell-beam" data-fill-token="primary" x="6" y="41" width="116" height="43" rx="10" fill="#DED5BD" stroke="#292C2A" stroke-width="3"/>
+      <rect id="shell-back-rail" x="10" y="44" width="108" height="9" rx="4" fill="#F3EEDA" stroke="#292C2A" stroke-width="2"/>
+      <rect id="shell-front-recess" x="14" y="80" width="100" height="5" rx="2" fill="#18211E"/>
+    </g>
+    <g id="seats-3">
+      <rect id="seat-3-1" data-fill-token="secondary" x="18" y="55" width="28.667" height="24" rx="6" fill="#355247" stroke="#292C2A" stroke-width="1.6"/>
+      <rect id="seat-3-2" x="49.667" y="55" width="28.667" height="24" rx="6" fill="#49685A" stroke="#292C2A" stroke-width="1.6"/>
+      <rect id="seat-3-3" data-fill-token="secondary" x="81.334" y="55" width="28.666" height="24" rx="6" fill="#355247" stroke="#292C2A" stroke-width="1.6"/>
+    </g>
+    <g id="seats-2" display="none">
+      <rect id="seat-2-1" data-fill-token="secondary" x="18" y="55" width="44.5" height="24" rx="6" fill="#355247" stroke="#292C2A" stroke-width="1.6"/>
+      <rect id="seat-2-2" x="65.5" y="55" width="44.5" height="24" rx="6" fill="#49685A" stroke="#292C2A" stroke-width="1.6"/>
+    </g>
+    <g id="seats-4" display="none">
+      <rect id="seat-4-1" data-fill-token="secondary" x="18" y="55" width="20.75" height="24" rx="6" fill="#355247" stroke="#292C2A" stroke-width="1.6"/>
+      <rect id="seat-4-2" x="41.75" y="55" width="20.75" height="24" rx="6" fill="#49685A" stroke="#292C2A" stroke-width="1.6"/>
+      <rect id="seat-4-3" data-fill-token="secondary" x="65.5" y="55" width="20.75" height="24" rx="6" fill="#355247" stroke="#292C2A" stroke-width="1.6"/>
+      <rect id="seat-4-4" x="89.25" y="55" width="20.75" height="24" rx="6" fill="#49685A" stroke="#292C2A" stroke-width="1.6"/>
+    </g>
+    <g id="service">
+      <rect id="service-tab" data-fill-token="accent" x="109" y="57" width="3" height="10" rx="1" fill="#B65F4D"/>
+    </g>
+  </g>
+</svg>

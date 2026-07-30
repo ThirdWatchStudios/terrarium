@@ -1,8 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { POSES, POSE_DEFS, getPose, poseCatalogJson } from '../src/parts/poses';
+import { POSES, POSE_DEFS, getPose, poseCatalogJson, poseVariantFor } from '../src/parts/poses';
 import { composeCharacter, poseRigAnchors } from '../src/core/compositor';
 import { posesAtlas } from '../src/core/exporter';
 import { defaultGoldenProject } from '../src/data/defaults';
+import { getPart } from '../src/parts/library';
 
 /**
  * Pose + beat data model guard (social-theater-presentation-experiment.md
@@ -93,7 +94,12 @@ describe('pose composition', () => {
     const base = composeCharacter(recipe, style, 'south', 128, 'normal', { badge: false });
     const pointed = composeCharacter(recipe, style, 'south', 128, 'normal', { badge: false, pose: 'point' });
     expect(pointed).not.toBe(base);
-    expect(pointed.length).toBeGreaterThan(base.length);
+    const bodyAnchors = getPart(recipe.parts.body)?.bodyAnchors?.south;
+    const point = poseVariantFor('point', 'south', bodyAnchors);
+    expect(point?.front.length).toBeGreaterThan(0);
+    for (const shape of point?.front ?? []) {
+      expect(pointed).toContain(`d="${shape.d}"`);
+    }
   });
 
   it('slump applies the head-drop group transform; neutral does not', () => {

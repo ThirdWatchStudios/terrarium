@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="desk" data-projection="plan">
+  <title>QuotaCo workhorse desk</title>
+  <desc>Plan-projected molded-plastic office desk with inset writing surface, monitor, keyboard, papers, and mug.</desc>
+  <g id="shell">
+    <rect id="shell-body" data-fill-token="primary" x="9" y="32" width="110" height="64" rx="11" fill="#DED5BD" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+  <g id="structure">
+    <rect id="structure-inset" data-fill-token="secondary" x="16" y="39" width="96" height="50" rx="7" fill="#355247"/>
+    <rect id="structure-writing-surface" x="20" y="43" width="88" height="42" rx="5" fill="#77755D"/>
+  </g>
+  <g id="function">
+    <rect id="function-monitor" x="31" y="41" width="45" height="11" rx="3" fill="#262B29" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="function-monitor-stand" data-fill-token="secondary" x="48" y="52" width="10" height="5" rx="2" fill="#355247" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="function-keyboard" x="34" y="64" width="42" height="13" rx="3" fill="#C7BDA7"/>
+    <path id="function-key-lines" d="M39 68H71M39 72H71" fill="none" stroke="#262B29" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity=".34"/>
+    <ellipse id="function-mouse" cx="86" cy="70" rx="4" ry="6" fill="#C7BDA7"/>
+  </g>
+  <g id="personalization">
+    <rect id="personalization-paper" x="79" y="48" width="18" height="13" rx="2" fill="#F4F0E4"/>
+    <path id="personalization-paper-lines" d="M82 53H93M82 57H90" fill="none" stroke="#262B29" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity=".38"/>
+    <ellipse id="personalization-mug" data-fill-token="accent" cx="102" cy="48" rx="6" ry="6" fill="#B65F4D"/>
+    <ellipse id="personalization-coffee" cx="102" cy="48" rx="3" ry="3" fill="#5A3527"/>
+  </g>
+  <g id="foreground">
+    <rect id="shell-front-edge" data-fill-token="secondary" x="16" y="82" width="96" height="7" rx="3" fill="#355247" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium outfit-vest south buttons</title>
+  <desc>Balanced-body front button pair fitted through the lower-torso frame.</desc>
+  <g id="art" transform="translate(64 87)">
+    <path id="detail/buttons/upper" d="M -1.5 2.22 a 1.5 1.5 0 1 0 3 0 a 1.5 1.5 0 1 0 -3 0 Z" fill="#00000030" fill-rule="nonzero"/>
+    <path id="detail/buttons/lower" d="M -1.5 9.82 a 1.5 1.5 0 1 0 3 0 a 1.5 1.5 0 1 0 -3 0 Z" fill="#00000030" fill-rule="nonzero"/>
+  </g>
+</svg>

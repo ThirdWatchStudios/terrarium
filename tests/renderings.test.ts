@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { UNIT_INK, UNIT_PARTS, codingHue, unitPalette, unitRecipe, unitRenderingSpec } from '../src/core/renderings';
 import { composeCharacter, composePortrait } from '../src/core/compositor';
 import { defaultGoldenProject } from '../src/data/defaults';
+import { getPart } from '../src/parts/library';
 
 /**
  * Renderings guard — register-constitution.md Article VIII (as amended):
@@ -97,7 +98,15 @@ describe('corporate-identity rendering (the badge photo)', () => {
   it('is a bust crop with a studio background, warm palette intact', () => {
     const { characters, style } = defaultGoldenProject();
     const portrait = composePortrait(characters[0], style, 96);
-    expect(portrait).toContain('viewBox="24 2 80 80"');
+    const headCenter = getPart(characters[0].parts.body)?.bodyAnchors?.south.headCenter;
+    expect(headCenter).toBeDefined();
+    const canvasHeadCenter = {
+      x: 64 + headCenter!.x,
+      y: 87 + headCenter!.y,
+    };
+    expect(portrait).toContain(
+      `viewBox="${canvasHeadCenter.x - 40} ${canvasHeadCenter.y - 42} 80 80"`,
+    );
     expect(portrait).toContain('#D9D4C9'); // the studio paper
     expect(portrait).toContain(characters[0].palette.skin.toUpperCase()); // warmth is proximity
   });

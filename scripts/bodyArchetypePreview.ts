@@ -67,6 +67,7 @@ interface CharacterPreviewOptions {
   accessories?: string[];
   pose?: Pose;
   style?: StyleSheet;
+  palette?: CharacterRecipe['palette'];
 }
 
 function recipe(archetype: BodyArchetype, options: CharacterPreviewOptions = {}): CharacterRecipe {
@@ -83,7 +84,7 @@ function recipe(archetype: BodyArchetype, options: CharacterPreviewOptions = {})
     },
     palette: bodyOnly
       ? { ...PALETTE, outfitPrimary: '#171A1C' }
-      : { ...PALETTE },
+      : { ...(options.palette ?? PALETTE) },
   };
 }
 
@@ -324,6 +325,238 @@ function riggedSliceSheet(): string {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
 }
 
+const OUTFIT_PROOF_PALETTES: readonly CharacterRecipe['palette'][] = [
+  {
+    skin: '#C68B59',
+    hair: '#2B211D',
+    outfitPrimary: '#315A78',
+    outfitSecondary: '#E8E4D8',
+    accent: '#D85A30',
+  },
+  {
+    skin: '#8D5A3B',
+    hair: '#1F1A17',
+    outfitPrimary: '#9A4F4C',
+    outfitSecondary: '#F0E2C8',
+    accent: '#315A78',
+  },
+  {
+    skin: '#F4D3B0',
+    hair: '#6E4A2A',
+    outfitPrimary: '#3E6B50',
+    outfitSecondary: '#DCE6EC',
+    accent: '#854F0B',
+  },
+];
+
+interface FocusedOutfitProof {
+  outfit:
+    | 'outfit-tee'
+    | 'outfit-blazer'
+    | 'outfit-polo'
+    | 'outfit-shirt-tie'
+    | 'outfit-turtleneck'
+    | 'outfit-cardigan'
+    | 'outfit-suit-jacket'
+    | 'outfit-hoodie'
+    | 'outfit-vest'
+    | 'outfit-dress';
+  title: string;
+  description: string;
+  sourceLabel: string;
+  northLabel?: string;
+}
+
+function focusedOutfitDetailSheet(proof: FocusedOutfitProof): string {
+  const header = 112;
+  const labelWidth = 178;
+  const rowHeight = 132;
+  const columns = [
+    { label: 'south · warm', facing: 'south', size: 112, panel: 116, style: DEFAULT_STYLE },
+    { label: 'east · warm', facing: 'east', size: 112, panel: 116, style: DEFAULT_STYLE },
+    { label: 'west · mirror', facing: 'west', size: 112, panel: 116, style: DEFAULT_STYLE },
+    { label: proof.northLabel ?? 'north · fallback', facing: 'north', size: 112, panel: 116, style: DEFAULT_STYLE },
+    {
+      label: 'south · cold',
+      facing: 'south',
+      size: 96,
+      panel: 104,
+      style: DEFAULT_STYLE_PRESETS[1].style,
+    },
+    {
+      label: 'east · cold',
+      facing: 'east',
+      size: 96,
+      panel: 104,
+      style: DEFAULT_STYLE_PRESETS[1].style,
+    },
+    { label: 'south · 48', facing: 'south', size: 48, panel: 68, style: DEFAULT_STYLE },
+    { label: 'east · 48', facing: 'east', size: 48, panel: 68, style: DEFAULT_STYLE },
+    { label: 'south · 40', facing: 'south', size: 40, panel: 60, style: DEFAULT_STYLE },
+    { label: 'east · 40', facing: 'east', size: 40, panel: 60, style: DEFAULT_STYLE },
+  ] as const;
+  const gap = 8;
+  const width = labelWidth + columns.reduce((sum, column) => sum + column.panel + gap, 0) + 10;
+  const height = header + BODY_ARCHETYPES.length * rowHeight + 34;
+  const parts: string[] = [`<rect width="${width}" height="${height}" fill="${COLORS.page}"/>`];
+
+  parts.push(text(18, 30, proof.title, 20, 700));
+  parts.push(text(
+    18,
+    53,
+    proof.description,
+    11,
+    400,
+    COLORS.muted,
+  ));
+  parts.push(text(
+    18,
+    72,
+    'Three palette swaps rotate by row. Literal 48 / 40 px cells are the gameplay-distance readability gate.',
+    11,
+    400,
+    COLORS.muted,
+  ));
+
+  let headerX = labelWidth;
+  for (const column of columns) {
+    parts.push(text(headerX + 7, 100, column.label, 9, 650, COLORS.muted));
+    headerX += column.panel + gap;
+  }
+
+  BODY_ARCHETYPES.forEach((archetype, row) => {
+    const y = header + row * rowHeight;
+    const palette = OUTFIT_PROOF_PALETTES[row % OUTFIT_PROOF_PALETTES.length];
+    parts.push(`<rect x="8" y="${y + 2}" width="${width - 16}" height="${rowHeight - 4}" rx="7" fill="${row % 2 === 0 ? COLORS.panel : COLORS.row}"/>`);
+    parts.push(text(20, y + 49, archetype.label, 15, 700));
+    parts.push(text(20, y + 68, archetype.id, 9, 500, COLORS.muted));
+    parts.push(text(20, y + 88, `palette ${(row % OUTFIT_PROOF_PALETTES.length) + 1}`, 9, 600, COLORS.muted));
+
+    let x = labelWidth;
+    for (const column of columns) {
+      const insetX = (column.panel - column.size) / 2;
+      const insetY = (rowHeight - column.size) / 2;
+      parts.push(`<rect x="${x}" y="${y + 6}" width="${column.panel}" height="${rowHeight - 12}" rx="5" fill="#FFFFFF" stroke="${COLORS.grid}"/>`);
+      parts.push(placedCharacter(
+        archetype,
+        column.facing,
+        x + insetX,
+        y + insetY,
+        column.size,
+        {
+          outfit: proof.outfit,
+          palette,
+          style: column.style,
+        },
+      ));
+      x += column.panel + gap;
+    }
+  });
+
+  parts.push(text(
+    18,
+    height - 12,
+    proof.sourceLabel,
+    10,
+    550,
+    COLORS.muted,
+  ));
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+}
+
+function blazerDetailSheet(): string {
+  return focusedOutfitDetailSheet({
+    outfit: 'outfit-blazer',
+    title: 'Componentized Blazer — production body fit',
+    description: 'Lapels use the upper-torso frame; buttons and pocket use the lower-torso frame. West mirrors east; north keeps the stable rear seam.',
+    sourceLabel: 'Authored source set: blazer.lapels.* · blazer.buttons.* · blazer.pocket.*',
+  });
+}
+
+function teeDetailSheet(): string {
+  return focusedOutfitDetailSheet({
+    outfit: 'outfit-tee',
+    title: 'Anchored Tee — production body fit',
+    description: 'Crew rib and neck opening follow each body’s neck anchor. West mirrors east; north keeps the stable code-builder fallback.',
+    sourceLabel: 'Authored source set: tee.south.svg · tee.east.svg',
+  });
+}
+
+function poloDetailSheet(): string {
+  return focusedOutfitDetailSheet({
+    outfit: 'outfit-polo',
+    title: 'Componentized Polo — production body fit',
+    description: 'Collar and placket share the upper-torso frame. West mirrors east; north keeps the stable code-builder collar.',
+    sourceLabel: 'Authored source set: polo.collar.* · polo.placket.*',
+  });
+}
+
+function shirtTieDetailSheet(): string {
+  return focusedOutfitDetailSheet({
+    outfit: 'outfit-shirt-tie',
+    title: 'Componentized Shirt + Tie — production body fit',
+    description: 'Collar and tie remain independent; profile ties stay at the forward torso edge. West mirrors east; north keeps the stable rear collar.',
+    sourceLabel: 'Authored source set: shirt-tie.collar.* · shirt-tie.tie.*',
+  });
+}
+
+function turtleneckDetailSheet(): string {
+  return focusedOutfitDetailSheet({
+    outfit: 'outfit-turtleneck',
+    title: 'Componentized Turtleneck — production body fit',
+    description: 'The primary-fabric neck band bridges the 3 px head/torso gap, with a widened profile that preserves the south/north collar weight. West mirrors east.',
+    sourceLabel: 'Authored source set: turtleneck.neck-band.{south,east,north}.svg',
+    northLabel: 'north · authored',
+  });
+}
+
+function cardiganDetailSheet(): string {
+  return focusedOutfitDetailSheet({
+    outfit: 'outfit-cardigan',
+    title: 'Componentized Cardigan — production body fit',
+    description: 'Contrasting neckline trim stays independent from the center seam and two-button line. West mirrors east; north keeps the clean rear fallback.',
+    sourceLabel: 'Authored source set: cardigan.trim.* · cardigan.button-line.*',
+  });
+}
+
+function suitJacketDetailSheet(): string {
+  return focusedOutfitDetailSheet({
+    outfit: 'outfit-suit-jacket',
+    title: 'Componentized Suit Jacket — production body fit',
+    description: 'Blazer structure, tie, pocket square, and notches remain independent. Profile details stay on the visible front edge; west mirrors east.',
+    sourceLabel: 'Authored source set: suit-jacket.{lapels,buttons,pocket,tie,pocket-square,notches}.*',
+  });
+}
+
+function hoodieDetailSheet(): string {
+  return focusedOutfitDetailSheet({
+    outfit: 'outfit-hoodie',
+    title: 'Componentized Hoodie — production body fit',
+    description: 'The down hood, drawstrings, and kangaroo-pocket seam fit independently. Rear view authors the hood only; west mirrors east.',
+    sourceLabel: 'Authored source set: hoodie.hood.{south,east,north} · hoodie.drawstrings.{south,east} · hoodie.pocket.south',
+    northLabel: 'north · authored hood',
+  });
+}
+
+function vestDetailSheet(): string {
+  return focusedOutfitDetailSheet({
+    outfit: 'outfit-vest',
+    title: 'Componentized Sweater Vest — production body fit',
+    description: 'The secondary-fabric panel, V-neck inset, and buttons are front-only. East/west carry no vest overlay; north keeps the clean rear fallback.',
+    sourceLabel: 'Authored source set: vest.panel.south · vest.neck-inset.south · vest.buttons.south',
+  });
+}
+
+function dressSilhouetteFitSheet(): string {
+  return focusedOutfitDetailSheet({
+    outfit: 'outfit-dress',
+    title: 'Dress silhouette refinement — production body fit',
+    description: 'A structured contrast waist and broader curved skirt make the garment unmistakable at game scale. Profiles rely on the skirt envelope and otherwise stay detail-light.',
+    sourceLabel: 'Generated per-body silhouette candidate: structured waist · broad curved hem · directional profile flare',
+    northLabel: 'north · rear seam',
+  });
+}
+
 const POSE_SHORT: Record<Pose, string> = {
   neutral: 'neutral',
   'walk-approach': 'walk →',
@@ -559,7 +792,7 @@ function html(): string {
   <p class="notice"><strong>Body rig and every outfit are mechanically complete; Dress visuals are provisional.</strong> Body-owned anchors drive the full catalog, while Dress remains scheduled for a dedicated art pass before its shape language is final.</p>
   <ul>${cards}</ul>
   <h2>Garment, lanyard, and pose proof</h2>
-  <img src="body-archetypes-rigged.png" alt="Five body archetypes with body-aware garments, lanyards, and poses">
+  <img src="body-archetypes-rigged.png" alt="Six body archetypes with body-aware garments, lanyards, and poses">
   <h2>Complete pose rig — all authored source facings</h2>
   <img src="body-archetypes-poses-south.png" alt="All body archetypes in all south-facing poses">
   <img src="body-archetypes-poses-east.png" alt="All body archetypes in all east-facing poses">
@@ -569,15 +802,15 @@ function html(): string {
   <img src="body-archetypes-held-east.png" alt="East-facing held-object compatibility matrix">
   <img src="body-archetypes-held-north.png" alt="North-facing held-object compatibility matrix">
   <h2>Complete outfit fit</h2>
-  <img src="body-archetypes-outfits-south.png" alt="All five body archetypes in all south-facing human outfits">
-  <img src="body-archetypes-outfits-east.png" alt="All five body archetypes in all east-facing human outfits">
-  <img src="body-archetypes-outfits-north.png" alt="All five body archetypes in all north-facing human outfits">
+  <img src="body-archetypes-outfits-south.png" alt="All six body archetypes in all south-facing human outfits">
+  <img src="body-archetypes-outfits-east.png" alt="All six body archetypes in all east-facing human outfits">
+  <img src="body-archetypes-outfits-north.png" alt="All six body archetypes in all north-facing human outfits">
   <h2>Dress silhouette study — provisional</h2>
   <img src="body-archetypes-dress-styles.png" alt="Body-specific dress silhouettes across source facings and style presets">
   <h2>Outfit game-scale strip</h2>
   <img src="body-archetypes-outfit-distance.png" alt="Every body and outfit at 64, 48, and 32 pixels">
   <h2>Characters through the production compositor</h2>
-  <img src="body-archetypes-preview.png" alt="Five body archetypes across facings and distances">
+  <img src="body-archetypes-preview.png" alt="Six body archetypes across facings and distances">
   <h2>Flat silhouettes</h2>
   <img src="body-archetypes-silhouettes.png" alt="Body-only silhouette comparison">
   <h2>Active sub-anchor blueprint</h2>
@@ -596,6 +829,16 @@ function main(): void {
 
   const full = fullCharacterSheet();
   writeSvgAndPng(outDir, 'body-archetypes-rigged', riggedSliceSheet());
+  writeSvgAndPng(outDir, 'character-blazer-component-fit-v1', blazerDetailSheet());
+  writeSvgAndPng(outDir, 'character-tee-anchored-fit-v1', teeDetailSheet());
+  writeSvgAndPng(outDir, 'character-polo-component-fit-v1', poloDetailSheet());
+  writeSvgAndPng(outDir, 'character-shirt-tie-component-fit-v1', shirtTieDetailSheet());
+  writeSvgAndPng(outDir, 'character-turtleneck-component-fit-v1', turtleneckDetailSheet());
+  writeSvgAndPng(outDir, 'character-cardigan-component-fit-v1', cardiganDetailSheet());
+  writeSvgAndPng(outDir, 'character-suit-jacket-component-fit-v1', suitJacketDetailSheet());
+  writeSvgAndPng(outDir, 'character-hoodie-component-fit-v1', hoodieDetailSheet());
+  writeSvgAndPng(outDir, 'character-vest-component-fit-v1', vestDetailSheet());
+  writeSvgAndPng(outDir, 'character-dress-silhouette-fit-v1', dressSilhouetteFitSheet());
   writeSvgAndPng(outDir, 'body-archetypes-poses-south', poseProofSheet('south'));
   writeSvgAndPng(outDir, 'body-archetypes-poses-east', poseProofSheet('east'));
   writeSvgAndPng(outDir, 'body-archetypes-poses-north', poseProofSheet('north'));

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="copier" data-projection="elevation">
+  <title>QuotaCo workhorse copier</title>
+  <desc>Elevation-projected floor copier with scanner lid, controls, output mouth, paper drawers, and base.</desc>
+  <g id="shadow">
+    <ellipse id="shadow-contact" cx="64" cy="117" rx="33" ry="5" fill="#000000" opacity=".12"/>
+  </g>
+  <g id="shell">
+    <rect id="shell-body" data-fill-token="primary" x="28" y="42" width="72" height="74" rx="10" fill="#DED5BD" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="shell-scanner-lid" x="22" y="31" width="78" height="19" rx="7" fill="#F3EEDA" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+  <g id="structure">
+    <rect id="structure-scanner-glass" x="30" y="35" width="50" height="8" rx="3" fill="#8FB7C0"/>
+    <path id="structure-lid-seam" d="M31 47H92" fill="none" stroke="#262B29" stroke-width="2" stroke-linecap="round" opacity=".32"/>
+    <rect id="structure-control-housing" x="76" y="51" width="19" height="16" rx="4" fill="#355247" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+  <g id="function">
+    <rect id="function-control-display" x="80" y="55" width="11" height="5" rx="2" fill="#18211E"/>
+    <ellipse id="function-control-coral" data-fill-token="accent" cx="82" cy="63" rx="2" ry="2" fill="#B65F4D"/>
+    <ellipse id="function-control-cream" cx="89" cy="63" rx="2" ry="2" fill="#F3EEDA"/>
+    <rect id="function-output-mouth" x="35" y="58" width="48" height="25" rx="6" fill="#18211E"/>
+    <path id="function-output-paper" d="M40 64H78V84H35V72Z" fill="#F4F0E4"/>
+    <rect id="function-drawer-upper" data-fill-token="secondary" x="36" y="88" width="56" height="10" rx="3" fill="#49685A"/>
+    <rect id="function-drawer-lower" data-fill-token="secondary" x="36" y="101" width="56" height="9" rx="3" fill="#49685A"/>
+    <rect id="function-drawer-pull-upper" x="53" y="91" width="22" height="3" rx="1" fill="#262B29"/>
+    <rect id="function-drawer-pull-lower" x="53" y="104" width="22" height="3" rx="1" fill="#262B29"/>
+  </g>
+  <g id="foreground">
+    <rect id="structure-base" x="29" y="109" width="70" height="7" rx="3" fill="#262B29" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+</svg>

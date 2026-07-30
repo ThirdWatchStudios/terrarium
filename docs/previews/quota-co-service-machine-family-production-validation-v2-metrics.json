@@ -1,0 +1,894 @@
+{
+  "reviewStatus": "production-wired-awaiting-visual-approval",
+  "productionPromotion": true,
+  "canonicalSvgCount": 10,
+  "importerGeneratedArt": true,
+  "unityImport": false,
+  "commitCreated": false,
+  "exportContractMutation": false,
+  "schemaMutation": false,
+  "schemaVersion": 19,
+  "invariants": {
+    "authoringCanvas": 128,
+    "acceptedWallDatum": 112,
+    "characterVisualScale": 0.65,
+    "propNativeFrameCells": 2,
+    "propCharacterMultiplierApplied": false,
+    "bakedGameplayArtScales": {
+      "printer": 0.84,
+      "printer-jammed": 0.84,
+      "coffee-machine": 0.84,
+      "coffee-machine-broken": 0.84,
+      "water-cooler": 0.86,
+      "water-cooler-empty": 0.86,
+      "shredder": 0.82,
+      "microwave": 0.85,
+      "fridge": 0.86,
+      "vending-machine": 0.86
+    }
+  },
+  "contractValidation": {
+    "pass": true,
+    "errors": [],
+    "contracts": [
+      {
+        "id": "printer",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 26,
+          "ry": 4
+        },
+        "params": [
+          {
+            "key": "width",
+            "min": 44,
+            "max": 72,
+            "step": 2,
+            "default": 56
+          }
+        ],
+        "defaultInstanceParams": {
+          "width": 56
+        }
+      },
+      {
+        "id": "printer-jammed",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 26,
+          "ry": 4
+        },
+        "params": [
+          {
+            "key": "width",
+            "min": 44,
+            "max": 72,
+            "step": 2,
+            "default": 56
+          }
+        ],
+        "defaultInstanceParams": {
+          "width": 56
+        }
+      },
+      {
+        "id": "coffee-machine",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 18,
+          "ry": 3.5
+        },
+        "params": [
+          {
+            "key": "height",
+            "min": 40,
+            "max": 56,
+            "step": 2,
+            "default": 48
+          }
+        ],
+        "defaultInstanceParams": {
+          "height": 48
+        }
+      },
+      {
+        "id": "coffee-machine-broken",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 18,
+          "ry": 3.5
+        },
+        "params": [
+          {
+            "key": "height",
+            "min": 40,
+            "max": 56,
+            "step": 2,
+            "default": 48
+          }
+        ],
+        "defaultInstanceParams": {
+          "height": 48
+        }
+      },
+      {
+        "id": "water-cooler",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 21,
+          "ry": 4
+        },
+        "params": [
+          {
+            "key": "height",
+            "min": 44,
+            "max": 68,
+            "step": 2,
+            "default": 56
+          }
+        ],
+        "defaultInstanceParams": {
+          "height": 56
+        }
+      },
+      {
+        "id": "water-cooler-empty",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 21,
+          "ry": 4
+        },
+        "params": [
+          {
+            "key": "height",
+            "min": 44,
+            "max": 68,
+            "step": 2,
+            "default": 56
+          }
+        ],
+        "defaultInstanceParams": {
+          "height": 56
+        }
+      },
+      {
+        "id": "shredder",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 17,
+          "ry": 4
+        },
+        "params": [
+          {
+            "key": "height",
+            "min": 34,
+            "max": 50,
+            "step": 2,
+            "default": 42
+          }
+        ],
+        "defaultInstanceParams": {
+          "height": 42
+        }
+      },
+      {
+        "id": "microwave",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 22,
+          "ry": 4
+        },
+        "params": [
+          {
+            "key": "width",
+            "min": 38,
+            "max": 52,
+            "step": 2,
+            "default": 44
+          }
+        ],
+        "defaultInstanceParams": {
+          "width": 44
+        }
+      },
+      {
+        "id": "fridge",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 21,
+          "ry": 4.5
+        },
+        "params": [
+          {
+            "key": "height",
+            "min": 66,
+            "max": 90,
+            "step": 2,
+            "default": 78
+          }
+        ],
+        "defaultInstanceParams": {
+          "height": 78
+        }
+      },
+      {
+        "id": "vending-machine",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 25,
+          "ry": 4.5
+        },
+        "params": [
+          {
+            "key": "height",
+            "min": 70,
+            "max": 94,
+            "step": 2,
+            "default": 84
+          },
+          {
+            "key": "stocked",
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "default": 3
+          }
+        ],
+        "defaultInstanceParams": {
+          "height": 84,
+          "stocked": 3
+        }
+      }
+    ]
+  },
+  "sourceProvenance": {
+    "printer": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/printer.svg",
+      "sourceSha256": "5d7b2d6eaffce50e1c16c6e181296fe720d6594256238c5a926c391786b76c37",
+      "importedSourceFile": "assets/props/quota-co-workhorse-v1/printer.svg",
+      "importedSourceSha256": "5d7b2d6eaffce50e1c16c6e181296fe720d6594256238c5a926c391786b76c37",
+      "hashMatchesImportedArt": true,
+      "projectionMatches": true,
+      "rasterStats": {
+        "canonicalSource": {
+          "close": {
+            "width": 128,
+            "height": 128,
+            "visiblePixels": 2587,
+            "bounds": {
+              "minX": 35,
+              "minY": 69,
+              "maxX": 92,
+              "maxY": 119
+            }
+          },
+          "far": {
+            "width": 40,
+            "height": 40,
+            "visiblePixels": 264,
+            "bounds": {
+              "minX": 11,
+              "minY": 21,
+              "maxX": 28,
+              "maxY": 37
+            }
+          }
+        },
+        "importedOutput": {
+          "close": {
+            "width": 128,
+            "height": 128,
+            "visiblePixels": 2858,
+            "bounds": {
+              "minX": 34,
+              "minY": 67,
+              "maxX": 93,
+              "maxY": 120
+            }
+          },
+          "far": {
+            "width": 40,
+            "height": 40,
+            "visiblePixels": 292,
+            "bounds": {
+              "minX": 10,
+              "minY": 21,
+              "maxX": 29,
+              "maxY": 37
+            }
+          }
+        }
+      }
+    },
+    "coffee-machine": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/coffee-machine.svg",
+      "sourceSha256": "0ec61554eb11a552ee04bacf634dc65a605f13891f97c884dc01084acd1b72fb",
+      "importedSourceFile": "assets/props/quota-co-workhorse-v1/coffee-machine.svg",
+      "importedSourceSha256": "0ec61554eb11a552ee04bacf634dc65a605f13891f97c884dc01084acd1b72fb",
+      "hashMatchesImportedArt": true,
+      "projectionMatches": true,
+      "rasterStats": {
+        "canonicalSource": {
+          "close": {
+            "width": 128,
+            "height": 128,
+            "visiblePixels": 2341,
+            "bounds": {
+              "minX": 43,
+              "minY": 61,
+              "maxX": 84,
+              "maxY": 119
+            }
+          },
+          "far": {
+            "width": 40,
+            "height": 40,
+            "visiblePixels": 246,
+            "bounds": {
+              "minX": 13,
+              "minY": 19,
+              "maxX": 26,
+              "maxY": 37
+            }
+          }
+        },
+        "importedOutput": {
+          "close": {
+            "width": 128,
+            "height": 128,
+            "visiblePixels": 2524,
+            "bounds": {
+              "minX": 42,
+              "minY": 60,
+              "maxX": 85,
+              "maxY": 120
+            }
+          },
+          "far": {
+            "width": 40,
+            "height": 40,
+            "visiblePixels": 256,
+            "bounds": {
+              "minX": 13,
+              "minY": 19,
+              "maxX": 26,
+              "maxY": 37
+            }
+          }
+        }
+      }
+    },
+    "water-cooler": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/water-cooler.svg",
+      "sourceSha256": "394edcd682ceb4a2aa3ec14a3c5b8570f9c2419ba1c05de69d562d66b2e9cb72",
+      "importedSourceFile": "assets/props/quota-co-workhorse-v1/water-cooler.svg",
+      "importedSourceSha256": "394edcd682ceb4a2aa3ec14a3c5b8570f9c2419ba1c05de69d562d66b2e9cb72",
+      "hashMatchesImportedArt": true,
+      "projectionMatches": true,
+      "rasterStats": {
+        "canonicalSource": {
+          "close": {
+            "width": 128,
+            "height": 128,
+            "visiblePixels": 3016,
+            "bounds": {
+              "minX": 42,
+              "minY": 36,
+              "maxX": 85,
+              "maxY": 119
+            }
+          },
+          "far": {
+            "width": 40,
+            "height": 40,
+            "visiblePixels": 304,
+            "bounds": {
+              "minX": 13,
+              "minY": 11,
+              "maxX": 26,
+              "maxY": 37
+            }
+          }
+        },
+        "importedOutput": {
+          "close": {
+            "width": 128,
+            "height": 128,
+            "visiblePixels": 3350,
+            "bounds": {
+              "minX": 40,
+              "minY": 35,
+              "maxX": 87,
+              "maxY": 120
+            }
+          },
+          "far": {
+            "width": 40,
+            "height": 40,
+            "visiblePixels": 352,
+            "bounds": {
+              "minX": 12,
+              "minY": 11,
+              "maxX": 27,
+              "maxY": 37
+            }
+          }
+        }
+      }
+    },
+    "shredder": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/shredder.svg",
+      "sourceSha256": "ec1124b825448a7410cb6bc2ed1a80920a42209af8470aff9e8fc169139e3b6e",
+      "importedSourceFile": "assets/props/quota-co-workhorse-v1/shredder.svg",
+      "importedSourceSha256": "ec1124b825448a7410cb6bc2ed1a80920a42209af8470aff9e8fc169139e3b6e",
+      "hashMatchesImportedArt": true,
+      "projectionMatches": true,
+      "rasterStats": {
+        "canonicalSource": {
+          "close": {
+            "width": 128,
+            "height": 128,
+            "visiblePixels": 1981,
+            "bounds": {
+              "minX": 43,
+              "minY": 54,
+              "maxX": 84,
+              "maxY": 119
+            }
+          },
+          "far": {
+            "width": 40,
+            "height": 40,
+            "visiblePixels": 212,
+            "bounds": {
+              "minX": 13,
+              "minY": 17,
+              "maxX": 26,
+              "maxY": 37
+            }
+          }
+        },
+        "importedOutput": {
+          "close": {
+            "width": 128,
+            "height": 128,
+            "visiblePixels": 2271,
+            "bounds": {
+              "minX": 41,
+              "minY": 52,
+              "maxX": 86,
+              "maxY": 120
+            }
+          },
+          "far": {
+            "width": 40,
+            "height": 40,
+            "visiblePixels": 235,
+            "bounds": {
+              "minX": 13,
+              "minY": 16,
+              "maxX": 26,
+              "maxY": 37
+            }
+          }
+        }
+      }
+    },
+    "microwave": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/microwave.svg",
+      "sourceSha256": "bb3a3db17bd221e9fb3469345291920639d32e8beb3aed31b8bc58541f640903",
+      "importedSourceFile": "assets/props/quota-co-workhorse-v1/microwave.svg",
+      "importedSourceSha256": "bb3a3db17bd221e9fb3469345291920639d32e8beb3aed31b8bc58541f640903",
+      "hashMatchesImportedArt": true,
+      "projectionMatches": true,
+      "rasterStats": {
+        "canonicalSource": {
+          "close": {
+            "width": 128,
+            "height": 128,
+            "visiblePixels": 1770,
+            "bounds": {
+              "minX": 38,
+              "minY": 84,
+              "maxX": 89,
+              "maxY": 119
+            }
+          },
+          "far": {
+            "width": 40,
+            "height": 40,
+            "visiblePixels": 186,
+            "bounds": {
+              "minX": 11,
+              "minY": 26,
+              "maxX": 28,
+              "maxY": 36
+            }
+          }
+        },
+        "importedOutput": {
+          "close": {
+            "width": 128,
+            "height": 128,
+            "visiblePixels": 1967,
+            "bounds": {
+              "minX": 36,
+              "minY": 83,
+              "maxX": 91,
+              "maxY": 120
+            }
+          },
+          "far": {
+            "width": 40,
+            "height": 40,
+            "visiblePixels": 204,
+            "bounds": {
+              "minX": 11,
+              "minY": 26,
+              "maxX": 28,
+              "maxY": 37
+            }
+          }
+        }
+      }
+    },
+    "fridge": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/fridge.svg",
+      "sourceSha256": "1991d7c58c2a5967a0088bb67e678c506577d3ff1605d9223158a8cee26c91a9",
+      "importedSourceFile": "assets/props/quota-co-workhorse-v1/fridge.svg",
+      "importedSourceSha256": "1991d7c58c2a5967a0088bb67e678c506577d3ff1605d9223158a8cee26c91a9",
+      "hashMatchesImportedArt": true,
+      "projectionMatches": true,
+      "rasterStats": {
+        "canonicalSource": {
+          "close": {
+            "width": 128,
+            "height": 128,
+            "visiblePixels": 3794,
+            "bounds": {
+              "minX": 40,
+              "minY": 39,
+              "maxX": 87,
+              "maxY": 120
+            }
+          },
+          "far": {
+            "width": 40,
+            "height": 40,
+            "visiblePixels": 396,
+            "bounds": {
+              "minX": 12,
+              "minY": 12,
+              "maxX": 27,
+              "maxY": 37
+            }
+          }
+        },
+        "importedOutput": {
+          "close": {
+            "width": 128,
+            "height": 128,
+            "visiblePixels": 4060,
+            "bounds": {
+              "minX": 39,
+              "minY": 37,
+              "maxX": 88,
+              "maxY": 121
+            }
+          },
+          "far": {
+            "width": 40,
+            "height": 40,
+            "visiblePixels": 416,
+            "bounds": {
+              "minX": 12,
+              "minY": 11,
+              "maxX": 27,
+              "maxY": 37
+            }
+          }
+        }
+      }
+    },
+    "vending-machine": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/vending-machine.svg",
+      "sourceSha256": "78dc64b8afab10d62244228fb80dcffa4d6e6dbb1cc381915815dbf8344fa0ca",
+      "importedSourceFile": "assets/props/quota-co-workhorse-v1/vending-machine.svg",
+      "importedSourceSha256": "78dc64b8afab10d62244228fb80dcffa4d6e6dbb1cc381915815dbf8344fa0ca",
+      "hashMatchesImportedArt": true,
+      "projectionMatches": true,
+      "rasterStats": {
+        "canonicalSource": {
+          "close": {
+            "width": 128,
+            "height": 128,
+            "visiblePixels": 4452,
+            "bounds": {
+              "minX": 37,
+              "minY": 36,
+              "maxX": 90,
+              "maxY": 120
+            }
+          },
+          "far": {
+            "width": 40,
+            "height": 40,
+            "visiblePixels": 466,
+            "bounds": {
+              "minX": 11,
+              "minY": 11,
+              "maxX": 28,
+              "maxY": 37
+            }
+          }
+        },
+        "importedOutput": {
+          "close": {
+            "width": 128,
+            "height": 128,
+            "visiblePixels": 4836,
+            "bounds": {
+              "minX": 35,
+              "minY": 35,
+              "maxX": 92,
+              "maxY": 121
+            }
+          },
+          "far": {
+            "width": 40,
+            "height": 40,
+            "visiblePixels": 476,
+            "bounds": {
+              "minX": 11,
+              "minY": 11,
+              "maxX": 28,
+              "maxY": 37
+            }
+          }
+        }
+      }
+    },
+    "printer-jammed": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/printer-jammed.svg",
+      "sourceSha256": "2a5601464cf786abce1abd13081a552510e9bd76208d9151d0fdfe1f9ad0636f",
+      "importedSourceFile": "assets/props/quota-co-workhorse-v1/printer-jammed.svg",
+      "importedSourceSha256": "2a5601464cf786abce1abd13081a552510e9bd76208d9151d0fdfe1f9ad0636f",
+      "hashMatchesImportedArt": true,
+      "projectionMatches": true,
+      "rasterStats": {
+        "canonicalSource": {
+          "close": {
+            "width": 128,
+            "height": 128,
+            "visiblePixels": 2580,
+            "bounds": {
+              "minX": 35,
+              "minY": 65,
+              "maxX": 92,
+              "maxY": 119
+            }
+          },
+          "far": {
+            "width": 40,
+            "height": 40,
+            "visiblePixels": 260,
+            "bounds": {
+              "minX": 11,
+              "minY": 20,
+              "maxX": 28,
+              "maxY": 37
+            }
+          }
+        },
+        "importedOutput": {
+          "close": {
+            "width": 128,
+            "height": 128,
+            "visiblePixels": 2857,
+            "bounds": {
+              "minX": 34,
+              "minY": 64,
+              "maxX": 93,
+              "maxY": 120
+            }
+          },
+          "far": {
+            "width": 40,
+            "height": 40,
+            "visiblePixels": 298,
+            "bounds": {
+              "minX": 10,
+              "minY": 20,
+              "maxX": 29,
+              "maxY": 37
+            }
+          }
+        }
+      }
+    },
+    "coffee-machine-broken": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/coffee-machine-broken.svg",
+      "sourceSha256": "c3e2c7c78b47bd9b13f56938043fb7633546cded869cfbcf906595fe2041bd79",
+      "importedSourceFile": "assets/props/quota-co-workhorse-v1/coffee-machine-broken.svg",
+      "importedSourceSha256": "c3e2c7c78b47bd9b13f56938043fb7633546cded869cfbcf906595fe2041bd79",
+      "hashMatchesImportedArt": true,
+      "projectionMatches": true,
+      "rasterStats": {
+        "canonicalSource": {
+          "close": {
+            "width": 128,
+            "height": 128,
+            "visiblePixels": 2458,
+            "bounds": {
+              "minX": 43,
+              "minY": 58,
+              "maxX": 86,
+              "maxY": 120
+            }
+          },
+          "far": {
+            "width": 40,
+            "height": 40,
+            "visiblePixels": 261,
+            "bounds": {
+              "minX": 13,
+              "minY": 18,
+              "maxX": 26,
+              "maxY": 37
+            }
+          }
+        },
+        "importedOutput": {
+          "close": {
+            "width": 128,
+            "height": 128,
+            "visiblePixels": 2654,
+            "bounds": {
+              "minX": 42,
+              "minY": 56,
+              "maxX": 86,
+              "maxY": 120
+            }
+          },
+          "far": {
+            "width": 40,
+            "height": 40,
+            "visiblePixels": 274,
+            "bounds": {
+              "minX": 13,
+              "minY": 17,
+              "maxX": 26,
+              "maxY": 37
+            }
+          }
+        }
+      }
+    },
+    "water-cooler-empty": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/water-cooler-empty.svg",
+      "sourceSha256": "20d64741f6305f1828fe0bb080d21bb91b43f952b4c81187cc0585390c97ef23",
+      "importedSourceFile": "assets/props/quota-co-workhorse-v1/water-cooler-empty.svg",
+      "importedSourceSha256": "20d64741f6305f1828fe0bb080d21bb91b43f952b4c81187cc0585390c97ef23",
+      "hashMatchesImportedArt": true,
+      "projectionMatches": true,
+      "rasterStats": {
+        "canonicalSource": {
+          "close": {
+            "width": 128,
+            "height": 128,
+            "visiblePixels": 3010,
+            "bounds": {
+              "minX": 42,
+              "minY": 36,
+              "maxX": 85,
+              "maxY": 119
+            }
+          },
+          "far": {
+            "width": 40,
+            "height": 40,
+            "visiblePixels": 304,
+            "bounds": {
+              "minX": 13,
+              "minY": 11,
+              "maxX": 26,
+              "maxY": 37
+            }
+          }
+        },
+        "importedOutput": {
+          "close": {
+            "width": 128,
+            "height": 128,
+            "visiblePixels": 3350,
+            "bounds": {
+              "minX": 40,
+              "minY": 35,
+              "maxX": 87,
+              "maxY": 120
+            }
+          },
+          "far": {
+            "width": 40,
+            "height": 40,
+            "visiblePixels": 352,
+            "bounds": {
+              "minX": 12,
+              "minY": 11,
+              "maxX": 27,
+              "maxY": 37
+            }
+          }
+        }
+      }
+    }
+  },
+  "protectedSurfaceHashes": {
+    "CONTRACT.md": "1db92f32e263af0887f9841909fb9b82a09e5df1ac7d5d4f809adab9c0b3105d",
+    "src/core/exporter.ts": "29f1bb95a975a578f0dcc3ec5d0eee4e65e219359da6c9e84430ddf8ac15ca8a",
+    "src/core/layout.ts": "2605f283175007baa7912fa4ef05f6bac995dcd3fda3cd77ff857dc38fb49e1c",
+    "src/core/types.ts": "9d4048de93599ee977b3ebb00adcee6f29a824269c2bd3d763745604d9f9baac",
+    "src/data/defaults.ts": "39f5720ef1dd3194552f5801e135d9af1e36b18ab5ea0fc8972abb9cf6c57a52",
+    "src/props/templates.ts": "16f98fe2a603dfe06d1e02f075f751b4dccbb99d77e6dbce0ba1a393189a4fdf"
+  }
+}

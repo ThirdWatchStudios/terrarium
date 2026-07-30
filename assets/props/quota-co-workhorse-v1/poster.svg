@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="poster" data-projection="plan">
+  <title>QuotaCo employee poster rail</title>
+  <desc>Plan-authored wall-slot poster with a molded clip rail, loose curled paper, bold graphic, and editable caption count.</desc>
+  <metadata>Palette tokens: primary clip rail, secondary graphic, accent service tab and sun. Default caption lines 2.</metadata>
+  <g id="art-scale" transform="translate(64 64) scale(.74) translate(-64 -64)">
+    <g id="mount">
+      <rect id="mount-shell" data-fill-token="primary" x="44" y="36" width="40" height="12" rx="5" fill="#DED5BD" stroke="#292C2A" stroke-width="3"/>
+      <rect id="mount-rail" data-fill-token="secondary" x="49" y="40" width="27" height="4" rx="2" fill="#355247"/>
+      <rect id="mount-service-tab" data-fill-token="accent" x="77" y="39" width="4" height="6" rx="1.5" fill="#B65F4D" stroke="#292C2A" stroke-width="1.2"/>
+    </g>
+    <g id="paper">
+      <path id="paper-sheet" d="M47 47H81V94L74 100H47Z" fill="#F4F0E4" stroke="#292C2A" stroke-width="2.2"/>
+      <path id="paper-curl" d="M74 94H81L74 100Z" fill="#C7BDA7"/>
+    </g>
+    <g id="graphic">
+      <circle id="graphic-sun" data-fill-token="accent" cx="64" cy="61" r="9" fill="#B65F4D"/>
+      <path id="graphic-mountain" data-fill-token="secondary" d="M51 73L61 57L68 68L74 60L78 73Z" fill="#355247"/>
+      <rect id="graphic-headline" data-fill-token="secondary" x="51" y="76" width="26" height="4" rx="2" fill="#355247"/>
+    </g>
+    <g id="lines-1" display="none">
+      <rect id="lines-1-a" x="52" y="84" width="25" height="2.4" rx="1" fill="#262B29" opacity=".66"/>
+    </g>
+    <g id="lines-2">
+      <rect id="lines-2-a" x="52" y="84" width="25" height="2.4" rx="1" fill="#262B29" opacity=".66"/>
+      <rect id="lines-2-b" x="52" y="89" width="22" height="2.4" rx="1" fill="#262B29" opacity=".66"/>
+    </g>
+    <g id="lines-3" display="none">
+      <rect id="lines-3-a" x="52" y="84" width="25" height="2.4" rx="1" fill="#262B29" opacity=".66"/>
+      <rect id="lines-3-b" x="52" y="89" width="22" height="2.4" rx="1" fill="#262B29" opacity=".66"/>
+      <rect id="lines-3-c" x="52" y="94" width="19" height="2.4" rx="1" fill="#262B29" opacity=".66"/>
+    </g>
+  </g>
+</svg>

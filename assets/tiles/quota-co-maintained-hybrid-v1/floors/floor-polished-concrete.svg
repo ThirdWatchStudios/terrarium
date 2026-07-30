@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"
+  data-surface-id="floor-polished-concrete" data-kind="floor" data-template-id="polished-concrete"
+  data-direction="maintained-hybrid">
+  <title>Polished concrete — QuotaCo Maintained Hybrid</title>
+  <desc>Artist-editable floor source accepted from the Maintained Hybrid complete-family proof. Flat, outline-free, and seamless on a 128-unit tile.</desc>
+  <g id="substrate">
+    <rect x="0" y="0" width="128" height="128" rx="0" fill="#9C9E9B" opacity="1" id="substrate-field" data-fill-token="primary"/>
+  </g>
+  <g id="secondary-detail">
+    <path d="M 0 0 V 128 M 0 0 H 128 M 64 0 V 128 M 0 64 H 128 M 128 0 V 128 M 0 128 H 128" fill="none" stroke="#7E807C" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18" id="secondary-detail-element-001" data-stroke-token="secondary"/>
+    <ellipse cx="103" cy="86" rx="28" ry="13" fill="#7E807C" opacity="0.065" id="secondary-detail-element-003" data-fill-token="secondary"/>
+  </g>
+  <g id="accent-detail">
+    <ellipse cx="31" cy="31" rx="22" ry="11" fill="#B4B6B2" opacity="0.055" id="accent-detail-element-002" data-fill-token="accent"/>
+    <path d="M 4 117 C 31 107 45 118 69 109 S 103 105 128 114" fill="none" stroke="#B4B6B2" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.1" id="accent-detail-element-004" data-stroke-token="accent"/>
+  </g>
+</svg>

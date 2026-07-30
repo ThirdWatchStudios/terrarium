@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium outfit-hoodie south drawstrings</title>
+  <desc>Balanced-body paired drawstrings and stops fitted through the upper-torso frame.</desc>
+  <g id="art" transform="translate(64 87)">
+    <path id="detail/drawstrings/cords" d="M -3 -18.2 L -4 -3 M 3 -18.2 L 4 -3" fill="none" stroke="#0000FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="detail/drawstrings/stop-left" d="M -5.4 -3 a 1.4 1.4 0 1 0 2.8 0 a 1.4 1.4 0 1 0 -2.8 0 Z" fill="#0000FF" fill-rule="nonzero"/>
+    <path id="detail/drawstrings/stop-right" d="M 2.6 -3 a 1.4 1.4 0 1 0 2.8 0 a 1.4 1.4 0 1 0 -2.8 0 Z" fill="#0000FF" fill-rule="nonzero"/>
+  </g>
+</svg>

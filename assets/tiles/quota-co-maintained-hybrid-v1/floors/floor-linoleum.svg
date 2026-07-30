@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"
+  data-surface-id="floor-linoleum" data-kind="floor" data-template-id="linoleum"
+  data-direction="maintained-hybrid">
+  <title>Break room linoleum — QuotaCo Maintained Hybrid</title>
+  <desc>Artist-editable floor source accepted from the Maintained Hybrid complete-family proof. Flat, outline-free, and seamless on a 128-unit tile.</desc>
+  <g id="substrate">
+    <rect x="0" y="0" width="128" height="128" rx="0" fill="#E8E4D8" opacity="1" id="substrate-field" data-fill-token="primary"/>
+  </g>
+  <g id="secondary-detail">
+    <path d="M 0 0 V 128 M 0 0 H 128 M 64 0 V 128 M 0 64 H 128 M 128 0 V 128 M 0 128 H 128" fill="none" stroke="#D3D1C7" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.2" id="secondary-detail-element-001" data-stroke-token="secondary"/>
+  </g>
+  <g id="accent-detail">
+    <path d="M 18 91 q 10 -4 20 0 M 83 38 q 8 3 17 -1" fill="none" stroke="#B4B2A9" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.11" id="accent-detail-element-003" data-stroke-token="accent"/>
+  </g>
+  <g id="literal-detail">
+    <rect x="0" y="0" width="128" height="9" rx="0" fill="#FFFFFF" opacity="0.055" id="literal-detail-element-002"/>
+  </g>
+</svg>

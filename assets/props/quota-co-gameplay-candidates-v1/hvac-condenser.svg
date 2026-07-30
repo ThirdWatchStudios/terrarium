@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="hvac-condenser" data-projection="elevation" data-status="source-only-candidate">
+  <title>QuotaCo exterior HVAC condenser candidate</title>
+  <desc>Rated-state exterior condenser with a dominant fan, separated control spine, service panel, and grounded equipment base.</desc>
+  <g id="shadow">
+    <ellipse id="shadow-contact" cx="64" cy="113" rx="49" ry="6" fill="#000000" opacity=".13"/>
+  </g>
+  <g id="shell">
+    <rect id="shell-casing" x="13" y="39" width="102" height="73" rx="13" fill="#DED5BD" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="shell-fan-bay" x="18" y="44" width="75" height="61" rx="10" fill="#355247" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="shell-control-spine" x="91" y="47" width="23" height="55" rx="8" fill="#49685A" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="shell-base" x="17" y="103" width="98" height="9" rx="4" fill="#262B29" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+  <g id="function">
+    <circle id="function-fan-recess" cx="55" cy="74" r="25" fill="#18211E" stroke="#292C2A" stroke-width="3"/>
+    <circle id="function-fan-ring" cx="55" cy="74" r="18" fill="#668E98" stroke="#292C2A" stroke-width="3"/>
+    <circle id="function-fan-hub" cx="55" cy="74" r="6" fill="#4E7470" stroke="#292C2A" stroke-width="3"/>
+    <path id="function-fan-blades" d="M55 55V93M36 74H74M42 61L68 87M68 61L42 87" fill="none" stroke="#C7BDA7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+    <rect id="function-control-screen" x="96" y="54" width="13" height="22" rx="4" fill="#18211E" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="function-status" x="99" y="58" width="7" height="6" rx="2" fill="#4E7470"/>
+    <rect id="function-label" x="99" y="68" width="7" height="4" rx="2" fill="#C7BDA7"/>
+    <rect id="function-access-panel" x="97" y="84" width="11" height="9" rx="3" fill="#DED5BD" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+</svg>

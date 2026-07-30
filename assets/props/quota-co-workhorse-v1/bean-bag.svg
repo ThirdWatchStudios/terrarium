@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="bean-bag" data-projection="plan">
+  <title>QuotaCo wipe-clean beanbag</title>
+  <desc>Plan-projected squashed floor pod with stitched upholstery panels, sat-in dent, carry tab, and maintenance marker.</desc>
+  <g id="art-scale" transform="translate(64 64) scale(.84) translate(-64 -64)">
+    <g id="shell">
+      <path id="shell-body" data-fill-token="primary" d="M43 68Q44 47.2 52 48Q64 37 76 48Q84 49.3 85 68Q83 85 64 88Q45 85 43 68Z" fill="#355247" stroke="#292C2A" stroke-width="2.7"/>
+      <ellipse id="structure-seat-dent" data-fill-token="secondary" cx="64" cy="70" rx="11.76" ry="7.14" fill="#18211E" opacity=".38"/>
+    </g>
+    <g id="stitching">
+      <path id="stitching-bowl-seam" d="M48.88 60Q64 75.55 79.12 60" fill="none" stroke="#49685A" stroke-width="2" opacity=".9"/>
+      <path id="stitching-center-seam" d="M64 48Q69 64 64 85" fill="none" stroke="#49685A" stroke-width="1.5" opacity=".75"/>
+    </g>
+    <g id="service">
+      <rect id="service-carry-tab" x="62" y="43" width="10" height="5" rx="2" fill="#F3EEDA" stroke="#292C2A" stroke-width="1.2"/>
+      <rect id="service-maintenance-tab" data-fill-token="accent" x="70" y="79" width="4" height="9" rx="1" fill="#B65F4D"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="office-chair" data-projection="plan">
+  <title>QuotaCo workhorse office chair</title>
+  <desc>Plan-projected rolling office chair with a dominant seat and three tucked caster contacts.</desc>
+  <g id="shadow">
+    <ellipse id="shadow-contact" cx="64" cy="99" rx="24" ry="6" fill="#000000" opacity=".1"/>
+  </g>
+  <g id="artwork" transform="translate(64 64) scale(.72) translate(-64 -64)">
+  <g id="structure">
+    <path id="structure-caster-spokes" d="M64 82L45 97M64 82L83 97M64 82V104" fill="none" stroke="#262B29" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <ellipse id="structure-caster-left" cx="44" cy="98" rx="4" ry="3" fill="#262B29" stroke="#292C2A" stroke-width="3"/>
+    <ellipse id="structure-caster-right" cx="84" cy="98" rx="4" ry="3" fill="#262B29" stroke="#292C2A" stroke-width="3"/>
+    <ellipse id="structure-caster-rear" cx="64" cy="105" rx="4" ry="3" fill="#262B29" stroke="#292C2A" stroke-width="3"/>
+  </g>
+  <g id="shell">
+    <path id="shell-backrest" data-fill-token="secondary" d="M42 48Q64 30 86 48L82 61Q64 50 46 61Z" fill="#355247" stroke="#292C2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+    <path id="shell-seat" data-fill-token="primary" d="M42 57Q64 48 86 57L88 78Q64 94 40 78Z" fill="#DED5BD" stroke="#292C2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+  <g id="personalization">
+    <path id="personalization-seat-insert" d="M47 60Q64 54 81 60L82 75Q64 85 46 75Z" fill="#98513F"/>
+  </g>
+  <g id="foreground">
+    <rect id="shell-arm-left" data-fill-token="primary" x="34" y="57" width="9" height="26" rx="4" fill="#DED5BD" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="shell-arm-right" data-fill-token="primary" x="85" y="57" width="9" height="26" rx="4" fill="#DED5BD" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="personalization-arm-left" data-fill-token="accent" x="36" y="61" width="5" height="14" rx="2" fill="#B65F4D"/>
+    <rect id="personalization-arm-right" data-fill-token="accent" x="87" y="61" width="5" height="14" rx="2" fill="#B65F4D"/>
+  </g>
+  <g id="function">
+    <ellipse id="function-pedestal" data-fill-token="secondary" cx="64" cy="83" rx="8" ry="6" fill="#355247" stroke="#292C2A" stroke-width="3"/>
+  </g>
+  </g>
+</svg>

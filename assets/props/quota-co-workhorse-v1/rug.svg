@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="rug" data-projection="plan">
+  <title>QuotaCo repaired office rug</title>
+  <desc>Plan-projected soft area rug with broad institutional bands, employee personalization, and a visible repair patch.</desc>
+  <metadata>Palette tokens: primary outer mat, secondary field, accent central mark and repair. Default width 96 and pattern 1.</metadata>
+  <g id="art-scale" transform="translate(64 64) scale(.94) translate(-64 -64)">
+    <g id="shell">
+      <rect id="shell-outer" data-fill-token="primary" x="16" y="37" width="96" height="54" rx="15" fill="#DED5BD" stroke="#292C2A" stroke-width="2.6"/>
+      <rect id="shell-field" data-fill-token="secondary" x="24" y="45" width="80" height="38" rx="10" fill="#355247"/>
+      <path id="shell-center-band" d="M31 64H97" fill="none" stroke="#F3EEDA" stroke-width="7" opacity=".8"/>
+      <rect id="shell-repair-patch" data-fill-token="accent" x="94" y="79" width="13" height="7" rx="3" fill="#B65F4D" stroke="#292C2A" stroke-width="1.2"/>
+    </g>
+    <g id="pattern-1">
+      <circle id="pattern-1-disc" data-fill-token="accent" cx="64" cy="64" r="11" fill="#B65F4D" opacity=".75"/>
+      <circle id="pattern-1-center" cx="64" cy="64" r="5" fill="#F3EEDA"/>
+    </g>
+    <g id="pattern-2" display="none">
+      <path id="pattern-2-left" d="M34 49L46 79" fill="none" stroke="#49685A" stroke-width="4"/>
+      <path id="pattern-2-right" d="M94 49L82 79" fill="none" stroke="#49685A" stroke-width="4"/>
+    </g>
+  </g>
+</svg>

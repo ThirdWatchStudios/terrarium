@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="couch" data-projection="plan">
+  <title>QuotaCo institutional lobby couch</title>
+  <desc>Plan-projected full-span molded couch with replaceable cushion inserts, service tab, and clear arm shells.</desc>
+  <g id="art-scale" transform="translate(64 64) scale(.9) translate(-64 -64)">
+    <g id="shell">
+      <rect id="shell-body" data-fill-token="primary" x="8" y="37" width="112" height="52" rx="12" fill="#DED5BD" stroke="#292C2A" stroke-width="3"/>
+      <rect id="shell-back" x="16" y="42" width="96" height="10" rx="5" fill="#F3EEDA" stroke="#292C2A" stroke-width="2"/>
+      <rect id="shell-left-arm" x="7" y="48" width="14" height="35" rx="6" fill="#F3EEDA" stroke="#292C2A" stroke-width="2"/>
+      <rect id="shell-right-arm" x="107" y="48" width="14" height="35" rx="6" fill="#F3EEDA" stroke="#292C2A" stroke-width="2"/>
+      <rect id="shell-front-recess" x="18" y="82" width="92" height="5" rx="2" fill="#18211E"/>
+    </g>
+    <g id="cushions-3">
+      <rect id="cushion-3-1" data-fill-token="secondary" x="25" y="53" width="24.667" height="27" rx="6" fill="#355247" stroke="#292C2A" stroke-width="1.7"/>
+      <rect id="cushion-3-2" data-fill-token="secondary" x="51.667" y="53" width="24.667" height="27" rx="6" fill="#355247" stroke="#292C2A" stroke-width="1.7"/>
+      <rect id="cushion-3-3" x="78.334" y="53" width="24.666" height="27" rx="6" fill="#49685A" stroke="#292C2A" stroke-width="1.7"/>
+    </g>
+    <g id="cushions-2" display="none">
+      <rect id="cushion-2-1" data-fill-token="secondary" x="25" y="53" width="38" height="27" rx="6" fill="#355247" stroke="#292C2A" stroke-width="1.7"/>
+      <rect id="cushion-2-2" x="65" y="53" width="38" height="27" rx="6" fill="#49685A" stroke="#292C2A" stroke-width="1.7"/>
+    </g>
+    <g id="service">
+      <rect id="service-tab" data-fill-token="accent" x="102" y="55" width="4" height="12" rx="1" fill="#B65F4D"/>
+      <path id="service-wear" d="M34 78Q44 83 53 78" fill="none" stroke="#C7BDA7" stroke-width="1.4" opacity=".75"/>
+    </g>
+  </g>
+</svg>

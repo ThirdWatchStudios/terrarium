@@ -10,9 +10,19 @@ production part. Static head/hair registration replaces matching facing
 geometry. The dedicated `body-art` mode updates the already-shared production
 body `PartDef` in place, while the explicit `outfit-tee` adapter replaces the
 detail shapes returned by its body-aware builder for known production bodies.
-In every mode labels, picker order, seeded-generation order, anchors, z-order,
-body rigs, and other runtime metadata remain owned by the handwritten
-`PartDef`.
+The `outfit-blazer` component adapter does the same after deterministically
+aggregating separately authored lapels, buttons, and pocket pieces;
+`outfit-polo` reuses that contract for independent collar and placket pieces.
+`outfit-shirt-tie` then reuses it for independent collar and tie pieces. In
+turn, `outfit-turtleneck` exercises a component with authored south/east/north
+facings. `outfit-cardigan` then separates upper-torso trim from its lower-torso
+opening seam and button line. `outfit-suit-jacket` extends the same component
+frames to formal lapels, buttons, pocket, tie, pocket square, and notches. In
+turn, `outfit-hoodie` uses a three-facing hood plus only the directional
+drawstring and pocket pieces that exist. `outfit-vest` follows with a
+south-only panel, V-neck inset, and buttons. In every mode labels, picker order,
+seeded-generation order, anchors, z-order, body rigs, and other runtime
+metadata remain owned by the handwritten `PartDef`.
 
 ## Commands
 
@@ -25,33 +35,45 @@ npm run parts:scaffolds # regenerate seeded SVG starters and palette files
 `npm run build` begins with `parts:check`; builds never rewrite source files.
 
 The generated authoring assets live under `assets/part-authoring`: seeded
-scaffolds for all five production bodies, all six human-head families,
+scaffolds for all six production bodies, all six human-head families,
 all ten mapped hair families (`hair-short`, `hair-bob`, `hair-bun`,
 `hair-curly`, `hair-balding`, `hair-side-part`, `hair-pixie`,
 `hair-ponytail`, `hair-long-straight`, and `hair-coils`), and the south/east tee
-starters, plus ASE, GPL, and readable SVG sentinel palette companions for
-optional editors. Their directory README defines the canonical editor-agnostic
-workflow. Layer locking is only an editing convenience; semantic IDs determine
-which groups the importer ignores.
+starters plus six componentized Blazer, four componentized Polo, four
+componentized Shirt + Tie, three Turtleneck starters, four Cardigan starters,
+and twelve Suit Jacket starters plus six Hoodie and three Vest starters, plus
+ASE, GPL, and readable SVG sentinel palette companions for optional editors. Their directory
+README defines the canonical editor-agnostic workflow. Layer locking is only
+an editing convenience; semantic IDs determine which groups the importer
+ignores.
 
 ## Source convention
 
 Sources live below `assets/parts`:
 
 ```text
-assets/parts/<slot>/<slug>.<facing>.svg
+assets/parts/<slot>/<slug>[.<component>].<facing>.svg
 ```
 
 For example, `assets/parts/body/compact.south.svg` targets `body-compact`,
 `assets/parts/hair/bob.south.svg` targets `hair-bob`, and
-`assets/parts/outfit/tee.south.svg` targets `outfit-tee`. Filenames and
-directories are lowercase. Authored facings are `south`, `east`, and `north`;
-west is the runtime mirror of east. Once any facing of a part is present, the
-complete facing set declared by its explicit import target must be present.
-Body and static head/hair targets require all three source facings. Tee
-deliberately requires south and east only; its north detail remains empty.
+`assets/parts/outfit/tee.south.svg` targets `outfit-tee`.
+`assets/parts/outfit/blazer.lapels.south.svg` targets the `lapels` component
+of `outfit-blazer`; `assets/parts/outfit/polo.collar.east.svg` targets the
+profile `collar` component of `outfit-polo`. Filenames and directories are
+lowercase. Authored facings are `south`, `east`, and `north`; west is the
+runtime mirror of east. Once any facing of a part or declared component is
+present, its complete manifest set must be present. Body and static head/hair
+targets require all three source facings. Tee and each Blazer/Polo/Shirt + Tie
+or Cardigan/Suit Jacket component deliberately require south/east only; their
+north detail remains on the handwritten fallback. Turtleneck explicitly
+requires south/east/north. Hoodie declares its asymmetric component facings;
+Vest declares south-only detail.
 Putting a valid complete set in this canonical directory makes it compiler
-input; visual acceptance remains a separate Definition of Done gate.
+input; visual acceptance remains a separate Definition of Done gate. These
+static hair overlays remain the canonical authored source and fallback
+geometry even when a production composition route applies a head-aware fitted
+variant.
 
 The importer currently accepts:
 
@@ -61,6 +83,27 @@ The importer currently accepts:
 - `outfit-tee` as an anchored-detail target, authored over `body-balanced`
   around the body origin `(64, 87)`. Its neck is canvas point `(64, 58)`, and
   the canonical source set is `tee.south.svg` plus `tee.east.svg`.
+- `outfit-blazer` as a component-detail target authored over the same body.
+  Its canonical source is six files: south/east for each of `lapels`,
+  `buttons`, and `pocket`.
+- `outfit-polo` as a component-detail target authored over the same body.
+  Its canonical source is four files: south/east for `collar` and `placket`.
+- `outfit-shirt-tie` as a component-detail target authored over the same body.
+  Its canonical source is four files: south/east for `collar` and `tie`.
+- `outfit-turtleneck` as a component-detail target authored over the same
+  body. Its canonical source is three `neck-band` files: south/east/north.
+- `outfit-cardigan` as a component-detail target authored over the same body.
+  Its canonical source is four south/east files: upper-torso `trim` and
+  lower-torso `button-line`.
+- `outfit-suit-jacket` as a component-detail target authored over the same
+  body. Its canonical source is twelve south/east files for `pocket-square`,
+  `lapels`, `buttons`, `pocket`, `tie`, and `notches`.
+- `outfit-hoodie` as a component-detail target authored over the same body.
+  Its canonical source is six files: three-facing `hood`, south/east
+  `drawstrings`, and south-only `pocket`.
+- `outfit-vest` as a component-detail target authored over the same body. Its
+  canonical source is three south-only files: `panel`, `neck-inset`, and
+  `buttons`.
 
 The east-facing head placement adjustment remains compositor-owned. The
 compiler always subtracts the stable `(64, 44)` authoring origin after it
@@ -76,6 +119,15 @@ measurably changes under generic flattening even at production sizes, so those
 explicit targets require visible paths directly under `translate(64 44)`.
 Bob retains the normal transform-baking path as the approved interoperability
 control.
+
+For all ten mapped hair IDs, the compositor now resolves a fixed fitted variant
+from the selected production head ID after import. The importer and source
+contract remain static: no fit envelope is inferred from SVG, no
+`buildVariant` is added to imported definitions, and no recipe or export-schema
+field changes. Flat and reconstructable layer routes share this resolver.
+Editing one of these canonical hair SVGs alone therefore changes its
+fallback/source geometry, but does not replace the six promoted head-specific
+fits; update and review the deterministic fit table as part of that work.
 
 ## Sentinel palette
 
@@ -171,10 +223,11 @@ Unknown, legacy-only, and internal part IDs are rejected. Duplicate imports,
 slot mismatches, missing production variants, and unadapted targets with
 `buildVariant` are rejected before the generated file changes.
 
-The five `body-art` targets own the complete visible facing shapes for
+The six `body-art` targets own the complete visible facing shapes for
 `body-compact`, `body-balanced`, `body-large-frame`, `body-tall`, and
-`body-soft`. South and east contain the `$outfitPrimary` silhouette followed
-by a literal lower-plane detail; north is silhouette-only. Installation mutates
+`body-soft`, plus the independent `body-pinch`. South and east contain the
+`$outfitPrimary` silhouette followed by a literal lower-plane detail; north is
+silhouette-only. Installation mutates
 only the shared production object's facing art and clones each imported shape.
 The exact `PartDef`, `bodyAnchors`, label, intent, z-order, and stable selection
 order are preserved. `body-standard`, `body-slim`, and `body-broad` remain
@@ -190,34 +243,94 @@ have `silhouette: false`: the selected body remains the conforming
 `$outfitPrimary` torso. The importer treats `body-balanced` as the source
 placement, translates the south/east kit from its neck to each target neck, and
 emits variants in stable order for `body-compact`, `body-balanced`,
-`body-large-frame`, `body-tall`, and `body-soft`. Every translated path is
+`body-large-frame`, `body-tall`, `body-soft`, and `body-pinch`. Every translated path is
 paint-bounds-validated again in its target canvas placement. At runtime the
 overlay replaces only those known detail variants and preserves the original
 builder's z-order. Legacy bodies, deliberately unauthored facings, and future
 body IDs continue through the original procedural builder/static fallback.
 
-This is a mechanical intake proof. The authored tee still requires visual
-approval and the remaining per-part Definition of Done checks.
+The authored Tee received focused visual approval on 2026-07-27; the broader
+scene-preview and stress gates remain open.
+
+`outfit-blazer` is the first multi-piece adapter. The manifest fixes component
+order and per-facing shape counts, so missing, flattened, or extra source
+pieces fail before generated output changes. Lapels scale and translate inside
+an upper-torso frame derived from neck, shoulder, and chest anchors. Buttons
+and pocket use a lower-torso frame derived from chest, waist, and hip anchors.
+Scale is conservatively bounded, stroke widths remain stable for distance
+readability, and every fitted path is canvas-validated again. Runtime
+installation still produces an ordinary `body-detail` overlay: no component
+metadata enters recipes, exports, or Unity.
+
+`outfit-polo` is the first direct reuse of that multi-piece contract. Collar
+and placket remain separately authored and both consume the upper-torso frame,
+so a narrow profile can move the opening without flattening the two source
+roles together. South/east art replaces only known production-body variants;
+north, legacy, and future bodies preserve the code-builder fallback.
+
+`outfit-shirt-tie` is the second direct reuse. Collar and tie remain separate
+sources and both consume the upper-torso frame, preserving a narrow profile tie
+without flattening it into the collar. The east tie sits at the forward torso
+edge and west mirrors that placement; it must not run through the profile
+torso center. South/east art replaces only known production-body variants;
+north, legacy, and future bodies preserve the code-builder fallback.
+
+`outfit-turtleneck` extends that contract to a component with all three
+authored facings. Its neck band and south fold remain one semantic component;
+south/east/north are fitted through the upper-torso frame and rise behind the
+head to bridge the 3 px head/torso gap, while west mirrors east. The band must
+use `outfitPrimary`, must not collapse into a detached chest mark, and keeps a
+wider profile footprint so east/west retain comparable collar weight to
+south/north. Legacy and future bodies preserve the code-builder fallback.
+
+`outfit-cardigan` returns to the south/east contract with two independent
+frames. The contrasting neckline `trim` consumes the upper-torso frame, while
+the opening seam and two buttons remain one `button-line` component fitted
+through the lower-torso frame. West mirrors east; north, legacy, and future
+bodies preserve the code-builder fallback.
+
+`outfit-suit-jacket` reuses the approved Blazer frame split while keeping its
+formal vocabulary independently authorable. Pocket square, buttons, and pocket
+use the lower-torso frame; lapels, tie, and notches use the upper-torso frame.
+The east tie stays at the forward torso edge and west mirrors it rather than
+running through the profile center. North, legacy, and future bodies preserve
+the code-builder fallback.
+
+`outfit-hoodie` is the first asymmetric component-facing manifest after the
+three-facing Turtleneck. The hood is authored in south/east/north through the
+upper-torso frame; drawstrings exist only in south/east through that same
+frame; the kangaroo-pocket seam exists only in south through the lower-torso
+frame. West mirrors east. Missing directional components intentionally paint
+nothing rather than inventing rear or profile detail.
+
+`outfit-vest` fits the secondary-fabric torso `panel` and contrasting
+`neck-inset` through the upper-torso frame, preserving the primary-fabric
+sleeve field around them. Its front `buttons` use the lower-torso frame. All
+three components exist only in south: east/west intentionally carry no vest
+overlay, while north retains the code-builder rear fallback. Legacy and future
+bodies follow the same facing rule.
 
 ## Intentionally deferred adapters
 
-- Componentized multi-piece outfit aggregation and multi-anchor deformation.
-  Tee is one combined neckline kit per authored facing and needs only neck
-  translation. Blazer is the next adapter boundary: lapels, buttons, and pocket
-  must remain separately addressable and require explicit deterministic piece
-  order plus neck/chest/hip/waist placement. Do not collapse that work into one
-  flat per-facing Blazer file.
-- New part definitions and their labels/insertion order.
+- Component manifests for the remaining conforming outfits. Tee remains one
+  combined neckline kit; Blazer, Polo, Shirt + Tie, Turtleneck, Cardigan, and
+  Suit Jacket, Hoodie, and Vest establish the component boundary that pockets
+  and trim can reuse where their vocabulary genuinely matches.
+- Further new part definitions and their labels/insertion order.
 - Accessory anchors, z-order, and hand-attachment roles.
 - Importing the full eleven-point body sub-rig from an anchor layer.
 
 Those need explicit manifests/adapters. The initial headless
 scaffold-to-runtime `hair-bob` proof and the first canonical head promotion
 (`head-round`) are visually approved and committed. The other five head sources
-are approved in the current production batch. The tee anchored-detail mechanics
-are complete; its visual approval remains a separate gate, and componentized
-Blazer intake remains the next outfit adapter boundary. The approved bodies
-also have canonical SVG sources and a shared-identity adapter. The first six
+are approved in the current production batch. The Tee and Blazer detail
+mechanics and art are approved; Polo mechanics and art are approved as well.
+Shirt + Tie mechanics and art are approved as well. The accepted six-body
+redesign, including independent Pinch, has canonical SVG sources and a
+shared-identity adapter. Turtleneck mechanics and art are approved. The first six
 hair families are approved. Bun, Balding, Pixie, and Side-part complete the
 mapped source set, pass automated production review, and received visual
-approval on 2026-07-10. Detail-only Blazer or wall work can now follow.
+approval on 2026-07-10. The remaining conforming outfits can now follow the
+component-detail contract proven by Blazer and reused by Polo, Shirt + Tie,
+and Turtleneck. Cardigan, Suit Jacket, and Hoodie mechanics and art are
+approved. Vest mechanics and art received approval on 2026-07-28.

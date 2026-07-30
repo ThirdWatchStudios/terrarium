@@ -12,7 +12,9 @@ import {
   PALETTE_TOKENS,
   PROP_PALETTE_TOKENS,
   type TileLayer,
+  characterFrameOffsetY,
   characterLayers,
+  propPaletteForRender,
   propLayers,
   floorLayers,
   composeActivityBadge,
@@ -67,11 +69,20 @@ import { unitRecipe, unitRenderingSpec } from './renderings';
 import { projectWithLook } from './look';
 import { normalizeCharacterRecipe } from './recipe';
 import { CONSTRUCTION_CREW, CONSTRUCTION_PROFILES } from '../data/defaults';
+import { authoredPropArt } from '../props/authoredArt';
 
 /** Sheet frame order. West is baked as mirrored east for engine convenience. */
 const SHEET_FACINGS = ['south', 'east', 'north', 'west'] as const;
 
 export const EXPORT_SCALES = [1, 2, 4];
+
+/** Normalized sprite pivot after the production-only static cell reframe. */
+function characterPivot(recipe: CharacterRecipe): { x: number; y: number } {
+  return {
+    x: 0.5,
+    y: 0.09 - characterFrameOffsetY(recipe) / CANVAS,
+  };
+}
 
 function svgToImage(svg: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
@@ -707,7 +718,7 @@ export function characterAtlas(recipe: CharacterRecipe, style: StyleSheet, scale
     scale,
     frames,
     /** Normalized pivot — feet sit near the bottom of the design canvas. */
-    pivot: { x: 0.5, y: 0.09 },
+    pivot: characterPivot(recipe),
     /**
      * Normalized attach points (same bottom-left origin as pivot). `aboveHead`
      * is where the sim hangs a *separate* overhead sprite — the shared activity
@@ -774,7 +785,7 @@ export function characterLayerManifest(recipe: CharacterRecipe, style: StyleShee
     // produced by re-tinting them — it ships as its own layer atlas beside this
     // one (`unit-layers@Nx.png` + `unit-manifest@Nx.json`, same composer path,
     // its coding hue baked into that manifest's palette).
-    pivot: { x: 0.5, y: 0.09 },
+    pivot: characterPivot(recipe),
     // Composite order: stack ascending z (ties broken by order). Multiply each
     // layer by palette[tint] (skip when tint is null). Show base layers (mood
     // null) plus the one layer whose mood === the active mood.
@@ -874,7 +885,7 @@ export function posesAtlas(recipe: CharacterRecipe, style: StyleSheet, scale: nu
     poses: [...POSES],
     facings: [...SHEET_FACINGS],
     frames,
-    pivot: { x: 0.5, y: 0.09 },
+    pivot: characterPivot(recipe),
     anchors,
     meta: {
       generator: 'sprite-character-creator',
@@ -954,7 +965,7 @@ export function moodAtlas(recipe: CharacterRecipe, style: StyleSheet, scale: num
     moods: [...MOODS],
     facings: [...SHEET_FACINGS],
     frames,
-    pivot: { x: 0.5, y: 0.09 },
+    pivot: characterPivot(recipe),
     meta: {
       generator: 'sprite-character-creator',
       westIsMirroredEast: true,
@@ -1245,10 +1256,14 @@ export function propLayerManifest(prop: PropInstance, style: StyleSheet, scale: 
     projection,
     placement: template?.placement ?? 'floor',
     pivot: projection === 'plan' ? { x: 0.5, y: 0.5 } : { x: 0.5, y: 0.09 },
-    /** The palette tokens the engine may recolour (the runtime tint levers). */
+    /**
+     * Palette vocabulary retained for manifest compatibility. Canonical
+     * authored SVG props export one tint:null layer by default; procedural
+     * props continue to expose token-tinted layers.
+     */
     tokens: [...PROP_PALETTE_TOKENS],
     /** Authored default colours — an untouched import renders identically to the flat sprite. */
-    palette: prop.palette,
+    palette: propPaletteForRender(prop, style),
     /** name → rect (top-down); the sim slices these like every other sheet. */
     frames,
     /** Paint order; each references its sprite by `frame` name. */
@@ -1410,6 +1425,15 @@ export function downloadJson(name: string, data: unknown): void {
   downloadBlob(name, new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
 }
 
+function normalizeAuthoredPropPalette(prop: PropInstance): PropInstance {
+  const art = authoredPropArt(prop.templateId);
+  if (!art) return prop;
+  return {
+    ...prop,
+    palette: structuredClone(art.paletteDefaults),
+  };
+}
+
 function slug(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'unnamed';
 }
@@ -1446,11 +1470,13 @@ export async function exportAll(
   // authored palettes — see core/look.ts). This is what makes the look reproducible:
   // it re-derives on every export instead of depending on a one-time palette sweep.
   // project.json below ships the authored project (+ the look flag) after the
-  // same identity normalization used by rendering. Palettes remain raw/editable,
+  // same identity normalization used by rendering. Authored SVG prop palettes
+  // are source-owned and normalized here; other palettes remain raw/editable,
   // so re-import never double-applies the look.
   const exportSource = {
     ...rawProject,
     characters: rawProject.characters.map(normalizeCharacterRecipe),
+    props: rawProject.props.map(normalizeAuthoredPropPalette),
   };
   const project = projectWithLook(exportSource);
   const { style } = project;
@@ -1574,7 +1600,8 @@ export async function exportAll(
     for (const scale of EXPORT_SCALES) {
       await write(`${dir}/sprite@${scale}x.png`, await png(propDesc(prop, style, scale)));
       await write(`${dir}/atlas@${scale}x.json`, JSON.stringify(propAtlas(prop, style, scale), null, 2));
-      // Re-tintable layer atlas (palette-as-runtime-lever) beside the flat sprite.
+      // Export layers beside the flat sprite: authored SVG props default to one
+      // canonical tint:null layer; procedural props retain palette masks.
       await write(`${dir}/layers@${scale}x.png`, await png(propLayerSheetDesc(prop, style, scale)));
       await write(`${dir}/layers-manifest@${scale}x.json`, JSON.stringify(propLayerManifest(prop, style, scale), null, 2));
       tick(prop.name);

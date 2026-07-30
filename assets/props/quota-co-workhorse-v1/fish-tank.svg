@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="fish-tank" data-projection="elevation">
+  <title>QuotaCo employee fish tank</title>
+  <desc>Elevation-projected wide aquarium vessel overhanging a narrower molded service stand, with visible water, gravel, plants, bubbles, and editable fish.</desc>
+  <metadata>Palette tokens: primary molded caps and stand, secondary aquarium frame and service bay, accent access controls. Default fish count 3.</metadata>
+  <g id="shadow">
+    <ellipse id="shadow-contact" cx="64" cy="116" rx="29" ry="4" fill="#262B29" opacity=".22"/>
+  </g>
+  <g id="art-scale" transform="translate(64 116) scale(.82) translate(-64 -116)">
+    <g id="tank-shell">
+      <rect id="tank-frame" data-fill-token="secondary" x="22" y="38" width="84" height="46" rx="7" fill="#355247" stroke="#292C2A" stroke-width="3"/>
+      <rect id="tank-water" x="27" y="43" width="74" height="35" rx="3" fill="#8FB7C0" stroke="#292C2A" stroke-width="1.7"/>
+      <rect id="tank-waterline" x="29" y="45" width="70" height="4" rx="2" fill="#C9E2E2" opacity=".8"/>
+      <rect id="tank-top-cap" data-fill-token="primary" x="25" y="35" width="78" height="8" rx="4" fill="#DED5BD" stroke="#292C2A" stroke-width="2"/>
+      <rect id="tank-filter-bay" data-fill-token="secondary" x="31" y="38" width="48" height="3" rx="1.5" fill="#355247"/>
+      <rect id="tank-access-tab" data-fill-token="accent" x="84" y="37" width="13" height="4" rx="1.5" fill="#B65F4D"/>
+    </g>
+    <g id="habitat">
+      <path id="habitat-gravel" d="M28 74Q45 68 60 73T100 69V78H28Z" fill="#8B7A60"/>
+      <path id="habitat-plant-left" d="M35 73Q31 58 37 50" fill="none" stroke="#3F7250" stroke-width="2.2"/>
+      <path id="habitat-plant-right" d="M43 73Q49 61 45 53" fill="none" stroke="#3F7250" stroke-width="2.2"/>
+      <circle id="habitat-bubble-large" cx="88" cy="54" r="1.5" fill="#F4F0E4" opacity=".65"/>
+      <circle id="habitat-bubble-small" cx="91" cy="49" r="1" fill="#F4F0E4" opacity=".55"/>
+    </g>
+    <g id="fish-1">
+      <ellipse id="fish-1-body" data-fill-token="accent" cx="43" cy="55" rx="5" ry="3" fill="#B65F4D" stroke="#292C2A" stroke-width="1.2"/>
+      <path id="fish-1-tail" data-fill-token="accent" d="M38 55L33 51V59Z" fill="#B65F4D" stroke="#292C2A" stroke-width="1"/>
+      <circle id="fish-1-eye" cx="45.2" cy="54.5" r=".8" fill="#262B29"/>
+    </g>
+    <g id="fish-2">
+      <ellipse id="fish-2-body" cx="60" cy="65" rx="5" ry="3" fill="#E1B464" stroke="#292C2A" stroke-width="1.2"/>
+      <path id="fish-2-tail" d="M65 65L70 61V69Z" fill="#E1B464" stroke="#292C2A" stroke-width="1"/>
+      <circle id="fish-2-eye" cx="57.8" cy="64.5" r=".8" fill="#262B29"/>
+    </g>
+    <g id="fish-3">
+      <ellipse id="fish-3-body" cx="77" cy="55" rx="5" ry="3" fill="#F4F0E4" stroke="#292C2A" stroke-width="1.2"/>
+      <path id="fish-3-tail" d="M72 55L67 51V59Z" fill="#F4F0E4" stroke="#292C2A" stroke-width="1"/>
+      <circle id="fish-3-eye" cx="79.2" cy="54.5" r=".8" fill="#262B29"/>
+    </g>
+    <g id="fish-4" display="none">
+      <ellipse id="fish-4-body" cx="94" cy="65" rx="5" ry="3" fill="#98513F" stroke="#292C2A" stroke-width="1.2"/>
+      <path id="fish-4-tail" d="M99 65L104 61V69Z" fill="#98513F" stroke="#292C2A" stroke-width="1"/>
+      <circle id="fish-4-eye" cx="91.8" cy="64.5" r=".8" fill="#262B29"/>
+    </g>
+    <g id="stand">
+      <rect id="stand-shell" data-fill-token="primary" x="36" y="83" width="56" height="34" rx="7" fill="#DED5BD" stroke="#292C2A" stroke-width="3"/>
+      <rect id="stand-service-bay" data-fill-token="secondary" x="42" y="89" width="44" height="19" rx="4" fill="#355247" stroke="#292C2A" stroke-width="2"/>
+      <rect id="stand-storage-slot" x="46" y="93" width="22" height="10" rx="2" fill="#18211E"/>
+      <rect id="stand-control-face" x="72" y="93" width="9" height="10" rx="2" fill="#F4F0E4"/>
+      <circle id="stand-control" data-fill-token="accent" cx="76.5" cy="98" r="1.7" fill="#B65F4D"/>
+      <rect id="stand-service-spine" data-fill-token="accent" x="85" y="91" width="4" height="14" rx="1.5" fill="#B65F4D" stroke="#292C2A" stroke-width="1.2"/>
+      <rect id="stand-plinth" x="43" y="111" width="42" height="4" rx="2" fill="#18211E"/>
+    </g>
+  </g>
+</svg>

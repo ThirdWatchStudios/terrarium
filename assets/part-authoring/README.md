@@ -10,23 +10,55 @@ npm run parts:scaffolds
 Do not edit files inside `scaffolds/` or `palettes/` in place; builds verify
 their exact bytes. Copy a complete three-facing scaffold set to a separate
 working directory, edit the copies, and place canonical review sources under
-`assets/parts/<slot>/<slug>.<facing>.svg`.
+`assets/parts/<slot>/<slug>[.<component>].<facing>.svg`.
 
 The current supported starters are:
 
-- `scaffolds/body/{compact,balanced,large-frame,tall,soft}.{south,east,north}.svg`
+- `scaffolds/body/{compact,balanced,large-frame,tall,soft,pinch}.{south,east,north}.svg`
 - `scaffolds/head/{round,oval,boxy,long,angular,soft-square}.{south,east,north}.svg`
 - `scaffolds/hair/{short,bob,bun,curly,balding,side-part,pixie,ponytail,long-straight,coils}.{south,east,north}.svg`
 - `scaffolds/outfit/tee.{south,east}.svg` (seeded on `body-balanced`)
+- `scaffolds/outfit/blazer.{lapels,buttons,pocket}.{south,east}.svg`
+  (each component seeded separately on `body-balanced`)
+- `scaffolds/outfit/polo.{collar,placket}.{south,east}.svg`
+  (each component seeded separately on `body-balanced`)
+- `scaffolds/outfit/shirt-tie.{collar,tie}.{south,east}.svg`
+  (each component seeded separately on `body-balanced`)
+- `scaffolds/outfit/turtleneck.neck-band.{south,east,north}.svg`
+  (the three-facing component is seeded on `body-balanced`)
+- `scaffolds/outfit/cardigan.{trim,button-line}.{south,east}.svg`
+  (each component is seeded separately on `body-balanced`)
+- `scaffolds/outfit/suit-jacket.{pocket-square,lapels,buttons,pocket,tie,notches}.{south,east}.svg`
+  (each component is seeded separately on `body-balanced`)
+- `scaffolds/outfit/hoodie.hood.{south,east,north}.svg`
+- `scaffolds/outfit/hoodie.drawstrings.{south,east}.svg`
+- `scaffolds/outfit/hoodie.pocket.south.svg`
+- `scaffolds/outfit/vest.{panel,neck-inset}.south.svg`
+- `scaffolds/outfit/vest.buttons.south.svg`
 
 They are seeded with the current production geometry, so they support a true
 source/edit/import proof rather than requiring a redraw. The tee starter shows
 the `body-balanced` reference silhouette plus neck, chest, waist, and hem rig
-guides; only its neckline detail is imported. Each body starter shows its full
-visible production art plus generated markers for all 11 typed rig points and
-`bodyOrigin`. Those `guide/*`, `reference/*`, and `anchors` paths are context
-only: the current rig remains TypeScript-owned and is never imported from the
-scaffold. Accessory starters still wait for their corresponding adapter.
+guides; only its neckline detail is imported. The Blazer starters expose the
+same rig while keeping lapels, buttons, and pocket in separately editable
+files; the importer aggregates them in manifest order and fits each component
+through its declared upper/lower torso frame. The Polo starters reuse that
+contract for separately editable collar and placket files, both fitted through
+the upper-torso frame. Shirt + Tie follows with separately editable collar and
+tie files in the same frame. Turtleneck adds the first component starter with
+an authored north view. Cardigan separates upper-torso neckline trim from its
+lower-torso seam and button line. Suit Jacket extends the same frame vocabulary
+to its six formal details and keeps the profile tie at the forward edge.
+Hoodie then authors only the directional pieces that exist: three hood views,
+two drawstring views, and one front pocket seam. Vest separates its south-only
+secondary-fabric torso panel from the V-neck inset and front buttons; east/west
+intentionally carry no overlay. Each body starter shows its
+full visible
+production art plus generated markers for all 11 typed rig points and
+`bodyOrigin`. Those
+`guide/*`, `reference/*`, and `anchors` paths are context only: the current rig
+remains TypeScript-owned and is never imported from the scaffold. Accessory
+starters still wait for their corresponding adapter.
 
 The oval, boxy, long, angular, and soft-square head families form one complete
 15-SVG approved production batch. Their scaffolds and canonical source sets
@@ -56,8 +88,10 @@ the production matrices, and received visual approval on 2026-07-10.
 ## Canonical headless workflow
 
 1. Copy a complete scaffold set to a working directory (three facings for
-   bodies, heads, and hair; south and east for the tee, whose north kit is
-   intentionally empty).
+   bodies, heads, and hair; south and east for the tee or for every
+   Blazer/Polo/Shirt + Tie/Cardigan/Suit Jacket component, whose north kits are
+   intentionally unauthored; Hoodie and Vest follow their declared asymmetric
+   facing sets).
 2. Edit only `art/*` and `detail/*` paths. Preserve unique semantic IDs, the
    `0 0 128 128` viewBox, exact sentinel paint, and explicit nonzero fill.
    Head eyes remain literal neutral-ink paths under `detail/*`, after the
@@ -73,8 +107,9 @@ deterministically, changes only intended snapshots, and passes visual review —
 not whether a named editor preserves it.
 
 The approved body and head sets plus all ten mapped hair styles now have
-approved canonical sources. Detail-only Tee refinement, the componentized
-Blazer adapter, and wall bevel/detail work follow the hair pass.
+approved canonical sources. Tee, Blazer, Polo, Shirt + Tie, and Turtleneck are
+approved; Cardigan, Suit Jacket, and Hoodie received visual approval on
+2026-07-27. Vest received visual approval on 2026-07-28.
 
 ## Optional visual-editor use
 

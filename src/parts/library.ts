@@ -65,21 +65,41 @@ const LEGACY_BODY_PARTS: PartDef[] = [
 const eyeS = (x: number, y: number) => ({ d: circle(x, y, 2.6), fill: INK, silhouette: false });
 
 const BASE_HEADS: Array<{ id: string; label: string; d: string; eastD?: string }> = [
-  { id: 'head-round', label: 'Round', d: circle(0, 0, 21) },
-  { id: 'head-oval', label: 'Oval', d: ellipse(0, 0, 19, 22) },
-  { id: 'head-boxy', label: 'Boxy', d: rr(-19, -20, 38, 40, 13) },
-  { id: 'head-long', label: 'Long', d: ellipse(0, 1, 17, 24), eastD: ellipse(1, 1, 16, 24) },
+  {
+    id: 'head-round',
+    label: 'Round',
+    d: 'M 0 -21 C 13 -21 21 -13 21 0 C 21 11 14 19 4 21 C 2 21.5 -2 21.5 -4 21 C -14 19 -21 11 -21 0 C -21 -13 -13 -21 0 -21 Z',
+    eastD: 'M -1 -21 C 11 -21 19 -14 20 -4 C 23 -2 23 2 20 4 C 20 13 13 21 1 21 C -12 21 -21 12 -21 0 C -21 -12 -13 -21 -1 -21 Z',
+  },
+  {
+    id: 'head-oval',
+    label: 'Broad',
+    d: 'M 0 -20 C 17 -20 26 -13 27 -3 C 28 7 19 15 6 18 C 2 19 -2 19 -6 18 C -19 15 -28 7 -27 -3 C -26 -13 -17 -20 0 -20 Z',
+    eastD: 'M -3 -20 C 13 -20 23 -13 24 -6 C 28 -4 29 -1 27 2 C 26 4 24 5 24 7 C 23 15 14 19 0 19 C -17 19 -26 12 -26 0 C -26 -11 -17 -20 -3 -20 Z',
+  },
+  {
+    id: 'head-boxy',
+    label: 'Block',
+    d: 'M 0 -21 C 10 -21 18 -16 20 -8 L 20 12 Q 20 21 11 22 H -11 Q -20 21 -20 12 L -20 -8 C -18 -16 -10 -21 0 -21 Z',
+    eastD: 'M -2 -21 C 9 -21 17 -16 19 -8 L 19 -5 C 23 -3 24 0 22 3 L 19 6 L 19 12 Q 18 21 8 22 H -10 Q -20 20 -20 10 L -20 -8 C -17 -17 -10 -21 -2 -21 Z',
+  },
+  {
+    id: 'head-long',
+    label: 'Long',
+    d: 'M 0 -22 C 8 -22 13 -15 14 -5 L 14 9 C 13 17 8 21 2 22 H -2 C -8 21 -13 17 -14 9 L -14 -5 C -13 -15 -8 -22 0 -22 Z',
+    eastD: 'M -3 -22 C 6 -22 12 -16 14 -7 C 18 -5 20 -2 19 2 C 18 5 16 6 16 8 C 15 17 9 22 0 22 C -9 22 -15 17 -16 9 L -16 -5 C -15 -16 -10 -22 -3 -22 Z',
+  },
   {
     id: 'head-angular',
-    label: 'Angular',
-    d: `M -16 -17 L 9 -20 L 19 -8 L 17 12 L 7 22 L -10 20 L -20 8 L -20 -7 Z`,
-    eastD: `M -13 -18 L 8 -20 L 19 -8 L 17 12 L 6 22 L -11 18 L -18 4 Z`,
+    label: 'Point',
+    d: 'M 0 -21 C 13 -21 22 -14 23 -3 C 23 8 16 15 8 18 L 0 22 L -8 18 C -16 15 -23 8 -23 -3 C -22 -14 -13 -21 0 -21 Z',
+    eastD: 'M -3 -21 C 10 -21 19 -15 21 -7 C 25 -5 27 -2 25 2 C 24 4 21 5 21 8 C 19 14 12 18 4 22 C -5 21 -14 18 -18 11 C -22 4 -21 -6 -18 -13 C -15 -18 -9 -21 -3 -21 Z',
   },
   {
     id: 'head-soft-square',
-    label: 'Soft square',
-    d: rr(-18, -19, 36, 41, 9),
-    eastD: rr(-16, -19, 33, 41, 9),
+    label: 'Lantern',
+    d: 'M 0 -21 C 7 -21 13 -17 14 -10 C 16 -4 15 1 20 7 C 25 12 25 17 18 20 C 12 22 6 22 0 22 C -6 22 -12 22 -18 20 C -25 17 -25 12 -20 7 C -15 1 -16 -4 -14 -10 C -13 -17 -7 -21 0 -21 Z',
+    eastD: 'M -3 -21 C 6 -21 12 -17 13 -10 C 15 -5 21 -4 23 -1 C 25 2 22 4 20 6 C 25 11 24 17 17 20 C 10 22 1 22 -7 21 C -17 21 -22 17 -22 9 C -22 3 -17 -2 -17 -8 C -16 -16 -10 -21 -3 -21 Z',
   },
 ];
 
@@ -747,19 +767,22 @@ function anchoredSuitJacket(facing: Facing, body: BodyFacingAnchors): PartVarian
   };
 }
 
-// Mechanically complete but visually provisional (2026-07-09 review): retain
-// these variants and revisit Dress in a dedicated art pass.
-const COMPACT_DRESS = { flareScale: 1.08, bottomDrop: 5 };
-const BALANCED_DRESS = { flareScale: 1, bottomDrop: 5 };
-const LARGE_FRAME_DRESS = { flareScale: 1.08, bottomDrop: 5 };
-const TALL_DRESS = { flareScale: 1.15, bottomDrop: 5 };
-const SOFT_DRESS = { flareScale: 1.18, bottomDrop: 5 };
+// Dedicated silhouette pass: preserve each accepted upper-body rhythm, soften
+// the waist transition, and give the hem enough drop to read as a garment at
+// gameplay scale without introducing legs or a second pose rig.
+const COMPACT_DRESS = { flareScale: 1.12, bottomDrop: 8 };
+const BALANCED_DRESS = { flareScale: 1.08, bottomDrop: 9 };
+const LARGE_FRAME_DRESS = { flareScale: 1.1, bottomDrop: 8 };
+const TALL_DRESS = { flareScale: 1.2, bottomDrop: 10 };
+const SOFT_DRESS = { flareScale: 1.2, bottomDrop: 8 };
+const PINCH_DRESS = { flareScale: 1.1, bottomDrop: 9 };
 const DRESS_PROFILES: Record<string, { flareScale: number; bottomDrop: number }> = {
   'body-compact': COMPACT_DRESS,
   'body-balanced': BALANCED_DRESS,
   'body-large-frame': LARGE_FRAME_DRESS,
   'body-tall': TALL_DRESS,
   'body-soft': SOFT_DRESS,
+  'body-pinch': PINCH_DRESS,
 };
 
 /** Body-specific A-line silhouette with anchor-driven neckline and seam art. */
@@ -769,23 +792,34 @@ function anchoredDress(facing: Facing, body: BodyFacingAnchors, bodyId?: string)
   const hem = spanCenter(body.hem);
   const waistHalf = spanWidth(body.waist) / 2;
   const hemHalf = spanWidth(body.hem) / 2;
-  const flareHalf = clampValue(18, 31, Math.max(hemHalf + 3, waistHalf * 0.88) * profile.flareScale);
+  const flareHalf = clampValue(
+    20,
+    40,
+    Math.max(hemHalf + 4, waistHalf + 4) * profile.flareScale,
+  );
+  const profileHalf = clampValue(18, 32, flareHalf * 0.78);
   const bottomY = hem.y + profile.bottomDrop;
   const leftBottom = facing === 'east'
-    ? Math.max(-31, hem.x - flareHalf * 0.78)
+    ? Math.max(-38, Math.min(body.waist.left.x, hem.x - profileHalf * 0.55))
     : hem.x - flareHalf;
   const rightBottom = facing === 'east'
-    ? Math.min(31, hem.x + flareHalf * 1.08)
+    ? Math.min(38, Math.max(body.waist.right.x, hem.x + profileHalf))
     : hem.x + flareHalf;
   const shoulderY = spanCenter(body.shoulders).y;
+  const leftTransitionX = body.waist.left.x
+    + (body.waist.left.x - body.shoulders.left.x) * 0.32;
+  const rightTransitionX = body.waist.right.x
+    + (body.waist.right.x - body.shoulders.right.x) * 0.32;
+  const transitionY = waist.y + (waist.y - shoulderY) * 0.32;
+  const lowerY = mix(waist.y, bottomY, 0.64);
   const skirt: PartVariant['shapes'][number] = {
-    d: `M ${body.neck.x} ${body.neck.y} Q ${body.shoulders.left.x} ${shoulderY} ${body.waist.left.x} ${waist.y} Q ${leftBottom} ${mix(waist.y, bottomY, 0.55)} ${leftBottom} ${bottomY} Q ${hem.x} ${bottomY + 2} ${rightBottom} ${bottomY} Q ${rightBottom} ${mix(waist.y, bottomY, 0.55)} ${body.waist.right.x} ${waist.y} Q ${body.shoulders.right.x} ${shoulderY} ${body.neck.x} ${body.neck.y} Z`,
+    d: `M ${body.neck.x} ${body.neck.y} Q ${body.shoulders.left.x} ${shoulderY} ${body.waist.left.x} ${waist.y} C ${leftTransitionX} ${transitionY} ${leftBottom} ${lowerY} ${leftBottom} ${bottomY} Q ${hem.x} ${bottomY + 2} ${rightBottom} ${bottomY} C ${rightBottom} ${lowerY} ${rightTransitionX} ${transitionY} ${body.waist.right.x} ${waist.y} Q ${body.shoulders.right.x} ${shoulderY} ${body.neck.x} ${body.neck.y} Z`,
     fill: '$outfitPrimary',
   };
   const waistBand: PartVariant['shapes'][number] = {
     d: `M ${body.waist.left.x} ${waist.y} L ${body.waist.right.x} ${waist.y}`,
-    stroke: '$accent',
-    strokeWidth: 2.5,
+    stroke: '$outfitSecondary',
+    strokeWidth: 4,
     silhouette: false,
   };
 
@@ -797,7 +831,7 @@ function anchoredDress(facing: Facing, body: BodyFacingAnchors, bodyId?: string)
         skirt,
         { d: rr(body.neck.x - neckHalf, body.neck.y, neckHalf * 2, 4, 2), fill: '$outfitSecondary', silhouette: false },
         waistBand,
-        { d: `M ${hem.x} ${waist.y + 3} L ${hem.x} ${bottomY - 1}`, stroke: '#00000018', strokeWidth: 1.4, silhouette: false },
+        { d: `M ${hem.x} ${waist.y + 5} L ${hem.x} ${bottomY - 3}`, stroke: '#00000018', strokeWidth: 1.2, silhouette: false },
       ],
     };
   }
@@ -810,8 +844,6 @@ function anchoredDress(facing: Facing, body: BodyFacingAnchors, bodyId?: string)
       shapes: [
         skirt,
         { d: `M ${collarSpan.left} ${collarY} Q ${bodyInteriorSpan(body, necklineY, 1.5).right} ${necklineY} ${collarSpan.right} ${collarY} Z`, fill: '$skin', silhouette: false },
-        waistBand,
-        { d: `M ${hem.x - flareHalf * 0.34} ${waist.y + 3} L ${hem.x - flareHalf * 0.48} ${bottomY - 1} M ${hem.x + flareHalf * 0.34} ${waist.y + 3} L ${hem.x + flareHalf * 0.48} ${bottomY - 1}`, stroke: '#0000001E', strokeWidth: 1.6, silhouette: false },
       ],
     };
   }
@@ -822,7 +854,7 @@ function anchoredDress(facing: Facing, body: BodyFacingAnchors, bodyId?: string)
       skirt,
       { d: `M ${body.neck.x - neckHalf} ${body.neck.y} Q ${body.neck.x} ${mix(body.neck.y, body.chest.y, 0.58)} ${body.neck.x + neckHalf} ${body.neck.y} Z`, fill: '$skin', silhouette: false },
       waistBand,
-      { d: `M ${hem.x - flareHalf * 0.34} ${waist.y + 3} L ${hem.x - flareHalf * 0.48} ${bottomY - 1} M ${hem.x + flareHalf * 0.34} ${waist.y + 3} L ${hem.x + flareHalf * 0.48} ${bottomY - 1} M ${hem.x} ${waist.y + 2} L ${hem.x} ${bottomY}`, stroke: '#0000001E', strokeWidth: 1.5, silhouette: false },
+      { d: `M ${hem.x - flareHalf * 0.25} ${waist.y + 6} L ${hem.x - flareHalf * 0.4} ${bottomY - 3} M ${hem.x + flareHalf * 0.25} ${waist.y + 6} L ${hem.x + flareHalf * 0.4} ${bottomY - 3}`, stroke: '#00000018', strokeWidth: 1.2, silhouette: false },
     ],
   };
 }
@@ -863,17 +895,7 @@ function anchoredVest(facing: Facing, body: BodyFacingAnchors): PartVariant {
   const apexY = mix(n.y, chest.y, 0.82);
 
   if (facing === 'east') {
-    const topY = spanCenter(body.shoulders).y + 2;
-    const top = bodyInteriorSpan(body, topY, 1.5);
-    const bottom = bodyInteriorSpan(body, bottomY, 2.5);
-    const apexX = bodyInteriorSpan(body, apexY, 2).right;
-    return {
-      z: 20,
-      shapes: [
-        { d: `M ${top.left} ${topY} L ${apexX} ${apexY} L ${top.right} ${topY} L ${bottom.right} ${bottomY} L ${bottom.left} ${bottomY} Z`, fill: '$outfitSecondary', silhouette: false },
-        { d: `M ${top.left + 1.5} ${topY} L ${apexX} ${mix(topY, apexY, 0.72)} L ${top.right - 1.5} ${topY} Z`, fill: '$accent', silhouette: false },
-      ],
-    };
+    return { z: 20, shapes: [] };
   }
   if (facing === 'north') {
     return {
@@ -1240,13 +1262,7 @@ const OUTFITS: PartDef[] = [
         ],
       },
       north: { z: 20, shapes: [{ d: rr(-12, -29, 24, 47, 4), fill: '$outfitSecondary', silhouette: false }] },
-      east: {
-        z: 20,
-        shapes: [
-          { d: `M 7 -29 L 12 -12 L 17 -29 L 17 18 L 7 18 Z`, fill: '$outfitSecondary', silhouette: false },
-          { d: `M 9 -29 L 12 -16 L 15 -29 Z`, fill: '$accent', silhouette: false },
-        ],
-      },
+      east: { z: 20, shapes: [] },
     },
     buildVariant: (facing, context) => context.bodyAnchors && anchoredVest(facing, context.bodyAnchors),
   },
@@ -1886,15 +1902,15 @@ const SERVICE_PARTS: PartDef[] = [
       south: {
         z: 60,
         shapes: [
-          { d: 'M -25 2 C -24 -22 -12 -31 0 -31 C 13 -31 24 -21 25 2 C 15 -3 -15 -3 -25 2 Z', fill: '#DDEBEA24', stroke: '#EEF5F2B8', strokeWidth: 1.8, silhouette: false },
+          { d: 'M -25 2 C -24 -22 -12 -29 0 -29 C 13 -29 24 -21 25 2 C 15 -3 -15 -3 -25 2 Z', fill: '#DDEBEA24', stroke: '#EEF5F2B8', strokeWidth: 1.8, silhouette: false },
           { d: 'M -18 -13 Q 0 -22 18 -13 M -21 -5 Q 0 -14 21 -5', stroke: '#EEF5F278', strokeWidth: 1.1, silhouette: false },
-          { d: 'M -12 -25 L -8 -4 M 0 -30 L 0 -3 M 12 -25 L 8 -4', stroke: '#EEF5F25C', strokeWidth: 1, silhouette: false },
+          { d: 'M -12 -25 L -8 -4 M 0 -29 L 0 -3 M 12 -25 L 8 -4', stroke: '#EEF5F25C', strokeWidth: 1, silhouette: false },
         ],
       },
       east: {
         z: 60,
         shapes: [
-          { d: 'M -23 3 C -22 -21 -10 -30 2 -30 C 15 -30 24 -20 24 3 C 12 -2 -12 -2 -23 3 Z', fill: '#DDEBEA24', stroke: '#EEF5F2B8', strokeWidth: 1.8, silhouette: false },
+          { d: 'M -23 3 C -22 -21 -10 -29 2 -29 C 15 -29 24 -20 24 3 C 12 -2 -12 -2 -23 3 Z', fill: '#DDEBEA24', stroke: '#EEF5F2B8', strokeWidth: 1.8, silhouette: false },
           { d: 'M -16 -13 Q 2 -22 19 -12 M -20 -4 Q 2 -13 21 -4', stroke: '#EEF5F278', strokeWidth: 1.1, silhouette: false },
           { d: 'M -8 -25 L -5 -3 M 5 -28 L 7 -3', stroke: '#EEF5F25C', strokeWidth: 1, silhouette: false },
         ],
@@ -1902,9 +1918,9 @@ const SERVICE_PARTS: PartDef[] = [
       north: {
         z: 60,
         shapes: [
-          { d: 'M -25 4 C -24 -21 -12 -31 0 -31 C 13 -31 24 -21 25 4 C 14 -1 -14 -1 -25 4 Z', fill: '#DDEBEA24', stroke: '#EEF5F2B8', strokeWidth: 1.8, silhouette: false },
+          { d: 'M -25 4 C -24 -21 -12 -29 0 -29 C 13 -29 24 -21 25 4 C 14 -1 -14 -1 -25 4 Z', fill: '#DDEBEA24', stroke: '#EEF5F2B8', strokeWidth: 1.8, silhouette: false },
           { d: 'M -19 -13 Q 0 -23 19 -13 M -22 -4 Q 0 -14 22 -4', stroke: '#EEF5F278', strokeWidth: 1.1, silhouette: false },
-          { d: 'M -12 -25 L -8 -2 M 0 -30 L 0 -1 M 12 -25 L 8 -2', stroke: '#EEF5F25C', strokeWidth: 1, silhouette: false },
+          { d: 'M -12 -25 L -8 -2 M 0 -29 L 0 -1 M 12 -25 L 8 -2', stroke: '#EEF5F25C', strokeWidth: 1, silhouette: false },
         ],
       },
     },

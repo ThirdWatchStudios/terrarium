@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="mail-station" data-projection="elevation">
+  <title>QuotaCo mail sorting station</title>
+  <desc>Elevation-projected broad mail station with an open pigeonhole matrix, visible envelopes, projecting sorting shelf, paired parcel bays, and grounded plinth.</desc>
+  <g id="shadow">
+    <ellipse id="shadow-contact" cx="64" cy="117" rx="38" ry="4.5" fill="#000000" opacity=".13"/>
+  </g>
+  <g id="art-scale" transform="translate(64 116) scale(.8) translate(-64 -116)">
+    <g id="shell">
+      <rect id="shell-body" data-fill-token="primary" x="27" y="51" width="74" height="65" rx="8" fill="#DED5BD" stroke="#292C2A" stroke-width="3"/>
+      <rect id="shell-top-cap" x="30" y="48" width="68" height="11" rx="4" fill="#F3EEDA" stroke="#292C2A" stroke-width="1.6"/>
+      <rect id="shell-mail-label" data-fill-token="accent" x="35" y="51" width="18" height="5" rx="1.5" fill="#B65F4D" stroke="#292C2A" stroke-width=".9"/>
+      <rect id="shell-pigeonhole-bay" data-fill-token="secondary" x="33" y="61" width="62" height="33" rx="3" fill="#355247" stroke="#292C2A" stroke-width="1.6"/>
+      <rect id="function-sort-counter" x="23" y="94" width="82" height="8" rx="3" fill="#F3EEDA" stroke="#292C2A" stroke-width="1.7"/>
+      <rect id="function-left-parcel-bay" data-fill-token="secondary" x="33" y="102" width="29" height="10" rx="3" fill="#355247" stroke="#292C2A" stroke-width="1.3"/>
+      <rect id="function-right-parcel-bay" x="66" y="102" width="29" height="10" rx="3" fill="#49685A" stroke="#292C2A" stroke-width="1.3"/>
+      <rect id="function-left-label" data-fill-token="accent" x="38" y="105" width="14" height="4" rx="1" fill="#B65F4D"/>
+      <path id="function-right-parcel" d="M71 110V104H90V110Z" fill="#F4F0E4" stroke="#292C2A" stroke-width=".9"/>
+      <rect id="shell-plinth" data-fill-token="secondary" x="34" y="112" width="60" height="4" rx="2" fill="#355247" stroke="#292C2A" stroke-width="1.2"/>
+    </g>
+    <g id="columns-4">
+      <path id="grid-4-lines" d="M48.5 62V93M64 62V93M79.5 62V93M34 72.7H94M34 83.3H94" fill="none" stroke="#C7BDA7" stroke-width="1.5"/>
+      <rect id="mail-4-1" x="35.5" y="65" width="11.5" height="5" rx="1" fill="#F4F0E4" stroke="#292C2A" stroke-width=".6"/>
+      <path id="mail-4-1-flap" d="M36 66L41.25 69L46.5 66" fill="none" stroke="#C7BDA7" stroke-width=".7"/>
+      <rect id="mail-4-2" x="66" y="76" width="11.5" height="5" rx="1" fill="#F4F0E4" stroke="#292C2A" stroke-width=".6"/>
+      <path id="mail-4-2-flap" d="M66.5 77L71.75 80L77 77" fill="none" stroke="#C7BDA7" stroke-width=".7"/>
+      <rect id="mail-4-3" x="81" y="86" width="11.5" height="5" rx="1" fill="#F4F0E4" stroke="#292C2A" stroke-width=".6"/>
+      <path id="mail-4-3-flap" d="M81.5 87L86.75 90L92 87" fill="none" stroke="#C7BDA7" stroke-width=".7"/>
+      <path id="mail-4-folder" d="M51 92L54 85H61L63 92Z" fill="#F4F0E4" stroke="#292C2A" stroke-width=".7"/>
+    </g>
+    <g id="columns-3" display="none">
+      <path id="grid-3-lines" d="M54 62V93M74 62V93M34 72.7H94M34 83.3H94" fill="none" stroke="#C7BDA7" stroke-width="1.5"/>
+      <rect id="mail-3-1" x="36" y="65" width="16" height="5" rx="1" fill="#F4F0E4" stroke="#292C2A" stroke-width=".6"/>
+      <path id="mail-3-1-flap" d="M36.5 66L44 69L51.5 66" fill="none" stroke="#C7BDA7" stroke-width=".7"/>
+      <rect id="mail-3-2" x="56" y="76" width="16" height="5" rx="1" fill="#F4F0E4" stroke="#292C2A" stroke-width=".6"/>
+      <path id="mail-3-2-flap" d="M56.5 77L64 80L71.5 77" fill="none" stroke="#C7BDA7" stroke-width=".7"/>
+      <rect id="mail-3-3" x="76" y="86" width="16" height="5" rx="1" fill="#F4F0E4" stroke="#292C2A" stroke-width=".6"/>
+      <path id="mail-3-3-flap" d="M76.5 87L84 90L91.5 87" fill="none" stroke="#C7BDA7" stroke-width=".7"/>
+    </g>
+    <g id="columns-5" display="none">
+      <path id="grid-5-lines" d="M46 62V93M58 62V93M70 62V93M82 62V93M34 72.7H94M34 83.3H94" fill="none" stroke="#C7BDA7" stroke-width="1.3"/>
+      <rect id="mail-5-1" x="35.5" y="65" width="9" height="5" rx="1" fill="#F4F0E4" stroke="#292C2A" stroke-width=".6"/>
+      <path id="mail-5-1-flap" d="M36 66L40 69L44 66" fill="none" stroke="#C7BDA7" stroke-width=".7"/>
+      <rect id="mail-5-2" x="59.5" y="76" width="9" height="5" rx="1" fill="#F4F0E4" stroke="#292C2A" stroke-width=".6"/>
+      <path id="mail-5-2-flap" d="M60 77L64 80L68 77" fill="none" stroke="#C7BDA7" stroke-width=".7"/>
+      <rect id="mail-5-3" x="83.5" y="86" width="9" height="5" rx="1" fill="#F4F0E4" stroke="#292C2A" stroke-width=".6"/>
+      <path id="mail-5-3-flap" d="M84 87L88 90L92 87" fill="none" stroke="#C7BDA7" stroke-width=".7"/>
+      <path id="mail-5-folder" d="M47 92L49 85H56L57 92Z" fill="#F4F0E4" stroke="#292C2A" stroke-width=".7"/>
+    </g>
+  </g>
+</svg>

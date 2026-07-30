@@ -422,6 +422,13 @@ population remains the approval gate. Production promotion would still need
 the chosen authored head SVGs, an explicit crop policy, hair fitting, portrait
 and atlas checks, and the separately deferred neutral-arm runtime uptake.
 
+Production resolution (2026-07-27): the six head hulls and static framing were
+promoted, then the head datum was lowered three source units after composed
+review found the initial one-row target too detached. The final gate preserves
+4–8 clear pixels between the filled head and torso silhouettes at 128 px while
+allowing expanded outlines to kiss at 40/48 px. The original v4 observations
+above remain historical evidence rather than the current production spacing.
+
 ## Hair/head fit and profile correction — review-only v5.1
 
 The first v5 render established six outer-mass ideas but is rejected as a fit
@@ -516,3 +523,25 @@ head-fit envelopes bake concrete hair/head variants or become static authoring
 metadata. Production hair SVGs, part IDs, portraits, atlases, exports,
 compositor behavior, and runtime animation remain unchanged until that separate
 step.
+
+Production resolution (2026-07-27): the first bounded carrier slice selected
+Short/Crop, Bob, and Ponytail/Tail. Their stable `hair-short`, `hair-bob`, and
+`hair-ponytail` recipe IDs now resolve fixed variants for all six production
+heads and south/east/north during Terrarium composition/export. Flat and
+reconstructable layer output share the resolver; Unity receives ordinary baked
+art with no fit metadata, schema change, bones, new poses, or secondary motion.
+The canonical imported SVGs remain source/fallback geometry. The remaining
+seven mapped hairstyles retain their prior static facings until they pass the
+same fitted proof. See
+`docs/previews/character-hair-fitting-pilot-v1.png` and its metrics JSON for
+the promoted matrix, literal 40/48 px audit, desk check, and crowd check.
+
+Production completion (2026-07-27): Pixie, Side-part/Sweep, Bun/Knot, Curly,
+Coils, Long straight, and Balding now join that same resolver for all six
+production heads and three authored facings. The original three-carrier variant
+digest remains byte-identical. A new 336-cell 40/48 px audit reports zero
+missing hair and zero hair edge contacts; every fitted style pair remains
+distinct at 32 px across south/east/north. The recut reduces the 4,320-cell
+top-overflow debt from the pre-fitting 766 cases to 467 high-contrast-only
+cases, with no non-top overflow. See
+`docs/previews/character-hair-fitting-completion-v2.png` and its metrics JSON.

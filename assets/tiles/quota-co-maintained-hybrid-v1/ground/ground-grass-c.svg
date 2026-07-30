@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"
+  data-surface-id="ground-grass-c" data-kind="ground" data-template-id="grass"
+  data-direction="maintained-hybrid">
+  <title>Soft field grass — QuotaCo Maintained Hybrid</title>
+  <desc>Artist-editable ground source accepted from the Maintained Hybrid complete-family proof. Flat, outline-free, and seamless on a 128-unit tile.</desc>
+  <g id="substrate">
+    <rect x="0" y="0" width="128" height="128" rx="0" fill="#4E9A3C" opacity="1" id="substrate-field" data-fill-token="primary"/>
+  </g>
+  <g id="secondary-detail">
+    <path d="M 0 24 C 24 11 41 38 66 27 S 105 13 128 24 L 128 39 C 105 28 88 49 65 39 S 25 26 0 40 Z" fill="#3A7431" opacity="0.056999999999999995" id="secondary-detail-element-001" data-fill-token="secondary"/>
+    <path d="M 114.5 104 L 117 97.5" fill="none" stroke="#3A7431" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.48" id="secondary-detail-element-005" data-stroke-token="secondary"/>
+    <path d="M 117 104 L 119.8 99" fill="none" stroke="#3A7431" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.42" id="secondary-detail-element-006" data-stroke-token="secondary"/>
+    <path d="M 106.5 62 L 109 54.5" fill="none" stroke="#3A7431" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.48" id="secondary-detail-element-007" data-stroke-token="secondary"/>
+    <path d="M 109 62 L 111.8 56" fill="none" stroke="#3A7431" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.42" id="secondary-detail-element-008" data-stroke-token="secondary"/>
+    <path d="M 10.5 20 L 13 13.5" fill="none" stroke="#3A7431" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.48" id="secondary-detail-element-011" data-stroke-token="secondary"/>
+    <path d="M 13 20 L 15.8 15" fill="none" stroke="#3A7431" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.42" id="secondary-detail-element-012" data-stroke-token="secondary"/>
+    <path d="M 88.5 46 L 91 38.5" fill="none" stroke="#3A7431" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.48" id="secondary-detail-element-013" data-stroke-token="secondary"/>
+    <path d="M 91 46 L 93.8 40" fill="none" stroke="#3A7431" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.42" id="secondary-detail-element-014" data-stroke-token="secondary"/>
+    <path d="M 54.5 80 L 57 73.5" fill="none" stroke="#3A7431" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.48" id="secondary-detail-element-017" data-stroke-token="secondary"/>
+    <path d="M 57 80 L 59.8 75" fill="none" stroke="#3A7431" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.42" id="secondary-detail-element-018" data-stroke-token="secondary"/>
+    <path d="M 92.5 52 L 95 44.5" fill="none" stroke="#3A7431" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.48" id="secondary-detail-element-019" data-stroke-token="secondary"/>
+    <path d="M 95 52 L 97.8 46" fill="none" stroke="#3A7431" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.42" id="secondary-detail-element-020" data-stroke-token="secondary"/>
+    <path d="M 30.5 68 L 33 61.5" fill="none" stroke="#3A7431" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.48" id="secondary-detail-element-023" data-stroke-token="secondary"/>
+    <path d="M 33 68 L 35.8 63" fill="none" stroke="#3A7431" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.42" id="secondary-detail-element-024" data-stroke-token="secondary"/>
+    <path d="M 56.5 116 L 59 108.5" fill="none" stroke="#3A7431" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.48" id="secondary-detail-element-025" data-stroke-token="secondary"/>
+    <path d="M 59 116 L 61.8 110" fill="none" stroke="#3A7431" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.42" id="secondary-detail-element-026" data-stroke-token="secondary"/>
+    <circle cx="100" cy="49" r="0.75" fill="#3A7431" opacity="0.22" id="secondary-detail-element-028" data-fill-token="secondary"/>
+    <circle cx="80" cy="103" r="0.75" fill="#3A7431" opacity="0.22" id="secondary-detail-element-029" data-fill-token="secondary"/>
+    <circle cx="122" cy="37" r="1.1" fill="#3A7431" opacity="0.22" id="secondary-detail-element-031" data-fill-token="secondary"/>
+    <circle cx="112" cy="85" r="0.75" fill="#3A7431" opacity="0.22" id="secondary-detail-element-032" data-fill-token="secondary"/>
+    <circle cx="30" cy="45" r="0.75" fill="#3A7431" opacity="0.22" id="secondary-detail-element-034" data-fill-token="secondary"/>
+    <circle cx="100" cy="49" r="1.1" fill="#3A7431" opacity="0.22" id="secondary-detail-element-035" data-fill-token="secondary"/>
+    <circle cx="116" cy="23" r="0.75" fill="#3A7431" opacity="0.22" id="secondary-detail-element-037" data-fill-token="secondary"/>
+    <circle cx="108" cy="107" r="0.75" fill="#3A7431" opacity="0.22" id="secondary-detail-element-038" data-fill-token="secondary"/>
+    <circle cx="26" cy="5" r="0.75" fill="#3A7431" opacity="0.22" id="secondary-detail-element-040" data-fill-token="secondary"/>
+    <circle cx="92" cy="65" r="0.75" fill="#3A7431" opacity="0.22" id="secondary-detail-element-041" data-fill-token="secondary"/>
+    <circle cx="42" cy="45" r="1.1" fill="#3A7431" opacity="0.22" id="secondary-detail-element-043" data-fill-token="secondary"/>
+    <circle cx="32" cy="49" r="0.75" fill="#3A7431" opacity="0.22" id="secondary-detail-element-044" data-fill-token="secondary"/>
+  </g>
+  <g id="accent-detail">
+    <path d="M 84 0 C 70 25 100 43 88 67 S 74 105 84 128 L 99 128 C 89 104 106 89 101 66 S 92 25 99 0 Z" fill="#79B861" opacity="0.046" id="accent-detail-element-002" data-fill-token="accent"/>
+    <path d="M 106.5 82 L 109 76.5" fill="none" stroke="#79B861" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.48" id="accent-detail-element-003" data-stroke-token="accent"/>
+    <path d="M 109 82 L 111.8 78" fill="none" stroke="#79B861" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.42" id="accent-detail-element-004" data-stroke-token="accent"/>
+    <path d="M 40.5 62 L 43 56.5" fill="none" stroke="#79B861" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.48" id="accent-detail-element-009" data-stroke-token="accent"/>
+    <path d="M 43 62 L 45.8 58" fill="none" stroke="#79B861" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.42" id="accent-detail-element-010" data-stroke-token="accent"/>
+    <path d="M 104.5 88 L 107 82.5" fill="none" stroke="#79B861" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.48" id="accent-detail-element-015" data-stroke-token="accent"/>
+    <path d="M 107 88 L 109.8 84" fill="none" stroke="#79B861" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.42" id="accent-detail-element-016" data-stroke-token="accent"/>
+    <path d="M 6.5 42 L 9 36.5" fill="none" stroke="#79B861" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.48" id="accent-detail-element-021" data-stroke-token="accent"/>
+    <path d="M 9 42 L 11.8 38" fill="none" stroke="#79B861" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.42" id="accent-detail-element-022" data-stroke-token="accent"/>
+    <circle cx="118" cy="73" r="1.1" fill="#79B861" opacity="0.22" id="accent-detail-element-027" data-fill-token="accent"/>
+    <circle cx="114" cy="25" r="0.75" fill="#79B861" opacity="0.22" id="accent-detail-element-030" data-fill-token="accent"/>
+    <circle cx="16" cy="25" r="0.75" fill="#79B861" opacity="0.22" id="accent-detail-element-033" data-fill-token="accent"/>
+    <circle cx="24" cy="21" r="0.75" fill="#79B861" opacity="0.22" id="accent-detail-element-036" data-fill-token="accent"/>
+    <circle cx="92" cy="83" r="1.1" fill="#79B861" opacity="0.22" id="accent-detail-element-039" data-fill-token="accent"/>
+    <circle cx="72" cy="119" r="0.75" fill="#79B861" opacity="0.22" id="accent-detail-element-042" data-fill-token="accent"/>
+  </g>
+  <g id="literal-detail">
+    <circle cx="68" cy="101" r="1.25" fill="#F2EED8" opacity="0.7" id="literal-detail-element-045"/>
+    <circle cx="54" cy="33" r="1.25" fill="#E8C84A" opacity="0.7" id="literal-detail-element-046"/>
+    <circle cx="8" cy="69" r="1.25" fill="#C08BD6" opacity="0.7" id="literal-detail-element-047"/>
+  </g>
+</svg>

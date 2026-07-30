@@ -1,0 +1,111 @@
+{
+  "status": "promoted-all-ten-style-set",
+  "productionHairMappings": [
+    {
+      "partId": "hair-pixie",
+      "constructionId": "broken-crop",
+      "label": "Pixie",
+      "note": "short asymmetry · rear tuft"
+    },
+    {
+      "partId": "hair-side-part",
+      "constructionId": "sweep",
+      "label": "Side-part / Sweep",
+      "note": "diagonal front · one-sided mass"
+    },
+    {
+      "partId": "hair-bun",
+      "constructionId": "knot",
+      "label": "Bun / Knot",
+      "note": "compact offset crown anchor"
+    },
+    {
+      "partId": "hair-curly",
+      "constructionId": "soft-cloud",
+      "label": "Curly",
+      "note": "five broad lobes · narrower halo"
+    },
+    {
+      "partId": "hair-coils",
+      "constructionId": "dense-cloud",
+      "label": "Coils",
+      "note": "dense scalloped halo · wider reach"
+    },
+    {
+      "partId": "hair-long-straight",
+      "constructionId": "curtain",
+      "label": "Long straight",
+      "note": "long rear curtain · open profile eye"
+    },
+    {
+      "partId": "hair-balding",
+      "constructionId": "temple-band",
+      "label": "Balding",
+      "note": "fitted temples · rear band"
+    }
+  ],
+  "preservedFirstSlice": [
+    "hair-short",
+    "hair-bob",
+    "hair-ponytail"
+  ],
+  "preservedFirstSliceVariantDigest": "83fff7ef11a2acbaa16e3453ff7a364782a334d43b4d36ea58cc15db13be7c9a",
+  "heads": [
+    {
+      "partId": "head-round",
+      "fitId": "round",
+      "label": "Round"
+    },
+    {
+      "partId": "head-oval",
+      "fitId": "broad",
+      "label": "Broad"
+    },
+    {
+      "partId": "head-long",
+      "fitId": "long",
+      "label": "Long"
+    },
+    {
+      "partId": "head-boxy",
+      "fitId": "block",
+      "label": "Block"
+    },
+    {
+      "partId": "head-angular",
+      "fitId": "point",
+      "label": "Point"
+    },
+    {
+      "partId": "head-soft-square",
+      "fitId": "lantern",
+      "label": "Lantern"
+    }
+  ],
+  "mechanism": {
+    "phase": "Terrarium composition/export bake",
+    "totalFittedHairIds": 10,
+    "recipeIdsChanged": false,
+    "exportSchemaChanged": false,
+    "runtimeMetadataAdded": false,
+    "authoredWestFacings": 0
+  },
+  "animationCost": {
+    "frames": 0,
+    "bones": 0,
+    "poses": 0,
+    "rendererStates": 0,
+    "secondaryMotionSystems": 0
+  },
+  "audit": {
+    "renderCount": 336,
+    "missingHair": [],
+    "hairEdgeContacts": [],
+    "deterministicDigest": "8a4e896bc623c3913b46e3657dd9ca277d4c7cf2d463e67887a4a6f9d369f08d"
+  },
+  "restoration": {
+    "productionSentinel": "byte-identical across proof generation",
+    "partReferences": "identical",
+    "facingReferences": "identical"
+  }
+}

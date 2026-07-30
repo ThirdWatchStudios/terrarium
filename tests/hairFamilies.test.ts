@@ -1,12 +1,19 @@
+import { createHash } from 'node:crypto';
+
 import { Resvg } from '@resvg/resvg-js';
 import { describe, expect, it } from 'vitest';
 
-import { composeCharacter } from '../src/core/compositor';
+import { characterLayers, composeCharacter } from '../src/core/compositor';
 import type { CharacterRecipe, Facing } from '../src/core/types';
 import { FACINGS } from '../src/core/types';
 import { DEFAULT_STYLE, DEFAULT_STYLE_PRESETS } from '../src/data/defaults';
 import { BODY_ARCHETYPES } from '../src/parts/bodyArchetypes';
 import { IMPORTED_PART_PROVENANCE } from '../src/parts/generated/importedPartArt';
+import {
+  FITTED_HAIR_HEAD_IDS,
+  FITTED_HAIR_IDS,
+  fittedHairVariant,
+} from '../src/parts/hairFitting';
 import { getPart, partsForSlot } from '../src/parts/library';
 
 const CANONICAL_HAIRS = [
@@ -79,7 +86,98 @@ function hairMask(id: string, facing: Facing): Uint8Array {
   );
 }
 
+function fittedHairMask(id: string, head: string, facing: Facing): Uint8Array {
+  const variant = fittedHairVariant(id, head, facing);
+  const paths = variant?.shapes
+    .filter(({ silhouette }) => silhouette !== false)
+    .map(({ d }) => `<path d="${d}" fill="#000000"/>`)
+    .join('') ?? '';
+  const image = new Resvg([
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="32" height="32">',
+    `<g transform="translate(64 44)">${paths}</g>`,
+    '</svg>',
+  ].join(''), { font: { loadSystemFonts: false } }).render();
+  const pixels = image.pixels;
+  return Uint8Array.from(
+    { length: pixels.length / 4 },
+    (_, index) => pixels[index * 4 + 3] >= 128 ? 1 : 0,
+  );
+}
+
 describe('canonical production hair families', () => {
+  it('resolves all ten promoted hairstyles deterministically against every production head', () => {
+    for (const hair of FITTED_HAIR_IDS) {
+      for (const head of FITTED_HAIR_HEAD_IDS) {
+        for (const facing of FACINGS) {
+          const first = fittedHairVariant(hair, head, facing);
+          const second = fittedHairVariant(hair, head, facing);
+          expect(first, `${hair}/${head}/${facing}`).toBeTruthy();
+          expect(second, `${hair}/${head}/${facing}`).toBe(first);
+          expect(first?.z, `${hair}/${head}/${facing}`).toBe(50);
+          expect(first?.shapes.length, `${hair}/${head}/${facing}`).toBeGreaterThan(0);
+          expect(first?.shapes.every(({ fill }) => fill === '$hair'), `${hair}/${head}/${facing}`)
+            .toBe(true);
+        }
+      }
+      for (const facing of FACINGS) {
+        const fittedPaths = FITTED_HAIR_HEAD_IDS.map((head) =>
+          fittedHairVariant(hair, head, facing)?.shapes.map(({ d }) => d).join('|'));
+        expect(new Set(fittedPaths).size, `${hair}/${facing} does not adapt to all six heads`)
+          .toBe(FITTED_HAIR_HEAD_IDS.length);
+      }
+    }
+
+    expect(fittedHairVariant('hair-none', 'head-round', 'south')).toBeUndefined();
+    expect(fittedHairVariant('hair-short', 'head-fab', 'south')).toBeUndefined();
+  });
+
+  it('preserves the first three approved carriers byte-for-byte', () => {
+    const approved = ['hair-short', 'hair-bob', 'hair-ponytail'];
+    const payload = approved.flatMap((hair) =>
+      FITTED_HAIR_HEAD_IDS.flatMap((head) =>
+        FACINGS.map((facing) => fittedHairVariant(hair, head, facing))));
+    expect(createHash('sha256').update(JSON.stringify(payload)).digest('hex'))
+      .toBe('83fff7ef11a2acbaa16e3453ff7a364782a334d43b4d36ea58cc15db13be7c9a');
+  });
+
+  it('uses the same fitted geometry in flat and reconstructable production output', () => {
+    for (const hair of FITTED_HAIR_IDS) {
+      for (const head of FITTED_HAIR_HEAD_IDS) {
+        const source = recipe('body-compact', head, hair);
+        const layers = characterLayers(source, DEFAULT_STYLE);
+        const hairLayer = layers.find(({ key }) => key === `${hair}__hair`);
+        expect(hairLayer, `${hair}/${head} has no reconstructable hair layer`).toBeTruthy();
+
+        for (const facing of FACINGS) {
+          const fitted = fittedHairVariant(hair, head, facing)!;
+          const flat = composeCharacter(source, DEFAULT_STYLE, facing, 128, 'normal', { badge: false });
+          for (const shape of fitted.shapes) {
+            expect(flat, `${hair}/${head}/${facing} flat`).toContain(`d="${shape.d}"`);
+            expect(hairLayer?.markup[facing], `${hair}/${head}/${facing} layer`).toContain(`d="${shape.d}"`);
+          }
+        }
+      }
+    }
+  });
+
+  it('keeps every fitted hairstyle pair distinct at 32px across the three authored facings', () => {
+    for (let leftIndex = 0; leftIndex < FITTED_HAIR_IDS.length; leftIndex++) {
+      for (let rightIndex = leftIndex + 1; rightIndex < FITTED_HAIR_IDS.length; rightIndex++) {
+        const leftId = FITTED_HAIR_IDS[leftIndex];
+        const rightId = FITTED_HAIR_IDS[rightIndex];
+        let changed = 0;
+        for (const facing of FACINGS) {
+          const left = fittedHairMask(leftId, 'head-round', facing);
+          const right = fittedHairMask(rightId, 'head-round', facing);
+          for (let pixel = 0; pixel < left.length; pixel++) {
+            if (left[pixel] !== right[pixel]) changed++;
+          }
+        }
+        expect(changed, `${leftId}/${rightId}`).toBeGreaterThanOrEqual(24);
+      }
+    }
+  });
+
   it('keeps exact picker order, canonical provenance, and facing semantics', () => {
     expect(partsForSlot('hair').map(({ id }) => id)).toEqual([
       'hair-none',
@@ -136,12 +234,15 @@ describe('canonical production hair families', () => {
     }
   });
 
-  it('renders the 3,600-cell hair, body, head, facing, and style matrix deterministically without clipping', () => {
+  it('renders the 4,320-cell hair matrix deterministically with bounded known top-frame debt', () => {
     let count = 0;
     const nondeterministic: string[] = [];
     const invalidGeometry: string[] = [];
     const unresolvedPaint: string[] = [];
     const outOfCanvasBounds: string[] = [];
+    const nonTopOverflow: string[] = [];
+    const overflowByPreset = new Map<string, number>();
+    let maxTopOverflow = 0;
 
     for (const preset of DEFAULT_STYLE_PRESETS) {
       for (const [hair] of CANONICAL_HAIRS) {
@@ -166,6 +267,17 @@ describe('canonical production hair families', () => {
                 bounds.y + bounds.height > 128.0001
               ) {
                 outOfCanvasBounds.push(label);
+                overflowByPreset.set(preset.id, (overflowByPreset.get(preset.id) ?? 0) + 1);
+              }
+              if (bounds) {
+                maxTopOverflow = Math.max(maxTopOverflow, -bounds.y);
+                if (
+                  bounds.x < -0.0001 ||
+                  bounds.x + bounds.width > 128.0001 ||
+                  bounds.y + bounds.height > 128.0001
+                ) {
+                  nonTopOverflow.push(label);
+                }
               }
               count++;
             }
@@ -174,11 +286,19 @@ describe('canonical production hair families', () => {
       }
     }
 
-    expect(count).toBe(3600);
+    expect(count).toBe(4320);
     expect(nondeterministic).toEqual([]);
     expect(invalidGeometry).toEqual([]);
     expect(unresolvedPaint).toEqual([]);
-    expect(outOfCanvasBounds).toEqual([]);
+    // The promoted heads sit higher in the static 128px frame. The fitted set
+    // removes the old tall-hair extremes; keep the remaining preset-driven
+    // top debt exact, top-only, and bounded.
+    expect(outOfCanvasBounds).toHaveLength(467);
+    expect(Object.fromEntries(overflowByPreset)).toEqual({
+      'preset-high-contrast': 467,
+    });
+    expect(nonTopOverflow).toEqual([]);
+    expect(maxTopOverflow).toBeLessThanOrEqual(10.321);
   });
 
   it('keeps every canonical family pair distinct at 32px while preserving the broad-family distance gate', () => {

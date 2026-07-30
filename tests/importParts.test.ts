@@ -149,6 +149,55 @@ async function outfitSourceTree(files: Partial<Record<Facing, string>>): Promise
   return root;
 }
 
+function validComponentDetailSvg(component: string, shapeCount: number): string {
+  const paths = Array.from({ length: shapeCount }, (_, index) => {
+    const x = 60 + index * 2;
+    const y = 58 + index * 3;
+    return `<path id="detail/${component}/shape-${index + 1}" d="M${x} ${y}L${x + 2} ${y} ${x + 1} ${y + 2}Z" fill="#00000033" fill-rule="nonzero"/>`;
+  }).join('');
+  return svg(`<g id="detail/${component}">${paths}</g>`);
+}
+
+async function componentSourceTree(
+  targetId:
+    | 'outfit-blazer'
+    | 'outfit-polo'
+    | 'outfit-shirt-tie'
+    | 'outfit-turtleneck'
+    | 'outfit-cardigan'
+    | 'outfit-suit-jacket'
+    | 'outfit-hoodie'
+    | 'outfit-vest',
+  slug:
+    | 'blazer'
+    | 'polo'
+    | 'shirt-tie'
+    | 'turtleneck'
+    | 'cardigan'
+    | 'suit-jacket'
+    | 'hoodie'
+    | 'vest',
+  omitted?: { component: string; facing: Facing },
+): Promise<string> {
+  const root = await mkdtemp(path.join(tmpdir(), `terrarium-${slug}-import-`));
+  roots.push(root);
+  await mkdir(path.join(root, 'outfit'), { recursive: true });
+  const target = PART_IMPORT_TARGETS.find(({ id }) => id === targetId)!;
+  for (const component of target.components ?? []) {
+    for (const facing of FACINGS) {
+      const shapeCount = component.facings[facing]?.shapeCount;
+      if (shapeCount === undefined) continue;
+      if (omitted?.component === component.id && omitted.facing === facing) continue;
+      await writeFile(
+        path.join(root, 'outfit', `${slug}.${component.id}.${facing}.svg`),
+        validComponentDetailSvg(component.id, shapeCount),
+        'utf8',
+      );
+    }
+  }
+  return root;
+}
+
 async function bodySourceTree(
   files: Partial<Record<Facing, string>>,
   slug = 'balanced',
@@ -505,7 +554,7 @@ describe('part source tree and generated registration', () => {
       expect(Object.keys(imported.bodyVariants[id])).toEqual(['south', 'east']);
     }
     expect(imported.bodyVariants['body-balanced'].south?.[0].d).toBe('M-8-29Q0-22 8-29Z');
-    expect(imported.bodyVariants['body-compact'].south?.[0].d).toBe('M-8-24Q0-17 8-24Z');
+    expect(imported.bodyVariants['body-compact'].south?.[0].d).toBe('M-8-29Q0-22 8-29Z');
     expect(imported.bodyVariants['body-tall'].south?.[0].d).toBe('M-8-34Q0-27 8-34Z');
 
     const reversed: ImportedPartArt = {
@@ -520,6 +569,273 @@ describe('part source tree and generated registration', () => {
     const bodyOffsets = productionIds.map((id) => emitted.indexOf(`      "${id}": {`));
     expect(bodyOffsets.every((offset) => offset >= 0)).toBe(true);
     expect(bodyOffsets).toEqual([...bodyOffsets].sort((left, right) => left - right));
+  });
+
+  it('aggregates Blazer components in manifest order and fits both body frames', async () => {
+    const root = await componentSourceTree('outfit-blazer', 'blazer');
+    const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-blazer')!;
+    const [imported] = await compilePartDirectory({
+      inputDir: root,
+      sourcePathPrefix: 'assets/parts',
+      catalog: [target],
+    });
+    if (imported.kind !== 'body-detail') throw new Error('Expected body-detail import');
+
+    expect(imported.sourceFiles).toEqual([
+      'assets/parts/outfit/blazer.buttons.east.svg',
+      'assets/parts/outfit/blazer.buttons.south.svg',
+      'assets/parts/outfit/blazer.lapels.east.svg',
+      'assets/parts/outfit/blazer.lapels.south.svg',
+      'assets/parts/outfit/blazer.pocket.east.svg',
+      'assets/parts/outfit/blazer.pocket.south.svg',
+    ]);
+    expect(Object.keys(imported.bodyVariants)).toEqual(BODY_ARCHETYPES.map(({ id }) => id));
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(imported.bodyVariants[archetype.id].south).toHaveLength(6);
+      expect(imported.bodyVariants[archetype.id].east).toHaveLength(4);
+      expect(imported.bodyVariants[archetype.id].north).toBeUndefined();
+      expect(imported.bodyVariants[archetype.id].south?.every(({ silhouette }) => silhouette === false))
+        .toBe(true);
+    }
+    expect(imported.bodyVariants['body-balanced'].south)
+      .not.toEqual(imported.bodyVariants['body-large-frame'].south);
+    expect(imported.bodyVariants['body-balanced'].east)
+      .not.toEqual(imported.bodyVariants['body-tall'].east);
+  });
+
+  it('aggregates Polo collar and placket independently through the upper-torso frame', async () => {
+    const root = await componentSourceTree('outfit-polo', 'polo');
+    const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-polo')!;
+    const [imported] = await compilePartDirectory({
+      inputDir: root,
+      sourcePathPrefix: 'assets/parts',
+      catalog: [target],
+    });
+    if (imported.kind !== 'body-detail') throw new Error('Expected body-detail import');
+
+    expect(imported.sourceFiles).toEqual([
+      'assets/parts/outfit/polo.collar.east.svg',
+      'assets/parts/outfit/polo.collar.south.svg',
+      'assets/parts/outfit/polo.placket.east.svg',
+      'assets/parts/outfit/polo.placket.south.svg',
+    ]);
+    expect(Object.keys(imported.bodyVariants)).toEqual(BODY_ARCHETYPES.map(({ id }) => id));
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(imported.bodyVariants[archetype.id].south).toHaveLength(2);
+      expect(imported.bodyVariants[archetype.id].east).toHaveLength(2);
+      expect(imported.bodyVariants[archetype.id].north).toBeUndefined();
+      expect(imported.bodyVariants[archetype.id].south?.every(({ silhouette }) => silhouette === false))
+        .toBe(true);
+    }
+    expect(imported.bodyVariants['body-balanced'].south)
+      .not.toEqual(imported.bodyVariants['body-large-frame'].south);
+    expect(imported.bodyVariants['body-balanced'].east)
+      .not.toEqual(imported.bodyVariants['body-tall'].east);
+  });
+
+  it('aggregates Shirt + Tie components independently through the upper-torso frame', async () => {
+    const root = await componentSourceTree('outfit-shirt-tie', 'shirt-tie');
+    const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-shirt-tie')!;
+    const [imported] = await compilePartDirectory({
+      inputDir: root,
+      sourcePathPrefix: 'assets/parts',
+      catalog: [target],
+    });
+    if (imported.kind !== 'body-detail') throw new Error('Expected body-detail import');
+
+    expect(imported.sourceFiles).toEqual([
+      'assets/parts/outfit/shirt-tie.collar.east.svg',
+      'assets/parts/outfit/shirt-tie.collar.south.svg',
+      'assets/parts/outfit/shirt-tie.tie.east.svg',
+      'assets/parts/outfit/shirt-tie.tie.south.svg',
+    ]);
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(imported.bodyVariants[archetype.id].south).toHaveLength(2);
+      expect(imported.bodyVariants[archetype.id].east).toHaveLength(2);
+      expect(imported.bodyVariants[archetype.id].north).toBeUndefined();
+      expect(imported.bodyVariants[archetype.id].east?.every(({ silhouette }) => silhouette === false))
+        .toBe(true);
+    }
+    expect(imported.bodyVariants['body-balanced'].south)
+      .not.toEqual(imported.bodyVariants['body-soft'].south);
+    expect(imported.bodyVariants['body-balanced'].east)
+      .not.toEqual(imported.bodyVariants['body-tall'].east);
+  });
+
+  it('aggregates the three-facing Turtleneck neck band through the upper-torso frame', async () => {
+    const root = await componentSourceTree('outfit-turtleneck', 'turtleneck');
+    const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-turtleneck')!;
+    const [imported] = await compilePartDirectory({
+      inputDir: root,
+      sourcePathPrefix: 'assets/parts',
+      catalog: [target],
+    });
+    if (imported.kind !== 'body-detail') throw new Error('Expected body-detail import');
+
+    expect(imported.sourceFiles).toEqual([
+      'assets/parts/outfit/turtleneck.neck-band.east.svg',
+      'assets/parts/outfit/turtleneck.neck-band.north.svg',
+      'assets/parts/outfit/turtleneck.neck-band.south.svg',
+    ]);
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(imported.bodyVariants[archetype.id].south).toHaveLength(2);
+      expect(imported.bodyVariants[archetype.id].east).toHaveLength(1);
+      expect(imported.bodyVariants[archetype.id].north).toHaveLength(1);
+      expect(FACINGS.every((facing) =>
+        imported.bodyVariants[archetype.id][facing]?.every(({ silhouette }) => silhouette === false)))
+        .toBe(true);
+    }
+    expect(imported.bodyVariants['body-balanced'].north)
+      .not.toEqual(imported.bodyVariants['body-tall'].north);
+  });
+
+  it('aggregates Cardigan trim and button-line components through independent torso frames', async () => {
+    const root = await componentSourceTree('outfit-cardigan', 'cardigan');
+    const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-cardigan')!;
+    const [imported] = await compilePartDirectory({
+      inputDir: root,
+      sourcePathPrefix: 'assets/parts',
+      catalog: [target],
+    });
+    if (imported.kind !== 'body-detail') throw new Error('Expected body-detail import');
+
+    expect(imported.sourceFiles).toEqual([
+      'assets/parts/outfit/cardigan.button-line.east.svg',
+      'assets/parts/outfit/cardigan.button-line.south.svg',
+      'assets/parts/outfit/cardigan.trim.east.svg',
+      'assets/parts/outfit/cardigan.trim.south.svg',
+    ]);
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(imported.bodyVariants[archetype.id].south).toHaveLength(4);
+      expect(imported.bodyVariants[archetype.id].east).toHaveLength(4);
+      expect(imported.bodyVariants[archetype.id].north).toBeUndefined();
+      expect(['south', 'east'].every((facing) =>
+        imported.bodyVariants[archetype.id][facing as Facing]
+          ?.every(({ silhouette }) => silhouette === false)))
+        .toBe(true);
+    }
+    expect(imported.bodyVariants['body-balanced'].south)
+      .not.toEqual(imported.bodyVariants['body-soft'].south);
+    expect(imported.bodyVariants['body-balanced'].east)
+      .not.toEqual(imported.bodyVariants['body-tall'].east);
+  });
+
+  it('aggregates the formal Suit Jacket vocabulary while keeping the profile tie forward', async () => {
+    const root = await componentSourceTree('outfit-suit-jacket', 'suit-jacket');
+    const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-suit-jacket')!;
+    const [imported] = await compilePartDirectory({
+      inputDir: root,
+      sourcePathPrefix: 'assets/parts',
+      catalog: [target],
+    });
+    if (imported.kind !== 'body-detail') throw new Error('Expected body-detail import');
+
+    expect(imported.sourceFiles).toEqual([
+      'assets/parts/outfit/suit-jacket.buttons.east.svg',
+      'assets/parts/outfit/suit-jacket.buttons.south.svg',
+      'assets/parts/outfit/suit-jacket.lapels.east.svg',
+      'assets/parts/outfit/suit-jacket.lapels.south.svg',
+      'assets/parts/outfit/suit-jacket.notches.east.svg',
+      'assets/parts/outfit/suit-jacket.notches.south.svg',
+      'assets/parts/outfit/suit-jacket.pocket-square.east.svg',
+      'assets/parts/outfit/suit-jacket.pocket-square.south.svg',
+      'assets/parts/outfit/suit-jacket.pocket.east.svg',
+      'assets/parts/outfit/suit-jacket.pocket.south.svg',
+      'assets/parts/outfit/suit-jacket.tie.east.svg',
+      'assets/parts/outfit/suit-jacket.tie.south.svg',
+    ]);
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(imported.bodyVariants[archetype.id].south).toHaveLength(9);
+      expect(imported.bodyVariants[archetype.id].east).toHaveLength(7);
+      expect(imported.bodyVariants[archetype.id].north).toBeUndefined();
+    }
+  });
+
+  it('aggregates the Hoodie hood, drawstrings, and pocket across their authored facing sets', async () => {
+    const root = await componentSourceTree('outfit-hoodie', 'hoodie');
+    const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-hoodie')!;
+    const [imported] = await compilePartDirectory({
+      inputDir: root,
+      sourcePathPrefix: 'assets/parts',
+      catalog: [target],
+    });
+    if (imported.kind !== 'body-detail') throw new Error('Expected body-detail import');
+
+    expect(imported.sourceFiles).toEqual([
+      'assets/parts/outfit/hoodie.drawstrings.east.svg',
+      'assets/parts/outfit/hoodie.drawstrings.south.svg',
+      'assets/parts/outfit/hoodie.hood.east.svg',
+      'assets/parts/outfit/hoodie.hood.north.svg',
+      'assets/parts/outfit/hoodie.hood.south.svg',
+      'assets/parts/outfit/hoodie.pocket.south.svg',
+    ]);
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(imported.bodyVariants[archetype.id].south).toHaveLength(5);
+      expect(imported.bodyVariants[archetype.id].east).toHaveLength(2);
+      expect(imported.bodyVariants[archetype.id].north).toHaveLength(1);
+    }
+    expect(imported.bodyVariants['body-balanced'].north)
+      .not.toEqual(imported.bodyVariants['body-tall'].north);
+  });
+
+  it('aggregates the sweater Vest front while leaving side profiles undecorated', async () => {
+    const root = await componentSourceTree('outfit-vest', 'vest');
+    const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-vest')!;
+    const [imported] = await compilePartDirectory({
+      inputDir: root,
+      sourcePathPrefix: 'assets/parts',
+      catalog: [target],
+    });
+    if (imported.kind !== 'body-detail') throw new Error('Expected body-detail import');
+
+    expect(imported.sourceFiles).toEqual([
+      'assets/parts/outfit/vest.buttons.south.svg',
+      'assets/parts/outfit/vest.neck-inset.south.svg',
+      'assets/parts/outfit/vest.panel.south.svg',
+    ]);
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(imported.bodyVariants[archetype.id].south).toHaveLength(4);
+      expect(imported.bodyVariants[archetype.id].east).toBeUndefined();
+      expect(imported.bodyVariants[archetype.id].north).toBeUndefined();
+    }
+  });
+
+  it('rejects incomplete or flattened component-detail source sets', async () => {
+    const target = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-blazer')!;
+    const complete = await componentSourceTree('outfit-blazer', 'blazer');
+    await expect(compilePartDirectory({
+      inputDir: complete,
+      sourcePathPrefix: 'assets/parts',
+      catalog: [{
+        ...target,
+        components: [...(target.components ?? []), target.components![0]],
+      }],
+    })).rejects.toThrow(/component manifest repeats lapels/);
+
+    const incomplete = await componentSourceTree(
+      'outfit-blazer',
+      'blazer',
+      { component: 'pocket', facing: 'east' },
+    );
+    await expect(compilePartDirectory({
+      inputDir: incomplete,
+      sourcePathPrefix: 'assets/parts',
+      catalog: [target],
+    })).rejects.toThrow(/outfit-blazer\.pocket.*complete facing set/);
+
+    const flattened = await mkdtemp(path.join(tmpdir(), 'terrarium-flat-blazer-import-'));
+    roots.push(flattened);
+    await mkdir(path.join(flattened, 'outfit'), { recursive: true });
+    await writeFile(
+      path.join(flattened, 'outfit', 'blazer.south.svg'),
+      validComponentDetailSvg('lapels', 3),
+      'utf8',
+    );
+    await expect(compilePartDirectory({
+      inputDir: flattened,
+      sourcePathPrefix: 'assets/parts',
+      catalog: [target],
+    })).rejects.toThrow(/component-detail targets cannot mix flat part files/);
   });
 
   it('rejects anchored variants that leave the canvas after body placement', async () => {
@@ -594,17 +910,18 @@ describe('part source tree and generated registration', () => {
     expect(generated).toBe(emitImportedPartArt(imports));
   });
 
-  it('keeps five bodies, ten canonical hairs, six human heads, one fabrication head, and tee as twenty-three deliberate authored overlays', async () => {
+  it('keeps six bodies, ten canonical hairs, seven heads, and nine authored outfits as thirty-two deliberate overlays', async () => {
     const imports = await compilePartDirectory({
       inputDir: path.resolve('assets/parts'),
       sourcePathPrefix: 'assets/parts',
       catalog: PART_IMPORT_TARGETS,
     });
-    expect(imports).toHaveLength(23);
+    expect(imports).toHaveLength(32);
     expect(imports.map(({ id }) => id)).toEqual([
       'body-balanced',
       'body-compact',
       'body-large-frame',
+      'body-pinch',
       'body-soft',
       'body-tall',
       'hair-balding',
@@ -624,7 +941,15 @@ describe('part source tree and generated registration', () => {
       'head-oval',
       'head-round',
       'head-soft-square',
+      'outfit-blazer',
+      'outfit-cardigan',
+      'outfit-hoodie',
+      'outfit-polo',
+      'outfit-shirt-tie',
+      'outfit-suit-jacket',
       'outfit-tee',
+      'outfit-turtleneck',
+      'outfit-vest',
     ]);
 
     const bodyTargets = PART_IMPORT_TARGETS.filter(({ importMode }) => importMode === 'body-art');
@@ -669,7 +994,7 @@ describe('part source tree and generated registration', () => {
       }
     }
     expect(createHash('sha256').update(exactBodyPaths.join('\n')).digest('hex'))
-      .toBe('0e0eb093d932859e514f37a259f14235881502d2a4a0477138ec505df5697519');
+      .toBe('8881ba1f607d010d621c0e1390fc41d23677862836fa85b2cb9fba14b039ca84');
 
     expect(imports.filter(({ kind }) => kind !== 'body-detail' && kind !== 'body-art').map(({ id }) => id))
       .toEqual([
@@ -813,6 +1138,177 @@ describe('part source tree and generated registration', () => {
         ]);
       }
       expect(tee.bodyVariants[archetype.id].north).toBeUndefined();
+    }
+
+    const blazer = imports.find(({ id }) => id === 'outfit-blazer')!;
+    if (blazer.kind !== 'body-detail') throw new Error('Expected body-detail Blazer import');
+    expect(blazer).toMatchObject({
+      id: 'outfit-blazer',
+      slot: 'outfit',
+      sourceKind: 'authored',
+      sourceFiles: [
+        'assets/parts/outfit/blazer.buttons.east.svg',
+        'assets/parts/outfit/blazer.buttons.south.svg',
+        'assets/parts/outfit/blazer.lapels.east.svg',
+        'assets/parts/outfit/blazer.lapels.south.svg',
+        'assets/parts/outfit/blazer.pocket.east.svg',
+        'assets/parts/outfit/blazer.pocket.south.svg',
+      ],
+    });
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(blazer.bodyVariants[archetype.id].south).toHaveLength(6);
+      expect(blazer.bodyVariants[archetype.id].east).toHaveLength(4);
+      expect(blazer.bodyVariants[archetype.id].north).toBeUndefined();
+    }
+
+    const polo = imports.find(({ id }) => id === 'outfit-polo')!;
+    if (polo.kind !== 'body-detail') throw new Error('Expected body-detail Polo import');
+    expect(polo).toMatchObject({
+      id: 'outfit-polo',
+      slot: 'outfit',
+      sourceKind: 'authored',
+      sourceFiles: [
+        'assets/parts/outfit/polo.collar.east.svg',
+        'assets/parts/outfit/polo.collar.south.svg',
+        'assets/parts/outfit/polo.placket.east.svg',
+        'assets/parts/outfit/polo.placket.south.svg',
+      ],
+    });
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(polo.bodyVariants[archetype.id].south).toHaveLength(2);
+      expect(polo.bodyVariants[archetype.id].east).toHaveLength(2);
+      expect(polo.bodyVariants[archetype.id].north).toBeUndefined();
+    }
+
+    const shirtTie = imports.find(({ id }) => id === 'outfit-shirt-tie')!;
+    if (shirtTie.kind !== 'body-detail') throw new Error('Expected body-detail Shirt + Tie import');
+    expect(shirtTie).toMatchObject({
+      id: 'outfit-shirt-tie',
+      slot: 'outfit',
+      sourceKind: 'authored',
+      sourceFiles: [
+        'assets/parts/outfit/shirt-tie.collar.east.svg',
+        'assets/parts/outfit/shirt-tie.collar.south.svg',
+        'assets/parts/outfit/shirt-tie.tie.east.svg',
+        'assets/parts/outfit/shirt-tie.tie.south.svg',
+      ],
+    });
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(shirtTie.bodyVariants[archetype.id].south).toHaveLength(2);
+      expect(shirtTie.bodyVariants[archetype.id].east).toHaveLength(2);
+      expect(shirtTie.bodyVariants[archetype.id].north).toBeUndefined();
+    }
+
+    const turtleneck = imports.find(({ id }) => id === 'outfit-turtleneck')!;
+    if (turtleneck.kind !== 'body-detail') throw new Error('Expected body-detail Turtleneck import');
+    expect(turtleneck).toMatchObject({
+      id: 'outfit-turtleneck',
+      slot: 'outfit',
+      sourceKind: 'authored',
+      sourceFiles: [
+        'assets/parts/outfit/turtleneck.neck-band.east.svg',
+        'assets/parts/outfit/turtleneck.neck-band.north.svg',
+        'assets/parts/outfit/turtleneck.neck-band.south.svg',
+      ],
+    });
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(turtleneck.bodyVariants[archetype.id].south).toHaveLength(2);
+      expect(turtleneck.bodyVariants[archetype.id].east).toHaveLength(1);
+      expect(turtleneck.bodyVariants[archetype.id].north).toHaveLength(1);
+      const filledShapes = FACINGS.flatMap(
+        (facing) => turtleneck.bodyVariants[archetype.id][facing] ?? [],
+      ).filter(({ fill }) => fill !== undefined);
+      expect(
+        filledShapes.every(({ fill }) => fill === '$outfitPrimary'),
+        `${archetype.id} Turtleneck band must use the shirt's primary fabric`,
+      ).toBe(true);
+    }
+
+    const cardigan = imports.find(({ id }) => id === 'outfit-cardigan')!;
+    if (cardigan.kind !== 'body-detail') throw new Error('Expected body-detail Cardigan import');
+    expect(cardigan).toMatchObject({
+      id: 'outfit-cardigan',
+      slot: 'outfit',
+      sourceKind: 'authored',
+      sourceFiles: [
+        'assets/parts/outfit/cardigan.button-line.east.svg',
+        'assets/parts/outfit/cardigan.button-line.south.svg',
+        'assets/parts/outfit/cardigan.trim.east.svg',
+        'assets/parts/outfit/cardigan.trim.south.svg',
+      ],
+    });
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(cardigan.bodyVariants[archetype.id].south).toHaveLength(4);
+      expect(cardigan.bodyVariants[archetype.id].east).toHaveLength(4);
+      expect(cardigan.bodyVariants[archetype.id].north).toBeUndefined();
+    }
+
+    const suitJacket = imports.find(({ id }) => id === 'outfit-suit-jacket')!;
+    if (suitJacket.kind !== 'body-detail') throw new Error('Expected body-detail Suit Jacket import');
+    expect(suitJacket).toMatchObject({
+      id: 'outfit-suit-jacket',
+      slot: 'outfit',
+      sourceKind: 'authored',
+      sourceFiles: [
+        'assets/parts/outfit/suit-jacket.buttons.east.svg',
+        'assets/parts/outfit/suit-jacket.buttons.south.svg',
+        'assets/parts/outfit/suit-jacket.lapels.east.svg',
+        'assets/parts/outfit/suit-jacket.lapels.south.svg',
+        'assets/parts/outfit/suit-jacket.notches.east.svg',
+        'assets/parts/outfit/suit-jacket.notches.south.svg',
+        'assets/parts/outfit/suit-jacket.pocket-square.east.svg',
+        'assets/parts/outfit/suit-jacket.pocket-square.south.svg',
+        'assets/parts/outfit/suit-jacket.pocket.east.svg',
+        'assets/parts/outfit/suit-jacket.pocket.south.svg',
+        'assets/parts/outfit/suit-jacket.tie.east.svg',
+        'assets/parts/outfit/suit-jacket.tie.south.svg',
+      ],
+    });
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(suitJacket.bodyVariants[archetype.id].south).toHaveLength(9);
+      expect(suitJacket.bodyVariants[archetype.id].east).toHaveLength(7);
+      expect(suitJacket.bodyVariants[archetype.id].north).toBeUndefined();
+    }
+    expect(suitJacket.bodyVariants['body-balanced'].east?.[5].d)
+      .toMatch(/^M10\.44-18\.92/);
+
+    const hoodie = imports.find(({ id }) => id === 'outfit-hoodie')!;
+    if (hoodie.kind !== 'body-detail') throw new Error('Expected body-detail Hoodie import');
+    expect(hoodie).toMatchObject({
+      id: 'outfit-hoodie',
+      slot: 'outfit',
+      sourceKind: 'authored',
+      sourceFiles: [
+        'assets/parts/outfit/hoodie.drawstrings.east.svg',
+        'assets/parts/outfit/hoodie.drawstrings.south.svg',
+        'assets/parts/outfit/hoodie.hood.east.svg',
+        'assets/parts/outfit/hoodie.hood.north.svg',
+        'assets/parts/outfit/hoodie.hood.south.svg',
+        'assets/parts/outfit/hoodie.pocket.south.svg',
+      ],
+    });
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(hoodie.bodyVariants[archetype.id].south).toHaveLength(5);
+      expect(hoodie.bodyVariants[archetype.id].east).toHaveLength(2);
+      expect(hoodie.bodyVariants[archetype.id].north).toHaveLength(1);
+    }
+
+    const vest = imports.find(({ id }) => id === 'outfit-vest')!;
+    if (vest.kind !== 'body-detail') throw new Error('Expected body-detail Vest import');
+    expect(vest).toMatchObject({
+      id: 'outfit-vest',
+      slot: 'outfit',
+      sourceKind: 'authored',
+      sourceFiles: [
+        'assets/parts/outfit/vest.buttons.south.svg',
+        'assets/parts/outfit/vest.neck-inset.south.svg',
+        'assets/parts/outfit/vest.panel.south.svg',
+      ],
+    });
+    for (const archetype of BODY_ARCHETYPES) {
+      expect(vest.bodyVariants[archetype.id].south).toHaveLength(4);
+      expect(vest.bodyVariants[archetype.id].east).toBeUndefined();
+      expect(vest.bodyVariants[archetype.id].north).toBeUndefined();
     }
   });
 });
@@ -1063,5 +1559,116 @@ describe('imported art overlay', () => {
       placementAnchor: 'neck',
     });
     expect(productionOutfit.buildVariant).toBeTypeOf('function');
+
+    const componentTargets = PART_IMPORT_TARGETS
+      .filter(({ importMode }) => importMode === 'component-detail');
+    expect(componentTargets).toMatchObject([
+      {
+        id: 'outfit-blazer',
+        slot: 'outfit',
+        anchor: 'body',
+        facings: { south: true, east: true },
+        buildVariant: true,
+        referenceBodyId: 'body-balanced',
+        components: [
+          { id: 'lapels', frame: 'upper-torso' },
+          { id: 'buttons', frame: 'lower-torso' },
+          { id: 'pocket', frame: 'lower-torso' },
+        ],
+      },
+      {
+        id: 'outfit-polo',
+        slot: 'outfit',
+        anchor: 'body',
+        facings: { south: true, east: true },
+        buildVariant: true,
+        referenceBodyId: 'body-balanced',
+        components: [
+          { id: 'collar', frame: 'upper-torso' },
+          { id: 'placket', frame: 'upper-torso' },
+        ],
+      },
+      {
+        id: 'outfit-shirt-tie',
+        slot: 'outfit',
+        anchor: 'body',
+        facings: { south: true, east: true },
+        buildVariant: true,
+        referenceBodyId: 'body-balanced',
+        components: [
+          { id: 'collar', frame: 'upper-torso' },
+          { id: 'tie', frame: 'upper-torso' },
+        ],
+      },
+      {
+        id: 'outfit-turtleneck',
+        slot: 'outfit',
+        anchor: 'body',
+        facings: { south: true, east: true, north: true },
+        buildVariant: true,
+        referenceBodyId: 'body-balanced',
+        components: [
+          { id: 'neck-band', frame: 'upper-torso' },
+        ],
+      },
+      {
+        id: 'outfit-cardigan',
+        slot: 'outfit',
+        anchor: 'body',
+        facings: { south: true, east: true },
+        buildVariant: true,
+        referenceBodyId: 'body-balanced',
+        components: [
+          { id: 'trim', frame: 'upper-torso' },
+          { id: 'button-line', frame: 'lower-torso' },
+        ],
+      },
+      {
+        id: 'outfit-suit-jacket',
+        slot: 'outfit',
+        anchor: 'body',
+        facings: { south: true, east: true },
+        buildVariant: true,
+        referenceBodyId: 'body-balanced',
+        components: [
+          { id: 'pocket-square', frame: 'lower-torso' },
+          { id: 'lapels', frame: 'upper-torso' },
+          { id: 'buttons', frame: 'lower-torso' },
+          { id: 'pocket', frame: 'lower-torso' },
+          { id: 'tie', frame: 'upper-torso' },
+          { id: 'notches', frame: 'upper-torso' },
+        ],
+      },
+      {
+        id: 'outfit-hoodie',
+        slot: 'outfit',
+        anchor: 'body',
+        facings: { south: true, east: true, north: true },
+        buildVariant: true,
+        referenceBodyId: 'body-balanced',
+        components: [
+          { id: 'hood', frame: 'upper-torso' },
+          { id: 'drawstrings', frame: 'upper-torso' },
+          { id: 'pocket', frame: 'lower-torso' },
+        ],
+      },
+      {
+        id: 'outfit-vest',
+        slot: 'outfit',
+        anchor: 'body',
+        facings: { south: true },
+        buildVariant: true,
+        referenceBodyId: 'body-balanced',
+        components: [
+          { id: 'panel', frame: 'upper-torso' },
+          { id: 'neck-inset', frame: 'upper-torso' },
+          { id: 'buttons', frame: 'lower-torso' },
+        ],
+      },
+    ]);
+    for (const target of componentTargets) {
+      expect(PART_LIBRARY.find(({ id }) => id === target.id)?.buildVariant)
+        .toBeTypeOf('function');
+    }
   });
 });

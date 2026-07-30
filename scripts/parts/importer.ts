@@ -6,7 +6,7 @@ import svgpath from 'svgpath';
 import { parseSync, type INode } from 'svgson';
 import { optimize } from 'svgo';
 
-import type { Facing, ShapeSpec } from '../../src/core/types';
+import type { BodyFacingAnchors, Facing, ShapeSpec } from '../../src/core/types';
 import { FACINGS } from '../../src/core/types';
 import { BODY_ARCHETYPES } from '../../src/parts/bodyArchetypes';
 import type {
@@ -14,7 +14,11 @@ import type {
   ImportedPartArt,
   ImportedPartSourceKind,
 } from '../../src/parts/importedArt';
-import type { PartImportTarget } from './catalog';
+import type {
+  BodyDetailFrame,
+  PartImportComponent,
+  PartImportTarget,
+} from './catalog';
 import { SENTINEL_TO_PALETTE_REF } from './sentinels';
 
 const SUPPORTED_SLOTS = ['body', 'head', 'hair', 'outfit'] as const;
@@ -68,12 +72,14 @@ interface SourceDescriptor {
   id: string;
   slot: SupportedSlot;
   facing: Facing;
+  component?: string;
 }
 
 interface MutableImportGroup {
   id: string;
   slot: SupportedSlot;
   files: Partial<Record<Facing, SourceDescriptor>>;
+  componentFiles: Map<string, Partial<Record<Facing, SourceDescriptor>>>;
 }
 
 export interface CompilePartSvgContext {
@@ -780,18 +786,21 @@ function sourceDescriptor(
   const relativePath = path.relative(inputDir, absolutePath).replaceAll(path.sep, '/');
   const segments = relativePath.split('/');
   if (segments.length !== 2) {
-    fail(relativePath, 'expected <slot>/<slug>.<facing>.svg');
+    fail(relativePath, 'expected <slot>/<slug>[.<component>].<facing>.svg');
   }
   const [slotValue, filename] = segments;
   if (!SLOT_SET.has(slotValue)) {
     fail(relativePath, `slot must be one of ${SUPPORTED_SLOTS.join(', ')}`);
   }
-  const match = /^([a-z0-9]+(?:-[a-z0-9]+)*)\.(south|east|north|west)\.svg$/.exec(filename);
-  if (!match) fail(relativePath, 'expected lowercase <slug>.<south|east|north>.svg');
+  const match = /^([a-z0-9]+(?:-[a-z0-9]+)*)(?:\.([a-z0-9]+(?:-[a-z0-9]+)*))?\.(south|east|north|west)\.svg$/.exec(filename);
+  if (!match) {
+    fail(relativePath, 'expected lowercase <slug>[.<component>].<south|east|north>.svg');
+  }
   const slot = slotValue as SupportedSlot;
   const slug = match[1];
-  if (!FACING_SET.has(match[2])) fail(relativePath, 'west is runtime-mirrored and cannot be authored');
-  const facing = match[2] as Facing;
+  const component = match[2];
+  if (!FACING_SET.has(match[3])) fail(relativePath, 'west is runtime-mirrored and cannot be authored');
+  const facing = match[3] as Facing;
   if (slug.startsWith(`${slot}-`)) {
     fail(relativePath, `slug must omit the ${slot}- id prefix`);
   }
@@ -802,6 +811,7 @@ function sourceDescriptor(
     id: `${slot}-${slug}`,
     slot,
     facing,
+    ...(component ? { component } : {}),
   };
 }
 
@@ -844,21 +854,87 @@ function validateTarget(group: MutableImportGroup, target: PartImportTarget | un
     if (!target.referenceBodyId || !target.placementAnchor) {
       fail(group.id, 'anchored-detail targets require a reference body and placement anchor');
     }
+  } else if (mode === 'component-detail') {
+    if (target.slot !== 'outfit' || target.anchor !== 'body' || !target.buildVariant) {
+      fail(group.id, 'component-detail targets must be body-anchored dynamic outfits');
+    }
+    if (!target.referenceBodyId || !target.components?.length) {
+      fail(group.id, 'component-detail targets require a reference body and component manifest');
+    }
+    const componentIds = new Set<string>();
+    const manifestedFacings = new Set<Facing>();
+    for (const component of target.components) {
+      if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(component.id)) {
+        fail(group.id, `component id ${component.id} must be a lowercase slug`);
+      }
+      if (componentIds.has(component.id)) {
+        fail(group.id, `component manifest repeats ${component.id}`);
+      }
+      componentIds.add(component.id);
+      const facings = FACINGS.filter((facing) => component.facings[facing] !== undefined);
+      if (facings.length === 0) fail(group.id, `component ${component.id} declares no facings`);
+      for (const facing of facings) {
+        manifestedFacings.add(facing);
+        const shapeCount = component.facings[facing]?.shapeCount;
+        if (shapeCount === undefined || !Number.isInteger(shapeCount) || shapeCount <= 0) {
+          fail(group.id, `component ${component.id}/${facing} needs a positive integer shapeCount`);
+        }
+      }
+    }
+    const targetFacings = FACINGS.filter((facing) => target.facings[facing] !== undefined);
+    const componentFacings = FACINGS.filter((facing) => manifestedFacings.has(facing));
+    if (targetFacings.join(',') !== componentFacings.join(',')) {
+      fail(
+        group.id,
+        `component manifest facings (${componentFacings.join(', ')}) do not match target facings (${targetFacings.join(', ')})`,
+      );
+    }
   } else {
-    if (target.buildVariant) fail(group.id, 'body-aware buildVariant art needs an anchored-detail adapter');
+    if (target.buildVariant) {
+      fail(group.id, 'body-aware buildVariant art needs an anchored-detail or component-detail adapter');
+    }
     const expectedAnchor = 'headCenter';
     if (target.anchor !== expectedAnchor) {
       fail(group.id, `target anchor ${target.anchor} is not supported for ${group.slot} imports`);
     }
   }
 
-  const expectedFacings = FACINGS.filter((facing) => target.facings[facing] !== undefined);
-  const importedFacings = FACINGS.filter((facing) => group.files[facing] !== undefined);
-  if (expectedFacings.join(',') !== importedFacings.join(',')) {
-    fail(
-      group.id,
-      `must import the complete facing set (${expectedFacings.join(', ')}); received ${importedFacings.join(', ') || 'none'}`,
-    );
+  if (mode === 'component-detail') {
+    if (FACINGS.some((facing) => group.files[facing] !== undefined)) {
+      fail(group.id, 'component-detail targets cannot mix flat part files with component files');
+    }
+    const expectedIds = target.components?.map(({ id }) => id) ?? [];
+    const importedIds = [...group.componentFiles.keys()].sort(compareText);
+    const sortedExpectedIds = [...expectedIds].sort(compareText);
+    if (sortedExpectedIds.join(',') !== importedIds.join(',')) {
+      fail(
+        group.id,
+        `must import component set (${expectedIds.join(', ')}); received ${importedIds.join(', ') || 'none'}`,
+      );
+    }
+    for (const component of target.components ?? []) {
+      const files = group.componentFiles.get(component.id);
+      const expectedFacings = FACINGS.filter((facing) => component.facings[facing] !== undefined);
+      const importedFacings = FACINGS.filter((facing) => files?.[facing] !== undefined);
+      if (expectedFacings.join(',') !== importedFacings.join(',')) {
+        fail(
+          `${group.id}.${component.id}`,
+          `must import the complete facing set (${expectedFacings.join(', ')}); received ${importedFacings.join(', ') || 'none'}`,
+        );
+      }
+    }
+  } else {
+    if (group.componentFiles.size > 0) {
+      fail(group.id, `${mode} targets cannot use component filenames`);
+    }
+    const expectedFacings = FACINGS.filter((facing) => target.facings[facing] !== undefined);
+    const importedFacings = FACINGS.filter((facing) => group.files[facing] !== undefined);
+    if (expectedFacings.join(',') !== importedFacings.join(',')) {
+      fail(
+        group.id,
+        `must import the complete facing set (${expectedFacings.join(', ')}); received ${importedFacings.join(', ') || 'none'}`,
+      );
+    }
   }
   return target;
 }
@@ -915,6 +991,119 @@ function expandAnchoredDetailVariants(
   return bodyVariants;
 }
 
+interface BodyDetailFrameGeometry {
+  origin: { x: number; y: number };
+  width: number;
+  height: number;
+}
+
+function bodyDetailFrameGeometry(
+  anchors: BodyFacingAnchors,
+  frame: BodyDetailFrame,
+): BodyDetailFrameGeometry {
+  if (frame === 'upper-torso') {
+    return {
+      origin: anchors.neck,
+      width: Math.abs(anchors.shoulders.right.x - anchors.shoulders.left.x),
+      height: anchors.chest.y - anchors.neck.y,
+    };
+  }
+  return {
+    origin: anchors.chest,
+    width: Math.abs(anchors.waist.right.x - anchors.waist.left.x),
+    height: anchors.hip.y - anchors.chest.y,
+  };
+}
+
+function clampScale(value: number): number {
+  return Math.max(0.78, Math.min(1.3, value));
+}
+
+function fitComponentShapes(
+  source: string,
+  component: PartImportComponent,
+  facing: Facing,
+  shapes: readonly ShapeSpec[],
+  referenceAnchors: BodyFacingAnchors,
+  targetAnchors: BodyFacingAnchors,
+): ShapeSpec[] {
+  if (shapes.some((shape) => shape.silhouette !== false)) {
+    fail(source, `component-detail ${component.id}/${facing} art must contain detail/* shapes only`);
+  }
+  const referenceFrame = bodyDetailFrameGeometry(referenceAnchors, component.frame);
+  const targetFrame = bodyDetailFrameGeometry(targetAnchors, component.frame);
+  if (
+    referenceFrame.width <= 0 ||
+    referenceFrame.height <= 0 ||
+    targetFrame.width <= 0 ||
+    targetFrame.height <= 0
+  ) {
+    fail(source, `${component.id}/${facing} has a degenerate body-detail frame`);
+  }
+  const scaleX = clampScale(targetFrame.width / referenceFrame.width);
+  const scaleY = clampScale(targetFrame.height / referenceFrame.height);
+
+  return shapes.map((shape, index) => {
+    const fitted = {
+      ...shape,
+      d: svgpath(shape.d)
+        .translate(-referenceFrame.origin.x, -referenceFrame.origin.y)
+        .scale(scaleX, scaleY)
+        .translate(targetFrame.origin.x, targetFrame.origin.y)
+        .round(PATH_PRECISION)
+        .toString(),
+    };
+    const origin = PART_AUTHORING_ORIGINS.outfit;
+    const canvasPath = svgpath(fitted.d)
+      .translate(origin.x, origin.y)
+      .round(PATH_PRECISION)
+      .toString();
+    validateBounds(
+      `${source}/${component.id}/${facing}/shape-${index + 1}`,
+      canvasPath,
+      fitted.fill,
+      fitted.stroke,
+      fitted.strokeWidth,
+      false,
+    );
+    return fitted;
+  });
+}
+
+function expandComponentDetailVariants(
+  source: string,
+  target: PartImportTarget,
+  componentFacings: ReadonlyMap<string, Partial<Record<Facing, readonly ShapeSpec[]>>>,
+): ImportedBodyDetailOverlay['bodyVariants'] {
+  const reference = BODY_ARCHETYPES.find(({ id }) => id === target.referenceBodyId);
+  if (!reference || !target.components?.length) {
+    fail(source, 'component-detail target has no valid reference body or component manifest');
+  }
+
+  const bodyVariants: Record<string, Partial<Record<Facing, ShapeSpec[]>>> = {};
+  for (const archetype of BODY_ARCHETYPES) {
+    const variants: Partial<Record<Facing, ShapeSpec[]>> = {};
+    for (const facing of FACINGS) {
+      const fitted: ShapeSpec[] = [];
+      for (const component of target.components) {
+        const shapes = componentFacings.get(component.id)?.[facing];
+        if (!shapes) continue;
+        fitted.push(...fitComponentShapes(
+          source,
+          component,
+          facing,
+          shapes,
+          reference.anchors[facing],
+          archetype.anchors[facing],
+        ));
+      }
+      if (fitted.length > 0) variants[facing] = fitted;
+    }
+    bodyVariants[archetype.id] = variants;
+  }
+  return bodyVariants;
+}
+
 /** Compile a source tree atomically in memory. No output is written on failure. */
 export async function compilePartDirectory(
   options: CompilePartDirectoryOptions,
@@ -928,29 +1117,73 @@ export async function compilePartDirectory(
   for (const descriptor of descriptors) {
     let group = groups.get(descriptor.id);
     if (!group) {
-      group = { id: descriptor.id, slot: descriptor.slot, files: {} };
+      group = {
+        id: descriptor.id,
+        slot: descriptor.slot,
+        files: {},
+        componentFiles: new Map(),
+      };
       groups.set(descriptor.id, group);
     }
     if (group.slot !== descriptor.slot) fail(descriptor.relativePath, `id ${descriptor.id} crosses slots`);
-    if (group.files[descriptor.facing]) {
-      fail(descriptor.relativePath, `duplicate ${descriptor.id}/${descriptor.facing} source`);
+    const files = descriptor.component
+      ? group.componentFiles.get(descriptor.component) ?? {}
+      : group.files;
+    if (files[descriptor.facing]) {
+      const label = descriptor.component ? `${descriptor.id}.${descriptor.component}` : descriptor.id;
+      fail(descriptor.relativePath, `duplicate ${label}/${descriptor.facing} source`);
     }
-    group.files[descriptor.facing] = descriptor;
+    files[descriptor.facing] = descriptor;
+    if (descriptor.component) group.componentFiles.set(descriptor.component, files);
   }
 
   const imports: ImportedPartArt[] = [];
   for (const group of [...groups.values()].sort((left, right) => compareText(left.id, right.id))) {
     const target = validateTarget(group, targets.get(group.id));
     const facings: Partial<Record<Facing, ShapeSpec[]>> = {};
-    for (const facing of FACINGS) {
-      const descriptor = group.files[facing];
-      if (!descriptor) continue;
-      const input = await readFile(descriptor.absolutePath, 'utf8');
-      facings[facing] = compilePartSvg(input, {
-        source: descriptor.sourcePath,
-        slot: descriptor.slot,
-        preserveLocalPaths: target.importMode === 'body-art' || target.preserveLocalPaths === true,
-      });
+    const componentFacings = new Map<string, Partial<Record<Facing, ShapeSpec[]>>>();
+    const provenanceFiles: string[] = [];
+    if (target.importMode === 'component-detail') {
+      for (const component of target.components ?? []) {
+        const files = group.componentFiles.get(component.id)
+          ?? fail(group.id, `missing component source ${component.id}`);
+        const compiled: Partial<Record<Facing, ShapeSpec[]>> = {};
+        for (const facing of FACINGS) {
+          const descriptor = files[facing];
+          if (!descriptor) continue;
+          const input = await readFile(descriptor.absolutePath, 'utf8');
+          const shapes = compilePartSvg(input, {
+            source: descriptor.sourcePath,
+            slot: descriptor.slot,
+          });
+          const expectedCount = component.facings[facing]?.shapeCount;
+          if (expectedCount === undefined) {
+            fail(descriptor.sourcePath, `${component.id}/${facing} is not declared in the component manifest`);
+          }
+          if (shapes.length !== expectedCount) {
+            fail(
+              descriptor.sourcePath,
+              `${component.id}/${facing} must contain ${expectedCount} detail shapes; received ${shapes.length}`,
+            );
+          }
+          compiled[facing] = shapes;
+          facings[facing] = [...(facings[facing] ?? []), ...shapes];
+          provenanceFiles.push(descriptor.sourcePath);
+        }
+        componentFacings.set(component.id, compiled);
+      }
+    } else {
+      for (const facing of FACINGS) {
+        const descriptor = group.files[facing];
+        if (!descriptor) continue;
+        const input = await readFile(descriptor.absolutePath, 'utf8');
+        facings[facing] = compilePartSvg(input, {
+          source: descriptor.sourcePath,
+          slot: descriptor.slot,
+          preserveLocalPaths: target.importMode === 'body-art' || target.preserveLocalPaths === true,
+        });
+        provenanceFiles.push(descriptor.sourcePath);
+      }
     }
     validateFacingPaintOrder(group.id, facings);
     if (target.importMode === 'body-art') {
@@ -963,10 +1196,7 @@ export async function compilePartDirectory(
     }
     const provenance = {
       sourceKind: options.sourceKind ?? 'authored' as const,
-      sourceFiles: FACINGS
-        .map((facing) => group.files[facing]?.sourcePath)
-        .filter((source): source is string => source !== undefined)
-        .sort(),
+      sourceFiles: provenanceFiles.sort(compareText),
     };
     if (target.importMode === 'body-art') {
       imports.push({
@@ -982,6 +1212,14 @@ export async function compilePartDirectory(
         id: group.id,
         slot: group.slot,
         bodyVariants: expandAnchoredDetailVariants(group.id, target, facings),
+        ...provenance,
+      });
+    } else if (target.importMode === 'component-detail') {
+      imports.push({
+        kind: 'body-detail',
+        id: group.id,
+        slot: group.slot,
+        bodyVariants: expandComponentDetailVariants(group.id, target, componentFacings),
         ...provenance,
       });
     } else {

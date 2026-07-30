@@ -1,19 +1,40 @@
 # Authored character part sources
 
-Place strict-dialect SVGs here as `<slot>/<slug>.<facing>.svg`, then run
+Place strict-dialect SVGs here as
+`<slot>/<slug>[.<component>].<facing>.svg`, then run
 `npm run parts:import`. The generated module is committed; builds run
 `npm run parts:check` and fail if it is stale.
 
-The current intake accepts complete facing sets for the five production bodies
+The current intake accepts complete facing sets for the six production bodies
 and existing static production parts in `head` and `hair`, plus the explicit
-`outfit-tee` anchored-detail target. Tee is authored once on `body-balanced` in
-south/east; the importer pre-expands its detail-only geometry onto the neck
-anchor of all five production bodies. The conforming torso and z-order remain
-owned by the production part, while legacy and future bodies retain the
+`outfit-tee` anchored-detail target and componentized `outfit-blazer`,
+`outfit-polo`, `outfit-shirt-tie`, `outfit-turtleneck`, and
+`outfit-cardigan`, `outfit-suit-jacket`, `outfit-hoodie`, and `outfit-vest`
+targets.
+Tee is authored once on `body-balanced` in south/east; the importer pre-expands
+its detail-only geometry onto the neck anchor of all six production bodies.
+Blazer keeps lapels, buttons, and pocket in six separate south/east files and
+fits them through upper/lower body frames in a fixed manifest order. Polo keeps
+collar and placket in four separate files and fits both through the upper-torso
+frame. The conforming torso and z-order remain owned by the production part,
+while legacy, future, and deliberately unauthored north variants retain the
 procedural fallback.
+Shirt + Tie keeps collar and tie in four separate south/east files and fits
+both through the upper-torso frame.
+Turtleneck keeps one neck-band component in three south/east/north files.
+Cardigan keeps upper-torso trim and a lower-torso button line in four
+south/east files.
+Suit Jacket keeps pocket square, lapels, buttons, pocket, tie, and notches in
+twelve south/east files; its profile tie follows the approved forward-edge
+placement.
+Hoodie keeps the down hood in south/east/north, drawstrings in south/east, and
+the kangaroo-pocket seam in south.
+Vest keeps its secondary-fabric panel, V-neck inset, and buttons south-only;
+east/west intentionally carry no vest overlay.
 
-`body/` contains the 15 canonical production sources for `body-compact`,
-`body-balanced`, `body-large-frame`, `body-tall`, and `body-soft`. They own the
+`body/` contains the 18 canonical production sources for `body-compact`,
+`body-balanced`, `body-large-frame`, `body-tall`, `body-soft`, and
+`body-pinch`. They own the
 complete visible south/east/north art, including the south/east lower plane.
 The dedicated `body-art` adapter installs those facings onto the one shared
 production `PartDef` in place, preserving its label, order, z-order, and exact
@@ -54,9 +75,12 @@ approval on 2026-07-10. Curly, Ponytail, and Coils received visual approval on
 and received visual approval on 2026-07-10.
 
 The approved human body/head foundations, the special FAB head, and all ten
-approved mapped hair sources now live in this tree. Detail-only Tee/Blazer work
-and later asset-polish passes follow the completed hair and wall-foundation
-work.
+approved mapped hair sources now live in this tree. Detail-only Tee mechanics
+and the componentized Blazer and Polo source sets are approved. Remaining
+outfit and later asset-polish passes follow; Shirt + Tie and Turtleneck are
+approved, and Cardigan received visual approval on 2026-07-27. Suit Jacket and
+Hoodie are visually approved as of 2026-07-27. Vest received visual approval
+on 2026-07-28.
 
 See `docs/part-importer.md` for the SVG dialect, sentinel palette, validation
-rules, and the deferred componentized multi-piece adapter needed by Blazer.
+rules, and the component-detail manifest established by Blazer.

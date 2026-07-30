@@ -1,0 +1,537 @@
+{
+  "status": "review-only",
+  "baseline": {
+    "schemaVersion": 19,
+    "authoringCanvas": 128,
+    "wallDatum": 112,
+    "normalCellPixels": 90,
+    "farCellPixels": 40,
+    "characterVisualScale": 0.65,
+    "legacyCharacterFrameCells": 1.55,
+    "installedCharacterFrameCells": 1.0075,
+    "propVisualMultiplier": null,
+    "note": "No universal prop multiplier is proposed; each candidate uses object-specific geometry inside the existing 128-unit frame."
+  },
+  "inventory": {
+    "propCount": 123,
+    "accessoryCount": 12,
+    "groups": [
+      {
+        "id": "handheld-character-relative",
+        "label": "Handheld and character-relative items",
+        "propCount": 0,
+        "accessoryCount": 12
+      },
+      {
+        "id": "desk-work-surface",
+        "label": "Desk and work-surface items",
+        "propCount": 18,
+        "accessoryCount": 0
+      },
+      {
+        "id": "furniture",
+        "label": "Furniture",
+        "propCount": 16,
+        "accessoryCount": 0
+      },
+      {
+        "id": "facilities-machines",
+        "label": "Facilities and machines",
+        "propCount": 26,
+        "accessoryCount": 0
+      },
+      {
+        "id": "wall-mounted-decorative",
+        "label": "Wall-mounted and decorative items",
+        "propCount": 25,
+        "accessoryCount": 0
+      },
+      {
+        "id": "outdoor-construction",
+        "label": "Outdoor and construction-site props",
+        "propCount": 38,
+        "accessoryCount": 0
+      }
+    ]
+  },
+  "representativeSet": {
+    "props": [
+      {
+        "propId": "desk",
+        "template": {
+          "id": "desk",
+          "label": "Desk",
+          "projection": "plan",
+          "gridFootprint": {
+            "w": 2,
+            "h": 1
+          },
+          "params": [
+            {
+              "key": "width",
+              "label": "Width",
+              "min": 72,
+              "max": 120,
+              "step": 4,
+              "default": 100
+            },
+            {
+              "key": "monitor",
+              "label": "Monitor",
+              "min": 0,
+              "max": 1,
+              "step": 1,
+              "default": 1
+            }
+          ]
+        },
+        "facility": {
+          "id": "desk",
+          "displayName": "Desk",
+          "kind": "Object",
+          "gridFootprint": {
+            "w": 2,
+            "h": 1
+          },
+          "gridPivot": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "propId": "desk",
+          "placement": "floor",
+          "rotatable": true,
+          "blocksWalk": true,
+          "isInteractionAnchor": false,
+          "needsSatisfied": null
+        }
+      },
+      {
+        "propId": "office-chair",
+        "template": {
+          "id": "office-chair",
+          "label": "Office chair",
+          "gridFootprint": {
+            "w": 1,
+            "h": 1
+          },
+          "projection": "plan",
+          "params": [
+            {
+              "key": "size",
+              "label": "Seat size",
+              "min": 10,
+              "max": 16,
+              "step": 1,
+              "default": 13
+            }
+          ]
+        },
+        "facility": {
+          "id": "office_chair",
+          "displayName": "Office chair",
+          "kind": "Object",
+          "gridFootprint": {
+            "w": 1,
+            "h": 1
+          },
+          "gridPivot": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "propId": "office-chair",
+          "placement": "floor",
+          "rotatable": true,
+          "blocksWalk": false,
+          "isInteractionAnchor": false,
+          "needsSatisfied": null
+        }
+      },
+      {
+        "propId": "filing-cabinet",
+        "template": {
+          "id": "filing-cabinet",
+          "label": "Filing cabinet",
+          "gridFootprint": {
+            "w": 1,
+            "h": 1
+          },
+          "projection": "elevation",
+          "footprint": {
+            "cx": 64,
+            "cy": 117,
+            "rx": 19,
+            "ry": 4
+          },
+          "params": [
+            {
+              "key": "drawers",
+              "label": "Drawers",
+              "min": 2,
+              "max": 4,
+              "step": 1,
+              "default": 4
+            }
+          ]
+        },
+        "facility": {
+          "id": "filing_cabinet",
+          "displayName": "Filing cabinet",
+          "kind": "Object",
+          "gridFootprint": {
+            "w": 1,
+            "h": 1
+          },
+          "gridPivot": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "propId": "filing-cabinet",
+          "placement": "floor",
+          "rotatable": false,
+          "blocksWalk": true,
+          "isInteractionAnchor": false,
+          "needsSatisfied": null
+        }
+      },
+      {
+        "propId": "copier",
+        "template": {
+          "id": "copier",
+          "label": "Copier",
+          "projection": "elevation",
+          "footprint": {
+            "cx": 64,
+            "cy": 117,
+            "rx": 24,
+            "ry": 4.5
+          },
+          "gridFootprint": {
+            "w": 1,
+            "h": 1
+          },
+          "params": [
+            {
+              "key": "height",
+              "label": "Height",
+              "min": 60,
+              "max": 78,
+              "step": 2,
+              "default": 70
+            }
+          ]
+        },
+        "facility": {
+          "id": "copier",
+          "displayName": "Copier",
+          "kind": "Object",
+          "gridFootprint": {
+            "w": 1,
+            "h": 1
+          },
+          "gridPivot": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "propId": "copier",
+          "placement": "floor",
+          "rotatable": false,
+          "blocksWalk": true,
+          "isInteractionAnchor": false,
+          "needsSatisfied": null
+        }
+      },
+      {
+        "propId": "office-plant",
+        "template": {
+          "id": "office-plant",
+          "label": "Office plant",
+          "gridFootprint": {
+            "w": 1,
+            "h": 1
+          },
+          "projection": "elevation",
+          "footprint": {
+            "cx": 64,
+            "cy": 117,
+            "rx": 15,
+            "ry": 3.5
+          },
+          "params": [
+            {
+              "key": "bushiness",
+              "label": "Bushiness",
+              "min": 1,
+              "max": 3,
+              "step": 1,
+              "default": 2
+            }
+          ]
+        },
+        "facility": {
+          "id": "office_plant",
+          "displayName": "Office plant",
+          "kind": "Object",
+          "gridFootprint": {
+            "w": 1,
+            "h": 1
+          },
+          "gridPivot": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "propId": "office-plant",
+          "placement": "floor",
+          "rotatable": false,
+          "blocksWalk": true,
+          "isInteractionAnchor": false,
+          "needsSatisfied": null
+        }
+      }
+    ],
+    "handheld": "acc-clipboard"
+  },
+  "directions": [
+    {
+      "id": "current",
+      "label": "CONTROL · current production art",
+      "shortLabel": "CURRENT",
+      "note": "Real composed prop assets at their present 1.0 world envelope.",
+      "evaluation": [
+        "Silhouettes vary by template rather than by a shared product family.",
+        "Machines reach near-character height after the 0.65 character lock.",
+        "Functional slots often disappear before the outer box does."
+      ],
+      "panelFill": "#F6F1E6"
+    },
+    {
+      "id": "catalog-shell",
+      "label": "A · CATALOG SHELL",
+      "shortLabel": "CATALOG SHELL",
+      "note": "Broad cream rollover, deep-green chassis, one coral hardware tell.",
+      "evaluation": [
+        "Strongest shared QuotaCo catalog read and calmest crowded-room rhythm.",
+        "Broad radii keep work surfaces and amenity shells friendly, not sleek.",
+        "Interaction faces remain large, dark, and front-biased."
+      ],
+      "panelFill": "#DCE9DD"
+    },
+    {
+      "id": "service-spine",
+      "label": "B · SERVICE SPINE",
+      "shortLabel": "SERVICE SPINE",
+      "note": "Asymmetric equipment pod, dark service band, visibly replaceable modules.",
+      "evaluation": [
+        "Most distinctive machine silhouettes and clearest service/maintenance logic.",
+        "Higher vertical rhythm risks competing with heads in crowded rooms.",
+        "Best functional read for copier, storage, and hydration surfaces."
+      ],
+      "panelFill": "#D8E6E4"
+    },
+    {
+      "id": "used-shell",
+      "label": "C · USED SHELL",
+      "shortLabel": "USED SHELL",
+      "note": "Catalog shell softened by wear, paper, repairs, plants, and personal color.",
+      "evaluation": [
+        "Warmest room read without replacing the shared institutional shell.",
+        "Personal overlays help reacquire desks and chairs in a repeated field.",
+        "Small clutter must remain subordinate at 40 px to avoid confetti noise."
+      ],
+      "panelFill": "#F0DDD6"
+    }
+  ],
+  "visualBounds": {
+    "current": {
+      "desk": {
+        "minX": 6,
+        "minY": 29,
+        "maxX": 121,
+        "maxY": 98,
+        "width": 116,
+        "height": 70
+      },
+      "office-chair": {
+        "minX": 40,
+        "minY": 43,
+        "maxX": 87,
+        "maxY": 98,
+        "width": 48,
+        "height": 56
+      },
+      "filing-cabinet": {
+        "minX": 41,
+        "minY": 45,
+        "maxX": 86,
+        "maxY": 120,
+        "width": 46,
+        "height": 76
+      },
+      "copier": {
+        "minX": 19,
+        "minY": 28,
+        "maxX": 102,
+        "maxY": 121,
+        "width": 84,
+        "height": 94
+      },
+      "office-plant": {
+        "minX": 22,
+        "minY": 21,
+        "maxX": 106,
+        "maxY": 120,
+        "width": 85,
+        "height": 100
+      }
+    },
+    "catalog-shell": {
+      "desk": {
+        "minX": 8,
+        "minY": 29,
+        "maxX": 119,
+        "maxY": 97,
+        "width": 112,
+        "height": 69
+      },
+      "office-chair": {
+        "minX": 34,
+        "minY": 33,
+        "maxX": 93,
+        "maxY": 111,
+        "width": 60,
+        "height": 79
+      },
+      "filing-cabinet": {
+        "minX": 33,
+        "minY": 32,
+        "maxX": 94,
+        "maxY": 120,
+        "width": 62,
+        "height": 89
+      },
+      "copier": {
+        "minX": 18,
+        "minY": 39,
+        "maxX": 109,
+        "maxY": 121,
+        "width": 92,
+        "height": 83
+      },
+      "office-plant": {
+        "minX": 30,
+        "minY": 23,
+        "maxX": 96,
+        "maxY": 120,
+        "width": 67,
+        "height": 98
+      }
+    },
+    "service-spine": {
+      "desk": {
+        "minX": 9,
+        "minY": 26,
+        "maxX": 118,
+        "maxY": 96,
+        "width": 110,
+        "height": 71
+      },
+      "office-chair": {
+        "minX": 35,
+        "minY": 28,
+        "maxX": 94,
+        "maxY": 111,
+        "width": 60,
+        "height": 84
+      },
+      "filing-cabinet": {
+        "minX": 38,
+        "minY": 28,
+        "maxX": 89,
+        "maxY": 120,
+        "width": 52,
+        "height": 93
+      },
+      "copier": {
+        "minX": 18,
+        "minY": 37,
+        "maxX": 109,
+        "maxY": 121,
+        "width": 92,
+        "height": 85
+      },
+      "office-plant": {
+        "minX": 34,
+        "minY": 25,
+        "maxX": 87,
+        "maxY": 120,
+        "width": 54,
+        "height": 96
+      }
+    },
+    "used-shell": {
+      "desk": {
+        "minX": 8,
+        "minY": 29,
+        "maxX": 119,
+        "maxY": 97,
+        "width": 112,
+        "height": 69
+      },
+      "office-chair": {
+        "minX": 34,
+        "minY": 32,
+        "maxX": 93,
+        "maxY": 111,
+        "width": 60,
+        "height": 80
+      },
+      "filing-cabinet": {
+        "minX": 33,
+        "minY": 26,
+        "maxX": 94,
+        "maxY": 120,
+        "width": 62,
+        "height": 95
+      },
+      "copier": {
+        "minX": 18,
+        "minY": 32,
+        "maxX": 109,
+        "maxY": 121,
+        "width": 92,
+        "height": 90
+      },
+      "office-plant": {
+        "minX": 27,
+        "minY": 23,
+        "maxX": 100,
+        "maxY": 120,
+        "width": 74,
+        "height": 98
+      }
+    }
+  },
+  "protectedSurfaceHashes": {
+    "CONTRACT.md": "1db92f32e263af0887f9841909fb9b82a09e5df1ac7d5d4f809adab9c0b3105d",
+    "src/core/exporter.ts": "29f1bb95a975a578f0dcc3ec5d0eee4e65e219359da6c9e84430ddf8ac15ca8a",
+    "src/core/layout.ts": "2605f283175007baa7912fa4ef05f6bac995dcd3fda3cd77ff857dc38fb49e1c",
+    "src/core/types.ts": "9d4048de93599ee977b3ebb00adcee6f29a824269c2bd3d763745604d9f9baac",
+    "src/data/defaults.ts": "7cc38f13417a60d75f515eae1af8fecaa12aac196a75c77c4bf8cfe350792049",
+    "src/props/templates.ts": "f665309737da777185486c3d0c640135550ebbb4f6fa9fd61e4b2e88f00832ae"
+  },
+  "boundaries": {
+    "character": [
+      "accepted silhouettes, heads, hair, garments, and anchors unchanged",
+      "0.65 Unity visual scale unchanged",
+      "128-unit authoring canvas unchanged",
+      "gameplay roots and footprints unchanged"
+    ],
+    "world": [
+      "112-unit accepted wall datum unchanged",
+      "prop grid footprints, pivots, navigation, collision, and interaction anchors unchanged"
+    ],
+    "integration": [
+      "no production prop registration",
+      "no exporter, CONTRACT, schema, atlas, or Unity integration change"
+    ]
+  }
+}

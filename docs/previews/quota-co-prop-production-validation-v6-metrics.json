@@ -1,0 +1,299 @@
+{
+  "status": "production-wired-uncommitted",
+  "schemaVersion": 19,
+  "authoringCanvas": 128,
+  "wallDatum": 112,
+  "characterVisualScale": 0.65,
+  "propVisualMultiplier": null,
+  "sources": [
+    {
+      "propId": "desk",
+      "projection": "plan",
+      "path": "assets/props/quota-co-workhorse-v1/desk.svg",
+      "sha256": "3563e9bb626735923b2d970e7f256384cb314b1a8751f923a3baa732d71530d7"
+    },
+    {
+      "propId": "office-chair",
+      "projection": "plan",
+      "path": "assets/props/quota-co-workhorse-v1/office-chair.svg",
+      "sha256": "6eb82aa0542965f1c59afaa531952e9c29792aedf8b224cb6c1ad4f911263828"
+    },
+    {
+      "propId": "filing-cabinet",
+      "projection": "elevation",
+      "path": "assets/props/quota-co-workhorse-v1/filing-cabinet.svg",
+      "sha256": "c596dd32dfa5fbeef2ca7f2dd4da1cb06cb74c9170a7cba3a6389c87a3d2a036"
+    },
+    {
+      "propId": "copier",
+      "projection": "elevation",
+      "path": "assets/props/quota-co-workhorse-v1/copier.svg",
+      "sha256": "c70859095ed9c7b5c9aae24526a05792e1da01931327fcf5e5237a6efbc76118"
+    },
+    {
+      "propId": "office-plant",
+      "projection": "elevation",
+      "path": "assets/props/quota-co-workhorse-v1/office-plant.svg",
+      "sha256": "8cbb90dcca5eead7e970288042762fac9045797782b43bf079da95ae0252e4ac"
+    }
+  ],
+  "visualComparison": {
+    "desk": {
+      "sourceBounds": {
+        "minX": 7,
+        "minY": 30,
+        "maxX": 120,
+        "maxY": 97,
+        "width": 114,
+        "height": 68
+      },
+      "productionBounds": {
+        "minX": 6,
+        "minY": 29,
+        "maxX": 121,
+        "maxY": 98,
+        "width": 116,
+        "height": 70
+      },
+      "difference": {
+        "changedPixels": 2944,
+        "maxChannelDelta": 255
+      }
+    },
+    "office-chair": {
+      "sourceBounds": {
+        "minX": 40,
+        "minY": 45,
+        "maxX": 87,
+        "maxY": 104,
+        "width": 48,
+        "height": 60
+      },
+      "productionBounds": {
+        "minX": 40,
+        "minY": 43,
+        "maxX": 87,
+        "maxY": 98,
+        "width": 48,
+        "height": 56
+      },
+      "difference": {
+        "changedPixels": 1550,
+        "maxChannelDelta": 255
+      }
+    },
+    "filing-cabinet": {
+      "sourceBounds": {
+        "minX": 41,
+        "minY": 47,
+        "maxX": 86,
+        "maxY": 120,
+        "width": 46,
+        "height": 74
+      },
+      "productionBounds": {
+        "minX": 41,
+        "minY": 45,
+        "maxX": 86,
+        "maxY": 120,
+        "width": 46,
+        "height": 76
+      },
+      "difference": {
+        "changedPixels": 1188,
+        "maxChannelDelta": 255
+      }
+    },
+    "copier": {
+      "sourceBounds": {
+        "minX": 20,
+        "minY": 29,
+        "maxX": 101,
+        "maxY": 121,
+        "width": 82,
+        "height": 93
+      },
+      "productionBounds": {
+        "minX": 19,
+        "minY": 28,
+        "maxX": 102,
+        "maxY": 121,
+        "width": 84,
+        "height": 94
+      },
+      "difference": {
+        "changedPixels": 2332,
+        "maxChannelDelta": 255
+      }
+    },
+    "office-plant": {
+      "sourceBounds": {
+        "minX": 23,
+        "minY": 22,
+        "maxX": 105,
+        "maxY": 120,
+        "width": 83,
+        "height": 99
+      },
+      "productionBounds": {
+        "minX": 22,
+        "minY": 21,
+        "maxX": 106,
+        "maxY": 120,
+        "width": 85,
+        "height": 100
+      },
+      "difference": {
+        "changedPixels": 2858,
+        "maxChannelDelta": 255
+      }
+    }
+  },
+  "templateContracts": {
+    "desk": {
+      "projection": "plan",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 2,
+        "h": 1
+      },
+      "gridPivot": null,
+      "contactShadowFootprint": null,
+      "params": [
+        {
+          "key": "width",
+          "label": "Width",
+          "min": 72,
+          "max": 120,
+          "step": 4,
+          "default": 100
+        },
+        {
+          "key": "monitor",
+          "label": "Monitor",
+          "min": 0,
+          "max": 1,
+          "step": 1,
+          "default": 1
+        }
+      ]
+    },
+    "office-chair": {
+      "projection": "plan",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "gridPivot": null,
+      "contactShadowFootprint": null,
+      "params": [
+        {
+          "key": "size",
+          "label": "Seat size",
+          "min": 10,
+          "max": 16,
+          "step": 1,
+          "default": 13
+        }
+      ]
+    },
+    "filing-cabinet": {
+      "projection": "elevation",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "gridPivot": null,
+      "contactShadowFootprint": {
+        "cx": 64,
+        "cy": 117,
+        "rx": 19,
+        "ry": 4
+      },
+      "params": [
+        {
+          "key": "drawers",
+          "label": "Drawers",
+          "min": 2,
+          "max": 4,
+          "step": 1,
+          "default": 4
+        }
+      ]
+    },
+    "copier": {
+      "projection": "elevation",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "gridPivot": null,
+      "contactShadowFootprint": {
+        "cx": 64,
+        "cy": 117,
+        "rx": 24,
+        "ry": 4.5
+      },
+      "params": [
+        {
+          "key": "height",
+          "label": "Height",
+          "min": 60,
+          "max": 78,
+          "step": 2,
+          "default": 70
+        }
+      ]
+    },
+    "office-plant": {
+      "projection": "elevation",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "gridPivot": null,
+      "contactShadowFootprint": {
+        "cx": 64,
+        "cy": 117,
+        "rx": 15,
+        "ry": 3.5
+      },
+      "params": [
+        {
+          "key": "bushiness",
+          "label": "Bushiness",
+          "min": 1,
+          "max": 3,
+          "step": 1,
+          "default": 2
+        }
+      ]
+    }
+  },
+  "protectedSurfaceHashes": {
+    "CONTRACT.md": "1db92f32e263af0887f9841909fb9b82a09e5df1ac7d5d4f809adab9c0b3105d",
+    "src/core/exporter.ts": "29f1bb95a975a578f0dcc3ec5d0eee4e65e219359da6c9e84430ddf8ac15ca8a",
+    "src/core/layout.ts": "2605f283175007baa7912fa4ef05f6bac995dcd3fda3cd77ff857dc38fb49e1c",
+    "src/core/types.ts": "9d4048de93599ee977b3ebb00adcee6f29a824269c2bd3d763745604d9f9baac",
+    "src/data/defaults.ts": "7cc38f13417a60d75f515eae1af8fecaa12aac196a75c77c4bf8cfe350792049",
+    "src/props/templates.ts": "f665309737da777185486c3d0c640135550ebbb4f6fa9fd61e4b2e88f00832ae"
+  },
+  "verificationBoundary": {
+    "performed": [
+      "standalone SVG source render",
+      "production composeProp render",
+      "normal and far literal-scale room render",
+      "crowd, wall, desk occlusion, and character interaction render"
+    ],
+    "notPerformed": [
+      "fresh headless export diff",
+      "The Water Cooler bundle import",
+      "Unity generated catalog inspection",
+      "Unity Play Mode eyes-on check"
+    ]
+  }
+}

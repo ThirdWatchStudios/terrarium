@@ -3,9 +3,9 @@
  *
  *   npx tsx scripts/hairFamilyPreview.ts [outDir]
  *
- * Renders the current compositor geometry for the approved representative
- * Short/Bob/Long straight and Curly/Ponytail/Coils sets. This script is
- * deliberately read-only with respect to part sources; all six are approved.
+ * Renders the current compositor geometry for all ten mapped head-aware
+ * production hairstyles. This script is deliberately read-only with respect
+ * to part sources.
  */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
@@ -34,71 +34,71 @@ const HAIR_STYLES = [
     id: 'hair-short',
     label: 'Short',
     approved: true,
-    status: 'approved canonical production geometry',
-    statusShort: 'approved canonical',
+    status: 'fitted head-aware production geometry',
+    statusShort: 'fitted production',
   },
   {
     id: 'hair-pixie',
     label: 'Pixie',
     approved: true,
-    status: 'approved canonical production geometry',
-    statusShort: 'approved canonical',
+    status: 'fitted head-aware production geometry',
+    statusShort: 'fitted production',
   },
   {
     id: 'hair-side-part',
     label: 'Side-part',
     approved: true,
-    status: 'approved canonical production geometry',
-    statusShort: 'approved canonical',
+    status: 'fitted head-aware production geometry',
+    statusShort: 'fitted production',
   },
   {
     id: 'hair-bob',
     label: 'Bob',
     approved: true,
-    status: 'approved medium-family control',
-    statusShort: 'approved control',
+    status: 'fitted head-aware production geometry',
+    statusShort: 'fitted production',
   },
   {
     id: 'hair-curly',
     label: 'Curly',
     approved: true,
-    status: 'approved canonical production geometry',
-    statusShort: 'approved canonical',
+    status: 'fitted head-aware production geometry',
+    statusShort: 'fitted production',
   },
   {
     id: 'hair-long-straight',
     label: 'Long straight',
     approved: true,
-    status: 'approved canonical production geometry',
-    statusShort: 'approved canonical',
+    status: 'fitted head-aware production geometry',
+    statusShort: 'fitted production',
   },
   {
     id: 'hair-ponytail',
     label: 'Ponytail',
     approved: true,
-    status: 'approved canonical production geometry',
-    statusShort: 'approved canonical',
+    status: 'fitted head-aware production geometry',
+    statusShort: 'fitted production',
   },
   {
     id: 'hair-bun',
     label: 'Bun',
     approved: true,
-    status: 'approved canonical production geometry',
-    statusShort: 'approved canonical',
+    status: 'fitted head-aware production geometry',
+    statusShort: 'fitted production',
   },
   {
     id: 'hair-balding',
     label: 'Balding',
     approved: true,
-    status: 'approved canonical production geometry',
-    statusShort: 'approved canonical',
+    status: 'fitted head-aware production geometry',
+    statusShort: 'fitted production',
   },
   {
     id: 'hair-coils',
     label: 'Coils',
     approved: true,
-    status: 'approved canonical production geometry',
-    statusShort: 'approved canonical',
+    status: 'fitted head-aware production geometry',
+    statusShort: 'fitted production',
   },
 ] as const;
 
@@ -284,7 +284,7 @@ function html(): string {
 </style>
 <main>
   <h1>Representative production hair-family review</h1>
-  <p class="notice"><span class="approved">All ten mapped hair families are approved canonical production geometry.</span> Bun is compact and clip-free, Balding uses tapered temple and horseshoe hair, Pixie has a clean swept profile, and Side-part carries its crease through every facing. All cells come directly from the production compositor; this preview does not alter part sources.</p>
+  <p class="notice"><span class="approved">All ten mapped hair families now resolve fitted head-aware production geometry.</span> Recipes retain their stable IDs, the canonical SVGs remain source/fallback art, and every cell comes directly from the production compositor without altering part sources.</p>
   <h2>Six-head compatibility across source facings</h2>
   <img src="hair-families-compatibility.png" alt="Ten production hairstyles on all six production heads across south, east, and north facings">
   <h2>Game-distance readability</h2>

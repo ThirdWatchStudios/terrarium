@@ -19,12 +19,12 @@
     <path id="guide/head-radius/path" d="M 43 44 a 21 21 0 1 0 42 0 a 21 21 0 1 0 -42 0 Z" fill="none" stroke="#4F91A8" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
   </g>
   <g id="reference/head-angular" opacity="0.22" transform="translate(64 44)">
-    <path id="reference/head-angular/shape-001" d="M0-21L9-19 17-12 21-3 18 11 9 21 0 24-9 21-18 11-21-3-17-12-9-19Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/head-angular/shape-001" d="M0-21C13-21 22-14 23-3 23 8 16 15 8 18L0 22-8 18C-16 15-23 8-23-3-22-14-13-21 0-21Z" fill="#66747A" fill-rule="nonzero"/>
     <path id="reference/head-angular/shape-002" d="M-10.6 0C-10.6 1.436-9.436 2.6-8 2.6-6.564 2.6-5.4 1.436-5.4 0-5.4-1.436-6.564-2.6-8-2.6-9.436-2.6-10.6-1.436-10.6 0Z" fill="#66747A" fill-rule="nonzero"/>
     <path id="reference/head-angular/shape-003" d="M5.4 0C5.4 0.929 5.896 1.787 6.7 2.252 7.504 2.716 8.496 2.716 9.3 2.252 10.104 1.787 10.6 0.929 10.6 0 10.6-0.929 10.104-1.787 9.3-2.252 8.496-2.716 7.504-2.716 6.7-2.252 5.896-1.787 5.4-0.929 5.4 0Z" fill="#66747A" fill-rule="nonzero"/>
   </g>
   <g id="art" transform="translate(64 44)">
-    <path id="art/shape-001" d="M0-21L9-19 17-12 21-3 18 11 9 21 0 24-9 21-18 11-21-3-17-12-9-19Z" fill="#FF00FF" fill-rule="nonzero"/>
+    <path id="art/shape-001" d="M0-21C13-21 22-14 23-3 23 8 16 15 8 18L0 22-8 18C-16 15-23 8-23-3-22-14-13-21 0-21Z" fill="#FF00FF" fill-rule="nonzero"/>
     <path id="detail/shape-002" d="M-10.6 0C-10.6 1.436-9.436 2.6-8 2.6-6.564 2.6-5.4 1.436-5.4 0-5.4-1.436-6.564-2.6-8-2.6-9.436-2.6-10.6-1.436-10.6 0Z" fill="#2C2C2A" fill-rule="nonzero"/>
     <path id="detail/shape-003" d="M5.4 0C5.4 0.929 5.896 1.787 6.7 2.252 7.504 2.716 8.496 2.716 9.3 2.252 10.104 1.787 10.6 0.929 10.6 0 10.6-0.929 10.104-1.787 9.3-2.252 8.496-2.716 7.504-2.716 6.7-2.252 5.896-1.787 5.4-0.929 5.4 0Z" fill="#2C2C2A" fill-rule="nonzero"/>
   </g>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="park-bench" data-projection="elevation">
+  <title>QuotaCo lived-campus park bench</title>
+  <desc>Elevation-projected institutional bench with a clear back, seat, grounded supports, localized wear, and one employee note.</desc>
+  <metadata>Accepted lived-campus exterior source. Existing 2x1 footprint remains template-owned.</metadata>
+  <g id="shadow">
+    <ellipse id="shadow-contact" cx="64" cy="117" rx="50" ry="5" fill="#000000" opacity=".13"/>
+  </g>
+  <g id="shell">
+    <rect id="shell-back" data-fill-token="primary" x="13" y="43" width="102" height="33" rx="11" fill="#DED5BD" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="shell-back-inset" data-fill-token="secondary" x="21" y="50" width="86" height="18" rx="7" fill="#355247" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <path id="shell-seat" data-fill-token="secondary" d="M10 76H118L108 91H20Z" fill="#355247" stroke="#292C2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+  <g id="structure">
+    <path id="structure-back-dividers" d="M42 51V67M64 51V67M86 51V67" fill="none" stroke="#262B29" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/>
+    <rect id="structure-leg-left" data-fill-token="secondary" x="23" y="88" width="14" height="27" rx="5" fill="#355247" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="structure-leg-right" data-fill-token="secondary" x="91" y="88" width="14" height="27" rx="5" fill="#355247" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+  <g id="condition">
+    <rect id="condition-upholstery-wear" x="27" y="55" width="24" height="10" rx="3" fill="#98513F" opacity=".8"/>
+  </g>
+  <g id="personalization">
+    <rect id="personalization-note" x="77" y="78" width="21" height="9" rx="3" fill="#D5C880" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <path id="personalization-note-line" d="M81 82H94" fill="none" stroke="#262B29" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/>
+  </g>
+</svg>

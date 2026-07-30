@@ -1,0 +1,104 @@
+{
+  "status": "review-only-pre-source",
+  "currentOwnership": {
+    "implementation": "src/tiles/templates.ts",
+    "compositor": "composeFloorTile",
+    "artistEditableStandaloneSvgCount": 0,
+    "currentOutputFormat": "generated-svg"
+  },
+  "inventory": {
+    "floorTemplateCount": 19,
+    "interiorFloorInstanceCount": 12,
+    "groundTemplateCount": 7,
+    "groundInstanceCount": 10,
+    "targetInteriorFloorIds": [
+      "floor-carpet",
+      "floor-carpet-tiles",
+      "floor-wood",
+      "floor-linoleum",
+      "floor-utility-vinyl",
+      "floor-quiet-carpet",
+      "floor-terrazzo",
+      "floor-rubber-mat",
+      "floor-lobby-stone",
+      "floor-polished-concrete",
+      "floor-accent-tile",
+      "floor-astroturf"
+    ],
+    "targetGrassGroundIds": [
+      "ground-grass",
+      "ground-grass-b",
+      "ground-grass-c"
+    ],
+    "contextualGroundIds": [
+      "ground-meadow",
+      "ground-meadow-b",
+      "ground-dirt",
+      "ground-asphalt",
+      "ground-sidewalk",
+      "ground-gravel",
+      "ground-pond-water"
+    ]
+  },
+  "directions": [
+    {
+      "id": "institutional-grid",
+      "label": "Institutional Grid",
+      "floorRule": "Crisp seams and broad material fields carry the noun.",
+      "grassRule": "Maintained mowing cadence; nature stays visually separate."
+    },
+    {
+      "id": "used-campus",
+      "label": "Used Campus",
+      "floorRule": "Traffic wear and softened material variation dominate.",
+      "grassRule": "Organic mottle, irregular tufts, and sparse flowers."
+    },
+    {
+      "id": "maintained-hybrid",
+      "label": "Maintained Hybrid",
+      "floorRule": "Functional seams remain readable without becoming a grid UI.",
+      "grassRule": "Low-frequency field masses survive far zoom; detail stays sparse."
+    }
+  ],
+  "evaluationContexts": [
+    "close-128u-material-read",
+    "normal-50px-per-cell-room",
+    "normal-50px-per-cell-grass-field",
+    "far-26px-per-cell-repeat",
+    "wall-prop-character-occlusion",
+    "seamless-4x2-and-12x4-repeats"
+  ],
+  "held": {
+    "authoringCanvas": 128,
+    "acceptedWallDatum": 112,
+    "characterVisualScale": 0.65,
+    "floorGroundCharacterMultiplierApplied": false,
+    "templateIds": true,
+    "instanceIds": true,
+    "params": true,
+    "palettes": true,
+    "exportKindsAndCells": true,
+    "schemaVersion": 19,
+    "schemaMutation": false,
+    "exporterMutation": false,
+    "unityRegistrationMutation": false,
+    "productionSourceCreation": false,
+    "bundleExportImport": false,
+    "commitCreated": false
+  },
+  "deferred": {
+    "grassFringe": {
+      "currentOwnership": "derived-code",
+      "autotileFrames": 47,
+      "reason": "base grass direction must be accepted first"
+    },
+    "nonTargetGroundFamilies": [
+      "meadow",
+      "dirt",
+      "asphalt",
+      "sidewalk",
+      "gravel",
+      "pond-water"
+    ]
+  }
+}

@@ -1,0 +1,421 @@
+{
+  "reviewStatus": "terrarium-production-svg-validation",
+  "acceptedDirection": "maintained-hybrid",
+  "canonicalSvgCount": 15,
+  "liveTemplateCount": 15,
+  "parameterCount": 29,
+  "everyParameterActive": true,
+  "entries": [
+    {
+      "id": "floor-carpet",
+      "templateId": "carpet",
+      "parameters": [
+        {
+          "key": "speckle",
+          "min": 0,
+          "max": 3,
+          "active": true
+        },
+        {
+          "key": "seed",
+          "min": 1,
+          "max": 9,
+          "active": true
+        }
+      ],
+      "close": {
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0
+      },
+      "far": {
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0
+      }
+    },
+    {
+      "id": "floor-carpet-tiles",
+      "templateId": "carpet-tiles",
+      "parameters": [
+        {
+          "key": "contrast",
+          "min": 1,
+          "max": 4,
+          "active": true
+        }
+      ],
+      "close": {
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0
+      },
+      "far": {
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0
+      }
+    },
+    {
+      "id": "floor-wood",
+      "templateId": "wood-floor",
+      "parameters": [
+        {
+          "key": "seed",
+          "min": 1,
+          "max": 9,
+          "active": true
+        }
+      ],
+      "close": {
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0
+      },
+      "far": {
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0
+      }
+    },
+    {
+      "id": "floor-linoleum",
+      "templateId": "linoleum",
+      "parameters": [
+        {
+          "key": "grid",
+          "min": 16,
+          "max": 64,
+          "active": true
+        }
+      ],
+      "close": {
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0
+      },
+      "far": {
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0
+      }
+    },
+    {
+      "id": "floor-utility-vinyl",
+      "templateId": "utility-vinyl",
+      "parameters": [
+        {
+          "key": "grid",
+          "min": 16,
+          "max": 64,
+          "active": true
+        },
+        {
+          "key": "scuff",
+          "min": 0,
+          "max": 3,
+          "active": true
+        },
+        {
+          "key": "seed",
+          "min": 1,
+          "max": 9,
+          "active": true
+        }
+      ],
+      "close": {
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0
+      },
+      "far": {
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0
+      }
+    },
+    {
+      "id": "floor-quiet-carpet",
+      "templateId": "quiet-carpet",
+      "parameters": [
+        {
+          "key": "weave",
+          "min": 1,
+          "max": 4,
+          "active": true
+        },
+        {
+          "key": "seed",
+          "min": 1,
+          "max": 9,
+          "active": true
+        }
+      ],
+      "close": {
+        "differentPixelCount": 30,
+        "maxChannelDelta": 1
+      },
+      "far": {
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0
+      }
+    },
+    {
+      "id": "floor-terrazzo",
+      "templateId": "terrazzo",
+      "parameters": [
+        {
+          "key": "density",
+          "min": 1,
+          "max": 3,
+          "active": true
+        },
+        {
+          "key": "seed",
+          "min": 1,
+          "max": 9,
+          "active": true
+        }
+      ],
+      "close": {
+        "differentPixelCount": 2,
+        "maxChannelDelta": 3
+      },
+      "far": {
+        "differentPixelCount": 3,
+        "maxChannelDelta": 7
+      }
+    },
+    {
+      "id": "floor-rubber-mat",
+      "templateId": "rubber-mat",
+      "parameters": [
+        {
+          "key": "studs",
+          "min": 6,
+          "max": 12,
+          "active": true
+        }
+      ],
+      "close": {
+        "differentPixelCount": 97,
+        "maxChannelDelta": 1
+      },
+      "far": {
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0
+      }
+    },
+    {
+      "id": "floor-lobby-stone",
+      "templateId": "lobby-stone",
+      "parameters": [
+        {
+          "key": "slab",
+          "min": 32,
+          "max": 64,
+          "active": true
+        },
+        {
+          "key": "sheen",
+          "min": 0,
+          "max": 3,
+          "active": true
+        }
+      ],
+      "close": {
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0
+      },
+      "far": {
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0
+      }
+    },
+    {
+      "id": "floor-polished-concrete",
+      "templateId": "polished-concrete",
+      "parameters": [
+        {
+          "key": "joints",
+          "min": 0,
+          "max": 2,
+          "active": true
+        },
+        {
+          "key": "seed",
+          "min": 1,
+          "max": 9,
+          "active": true
+        }
+      ],
+      "close": {
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0
+      },
+      "far": {
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0
+      }
+    },
+    {
+      "id": "floor-accent-tile",
+      "templateId": "accent-tile",
+      "parameters": [
+        {
+          "key": "grid",
+          "min": 32,
+          "max": 64,
+          "active": true
+        },
+        {
+          "key": "motif",
+          "min": 0,
+          "max": 2,
+          "active": true
+        }
+      ],
+      "close": {
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0
+      },
+      "far": {
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0
+      }
+    },
+    {
+      "id": "floor-astroturf",
+      "templateId": "astroturf",
+      "parameters": [
+        {
+          "key": "seed",
+          "min": 1,
+          "max": 9,
+          "active": true
+        }
+      ],
+      "close": {
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0
+      },
+      "far": {
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0
+      }
+    },
+    {
+      "id": "ground-grass",
+      "templateId": "grass",
+      "parameters": [
+        {
+          "key": "blades",
+          "min": 1,
+          "max": 3,
+          "active": true
+        },
+        {
+          "key": "flowers",
+          "min": 0,
+          "max": 2,
+          "active": true
+        },
+        {
+          "key": "seed",
+          "min": 1,
+          "max": 9,
+          "active": true
+        }
+      ],
+      "close": {
+        "differentPixelCount": 1,
+        "maxChannelDelta": 1
+      },
+      "far": {
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0
+      }
+    },
+    {
+      "id": "ground-grass-b",
+      "templateId": "grass",
+      "parameters": [
+        {
+          "key": "blades",
+          "min": 1,
+          "max": 3,
+          "active": true
+        },
+        {
+          "key": "flowers",
+          "min": 0,
+          "max": 2,
+          "active": true
+        },
+        {
+          "key": "seed",
+          "min": 1,
+          "max": 9,
+          "active": true
+        }
+      ],
+      "close": {
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0
+      },
+      "far": {
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0
+      }
+    },
+    {
+      "id": "ground-grass-c",
+      "templateId": "grass",
+      "parameters": [
+        {
+          "key": "blades",
+          "min": 1,
+          "max": 3,
+          "active": true
+        },
+        {
+          "key": "flowers",
+          "min": 0,
+          "max": 2,
+          "active": true
+        },
+        {
+          "key": "seed",
+          "min": 1,
+          "max": 9,
+          "active": true
+        }
+      ],
+      "close": {
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0
+      },
+      "far": {
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0
+      }
+    }
+  ],
+  "held": {
+    "authoringCanvas": 128,
+    "acceptedWallDatum": 112,
+    "characterVisualScale": 0.65,
+    "floorGroundCharacterMultiplierApplied": false,
+    "instanceIds": true,
+    "templateIds": true,
+    "kinds": true,
+    "params": true,
+    "palettes": true,
+    "exportContractMutation": false,
+    "schemaMutation": false,
+    "schemaVersion": 19,
+    "unityMutation": false,
+    "commitCreated": false
+  },
+  "promoted": {
+    "canonicalSvgProductionSource": true,
+    "productionTemplateRegistration": true,
+    "semanticParameterVariants": true,
+    "snapshotPromotion": true
+  },
+  "deferred": {
+    "grassFringe47FrameProof": true,
+    "bundleImport": true,
+    "unityRegistration": true
+  }
+}

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="bike-rack" data-projection="plan">
+  <title>QuotaCo low-staple bike rack</title>
+  <desc>Plan-projected three-hoop bicycle rack with wide locking spaces, six explicit ground mounts, and one employee lock.</desc>
+  <metadata>Accepted low-staple-bank exterior source. Existing 2x1 footprint remains template-owned.</metadata>
+  <g id="shadow">
+    <ellipse id="shadow-contact" cx="64" cy="96" rx="52" ry="7" fill="#000000" opacity=".12"/>
+  </g>
+  <g id="shell">
+    <rect id="shell-base" data-fill-token="secondary" x="10" y="83" width="108" height="15" rx="7" fill="#355247" stroke="#262B29" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="shell-base-inset" x="17" y="88" width="94" height="5" rx="2.5" fill="#4E7470"/>
+  </g>
+  <g id="structure">
+    <path id="structure-hoop-left" d="M23 82V58Q23 44 34 44Q45 44 45 58V82" fill="none" stroke="#DED5BD" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="structure-hoop-center" d="M53 82V58Q53 44 64 44Q75 44 75 58V82" fill="none" stroke="#DED5BD" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="structure-hoop-right" d="M83 82V58Q83 44 94 44Q105 44 105 58V82" fill="none" stroke="#DED5BD" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect id="structure-mount-1" x="19" y="78" width="8" height="12" rx="3" fill="#262B29"/>
+    <rect id="structure-mount-2" x="41" y="78" width="8" height="12" rx="3" fill="#262B29"/>
+    <rect id="structure-mount-3" x="49" y="78" width="8" height="12" rx="3" fill="#262B29"/>
+    <rect id="structure-mount-4" x="71" y="78" width="8" height="12" rx="3" fill="#262B29"/>
+    <rect id="structure-mount-5" x="79" y="78" width="8" height="12" rx="3" fill="#262B29"/>
+    <rect id="structure-mount-6" x="101" y="78" width="8" height="12" rx="3" fill="#262B29"/>
+  </g>
+  <g id="personalization">
+    <path id="personalization-lock-body" d="M57 58Q64 50 71 58V66H57Z" fill="none" stroke="#B65F4D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle id="personalization-lock-core" cx="64" cy="62" r="3" fill="#F1ECD9"/>
+  </g>
+</svg>

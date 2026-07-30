@@ -17,6 +17,7 @@ import type { Mood, TileInstance } from './types';
 import { CANVAS, MOODS } from './types';
 import { circle, ellipse } from './geometry';
 import { getPart } from '../parts/library';
+import { fittedHairVariant } from '../parts/hairFitting';
 import { MOOD_EMOTES, MOOD_OVERLAYS } from '../parts/moods';
 import type { Activity } from '../parts/activities';
 import { ACTIVITY_BADGES } from '../parts/activities';
@@ -27,6 +28,7 @@ import { ATTENTION_PUFF_ART, type AttentionPuff, type AttentionPuffArt } from '.
 import { getIcon } from '../parts/icons';
 import { getPose, poseVariantFor, type Pose, type PoseTransforms, type PoseVariant } from '../parts/poses';
 import { normalizedRiggedAccessories } from './recipe';
+import { authoredPropArt } from '../props/authoredArt';
 import { PROP_TEMPLATES } from '../props/templates';
 import {
   FLOOR_TEMPLATES,
@@ -87,6 +89,21 @@ interface ResolvedCharacterRig {
   bodyId?: string;
 }
 
+/**
+ * Static production-cell reframe selected with the one-row head/body gap.
+ * It is deliberately recipe-derived rather than a renderer state: only the
+ * six body-owned production rigs receive it, while legacy recipes retain their
+ * established framing byte-for-byte.
+ */
+export const CHARACTER_FRAME_OFFSET_Y = 5;
+
+export function characterFrameOffsetY(
+  recipe?: CharacterRecipe,
+  facing: Facing = 'south',
+): number {
+  return resolveCharacterRig(recipe, facing).bodyAnchors ? CHARACTER_FRAME_OFFSET_Y : 0;
+}
+
 const translated = (origin: { x: number; y: number }, local: { x: number; y: number }) => ({
   x: origin.x + local.x,
   y: origin.y + local.y,
@@ -114,7 +131,16 @@ function resolveCharacterRig(recipe: CharacterRecipe | undefined, facing: Facing
   return { anchors, bodyAnchors, bodyId };
 }
 
-function variantForPart(part: PartDef, facing: Facing, rig: ResolvedCharacterRig): PartVariant | undefined {
+function variantForPart(
+  part: PartDef,
+  facing: Facing,
+  rig: ResolvedCharacterRig,
+  headId?: string,
+): PartVariant | undefined {
+  const fittedHair = headId && part.slot === 'hair'
+    ? fittedHairVariant(part.id, headId, facing)
+    : undefined;
+  if (fittedHair) return fittedHair;
   return part.buildVariant?.(facing, { bodyAnchors: rig.bodyAnchors, bodyId: rig.bodyId }) ?? part.facings[facing];
 }
 
@@ -213,10 +239,17 @@ function placeParts(
   pose?: Pose,
   rig: ResolvedCharacterRig = resolveCharacterRig(recipe, facing),
 ): PlacedPart[] {
-  const poseVariant = pose ? poseVariantFor(pose, facing, rig.bodyAnchors) : undefined;
-  const attachmentVariant = poseVariant ?? (
-    rig.bodyAnchors ? poseVariantFor('neutral', facing, rig.bodyAnchors) : undefined
-  );
+  // A production body is never armless: omitted pose input resolves to the
+  // existing generated Neutral state. Explicit poses replace this variant
+  // wholesale, so always-on arms add no pose id, frame, or renderer state.
+  // Legacy bodies have no body-owned rig and deliberately retain their old
+  // unposed rendering until their saved recipes are migrated.
+  const poseVariant = pose
+    ? poseVariantFor(pose, facing, rig.bodyAnchors)
+    : rig.bodyAnchors
+      ? poseVariantFor('neutral', facing, rig.bodyAnchors)
+      : undefined;
+  const attachmentVariant = poseVariant;
   const ids = [
     recipe.parts.body,
     recipe.parts.outfit,
@@ -228,7 +261,7 @@ function placeParts(
   for (const id of ids) {
     const part = getPart(id);
     if (!part) continue;
-    const variant = variantForPart(part, facing, rig);
+    const variant = variantForPart(part, facing, rig, recipe.parts.head);
     if (!variant) continue;
     const anchor = anchorForPart(part, rig, attachmentVariant);
     if (!anchor) continue;
@@ -267,8 +300,8 @@ function placeParts(
     });
   }
 
-  // Pose arm layers (parts/poses.ts) — body-local like the outfit overlays, so
-  // they ride the bodyWidth group transform and stay attached to the capsule.
+  // Resolved arm layers (parts/poses.ts) — body-local like the outfit overlays,
+  // so they ride the bodyWidth group transform and stay attached to the hull.
   if (poseVariant) {
     if (poseVariant.back && poseVariant.back.length > 0) {
       placed.push({
@@ -487,7 +520,14 @@ export function composeCharacter(
   // Contact shadow at the feet, painted first so it sits under the figure. It's
   // centered on the canvas, so the west mirror leaves it untouched.
   const shadow = contactShadow(CANVAS / 2, 113, 16, 4.5, style);
-  return svgWrap(shadow + inner, pixelSize ?? style.render.baseSize);
+  const frameOffsetY = rig.bodyAnchors ? CHARACTER_FRAME_OFFSET_Y : 0;
+  // The reframe moves the authored figure within its cell; the contact shadow
+  // remains on the established floor datum so it cannot be pushed into the
+  // lower raster edge.
+  const framedFigure = frameOffsetY
+    ? `<g transform="translate(0 ${frameOffsetY})">${inner}</g>`
+    : inner;
+  return svgWrap(shadow + framedFigure, pixelSize ?? style.render.baseSize);
 }
 
 /**
@@ -501,6 +541,8 @@ export function composeCharacter(
  * paper behind — curated, official, the forced smile. Warmth here is
  * PROXIMITY, not truth: this is the corporation's drawing of the person, and
  * the UI frames it (see the `portrait-frame` icon); the photo ships bare.
+ * Rigged identities keep their Neutral upper sleeves in this bust crop: the
+ * portrait is a crop of the same model, not a separate armless rendering.
  */
 export function composePortrait(
   recipe: CharacterRecipe,
@@ -532,8 +574,9 @@ export function composePortrait(
  * from composePortrait's badge-photo crop, but resolves from the same body rig.
  */
 export function employeePortraitCrop(recipe?: CharacterRecipe): { x: number; y: number; w: number; h: number } {
-  const head = resolveCharacterRig(recipe, 'south').anchors.headCenter;
-  return { x: head.x - 40, y: head.y - 30, w: 80, h: 80 };
+  const rig = resolveCharacterRig(recipe, 'south');
+  const frameOffsetY = rig.bodyAnchors ? CHARACTER_FRAME_OFFSET_Y : 0;
+  return { x: rig.anchors.headCenter.x - 40, y: rig.anchors.headCenter.y + frameOffsetY - 30, w: 80, h: 80 };
 }
 
 /**
@@ -547,18 +590,28 @@ export function poseRigAnchors(
   recipe?: CharacterRecipe,
 ): Record<'shoulderLeft' | 'shoulderRight' | 'hip', { x: number; y: number }> {
   if (facing === 'west') {
-    const east = resolveCharacterRig(recipe, 'east').anchors;
-    const flip = (a: { x: number; y: number }) => ({ x: CANVAS - a.x, y: a.y });
+    const rig = resolveCharacterRig(recipe, 'east');
+    const frameOffsetY = rig.bodyAnchors ? CHARACTER_FRAME_OFFSET_Y : 0;
+    const flip = (a: { x: number; y: number }) => ({ x: CANVAS - a.x, y: a.y + frameOffsetY });
+    const east = rig.anchors;
     return { shoulderLeft: flip(east.shoulderRight), shoulderRight: flip(east.shoulderLeft), hip: flip(east.hip) };
   }
-  const a = resolveCharacterRig(recipe, facing).anchors;
-  return { shoulderLeft: a.shoulderLeft, shoulderRight: a.shoulderRight, hip: a.hip };
+  const rig = resolveCharacterRig(recipe, facing);
+  const frameOffsetY = rig.bodyAnchors ? CHARACTER_FRAME_OFFSET_Y : 0;
+  const shifted = (a: { x: number; y: number }) => ({ x: a.x, y: a.y + frameOffsetY });
+  return {
+    shoulderLeft: shifted(rig.anchors.shoulderLeft),
+    shoulderRight: shifted(rig.anchors.shoulderRight),
+    hip: shifted(rig.anchors.hip),
+  };
 }
 
 export function overheadAnchor(facing: Facing | 'west', recipe?: CharacterRecipe): { x: number; y: number } {
   const actual: Facing = facing === 'west' ? 'east' : facing;
-  const a = resolveCharacterRig(recipe, actual).anchors.aboveHead;
-  return { x: facing === 'west' ? CANVAS - a.x : a.x, y: a.y };
+  const rig = resolveCharacterRig(recipe, actual);
+  const a = rig.anchors.aboveHead;
+  const frameOffsetY = rig.bodyAnchors ? CHARACTER_FRAME_OFFSET_Y : 0;
+  return { x: facing === 'west' ? CANVAS - a.x : a.x, y: a.y + frameOffsetY };
 }
 
 /**
@@ -739,7 +792,7 @@ interface IdPlaced {
 
 /** Like placeParts but retains part identity and excludes mood/neck-shadow. */
 function placeForLayers(recipe: CharacterRecipe, facing: Facing, rig: ResolvedCharacterRig): IdPlaced[] {
-  const attachmentVariant = rig.bodyAnchors
+  const neutralVariant = rig.bodyAnchors
     ? poseVariantFor('neutral', facing, rig.bodyAnchors)
     : undefined;
   const order: Array<{ id: string; slot: string }> = [
@@ -752,9 +805,9 @@ function placeForLayers(recipe: CharacterRecipe, facing: Facing, rig: ResolvedCh
   const out: IdPlaced[] = [];
   for (const { id, slot } of order) {
     const part = getPart(id);
-    const variant = part ? variantForPart(part, facing, rig) : undefined;
+    const variant = part ? variantForPart(part, facing, rig, recipe.parts.head) : undefined;
     if (!part || !variant) continue;
-    const anchor = anchorForPart(part, rig, attachmentVariant);
+    const anchor = anchorForPart(part, rig, neutralVariant);
     if (!anchor) continue;
     out.push({
       partId: id,
@@ -762,6 +815,29 @@ function placeForLayers(recipe: CharacterRecipe, facing: Facing, rig: ResolvedCh
       anchor,
       group: HEAD_ANCHORS.includes(part.anchor) ? 'head' : 'body',
       variant,
+    });
+  }
+
+  // Reconstructed characters must carry the same visible base arms as the
+  // flattened compositor. Keep front/back identities separate because they
+  // occupy different z bands; token bucketing below then yields independent
+  // sleeve and hand masks without inventing runtime pose state.
+  if (neutralVariant?.back && neutralVariant.back.length > 0) {
+    out.push({
+      partId: 'pose-neutral-back',
+      slot: 'pose',
+      anchor: rig.anchors.body,
+      group: 'body',
+      variant: { shapes: neutralVariant.back, z: POSE_BACK_Z },
+    });
+  }
+  if (neutralVariant?.front && neutralVariant.front.length > 0) {
+    out.push({
+      partId: 'pose-neutral-front',
+      slot: 'pose',
+      anchor: rig.anchors.body,
+      group: 'body',
+      variant: { shapes: neutralVariant.front, z: POSE_FRONT_Z },
     });
   }
   return out;
@@ -865,6 +941,16 @@ export function characterLayers(recipe: CharacterRecipe, style: StyleSheet): Cha
   }
 
   const layers = [...byKey.values()].sort((a, b) => a.z - b.z || a.order - b.order);
+  // The flat compositor reframes the complete production figure by five
+  // source units. Apply the identical static transform to every reconstructable
+  // layer so flat and layer-atlas paths remain pixel-identical.
+  for (const facing of facings) {
+    if (!resolveCharacterRig(recipe, facing).bodyAnchors) continue;
+    for (const layer of layers) {
+      const markup = layer.markup[facing];
+      if (markup) layer.markup[facing] = `<g transform="translate(0 ${CHARACTER_FRAME_OFFSET_Y})">${markup}</g>`;
+    }
+  }
   // west = mirrored east, same as composeCharacter
   for (const layer of layers) {
     if (layer.markup.east) layer.markup.west = `<g transform="translate(${CANVAS} 0) scale(-1 1)">${layer.markup.east}</g>`;
@@ -997,7 +1083,7 @@ export function composeGroundOverlayTile(
 // floors coalesce by token (`bucketLayers`).
 // ---------------------------------------------------------------------------
 
-/** The prop/wall/floor palette tokens the sim drives at runtime (the tint levers). */
+/** The procedural prop/floor palette tokens the sim may drive at runtime. */
 export const PROP_PALETTE_TOKENS: PropPaletteToken[] = ['primary', 'secondary', 'accent'];
 
 export interface TileLayer {
@@ -1076,6 +1162,46 @@ function bucketLayers(shapes: ShapeSpec[]): TileLayer[] {
   }));
 }
 
+export interface PropStyleOptions {
+  /**
+   * Authored SVG props keep their canonical strokes and omit compositor-owned
+   * outline/contact-shadow styling by default. Set true only for an explicit
+   * restyling experiment; procedural props retain the historical behavior.
+   */
+  restyleAuthoredSvg?: boolean;
+}
+
+function globalPropStyleEnabled(
+  templateId: string,
+  options?: PropStyleOptions,
+): boolean {
+  return !authoredPropArt(templateId) || options?.restyleAuthoredSvg === true;
+}
+
+/**
+ * The palette that should actually resolve a prop's colour tokens.
+ *
+ * Authored SVGs own their raw/default colours. A persisted instance palette is
+ * only allowed to replace them for an explicit restyle, or when the caller has
+ * deliberately supplied the clinical look. Procedural props retain their
+ * historical instance-palette behaviour.
+ */
+export function propPaletteForRender(
+  prop: PropInstance,
+  style: StyleSheet,
+  options?: PropStyleOptions,
+): PropPalette {
+  const art = authoredPropArt(prop.templateId);
+  if (
+    art &&
+    options?.restyleAuthoredSvg !== true &&
+    !isClinicalStyle(style)
+  ) {
+    return art.paletteDefaults;
+  }
+  return prop.palette;
+}
+
 /** The baked outline layer (untinted) — the same silhouette pass compose* draws under colour. */
 function outlineLayer(shapes: ShapeSpec[], style: StyleSheet): TileLayer | null {
   if (style.outline.width <= 0) return null;
@@ -1084,14 +1210,32 @@ function outlineLayer(shapes: ShapeSpec[], style: StyleSheet): TileLayer | null 
 }
 
 /**
- * A prop as re-tintable layers, stacked bottom→top exactly as composeProp paints:
- * contact shadow (untinted), outline (untinted), then the colour runs. Empty when
- * the template is unknown.
+ * A prop as export layers, stacked bottom→top exactly as composeProp paints.
+ *
+ * Authored SVG props default to one resolved, untinted canonical layer. This
+ * preserves source paint order and keeps their layer atlases compact. The
+ * legacy restyled path remains available as an explicit experiment.
+ *
+ * Procedural props retain their historical contact-shadow, outline, and
+ * re-tintable colour-run layers. Empty when the template is unknown.
  */
-export function propLayers(prop: PropInstance, style: StyleSheet): TileLayer[] {
+export function propLayers(
+  prop: PropInstance,
+  style: StyleSheet,
+  options?: PropStyleOptions,
+): TileLayer[] {
   const template = PROP_TEMPLATES.find((t) => t.id === prop.templateId);
   if (!template) return [];
-  const shapes = template.build(prop.params, prop.palette);
+  const palette = propPaletteForRender(prop, style, options);
+  const shapes = template.build(prop.params, palette);
+  if (!globalPropStyleEnabled(prop.templateId, options)) {
+    const resolve = makePropResolver(palette);
+    return [{
+      key: 'literal-0',
+      tint: null,
+      markup: shapes.map((shape) => emitColorShape(shape, resolve)).join(''),
+    }];
+  }
   const layers: TileLayer[] = [];
   const fp = template.footprint;
   const shadow = fp ? contactShadow(fp.cx, fp.cy, fp.rx, fp.ry, style) : '';
@@ -1184,13 +1328,20 @@ export function composeFloorRepeat(
 }
 
 /** Render a prop instance to an SVG string. */
-export function composeProp(prop: PropInstance, style: StyleSheet, pixelSize?: number): string {
+export function composeProp(
+  prop: PropInstance,
+  style: StyleSheet,
+  pixelSize?: number,
+  options?: PropStyleOptions,
+): string {
   const template = PROP_TEMPLATES.find((t) => t.id === prop.templateId);
   if (!template) return svgWrap('', pixelSize ?? style.render.baseSize);
-  const shapes = template.build(prop.params, prop.palette);
-  const resolve = makePropResolver(prop.palette);
+  const palette = propPaletteForRender(prop, style, options);
+  const shapes = template.build(prop.params, palette);
+  const resolve = makePropResolver(palette);
+  const globalStyle = globalPropStyleEnabled(prop.templateId, options);
   const outline =
-    style.outline.width > 0
+    globalStyle && style.outline.width > 0
       ? shapes
           .filter(shapeIsSilhouette)
           .map((s) => emitOutlineShape(s, style))
@@ -1198,6 +1349,9 @@ export function composeProp(prop: PropInstance, style: StyleSheet, pixelSize?: n
       : '';
   const color = shapes.map((s) => emitColorShape(s, resolve)).join('');
   const fp = template.footprint;
-  const shadow = fp ? contactShadow(fp.cx, fp.cy, fp.rx, fp.ry, style) : '';
+  const shadow =
+    globalStyle && fp
+      ? contactShadow(fp.cx, fp.cy, fp.rx, fp.ry, style)
+      : '';
   return svgWrap(shadow + outline + color, pixelSize ?? style.render.baseSize);
 }

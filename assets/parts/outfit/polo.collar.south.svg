@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium outfit-polo south collar</title>
+  <desc>Balanced-body polo collar; the component-detail importer fits this upper-torso piece to every production body.</desc>
+  <g id="art" transform="translate(64 87)">
+    <path id="detail/collar/front" d="M -9.5 -29 L 0 -13.64 L 9.5 -29 Z" fill="#00FF00" fill-rule="nonzero"/>
+  </g>
+</svg>

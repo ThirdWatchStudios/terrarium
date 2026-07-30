@@ -1,0 +1,423 @@
+{
+  "reviewStatus": "production-wired-source-validation",
+  "productionPromotion": true,
+  "sourceSvgAuthoring": true,
+  "canonicalSvgCount": 7,
+  "importerGeneratedArt": true,
+  "unityImport": false,
+  "commitCreated": false,
+  "exportContractMutation": false,
+  "schemaMutation": false,
+  "schemaVersion": 19,
+  "invariants": {
+    "authoringCanvas": 128,
+    "acceptedWallDatum": 112,
+    "characterVisualScale": 0.65,
+    "propNativeFrameCells": 2,
+    "propCharacterMultiplierApplied": false,
+    "gameplayArtScales": {
+      "couch": 0.9,
+      "waiting-bench": 0.9,
+      "coffee-table": 0.82,
+      "break-table": 0.9,
+      "lounge-seating": 0.9,
+      "bean-bag": 0.84,
+      "nap-pod": 0.9
+    }
+  },
+  "contractValidation": {
+    "pass": true,
+    "errors": [],
+    "contracts": [
+      {
+        "id": "couch",
+        "projection": "plan",
+        "gridFootprint": {
+          "w": 2,
+          "h": 1
+        },
+        "contactShadow": null,
+        "params": [
+          {
+            "key": "width",
+            "min": 62,
+            "max": 98,
+            "step": 4,
+            "default": 82
+          },
+          {
+            "key": "cushions",
+            "min": 2,
+            "max": 3,
+            "step": 1,
+            "default": 3
+          }
+        ],
+        "defaultInstanceParams": {
+          "width": 82,
+          "cushions": 3
+        }
+      },
+      {
+        "id": "waiting-bench",
+        "projection": "plan",
+        "gridFootprint": {
+          "w": 2,
+          "h": 1
+        },
+        "contactShadow": null,
+        "params": [
+          {
+            "key": "length",
+            "min": 76,
+            "max": 112,
+            "step": 4,
+            "default": 96
+          },
+          {
+            "key": "seats",
+            "min": 2,
+            "max": 4,
+            "step": 1,
+            "default": 3
+          }
+        ],
+        "defaultInstanceParams": {
+          "length": 96,
+          "seats": 3
+        }
+      },
+      {
+        "id": "coffee-table",
+        "projection": "plan",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": null,
+        "params": [
+          {
+            "key": "width",
+            "min": 48,
+            "max": 76,
+            "step": 4,
+            "default": 62
+          },
+          {
+            "key": "decor",
+            "min": 0,
+            "max": 2,
+            "step": 1,
+            "default": 2
+          }
+        ],
+        "defaultInstanceParams": {
+          "width": 62,
+          "decor": 2
+        }
+      },
+      {
+        "id": "break-table",
+        "projection": "plan",
+        "gridFootprint": {
+          "w": 2,
+          "h": 2
+        },
+        "contactShadow": null,
+        "params": [
+          {
+            "key": "diameter",
+            "min": 40,
+            "max": 64,
+            "step": 4,
+            "default": 52
+          },
+          {
+            "key": "stools",
+            "min": 2,
+            "max": 4,
+            "step": 1,
+            "default": 4
+          }
+        ],
+        "defaultInstanceParams": {
+          "diameter": 52,
+          "stools": 4
+        }
+      },
+      {
+        "id": "lounge-seating",
+        "projection": "plan",
+        "gridFootprint": {
+          "w": 2,
+          "h": 2
+        },
+        "contactShadow": null,
+        "params": [
+          {
+            "key": "seats",
+            "min": 2,
+            "max": 4,
+            "step": 1,
+            "default": 3
+          }
+        ],
+        "defaultInstanceParams": {
+          "seats": 3
+        }
+      },
+      {
+        "id": "bean-bag",
+        "projection": "plan",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": null,
+        "params": [
+          {
+            "key": "size",
+            "min": 34,
+            "max": 48,
+            "step": 2,
+            "default": 42
+          }
+        ],
+        "defaultInstanceParams": {
+          "size": 42
+        }
+      },
+      {
+        "id": "nap-pod",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 2,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 34,
+          "ry": 5
+        },
+        "params": [
+          {
+            "key": "visor",
+            "min": 0,
+            "max": 1,
+            "step": 1,
+            "default": 1
+          }
+        ],
+        "defaultInstanceParams": {
+          "visor": 1
+        }
+      }
+    ]
+  },
+  "sourceProvenance": {
+    "couch": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/couch.svg",
+      "sourceSha256": "db09a574aa698d4e12b648edccef00c81417f5b9d95343f9f213b60b55fbec04",
+      "importedSourceSha256": "db09a574aa698d4e12b648edccef00c81417f5b9d95343f9f213b60b55fbec04",
+      "hashMatchesImportedArt": true,
+      "projectionMatches": true,
+      "canonicalRaster": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 5130,
+        "bounds": {
+          "minX": 11,
+          "minY": 38,
+          "maxX": 116,
+          "maxY": 87
+        }
+      },
+      "importedRaster": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 5440,
+        "bounds": {
+          "minX": 10,
+          "minY": 37,
+          "maxX": 117,
+          "maxY": 88
+        }
+      }
+    },
+    "waiting-bench": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/waiting-bench.svg",
+      "sourceSha256": "ef78461acb3d5e2655e7c9c8534c2baffd875397731d0b13af7648c1ed5d4da1",
+      "importedSourceSha256": "ef78461acb3d5e2655e7c9c8534c2baffd875397731d0b13af7648c1ed5d4da1",
+      "hashMatchesImportedArt": true,
+      "projectionMatches": true,
+      "canonicalRaster": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 4437,
+        "bounds": {
+          "minX": 10,
+          "minY": 42,
+          "maxX": 117,
+          "maxY": 83
+        }
+      },
+      "importedRaster": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 4826,
+        "bounds": {
+          "minX": 9,
+          "minY": 40,
+          "maxX": 118,
+          "maxY": 84
+        }
+      }
+    },
+    "coffee-table": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/coffee-table.svg",
+      "sourceSha256": "805fcff630d96b4e5fe7afa04fe988174fdbee546876f28f8fea341cd92b2d60",
+      "importedSourceSha256": "805fcff630d96b4e5fe7afa04fe988174fdbee546876f28f8fea341cd92b2d60",
+      "hashMatchesImportedArt": true,
+      "projectionMatches": true,
+      "canonicalRaster": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 1877,
+        "bounds": {
+          "minX": 37,
+          "minY": 46,
+          "maxX": 90,
+          "maxY": 81
+        }
+      },
+      "importedRaster": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 2228,
+        "bounds": {
+          "minX": 35,
+          "minY": 44,
+          "maxX": 92,
+          "maxY": 83
+        }
+      }
+    },
+    "break-table": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/break-table.svg",
+      "sourceSha256": "dc7b35aa9506e07aff24591bd6784a86205185d504952823476b9b5d3ce630cb",
+      "importedSourceSha256": "dc7b35aa9506e07aff24591bd6784a86205185d504952823476b9b5d3ce630cb",
+      "hashMatchesImportedArt": true,
+      "projectionMatches": true,
+      "canonicalRaster": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 3772,
+        "bounds": {
+          "minX": 16,
+          "minY": 16,
+          "maxX": 111,
+          "maxY": 111
+        }
+      },
+      "importedRaster": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 4340,
+        "bounds": {
+          "minX": 14,
+          "minY": 14,
+          "maxX": 113,
+          "maxY": 113
+        }
+      }
+    },
+    "lounge-seating": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/lounge-seating.svg",
+      "sourceSha256": "d20ea8e62027bafcf31617b6930101177262c48abd692edd1be7bb53a9569b48",
+      "importedSourceSha256": "d20ea8e62027bafcf31617b6930101177262c48abd692edd1be7bb53a9569b48",
+      "hashMatchesImportedArt": true,
+      "projectionMatches": true,
+      "canonicalRaster": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 2408,
+        "bounds": {
+          "minX": 25,
+          "minY": 21,
+          "maxX": 102,
+          "maxY": 90
+        }
+      },
+      "importedRaster": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 2897,
+        "bounds": {
+          "minX": 24,
+          "minY": 19,
+          "maxX": 103,
+          "maxY": 92
+        }
+      }
+    },
+    "bean-bag": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/bean-bag.svg",
+      "sourceSha256": "f0d58020a7f24b6b68a2a3db806098dc628dff26fc62030608e8c22095ce7f45",
+      "importedSourceSha256": "f0d58020a7f24b6b68a2a3db806098dc628dff26fc62030608e8c22095ce7f45",
+      "hashMatchesImportedArt": true,
+      "projectionMatches": true,
+      "canonicalRaster": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 1243,
+        "bounds": {
+          "minX": 45,
+          "minY": 44,
+          "maxX": 82,
+          "maxY": 85
+        }
+      },
+      "importedRaster": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 1422,
+        "bounds": {
+          "minX": 43,
+          "minY": 43,
+          "maxX": 84,
+          "maxY": 86
+        }
+      }
+    },
+    "nap-pod": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/nap-pod.svg",
+      "sourceSha256": "c137b954cf4654554e29c4abdb4a3cd3f18e198332e9c92f72638f14d3afb307",
+      "importedSourceSha256": "c137b954cf4654554e29c4abdb4a3cd3f18e198332e9c92f72638f14d3afb307",
+      "hashMatchesImportedArt": true,
+      "projectionMatches": true,
+      "canonicalRaster": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 4281,
+        "bounds": {
+          "minX": 17,
+          "minY": 56,
+          "maxX": 113,
+          "maxY": 121
+        }
+      },
+      "importedRaster": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 4518,
+        "bounds": {
+          "minX": 16,
+          "minY": 55,
+          "maxX": 114,
+          "maxY": 121
+        }
+      }
+    }
+  }
+}

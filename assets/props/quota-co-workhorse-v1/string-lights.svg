@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="string-lights" data-projection="plan">
+  <title>QuotaCo employee string lights</title>
+  <desc>Plan-authored wall-slot string lights with molded mounting clips, a dark sagging cable, and four to eight editable warm bulbs.</desc>
+  <metadata>Palette tokens: primary mounting clips, secondary cable inserts, accent service end. Default bulb count 6.</metadata>
+  <g id="mounts">
+    <rect id="mount-left-shell" data-fill-token="primary" x="5" y="43" width="10" height="13" rx="5" fill="#DED5BD" stroke="#292C2A" stroke-width="1.8"/>
+    <rect id="mount-right-shell" data-fill-token="primary" x="113" y="43" width="10" height="13" rx="5" fill="#DED5BD" stroke="#292C2A" stroke-width="1.8"/>
+    <rect id="mount-left-inset" data-fill-token="secondary" x="8" y="47" width="5" height="5" rx="2" fill="#262B29"/>
+    <rect id="mount-right-service" data-fill-token="accent" x="116" y="47" width="5" height="5" rx="2" fill="#B65F4D"/>
+  </g>
+  <g id="cable">
+    <path id="cable-sag" d="M12 49Q64 62 116 49" fill="none" stroke="#262B29" stroke-width="2.4"/>
+  </g>
+  <g id="bulb-1">
+    <path id="bulb-1-drop" d="M20 51V56" fill="none" stroke="#262B29" stroke-width="1.6"/>
+    <circle id="bulb-1-glow" cx="20" cy="60" r="6.5" fill="#E1B464" opacity=".2"/>
+    <ellipse id="bulb-1-lamp" cx="20" cy="59" rx="3.6" ry="4.5" fill="#E1B464" stroke="#292C2A" stroke-width="1.2"/>
+    <path id="bulb-1-filament" d="M19 58Q20 61 21 58" fill="none" stroke="#F4F0E4" stroke-width=".9"/>
+  </g>
+  <g id="bulb-2">
+    <path id="bulb-2-drop" d="M37 55V60" fill="none" stroke="#262B29" stroke-width="1.6"/>
+    <circle id="bulb-2-glow" cx="37" cy="64" r="6.5" fill="#E1B464" opacity=".2"/>
+    <ellipse id="bulb-2-lamp" cx="37" cy="63" rx="3.6" ry="4.5" fill="#E1B464" stroke="#292C2A" stroke-width="1.2"/>
+    <path id="bulb-2-filament" d="M36 62Q37 65 38 62" fill="none" stroke="#F4F0E4" stroke-width=".9"/>
+  </g>
+  <g id="bulb-3">
+    <path id="bulb-3-drop" d="M54 59V64" fill="none" stroke="#262B29" stroke-width="1.6"/>
+    <circle id="bulb-3-glow" cx="54" cy="68" r="6.5" fill="#E1B464" opacity=".2"/>
+    <ellipse id="bulb-3-lamp" cx="54" cy="67" rx="3.6" ry="4.5" fill="#E1B464" stroke="#292C2A" stroke-width="1.2"/>
+    <path id="bulb-3-filament" d="M53 66Q54 69 55 66" fill="none" stroke="#F4F0E4" stroke-width=".9"/>
+  </g>
+  <g id="bulb-4">
+    <path id="bulb-4-drop" d="M74 59V64" fill="none" stroke="#262B29" stroke-width="1.6"/>
+    <circle id="bulb-4-glow" cx="74" cy="68" r="6.5" fill="#E1B464" opacity=".2"/>
+    <ellipse id="bulb-4-lamp" cx="74" cy="67" rx="3.6" ry="4.5" fill="#E1B464" stroke="#292C2A" stroke-width="1.2"/>
+    <path id="bulb-4-filament" d="M73 66Q74 69 75 66" fill="none" stroke="#F4F0E4" stroke-width=".9"/>
+  </g>
+  <g id="bulb-5">
+    <path id="bulb-5-drop" d="M91 55V60" fill="none" stroke="#262B29" stroke-width="1.6"/>
+    <circle id="bulb-5-glow" cx="91" cy="64" r="6.5" fill="#E1B464" opacity=".2"/>
+    <ellipse id="bulb-5-lamp" cx="91" cy="63" rx="3.6" ry="4.5" fill="#E1B464" stroke="#292C2A" stroke-width="1.2"/>
+    <path id="bulb-5-filament" d="M90 62Q91 65 92 62" fill="none" stroke="#F4F0E4" stroke-width=".9"/>
+  </g>
+  <g id="bulb-6">
+    <path id="bulb-6-drop" d="M108 51V56" fill="none" stroke="#262B29" stroke-width="1.6"/>
+    <circle id="bulb-6-glow" cx="108" cy="60" r="6.5" fill="#E1B464" opacity=".2"/>
+    <ellipse id="bulb-6-lamp" cx="108" cy="59" rx="3.6" ry="4.5" fill="#E1B464" stroke="#292C2A" stroke-width="1.2"/>
+    <path id="bulb-6-filament" d="M107 58Q108 61 109 58" fill="none" stroke="#F4F0E4" stroke-width=".9"/>
+  </g>
+  <g id="bulb-7" display="none">
+    <path id="bulb-7-drop" d="M62 60V65" fill="none" stroke="#262B29" stroke-width="1.6"/>
+    <circle id="bulb-7-glow" cx="62" cy="69" r="6.5" fill="#E1B464" opacity=".2"/>
+    <ellipse id="bulb-7-lamp" cx="62" cy="68" rx="3.6" ry="4.5" fill="#E1B464" stroke="#292C2A" stroke-width="1.2"/>
+    <path id="bulb-7-filament" d="M61 67Q62 70 63 67" fill="none" stroke="#F4F0E4" stroke-width=".9"/>
+  </g>
+  <g id="bulb-8" display="none">
+    <path id="bulb-8-drop" d="M83 58V63" fill="none" stroke="#262B29" stroke-width="1.6"/>
+    <circle id="bulb-8-glow" cx="83" cy="67" r="6.5" fill="#E1B464" opacity=".2"/>
+    <ellipse id="bulb-8-lamp" cx="83" cy="66" rx="3.6" ry="4.5" fill="#E1B464" stroke="#292C2A" stroke-width="1.2"/>
+    <path id="bulb-8-filament" d="M82 65Q83 68 84 65" fill="none" stroke="#F4F0E4" stroke-width=".9"/>
+  </g>
+</svg>

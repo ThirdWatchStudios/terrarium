@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Terrarium outfit-blazer south buttons</title>
+  <desc>Balanced-body jacket buttons; the component-detail importer fits this lower-torso piece to every production body.</desc>
+  <g id="art" transform="translate(64 87)">
+    <path id="detail/buttons/upper" d="M -1.8 1.65 A 1.8 1.8 0 1 0 1.8 1.65 A 1.8 1.8 0 1 0 -1.8 1.65 Z" fill="#00000033" fill-rule="nonzero"/>
+    <path id="detail/buttons/lower" d="M -1.8 9.25 A 1.8 1.8 0 1 0 1.8 9.25 A 1.8 1.8 0 1 0 -1.8 9.25 Z" fill="#00000033" fill-rule="nonzero"/>
+  </g>
+</svg>

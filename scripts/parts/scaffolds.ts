@@ -25,6 +25,7 @@ export const PART_SCAFFOLD_SPECS = [
   { slot: 'body', referenceId: 'body-large-frame', slug: 'large-frame', facings: FACINGS },
   { slot: 'body', referenceId: 'body-tall', slug: 'tall', facings: FACINGS },
   { slot: 'body', referenceId: 'body-soft', slug: 'soft', facings: FACINGS },
+  { slot: 'body', referenceId: 'body-pinch', slug: 'pinch', facings: FACINGS },
   { slot: 'head', referenceId: 'head-round', slug: 'round', facings: FACINGS },
   { slot: 'head', referenceId: 'head-oval', slug: 'oval', facings: FACINGS },
   { slot: 'head', referenceId: 'head-boxy', slug: 'boxy', facings: FACINGS },
@@ -49,10 +50,187 @@ export const PART_SCAFFOLD_SPECS = [
     slug: 'tee',
     facings: ['south', 'east'],
   },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-blazer',
+    referenceBodyId: 'body-balanced',
+    componentId: 'lapels',
+    slug: 'blazer.lapels',
+    facings: ['south', 'east'],
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-blazer',
+    referenceBodyId: 'body-balanced',
+    componentId: 'buttons',
+    slug: 'blazer.buttons',
+    facings: ['south', 'east'],
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-blazer',
+    referenceBodyId: 'body-balanced',
+    componentId: 'pocket',
+    slug: 'blazer.pocket',
+    facings: ['south', 'east'],
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-polo',
+    referenceBodyId: 'body-balanced',
+    componentId: 'collar',
+    slug: 'polo.collar',
+    facings: ['south', 'east'],
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-polo',
+    referenceBodyId: 'body-balanced',
+    componentId: 'placket',
+    slug: 'polo.placket',
+    facings: ['south', 'east'],
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-shirt-tie',
+    referenceBodyId: 'body-balanced',
+    componentId: 'collar',
+    slug: 'shirt-tie.collar',
+    facings: ['south', 'east'],
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-shirt-tie',
+    referenceBodyId: 'body-balanced',
+    componentId: 'tie',
+    slug: 'shirt-tie.tie',
+    facings: ['south', 'east'],
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-turtleneck',
+    referenceBodyId: 'body-balanced',
+    componentId: 'neck-band',
+    slug: 'turtleneck.neck-band',
+    facings: FACINGS,
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-cardigan',
+    referenceBodyId: 'body-balanced',
+    componentId: 'trim',
+    slug: 'cardigan.trim',
+    facings: ['south', 'east'],
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-cardigan',
+    referenceBodyId: 'body-balanced',
+    componentId: 'button-line',
+    slug: 'cardigan.button-line',
+    facings: ['south', 'east'],
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-suit-jacket',
+    referenceBodyId: 'body-balanced',
+    componentId: 'lapels',
+    slug: 'suit-jacket.lapels',
+    facings: ['south', 'east'],
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-suit-jacket',
+    referenceBodyId: 'body-balanced',
+    componentId: 'buttons',
+    slug: 'suit-jacket.buttons',
+    facings: ['south', 'east'],
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-suit-jacket',
+    referenceBodyId: 'body-balanced',
+    componentId: 'pocket',
+    slug: 'suit-jacket.pocket',
+    facings: ['south', 'east'],
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-suit-jacket',
+    referenceBodyId: 'body-balanced',
+    componentId: 'tie',
+    slug: 'suit-jacket.tie',
+    facings: ['south', 'east'],
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-suit-jacket',
+    referenceBodyId: 'body-balanced',
+    componentId: 'pocket-square',
+    slug: 'suit-jacket.pocket-square',
+    facings: ['south', 'east'],
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-suit-jacket',
+    referenceBodyId: 'body-balanced',
+    componentId: 'notches',
+    slug: 'suit-jacket.notches',
+    facings: ['south', 'east'],
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-hoodie',
+    referenceBodyId: 'body-balanced',
+    componentId: 'hood',
+    slug: 'hoodie.hood',
+    facings: FACINGS,
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-hoodie',
+    referenceBodyId: 'body-balanced',
+    componentId: 'drawstrings',
+    slug: 'hoodie.drawstrings',
+    facings: ['south', 'east'],
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-hoodie',
+    referenceBodyId: 'body-balanced',
+    componentId: 'pocket',
+    slug: 'hoodie.pocket',
+    facings: ['south'],
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-vest',
+    referenceBodyId: 'body-balanced',
+    componentId: 'panel',
+    slug: 'vest.panel',
+    facings: ['south'],
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-vest',
+    referenceBodyId: 'body-balanced',
+    componentId: 'neck-inset',
+    slug: 'vest.neck-inset',
+    facings: ['south'],
+  },
+  {
+    slot: 'outfit',
+    referenceId: 'outfit-vest',
+    referenceBodyId: 'body-balanced',
+    componentId: 'buttons',
+    slug: 'vest.buttons',
+    facings: ['south'],
+  },
 ] as const satisfies readonly {
   slot: 'body' | 'head' | 'hair' | 'outfit';
   referenceId: string;
   referenceBodyId?: BodyArchetypeId;
+  componentId?: string;
   slug: string;
   facings: readonly Facing[];
 }[];
@@ -336,6 +514,7 @@ function activeOutfitArt(
   bodyId: BodyArchetypeId,
   facing: Facing,
   anchors: BodyFacingAnchors,
+  componentId?: string,
 ): string {
   const variant = part.buildVariant?.(facing, { bodyAnchors: anchors, bodyId })
     ?? fail(`${part.id}/${bodyId}/${facing} has no body-aware source geometry`);
@@ -343,9 +522,28 @@ function activeOutfitArt(
   if (variant.shapes.some((shape) => shape.silhouette !== false)) {
     fail(`${part.id}/${bodyId}/${facing} is not a fitted detail-only kit`);
   }
+  let shapes = variant.shapes;
+  let semanticId = 'neckline';
+  if (componentId) {
+    const target = PART_IMPORT_TARGETS.find(({ id }) => id === part.id);
+    const components = target?.components ?? fail(`${part.id} has no component manifest`);
+    const componentIndex = components.findIndex(({ id }) => id === componentId);
+    if (componentIndex < 0) fail(`${part.id} has no ${componentId} component`);
+    const component = components[componentIndex];
+    const count = component.facings[facing]?.shapeCount
+      ?? fail(`${part.id}.${componentId}/${facing} has no authored shape count`);
+    const offset = components
+      .slice(0, componentIndex)
+      .reduce((total, item) => total + (item.facings[facing]?.shapeCount ?? 0), 0);
+    shapes = variant.shapes.slice(offset, offset + count);
+    if (shapes.length !== count) {
+      fail(`${part.id}.${componentId}/${facing} expected ${count} shapes, received ${shapes.length}`);
+    }
+    semanticId = componentId;
+  }
   const origin = PART_AUTHORING_ORIGINS.outfit;
-  const paths = variant.shapes.map((shape, index) =>
-    pathElement(`detail/neckline/shape-${String(index + 1).padStart(3, '0')}`, shape));
+  const paths = shapes.map((shape, index) =>
+    pathElement(`detail/${semanticId}/shape-${String(index + 1).padStart(3, '0')}`, shape));
   return [
     `  <g id="art" transform="translate(${origin.x} ${origin.y})">`,
     ...paths,
@@ -451,17 +649,31 @@ function outfitScaffoldSvg(
   referenceId: string,
   referenceBodyId: BodyArchetypeId,
   facing: Facing,
+  componentId?: string,
 ): string {
   const part = getPart(referenceId) ?? fail(`unknown reference ${referenceId}`);
   if (part.slot !== 'outfit') fail(`${referenceId} is ${part.slot}, not outfit`);
   const target = PART_IMPORT_TARGETS.find(({ id }) => id === referenceId);
-  if (!target || target.slot !== 'outfit' || target.importMode !== 'anchored-detail') {
-    fail(`${referenceId} is not an allowed anchored-detail import target`);
+  if (
+    !target ||
+    target.slot !== 'outfit' ||
+    (target.importMode !== 'anchored-detail' && target.importMode !== 'component-detail')
+  ) {
+    fail(`${referenceId} is not an allowed outfit-detail import target`);
   }
   if (target.referenceBodyId !== referenceBodyId) {
     fail(`${referenceId} scaffold body ${referenceBodyId} does not match target body ${target.referenceBodyId ?? 'none'}`);
   }
-  if (target.facings[facing] === undefined) {
+  const component = componentId
+    ? target.components?.find(({ id }) => id === componentId)
+    : undefined;
+  if (target.importMode === 'component-detail' && !component) {
+    fail(`${referenceId} has no declared ${componentId ?? 'unnamed'} component`);
+  }
+  const authoredFacing = component
+    ? component.facings[facing] !== undefined
+    : target.facings[facing] !== undefined;
+  if (!authoredFacing) {
     fail(`${referenceId}/${facing} is not an authored target facing`);
   }
   const archetype = BODY_ARCHETYPES.find(({ id }) => id === referenceBodyId)
@@ -470,8 +682,8 @@ function outfitScaffoldSvg(
 
   return [
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">',
-    `  <title>Terrarium ${referenceId} ${facing} authoring scaffold on ${referenceBodyId}</title>`,
-    '  <desc>The importer ignores guide, reference, anchor, and swatch groups. Edit detail paths; preserve unique ids, sentinel paint, and nonzero fill.</desc>',
+    `  <title>Terrarium ${referenceId}${componentId ? ` ${componentId}` : ''} ${facing} authoring scaffold on ${referenceBodyId}</title>`,
+    `  <desc>The importer ignores guide, reference, anchor, and swatch groups. Edit ${componentId ?? 'detail'} paths; preserve unique ids, sentinel paint, and nonzero fill.</desc>`,
     '  <path id="reference/canvas-background" d="M 0 0 H 128 V 128 H 0 Z" fill="#FFFEFA" fill-rule="nonzero"/>',
     '  <g id="guide/grid-minor">',
     guidePath('guide/grid-minor/path', gridPath(8), GUIDE_COLORS.minor, 0.35),
@@ -485,7 +697,7 @@ function outfitScaffoldSvg(
     '  </g>',
     bodyReferenceGroup(referenceBodyId, facing, 0.22),
     outfitRigGuides(anchors),
-    activeOutfitArt(part, referenceBodyId, facing, anchors),
+    activeOutfitArt(part, referenceBodyId, facing, anchors, componentId),
     '  <g id="swatches">',
     swatchPaths(),
     '  </g>',
@@ -584,6 +796,7 @@ export function generatePartAuthoringAssets(): GeneratedPartAuthoringAsset[] {
           spec.referenceId,
           spec.referenceBodyId ?? fail(`${spec.referenceId} has no reference body`),
           facing,
+          'componentId' in spec ? spec.componentId : undefined,
         )
         : spec.slot === 'body'
           ? bodyScaffoldSvg(spec.referenceId, facing)

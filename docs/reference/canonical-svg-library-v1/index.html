@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Terrarium canonical SVG library</title>
+  <style>
+    :root { color-scheme: light; --page:#E7E1D2; --panel:#F6F1E6; --ink:#292C2A; --muted:#626861; --rule:#A39B8B; --green:#355647; --coral:#B65F4D; --blue:#294565; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--page); color:var(--ink); font:15px/1.5 Inter,ui-sans-serif,system-ui,sans-serif; }
+    main { width:min(1500px,calc(100% - 32px)); margin:0 auto; padding:38px 0 64px; }
+    header { display:grid; gap:12px; padding:26px 28px; border:1px solid var(--rule); border-radius:18px; background:var(--panel); }
+    h1 { margin:0; color:var(--green); font-size:clamp(28px,4vw,48px); line-height:1.05; }
+    h2 { margin:0; font-size:21px; }
+    p { margin:0; color:var(--muted); max-width:90ch; }
+    .stats { display:flex; flex-wrap:wrap; gap:10px; margin-top:8px; }
+    .stat { padding:7px 11px; border-radius:999px; background:#ece5d7; color:var(--blue); font-weight:750; }
+    .notice { border-left:5px solid var(--coral); padding-left:14px; }
+    .grid { display:grid; grid-template-columns:1fr; gap:24px; margin-top:28px; }
+    article { overflow:hidden; border:1px solid var(--rule); border-radius:18px; background:var(--panel); }
+    article > div { display:flex; justify-content:space-between; gap:18px; padding:18px 20px; align-items:baseline; }
+    article img { display:block; width:100%; height:auto; background:var(--page); border-top:1px solid var(--rule); }
+    a { color:var(--blue); }
+    .links { white-space:nowrap; font-weight:700; }
+    footer { margin-top:28px; color:var(--muted); }
+    @media (max-width:720px) { main { width:min(100% - 16px,1500px); padding-top:8px; } article > div { align-items:flex-start; flex-direction:column; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Terrarium canonical SVG library</h1>
+      <p>One visual source of truth for the genuine editable assets currently selected by Terrarium's live importers.</p>
+      <div class="stats">
+        <span class="stat">259 exact sources</span>
+        <span class="stat">181 production</span>
+        <span class="stat">74 dependencies</span>
+        <span class="stat">4 deferred concepts</span>
+        <span class="stat">47 wall masks</span>
+      </div>
+      <p class="notice"><strong>Grass fringe remains deferred.</strong> This guide creates no transition source, export, schema, or Unity change.</p>
+      <p><a href="./README.md">Scope and regeneration notes</a> · <a href="./manifest.json">machine-readable manifest</a></p>
+    </header>
+    <section class="grid">
+      <article>
+        <div>
+          <div><h2>Complete one-sheet</h2><p>259 exact editable SVG sources</p></div>
+          <span class="links"><a href="./overview.svg">SVG</a> · <a href="./overview.png">PNG</a></span>
+        </div>
+        <a href="./overview.svg"><img src="./overview.png" alt="Complete one-sheet"></a>
+      </article>
+<article>
+        <div>
+          <div><h2>Character sources</h2><p>113 exact files</p></div>
+          <span class="links"><a href="./characters.svg">SVG</a> · <a href="./characters.png">PNG</a></span>
+        </div>
+        <a href="./characters.svg"><img src="./characters.png" alt="Character sources"></a>
+      </article>
+<article>
+        <div>
+          <div><h2>Props and surfaces</h2><p>72 exact files</p></div>
+          <span class="links"><a href="./props-surfaces.svg">SVG</a> · <a href="./props-surfaces.png">PNG</a></span>
+        </div>
+        <a href="./props-surfaces.svg"><img src="./props-surfaces.png" alt="Props and surfaces"></a>
+      </article>
+<article>
+        <div>
+          <div><h2>Wall system</h2><p>74 active sources + 47 composed masks</p></div>
+          <span class="links"><a href="./walls.svg">SVG</a> · <a href="./walls.png">PNG</a></span>
+        </div>
+        <a href="./walls.svg"><img src="./walls.png" alt="Wall system"></a>
+      </article>
+    </section>
+    <footer>Generated from live canonical source registries. Individual art changes belong in the linked SVG source files.</footer>
+  </main>
+</body>
+</html>

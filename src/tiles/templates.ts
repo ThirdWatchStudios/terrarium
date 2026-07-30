@@ -4,6 +4,7 @@ import { blobIndex, configForIndex } from './blob';
 import { authoredWallBevel } from './wallBevel';
 import { rr, circle, ellipse } from '../core/geometry';
 import { mulberry32 } from '../core/random';
+import { maintainedHybridSurfaceShapes } from './maintainedHybridSurfaces';
 
 /**
  * Wall + floor tile templates. Conventions:
@@ -462,25 +463,8 @@ const carpet: FloorTemplate = {
     { key: 'speckle', label: 'Speckle', min: 0, max: 3, step: 1, default: 2 },
     { key: 'seed', label: 'Pattern seed', min: 1, max: 9, step: 1, default: 3 },
   ],
-  build(params) {
-    const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
-    const rng = mulberry32((params.seed ?? 3) * 7919);
-    const count = (params.speckle ?? 2) * 22;
-    for (let i = 0; i < count; i++) {
-      const x = rng() * 128;
-      const y = rng() * 128;
-      const r = 1 + rng() * 1.4;
-      const fill = rng() > 0.5 ? '$secondary' : '$accent';
-      // draw wrapped copies so speckles tile seamlessly across edges
-      for (const dx of [0, -128, 128]) {
-        for (const dy of [0, -128, 128]) {
-          if (x + dx > -4 && x + dx < 132 && y + dy > -4 && y + dy < 132) {
-            shapes.push(flat(circle(x + dx, y + dy, r), fill, 0.55));
-          }
-        }
-      }
-    }
-    return shapes;
+  build(params, palette) {
+    return maintainedHybridSurfaceShapes('carpet', params, palette) ?? [];
   },
 };
 
@@ -489,16 +473,8 @@ const carpetTiles: FloorTemplate = {
   id: 'carpet-tiles',
   label: 'Carpet tiles',
   params: [{ key: 'contrast', label: 'Checker contrast', min: 1, max: 4, step: 1, default: 2 }],
-  build(params) {
-    const alpha = (params.contrast ?? 2) * 0.06;
-    const a = Math.round(alpha * 255).toString(16).padStart(2, '0');
-    return [
-      flat(rr(0, 0, 128, 128, 0), '$primary'),
-      flat(rr(64, 0, 64, 64, 0), `#000000${a}`),
-      flat(rr(0, 64, 64, 64, 0), `#000000${a}`),
-      // seams
-      { d: 'M 64 0 L 64 128 M 0 64 L 128 64', stroke: '#00000014', strokeWidth: 1.5, silhouette: false },
-    ];
+  build(params, palette) {
+    return maintainedHybridSurfaceShapes('carpet-tiles', params, palette) ?? [];
   },
 };
 
@@ -507,27 +483,8 @@ const woodFloor: FloorTemplate = {
   id: 'wood-floor',
   label: 'Wood floor',
   params: [{ key: 'seed', label: 'Pattern seed', min: 1, max: 9, step: 1, default: 5 }],
-  build(params) {
-    const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
-    const rng = mulberry32((params.seed ?? 5) * 104729);
-    for (let row = 0; row < 8; row++) {
-      const y = row * 16;
-      // plank line
-      shapes.push({ d: `M 0 ${y} L 128 ${y}`, stroke: '#00000018', strokeWidth: 1.5, silhouette: false });
-      // one staggered end-seam per row, wrapped
-      const sx = Math.floor(rng() * 8) * 16;
-      for (const dx of [0, -128, 128]) {
-        if (sx + dx >= -2 && sx + dx <= 130) {
-          shapes.push({ d: `M ${sx + dx} ${y} L ${sx + dx} ${y + 16}`, stroke: '#00000018', strokeWidth: 1.5, silhouette: false });
-        }
-      }
-      // occasional grain streak
-      if (rng() > 0.5) {
-        const gx = rng() * 100 + 10;
-        shapes.push({ d: `M ${gx} ${y + 5} L ${gx + 14} ${y + 5}`, stroke: '#00000010', strokeWidth: 2, silhouette: false });
-      }
-    }
-    return shapes;
+  build(params, palette) {
+    return maintainedHybridSurfaceShapes('wood-floor', params, palette) ?? [];
   },
 };
 
@@ -536,16 +493,8 @@ const linoleum: FloorTemplate = {
   id: 'linoleum',
   label: 'Linoleum',
   params: [{ key: 'grid', label: 'Tile size', min: 16, max: 64, step: 16, default: 32 }],
-  build(params) {
-    const g = params.grid ?? 32;
-    const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
-    for (let v = 0; v <= 128; v += g) {
-      shapes.push({ d: `M ${v} 0 L ${v} 128`, stroke: '#00000012', strokeWidth: 2, silhouette: false });
-      shapes.push({ d: `M 0 ${v} L 128 ${v}`, stroke: '#00000012', strokeWidth: 2, silhouette: false });
-    }
-    // soft sheen
-    shapes.push(flat(rr(0, 0, 128, 14, 0), '#FFFFFF0A'));
-    return shapes;
+  build(params, palette) {
+    return maintainedHybridSurfaceShapes('linoleum', params, palette) ?? [];
   },
 };
 
@@ -558,30 +507,8 @@ const utilityVinyl: FloorTemplate = {
     { key: 'scuff', label: 'Scuff', min: 0, max: 3, step: 1, default: 2 },
     { key: 'seed', label: 'Pattern seed', min: 1, max: 9, step: 1, default: 4 },
   ],
-  build(params) {
-    const g = params.grid ?? 32;
-    const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
-    for (let v = 0; v <= 128; v += g) {
-      shapes.push({ d: `M ${v} 0 L ${v} 128`, stroke: '#00000010', strokeWidth: 1.5, silhouette: false });
-      shapes.push({ d: `M 0 ${v} L 128 ${v}`, stroke: '#00000010', strokeWidth: 1.5, silhouette: false });
-    }
-    const rng = mulberry32((params.seed ?? 4) * 65537);
-    const count = (params.scuff ?? 2) * 10;
-    for (let i = 0; i < count; i++) {
-      const x = rng() * 128;
-      const y = rng() * 128;
-      const w = 4 + rng() * 9;
-      const fill = rng() > 0.45 ? '$secondary' : '$accent';
-      for (const dx of [0, -128, 128]) {
-        for (const dy of [0, -128, 128]) {
-          if (x + dx > -12 && x + dx < 140 && y + dy > -4 && y + dy < 132) {
-            shapes.push(flat(rr(x + dx, y + dy, w, 1.5, 1), fill, 0.34));
-          }
-        }
-      }
-    }
-    shapes.push(flat(rr(0, 0, 128, 12, 0), '#FFFFFF08'));
-    return shapes;
+  build(params, palette) {
+    return maintainedHybridSurfaceShapes('utility-vinyl', params, palette) ?? [];
   },
 };
 
@@ -593,27 +520,8 @@ const quietCarpet: FloorTemplate = {
     { key: 'weave', label: 'Weave', min: 1, max: 4, step: 1, default: 2 },
     { key: 'seed', label: 'Pattern seed', min: 1, max: 9, step: 1, default: 6 },
   ],
-  build(params) {
-    const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
-    const step = 16;
-    const opacity = 0.06 + (params.weave ?? 2) * 0.025;
-    for (let v = -128; v <= 256; v += step) {
-      shapes.push({ d: `M ${v} 0 L ${v + 128} 128`, stroke: '$secondary', strokeWidth: 1.2, opacity, silhouette: false });
-      shapes.push({ d: `M ${v} 128 L ${v + 128} 0`, stroke: '$accent', strokeWidth: 1, opacity: opacity * 0.8, silhouette: false });
-    }
-    const rng = mulberry32((params.seed ?? 6) * 31337);
-    for (let i = 0; i < 12; i++) {
-      const x = rng() * 128;
-      const y = rng() * 128;
-      for (const dx of [0, -128, 128]) {
-        for (const dy of [0, -128, 128]) {
-          if (x + dx > -4 && x + dx < 132 && y + dy > -4 && y + dy < 132) {
-            shapes.push(flat(circle(x + dx, y + dy, 1.1), '$secondary', 0.32));
-          }
-        }
-      }
-    }
-    return shapes;
+  build(params, palette) {
+    return maintainedHybridSurfaceShapes('quiet-carpet', params, palette) ?? [];
   },
 };
 
@@ -625,29 +533,8 @@ const terrazzo: FloorTemplate = {
     { key: 'density', label: 'Aggregate', min: 1, max: 3, step: 1, default: 2 },
     { key: 'seed', label: 'Pattern seed', min: 1, max: 9, step: 1, default: 4 },
   ],
-  build(params) {
-    const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
-    const rng = mulberry32((params.seed ?? 4) * 49157);
-    const count = (params.density ?? 2) * 26;
-    const palette = ['$secondary', '$accent'];
-    for (let i = 0; i < count; i++) {
-      // resolve every per-chip property BEFORE the wrap loops so each wrapped
-      // copy is identical — otherwise edge chips wouldn't match across tiles.
-      const x = rng() * 128;
-      const y = rng() * 128;
-      const r = 1.5 + rng() * 2.5;
-      const ry = r * (0.6 + rng() * 0.5);
-      const fill = palette[rng() > 0.5 ? 0 : 1];
-      const op = 0.3 + rng() * 0.3;
-      for (const dx of [0, -128, 128]) {
-        for (const dy of [0, -128, 128]) {
-          if (x + dx > -6 && x + dx < 134 && y + dy > -6 && y + dy < 134) {
-            shapes.push(flat(ellipse(x + dx, y + dy, r, ry), fill, op));
-          }
-        }
-      }
-    }
-    return shapes;
+  build(params, palette) {
+    return maintainedHybridSurfaceShapes('terrazzo', params, palette) ?? [];
   },
 };
 
@@ -656,20 +543,8 @@ const rubberMat: FloorTemplate = {
   id: 'rubber-mat',
   label: 'Rubber mat',
   params: [{ key: 'studs', label: 'Studs', min: 6, max: 12, step: 1, default: 8 }],
-  build(params) {
-    const n = params.studs ?? 8;
-    const sp = 128 / n; // exact divisor → studs wrap seamlessly across tile edges
-    const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
-    for (let j = 0; j < n; j++) {
-      for (let i = 0; i < n; i++) {
-        const x = (i + 0.5) * sp;
-        const y = (j + 0.5) * sp;
-        shapes.push(flat(circle(x, y, 2.2), '$secondary', 0.5));
-        shapes.push(flat(circle(x, y, 1), '$accent', 0.4));
-      }
-    }
-    shapes.push(flat(rr(0, 0, 128, 10, 0), '#FFFFFF08'));
-    return shapes;
+  build(params, palette) {
+    return maintainedHybridSurfaceShapes('rubber-mat', params, palette) ?? [];
   },
 };
 
@@ -688,29 +563,8 @@ const lobbyStone: FloorTemplate = {
     { key: 'slab', label: 'Slab size', min: 32, max: 64, step: 16, default: 64 },
     { key: 'sheen', label: 'Sheen', min: 0, max: 3, step: 1, default: 2 },
   ],
-  build(params) {
-    const g = params.slab ?? 64;
-    const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
-    // checker the slabs faintly so the grid reads as stone, not a single sheet
-    for (let y = 0; y < 128; y += g) {
-      for (let x = 0; x < 128; x += g) {
-        if (((x / g) + (y / g)) % 2 === 1) shapes.push(flat(rr(x, y, g, g, 0), '$secondary', 0.5));
-      }
-    }
-    // grout seams (wrap because they sit on divisors of 128)
-    for (let v = 0; v <= 128; v += g) {
-      shapes.push({ d: `M ${v} 0 L ${v} 128`, stroke: '#0000001C', strokeWidth: 1.5, silhouette: false });
-      shapes.push({ d: `M 0 ${v} L 128 ${v}`, stroke: '#0000001C', strokeWidth: 1.5, silhouette: false });
-    }
-    // diagonal polish streaks, wrapped across both edges
-    const n = params.sheen ?? 2;
-    for (let i = 0; i < n; i++) {
-      const off = -128 + i * 48;
-      for (const d of [0, 128]) {
-        shapes.push({ d: `M ${off + d} 128 L ${off + 128 + d} 0`, stroke: '#FFFFFF14', strokeWidth: 6, silhouette: false });
-      }
-    }
-    return shapes;
+  build(params, palette) {
+    return maintainedHybridSurfaceShapes('lobby-stone', params, palette) ?? [];
   },
 };
 
@@ -783,43 +637,8 @@ const grass: FloorTemplate = {
     { key: 'flowers', label: 'Wildflowers', min: 0, max: 2, step: 1, default: 1 },
     { key: 'seed', label: 'Pattern seed', min: 1, max: 9, step: 1, default: 5 },
   ],
-  build(params) {
-    const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
-    const rng = mulberry32((params.seed ?? 5) * 22307);
-    groundMottle(shapes, rng, 7, 0.14);
-    const count = (params.blades ?? 2) * 60;
-    for (let i = 0; i < count; i++) {
-      // resolve per-blade props before the wrap loops so edge blades match across tiles
-      const x = rng() * 128;
-      const y = rng() * 128;
-      const h = 3.5 + rng() * 4.5;
-      const lean = (rng() - 0.5) * 4;
-      const fill = rng() > 0.5 ? '$secondary' : '$accent';
-      const op = 0.5 + rng() * 0.25;
-      for (const dx of [0, -128, 128]) {
-        for (const dy of [0, -128, 128]) {
-          if (x + dx > -5 && x + dx < 133 && y + dy > -9 && y + dy < 137) {
-            shapes.push({ d: `M ${x + dx} ${y + dy} L ${x + dx + lean} ${y + dy - h}`, stroke: fill, strokeWidth: 1.4, opacity: op, silhouette: false });
-          }
-        }
-      }
-    }
-    // clover — trios of highlight-green dots
-    for (let i = 0; i < 8; i++) {
-      const x = rng() * 128;
-      const y = rng() * 128;
-      for (const dx of [0, -128, 128]) {
-        for (const dy of [0, -128, 128]) {
-          if (x + dx > -6 && x + dx < 134 && y + dy > -6 && y + dy < 134) {
-            shapes.push(flat(circle(x + dx, y + dy, 1.3), '$accent', 0.55));
-            shapes.push(flat(circle(x + dx + 1.6, y + dy + 1.1, 1.1), '$accent', 0.5));
-            shapes.push(flat(circle(x + dx - 1.4, y + dy + 1.3, 1.1), '$accent', 0.5));
-          }
-        }
-      }
-    }
-    wildflowers(shapes, rng, (params.flowers ?? 1) * 6);
-    return shapes;
+  build(params, palette) {
+    return maintainedHybridSurfaceShapes('grass', params, palette) ?? [];
   },
 };
 
@@ -1072,33 +891,8 @@ const polishedConcrete: FloorTemplate = {
     { key: 'joints', label: 'Control joints', min: 0, max: 2, step: 1, default: 1 },
     { key: 'seed', label: 'Pattern seed', min: 1, max: 9, step: 1, default: 3 },
   ],
-  build(params) {
-    const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
-    const rng = mulberry32((params.seed ?? 3) * 21937);
-    for (let i = 0; i < 28; i++) {
-      const x = rng() * 128;
-      const y = rng() * 128;
-      const r = 6 + rng() * 14;
-      const fill = rng() > 0.5 ? '$secondary' : '$accent';
-      for (const dx of [0, -128, 128]) {
-        for (const dy of [0, -128, 128]) {
-          if (x + dx > -20 && x + dx < 148 && y + dy > -20 && y + dy < 148) shapes.push(flat(circle(x + dx, y + dy, r), fill, 0.06));
-        }
-      }
-    }
-    const joints = params.joints ?? 1;
-    if (joints >= 1)
-      for (const v of [64]) {
-        shapes.push({ d: `M ${v} 0 L ${v} 128`, stroke: '#00000018', strokeWidth: 1.2, silhouette: false });
-        shapes.push({ d: `M 0 ${v} L 128 ${v}`, stroke: '#00000018', strokeWidth: 1.2, silhouette: false });
-      }
-    if (joints >= 2)
-      for (const v of [32, 96]) {
-        shapes.push({ d: `M ${v} 0 L ${v} 128`, stroke: '#00000010', strokeWidth: 1, silhouette: false });
-        shapes.push({ d: `M 0 ${v} L 128 ${v}`, stroke: '#00000010', strokeWidth: 1, silhouette: false });
-      }
-    shapes.push(flat(rr(0, 0, 128, 12, 0), '#FFFFFF0A'));
-    return shapes;
+  build(params, palette) {
+    return maintainedHybridSurfaceShapes('polished-concrete', params, palette) ?? [];
   },
 };
 
@@ -1112,26 +906,8 @@ const accentTile: FloorTemplate = {
     { key: 'grid', label: 'Tile size', min: 32, max: 64, step: 16, default: 32 },
     { key: 'motif', label: 'Motif', min: 0, max: 2, step: 1, default: 1 },
   ],
-  build(params) {
-    const g = params.grid ?? 32;
-    const motif = params.motif ?? 1;
-    const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
-    for (let y = 0; y < 128; y += g) {
-      for (let x = 0; x < 128; x += g) {
-        if ((x / g + y / g) % 2 === 1) shapes.push(flat(rr(x, y, g, g, 0), '$secondary', 0.8));
-        if (motif >= 1) {
-          const cx = x + g / 2;
-          const cy = y + g / 2;
-          const d = g * 0.22;
-          shapes.push(flat(`M ${cx} ${cy - d} L ${cx + d} ${cy} L ${cx} ${cy + d} L ${cx - d} ${cy} Z`, '$accent', 0.85));
-        }
-      }
-    }
-    for (let v = 0; v <= 128; v += g) {
-      shapes.push({ d: `M ${v} 0 L ${v} 128`, stroke: '#00000018', strokeWidth: 1, silhouette: false });
-      shapes.push({ d: `M 0 ${v} L 128 ${v}`, stroke: '#00000018', strokeWidth: 1, silhouette: false });
-    }
-    return shapes;
+  build(params, palette) {
+    return maintainedHybridSurfaceShapes('accent-tile', params, palette) ?? [];
   },
 };
 
@@ -1142,24 +918,8 @@ const astroturf: FloorTemplate = {
   id: 'astroturf',
   label: 'Astroturf',
   params: [{ key: 'seed', label: 'Pattern seed', min: 1, max: 9, step: 1, default: 5 }],
-  build(params) {
-    const shapes: ShapeSpec[] = [flat(rr(0, 0, 128, 128, 0), '$primary')];
-    // mowing stripes (32-wide, wrap on divisors)
-    for (let i = 1; i < 4; i += 2) shapes.push(flat(rr(i * 32, 0, 32, 128, 0), '$secondary', 0.32));
-    // grass flecks
-    const rng = mulberry32((params.seed ?? 5) * 71317);
-    for (let i = 0; i < 90; i++) {
-      const x = rng() * 128;
-      const y = rng() * 128;
-      const len = 2 + rng() * 2;
-      const fill = rng() > 0.5 ? '$secondary' : '$accent';
-      for (const dx of [0, -128, 128]) {
-        for (const dy of [0, -128, 128]) {
-          if (x + dx > -4 && x + dx < 132 && y + dy > -4 && y + dy < 132) shapes.push({ d: `M ${x + dx} ${y + dy} L ${x + dx} ${y + dy - len}`, stroke: fill, strokeWidth: 1, opacity: 0.5, silhouette: false });
-        }
-      }
-    }
-    return shapes;
+  build(params, palette) {
+    return maintainedHybridSurfaceShapes('astroturf', params, palette) ?? [];
   },
 };
 

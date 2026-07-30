@@ -1,0 +1,139 @@
+{
+  "status": "production-source-and-importer-validated",
+  "authoringCanvas": 128,
+  "wallDatum": 112,
+  "characterVisualScale": 0.65,
+  "schemaVersion": 19,
+  "liveCarrierSourceCount": 8,
+  "systemCandidateSourceCount": 4,
+  "maximumNormalizedPixelDelta": 0,
+  "maximumImportedPixelDelta": 0.000030098709405637256,
+  "sources": [
+    {
+      "id": "car",
+      "kind": "live-carrier",
+      "projection": "plan",
+      "path": "assets/props/quota-co-workhorse-v1/car.svg",
+      "sha256": "8749f838f92918187a3eaaec40f19fa054a2021e83874b752e3d77921d6049c0",
+      "normalizedPixelDelta": 0,
+      "normalizedImportedPixelDelta": 0.000030098709405637256,
+      "semanticGroupCount": 6
+    },
+    {
+      "id": "lot-marking-crosswalk",
+      "kind": "live-carrier",
+      "projection": "plan",
+      "path": "assets/props/quota-co-workhorse-v1/lot-marking-crosswalk.svg",
+      "sha256": "c1e241e3dfb89c3cddbad3a4e8d600fd9ea10fc9d0eaad5cb1f4b4894b8d38c1",
+      "normalizedPixelDelta": 0,
+      "normalizedImportedPixelDelta": 0,
+      "semanticGroupCount": 3
+    },
+    {
+      "id": "lamp-post",
+      "kind": "live-carrier",
+      "projection": "elevation",
+      "path": "assets/props/quota-co-workhorse-v1/lamp-post.svg",
+      "sha256": "2d941d0ee3ae1d7f33a3d78292d98fc3324b8259393b394ad989a41da9d122cb",
+      "normalizedPixelDelta": 0,
+      "normalizedImportedPixelDelta": 0,
+      "semanticGroupCount": 4
+    },
+    {
+      "id": "sign-lot",
+      "kind": "live-carrier",
+      "projection": "elevation",
+      "path": "assets/props/quota-co-workhorse-v1/sign-lot.svg",
+      "sha256": "efe7dad17a22f286bf08b6177c327f48d029878fe0b50b3a7ae25bd8ac4d1515",
+      "normalizedPixelDelta": 0,
+      "normalizedImportedPixelDelta": 0.0000017951516544117647,
+      "semanticGroupCount": 6
+    },
+    {
+      "id": "bike-rack",
+      "kind": "live-carrier",
+      "projection": "plan",
+      "path": "assets/props/quota-co-workhorse-v1/bike-rack.svg",
+      "sha256": "1e1f074b34adbbc8b4a954395afdb2ea503d72fdafdbfdd136e1e916d919f59f",
+      "normalizedPixelDelta": 0,
+      "normalizedImportedPixelDelta": 0,
+      "semanticGroupCount": 4
+    },
+    {
+      "id": "park-bench",
+      "kind": "live-carrier",
+      "projection": "elevation",
+      "path": "assets/props/quota-co-workhorse-v1/park-bench.svg",
+      "sha256": "a5d10089a5be5c309dc3c0391f7c805216a9ea77609b64357628167c24e06107",
+      "normalizedPixelDelta": 0,
+      "normalizedImportedPixelDelta": 0,
+      "semanticGroupCount": 5
+    },
+    {
+      "id": "picnic-table",
+      "kind": "live-carrier",
+      "projection": "plan",
+      "path": "assets/props/quota-co-workhorse-v1/picnic-table.svg",
+      "sha256": "adb4c373e31453f24d950403a7dbc8af8ab4f9a26ddf00d8dec65def394e0694",
+      "normalizedPixelDelta": 0,
+      "normalizedImportedPixelDelta": 0,
+      "semanticGroupCount": 4
+    },
+    {
+      "id": "tree-canopy",
+      "kind": "live-carrier",
+      "projection": "elevation",
+      "path": "assets/props/quota-co-workhorse-v1/tree-canopy.svg",
+      "sha256": "b449cb35a06d1b16d71f2787b9402344e664a83a2f2e08c01f6349869b0d401d",
+      "normalizedPixelDelta": 0,
+      "normalizedImportedPixelDelta": 0,
+      "semanticGroupCount": 5
+    },
+    {
+      "id": "hvac-condenser",
+      "kind": "system-candidate",
+      "projection": "elevation",
+      "path": "assets/props/quota-co-gameplay-candidates-v1/hvac-condenser.svg",
+      "sha256": "a12302402652d62241daee4bcef954e9abb8385c097843f302f5ff5840e0be55",
+      "normalizedPixelDelta": 0,
+      "semanticGroupCount": 3
+    },
+    {
+      "id": "surveillance-camera",
+      "kind": "system-candidate",
+      "projection": "elevation",
+      "path": "assets/props/quota-co-gameplay-candidates-v1/surveillance-camera.svg",
+      "sha256": "0051840cc260d38cf8828d70ffeb5346b8559efdc18a69a1658257ee90b5cecc",
+      "normalizedPixelDelta": 0,
+      "semanticGroupCount": 3
+    },
+    {
+      "id": "surveillance-sensor",
+      "kind": "system-candidate",
+      "projection": "elevation",
+      "path": "assets/props/quota-co-gameplay-candidates-v1/surveillance-sensor.svg",
+      "sha256": "3c4c04c7363455fe0b12fd332e613440e1f56bcce588fa0d5e50f5e418602323",
+      "normalizedPixelDelta": 0,
+      "semanticGroupCount": 3
+    },
+    {
+      "id": "privacy-hedge",
+      "kind": "system-candidate",
+      "projection": "elevation",
+      "path": "assets/props/quota-co-gameplay-candidates-v1/privacy-hedge.svg",
+      "sha256": "91aaa992d4e47eee79c935f42da44aea882cf8b18a16cbd0a6b1fd851ac3ca01",
+      "normalizedPixelDelta": 0,
+      "semanticGroupCount": 3
+    }
+  ],
+  "productionMutations": {
+    "importerManifest": true,
+    "generatedShapeSpecs": true,
+    "propTemplates": "appearance-builders-only",
+    "facilityCatalog": false,
+    "exporter": false,
+    "schema": false,
+    "unityRegistration": false,
+    "commit": false
+  }
+}

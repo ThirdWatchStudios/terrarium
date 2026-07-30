@@ -1,0 +1,1456 @@
+{
+  "reviewStatus": "canonical-portfolio-unity-import-accepted",
+  "canonicalSvgCount": 45,
+  "sourceSvgAuthoring": true,
+  "productionPromotion": true,
+  "bundleExportPerformed": true,
+  "unityImport": true,
+  "commitCreated": true,
+  "exportContractMutation": false,
+  "schemaMutation": false,
+  "schemaVersion": 19,
+  "closureEvidence": {
+    "headlessExportFileCount": 3523,
+    "unityRepository": "ThirdWatchStudios/the-water-cooler",
+    "unityImportFolder": "water-cooler-sprites-20260729-182010",
+    "unityImportCommit": "d345281b0d",
+    "visualAcceptance": [
+      "accepted prop geometry visible in Unity",
+      "canonical SVG palette visible after stale-palette reconciliation"
+    ],
+    "terrariumCommitScope": "canonical authored prop source bank, importer, proofs, palette policy, tests, and snapshots"
+  },
+  "invariants": {
+    "authoringCanvas": 128,
+    "acceptedWallDatum": 112,
+    "characterVisualScale": 0.65,
+    "propCharacterMultiplierApplied": false,
+    "nativePropFrameCells": 2,
+    "gameplayRootsAndFootprintsPreserved": true
+  },
+  "authoredSvgStylePolicy": {
+    "globalRestylingDefault": false,
+    "compositorOutlineDefault": false,
+    "compositorContactShadowDefault": false,
+    "exportLayerMode": "single-resolved-untinted",
+    "explicitOptIn": "restyleAuthoredSvg"
+  },
+  "groups": [
+    {
+      "id": "handheld-character-relative",
+      "label": "Handheld and character-relative items",
+      "authoredIds": [],
+      "carryoverIds": [
+        "acc-clipboard"
+      ]
+    },
+    {
+      "id": "desk-work-surface",
+      "label": "Desk and work-surface items",
+      "authoredIds": [
+        "desk",
+        "desk-lamp",
+        "standing-desk",
+        "coffee-table",
+        "conference-table",
+        "reception-desk",
+        "desk-clutter",
+        "cubicle-workstation",
+        "break-table"
+      ],
+      "carryoverIds": []
+    },
+    {
+      "id": "furniture",
+      "label": "Furniture",
+      "authoredIds": [
+        "bookshelf",
+        "lockers",
+        "open-shelving",
+        "waiting-bench",
+        "pantry-shelf",
+        "bean-bag",
+        "nap-pod",
+        "office-chair",
+        "filing-cabinet",
+        "supply-cabinet",
+        "coat-rack",
+        "couch",
+        "lounge-seating"
+      ],
+      "carryoverIds": []
+    },
+    {
+      "id": "facilities-machines",
+      "label": "Facilities and machines",
+      "authoredIds": [
+        "water-cooler",
+        "printer",
+        "coffee-machine",
+        "printer-jammed",
+        "coffee-machine-broken",
+        "water-cooler-empty",
+        "copier",
+        "shredder",
+        "server-rack",
+        "microwave",
+        "fridge",
+        "vending-machine",
+        "mail-station"
+      ],
+      "carryoverIds": []
+    },
+    {
+      "id": "wall-mounted-decorative",
+      "label": "Wall-mounted and decorative items",
+      "authoredIds": [
+        "office-plant",
+        "potted-tree",
+        "hanging-plant",
+        "floor-lamp",
+        "framed-art",
+        "poster",
+        "wall-clock",
+        "fish-tank",
+        "string-lights",
+        "rug"
+      ],
+      "carryoverIds": []
+    },
+    {
+      "id": "outdoor-construction",
+      "label": "Outdoor and construction-site props",
+      "authoredIds": [],
+      "carryoverIds": [
+        "car",
+        "lamp-post",
+        "bike-rack"
+      ]
+    }
+  ],
+  "sourceValidation": {
+    "printer": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/printer.svg",
+      "sourceSha256": "5d7b2d6eaffce50e1c16c6e181296fe720d6594256238c5a926c391786b76c37",
+      "importedSourceSha256": "5d7b2d6eaffce50e1c16c6e181296fe720d6594256238c5a926c391786b76c37",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.000059838388480392154,
+      "close": {
+        "visiblePixels": 2587,
+        "bounds": {
+          "minX": 35,
+          "minY": 69,
+          "maxX": 92,
+          "maxY": 119
+        }
+      },
+      "far": {
+        "visiblePixels": 264,
+        "bounds": {
+          "minX": 11,
+          "minY": 21,
+          "maxX": 28,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "printer-jammed": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/printer-jammed.svg",
+      "sourceSha256": "2a5601464cf786abce1abd13081a552510e9bd76208d9151d0fdfe1f9ad0636f",
+      "importedSourceSha256": "2a5601464cf786abce1abd13081a552510e9bd76208d9151d0fdfe1f9ad0636f",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.0000442205690870098,
+      "close": {
+        "visiblePixels": 2580,
+        "bounds": {
+          "minX": 35,
+          "minY": 65,
+          "maxX": 92,
+          "maxY": 119
+        }
+      },
+      "far": {
+        "visiblePixels": 260,
+        "bounds": {
+          "minX": 11,
+          "minY": 20,
+          "maxX": 28,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "coffee-machine": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/coffee-machine.svg",
+      "sourceSha256": "0ec61554eb11a552ee04bacf634dc65a605f13891f97c884dc01084acd1b72fb",
+      "importedSourceSha256": "0ec61554eb11a552ee04bacf634dc65a605f13891f97c884dc01084acd1b72fb",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.000029260971966911766,
+      "close": {
+        "visiblePixels": 2343,
+        "bounds": {
+          "minX": 43,
+          "minY": 61,
+          "maxX": 84,
+          "maxY": 119
+        }
+      },
+      "far": {
+        "visiblePixels": 246,
+        "bounds": {
+          "minX": 13,
+          "minY": 19,
+          "maxX": 26,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "coffee-machine-broken": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/coffee-machine-broken.svg",
+      "sourceSha256": "c3e2c7c78b47bd9b13f56938043fb7633546cded869cfbcf906595fe2041bd79",
+      "importedSourceSha256": "c3e2c7c78b47bd9b13f56938043fb7633546cded869cfbcf906595fe2041bd79",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.0003471823299632353,
+      "close": {
+        "visiblePixels": 2456,
+        "bounds": {
+          "minX": 43,
+          "minY": 58,
+          "maxX": 86,
+          "maxY": 120
+        }
+      },
+      "far": {
+        "visiblePixels": 262,
+        "bounds": {
+          "minX": 13,
+          "minY": 17,
+          "maxX": 26,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "water-cooler": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/water-cooler.svg",
+      "sourceSha256": "394edcd682ceb4a2aa3ec14a3c5b8570f9c2419ba1c05de69d562d66b2e9cb72",
+      "importedSourceSha256": "394edcd682ceb4a2aa3ec14a3c5b8570f9c2419ba1c05de69d562d66b2e9cb72",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.00003973268995098039,
+      "close": {
+        "visiblePixels": 3016,
+        "bounds": {
+          "minX": 42,
+          "minY": 36,
+          "maxX": 85,
+          "maxY": 119
+        }
+      },
+      "far": {
+        "visiblePixels": 304,
+        "bounds": {
+          "minX": 13,
+          "minY": 11,
+          "maxX": 26,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "water-cooler-empty": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/water-cooler-empty.svg",
+      "sourceSha256": "20d64741f6305f1828fe0bb080d21bb91b43f952b4c81187cc0585390c97ef23",
+      "importedSourceSha256": "20d64741f6305f1828fe0bb080d21bb91b43f952b4c81187cc0585390c97ef23",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.0011594884535845588,
+      "close": {
+        "visiblePixels": 3010,
+        "bounds": {
+          "minX": 42,
+          "minY": 36,
+          "maxX": 85,
+          "maxY": 119
+        }
+      },
+      "far": {
+        "visiblePixels": 302,
+        "bounds": {
+          "minX": 13,
+          "minY": 11,
+          "maxX": 26,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "shredder": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/shredder.svg",
+      "sourceSha256": "ec1124b825448a7410cb6bc2ed1a80920a42209af8470aff9e8fc169139e3b6e",
+      "importedSourceSha256": "ec1124b825448a7410cb6bc2ed1a80920a42209af8470aff9e8fc169139e3b6e",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.000004487879136029412,
+      "close": {
+        "visiblePixels": 1981,
+        "bounds": {
+          "minX": 43,
+          "minY": 54,
+          "maxX": 84,
+          "maxY": 119
+        }
+      },
+      "far": {
+        "visiblePixels": 212,
+        "bounds": {
+          "minX": 13,
+          "minY": 17,
+          "maxX": 26,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "microwave": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/microwave.svg",
+      "sourceSha256": "bb3a3db17bd221e9fb3469345291920639d32e8beb3aed31b8bc58541f640903",
+      "importedSourceSha256": "bb3a3db17bd221e9fb3469345291920639d32e8beb3aed31b8bc58541f640903",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.0000030517578125,
+      "close": {
+        "visiblePixels": 1770,
+        "bounds": {
+          "minX": 38,
+          "minY": 84,
+          "maxX": 89,
+          "maxY": 119
+        }
+      },
+      "far": {
+        "visiblePixels": 186,
+        "bounds": {
+          "minX": 11,
+          "minY": 26,
+          "maxX": 28,
+          "maxY": 36
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "fridge": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/fridge.svg",
+      "sourceSha256": "1991d7c58c2a5967a0088bb67e678c506577d3ff1605d9223158a8cee26c91a9",
+      "importedSourceSha256": "1991d7c58c2a5967a0088bb67e678c506577d3ff1605d9223158a8cee26c91a9",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.000026209214154411763,
+      "close": {
+        "visiblePixels": 3795,
+        "bounds": {
+          "minX": 40,
+          "minY": 39,
+          "maxX": 87,
+          "maxY": 120
+        }
+      },
+      "far": {
+        "visiblePixels": 396,
+        "bounds": {
+          "minX": 12,
+          "minY": 12,
+          "maxX": 27,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "vending-machine": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/vending-machine.svg",
+      "sourceSha256": "78dc64b8afab10d62244228fb80dcffa4d6e6dbb1cc381915815dbf8344fa0ca",
+      "importedSourceSha256": "78dc64b8afab10d62244228fb80dcffa4d6e6dbb1cc381915815dbf8344fa0ca",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.000041468003216911766,
+      "close": {
+        "visiblePixels": 4452,
+        "bounds": {
+          "minX": 37,
+          "minY": 36,
+          "maxX": 90,
+          "maxY": 120
+        }
+      },
+      "far": {
+        "visiblePixels": 466,
+        "bounds": {
+          "minX": 11,
+          "minY": 11,
+          "maxX": 28,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "desk": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/desk.svg",
+      "sourceSha256": "3563e9bb626735923b2d970e7f256384cb314b1a8751f923a3baa732d71530d7",
+      "importedSourceSha256": "3563e9bb626735923b2d970e7f256384cb314b1a8751f923a3baa732d71530d7",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0,
+      "close": {
+        "visiblePixels": 7608,
+        "bounds": {
+          "minX": 7,
+          "minY": 30,
+          "maxX": 120,
+          "maxY": 97
+        }
+      },
+      "far": {
+        "visiblePixels": 769,
+        "bounds": {
+          "minX": 2,
+          "minY": 9,
+          "maxX": 37,
+          "maxY": 30
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "office-chair": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/office-chair.svg",
+      "sourceSha256": "6eb82aa0542965f1c59afaa531952e9c29792aedf8b224cb6c1ad4f911263828",
+      "importedSourceSha256": "6eb82aa0542965f1c59afaa531952e9c29792aedf8b224cb6c1ad4f911263828",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.0001968682981004902,
+      "close": {
+        "visiblePixels": 2038,
+        "bounds": {
+          "minX": 40,
+          "minY": 45,
+          "maxX": 87,
+          "maxY": 104
+        }
+      },
+      "far": {
+        "visiblePixels": 224,
+        "bounds": {
+          "minX": 12,
+          "minY": 14,
+          "maxX": 27,
+          "maxY": 32
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "filing-cabinet": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/filing-cabinet.svg",
+      "sourceSha256": "c596dd32dfa5fbeef2ca7f2dd4da1cb06cb74c9170a7cba3a6389c87a3d2a036",
+      "importedSourceSha256": "c596dd32dfa5fbeef2ca7f2dd4da1cb06cb74c9170a7cba3a6389c87a3d2a036",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.000007419960171568627,
+      "close": {
+        "visiblePixels": 3066,
+        "bounds": {
+          "minX": 41,
+          "minY": 47,
+          "maxX": 86,
+          "maxY": 120
+        }
+      },
+      "far": {
+        "visiblePixels": 326,
+        "bounds": {
+          "minX": 13,
+          "minY": 14,
+          "maxX": 26,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "copier": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/copier.svg",
+      "sourceSha256": "c70859095ed9c7b5c9aae24526a05792e1da01931327fcf5e5237a6efbc76118",
+      "importedSourceSha256": "c70859095ed9c7b5c9aae24526a05792e1da01931327fcf5e5237a6efbc76118",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0,
+      "close": {
+        "visiblePixels": 7016,
+        "bounds": {
+          "minX": 20,
+          "minY": 29,
+          "maxX": 101,
+          "maxY": 121
+        }
+      },
+      "far": {
+        "visiblePixels": 698,
+        "bounds": {
+          "minX": 6,
+          "minY": 9,
+          "maxX": 31,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "office-plant": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/office-plant.svg",
+      "sourceSha256": "8cbb90dcca5eead7e970288042762fac9045797782b43bf079da95ae0252e4ac",
+      "importedSourceSha256": "8cbb90dcca5eead7e970288042762fac9045797782b43bf079da95ae0252e4ac",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0,
+      "close": {
+        "visiblePixels": 4557,
+        "bounds": {
+          "minX": 23,
+          "minY": 22,
+          "maxX": 105,
+          "maxY": 120
+        }
+      },
+      "far": {
+        "visiblePixels": 473,
+        "bounds": {
+          "minX": 7,
+          "minY": 7,
+          "maxX": 32,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "standing-desk": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/standing-desk.svg",
+      "sourceSha256": "00d9a2056acb1f03cfc1eca8e1bf3b6f67da8faec6f78a82b663c0700f294fb8",
+      "importedSourceSha256": "00d9a2056acb1f03cfc1eca8e1bf3b6f67da8faec6f78a82b663c0700f294fb8",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0,
+      "close": {
+        "visiblePixels": 6697,
+        "bounds": {
+          "minX": 12,
+          "minY": 30,
+          "maxX": 116,
+          "maxY": 95
+        }
+      },
+      "far": {
+        "visiblePixels": 682,
+        "bounds": {
+          "minX": 3,
+          "minY": 9,
+          "maxX": 36,
+          "maxY": 29
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "cubicle-workstation": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/cubicle-workstation.svg",
+      "sourceSha256": "0ac7255d9f075a59452d9a90ce6dda135afa00956cc0f6e355ce2fb01661b7d5",
+      "importedSourceSha256": "0ac7255d9f075a59452d9a90ce6dda135afa00956cc0f6e355ce2fb01661b7d5",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0,
+      "close": {
+        "visiblePixels": 8641,
+        "bounds": {
+          "minX": 13,
+          "minY": 12,
+          "maxX": 114,
+          "maxY": 109
+        }
+      },
+      "far": {
+        "visiblePixels": 901,
+        "bounds": {
+          "minX": 4,
+          "minY": 3,
+          "maxX": 35,
+          "maxY": 34
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "reception-desk": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/reception-desk.svg",
+      "sourceSha256": "653157739a9d5e4bb9fb1aa29b513f24a3951758676183ef8e655eff9cddb29f",
+      "importedSourceSha256": "653157739a9d5e4bb9fb1aa29b513f24a3951758676183ef8e655eff9cddb29f",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.000011848000919117647,
+      "close": {
+        "visiblePixels": 5338,
+        "bounds": {
+          "minX": 17,
+          "minY": 18,
+          "maxX": 109,
+          "maxY": 112
+        }
+      },
+      "far": {
+        "visiblePixels": 571,
+        "bounds": {
+          "minX": 5,
+          "minY": 5,
+          "maxX": 34,
+          "maxY": 35
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "conference-table": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/conference-table.svg",
+      "sourceSha256": "2e400ded975dfd943eef22e96176e28a37fd64a2626f406c6ba6d5cbb4165aaa",
+      "importedSourceSha256": "2e400ded975dfd943eef22e96176e28a37fd64a2626f406c6ba6d5cbb4165aaa",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.0000067018995098039215,
+      "close": {
+        "visiblePixels": 8361,
+        "bounds": {
+          "minX": 7,
+          "minY": 11,
+          "maxX": 120,
+          "maxY": 116
+        }
+      },
+      "far": {
+        "visiblePixels": 883,
+        "bounds": {
+          "minX": 2,
+          "minY": 3,
+          "maxX": 37,
+          "maxY": 36
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "supply-cabinet": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/supply-cabinet.svg",
+      "sourceSha256": "c4edb6ff3150f1947f21347e06e6da73635710047d56beab76bf8b71e12fb546",
+      "importedSourceSha256": "c4edb6ff3150f1947f21347e06e6da73635710047d56beab76bf8b71e12fb546",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.00007384057138480392,
+      "close": {
+        "visiblePixels": 2662,
+        "bounds": {
+          "minX": 39,
+          "minY": 60,
+          "maxX": 88,
+          "maxY": 121
+        }
+      },
+      "far": {
+        "visiblePixels": 274,
+        "bounds": {
+          "minX": 12,
+          "minY": 18,
+          "maxX": 27,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "desk-lamp": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/desk-lamp.svg",
+      "sourceSha256": "db2e665fba2a6646fe36b21cc72b74007ccfbba10264f091b6de750145bc8c52",
+      "importedSourceSha256": "db2e665fba2a6646fe36b21cc72b74007ccfbba10264f091b6de750145bc8c52",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.00005900065104166667,
+      "close": {
+        "visiblePixels": 588,
+        "bounds": {
+          "minX": 47,
+          "minY": 89,
+          "maxX": 80,
+          "maxY": 120
+        }
+      },
+      "far": {
+        "visiblePixels": 70,
+        "bounds": {
+          "minX": 15,
+          "minY": 27,
+          "maxX": 24,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "desk-clutter": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/desk-clutter.svg",
+      "sourceSha256": "c2f09c2a1266df72d303602b5711e188131f0e498d90f3da21b28372f743743a",
+      "importedSourceSha256": "c2f09c2a1266df72d303602b5711e188131f0e498d90f3da21b28372f743743a",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.0000017951516544117647,
+      "close": {
+        "visiblePixels": 5486,
+        "bounds": {
+          "minX": 19,
+          "minY": 31,
+          "maxX": 108,
+          "maxY": 93
+        }
+      },
+      "far": {
+        "visiblePixels": 560,
+        "bounds": {
+          "minX": 6,
+          "minY": 9,
+          "maxX": 33,
+          "maxY": 29
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "couch": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/couch.svg",
+      "sourceSha256": "db09a574aa698d4e12b648edccef00c81417f5b9d95343f9f213b60b55fbec04",
+      "importedSourceSha256": "db09a574aa698d4e12b648edccef00c81417f5b9d95343f9f213b60b55fbec04",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.000047272326899509805,
+      "close": {
+        "visiblePixels": 5130,
+        "bounds": {
+          "minX": 11,
+          "minY": 38,
+          "maxX": 116,
+          "maxY": 87
+        }
+      },
+      "far": {
+        "visiblePixels": 550,
+        "bounds": {
+          "minX": 3,
+          "minY": 11,
+          "maxX": 36,
+          "maxY": 27
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "waiting-bench": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/waiting-bench.svg",
+      "sourceSha256": "ef78461acb3d5e2655e7c9c8534c2baffd875397731d0b13af7648c1ed5d4da1",
+      "importedSourceSha256": "ef78461acb3d5e2655e7c9c8534c2baffd875397731d0b13af7648c1ed5d4da1",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.00003674077052696078,
+      "close": {
+        "visiblePixels": 4437,
+        "bounds": {
+          "minX": 10,
+          "minY": 42,
+          "maxX": 117,
+          "maxY": 83
+        }
+      },
+      "far": {
+        "visiblePixels": 463,
+        "bounds": {
+          "minX": 3,
+          "minY": 13,
+          "maxX": 36,
+          "maxY": 26
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "coffee-table": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/coffee-table.svg",
+      "sourceSha256": "805fcff630d96b4e5fe7afa04fe988174fdbee546876f28f8fea341cd92b2d60",
+      "importedSourceSha256": "805fcff630d96b4e5fe7afa04fe988174fdbee546876f28f8fea341cd92b2d60",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.00010196461397058824,
+      "close": {
+        "visiblePixels": 1877,
+        "bounds": {
+          "minX": 37,
+          "minY": 46,
+          "maxX": 90,
+          "maxY": 81
+        }
+      },
+      "far": {
+        "visiblePixels": 204,
+        "bounds": {
+          "minX": 11,
+          "minY": 14,
+          "maxX": 28,
+          "maxY": 25
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "break-table": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/break-table.svg",
+      "sourceSha256": "dc7b35aa9506e07aff24591bd6784a86205185d504952823476b9b5d3ce630cb",
+      "importedSourceSha256": "dc7b35aa9506e07aff24591bd6784a86205185d504952823476b9b5d3ce630cb",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.0005006677964154412,
+      "close": {
+        "visiblePixels": 3772,
+        "bounds": {
+          "minX": 16,
+          "minY": 16,
+          "maxX": 111,
+          "maxY": 111
+        }
+      },
+      "far": {
+        "visiblePixels": 401,
+        "bounds": {
+          "minX": 4,
+          "minY": 5,
+          "maxX": 34,
+          "maxY": 34
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "lounge-seating": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/lounge-seating.svg",
+      "sourceSha256": "d20ea8e62027bafcf31617b6930101177262c48abd692edd1be7bb53a9569b48",
+      "importedSourceSha256": "d20ea8e62027bafcf31617b6930101177262c48abd692edd1be7bb53a9569b48",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.00021087048100490197,
+      "close": {
+        "visiblePixels": 2408,
+        "bounds": {
+          "minX": 25,
+          "minY": 21,
+          "maxX": 102,
+          "maxY": 90
+        }
+      },
+      "far": {
+        "visiblePixels": 274,
+        "bounds": {
+          "minX": 7,
+          "minY": 6,
+          "maxX": 32,
+          "maxY": 28
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "bean-bag": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/bean-bag.svg",
+      "sourceSha256": "f0d58020a7f24b6b68a2a3db806098dc628dff26fc62030608e8c22095ce7f45",
+      "importedSourceSha256": "f0d58020a7f24b6b68a2a3db806098dc628dff26fc62030608e8c22095ce7f45",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.000020404890471813724,
+      "close": {
+        "visiblePixels": 1243,
+        "bounds": {
+          "minX": 45,
+          "minY": 44,
+          "maxX": 82,
+          "maxY": 85
+        }
+      },
+      "far": {
+        "visiblePixels": 128,
+        "bounds": {
+          "minX": 14,
+          "minY": 14,
+          "maxX": 25,
+          "maxY": 26
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "nap-pod": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/nap-pod.svg",
+      "sourceSha256": "c137b954cf4654554e29c4abdb4a3cd3f18e198332e9c92f72638f14d3afb307",
+      "importedSourceSha256": "c137b954cf4654554e29c4abdb4a3cd3f18e198332e9c92f72638f14d3afb307",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.0004923502604166667,
+      "close": {
+        "visiblePixels": 4279,
+        "bounds": {
+          "minX": 17,
+          "minY": 56,
+          "maxX": 113,
+          "maxY": 121
+        }
+      },
+      "far": {
+        "visiblePixels": 444,
+        "bounds": {
+          "minX": 5,
+          "minY": 17,
+          "maxX": 35,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "bookshelf": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/bookshelf.svg",
+      "sourceSha256": "e5ff3a54ec03e332a4cdc8299558e90e0a0b1388534679089e70937cdf7dab45",
+      "importedSourceSha256": "e5ff3a54ec03e332a4cdc8299558e90e0a0b1388534679089e70937cdf7dab45",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.0001457064759497549,
+      "close": {
+        "visiblePixels": 3466,
+        "bounds": {
+          "minX": 37,
+          "minY": 37,
+          "maxX": 90,
+          "maxY": 121
+        }
+      },
+      "far": {
+        "visiblePixels": 378,
+        "bounds": {
+          "minX": 12,
+          "minY": 11,
+          "maxX": 27,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "lockers": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/lockers.svg",
+      "sourceSha256": "a214bd7613c8223148f1b32c64c2dd04579ef28e068c5366dcc24f36a8a43a71",
+      "importedSourceSha256": "a214bd7613c8223148f1b32c64c2dd04579ef28e068c5366dcc24f36a8a43a71",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.00016748764935661765,
+      "close": {
+        "visiblePixels": 3548,
+        "bounds": {
+          "minX": 35,
+          "minY": 47,
+          "maxX": 92,
+          "maxY": 121
+        }
+      },
+      "far": {
+        "visiblePixels": 376,
+        "bounds": {
+          "minX": 11,
+          "minY": 14,
+          "maxX": 28,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "open-shelving": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/open-shelving.svg",
+      "sourceSha256": "7d86837e393cbec6a8247ff391bbf8dd21574289e4da87e2ece60a7a0faff99d",
+      "importedSourceSha256": "7d86837e393cbec6a8247ff391bbf8dd21574289e4da87e2ece60a7a0faff99d",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.0001977060355392157,
+      "close": {
+        "visiblePixels": 3341,
+        "bounds": {
+          "minX": 35,
+          "minY": 49,
+          "maxX": 92,
+          "maxY": 121
+        }
+      },
+      "far": {
+        "visiblePixels": 366,
+        "bounds": {
+          "minX": 11,
+          "minY": 15,
+          "maxX": 28,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "pantry-shelf": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/pantry-shelf.svg",
+      "sourceSha256": "d78a360ff8d6ad59d2038bb47fd588a1ad64ca833e0488e7025ed9238f5c01f5",
+      "importedSourceSha256": "d78a360ff8d6ad59d2038bb47fd588a1ad64ca833e0488e7025ed9238f5c01f5",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.00014139811197916668,
+      "close": {
+        "visiblePixels": 2693,
+        "bounds": {
+          "minX": 37,
+          "minY": 62,
+          "maxX": 90,
+          "maxY": 121
+        }
+      },
+      "far": {
+        "visiblePixels": 290,
+        "bounds": {
+          "minX": 12,
+          "minY": 19,
+          "maxX": 27,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "mail-station": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/mail-station.svg",
+      "sourceSha256": "cf9bc3a21d19bd284fe7774e8bd894348fcec66429b0decdc00fb84627c8d3dd",
+      "importedSourceSha256": "cf9bc3a21d19bd284fe7774e8bd894348fcec66429b0decdc00fb84627c8d3dd",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.00045429304534313727,
+      "close": {
+        "visiblePixels": 3790,
+        "bounds": {
+          "minX": 26,
+          "minY": 61,
+          "maxX": 101,
+          "maxY": 121
+        }
+      },
+      "far": {
+        "visiblePixels": 400,
+        "bounds": {
+          "minX": 8,
+          "minY": 18,
+          "maxX": 31,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "server-rack": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/server-rack.svg",
+      "sourceSha256": "61648316da984d4753faa5e688d410b211870987e16a6107cf2ede74dc466d13",
+      "importedSourceSha256": "61648316da984d4753faa5e688d410b211870987e16a6107cf2ede74dc466d13",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.0016736198874080883,
+      "close": {
+        "visiblePixels": 3719,
+        "bounds": {
+          "minX": 34,
+          "minY": 46,
+          "maxX": 93,
+          "maxY": 121
+        }
+      },
+      "far": {
+        "visiblePixels": 386,
+        "bounds": {
+          "minX": 11,
+          "minY": 14,
+          "maxX": 28,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "coat-rack": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/coat-rack.svg",
+      "sourceSha256": "1cd6558d694a2186dff2f0c39a6209dbcfe4b413daa564c8e0319194dd140b88",
+      "importedSourceSha256": "1cd6558d694a2186dff2f0c39a6209dbcfe4b413daa564c8e0319194dd140b88",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.00020955403645833332,
+      "close": {
+        "visiblePixels": 1326,
+        "bounds": {
+          "minX": 49,
+          "minY": 61,
+          "maxX": 81,
+          "maxY": 121
+        }
+      },
+      "far": {
+        "visiblePixels": 150,
+        "bounds": {
+          "minX": 15,
+          "minY": 19,
+          "maxX": 25,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "potted-tree": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/potted-tree.svg",
+      "sourceSha256": "e73fe8670a258486aa4f53672ede1b7fe48fa56c45854013cc03e241df9c27a3",
+      "importedSourceSha256": "e73fe8670a258486aa4f53672ede1b7fe48fa56c45854013cc03e241df9c27a3",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.00011877920113357843,
+      "close": {
+        "visiblePixels": 2513,
+        "bounds": {
+          "minX": 39,
+          "minY": 47,
+          "maxX": 88,
+          "maxY": 119
+        }
+      },
+      "far": {
+        "visiblePixels": 271,
+        "bounds": {
+          "minX": 12,
+          "minY": 14,
+          "maxX": 27,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "hanging-plant": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/hanging-plant.svg",
+      "sourceSha256": "78d0ac3c45b23aee9c6fee3692fb7ead4e22b16c0814383532bdd3877703510f",
+      "importedSourceSha256": "78d0ac3c45b23aee9c6fee3692fb7ead4e22b16c0814383532bdd3877703510f",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.0005056343826593138,
+      "close": {
+        "visiblePixels": 1356,
+        "bounds": {
+          "minX": 41,
+          "minY": 37,
+          "maxX": 86,
+          "maxY": 85
+        }
+      },
+      "far": {
+        "visiblePixels": 166,
+        "bounds": {
+          "minX": 12,
+          "minY": 11,
+          "maxX": 27,
+          "maxY": 26
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "floor-lamp": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/floor-lamp.svg",
+      "sourceSha256": "6d9867cc4e15d41f43f0252da0977608a94c2a2c812e8c328d16b0d8832bd1cc",
+      "importedSourceSha256": "6d9867cc4e15d41f43f0252da0977608a94c2a2c812e8c328d16b0d8832bd1cc",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.00006761737898284314,
+      "close": {
+        "visiblePixels": 1134,
+        "bounds": {
+          "minX": 45,
+          "minY": 50,
+          "maxX": 89,
+          "maxY": 119
+        }
+      },
+      "far": {
+        "visiblePixels": 131,
+        "bounds": {
+          "minX": 14,
+          "minY": 15,
+          "maxX": 27,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "framed-art": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/framed-art.svg",
+      "sourceSha256": "69e685aa763d699437bf312c4e520a5f996e851ca7175d172a550ac452f4ef19",
+      "importedSourceSha256": "69e685aa763d699437bf312c4e520a5f996e851ca7175d172a550ac452f4ef19",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.00004254509420955882,
+      "close": {
+        "visiblePixels": 2280,
+        "bounds": {
+          "minX": 36,
+          "minY": 43,
+          "maxX": 91,
+          "maxY": 84
+        }
+      },
+      "far": {
+        "visiblePixels": 240,
+        "bounds": {
+          "minX": 11,
+          "minY": 13,
+          "maxX": 28,
+          "maxY": 26
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "poster": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/poster.svg",
+      "sourceSha256": "b5fd04f0fe6432f6a64494fe8a3bb8e4a2ccf239f2e0dd3ac7b3bdbcf1cc4a3f",
+      "importedSourceSha256": "b5fd04f0fe6432f6a64494fe8a3bb8e4a2ccf239f2e0dd3ac7b3bdbcf1cc4a3f",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.00003566367953431373,
+      "close": {
+        "visiblePixels": 1416,
+        "bounds": {
+          "minX": 48,
+          "minY": 42,
+          "maxX": 79,
+          "maxY": 91
+        }
+      },
+      "far": {
+        "visiblePixels": 159,
+        "bounds": {
+          "minX": 14,
+          "minY": 13,
+          "maxX": 25,
+          "maxY": 28
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "wall-clock": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/wall-clock.svg",
+      "sourceSha256": "5e3ed1dcbdfeb40b6012278b37fef70d250e1a30d2d3d98e930f9345120c2615",
+      "importedSourceSha256": "5e3ed1dcbdfeb40b6012278b37fef70d250e1a30d2d3d98e930f9345120c2615",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.0003050561044730392,
+      "close": {
+        "visiblePixels": 1160,
+        "bounds": {
+          "minX": 47,
+          "minY": 45,
+          "maxX": 80,
+          "maxY": 80
+        }
+      },
+      "far": {
+        "visiblePixels": 132,
+        "bounds": {
+          "minX": 14,
+          "minY": 14,
+          "maxX": 25,
+          "maxY": 25
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "fish-tank": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/fish-tank.svg",
+      "sourceSha256": "6fe9ef84227c60b5923ddb5a5e5b42c0982ec0f2bc38abe33decd3da9b64a4d1",
+      "importedSourceSha256": "6fe9ef84227c60b5923ddb5a5e5b42c0982ec0f2bc38abe33decd3da9b64a4d1",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.0003189386106004902,
+      "close": {
+        "visiblePixels": 4492,
+        "bounds": {
+          "minX": 28,
+          "minY": 48,
+          "maxX": 99,
+          "maxY": 119
+        }
+      },
+      "far": {
+        "visiblePixels": 466,
+        "bounds": {
+          "minX": 8,
+          "minY": 15,
+          "maxX": 31,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "string-lights": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/string-lights.svg",
+      "sourceSha256": "82885875b9bf7a0fe641cd354b0baf1896dc6b3c3b4703b55c0d401be4340abc",
+      "importedSourceSha256": "82885875b9bf7a0fe641cd354b0baf1896dc6b3c3b4703b55c0d401be4340abc",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.00044651405484068626,
+      "close": {
+        "visiblePixels": 1542,
+        "bounds": {
+          "minX": 4,
+          "minY": 42,
+          "maxX": 123,
+          "maxY": 74
+        }
+      },
+      "far": {
+        "visiblePixels": 193,
+        "bounds": {
+          "minX": 1,
+          "minY": 12,
+          "maxX": 38,
+          "maxY": 23
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "rug": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/rug.svg",
+      "sourceSha256": "44d8bd78288adfb2bf39747af470a1b3bfe03e82bbe544ba1f193e8f1daaccbf",
+      "importedSourceSha256": "44d8bd78288adfb2bf39747af470a1b3bfe03e82bbe544ba1f193e8f1daaccbf",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0.0008359422870710784,
+      "close": {
+        "visiblePixels": 4860,
+        "bounds": {
+          "minX": 17,
+          "minY": 37,
+          "maxX": 110,
+          "maxY": 90
+        }
+      },
+      "far": {
+        "visiblePixels": 512,
+        "bounds": {
+          "minX": 5,
+          "minY": 11,
+          "maxX": 34,
+          "maxY": 28
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    }
+  },
+  "evaluationContexts": [
+    "close-canonical-svg-versus-terrarium-output",
+    "normal-workstation-service",
+    "normal-meeting-lounge",
+    "normal-storage-machine-bay",
+    "far-workstation",
+    "far-crowded-room",
+    "far-interaction-approach",
+    "wall-context",
+    "desk-occlusion",
+    "character-relative-handheld",
+    "procedural-outdoor-carryover"
+  ],
+  "protectedCounts": {
+    "defaultCharacters": 4,
+    "defaultProps": 132,
+    "defaultWalls": 10
+  }
+}
