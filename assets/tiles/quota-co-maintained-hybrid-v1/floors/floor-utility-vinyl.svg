@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"
+  data-surface-id="floor-utility-vinyl" data-kind="floor" data-template-id="utility-vinyl"
+  data-direction="maintained-hybrid">
+  <title>Utility vinyl — QuotaCo Maintained Hybrid</title>
+  <desc>Artist-editable floor source accepted from the Maintained Hybrid complete-family proof. Flat, outline-free, and seamless on a 128-unit tile.</desc>
+  <g id="substrate">
+    <rect x="0" y="0" width="128" height="128" rx="0" fill="#CAD4D7" opacity="1" id="substrate-field" data-fill-token="primary"/>
+  </g>
+  <g id="secondary-detail">
+    <path d="M 0 0 V 128 M 0 0 H 128 M 32 0 V 128 M 0 32 H 128 M 64 0 V 128 M 0 64 H 128 M 96 0 V 128 M 0 96 H 128 M 128 0 V 128 M 0 128 H 128" fill="none" stroke="#EEF3F4" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.16" id="secondary-detail-element-001" data-stroke-token="secondary"/>
+    <path d="M 94 30 q 4 -2 9 0" fill="none" stroke="#EEF3F4" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.18" id="secondary-detail-element-005" data-stroke-token="secondary"/>
+    <path d="M 98 72 q 5 2 10 0" fill="none" stroke="#EEF3F4" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.18" id="secondary-detail-element-006" data-stroke-token="secondary"/>
+    <path d="M 20 110 q 3 2 9 0" fill="none" stroke="#EEF3F4" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.18" id="secondary-detail-element-009" data-stroke-token="secondary"/>
+    <path d="M 52 108 q 4 -2 10 0" fill="none" stroke="#EEF3F4" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.18" id="secondary-detail-element-010" data-stroke-token="secondary"/>
+    <path d="M 72 44 q 6 -2 9 0" fill="none" stroke="#EEF3F4" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.18" id="secondary-detail-element-012" data-stroke-token="secondary"/>
+  </g>
+  <g id="accent-detail">
+    <path d="M 64 12 q 3 2 8 0" fill="none" stroke="#7F8B91" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.18" id="accent-detail-element-003" data-stroke-token="accent"/>
+    <path d="M 64 140 q 3 2 8 0" fill="none" stroke="#7F8B91" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.18" id="accent-detail-element-004" data-stroke-token="accent"/>
+    <path d="M 96 10 q 6 -2 8 0" fill="none" stroke="#7F8B91" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.18" id="accent-detail-element-007" data-stroke-token="accent"/>
+    <path d="M 96 138 q 6 -2 8 0" fill="none" stroke="#7F8B91" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.18" id="accent-detail-element-008" data-stroke-token="accent"/>
+    <path d="M 90 46 q 5 2 8 0" fill="none" stroke="#7F8B91" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.18" id="accent-detail-element-011" data-stroke-token="accent"/>
+  </g>
+  <g id="literal-detail">
+    <rect x="0" y="0" width="128" height="8" rx="0" fill="#FFFFFF" opacity="0.045" id="literal-detail-element-002"/>
+  </g>
+</svg>

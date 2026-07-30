@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"
+  data-surface-id="floor-rubber-mat" data-kind="floor" data-template-id="rubber-mat"
+  data-direction="maintained-hybrid">
+  <title>Rubber mat — QuotaCo Maintained Hybrid</title>
+  <desc>Artist-editable floor source accepted from the Maintained Hybrid complete-family proof. Flat, outline-free, and seamless on a 128-unit tile.</desc>
+  <g id="substrate">
+    <rect x="0" y="0" width="128" height="128" rx="0" fill="#3C4651" opacity="1" id="substrate-field" data-fill-token="primary"/>
+  </g>
+  <g id="secondary-detail">
+    <circle cx="8" cy="8" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-001" data-fill-token="secondary"/>
+    <circle cx="24" cy="8" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-003" data-fill-token="secondary"/>
+    <circle cx="40" cy="8" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-005" data-fill-token="secondary"/>
+    <circle cx="56" cy="8" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-007" data-fill-token="secondary"/>
+    <circle cx="72" cy="8" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-009" data-fill-token="secondary"/>
+    <circle cx="88" cy="8" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-011" data-fill-token="secondary"/>
+    <circle cx="104" cy="8" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-013" data-fill-token="secondary"/>
+    <circle cx="120" cy="8" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-015" data-fill-token="secondary"/>
+    <circle cx="8" cy="24" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-017" data-fill-token="secondary"/>
+    <circle cx="24" cy="24" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-019" data-fill-token="secondary"/>
+    <circle cx="40" cy="24" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-021" data-fill-token="secondary"/>
+    <circle cx="56" cy="24" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-023" data-fill-token="secondary"/>
+    <circle cx="72" cy="24" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-025" data-fill-token="secondary"/>
+    <circle cx="88" cy="24" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-027" data-fill-token="secondary"/>
+    <circle cx="104" cy="24" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-029" data-fill-token="secondary"/>
+    <circle cx="120" cy="24" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-031" data-fill-token="secondary"/>
+    <circle cx="8" cy="40" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-033" data-fill-token="secondary"/>
+    <circle cx="24" cy="40" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-035" data-fill-token="secondary"/>
+    <circle cx="40" cy="40" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-037" data-fill-token="secondary"/>
+    <circle cx="56" cy="40" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-039" data-fill-token="secondary"/>
+    <circle cx="72" cy="40" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-041" data-fill-token="secondary"/>
+    <circle cx="88" cy="40" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-043" data-fill-token="secondary"/>
+    <circle cx="104" cy="40" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-045" data-fill-token="secondary"/>
+    <circle cx="120" cy="40" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-047" data-fill-token="secondary"/>
+    <circle cx="8" cy="56" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-049" data-fill-token="secondary"/>
+    <circle cx="24" cy="56" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-051" data-fill-token="secondary"/>
+    <circle cx="40" cy="56" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-053" data-fill-token="secondary"/>
+    <circle cx="56" cy="56" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-055" data-fill-token="secondary"/>
+    <circle cx="72" cy="56" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-057" data-fill-token="secondary"/>
+    <circle cx="88" cy="56" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-059" data-fill-token="secondary"/>
+    <circle cx="104" cy="56" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-061" data-fill-token="secondary"/>
+    <circle cx="120" cy="56" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-063" data-fill-token="secondary"/>
+    <circle cx="8" cy="72" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-065" data-fill-token="secondary"/>
+    <circle cx="24" cy="72" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-067" data-fill-token="secondary"/>
+    <circle cx="40" cy="72" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-069" data-fill-token="secondary"/>
+    <circle cx="56" cy="72" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-071" data-fill-token="secondary"/>
+    <circle cx="72" cy="72" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-073" data-fill-token="secondary"/>
+    <circle cx="88" cy="72" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-075" data-fill-token="secondary"/>
+    <circle cx="104" cy="72" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-077" data-fill-token="secondary"/>
+    <circle cx="120" cy="72" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-079" data-fill-token="secondary"/>
+    <circle cx="8" cy="88" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-081" data-fill-token="secondary"/>
+    <circle cx="24" cy="88" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-083" data-fill-token="secondary"/>
+    <circle cx="40" cy="88" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-085" data-fill-token="secondary"/>
+    <circle cx="56" cy="88" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-087" data-fill-token="secondary"/>
+    <circle cx="72" cy="88" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-089" data-fill-token="secondary"/>
+    <circle cx="88" cy="88" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-091" data-fill-token="secondary"/>
+    <circle cx="104" cy="88" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-093" data-fill-token="secondary"/>
+    <circle cx="120" cy="88" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-095" data-fill-token="secondary"/>
+    <circle cx="8" cy="104" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-097" data-fill-token="secondary"/>
+    <circle cx="24" cy="104" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-099" data-fill-token="secondary"/>
+    <circle cx="40" cy="104" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-101" data-fill-token="secondary"/>
+    <circle cx="56" cy="104" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-103" data-fill-token="secondary"/>
+    <circle cx="72" cy="104" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-105" data-fill-token="secondary"/>
+    <circle cx="88" cy="104" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-107" data-fill-token="secondary"/>
+    <circle cx="104" cy="104" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-109" data-fill-token="secondary"/>
+    <circle cx="120" cy="104" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-111" data-fill-token="secondary"/>
+    <circle cx="8" cy="120" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-113" data-fill-token="secondary"/>
+    <circle cx="24" cy="120" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-115" data-fill-token="secondary"/>
+    <circle cx="40" cy="120" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-117" data-fill-token="secondary"/>
+    <circle cx="56" cy="120" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-119" data-fill-token="secondary"/>
+    <circle cx="72" cy="120" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-121" data-fill-token="secondary"/>
+    <circle cx="88" cy="120" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-123" data-fill-token="secondary"/>
+    <circle cx="104" cy="120" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-125" data-fill-token="secondary"/>
+    <circle cx="120" cy="120" r="2.25" fill="#56626E" opacity="0.56" id="secondary-detail-element-127" data-fill-token="secondary"/>
+  </g>
+  <g id="literal-detail">
+    <circle cx="7.4" cy="7.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-002"/>
+    <circle cx="23.4" cy="7.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-004"/>
+    <circle cx="39.4" cy="7.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-006"/>
+    <circle cx="55.4" cy="7.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-008"/>
+    <circle cx="71.4" cy="7.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-010"/>
+    <circle cx="87.4" cy="7.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-012"/>
+    <circle cx="103.4" cy="7.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-014"/>
+    <circle cx="119.4" cy="7.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-016"/>
+    <circle cx="7.4" cy="23.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-018"/>
+    <circle cx="23.4" cy="23.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-020"/>
+    <circle cx="39.4" cy="23.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-022"/>
+    <circle cx="55.4" cy="23.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-024"/>
+    <circle cx="71.4" cy="23.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-026"/>
+    <circle cx="87.4" cy="23.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-028"/>
+    <circle cx="103.4" cy="23.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-030"/>
+    <circle cx="119.4" cy="23.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-032"/>
+    <circle cx="7.4" cy="39.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-034"/>
+    <circle cx="23.4" cy="39.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-036"/>
+    <circle cx="39.4" cy="39.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-038"/>
+    <circle cx="55.4" cy="39.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-040"/>
+    <circle cx="71.4" cy="39.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-042"/>
+    <circle cx="87.4" cy="39.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-044"/>
+    <circle cx="103.4" cy="39.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-046"/>
+    <circle cx="119.4" cy="39.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-048"/>
+    <circle cx="7.4" cy="55.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-050"/>
+    <circle cx="23.4" cy="55.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-052"/>
+    <circle cx="39.4" cy="55.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-054"/>
+    <circle cx="55.4" cy="55.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-056"/>
+    <circle cx="71.4" cy="55.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-058"/>
+    <circle cx="87.4" cy="55.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-060"/>
+    <circle cx="103.4" cy="55.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-062"/>
+    <circle cx="119.4" cy="55.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-064"/>
+    <circle cx="7.4" cy="71.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-066"/>
+    <circle cx="23.4" cy="71.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-068"/>
+    <circle cx="39.4" cy="71.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-070"/>
+    <circle cx="55.4" cy="71.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-072"/>
+    <circle cx="71.4" cy="71.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-074"/>
+    <circle cx="87.4" cy="71.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-076"/>
+    <circle cx="103.4" cy="71.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-078"/>
+    <circle cx="119.4" cy="71.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-080"/>
+    <circle cx="7.4" cy="87.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-082"/>
+    <circle cx="23.4" cy="87.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-084"/>
+    <circle cx="39.4" cy="87.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-086"/>
+    <circle cx="55.4" cy="87.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-088"/>
+    <circle cx="71.4" cy="87.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-090"/>
+    <circle cx="87.4" cy="87.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-092"/>
+    <circle cx="103.4" cy="87.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-094"/>
+    <circle cx="119.4" cy="87.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-096"/>
+    <circle cx="7.4" cy="103.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-098"/>
+    <circle cx="23.4" cy="103.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-100"/>
+    <circle cx="39.4" cy="103.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-102"/>
+    <circle cx="55.4" cy="103.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-104"/>
+    <circle cx="71.4" cy="103.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-106"/>
+    <circle cx="87.4" cy="103.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-108"/>
+    <circle cx="103.4" cy="103.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-110"/>
+    <circle cx="119.4" cy="103.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-112"/>
+    <circle cx="7.4" cy="119.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-114"/>
+    <circle cx="23.4" cy="119.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-116"/>
+    <circle cx="39.4" cy="119.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-118"/>
+    <circle cx="55.4" cy="119.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-120"/>
+    <circle cx="71.4" cy="119.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-122"/>
+    <circle cx="87.4" cy="119.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-124"/>
+    <circle cx="103.4" cy="119.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-126"/>
+    <circle cx="119.4" cy="119.3" r="0.8" fill="#FFFFFF" opacity="0.08" id="literal-detail-element-128"/>
+  </g>
+</svg>

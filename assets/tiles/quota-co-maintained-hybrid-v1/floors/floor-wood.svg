@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"
+  data-surface-id="floor-wood" data-kind="floor" data-template-id="wood-floor"
+  data-direction="maintained-hybrid">
+  <title>Executive wood — QuotaCo Maintained Hybrid</title>
+  <desc>Artist-editable floor source accepted from the Maintained Hybrid complete-family proof. Flat, outline-free, and seamless on a 128-unit tile.</desc>
+  <g id="substrate">
+    <rect x="0" y="0" width="128" height="128" rx="0" fill="#A9714B" opacity="1" id="substrate-field" data-fill-token="primary"/>
+  </g>
+  <g id="secondary-detail">
+    <path d="M 0 0 H 128" fill="none" stroke="#6E4A2A" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.28" id="secondary-detail-element-001" data-stroke-token="secondary"/>
+    <path d="M 36 0 V 16" fill="none" stroke="#6E4A2A" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.26" id="secondary-detail-element-002" data-stroke-token="secondary"/>
+    <path d="M 0 16 H 128" fill="none" stroke="#6E4A2A" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.28" id="secondary-detail-element-004" data-stroke-token="secondary"/>
+    <path d="M 83 16 V 32" fill="none" stroke="#6E4A2A" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.26" id="secondary-detail-element-005" data-stroke-token="secondary"/>
+    <path d="M 0 32 H 128" fill="none" stroke="#6E4A2A" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.28" id="secondary-detail-element-007" data-stroke-token="secondary"/>
+    <path d="M 55 32 V 48" fill="none" stroke="#6E4A2A" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.26" id="secondary-detail-element-008" data-stroke-token="secondary"/>
+    <path d="M 0 48 H 128" fill="none" stroke="#6E4A2A" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.28" id="secondary-detail-element-010" data-stroke-token="secondary"/>
+    <path d="M 105 48 V 64" fill="none" stroke="#6E4A2A" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.26" id="secondary-detail-element-011" data-stroke-token="secondary"/>
+    <path d="M 0 64 H 128" fill="none" stroke="#6E4A2A" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.28" id="secondary-detail-element-013" data-stroke-token="secondary"/>
+    <path d="M 24 64 V 80" fill="none" stroke="#6E4A2A" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.26" id="secondary-detail-element-014" data-stroke-token="secondary"/>
+    <path d="M 0 80 H 128" fill="none" stroke="#6E4A2A" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.28" id="secondary-detail-element-016" data-stroke-token="secondary"/>
+    <path d="M 70 80 V 96" fill="none" stroke="#6E4A2A" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.26" id="secondary-detail-element-017" data-stroke-token="secondary"/>
+    <path d="M 0 96 H 128" fill="none" stroke="#6E4A2A" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.28" id="secondary-detail-element-019" data-stroke-token="secondary"/>
+    <path d="M 111 96 V 112" fill="none" stroke="#6E4A2A" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.26" id="secondary-detail-element-020" data-stroke-token="secondary"/>
+    <path d="M 0 112 H 128" fill="none" stroke="#6E4A2A" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.28" id="secondary-detail-element-022" data-stroke-token="secondary"/>
+    <path d="M 47 112 V 128" fill="none" stroke="#6E4A2A" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.26" id="secondary-detail-element-023" data-stroke-token="secondary"/>
+  </g>
+  <g id="accent-detail">
+    <path d="M 60 5 h 12" fill="none" stroke="#C68B59" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.24" id="accent-detail-element-003" data-stroke-token="accent"/>
+    <path d="M 107 21 h 17" fill="none" stroke="#C68B59" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.24" id="accent-detail-element-006" data-stroke-token="accent"/>
+    <path d="M 79 37 h 22" fill="none" stroke="#C68B59" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.24" id="accent-detail-element-009" data-stroke-token="accent"/>
+    <path d="M 19 53 h 12" fill="none" stroke="#C68B59" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.24" id="accent-detail-element-012" data-stroke-token="accent"/>
+    <path d="M 48 69 h 17" fill="none" stroke="#C68B59" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.24" id="accent-detail-element-015" data-stroke-token="accent"/>
+    <path d="M 94 85 h 22" fill="none" stroke="#C68B59" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.24" id="accent-detail-element-018" data-stroke-token="accent"/>
+    <path d="M 25 101 h 12" fill="none" stroke="#C68B59" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.24" id="accent-detail-element-021" data-stroke-token="accent"/>
+    <path d="M 71 117 h 17" fill="none" stroke="#C68B59" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.24" id="accent-detail-element-024" data-stroke-token="accent"/>
+  </g>
+</svg>

@@ -1,0 +1,342 @@
+{
+  "reviewStatus": "canonical-source-import-validation",
+  "canonicalSvgCount": 15,
+  "compiledCandidateCount": 15,
+  "sourceHashesMatch": true,
+  "entries": [
+    {
+      "id": "floor-accent-tile",
+      "kind": "floor",
+      "templateId": "accent-tile",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/floors/floor-accent-tile.svg",
+      "sourceSha256": "da860ba624816e866fa9cf6df556d0601bcbb22989a9cbd01e18ea0f57e3310c",
+      "sourceHashMatches": true,
+      "shapeCount": 8,
+      "close": {
+        "width": 128,
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0,
+        "meanChannelDelta": 0
+      },
+      "far": {
+        "width": 40,
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0,
+        "meanChannelDelta": 0
+      }
+    },
+    {
+      "id": "floor-astroturf",
+      "kind": "floor",
+      "templateId": "astroturf",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/floors/floor-astroturf.svg",
+      "sourceSha256": "a236a29ba33fa84cb963d9ed628768824b6e96af6bc39970a2be0630183f5113",
+      "sourceHashMatches": true,
+      "shapeCount": 17,
+      "close": {
+        "width": 128,
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0,
+        "meanChannelDelta": 0
+      },
+      "far": {
+        "width": 40,
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0,
+        "meanChannelDelta": 0
+      }
+    },
+    {
+      "id": "floor-carpet",
+      "kind": "floor",
+      "templateId": "carpet",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/floors/floor-carpet.svg",
+      "sourceSha256": "2cde1894e54ce5e4b0557cb8b9137b5e24396eb53998f6fa0f4299c343110e17",
+      "sourceHashMatches": true,
+      "shapeCount": 23,
+      "close": {
+        "width": 128,
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0,
+        "meanChannelDelta": 0
+      },
+      "far": {
+        "width": 40,
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0,
+        "meanChannelDelta": 0
+      }
+    },
+    {
+      "id": "floor-carpet-tiles",
+      "kind": "floor",
+      "templateId": "carpet-tiles",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/floors/floor-carpet-tiles.svg",
+      "sourceSha256": "ddbc0fd9bd7fba33a2ac24f1d7b6b4dc85c15370ad0864c286549c16bfcea810",
+      "sourceHashMatches": true,
+      "shapeCount": 14,
+      "close": {
+        "width": 128,
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0,
+        "meanChannelDelta": 0
+      },
+      "far": {
+        "width": 40,
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0,
+        "meanChannelDelta": 0
+      }
+    },
+    {
+      "id": "floor-linoleum",
+      "kind": "floor",
+      "templateId": "linoleum",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/floors/floor-linoleum.svg",
+      "sourceSha256": "071627aeb73034d44da475f3fec940b89f2512ec86f9019618cc97fc3f64a646",
+      "sourceHashMatches": true,
+      "shapeCount": 4,
+      "close": {
+        "width": 128,
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0,
+        "meanChannelDelta": 0
+      },
+      "far": {
+        "width": 40,
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0,
+        "meanChannelDelta": 0
+      }
+    },
+    {
+      "id": "floor-lobby-stone",
+      "kind": "floor",
+      "templateId": "lobby-stone",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/floors/floor-lobby-stone.svg",
+      "sourceSha256": "5e5bb9a8899c4103fe90eebadd1e8537418ebe155c779b025af64bdced03242e",
+      "sourceHashMatches": true,
+      "shapeCount": 4,
+      "close": {
+        "width": 128,
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0,
+        "meanChannelDelta": 0
+      },
+      "far": {
+        "width": 40,
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0,
+        "meanChannelDelta": 0
+      }
+    },
+    {
+      "id": "floor-polished-concrete",
+      "kind": "floor",
+      "templateId": "polished-concrete",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/floors/floor-polished-concrete.svg",
+      "sourceSha256": "ddc393111b001a36df35857247410f515d5ed7a47da4fa61ed4b8399ed734c91",
+      "sourceHashMatches": true,
+      "shapeCount": 5,
+      "close": {
+        "width": 128,
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0,
+        "meanChannelDelta": 0
+      },
+      "far": {
+        "width": 40,
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0,
+        "meanChannelDelta": 0
+      }
+    },
+    {
+      "id": "floor-quiet-carpet",
+      "kind": "floor",
+      "templateId": "quiet-carpet",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/floors/floor-quiet-carpet.svg",
+      "sourceSha256": "47e5963c769680436d6a736b3f136ec6cb469bb2839c4bab4707452fc2a8ff83",
+      "sourceHashMatches": true,
+      "shapeCount": 25,
+      "close": {
+        "width": 128,
+        "differentPixelCount": 30,
+        "maxChannelDelta": 1,
+        "meanChannelDelta": 0.001068
+      },
+      "far": {
+        "width": 40,
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0,
+        "meanChannelDelta": 0
+      }
+    },
+    {
+      "id": "floor-rubber-mat",
+      "kind": "floor",
+      "templateId": "rubber-mat",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/floors/floor-rubber-mat.svg",
+      "sourceSha256": "22300f53fdc016b07a56435ab7d1b3fa82917ec7687fe146d9e6947ce200c479",
+      "sourceHashMatches": true,
+      "shapeCount": 129,
+      "close": {
+        "width": 128,
+        "differentPixelCount": 97,
+        "maxChannelDelta": 1,
+        "meanChannelDelta": 0.00444
+      },
+      "far": {
+        "width": 40,
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0,
+        "meanChannelDelta": 0
+      }
+    },
+    {
+      "id": "floor-terrazzo",
+      "kind": "floor",
+      "templateId": "terrazzo",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/floors/floor-terrazzo.svg",
+      "sourceSha256": "4f185c1a2376b740ab983067db4c8e25aa4355d8ff8a6aefd76d7b5b5f4c75eb",
+      "sourceHashMatches": true,
+      "shapeCount": 15,
+      "close": {
+        "width": 128,
+        "differentPixelCount": 2,
+        "maxChannelDelta": 3,
+        "meanChannelDelta": 0.000214
+      },
+      "far": {
+        "width": 40,
+        "differentPixelCount": 3,
+        "maxChannelDelta": 7,
+        "meanChannelDelta": 0.005156
+      }
+    },
+    {
+      "id": "floor-utility-vinyl",
+      "kind": "floor",
+      "templateId": "utility-vinyl",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/floors/floor-utility-vinyl.svg",
+      "sourceSha256": "b0cf101f057b7eb8826b78b25acbfbcb94975ed19b7bacd2c5691fd11a669315",
+      "sourceHashMatches": true,
+      "shapeCount": 13,
+      "close": {
+        "width": 128,
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0,
+        "meanChannelDelta": 0
+      },
+      "far": {
+        "width": 40,
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0,
+        "meanChannelDelta": 0
+      }
+    },
+    {
+      "id": "floor-wood",
+      "kind": "floor",
+      "templateId": "wood-floor",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/floors/floor-wood.svg",
+      "sourceSha256": "d25aadf1d277e960c1bdbbe840bcb9414b22d14d9a6e09f329ac7b9181020af0",
+      "sourceHashMatches": true,
+      "shapeCount": 25,
+      "close": {
+        "width": 128,
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0,
+        "meanChannelDelta": 0
+      },
+      "far": {
+        "width": 40,
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0,
+        "meanChannelDelta": 0
+      }
+    },
+    {
+      "id": "ground-grass",
+      "kind": "ground",
+      "templateId": "grass",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/ground/ground-grass.svg",
+      "sourceSha256": "cb4ba412d9a2a1382406f816a53e759cc51233dd3f83e4930dfadeab6391cda7",
+      "sourceHashMatches": true,
+      "shapeCount": 58,
+      "close": {
+        "width": 128,
+        "differentPixelCount": 1,
+        "maxChannelDelta": 1,
+        "meanChannelDelta": 0.000046
+      },
+      "far": {
+        "width": 40,
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0,
+        "meanChannelDelta": 0
+      }
+    },
+    {
+      "id": "ground-grass-b",
+      "kind": "ground",
+      "templateId": "grass",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/ground/ground-grass-b.svg",
+      "sourceSha256": "f8a0454b4b5e5cf3af460075728408e0a7fc4b14756ad4aff9669cbce1e11bdb",
+      "sourceHashMatches": true,
+      "shapeCount": 61,
+      "close": {
+        "width": 128,
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0,
+        "meanChannelDelta": 0
+      },
+      "far": {
+        "width": 40,
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0,
+        "meanChannelDelta": 0
+      }
+    },
+    {
+      "id": "ground-grass-c",
+      "kind": "ground",
+      "templateId": "grass",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/ground/ground-grass-c.svg",
+      "sourceSha256": "92c451b4ac1248eae51fedefd7bf14aa93067f438ad14936c6017b32ff49a01d",
+      "sourceHashMatches": true,
+      "shapeCount": 48,
+      "close": {
+        "width": 128,
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0,
+        "meanChannelDelta": 0
+      },
+      "far": {
+        "width": 40,
+        "differentPixelCount": 0,
+        "maxChannelDelta": 0,
+        "meanChannelDelta": 0
+      }
+    }
+  ],
+  "held": {
+    "authoringCanvas": 128,
+    "acceptedWallDatum": 112,
+    "characterVisualScale": 0.65,
+    "floorGroundCharacterMultiplierApplied": false,
+    "productionTemplateRegistration": true,
+    "defaultMutation": false,
+    "snapshotPromotion": true,
+    "exporterMutation": false,
+    "schemaMutation": false,
+    "schemaVersion": 19,
+    "bundleExportImport": false,
+    "unityMutation": false,
+    "commitCreated": false
+  },
+  "deferred": {
+    "parameterizedProductionBuilders": false,
+    "grassFringe47FrameProof": true
+  }
+}

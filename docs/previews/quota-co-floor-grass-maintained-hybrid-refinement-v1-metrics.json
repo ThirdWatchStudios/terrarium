@@ -1,0 +1,77 @@
+{
+  "reviewStatus": "approved-direction-complete-family-refinement",
+  "approvedDirection": "maintained-hybrid",
+  "sourceStatus": "proof-code-only",
+  "inventory": {
+    "floorTemplateCount": 19,
+    "interiorFloorInstanceCount": 12,
+    "groundTemplateCount": 7,
+    "groundInstanceCount": 10,
+    "targetInteriorFloorIds": [
+      "floor-carpet",
+      "floor-carpet-tiles",
+      "floor-wood",
+      "floor-linoleum",
+      "floor-utility-vinyl",
+      "floor-quiet-carpet",
+      "floor-terrazzo",
+      "floor-rubber-mat",
+      "floor-lobby-stone",
+      "floor-polished-concrete",
+      "floor-accent-tile",
+      "floor-astroturf"
+    ],
+    "targetGrassGroundIds": [
+      "ground-grass",
+      "ground-grass-b",
+      "ground-grass-c"
+    ],
+    "newIdsCreated": 0
+  },
+  "refinements": {
+    "allTargetInstancesRendered": true,
+    "currentVersusProposal": true,
+    "close128u": true,
+    "normal52pxPerCell": true,
+    "far18pxPerCell": true,
+    "repeatStress": true,
+    "mixedGrassVariantField": true,
+    "largeRepeatedGrassPatchesRemoved": true
+  },
+  "held": {
+    "authoringCanvas": 128,
+    "acceptedWallDatum": 112,
+    "characterVisualScale": 0.65,
+    "floorGroundCharacterMultiplierApplied": false,
+    "templateIds": true,
+    "instanceIds": true,
+    "params": true,
+    "palettes": true,
+    "floorGroundExportKinds": true,
+    "atlasCells": true,
+    "schemaVersion": 19,
+    "schemaMutation": false,
+    "exporterMutation": false,
+    "unityRegistrationMutation": false,
+    "productionSourceCreation": false,
+    "templateDefaultMutation": false,
+    "snapshotPromotion": false,
+    "bundleExportImport": false,
+    "commitCreated": false
+  },
+  "deferred": {
+    "grassFringe": {
+      "currentOwnership": "derived-code",
+      "autotileFrames": 47,
+      "reason": "base grass source must be visually approved first"
+    },
+    "nonTargetGroundFamilies": [
+      "meadow",
+      "dirt",
+      "asphalt",
+      "sidewalk",
+      "gravel",
+      "pond-water"
+    ]
+  }
+}

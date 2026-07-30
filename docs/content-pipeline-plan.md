@@ -723,6 +723,17 @@ migration, or schema bump. Unity scatter/import-catalog adoption remains a
 separate sync after visual approval; non-placeable nature props do not enter
 Terrarium's `facility-catalog.json`.
 
+**Maintained Hybrid floor/grass SVG slice (2026-07-30):** the 12 existing
+interior floor instances and three existing grass instances now render from
+genuine artist-editable SVG sources under
+`assets/tiles/quota-co-maintained-hybrid-v1/`. The deterministic surface
+importer retains semantic group and element ownership, and the live floor
+templates use those layers for all non-default parameter variants. Existing
+IDs, template IDs, palettes, defaults, floor/ground kinds, export contract, and
+schema remain unchanged. The 15 default compositor snapshots are promoted.
+Bundle import and Unity uptake remain a separate user-run handoff; the derived
+47-frame grass fringe stays code-owned and deferred to its own proof.
+
 **Open:**
 - Surveillance apparatus props (cameras, sensors — QuotaCo "tech you place");
   new templates, B4/B5 timing.

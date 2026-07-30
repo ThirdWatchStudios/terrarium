@@ -212,3 +212,9 @@ existing carriers, while the four gameplay-system concepts remain source-only.
 An in-world visual smoke test remains deferred because none of the eight
 existing carriers are surfaced in the current build or bare-lot presentation.
 No runtime-appearance conclusion is inferred from their present absence.
+
+Gameplay-contract and registration work for the four source-only infrastructure
+concepts was explicitly deferred on 2026-07-30. Their SVGs remain reference
+art, not an active production queue. Promotion requires a separately approved
+receiver, observable states, placement/coverage rules, and employee
+consequences.

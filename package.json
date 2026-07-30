@@ -19,6 +19,9 @@
     "parts:check": "npm run parts:import:check && npm run parts:scaffolds:check",
     "props:import": "tsx scripts/importQuotaCoWorkhorseProps.ts",
     "props:import:check": "tsx scripts/importQuotaCoWorkhorseProps.ts --check",
+    "surfaces:import": "tsx scripts/importQuotaCoMaintainedHybridSurfaces.ts",
+    "surfaces:import:check": "tsx scripts/importQuotaCoMaintainedHybridSurfaces.ts --check",
+    "surfaces:production:preview": "tsx scripts/quotaCoFloorGrassProductionValidationPreview.ts",
     "props:production:preview": "tsx scripts/quotaCoPropProductionValidationPreview.ts",
     "props:canonical-portfolio:preview": "tsx scripts/quotaCoCanonicalPropPortfolioPreview.ts",
     "props:workstation:production:preview": "tsx scripts/quotaCoWorkstationFamilyProductionValidationPreview.ts",
@@ -50,7 +53,7 @@
     "style:serve": "tsx scripts/styleLoop.ts --serve-only",
     "iris:preview": "tsx scripts/irisFamilyPreview.ts",
     "flora:preview": "tsx scripts/floraFieldPreview.ts",
-    "assets:check": "npm run parts:check && npm run props:import:check && npm run walls:import:check"
+    "assets:check": "npm run parts:check && npm run props:import:check && npm run surfaces:import:check && npm run walls:import:check"
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",
