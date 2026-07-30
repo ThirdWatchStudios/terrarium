@@ -22,6 +22,8 @@
     "surfaces:import": "tsx scripts/importQuotaCoMaintainedHybridSurfaces.ts",
     "surfaces:import:check": "tsx scripts/importQuotaCoMaintainedHybridSurfaces.ts --check",
     "surfaces:production:preview": "tsx scripts/quotaCoFloorGrassProductionValidationPreview.ts",
+    "assets:reference:guide": "tsx scripts/canonicalSvgReferenceGuide.ts",
+    "assets:reference:guide:check": "tsx scripts/canonicalSvgReferenceGuide.ts --check",
     "props:production:preview": "tsx scripts/quotaCoPropProductionValidationPreview.ts",
     "props:canonical-portfolio:preview": "tsx scripts/quotaCoCanonicalPropPortfolioPreview.ts",
     "props:workstation:production:preview": "tsx scripts/quotaCoWorkstationFamilyProductionValidationPreview.ts",

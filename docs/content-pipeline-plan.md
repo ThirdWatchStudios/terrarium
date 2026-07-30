@@ -734,6 +734,20 @@ schema remain unchanged. The 15 default compositor snapshots are promoted.
 Bundle import and Unity uptake remain a separate user-run handoff; the derived
 47-frame grass fringe stays code-owned and deferred to its own proof.
 
+**Grass-fringe deferral (2026-07-30):** the separate 47-frame transition proof,
+editable edge/corner source kit, production promotion, and Unity handoff are
+explicitly deferred. The current code-owned fringe remains unchanged. Reopen
+this only as a bounded visual-review slice after an owner decision; do not infer
+an active queue from the accepted base-grass sources.
+
+**Canonical SVG reference guide (2026-07-30):** the generated multi-sheet guide
+under `docs/reference/canonical-svg-library-v1/` is the visual inventory of
+exact editable SVG sources selected by the live import registries. It separates
+production sources, production dependencies, and deferred concepts, and shows
+the composed 47-frame wall atlas beside its active source fragments. Generated
+character scaffolds, palette sentinels, and wall proof files not referenced by
+the live mapping are documented exclusions rather than canonical art.
+
 **Open:**
 - Surveillance apparatus props (cameras, sensors — QuotaCo "tech you place");
   new templates, B4/B5 timing.

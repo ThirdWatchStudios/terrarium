@@ -1,0 +1,2516 @@
+{
+  "schemaVersion": 1,
+  "guide": "Terrarium canonical SVG library",
+  "counts": {
+    "exactSourceFiles": 259,
+    "production": 181,
+    "productionDependencies": 74,
+    "deferred": 4,
+    "derivedWallFrames": 47,
+    "byCategory": {
+      "characters/body": 18,
+      "characters/hair": 30,
+      "characters/head": 21,
+      "characters/outfit": 44,
+      "props/deferred-gameplay": 4,
+      "props/outdoor": 8,
+      "props/workhorse": 45,
+      "surfaces/floors": 12,
+      "surfaces/grass": 3,
+      "walls/bevel": 12,
+      "walls/equal-height-direct": 10,
+      "walls/equal-height-promoted-proof": 52
+    }
+  },
+  "entries": [
+    {
+      "assetId": "body-balanced",
+      "category": "characters/body",
+      "status": "production",
+      "sourceFile": "assets/parts/body/balanced.east.svg",
+      "sha256": "cbbe8b13e8a7cb722279225c1cffb73fdf5a5c61bee277225753e713e43e24c1"
+    },
+    {
+      "assetId": "body-balanced",
+      "category": "characters/body",
+      "status": "production",
+      "sourceFile": "assets/parts/body/balanced.north.svg",
+      "sha256": "023a03ebd3901704de353905d7525abfe18ee66a1bc3adb1cafa82194ae3b1da"
+    },
+    {
+      "assetId": "body-balanced",
+      "category": "characters/body",
+      "status": "production",
+      "sourceFile": "assets/parts/body/balanced.south.svg",
+      "sha256": "93c24cae13cd152cd14b16b9f41b75ed6afef03ec4e1acfab9c0c62993f06988"
+    },
+    {
+      "assetId": "body-compact",
+      "category": "characters/body",
+      "status": "production",
+      "sourceFile": "assets/parts/body/compact.east.svg",
+      "sha256": "4ed3437f323e2dc7526e622d46f48077cb63d0fe296da8ebfaa90e6be2c1c28a"
+    },
+    {
+      "assetId": "body-compact",
+      "category": "characters/body",
+      "status": "production",
+      "sourceFile": "assets/parts/body/compact.north.svg",
+      "sha256": "3db4aade742a54e3a94e53cd9f301bae20df81a2cc04e99099a9b2aa9f39cd78"
+    },
+    {
+      "assetId": "body-compact",
+      "category": "characters/body",
+      "status": "production",
+      "sourceFile": "assets/parts/body/compact.south.svg",
+      "sha256": "6a1aa421221d80ef31474c090e653eba0810b47deeea68c422c1bf30fbbf7181"
+    },
+    {
+      "assetId": "body-large-frame",
+      "category": "characters/body",
+      "status": "production",
+      "sourceFile": "assets/parts/body/large-frame.east.svg",
+      "sha256": "78faf26361026e97c866ef94744456898594cef5dea19f6ee9beba0dfc788f60"
+    },
+    {
+      "assetId": "body-large-frame",
+      "category": "characters/body",
+      "status": "production",
+      "sourceFile": "assets/parts/body/large-frame.north.svg",
+      "sha256": "fe2d51ef7be0d889afea697bd03ada50f4203a83dfe943110e1d4a870816b696"
+    },
+    {
+      "assetId": "body-large-frame",
+      "category": "characters/body",
+      "status": "production",
+      "sourceFile": "assets/parts/body/large-frame.south.svg",
+      "sha256": "ff7c29d4a7f7083286b27f2bedafbe392619890cb343d35a04f3289c5789104a"
+    },
+    {
+      "assetId": "body-pinch",
+      "category": "characters/body",
+      "status": "production",
+      "sourceFile": "assets/parts/body/pinch.east.svg",
+      "sha256": "6f73ce1e135fb7a42d1478873db04416446c4c491b82c1b26776bf162f71c463"
+    },
+    {
+      "assetId": "body-pinch",
+      "category": "characters/body",
+      "status": "production",
+      "sourceFile": "assets/parts/body/pinch.north.svg",
+      "sha256": "1170397aad3026be71fad0e2e588e02771e22a69cb6749fc679b44fa7de817c2"
+    },
+    {
+      "assetId": "body-pinch",
+      "category": "characters/body",
+      "status": "production",
+      "sourceFile": "assets/parts/body/pinch.south.svg",
+      "sha256": "61f7034729dc5f3a3a466f9ce18bfe180d7d3f0fd28200ab7468385a3c1b763e"
+    },
+    {
+      "assetId": "body-soft",
+      "category": "characters/body",
+      "status": "production",
+      "sourceFile": "assets/parts/body/soft.east.svg",
+      "sha256": "946e20fe96fe9a9f21f94df608ad0541f24729f52c7b8878cd94d79cadb23e09"
+    },
+    {
+      "assetId": "body-soft",
+      "category": "characters/body",
+      "status": "production",
+      "sourceFile": "assets/parts/body/soft.north.svg",
+      "sha256": "d2d68dc3ceed580af795bab52d1203f03647a37d9c1d4b6501228744fff89fac"
+    },
+    {
+      "assetId": "body-soft",
+      "category": "characters/body",
+      "status": "production",
+      "sourceFile": "assets/parts/body/soft.south.svg",
+      "sha256": "738d905efce753c7b18fc508c7ec2a970ac8e66579912b21baff9c9cea67166c"
+    },
+    {
+      "assetId": "body-tall",
+      "category": "characters/body",
+      "status": "production",
+      "sourceFile": "assets/parts/body/tall.east.svg",
+      "sha256": "96590ef420043a836f89328d52e5616a8b85bab154e28ce2f8b3ab0bdb3c002f"
+    },
+    {
+      "assetId": "body-tall",
+      "category": "characters/body",
+      "status": "production",
+      "sourceFile": "assets/parts/body/tall.north.svg",
+      "sha256": "206d7fd2a1dea0f02277fbc48bdebf69596c7829b82c380efac3ee4ba03d1ffb"
+    },
+    {
+      "assetId": "body-tall",
+      "category": "characters/body",
+      "status": "production",
+      "sourceFile": "assets/parts/body/tall.south.svg",
+      "sha256": "446b6b2810e24c2c5cea3fb442441dac16bc41480c161545d0a193310e1245b7"
+    },
+    {
+      "assetId": "hair-balding",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/balding.east.svg",
+      "sha256": "1421062d7f9d5183c14eefdf014b995b394e4e9875286db5913f442c748048a3"
+    },
+    {
+      "assetId": "hair-balding",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/balding.north.svg",
+      "sha256": "79ce48594730253e5a90eb3fdbece05171d92030ac84b766176d29a1e96bcf2b"
+    },
+    {
+      "assetId": "hair-balding",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/balding.south.svg",
+      "sha256": "c352e315b8b978c3e1656da616b4dfc762a53e550126765150832d795e7618f8"
+    },
+    {
+      "assetId": "hair-bob",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/bob.east.svg",
+      "sha256": "350ac6094fb8839e1049ed52410636859dd1b38866a92e0f1444d470d83794a2"
+    },
+    {
+      "assetId": "hair-bob",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/bob.north.svg",
+      "sha256": "85494be9afd88e04038e5a8db0a40904bc06bafaf8a856fb72556ffbb287ebe7"
+    },
+    {
+      "assetId": "hair-bob",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/bob.south.svg",
+      "sha256": "8c8c6e7674cd69ab45459483108db59025e66f27253e1824324cc54c4d2344d8"
+    },
+    {
+      "assetId": "hair-bun",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/bun.east.svg",
+      "sha256": "962a42e5c7e1268fbe752fc738e6f452a932b9325b3ae07d9d2d00da82e7c313"
+    },
+    {
+      "assetId": "hair-bun",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/bun.north.svg",
+      "sha256": "573f93b38eb279900b3e87961ca59896b58028f24ce945859c1f2e88997d1a30"
+    },
+    {
+      "assetId": "hair-bun",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/bun.south.svg",
+      "sha256": "ce6e7f1231f8884f8e7c43c0a96708b8a58ae896cb3ecc854b265f8af30ed6b5"
+    },
+    {
+      "assetId": "hair-coils",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/coils.east.svg",
+      "sha256": "c3bc04e3964a40d5a0368d9b70fbf2315b93088b326e7c12b62e442f97077c92"
+    },
+    {
+      "assetId": "hair-coils",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/coils.north.svg",
+      "sha256": "ad14aa5b87ab417ccda45fb337b5a0966809e835d1c7412fd2ee668182e1932a"
+    },
+    {
+      "assetId": "hair-coils",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/coils.south.svg",
+      "sha256": "9313bdf6daa58227bb5f0320800d0d42f9c983aa27919b1f703c9c828d1c34e5"
+    },
+    {
+      "assetId": "hair-curly",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/curly.east.svg",
+      "sha256": "92b8a991fa4fb27f0d0eaa72cb02744bcf468ad91d3b9c4b57922f9b5e01c57b"
+    },
+    {
+      "assetId": "hair-curly",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/curly.north.svg",
+      "sha256": "05fa3741b1f4bddc6bcccd67bc93c3934d9b6fa206339aa9da10c7305a32e049"
+    },
+    {
+      "assetId": "hair-curly",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/curly.south.svg",
+      "sha256": "f14cc6b1b17eace84cf87d0b7749050b34284f6d60778617948eb8f857402090"
+    },
+    {
+      "assetId": "hair-long-straight",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/long-straight.east.svg",
+      "sha256": "98d370eb902ab3ffed3d82c99adf8dcc1f225b73148e28d82b9284ce90169bcd"
+    },
+    {
+      "assetId": "hair-long-straight",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/long-straight.north.svg",
+      "sha256": "86010331f0f2af924f1105e8d765b101c756d52f6a7ae03f613819c3165a1dc7"
+    },
+    {
+      "assetId": "hair-long-straight",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/long-straight.south.svg",
+      "sha256": "5ac587335ad21a9ae8775b7471b6bc404e877babf6bd60bf8a498ea2b4b8b4f4"
+    },
+    {
+      "assetId": "hair-pixie",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/pixie.east.svg",
+      "sha256": "15eec4ba4ab053ca6a5ebf51e11be51797b2f157acd86058fc5f836d11bc8ee1"
+    },
+    {
+      "assetId": "hair-pixie",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/pixie.north.svg",
+      "sha256": "89690638d775459ca6ce8bd0363b37d148c2a6a3768f296a5e56415a7b549576"
+    },
+    {
+      "assetId": "hair-pixie",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/pixie.south.svg",
+      "sha256": "64962477178cda8e1eab4b2f9f8232c01040a182ed17027fc2f0e88020cc2856"
+    },
+    {
+      "assetId": "hair-ponytail",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/ponytail.east.svg",
+      "sha256": "f53bad0df3651203975d4d6e8aea630a864bee58e0a1c41be0419d3e9ca6dfd2"
+    },
+    {
+      "assetId": "hair-ponytail",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/ponytail.north.svg",
+      "sha256": "8aefaa71806cc2a2a76c57c125cd8f8e6801cde99fdbcbebf5363ad70a00eb24"
+    },
+    {
+      "assetId": "hair-ponytail",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/ponytail.south.svg",
+      "sha256": "3c29a0a00b84438c3a59546b25b4d14234b60d808ac61242ff8eb28f399dda29"
+    },
+    {
+      "assetId": "hair-short",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/short.east.svg",
+      "sha256": "34d82f2a28610a3b8e24ff3c5957402481fcfefbfd2d13050b4c79a11c742c04"
+    },
+    {
+      "assetId": "hair-short",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/short.north.svg",
+      "sha256": "dce6004e94812865ded3be0ace9f30d7c93e95992f43bba9f6fda77ff92c3e31"
+    },
+    {
+      "assetId": "hair-short",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/short.south.svg",
+      "sha256": "634487e7b3c6d273de15c8695272197f9593120492ba5b9af2ea2a9655463333"
+    },
+    {
+      "assetId": "hair-side-part",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/side-part.east.svg",
+      "sha256": "fa8340ac8869325c39af41814d76cffd9ec771855ee8b92781b4f256306e1bac"
+    },
+    {
+      "assetId": "hair-side-part",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/side-part.north.svg",
+      "sha256": "111c5caa12924f6090a89d4b04146730f9d34400a7a7347dc1ca05312ab64ad9"
+    },
+    {
+      "assetId": "hair-side-part",
+      "category": "characters/hair",
+      "status": "production",
+      "sourceFile": "assets/parts/hair/side-part.south.svg",
+      "sha256": "28b6f09ad80e5a6a05107178e1ff58f948321ff6a63e6d33ffb3b8d0bc410bec"
+    },
+    {
+      "assetId": "head-angular",
+      "category": "characters/head",
+      "status": "production",
+      "sourceFile": "assets/parts/head/angular.east.svg",
+      "sha256": "8f1c47e6ee2ab5a6d9fc96af743a2fcaaf7dc52e00924795799dcb9914a7c6fc"
+    },
+    {
+      "assetId": "head-angular",
+      "category": "characters/head",
+      "status": "production",
+      "sourceFile": "assets/parts/head/angular.north.svg",
+      "sha256": "3005da4399e881f69ff061b19137c0dbad9085ff6e5bfb74d2c351b8d08f1900"
+    },
+    {
+      "assetId": "head-angular",
+      "category": "characters/head",
+      "status": "production",
+      "sourceFile": "assets/parts/head/angular.south.svg",
+      "sha256": "488fb127c75277af93bec52b5c49962affd7fe93ed2f0541852f69e8659c4886"
+    },
+    {
+      "assetId": "head-boxy",
+      "category": "characters/head",
+      "status": "production",
+      "sourceFile": "assets/parts/head/boxy.east.svg",
+      "sha256": "d5fc026c02376df33d0328b9dbb72aeb3389c95e3bd12ad846459e2bed9b9acf"
+    },
+    {
+      "assetId": "head-boxy",
+      "category": "characters/head",
+      "status": "production",
+      "sourceFile": "assets/parts/head/boxy.north.svg",
+      "sha256": "2e472ea2d3aae181d6b9cb370568bd1331d0f0dd88c17c7e9c1b43b69c39a0a0"
+    },
+    {
+      "assetId": "head-boxy",
+      "category": "characters/head",
+      "status": "production",
+      "sourceFile": "assets/parts/head/boxy.south.svg",
+      "sha256": "804499221e37801f204c4478cbf101985008035949c24035cfc99fbe495758f7"
+    },
+    {
+      "assetId": "head-fab",
+      "category": "characters/head",
+      "status": "production",
+      "sourceFile": "assets/parts/head/fab.east.svg",
+      "sha256": "fb5b745c06bd701e9ce624f2992b16629b6e35aadf7a9cd47134d0999e60e831"
+    },
+    {
+      "assetId": "head-fab",
+      "category": "characters/head",
+      "status": "production",
+      "sourceFile": "assets/parts/head/fab.north.svg",
+      "sha256": "30070d4070ebacd619f07b693aa3abf188eeed6ee3b7497a9d3644e234701e68"
+    },
+    {
+      "assetId": "head-fab",
+      "category": "characters/head",
+      "status": "production",
+      "sourceFile": "assets/parts/head/fab.south.svg",
+      "sha256": "3222aad8665ef4f632e752ee41d394aab98edf35994a2da524f95ed05809d28e"
+    },
+    {
+      "assetId": "head-long",
+      "category": "characters/head",
+      "status": "production",
+      "sourceFile": "assets/parts/head/long.east.svg",
+      "sha256": "ae9ec6436ba741dd628e0ad3261fed3cb19932c9a5cbb683769bf804c5a392b4"
+    },
+    {
+      "assetId": "head-long",
+      "category": "characters/head",
+      "status": "production",
+      "sourceFile": "assets/parts/head/long.north.svg",
+      "sha256": "d08debd53794e4d07e90d36bccd31550fbf67b73cd7b1709523c51c42d133c70"
+    },
+    {
+      "assetId": "head-long",
+      "category": "characters/head",
+      "status": "production",
+      "sourceFile": "assets/parts/head/long.south.svg",
+      "sha256": "32f69afce86e566b4e1852f504eae52fd137cfd802c20a4e13cfa4e185441841"
+    },
+    {
+      "assetId": "head-oval",
+      "category": "characters/head",
+      "status": "production",
+      "sourceFile": "assets/parts/head/oval.east.svg",
+      "sha256": "cf864c66dce29e857a93be0869b03da6a8700a21937bcbfda98528d077475030"
+    },
+    {
+      "assetId": "head-oval",
+      "category": "characters/head",
+      "status": "production",
+      "sourceFile": "assets/parts/head/oval.north.svg",
+      "sha256": "c72084c005c2c4bb149fc27c2a1e11e74550e7bae0e9bcb452933cf7a6cecafd"
+    },
+    {
+      "assetId": "head-oval",
+      "category": "characters/head",
+      "status": "production",
+      "sourceFile": "assets/parts/head/oval.south.svg",
+      "sha256": "2f490b09c0f45e5f8b8c568cc6d29d5ecb2ed948ee58acebff855e2a5702a21d"
+    },
+    {
+      "assetId": "head-round",
+      "category": "characters/head",
+      "status": "production",
+      "sourceFile": "assets/parts/head/round.east.svg",
+      "sha256": "56409cbe292232348331622ebcdaa90d48fab6eb1cf4730e57e10f1f93246006"
+    },
+    {
+      "assetId": "head-round",
+      "category": "characters/head",
+      "status": "production",
+      "sourceFile": "assets/parts/head/round.north.svg",
+      "sha256": "2d4dc35af6fc4bf97acd60d538689d3f4c425bdce076e6c6ca95d25439c49255"
+    },
+    {
+      "assetId": "head-round",
+      "category": "characters/head",
+      "status": "production",
+      "sourceFile": "assets/parts/head/round.south.svg",
+      "sha256": "a1f539b6a16407e1774d6a0bc94de8920f6656b75bbdbd4f38faf5de72f000df"
+    },
+    {
+      "assetId": "head-soft-square",
+      "category": "characters/head",
+      "status": "production",
+      "sourceFile": "assets/parts/head/soft-square.east.svg",
+      "sha256": "ccb4452973d4b3740492aef59c95119de44128acaeb701a6666e319a706874e8"
+    },
+    {
+      "assetId": "head-soft-square",
+      "category": "characters/head",
+      "status": "production",
+      "sourceFile": "assets/parts/head/soft-square.north.svg",
+      "sha256": "aced4bee6c5bebaeb24775c49a92bd85dbc8c068454f25e55e89c9230a708f13"
+    },
+    {
+      "assetId": "head-soft-square",
+      "category": "characters/head",
+      "status": "production",
+      "sourceFile": "assets/parts/head/soft-square.south.svg",
+      "sha256": "a85fe3269936217a1582a62563344353485501b95bbb2d584975f76f4c007d94"
+    },
+    {
+      "assetId": "outfit-blazer",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/blazer.buttons.east.svg",
+      "sha256": "638a5c300a6b8a4efb5c04cbbebb844376366f731c7c63a2be02206a621ba6ec"
+    },
+    {
+      "assetId": "outfit-blazer",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/blazer.buttons.south.svg",
+      "sha256": "c05d498864e4ad45257acf875f56a53ea61e2b5afbaa45b09de31d64d4c5ddca"
+    },
+    {
+      "assetId": "outfit-blazer",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/blazer.lapels.east.svg",
+      "sha256": "8c115c472309b379a43c92a05009444ca69dbc0c70438d3d7014533d201a307f"
+    },
+    {
+      "assetId": "outfit-blazer",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/blazer.lapels.south.svg",
+      "sha256": "bde2f9bede22984d6af3d415de628a577046a2db5dc029f4ea9ca19e43d877b8"
+    },
+    {
+      "assetId": "outfit-blazer",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/blazer.pocket.east.svg",
+      "sha256": "3c0f8581e10e46acd5584075a792dbf36e6f8679c144399eb725a3a60f7a5467"
+    },
+    {
+      "assetId": "outfit-blazer",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/blazer.pocket.south.svg",
+      "sha256": "4cb726de0a63e3a868e63aceca29570238a3b12e6f4912315f4c96726f13b0f0"
+    },
+    {
+      "assetId": "outfit-cardigan",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/cardigan.button-line.east.svg",
+      "sha256": "998d7605632ef7e049075c907bd1e598971c0d1c026d46f996af86066ff1781d"
+    },
+    {
+      "assetId": "outfit-cardigan",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/cardigan.button-line.south.svg",
+      "sha256": "f48e1188608b53ac0cf3a32d72f8b108ed20a021c7e55ca989261505cdc3f8d5"
+    },
+    {
+      "assetId": "outfit-cardigan",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/cardigan.trim.east.svg",
+      "sha256": "6ab96f6a56bfbf268d72e29fba379ee28aebdd0e4bc8333d3b83e1999f1a2c8a"
+    },
+    {
+      "assetId": "outfit-cardigan",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/cardigan.trim.south.svg",
+      "sha256": "1816d66d2742cb3e62c7d3cb15ca6678962a8147c568996bdb8ced694ee2bb7d"
+    },
+    {
+      "assetId": "outfit-hoodie",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/hoodie.drawstrings.east.svg",
+      "sha256": "76bc01c330169ce69d9d1fd9d4fd073affba27041a50371abadc78155e939b64"
+    },
+    {
+      "assetId": "outfit-hoodie",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/hoodie.drawstrings.south.svg",
+      "sha256": "f68f8840ee53b556c9e7bf9c498236e5b9cae7209b19ddc5cd9a1d3b542fa869"
+    },
+    {
+      "assetId": "outfit-hoodie",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/hoodie.hood.east.svg",
+      "sha256": "97cb5ee18f0a5fb8336079c7eab51e74acf2f86eab171464295d1717fde89b49"
+    },
+    {
+      "assetId": "outfit-hoodie",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/hoodie.hood.north.svg",
+      "sha256": "5eee6d075604ea1d5a9f4d13adea96fca49fa95a4499c6e557113f8ab5341fea"
+    },
+    {
+      "assetId": "outfit-hoodie",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/hoodie.hood.south.svg",
+      "sha256": "26dcf6748a05f4eb05e7b426eda4d03650f59abed5d900da6aab414c31032cc8"
+    },
+    {
+      "assetId": "outfit-hoodie",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/hoodie.pocket.south.svg",
+      "sha256": "8bdb56cea782e9fa48012915ff3badb9512c3c1d21b8fd3af7b11e637a600348"
+    },
+    {
+      "assetId": "outfit-polo",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/polo.collar.east.svg",
+      "sha256": "aa9771d5e75f1dabfca6e19542f90fb99833f0d86685ab8d6f276e7c79cd5978"
+    },
+    {
+      "assetId": "outfit-polo",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/polo.collar.south.svg",
+      "sha256": "048eb91230a0736e9732740d3e354b9d20ca988d0187b48d900373ba0a502d56"
+    },
+    {
+      "assetId": "outfit-polo",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/polo.placket.east.svg",
+      "sha256": "60a65798cfb0f3a5f2f15198eee570a53f2d0002ef8aff730e4e6ab371dd5717"
+    },
+    {
+      "assetId": "outfit-polo",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/polo.placket.south.svg",
+      "sha256": "1427e8ea04bee92a7cd76829b63f7b84e21365d03b444cdfd15a5743bb0395e6"
+    },
+    {
+      "assetId": "outfit-shirt-tie",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/shirt-tie.collar.east.svg",
+      "sha256": "e174e47fe4f5dd99ca551fab5614f8feb849cdf257495a17674607754f5fc6d1"
+    },
+    {
+      "assetId": "outfit-shirt-tie",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/shirt-tie.collar.south.svg",
+      "sha256": "0c0b82b9e63e9a688e3e6fb9d4757fec398889a44672574617f0da3368cbb7e8"
+    },
+    {
+      "assetId": "outfit-shirt-tie",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/shirt-tie.tie.east.svg",
+      "sha256": "9d6374c39c2ecc5e977d05fef52738abf30c46bd5ae83db00fa71fff5a91fafa"
+    },
+    {
+      "assetId": "outfit-shirt-tie",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/shirt-tie.tie.south.svg",
+      "sha256": "cfdbc58aa44d3a1ff99448bdf86d3fa2ed40ab1e1f71d918a1acbddc1dc8de33"
+    },
+    {
+      "assetId": "outfit-suit-jacket",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/suit-jacket.buttons.east.svg",
+      "sha256": "521f2ead128e67ac23146cced20dc188b4f86943bb565fc024362789628b2a7d"
+    },
+    {
+      "assetId": "outfit-suit-jacket",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/suit-jacket.buttons.south.svg",
+      "sha256": "fd9f0f30dc66150dcc1e593bec76e9501f449896fd61ad4f91a24e8f4c3a87aa"
+    },
+    {
+      "assetId": "outfit-suit-jacket",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/suit-jacket.lapels.east.svg",
+      "sha256": "467289d29d6569b4a8b69464a086788b5387b77f14b909d0e973e78a6c5dd4a2"
+    },
+    {
+      "assetId": "outfit-suit-jacket",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/suit-jacket.lapels.south.svg",
+      "sha256": "3789cdabc9bb6d2563fc212e303499c3b1316060d9a01adec42a0fd2b92e42ac"
+    },
+    {
+      "assetId": "outfit-suit-jacket",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/suit-jacket.notches.east.svg",
+      "sha256": "05c5f65bbe4e5ba4845bbf74915640a27ff8e09bf79d0161465ba78173dc858b"
+    },
+    {
+      "assetId": "outfit-suit-jacket",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/suit-jacket.notches.south.svg",
+      "sha256": "9b6fd2131a33b235bc14d49eae231d61ab5278191bc4b81f5c56687b2a467463"
+    },
+    {
+      "assetId": "outfit-suit-jacket",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/suit-jacket.pocket-square.east.svg",
+      "sha256": "e4bbf318fdaba4390e7174be1d5770c8bd29453aa2771d44ec70e3d913556f1e"
+    },
+    {
+      "assetId": "outfit-suit-jacket",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/suit-jacket.pocket-square.south.svg",
+      "sha256": "75325dca4e03444e37a8f653a9e27aac647abb87b9c95a48c16796cc45cd4bda"
+    },
+    {
+      "assetId": "outfit-suit-jacket",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/suit-jacket.pocket.east.svg",
+      "sha256": "702c3fc8fbe10eff5e66bc31f65d8033a85deb1b0392c6b9e5f9b4ee46d589e6"
+    },
+    {
+      "assetId": "outfit-suit-jacket",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/suit-jacket.pocket.south.svg",
+      "sha256": "ba49450112095ce78bceb3307068d871758c0029c0226ad476453394027752d0"
+    },
+    {
+      "assetId": "outfit-suit-jacket",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/suit-jacket.tie.east.svg",
+      "sha256": "f5b50dcde0d18c13c63515b0e2b4da6ef904dc26ca0e0911a7e9c52851b9608c"
+    },
+    {
+      "assetId": "outfit-suit-jacket",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/suit-jacket.tie.south.svg",
+      "sha256": "9d5d02f932c943c5bfe18ca12f5f58de4e1b38db5607a97724f4031e39499a56"
+    },
+    {
+      "assetId": "outfit-tee",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/tee.east.svg",
+      "sha256": "1a52f00ac989a250d67b149a228ad2e4d7f3102c8f4a6cdce2dbcdb15c72d782"
+    },
+    {
+      "assetId": "outfit-tee",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/tee.south.svg",
+      "sha256": "acb2802021cdd335bff29b05da1352f7a5189ee77ac5d12be45ee0b00535d2d8"
+    },
+    {
+      "assetId": "outfit-turtleneck",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/turtleneck.neck-band.east.svg",
+      "sha256": "97b34b706ada59560e84ba92fac3cb94b42db11b3c0e169ada62385b060af694"
+    },
+    {
+      "assetId": "outfit-turtleneck",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/turtleneck.neck-band.north.svg",
+      "sha256": "337d21a32716f3f2bf4046ef8831222ae318fdc20fbf0590609f702b36f0291d"
+    },
+    {
+      "assetId": "outfit-turtleneck",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/turtleneck.neck-band.south.svg",
+      "sha256": "fe12367a20ef427c5c7cc3f816303303d4616171760ff0414948138e972eb8bf"
+    },
+    {
+      "assetId": "outfit-vest",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/vest.buttons.south.svg",
+      "sha256": "1cba4c7e15c6d7712abb06c12ea37b9d0302de8f9ba390e2ab6b8cb5db1aec9d"
+    },
+    {
+      "assetId": "outfit-vest",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/vest.neck-inset.south.svg",
+      "sha256": "2198a24affe5dfa198033aca39050008686370e38dfd3dae2c22b7f96970e5a7"
+    },
+    {
+      "assetId": "outfit-vest",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/vest.panel.south.svg",
+      "sha256": "69842c377abdfcde745888e74acf858fd25f748df80f80eabcb0769bea2bdd06"
+    },
+    {
+      "assetId": "hvac-condenser",
+      "category": "props/deferred-gameplay",
+      "status": "deferred",
+      "sourceFile": "assets/props/quota-co-gameplay-candidates-v1/hvac-condenser.svg",
+      "sha256": "a12302402652d62241daee4bcef954e9abb8385c097843f302f5ff5840e0be55"
+    },
+    {
+      "assetId": "privacy-hedge",
+      "category": "props/deferred-gameplay",
+      "status": "deferred",
+      "sourceFile": "assets/props/quota-co-gameplay-candidates-v1/privacy-hedge.svg",
+      "sha256": "91aaa992d4e47eee79c935f42da44aea882cf8b18a16cbd0a6b1fd851ac3ca01"
+    },
+    {
+      "assetId": "surveillance-camera",
+      "category": "props/deferred-gameplay",
+      "status": "deferred",
+      "sourceFile": "assets/props/quota-co-gameplay-candidates-v1/surveillance-camera.svg",
+      "sha256": "0051840cc260d38cf8828d70ffeb5346b8559efdc18a69a1658257ee90b5cecc"
+    },
+    {
+      "assetId": "surveillance-sensor",
+      "category": "props/deferred-gameplay",
+      "status": "deferred",
+      "sourceFile": "assets/props/quota-co-gameplay-candidates-v1/surveillance-sensor.svg",
+      "sha256": "3c4c04c7363455fe0b12fd332e613440e1f56bcce588fa0d5e50f5e418602323"
+    },
+    {
+      "assetId": "bike-rack",
+      "category": "props/outdoor",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/bike-rack.svg",
+      "sha256": "1e1f074b34adbbc8b4a954395afdb2ea503d72fdafdbfdd136e1e916d919f59f"
+    },
+    {
+      "assetId": "car",
+      "category": "props/outdoor",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/car.svg",
+      "sha256": "8749f838f92918187a3eaaec40f19fa054a2021e83874b752e3d77921d6049c0"
+    },
+    {
+      "assetId": "lamp-post",
+      "category": "props/outdoor",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/lamp-post.svg",
+      "sha256": "2d941d0ee3ae1d7f33a3d78292d98fc3324b8259393b394ad989a41da9d122cb"
+    },
+    {
+      "assetId": "lot-marking-crosswalk",
+      "category": "props/outdoor",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/lot-marking-crosswalk.svg",
+      "sha256": "c1e241e3dfb89c3cddbad3a4e8d600fd9ea10fc9d0eaad5cb1f4b4894b8d38c1"
+    },
+    {
+      "assetId": "park-bench",
+      "category": "props/outdoor",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/park-bench.svg",
+      "sha256": "a5d10089a5be5c309dc3c0391f7c805216a9ea77609b64357628167c24e06107"
+    },
+    {
+      "assetId": "picnic-table",
+      "category": "props/outdoor",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/picnic-table.svg",
+      "sha256": "adb4c373e31453f24d950403a7dbc8af8ab4f9a26ddf00d8dec65def394e0694"
+    },
+    {
+      "assetId": "sign-lot",
+      "category": "props/outdoor",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/sign-lot.svg",
+      "sha256": "efe7dad17a22f286bf08b6177c327f48d029878fe0b50b3a7ae25bd8ac4d1515"
+    },
+    {
+      "assetId": "tree-canopy",
+      "category": "props/outdoor",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/tree-canopy.svg",
+      "sha256": "b449cb35a06d1b16d71f2787b9402344e664a83a2f2e08c01f6349869b0d401d"
+    },
+    {
+      "assetId": "bean-bag",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/bean-bag.svg",
+      "sha256": "f0d58020a7f24b6b68a2a3db806098dc628dff26fc62030608e8c22095ce7f45"
+    },
+    {
+      "assetId": "bookshelf",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/bookshelf.svg",
+      "sha256": "e5ff3a54ec03e332a4cdc8299558e90e0a0b1388534679089e70937cdf7dab45"
+    },
+    {
+      "assetId": "break-table",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/break-table.svg",
+      "sha256": "dc7b35aa9506e07aff24591bd6784a86205185d504952823476b9b5d3ce630cb"
+    },
+    {
+      "assetId": "coat-rack",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/coat-rack.svg",
+      "sha256": "1cd6558d694a2186dff2f0c39a6209dbcfe4b413daa564c8e0319194dd140b88"
+    },
+    {
+      "assetId": "coffee-machine-broken",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/coffee-machine-broken.svg",
+      "sha256": "c3e2c7c78b47bd9b13f56938043fb7633546cded869cfbcf906595fe2041bd79"
+    },
+    {
+      "assetId": "coffee-machine",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/coffee-machine.svg",
+      "sha256": "0ec61554eb11a552ee04bacf634dc65a605f13891f97c884dc01084acd1b72fb"
+    },
+    {
+      "assetId": "coffee-table",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/coffee-table.svg",
+      "sha256": "805fcff630d96b4e5fe7afa04fe988174fdbee546876f28f8fea341cd92b2d60"
+    },
+    {
+      "assetId": "conference-table",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/conference-table.svg",
+      "sha256": "2e400ded975dfd943eef22e96176e28a37fd64a2626f406c6ba6d5cbb4165aaa"
+    },
+    {
+      "assetId": "copier",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/copier.svg",
+      "sha256": "c70859095ed9c7b5c9aae24526a05792e1da01931327fcf5e5237a6efbc76118"
+    },
+    {
+      "assetId": "couch",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/couch.svg",
+      "sha256": "db09a574aa698d4e12b648edccef00c81417f5b9d95343f9f213b60b55fbec04"
+    },
+    {
+      "assetId": "cubicle-workstation",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/cubicle-workstation.svg",
+      "sha256": "0ac7255d9f075a59452d9a90ce6dda135afa00956cc0f6e355ce2fb01661b7d5"
+    },
+    {
+      "assetId": "desk-clutter",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/desk-clutter.svg",
+      "sha256": "c2f09c2a1266df72d303602b5711e188131f0e498d90f3da21b28372f743743a"
+    },
+    {
+      "assetId": "desk-lamp",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/desk-lamp.svg",
+      "sha256": "db2e665fba2a6646fe36b21cc72b74007ccfbba10264f091b6de750145bc8c52"
+    },
+    {
+      "assetId": "desk",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/desk.svg",
+      "sha256": "3563e9bb626735923b2d970e7f256384cb314b1a8751f923a3baa732d71530d7"
+    },
+    {
+      "assetId": "filing-cabinet",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/filing-cabinet.svg",
+      "sha256": "c596dd32dfa5fbeef2ca7f2dd4da1cb06cb74c9170a7cba3a6389c87a3d2a036"
+    },
+    {
+      "assetId": "fish-tank",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/fish-tank.svg",
+      "sha256": "6fe9ef84227c60b5923ddb5a5e5b42c0982ec0f2bc38abe33decd3da9b64a4d1"
+    },
+    {
+      "assetId": "floor-lamp",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/floor-lamp.svg",
+      "sha256": "6d9867cc4e15d41f43f0252da0977608a94c2a2c812e8c328d16b0d8832bd1cc"
+    },
+    {
+      "assetId": "framed-art",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/framed-art.svg",
+      "sha256": "69e685aa763d699437bf312c4e520a5f996e851ca7175d172a550ac452f4ef19"
+    },
+    {
+      "assetId": "fridge",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/fridge.svg",
+      "sha256": "1991d7c58c2a5967a0088bb67e678c506577d3ff1605d9223158a8cee26c91a9"
+    },
+    {
+      "assetId": "hanging-plant",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/hanging-plant.svg",
+      "sha256": "78d0ac3c45b23aee9c6fee3692fb7ead4e22b16c0814383532bdd3877703510f"
+    },
+    {
+      "assetId": "lockers",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/lockers.svg",
+      "sha256": "a214bd7613c8223148f1b32c64c2dd04579ef28e068c5366dcc24f36a8a43a71"
+    },
+    {
+      "assetId": "lounge-seating",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/lounge-seating.svg",
+      "sha256": "d20ea8e62027bafcf31617b6930101177262c48abd692edd1be7bb53a9569b48"
+    },
+    {
+      "assetId": "mail-station",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/mail-station.svg",
+      "sha256": "cf9bc3a21d19bd284fe7774e8bd894348fcec66429b0decdc00fb84627c8d3dd"
+    },
+    {
+      "assetId": "microwave",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/microwave.svg",
+      "sha256": "bb3a3db17bd221e9fb3469345291920639d32e8beb3aed31b8bc58541f640903"
+    },
+    {
+      "assetId": "nap-pod",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/nap-pod.svg",
+      "sha256": "c137b954cf4654554e29c4abdb4a3cd3f18e198332e9c92f72638f14d3afb307"
+    },
+    {
+      "assetId": "office-chair",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/office-chair.svg",
+      "sha256": "6eb82aa0542965f1c59afaa531952e9c29792aedf8b224cb6c1ad4f911263828"
+    },
+    {
+      "assetId": "office-plant",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/office-plant.svg",
+      "sha256": "8cbb90dcca5eead7e970288042762fac9045797782b43bf079da95ae0252e4ac"
+    },
+    {
+      "assetId": "open-shelving",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/open-shelving.svg",
+      "sha256": "7d86837e393cbec6a8247ff391bbf8dd21574289e4da87e2ece60a7a0faff99d"
+    },
+    {
+      "assetId": "pantry-shelf",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/pantry-shelf.svg",
+      "sha256": "d78a360ff8d6ad59d2038bb47fd588a1ad64ca833e0488e7025ed9238f5c01f5"
+    },
+    {
+      "assetId": "poster",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/poster.svg",
+      "sha256": "b5fd04f0fe6432f6a64494fe8a3bb8e4a2ccf239f2e0dd3ac7b3bdbcf1cc4a3f"
+    },
+    {
+      "assetId": "potted-tree",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/potted-tree.svg",
+      "sha256": "e73fe8670a258486aa4f53672ede1b7fe48fa56c45854013cc03e241df9c27a3"
+    },
+    {
+      "assetId": "printer-jammed",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/printer-jammed.svg",
+      "sha256": "2a5601464cf786abce1abd13081a552510e9bd76208d9151d0fdfe1f9ad0636f"
+    },
+    {
+      "assetId": "printer",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/printer.svg",
+      "sha256": "5d7b2d6eaffce50e1c16c6e181296fe720d6594256238c5a926c391786b76c37"
+    },
+    {
+      "assetId": "reception-desk",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/reception-desk.svg",
+      "sha256": "653157739a9d5e4bb9fb1aa29b513f24a3951758676183ef8e655eff9cddb29f"
+    },
+    {
+      "assetId": "rug",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/rug.svg",
+      "sha256": "44d8bd78288adfb2bf39747af470a1b3bfe03e82bbe544ba1f193e8f1daaccbf"
+    },
+    {
+      "assetId": "server-rack",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/server-rack.svg",
+      "sha256": "61648316da984d4753faa5e688d410b211870987e16a6107cf2ede74dc466d13"
+    },
+    {
+      "assetId": "shredder",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/shredder.svg",
+      "sha256": "ec1124b825448a7410cb6bc2ed1a80920a42209af8470aff9e8fc169139e3b6e"
+    },
+    {
+      "assetId": "standing-desk",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/standing-desk.svg",
+      "sha256": "00d9a2056acb1f03cfc1eca8e1bf3b6f67da8faec6f78a82b663c0700f294fb8"
+    },
+    {
+      "assetId": "string-lights",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/string-lights.svg",
+      "sha256": "82885875b9bf7a0fe641cd354b0baf1896dc6b3c3b4703b55c0d401be4340abc"
+    },
+    {
+      "assetId": "supply-cabinet",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/supply-cabinet.svg",
+      "sha256": "c4edb6ff3150f1947f21347e06e6da73635710047d56beab76bf8b71e12fb546"
+    },
+    {
+      "assetId": "vending-machine",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/vending-machine.svg",
+      "sha256": "78dc64b8afab10d62244228fb80dcffa4d6e6dbb1cc381915815dbf8344fa0ca"
+    },
+    {
+      "assetId": "waiting-bench",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/waiting-bench.svg",
+      "sha256": "ef78461acb3d5e2655e7c9c8534c2baffd875397731d0b13af7648c1ed5d4da1"
+    },
+    {
+      "assetId": "wall-clock",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/wall-clock.svg",
+      "sha256": "5e3ed1dcbdfeb40b6012278b37fef70d250e1a30d2d3d98e930f9345120c2615"
+    },
+    {
+      "assetId": "water-cooler-empty",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/water-cooler-empty.svg",
+      "sha256": "20d64741f6305f1828fe0bb080d21bb91b43f952b4c81187cc0585390c97ef23"
+    },
+    {
+      "assetId": "water-cooler",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/water-cooler.svg",
+      "sha256": "394edcd682ceb4a2aa3ec14a3c5b8570f9c2419ba1c05de69d562d66b2e9cb72"
+    },
+    {
+      "assetId": "floor-accent-tile",
+      "category": "surfaces/floors",
+      "status": "production",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/floors/floor-accent-tile.svg",
+      "sha256": "da860ba624816e866fa9cf6df556d0601bcbb22989a9cbd01e18ea0f57e3310c"
+    },
+    {
+      "assetId": "floor-astroturf",
+      "category": "surfaces/floors",
+      "status": "production",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/floors/floor-astroturf.svg",
+      "sha256": "a236a29ba33fa84cb963d9ed628768824b6e96af6bc39970a2be0630183f5113"
+    },
+    {
+      "assetId": "floor-carpet-tiles",
+      "category": "surfaces/floors",
+      "status": "production",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/floors/floor-carpet-tiles.svg",
+      "sha256": "ddbc0fd9bd7fba33a2ac24f1d7b6b4dc85c15370ad0864c286549c16bfcea810"
+    },
+    {
+      "assetId": "floor-carpet",
+      "category": "surfaces/floors",
+      "status": "production",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/floors/floor-carpet.svg",
+      "sha256": "2cde1894e54ce5e4b0557cb8b9137b5e24396eb53998f6fa0f4299c343110e17"
+    },
+    {
+      "assetId": "floor-linoleum",
+      "category": "surfaces/floors",
+      "status": "production",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/floors/floor-linoleum.svg",
+      "sha256": "071627aeb73034d44da475f3fec940b89f2512ec86f9019618cc97fc3f64a646"
+    },
+    {
+      "assetId": "floor-lobby-stone",
+      "category": "surfaces/floors",
+      "status": "production",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/floors/floor-lobby-stone.svg",
+      "sha256": "5e5bb9a8899c4103fe90eebadd1e8537418ebe155c779b025af64bdced03242e"
+    },
+    {
+      "assetId": "floor-polished-concrete",
+      "category": "surfaces/floors",
+      "status": "production",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/floors/floor-polished-concrete.svg",
+      "sha256": "ddc393111b001a36df35857247410f515d5ed7a47da4fa61ed4b8399ed734c91"
+    },
+    {
+      "assetId": "floor-quiet-carpet",
+      "category": "surfaces/floors",
+      "status": "production",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/floors/floor-quiet-carpet.svg",
+      "sha256": "47e5963c769680436d6a736b3f136ec6cb469bb2839c4bab4707452fc2a8ff83"
+    },
+    {
+      "assetId": "floor-rubber-mat",
+      "category": "surfaces/floors",
+      "status": "production",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/floors/floor-rubber-mat.svg",
+      "sha256": "22300f53fdc016b07a56435ab7d1b3fa82917ec7687fe146d9e6947ce200c479"
+    },
+    {
+      "assetId": "floor-terrazzo",
+      "category": "surfaces/floors",
+      "status": "production",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/floors/floor-terrazzo.svg",
+      "sha256": "4f185c1a2376b740ab983067db4c8e25aa4355d8ff8a6aefd76d7b5b5f4c75eb"
+    },
+    {
+      "assetId": "floor-utility-vinyl",
+      "category": "surfaces/floors",
+      "status": "production",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/floors/floor-utility-vinyl.svg",
+      "sha256": "b0cf101f057b7eb8826b78b25acbfbcb94975ed19b7bacd2c5691fd11a669315"
+    },
+    {
+      "assetId": "floor-wood",
+      "category": "surfaces/floors",
+      "status": "production",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/floors/floor-wood.svg",
+      "sha256": "d25aadf1d277e960c1bdbbe840bcb9414b22d14d9a6e09f329ac7b9181020af0"
+    },
+    {
+      "assetId": "ground-grass-b",
+      "category": "surfaces/grass",
+      "status": "production",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/ground/ground-grass-b.svg",
+      "sha256": "f8a0454b4b5e5cf3af460075728408e0a7fc4b14756ad4aff9669cbce1e11bdb"
+    },
+    {
+      "assetId": "ground-grass-c",
+      "category": "surfaces/grass",
+      "status": "production",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/ground/ground-grass-c.svg",
+      "sha256": "92c451b4ac1248eae51fedefd7bf14aa93067f438ad14936c6017b32ff49a01d"
+    },
+    {
+      "assetId": "ground-grass",
+      "category": "surfaces/grass",
+      "status": "production",
+      "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/ground/ground-grass.svg",
+      "sha256": "cb4ba412d9a2a1382406f816a53e759cc51233dd3f83e4930dfadeab6391cda7"
+    },
+    {
+      "assetId": "concave-ne",
+      "category": "walls/bevel",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/bevel/concave-ne.svg",
+      "sha256": "ebdb74a2b228093d1e74c30f856048b21752a104fd5dcd92018e6430d3344630"
+    },
+    {
+      "assetId": "concave-nw",
+      "category": "walls/bevel",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/bevel/concave-nw.svg",
+      "sha256": "a5ddf4b0f7a84d0c78ed91b8801cb580f44f95b8d51a6c3f1e5d902c996e318f"
+    },
+    {
+      "assetId": "concave-se",
+      "category": "walls/bevel",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/bevel/concave-se.svg",
+      "sha256": "7bd38a9fe27b0ba434d3ec00cbcba033026f4613f909f565155b9d7faf34e057"
+    },
+    {
+      "assetId": "concave-sw",
+      "category": "walls/bevel",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/bevel/concave-sw.svg",
+      "sha256": "f9384659db7349d3ec74cbc48129d738b02be5e20e115db905f638362f99cd84"
+    },
+    {
+      "assetId": "convex-ne",
+      "category": "walls/bevel",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/bevel/convex-ne.svg",
+      "sha256": "54a8c52a86e2a952dcf9dc5e01144de6d5ae938ddcd3d7825d8573701ca4b90a"
+    },
+    {
+      "assetId": "convex-nw",
+      "category": "walls/bevel",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/bevel/convex-nw.svg",
+      "sha256": "de47da40c99285721cf7017d31713ba3b56ecb09545b594e7cb70d4ceb7fb4a0"
+    },
+    {
+      "assetId": "convex-se",
+      "category": "walls/bevel",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/bevel/convex-se.svg",
+      "sha256": "932fbcb3334b32fafc465f3f998283915d596ac4a0775a3c19de494445351e1c"
+    },
+    {
+      "assetId": "convex-sw",
+      "category": "walls/bevel",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/bevel/convex-sw.svg",
+      "sha256": "cc486d169f2d7282395f8d3796fdb813679970cc2e206a3b3327af3480e53eeb"
+    },
+    {
+      "assetId": "edge-e",
+      "category": "walls/bevel",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/bevel/edge-e.svg",
+      "sha256": "a26a97148dc9402cd3e331036b8b02d54434c2e5e8ba946ff3d2eeb9d8fb7fc8"
+    },
+    {
+      "assetId": "edge-n",
+      "category": "walls/bevel",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/bevel/edge-n.svg",
+      "sha256": "2e7b12b3dcf5a4c01163174c17a853ea10c59bc383ddaad93b66a30d3586bfe2"
+    },
+    {
+      "assetId": "edge-s",
+      "category": "walls/bevel",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/bevel/edge-s.svg",
+      "sha256": "a2c613444ea481152209fc29874259e830c67652c87b20c9dc676731a721ee57"
+    },
+    {
+      "assetId": "edge-w",
+      "category": "walls/bevel",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/bevel/edge-w.svg",
+      "sha256": "ca8dd1bd87bb0293af4c1cf41da3048d3e4c7ac66a82b4cd1a6c55401356de9f"
+    },
+    {
+      "assetId": "full_exterior_corner",
+      "category": "walls/equal-height-direct",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system/full_exterior_corner-base.svg",
+      "sha256": "3b0d4ece165cffa5285c51ecbbb444af91e42341c1cf60e21414fda04b9fb7c2"
+    },
+    {
+      "assetId": "full_exterior_corner",
+      "category": "walls/equal-height-direct",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system/full_exterior_corner-upper.svg",
+      "sha256": "520d67cd5ebe690b6324d6783683ac5c9020c7a85e6af3c1517576947f4ce55c"
+    },
+    {
+      "assetId": "full_n_straight",
+      "category": "walls/equal-height-direct",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system/full_n_straight-base.svg",
+      "sha256": "6b0f8c94857ac42f770b3dc63503a9f7f752ee0b524288108124fc74a943e31b"
+    },
+    {
+      "assetId": "full_n_straight",
+      "category": "walls/equal-height-direct",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system/full_n_straight-upper.svg",
+      "sha256": "51c1f9482ebf674082e67644d7cae402bab2983752e798f090106ada5000bd0f"
+    },
+    {
+      "assetId": "full_terminus",
+      "category": "walls/equal-height-direct",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system/full_terminus-base.svg",
+      "sha256": "afe316a528083d757ee816d8a2c9e55920350f9f481dd11a6d339f9ce2aeab31"
+    },
+    {
+      "assetId": "full_terminus",
+      "category": "walls/equal-height-direct",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system/full_terminus-upper.svg",
+      "sha256": "7df916b556ade433c1fdf33555fadbbf61e50ca5690ac2c5d48f004cd4cd2641"
+    },
+    {
+      "assetId": "full_w_straight",
+      "category": "walls/equal-height-direct",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system/full_w_straight-base.svg",
+      "sha256": "4762ffdd8bb6ca0c654358397e54d17eeff6c9b6db939838a1b2e5d084dd2cb4"
+    },
+    {
+      "assetId": "full_w_straight",
+      "category": "walls/equal-height-direct",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system/full_w_straight-upper.svg",
+      "sha256": "a30a8b894e091e65bf9aa916c945b3691b73e0144aa6924d7960d6a6d518d4e6"
+    },
+    {
+      "assetId": "transition_w_to_s",
+      "category": "walls/equal-height-direct",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system/transition_w_to_s-base.svg",
+      "sha256": "5e43d799bc086dae8b3bee3632f1820befaeb65867966bd72ae0316576e451c7"
+    },
+    {
+      "assetId": "transition_w_to_s",
+      "category": "walls/equal-height-direct",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system/transition_w_to_s-upper.svg",
+      "sha256": "219901f30f10d7c9abbcd933bb074a69da5c89906788506ea88bae22c1126af7"
+    },
+    {
+      "assetId": "open_cross_filled_ne_sw",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/double-filled-diagonal-cross-junction/open_cross_filled_ne_sw-base.svg",
+      "sha256": "3924381f3b8345a1a8993488e1b89747737055f8e129fc8ca1b8114abd0e71ca"
+    },
+    {
+      "assetId": "open_cross_filled_ne_sw",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/double-filled-diagonal-cross-junction/open_cross_filled_ne_sw-upper.svg",
+      "sha256": "9980acc6db8b5985731c13c1d206ef34fb6112785649aca25908b12c1cb8f71d"
+    },
+    {
+      "assetId": "open_cross_filled_e",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/double-filled-east-cross-junction/open_cross_filled_e-base.svg",
+      "sha256": "6b327645d9035275e3675a251adf8d3e605a8f40a08fe14365d7116531507676"
+    },
+    {
+      "assetId": "open_cross_filled_e",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/double-filled-east-cross-junction/open_cross_filled_e-upper.svg",
+      "sha256": "2de2160e8ba908ffec6d4f142afbf0249c122c2ff61299e45a0ab500704557ea"
+    },
+    {
+      "assetId": "open_cross_filled_n",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/double-filled-north-cross-junction/open_cross_filled_n-base.svg",
+      "sha256": "2f6cb42e27d4ddfba5a5c33c56440c1ea64a4a925b73100c1d0cd7b804642208"
+    },
+    {
+      "assetId": "open_cross_filled_n",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/double-filled-north-cross-junction/open_cross_filled_n-upper.svg",
+      "sha256": "0f7188a36219693e1b79c7ca7021b908b0bbe41bd295039f38e04960e171e275"
+    },
+    {
+      "assetId": "open_cross_filled_s",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/double-filled-south-cross-junction/open_cross_filled_s-base.svg",
+      "sha256": "fec8d1e106066f90cf3361a6243dcd822df3d8e4a721ed8dcf180d1e1ec37a52"
+    },
+    {
+      "assetId": "open_cross_filled_s",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/double-filled-south-cross-junction/open_cross_filled_s-upper.svg",
+      "sha256": "863e65aa8c384e8b455b8ff72746006c986ea038ea2758b4b0db8989a40250b4"
+    },
+    {
+      "assetId": "filled_center",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/fully-filled-cross-junction/filled_center-base.svg",
+      "sha256": "8b11bdfde19c7f0a36c0d5ee69169a77a5de6f33144f119c561625afb4ad666a"
+    },
+    {
+      "assetId": "filled_center",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/fully-filled-cross-junction/filled_center-upper.svg",
+      "sha256": "d71d754afe8206e97439937215cbec8bdf78db6d21f0c00317c8efc9b26b341e"
+    },
+    {
+      "assetId": "open_n_t_junction",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/horizontal-open-pocket-t-junction/open_n_t_junction-base.svg",
+      "sha256": "cfd628a3fa877dd6be6b1734fafafa70688a86a4f4057b543cd340a4a4eea94e"
+    },
+    {
+      "assetId": "open_n_t_junction",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/horizontal-open-pocket-t-junction/open_n_t_junction-upper.svg",
+      "sha256": "1c04f314fdedffca987b7ec2d6a25fa9a1a54532070a7f89ac19f7b8f370b2d5"
+    },
+    {
+      "assetId": "open_s_t_junction",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/horizontal-open-pocket-t-junction/open_s_t_junction-base.svg",
+      "sha256": "d0c08c4a9221bdd3e26768a0ef1bdf7456fb4b699aaab780c53ce2cd12016fc1"
+    },
+    {
+      "assetId": "open_s_t_junction",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/horizontal-open-pocket-t-junction/open_s_t_junction-upper.svg",
+      "sha256": "16bae101353ab0575ba07b5e43c16a85974814299805fa8e41fd3701aeb7a0d7"
+    },
+    {
+      "assetId": "open_n_t_filled_se",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/horizontal-partial-t-junction/open_n_t_filled_se-base.svg",
+      "sha256": "efcca504bb096a3ef282cb6fc158f66ff0e3f8331e01489e4056a8644617691b"
+    },
+    {
+      "assetId": "open_n_t_filled_se",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/horizontal-partial-t-junction/open_n_t_filled_se-upper.svg",
+      "sha256": "052e36c00c29fadb519d5642bc40771b1f083e59a6431a295f84106913ffff98"
+    },
+    {
+      "assetId": "open_s_t_filled_ne",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/horizontal-partial-t-junction/open_s_t_filled_ne-base.svg",
+      "sha256": "1e2559ccfec2c753bfca2ba18fab312f0f0407565022b439d9290652c5d2aaeb"
+    },
+    {
+      "assetId": "open_s_t_filled_ne",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/horizontal-partial-t-junction/open_s_t_filled_ne-upper.svg",
+      "sha256": "1661603034ddc63634d32685095400671159f2eb3272e18d527ed3e81a92ca2d"
+    },
+    {
+      "assetId": "isolated_shell",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/isolated-shell/isolated_shell-base.svg",
+      "sha256": "e8ae74da23ad592cb2cfa1d7e4e067f3edaaa03eeb63339833fdd083b9d75991"
+    },
+    {
+      "assetId": "isolated_shell",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/isolated-shell/isolated_shell-upper.svg",
+      "sha256": "bb7a51ebf1438b10e4862d12c5ac9474faeb06949adc07b3d5c87457714dd4ce"
+    },
+    {
+      "assetId": "open_cross_junction",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/open-pocket-cross-junction/open_cross_junction-base.svg",
+      "sha256": "3dc08cd7c96d97c84b3d28ad1376980102bce15203bc56218e0b63a38095b42e"
+    },
+    {
+      "assetId": "open_cross_junction",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/open-pocket-cross-junction/open_cross_junction-upper.svg",
+      "sha256": "56a1fe6c4db27a0c9f964fcb9c2f12381d510382b9646cad0ab1e7c9d615f74a"
+    },
+    {
+      "assetId": "open_w_t_junction",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/open-pocket-t-junction/open_w_t_junction-base.svg",
+      "sha256": "e474c4ee80f595083edb24aee5c9e13a1077336e8502e184cd5341c678799c2b"
+    },
+    {
+      "assetId": "open_w_t_junction",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/open-pocket-t-junction/open_w_t_junction-upper.svg",
+      "sha256": "aa1b1fe254afd29164354ef3d3ff951a02c32bf8a8bd5a31f63b1c977bafbe0a"
+    },
+    {
+      "assetId": "open_cross_filled_ne",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/single-filled-cross-junction/open_cross_filled_ne-base.svg",
+      "sha256": "a214b3bb5c15f3343bf36909d3b77102689050303a8f4528ad62844f2ff29d20"
+    },
+    {
+      "assetId": "open_cross_filled_ne",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/single-filled-cross-junction/open_cross_filled_ne-upper.svg",
+      "sha256": "cc7e402be129f53b384eece85a93c2722bced00be375f2ef6e0df3c210af44db"
+    },
+    {
+      "assetId": "open_cross_filled_nw",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/single-filled-northwest-cross-junction/open_cross_filled_nw-base.svg",
+      "sha256": "4aefb757af0e896095c445edbe4e349db3440ea77b8366006e80dc43a976d78a"
+    },
+    {
+      "assetId": "open_cross_filled_nw",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/single-filled-northwest-cross-junction/open_cross_filled_nw-upper.svg",
+      "sha256": "18d34211a0e2664d02bf0f4be77530105ad99062b4733cdb65cf6523f295006f"
+    },
+    {
+      "assetId": "open_cross_filled_se",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/single-filled-southeast-cross-junction/open_cross_filled_se-base.svg",
+      "sha256": "18129d5bd34120616ce886d57aec4eddeda928deb340542812fa02d4a9b7545d"
+    },
+    {
+      "assetId": "open_cross_filled_se",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/single-filled-southeast-cross-junction/open_cross_filled_se-upper.svg",
+      "sha256": "8ca1407d4b8d7484f38b84369825b017a6fe349d15e6d95587ee349fcebd056a"
+    },
+    {
+      "assetId": "open_cross_filled_ne_se_sw",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/single-open-northwest-cross-junction/open_cross_filled_ne_se_sw-base.svg",
+      "sha256": "5336781de0092d68fdf2af987af46a1f22793883c58f4a12f7d0baab4ae7f7a1"
+    },
+    {
+      "assetId": "open_cross_filled_ne_se_sw",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/single-open-northwest-cross-junction/open_cross_filled_ne_se_sw-upper.svg",
+      "sha256": "e5fdfb643dbb003bcd7e9782284009a4d8d8d25d24f7e6dbbf24e5a46f58517b"
+    },
+    {
+      "assetId": "open_cross_filled_ne_se_nw",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/single-open-southwest-cross-junction/open_cross_filled_ne_se_nw-base.svg",
+      "sha256": "24eef0c180cce0169deb6cf8d91e0a098f2c5bff0409615a929c39748d1c738b"
+    },
+    {
+      "assetId": "open_cross_filled_ne_se_nw",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/single-open-southwest-cross-junction/open_cross_filled_ne_se_nw-upper.svg",
+      "sha256": "bc4c61aeb83dd937625ea732c8d70de251b793f96bbfbd8a7f8986dec932557d"
+    },
+    {
+      "assetId": "filled_nw_elbow",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/thick-wall-block/filled_nw_elbow-base.svg",
+      "sha256": "3b0d4ece165cffa5285c51ecbbb444af91e42341c1cf60e21414fda04b9fb7c2"
+    },
+    {
+      "assetId": "filled_nw_elbow",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/thick-wall-block/filled_nw_elbow-upper.svg",
+      "sha256": "5b80e877a758c4b827bf035fc5211cc8c7210120b5c9663d6f312d659b3ff420"
+    },
+    {
+      "assetId": "filled_sw_elbow",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/thick-wall-block/filled_sw_elbow-base.svg",
+      "sha256": "5e43d799bc086dae8b3bee3632f1820befaeb65867966bd72ae0316576e451c7"
+    },
+    {
+      "assetId": "filled_sw_elbow",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/thick-wall-block/filled_sw_elbow-upper.svg",
+      "sha256": "e8684a3c4613ecd5aff6c747f02f35b1d7c28bde6850390e714c40bc4db3aa44"
+    },
+    {
+      "assetId": "filled_n_middle",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/thick-wall-horizontal-repeat/filled_n_middle-base.svg",
+      "sha256": "f2041546360a021c8321e27c0eb4fffab04cb870f676bbc8caf1b41932a6eb8f"
+    },
+    {
+      "assetId": "filled_n_middle",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/thick-wall-horizontal-repeat/filled_n_middle-upper.svg",
+      "sha256": "df077165cfe2b1f23a333dae4d3ea8739eaa8540d953f87d40eefab41b93df65"
+    },
+    {
+      "assetId": "filled_s_middle",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/thick-wall-horizontal-repeat/filled_s_middle-base.svg",
+      "sha256": "6b0f8c94857ac42f770b3dc63503a9f7f752ee0b524288108124fc74a943e31b"
+    },
+    {
+      "assetId": "filled_s_middle",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/thick-wall-horizontal-repeat/filled_s_middle-upper.svg",
+      "sha256": "af9274fbe6daf4876fa65ddf7d5747f58d3cf5e2224128d4593956c22b20a139"
+    },
+    {
+      "assetId": "filled_w_middle",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/thick-wall-repeat/filled_w_middle-base.svg",
+      "sha256": "e5f59534858035028ce2f38b7a010c2ed22aaba6d4dcbd18756ab024961fbb1f"
+    },
+    {
+      "assetId": "filled_w_middle",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/thick-wall-repeat/filled_w_middle-upper.svg",
+      "sha256": "392d4e72e6276b3e0ecf2b1142972c50867fc0505578fd921ff32121528c769c"
+    },
+    {
+      "assetId": "vertical_n_terminus",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/vertical-terminus/vertical_n_terminus-base.svg",
+      "sha256": "4fe4f687e53fe00bcc0f650e2974f8be5a7cb51a9909eb8c339a4e16ffc1b170"
+    },
+    {
+      "assetId": "vertical_n_terminus",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/vertical-terminus/vertical_n_terminus-upper.svg",
+      "sha256": "95985736fc376794342a0a8ee99bb6ba6fa14971d5d8401340316624f508940f"
+    },
+    {
+      "assetId": "vertical_s_terminus",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/vertical-terminus/vertical_s_terminus-base.svg",
+      "sha256": "d600e6073a64b4f896c6aeca8f414d21219c7faa26250a96ddcf602ae3bdaa00"
+    },
+    {
+      "assetId": "vertical_s_terminus",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/vertical-terminus/vertical_s_terminus-upper.svg",
+      "sha256": "3454b2b4427c548a9c64cb45edff36ad516216a3b17e9f27a568611d6ec845eb"
+    },
+    {
+      "assetId": "open_w_t_filled_ne",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/west-partial-t-junction/open_w_t_filled_ne-base.svg",
+      "sha256": "b318eee40bb41de8eb6359ea6444eaec9bba89db36942ed0617a7aa622400618"
+    },
+    {
+      "assetId": "open_w_t_filled_ne",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/west-partial-t-junction/open_w_t_filled_ne-upper.svg",
+      "sha256": "266981e038615c0a29a8403862aa6f40d545f3f5d6bf12cdf28e1c0dd254b495"
+    },
+    {
+      "assetId": "open_w_t_filled_se",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/west-partial-t-junction/open_w_t_filled_se-base.svg",
+      "sha256": "68267320e17312f2b6e09e4385c40d0fd4f2a6e385b10158c5f597be3a05a2bc"
+    },
+    {
+      "assetId": "open_w_t_filled_se",
+      "category": "walls/equal-height-promoted-proof",
+      "status": "production-dependency",
+      "sourceFile": "assets/walls/quota-co-building-system-proofs/west-partial-t-junction/open_w_t_filled_se-upper.svg",
+      "sha256": "2546c752dc59fba041fb2ce86715ebfe928a4b3e2ba91e313999932edd1042d3"
+    }
+  ],
+  "derivedWallFrames": [
+    {
+      "id": "mask_0",
+      "index": 0,
+      "canonicalMask": 0,
+      "sourceStem": "isolated_shell",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/isolated-shell/isolated_shell-base.svg",
+        "assets/walls/quota-co-building-system-proofs/isolated-shell/isolated_shell-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_1",
+      "index": 1,
+      "canonicalMask": 1,
+      "sourceStem": "vertical_s_terminus",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/vertical-terminus/vertical_s_terminus-base.svg",
+        "assets/walls/quota-co-building-system-proofs/vertical-terminus/vertical_s_terminus-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_2",
+      "index": 2,
+      "canonicalMask": 2,
+      "sourceStem": "full_terminus",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/full_terminus-base.svg",
+        "assets/walls/quota-co-building-system/full_terminus-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_3",
+      "index": 3,
+      "canonicalMask": 3,
+      "sourceStem": "transition_w_to_s",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/transition_w_to_s-base.svg",
+        "assets/walls/quota-co-building-system/transition_w_to_s-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_4",
+      "index": 4,
+      "canonicalMask": 4,
+      "sourceStem": "vertical_n_terminus",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/vertical-terminus/vertical_n_terminus-base.svg",
+        "assets/walls/quota-co-building-system-proofs/vertical-terminus/vertical_n_terminus-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_5",
+      "index": 5,
+      "canonicalMask": 5,
+      "sourceStem": "full_w_straight",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/full_w_straight-base.svg",
+        "assets/walls/quota-co-building-system/full_w_straight-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_6",
+      "index": 6,
+      "canonicalMask": 6,
+      "sourceStem": "full_exterior_corner",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/full_exterior_corner-base.svg",
+        "assets/walls/quota-co-building-system/full_exterior_corner-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_7",
+      "index": 7,
+      "canonicalMask": 7,
+      "sourceStem": "open_w_t_junction",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/open-pocket-t-junction/open_w_t_junction-base.svg",
+        "assets/walls/quota-co-building-system-proofs/open-pocket-t-junction/open_w_t_junction-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_8",
+      "index": 8,
+      "canonicalMask": 8,
+      "sourceStem": "full_terminus",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/full_terminus-base.svg",
+        "assets/walls/quota-co-building-system/full_terminus-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_9",
+      "index": 9,
+      "canonicalMask": 9,
+      "sourceStem": "transition_w_to_s",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/transition_w_to_s-base.svg",
+        "assets/walls/quota-co-building-system/transition_w_to_s-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_10",
+      "index": 10,
+      "canonicalMask": 10,
+      "sourceStem": "full_n_straight",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/full_n_straight-base.svg",
+        "assets/walls/quota-co-building-system/full_n_straight-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_11",
+      "index": 11,
+      "canonicalMask": 11,
+      "sourceStem": "open_s_t_junction",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/horizontal-open-pocket-t-junction/open_s_t_junction-base.svg",
+        "assets/walls/quota-co-building-system-proofs/horizontal-open-pocket-t-junction/open_s_t_junction-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_12",
+      "index": 12,
+      "canonicalMask": 12,
+      "sourceStem": "full_exterior_corner",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system/full_exterior_corner-base.svg",
+        "assets/walls/quota-co-building-system/full_exterior_corner-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_13",
+      "index": 13,
+      "canonicalMask": 13,
+      "sourceStem": "open_w_t_junction",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/open-pocket-t-junction/open_w_t_junction-base.svg",
+        "assets/walls/quota-co-building-system-proofs/open-pocket-t-junction/open_w_t_junction-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_14",
+      "index": 14,
+      "canonicalMask": 14,
+      "sourceStem": "open_n_t_junction",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/horizontal-open-pocket-t-junction/open_n_t_junction-base.svg",
+        "assets/walls/quota-co-building-system-proofs/horizontal-open-pocket-t-junction/open_n_t_junction-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_15",
+      "index": 15,
+      "canonicalMask": 15,
+      "sourceStem": "open_cross_junction",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/open-pocket-cross-junction/open_cross_junction-base.svg",
+        "assets/walls/quota-co-building-system-proofs/open-pocket-cross-junction/open_cross_junction-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_16",
+      "index": 16,
+      "canonicalMask": 19,
+      "sourceStem": "filled_sw_elbow",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/thick-wall-block/filled_sw_elbow-base.svg",
+        "assets/walls/quota-co-building-system-proofs/thick-wall-block/filled_sw_elbow-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_17",
+      "index": 17,
+      "canonicalMask": 23,
+      "sourceStem": "open_w_t_filled_ne",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/west-partial-t-junction/open_w_t_filled_ne-base.svg",
+        "assets/walls/quota-co-building-system-proofs/west-partial-t-junction/open_w_t_filled_ne-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_18",
+      "index": 18,
+      "canonicalMask": 27,
+      "sourceStem": "open_s_t_filled_ne",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/horizontal-partial-t-junction/open_s_t_filled_ne-base.svg",
+        "assets/walls/quota-co-building-system-proofs/horizontal-partial-t-junction/open_s_t_filled_ne-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_19",
+      "index": 19,
+      "canonicalMask": 31,
+      "sourceStem": "open_cross_filled_ne",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/single-filled-cross-junction/open_cross_filled_ne-base.svg",
+        "assets/walls/quota-co-building-system-proofs/single-filled-cross-junction/open_cross_filled_ne-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_20",
+      "index": 20,
+      "canonicalMask": 38,
+      "sourceStem": "filled_nw_elbow",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/thick-wall-block/filled_nw_elbow-base.svg",
+        "assets/walls/quota-co-building-system-proofs/thick-wall-block/filled_nw_elbow-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_21",
+      "index": 21,
+      "canonicalMask": 39,
+      "sourceStem": "open_w_t_filled_se",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/west-partial-t-junction/open_w_t_filled_se-base.svg",
+        "assets/walls/quota-co-building-system-proofs/west-partial-t-junction/open_w_t_filled_se-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_22",
+      "index": 22,
+      "canonicalMask": 46,
+      "sourceStem": "open_n_t_filled_se",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/horizontal-partial-t-junction/open_n_t_filled_se-base.svg",
+        "assets/walls/quota-co-building-system-proofs/horizontal-partial-t-junction/open_n_t_filled_se-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_23",
+      "index": 23,
+      "canonicalMask": 47,
+      "sourceStem": "open_cross_filled_se",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/single-filled-southeast-cross-junction/open_cross_filled_se-base.svg",
+        "assets/walls/quota-co-building-system-proofs/single-filled-southeast-cross-junction/open_cross_filled_se-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_24",
+      "index": 24,
+      "canonicalMask": 55,
+      "sourceStem": "filled_w_middle",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/thick-wall-repeat/filled_w_middle-base.svg",
+        "assets/walls/quota-co-building-system-proofs/thick-wall-repeat/filled_w_middle-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_25",
+      "index": 25,
+      "canonicalMask": 63,
+      "sourceStem": "open_cross_filled_e",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/double-filled-east-cross-junction/open_cross_filled_e-base.svg",
+        "assets/walls/quota-co-building-system-proofs/double-filled-east-cross-junction/open_cross_filled_e-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_26",
+      "index": 26,
+      "canonicalMask": 76,
+      "sourceStem": "filled_nw_elbow",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/thick-wall-block/filled_nw_elbow-base.svg",
+        "assets/walls/quota-co-building-system-proofs/thick-wall-block/filled_nw_elbow-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_27",
+      "index": 27,
+      "canonicalMask": 77,
+      "sourceStem": "open_w_t_filled_se",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/west-partial-t-junction/open_w_t_filled_se-base.svg",
+        "assets/walls/quota-co-building-system-proofs/west-partial-t-junction/open_w_t_filled_se-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_28",
+      "index": 28,
+      "canonicalMask": 78,
+      "sourceStem": "open_n_t_filled_se",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/horizontal-partial-t-junction/open_n_t_filled_se-base.svg",
+        "assets/walls/quota-co-building-system-proofs/horizontal-partial-t-junction/open_n_t_filled_se-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_29",
+      "index": 29,
+      "canonicalMask": 79,
+      "sourceStem": "open_cross_filled_se",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/single-filled-southeast-cross-junction/open_cross_filled_se-base.svg",
+        "assets/walls/quota-co-building-system-proofs/single-filled-southeast-cross-junction/open_cross_filled_se-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_30",
+      "index": 30,
+      "canonicalMask": 95,
+      "sourceStem": "open_cross_filled_ne_sw",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/double-filled-diagonal-cross-junction/open_cross_filled_ne_sw-base.svg",
+        "assets/walls/quota-co-building-system-proofs/double-filled-diagonal-cross-junction/open_cross_filled_ne_sw-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_31",
+      "index": 31,
+      "canonicalMask": 110,
+      "sourceStem": "filled_n_middle",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/thick-wall-horizontal-repeat/filled_n_middle-base.svg",
+        "assets/walls/quota-co-building-system-proofs/thick-wall-horizontal-repeat/filled_n_middle-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_32",
+      "index": 32,
+      "canonicalMask": 111,
+      "sourceStem": "open_cross_filled_s",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/double-filled-south-cross-junction/open_cross_filled_s-base.svg",
+        "assets/walls/quota-co-building-system-proofs/double-filled-south-cross-junction/open_cross_filled_s-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_33",
+      "index": 33,
+      "canonicalMask": 127,
+      "sourceStem": "open_cross_filled_ne_se_sw",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/single-open-northwest-cross-junction/open_cross_filled_ne_se_sw-base.svg",
+        "assets/walls/quota-co-building-system-proofs/single-open-northwest-cross-junction/open_cross_filled_ne_se_sw-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_34",
+      "index": 34,
+      "canonicalMask": 137,
+      "sourceStem": "filled_sw_elbow",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/thick-wall-block/filled_sw_elbow-base.svg",
+        "assets/walls/quota-co-building-system-proofs/thick-wall-block/filled_sw_elbow-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_35",
+      "index": 35,
+      "canonicalMask": 139,
+      "sourceStem": "open_s_t_filled_ne",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/horizontal-partial-t-junction/open_s_t_filled_ne-base.svg",
+        "assets/walls/quota-co-building-system-proofs/horizontal-partial-t-junction/open_s_t_filled_ne-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_36",
+      "index": 36,
+      "canonicalMask": 141,
+      "sourceStem": "open_w_t_filled_ne",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/west-partial-t-junction/open_w_t_filled_ne-base.svg",
+        "assets/walls/quota-co-building-system-proofs/west-partial-t-junction/open_w_t_filled_ne-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_37",
+      "index": 37,
+      "canonicalMask": 143,
+      "sourceStem": "open_cross_filled_nw",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/single-filled-northwest-cross-junction/open_cross_filled_nw-base.svg",
+        "assets/walls/quota-co-building-system-proofs/single-filled-northwest-cross-junction/open_cross_filled_nw-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_38",
+      "index": 38,
+      "canonicalMask": 155,
+      "sourceStem": "filled_s_middle",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/thick-wall-horizontal-repeat/filled_s_middle-base.svg",
+        "assets/walls/quota-co-building-system-proofs/thick-wall-horizontal-repeat/filled_s_middle-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_39",
+      "index": 39,
+      "canonicalMask": 159,
+      "sourceStem": "open_cross_filled_n",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/double-filled-north-cross-junction/open_cross_filled_n-base.svg",
+        "assets/walls/quota-co-building-system-proofs/double-filled-north-cross-junction/open_cross_filled_n-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_40",
+      "index": 40,
+      "canonicalMask": 175,
+      "sourceStem": "open_cross_filled_ne_sw",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/double-filled-diagonal-cross-junction/open_cross_filled_ne_sw-base.svg",
+        "assets/walls/quota-co-building-system-proofs/double-filled-diagonal-cross-junction/open_cross_filled_ne_sw-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_41",
+      "index": 41,
+      "canonicalMask": 191,
+      "sourceStem": "open_cross_filled_ne_se_nw",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/single-open-southwest-cross-junction/open_cross_filled_ne_se_nw-base.svg",
+        "assets/walls/quota-co-building-system-proofs/single-open-southwest-cross-junction/open_cross_filled_ne_se_nw-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_42",
+      "index": 42,
+      "canonicalMask": 205,
+      "sourceStem": "filled_w_middle",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/thick-wall-repeat/filled_w_middle-base.svg",
+        "assets/walls/quota-co-building-system-proofs/thick-wall-repeat/filled_w_middle-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_43",
+      "index": 43,
+      "canonicalMask": 207,
+      "sourceStem": "open_cross_filled_e",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/double-filled-east-cross-junction/open_cross_filled_e-base.svg",
+        "assets/walls/quota-co-building-system-proofs/double-filled-east-cross-junction/open_cross_filled_e-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_44",
+      "index": 44,
+      "canonicalMask": 223,
+      "sourceStem": "open_cross_filled_ne_se_nw",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/single-open-southwest-cross-junction/open_cross_filled_ne_se_nw-base.svg",
+        "assets/walls/quota-co-building-system-proofs/single-open-southwest-cross-junction/open_cross_filled_ne_se_nw-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_45",
+      "index": 45,
+      "canonicalMask": 239,
+      "sourceStem": "open_cross_filled_ne_se_sw",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/single-open-northwest-cross-junction/open_cross_filled_ne_se_sw-base.svg",
+        "assets/walls/quota-co-building-system-proofs/single-open-northwest-cross-junction/open_cross_filled_ne_se_sw-upper.svg"
+      ]
+    },
+    {
+      "id": "mask_46",
+      "index": 46,
+      "canonicalMask": 255,
+      "sourceStem": "filled_center",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/fully-filled-cross-junction/filled_center-base.svg",
+        "assets/walls/quota-co-building-system-proofs/fully-filled-cross-junction/filled_center-upper.svg"
+      ]
+    }
+  ],
+  "exclusions": [
+    {
+      "pattern": "assets/part-authoring/scaffolds/**/*.svg",
+      "count": 113,
+      "reason": "Generated artist scaffolds mirror production geometry but are not canonical source truth.",
+      "sourceFiles": [
+        "assets/part-authoring/scaffolds/body/balanced.east.svg",
+        "assets/part-authoring/scaffolds/body/balanced.north.svg",
+        "assets/part-authoring/scaffolds/body/balanced.south.svg",
+        "assets/part-authoring/scaffolds/body/compact.east.svg",
+        "assets/part-authoring/scaffolds/body/compact.north.svg",
+        "assets/part-authoring/scaffolds/body/compact.south.svg",
+        "assets/part-authoring/scaffolds/body/large-frame.east.svg",
+        "assets/part-authoring/scaffolds/body/large-frame.north.svg",
+        "assets/part-authoring/scaffolds/body/large-frame.south.svg",
+        "assets/part-authoring/scaffolds/body/pinch.east.svg",
+        "assets/part-authoring/scaffolds/body/pinch.north.svg",
+        "assets/part-authoring/scaffolds/body/pinch.south.svg",
+        "assets/part-authoring/scaffolds/body/soft.east.svg",
+        "assets/part-authoring/scaffolds/body/soft.north.svg",
+        "assets/part-authoring/scaffolds/body/soft.south.svg",
+        "assets/part-authoring/scaffolds/body/tall.east.svg",
+        "assets/part-authoring/scaffolds/body/tall.north.svg",
+        "assets/part-authoring/scaffolds/body/tall.south.svg",
+        "assets/part-authoring/scaffolds/hair/balding.east.svg",
+        "assets/part-authoring/scaffolds/hair/balding.north.svg",
+        "assets/part-authoring/scaffolds/hair/balding.south.svg",
+        "assets/part-authoring/scaffolds/hair/bob.east.svg",
+        "assets/part-authoring/scaffolds/hair/bob.north.svg",
+        "assets/part-authoring/scaffolds/hair/bob.south.svg",
+        "assets/part-authoring/scaffolds/hair/bun.east.svg",
+        "assets/part-authoring/scaffolds/hair/bun.north.svg",
+        "assets/part-authoring/scaffolds/hair/bun.south.svg",
+        "assets/part-authoring/scaffolds/hair/coils.east.svg",
+        "assets/part-authoring/scaffolds/hair/coils.north.svg",
+        "assets/part-authoring/scaffolds/hair/coils.south.svg",
+        "assets/part-authoring/scaffolds/hair/curly.east.svg",
+        "assets/part-authoring/scaffolds/hair/curly.north.svg",
+        "assets/part-authoring/scaffolds/hair/curly.south.svg",
+        "assets/part-authoring/scaffolds/hair/long-straight.east.svg",
+        "assets/part-authoring/scaffolds/hair/long-straight.north.svg",
+        "assets/part-authoring/scaffolds/hair/long-straight.south.svg",
+        "assets/part-authoring/scaffolds/hair/pixie.east.svg",
+        "assets/part-authoring/scaffolds/hair/pixie.north.svg",
+        "assets/part-authoring/scaffolds/hair/pixie.south.svg",
+        "assets/part-authoring/scaffolds/hair/ponytail.east.svg",
+        "assets/part-authoring/scaffolds/hair/ponytail.north.svg",
+        "assets/part-authoring/scaffolds/hair/ponytail.south.svg",
+        "assets/part-authoring/scaffolds/hair/short.east.svg",
+        "assets/part-authoring/scaffolds/hair/short.north.svg",
+        "assets/part-authoring/scaffolds/hair/short.south.svg",
+        "assets/part-authoring/scaffolds/hair/side-part.east.svg",
+        "assets/part-authoring/scaffolds/hair/side-part.north.svg",
+        "assets/part-authoring/scaffolds/hair/side-part.south.svg",
+        "assets/part-authoring/scaffolds/head/angular.east.svg",
+        "assets/part-authoring/scaffolds/head/angular.north.svg",
+        "assets/part-authoring/scaffolds/head/angular.south.svg",
+        "assets/part-authoring/scaffolds/head/boxy.east.svg",
+        "assets/part-authoring/scaffolds/head/boxy.north.svg",
+        "assets/part-authoring/scaffolds/head/boxy.south.svg",
+        "assets/part-authoring/scaffolds/head/fab.east.svg",
+        "assets/part-authoring/scaffolds/head/fab.north.svg",
+        "assets/part-authoring/scaffolds/head/fab.south.svg",
+        "assets/part-authoring/scaffolds/head/long.east.svg",
+        "assets/part-authoring/scaffolds/head/long.north.svg",
+        "assets/part-authoring/scaffolds/head/long.south.svg",
+        "assets/part-authoring/scaffolds/head/oval.east.svg",
+        "assets/part-authoring/scaffolds/head/oval.north.svg",
+        "assets/part-authoring/scaffolds/head/oval.south.svg",
+        "assets/part-authoring/scaffolds/head/round.east.svg",
+        "assets/part-authoring/scaffolds/head/round.north.svg",
+        "assets/part-authoring/scaffolds/head/round.south.svg",
+        "assets/part-authoring/scaffolds/head/soft-square.east.svg",
+        "assets/part-authoring/scaffolds/head/soft-square.north.svg",
+        "assets/part-authoring/scaffolds/head/soft-square.south.svg",
+        "assets/part-authoring/scaffolds/outfit/blazer.buttons.east.svg",
+        "assets/part-authoring/scaffolds/outfit/blazer.buttons.south.svg",
+        "assets/part-authoring/scaffolds/outfit/blazer.lapels.east.svg",
+        "assets/part-authoring/scaffolds/outfit/blazer.lapels.south.svg",
+        "assets/part-authoring/scaffolds/outfit/blazer.pocket.east.svg",
+        "assets/part-authoring/scaffolds/outfit/blazer.pocket.south.svg",
+        "assets/part-authoring/scaffolds/outfit/cardigan.button-line.east.svg",
+        "assets/part-authoring/scaffolds/outfit/cardigan.button-line.south.svg",
+        "assets/part-authoring/scaffolds/outfit/cardigan.trim.east.svg",
+        "assets/part-authoring/scaffolds/outfit/cardigan.trim.south.svg",
+        "assets/part-authoring/scaffolds/outfit/hoodie.drawstrings.east.svg",
+        "assets/part-authoring/scaffolds/outfit/hoodie.drawstrings.south.svg",
+        "assets/part-authoring/scaffolds/outfit/hoodie.hood.east.svg",
+        "assets/part-authoring/scaffolds/outfit/hoodie.hood.north.svg",
+        "assets/part-authoring/scaffolds/outfit/hoodie.hood.south.svg",
+        "assets/part-authoring/scaffolds/outfit/hoodie.pocket.south.svg",
+        "assets/part-authoring/scaffolds/outfit/polo.collar.east.svg",
+        "assets/part-authoring/scaffolds/outfit/polo.collar.south.svg",
+        "assets/part-authoring/scaffolds/outfit/polo.placket.east.svg",
+        "assets/part-authoring/scaffolds/outfit/polo.placket.south.svg",
+        "assets/part-authoring/scaffolds/outfit/shirt-tie.collar.east.svg",
+        "assets/part-authoring/scaffolds/outfit/shirt-tie.collar.south.svg",
+        "assets/part-authoring/scaffolds/outfit/shirt-tie.tie.east.svg",
+        "assets/part-authoring/scaffolds/outfit/shirt-tie.tie.south.svg",
+        "assets/part-authoring/scaffolds/outfit/suit-jacket.buttons.east.svg",
+        "assets/part-authoring/scaffolds/outfit/suit-jacket.buttons.south.svg",
+        "assets/part-authoring/scaffolds/outfit/suit-jacket.lapels.east.svg",
+        "assets/part-authoring/scaffolds/outfit/suit-jacket.lapels.south.svg",
+        "assets/part-authoring/scaffolds/outfit/suit-jacket.notches.east.svg",
+        "assets/part-authoring/scaffolds/outfit/suit-jacket.notches.south.svg",
+        "assets/part-authoring/scaffolds/outfit/suit-jacket.pocket-square.east.svg",
+        "assets/part-authoring/scaffolds/outfit/suit-jacket.pocket-square.south.svg",
+        "assets/part-authoring/scaffolds/outfit/suit-jacket.pocket.east.svg",
+        "assets/part-authoring/scaffolds/outfit/suit-jacket.pocket.south.svg",
+        "assets/part-authoring/scaffolds/outfit/suit-jacket.tie.east.svg",
+        "assets/part-authoring/scaffolds/outfit/suit-jacket.tie.south.svg",
+        "assets/part-authoring/scaffolds/outfit/tee.east.svg",
+        "assets/part-authoring/scaffolds/outfit/tee.south.svg",
+        "assets/part-authoring/scaffolds/outfit/turtleneck.neck-band.east.svg",
+        "assets/part-authoring/scaffolds/outfit/turtleneck.neck-band.north.svg",
+        "assets/part-authoring/scaffolds/outfit/turtleneck.neck-band.south.svg",
+        "assets/part-authoring/scaffolds/outfit/vest.buttons.south.svg",
+        "assets/part-authoring/scaffolds/outfit/vest.neck-inset.south.svg",
+        "assets/part-authoring/scaffolds/outfit/vest.panel.south.svg"
+      ]
+    },
+    {
+      "pattern": "assets/walls/quota-co-building-system{,-proofs}/**/*.svg (inactive)",
+      "count": 62,
+      "reason": "Retained technical and proof files not referenced by the live canonical 47-frame mapping.",
+      "sourceFiles": [
+        "assets/walls/quota-co-building-system-proofs/proof-horizontal-frontal.svg",
+        "assets/walls/quota-co-building-system-proofs/proof-vertical-topplane.svg",
+        "assets/walls/quota-co-building-system/door_closed-base.svg",
+        "assets/walls/quota-co-building-system/door_closed-upper.svg",
+        "assets/walls/quota-co-building-system/door_open-base.svg",
+        "assets/walls/quota-co-building-system/door_open-upper.svg",
+        "assets/walls/quota-co-building-system/low-profile-correction/low-e-straight.svg",
+        "assets/walls/quota-co-building-system/low-profile-correction/low-s-straight.svg",
+        "assets/walls/quota-co-building-system/low-profile-correction/low-se-corner.svg",
+        "assets/walls/quota-co-building-system/low-profile-correction/transition-n-to-e-base.svg",
+        "assets/walls/quota-co-building-system/low-profile-correction/transition-n-to-e-upper.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-nw.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-se.svg",
+        "assets/walls/quota-co-building-system/topology/base/concave-sw.svg",
+        "assets/walls/quota-co-building-system/topology/base/convex-ne.svg",
+        "assets/walls/quota-co-building-system/topology/base/convex-nw.svg",
+        "assets/walls/quota-co-building-system/topology/base/convex-se.svg",
+        "assets/walls/quota-co-building-system/topology/base/convex-sw.svg",
+        "assets/walls/quota-co-building-system/topology/base/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/base/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/base/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-ne-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-ne-n.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-nw-n.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-nw-w.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-se-e.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-se-s.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-sw-s.svg",
+        "assets/walls/quota-co-building-system/topology/base/one-sw-w.svg",
+        "assets/walls/quota-co-building-system/topology/state/door-base.svg",
+        "assets/walls/quota-co-building-system/topology/state/door-leaf-closed.svg",
+        "assets/walls/quota-co-building-system/topology/state/door-leaf-open.svg",
+        "assets/walls/quota-co-building-system/topology/state/door-upper-frame.svg",
+        "assets/walls/quota-co-building-system/topology/state/profile-n-to-e-upper.svg",
+        "assets/walls/quota-co-building-system/topology/state/profile-w-to-s-upper.svg",
+        "assets/walls/quota-co-building-system/topology/state/window-wide-upper.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-ne.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-nw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-se.svg",
+        "assets/walls/quota-co-building-system/topology/upper/concave-sw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/convex-ne.svg",
+        "assets/walls/quota-co-building-system/topology/upper/convex-nw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/convex-se.svg",
+        "assets/walls/quota-co-building-system/topology/upper/convex-sw.svg",
+        "assets/walls/quota-co-building-system/topology/upper/edge-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/edge-n.svg",
+        "assets/walls/quota-co-building-system/topology/upper/edge-s.svg",
+        "assets/walls/quota-co-building-system/topology/upper/edge-w.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-ne-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-ne-n.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-nw-n.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-nw-w.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-se-e.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-se-s.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-sw-s.svg",
+        "assets/walls/quota-co-building-system/topology/upper/one-sw-w.svg",
+        "assets/walls/quota-co-building-system/transition_n_to_e-base.svg",
+        "assets/walls/quota-co-building-system/transition_n_to_e-upper.svg",
+        "assets/walls/quota-co-building-system/window_wide-base.svg",
+        "assets/walls/quota-co-building-system/window_wide-upper.svg"
+      ]
+    },
+    {
+      "pattern": "assets/part-authoring/palettes/*.svg",
+      "count": 1,
+      "reason": "Importer palette sentinels are authoring infrastructure, not game assets.",
+      "sourceFiles": [
+        "assets/part-authoring/palettes/terrarium-part-sentinels.svg"
+      ]
+    }
+  ],
+  "deferredWork": [
+    "The 47-frame grass-fringe remains code-owned and is explicitly deferred.",
+    "No grass-fringe SVG extraction, redesign proof, production promotion, export change, or Unity integration is active.",
+    "Reopen grass-fringe only as a separately approved visual slice."
+  ]
+}

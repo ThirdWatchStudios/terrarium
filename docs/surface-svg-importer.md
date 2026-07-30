@@ -66,6 +66,18 @@ export contract, or schema shape changed. Bundle import and Unity registration
 remain a separate user-run handoff. The derived 47-frame grass fringe remains
 code-owned and deferred to its own edge-density proof.
 
+## Deferred grass-fringe transition
+
+As of 2026-07-30, the separate 47-frame `grass-fringe` redesign and SVG-source
+conversion are explicitly deferred. The current code-owned transition remains
+unchanged. No transition proof, edge/corner source kit, production promotion,
+export change, schema change, or Unity integration is active.
+
+The accepted base grass sources do not silently promote the fringe. Reopen it
+only as its own bounded visual-review slice, preserving the shared mask order,
+receiver rules, atlas layout, sort band, and Unity-facing contract until visual
+approval.
+
 Render the production gate with:
 
 ```bash
