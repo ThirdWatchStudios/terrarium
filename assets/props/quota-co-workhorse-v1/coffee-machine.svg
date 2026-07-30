@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="coffee-machine" data-projection="elevation">
+  <title>QuotaCo service-system coffee machine</title>
+  <desc>Elevation coffee machine with a molded brew tower and protected cup interaction bay.</desc>
+  <g id="art-envelope" transform="translate(64 116) scale(.84) translate(-64 -116)">
+    <g id="shadow">
+      <ellipse id="shadow-contact" cx="64" cy="117" rx="21" ry="4" fill="#000000" opacity=".125"/>
+    </g>
+    <g id="shell">
+      <rect id="shell-body" data-fill-token="primary" x="41" y="53" width="46" height="63" rx="11" fill="#DED5BD" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+      <rect id="shell-control-band" data-fill-token="secondary" x="46" y="59" width="36" height="14" rx="6" fill="#355247"/>
+      <rect id="shell-base" x="49" y="109" width="30" height="6" rx="3" fill="#49685A"/>
+    </g>
+    <g id="function">
+      <circle id="function-brew-control" data-fill-token="accent" cx="53" cy="66" r="3.2" fill="#B65F4D" stroke="#292C2A" stroke-width="1.6"/>
+      <circle id="function-status-light" cx="63" cy="66" r="2.6" fill="#F3EEDA"/>
+      <rect id="function-cup-bay" x="47" y="77" width="34" height="31" rx="8" fill="#18211E" stroke="#292C2A" stroke-width="2"/>
+      <rect id="function-brew-head" x="53" y="78" width="22" height="7" rx="3" fill="#C7BDA7"/>
+      <rect id="function-cup" x="54" y="90" width="20" height="15" rx="5" fill="#8FB7C0" stroke="#292C2A" stroke-width="1.7"/>
+      <rect id="function-coffee-level" x="57" y="97" width="14" height="6" rx="2" fill="#6E4A2A"/>
+    </g>
+  </g>
+</svg>

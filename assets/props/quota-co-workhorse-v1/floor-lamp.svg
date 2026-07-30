@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="floor-lamp" data-projection="elevation">
+  <title>QuotaCo institutional floor lamp</title>
+  <desc>Elevation-projected local task lamp with molded base, arched service standard, and broad warm shade.</desc>
+  <metadata>Palette tokens: primary molded shell, secondary service standard, accent control tab. Default height 92.</metadata>
+  <g id="shadow">
+    <ellipse id="shadow-contact" cx="61" cy="116" rx="16" ry="4" fill="#262B29" opacity=".22"/>
+  </g>
+  <g id="art-scale" transform="translate(64 116) scale(.76) translate(-64 -116)">
+    <g id="base">
+      <rect id="base-shell" data-fill-token="primary" x="47" y="108" width="28" height="8" rx="4" fill="#DED5BD" stroke="#292C2A" stroke-width="3"/>
+      <rect id="base-bay" data-fill-token="secondary" x="51" y="110" width="20" height="3" rx="1.5" fill="#355247"/>
+      <rect id="base-control" data-fill-token="accent" x="68" y="109" width="4" height="6" rx="1.5" fill="#B65F4D" stroke="#292C2A" stroke-width="1.2"/>
+    </g>
+    <g id="standard">
+      <path id="standard-outer" d="M59 108V54Q59 36 72 36" fill="none" stroke="#262B29" stroke-width="5"/>
+      <path id="standard-inset" d="M59 108V54Q59 36 72 36" fill="none" stroke="#355247" stroke-width="2.2"/>
+    </g>
+    <g id="shade">
+      <path id="shade-shell" data-fill-token="primary" d="M61 34Q73 27 86 35L92 52Q76 58 58 52Z" fill="#DED5BD" stroke="#292C2A" stroke-width="2.8"/>
+      <rect id="shade-light-rim" x="62" y="48" width="27" height="5" rx="2" fill="#E1B464" stroke="#292C2A" stroke-width="1.5"/>
+      <ellipse id="shade-light-pool" cx="76" cy="57" rx="22" ry="8" fill="#E1B464" opacity=".2"/>
+      <circle id="shade-bulb" cx="75" cy="39" r="4" fill="#F4F0E4"/>
+    </g>
+  </g>
+</svg>

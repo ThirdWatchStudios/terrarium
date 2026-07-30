@@ -31,7 +31,7 @@ function defaultBaseline() {
 }
 
 /** Capture every emitted path (strings and PNG bytes alike) plus the JSON bodies. */
-async function exportPaths() {
+async function exportPaths(project = defaultBaseline()) {
   const paths = new Set<string>();
   const json = new Map<string, string>();
   const sink: ExportSink = {
@@ -41,7 +41,7 @@ async function exportPaths() {
     },
   };
   const rasterizer: Rasterizer = { rasterizeSheet: async () => new Uint8Array() };
-  await exportAll(defaultBaseline(), { sink, rasterizer, scenarioTemplates: ROLE_TEMPLATES });
+  await exportAll(project, { sink, rasterizer, scenarioTemplates: ROLE_TEMPLATES });
   return { paths, json };
 }
 
@@ -415,26 +415,61 @@ describe('default bundle is a complete, sim-importable baseline', () => {
       'construction worker must NOT be in the office cast').toBe(false);
   });
 
-  it('ships re-tintable layer atlases for props and floors (palette-as-runtime-lever)', async () => {
+  it('ships canonical authored-prop layers and re-tintable procedural/floor layers', async () => {
     const { paths, json } = await exportPaths();
     const TOKENS = ['primary', 'secondary', 'accent'];
     const validTint = (t: unknown) => t === null || TOKENS.includes(t as string);
+    const propManifest = (templateId: string) => {
+      const propPath = [...paths].find((candidate) => {
+        if (!/^props\/.+\/prop\.json$/.test(candidate)) return false;
+        return JSON.parse(json.get(candidate)!).templateId === templateId;
+      });
+      expect(propPath, `missing prop export for ${templateId}`).toBeTruthy();
+      const manifestPath = propPath!.replace(
+        /prop\.json$/,
+        'layers-manifest@1x.json',
+      );
+      return JSON.parse(json.get(manifestPath)!);
+    };
 
-    // Props — flat sprite PLUS a layer sheet + manifest; token layers are recolorable.
+    // Props always ship a flat sprite plus a layer sheet and manifest.
     expect([...paths].some((p) => /^props\/.+\/layers@1x\.png$/.test(p)), 'no prop layer sheet').toBe(true);
-    const propManifestPath = [...paths].find((p) => /^props\/.+\/layers-manifest@1x\.json$/.test(p));
-    expect(propManifestPath, 'no prop layer manifest').toBeTruthy();
-    const pm = JSON.parse(json.get(propManifestPath!)!);
-    expect(pm.kind).toBe('prop-layers');
-    expect(pm.tokens).toEqual(TOKENS);
-    for (const tok of TOKENS) expect(pm.palette[tok], `prop manifest palette missing default ${tok}`).toBeTruthy();
-    expect(pm.layers.length, 'prop manifest has no layers').toBeGreaterThan(0);
-    expect(pm.layers.some((l: { tint: unknown }) => l.tint !== null), 'prop has no re-tintable token layer').toBe(true);
-    expect(pm.layers.every((l: { tint: unknown }) => validTint(l.tint)), 'prop layer has an unknown tint').toBe(true);
+    const authored = propManifest('water-cooler');
+    expect(authored.kind).toBe('prop-layers');
+    expect(authored.tokens).toEqual(TOKENS);
+    for (const tok of TOKENS) {
+      expect(
+        authored.palette[tok],
+        `authored prop manifest palette missing default ${tok}`,
+      ).toBeTruthy();
+    }
+    expect(authored.layers).toHaveLength(1);
+    expect(authored.layers[0]).toMatchObject({ key: 'literal-0', tint: null });
+
+    const procedural = propManifest('phone-booth');
+    expect(
+      procedural.layers.some((layer: { tint: unknown }) => layer.tint !== null),
+      'procedural prop has no re-tintable token layer',
+    ).toBe(true);
+    expect(
+      procedural.layers.every((layer: { tint: unknown }) =>
+        validTint(layer.tint)
+      ),
+      'procedural prop layer has an unknown tint',
+    ).toBe(true);
+
     // Top-level `frames` map (name → rect), like the character manifest; every layer
     // resolves its sprite by `frame` name, so the sim slices it with the same machinery.
-    expect(pm.frames && typeof pm.frames === 'object', 'prop manifest missing frames map').toBe(true);
-    expect(pm.layers.every((l: { frame: string }) => l.frame in pm.frames), 'a prop layer frame name is not in frames').toBe(true);
+    expect(
+      authored.frames && typeof authored.frames === 'object',
+      'authored prop manifest missing frames map',
+    ).toBe(true);
+    expect(
+      authored.layers.every(
+        (layer: { frame: string }) => layer.frame in authored.frames,
+      ),
+      'an authored prop layer frame name is not in frames',
+    ).toBe(true);
 
     // Walls ship NO layer atlas — fixed look (47-blob plan, D2), flat autotile only.
     expect([...paths].some((p) => /^walls\/.+\/layers@1x\.png$/.test(p)), 'wall layer sheet should be gone (D2)').toBe(false);
@@ -450,6 +485,39 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     expect(fm.kind).toBe('floor-layers');
     expect(fm.tileable).toBe(true);
     expect(fm.layers.some((l: { tint: unknown }) => l.tint === 'primary'), 'floor has no recolorable primary base').toBe(true);
+  });
+
+  it('normalizes stale authored palettes across project, prop, and layer metadata', async () => {
+    const saved = defaultBaseline();
+    const staleDesk = saved.props.find((prop) => prop.templateId === 'desk')!;
+    staleDesk.palette = {
+      primary: '#A9714B',
+      secondary: '#DCE6EC',
+      accent: '#444441',
+    };
+
+    const { paths, json } = await exportPaths(saved);
+    const expected = {
+      primary: '#DED5BD',
+      secondary: '#355247',
+      accent: '#B65F4D',
+    };
+    const exportedProject = JSON.parse(json.get('project.json')!);
+    expect(
+      exportedProject.props.find((prop: { templateId: string }) => prop.templateId === 'desk').palette,
+    ).toEqual(expected);
+
+    const propPath = [...paths].find((candidate) => {
+      if (!/^props\/.+\/prop\.json$/.test(candidate)) return false;
+      return JSON.parse(json.get(candidate)!).templateId === 'desk';
+    })!;
+    expect(JSON.parse(json.get(propPath)!).palette).toEqual(expected);
+    expect(
+      JSON.parse(json.get(propPath.replace(/prop\.json$/, 'layers-manifest@1x.json'))!).palette,
+    ).toEqual(expected);
+
+    // Export normalization must not mutate the caller's in-memory project.
+    expect(staleDesk.palette.primary).toBe('#A9714B');
   });
 
   it('exports a $primary re-tint body layer for every parking-lot car', async () => {

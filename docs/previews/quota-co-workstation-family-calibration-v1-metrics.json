@@ -1,0 +1,405 @@
+{
+  "reviewStatus": "visual-calibration-only",
+  "productionPromotion": false,
+  "sourceSvgAuthoring": false,
+  "unityImport": false,
+  "exportChanged": false,
+  "schemaChanged": false,
+  "schemaVersion": 19,
+  "invariants": {
+    "authoringCanvas": 128,
+    "acceptedWallDatum": 112,
+    "characterVisualScale": 0.65,
+    "propNativeFrameCells": 2,
+    "propCharacterMultiplierApplied": false,
+    "gameplayArtScales": {
+      "office-chair": 0.72,
+      "filing-cabinet": 0.76,
+      "supply-cabinet": 0.76,
+      "desk-lamp": 0.58
+    }
+  },
+  "contractValidation": {
+    "pass": true,
+    "errors": [],
+    "contracts": [
+      {
+        "id": "standing-desk",
+        "projection": "plan",
+        "gridFootprint": {
+          "w": 2,
+          "h": 1
+        },
+        "contactShadow": null,
+        "params": [
+          {
+            "key": "width",
+            "min": 84,
+            "max": 116,
+            "step": 4,
+            "default": 100
+          },
+          {
+            "key": "dual",
+            "min": 0,
+            "max": 1,
+            "step": 1,
+            "default": 0
+          }
+        ],
+        "defaultInstanceParams": {
+          "width": 100,
+          "dual": 0
+        }
+      },
+      {
+        "id": "cubicle-workstation",
+        "projection": "plan",
+        "gridFootprint": {
+          "w": 2,
+          "h": 2
+        },
+        "contactShadow": null,
+        "params": [
+          {
+            "key": "openness",
+            "min": 0,
+            "max": 3,
+            "step": 1,
+            "default": 0
+          },
+          {
+            "key": "clutter",
+            "min": 0,
+            "max": 2,
+            "step": 1,
+            "default": 1
+          }
+        ],
+        "defaultInstanceParams": {
+          "openness": 0,
+          "clutter": 1
+        }
+      },
+      {
+        "id": "reception-desk",
+        "projection": "plan",
+        "gridFootprint": {
+          "w": 2,
+          "h": 2
+        },
+        "contactShadow": null,
+        "params": [
+          {
+            "key": "width",
+            "min": 72,
+            "max": 104,
+            "step": 4,
+            "default": 88
+          }
+        ],
+        "defaultInstanceParams": {
+          "width": 88
+        }
+      },
+      {
+        "id": "conference-table",
+        "projection": "plan",
+        "gridFootprint": {
+          "w": 3,
+          "h": 2
+        },
+        "contactShadow": null,
+        "params": [
+          {
+            "key": "width",
+            "min": 84,
+            "max": 120,
+            "step": 4,
+            "default": 110
+          },
+          {
+            "key": "chairs",
+            "min": 0,
+            "max": 8,
+            "step": 1,
+            "default": 6
+          }
+        ],
+        "defaultInstanceParams": {
+          "width": 110,
+          "chairs": 6
+        }
+      },
+      {
+        "id": "supply-cabinet",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 22,
+          "ry": 4.5
+        },
+        "params": [
+          {
+            "key": "height",
+            "min": 60,
+            "max": 84,
+            "step": 2,
+            "default": 72
+          }
+        ],
+        "defaultInstanceParams": {
+          "height": 72
+        }
+      },
+      {
+        "id": "desk-lamp",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 9,
+          "ry": 3
+        },
+        "params": [
+          {
+            "key": "size",
+            "min": 26,
+            "max": 40,
+            "step": 2,
+            "default": 32
+          }
+        ],
+        "defaultInstanceParams": {
+          "size": 32
+        }
+      },
+      {
+        "id": "desk-clutter",
+        "projection": "plan",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": null,
+        "params": [
+          {
+            "key": "papers",
+            "min": 1,
+            "max": 4,
+            "step": 1,
+            "default": 3
+          },
+          {
+            "key": "phone",
+            "min": 0,
+            "max": 1,
+            "step": 1,
+            "default": 1
+          }
+        ],
+        "defaultInstanceParams": {
+          "papers": 3,
+          "phone": 1
+        }
+      }
+    ]
+  },
+  "sourceAssetPresence": {
+    "standing-desk": false,
+    "cubicle-workstation": false,
+    "reception-desk": false,
+    "conference-table": false,
+    "supply-cabinet": false,
+    "desk-lamp": false,
+    "desk-clutter": false
+  },
+  "supplyCabinetFacilityContractPresent": true,
+  "protectedSurfaceHashes": {
+    "CONTRACT.md": "1db92f32e263af0887f9841909fb9b82a09e5df1ac7d5d4f809adab9c0b3105d",
+    "src/core/exporter.ts": "29f1bb95a975a578f0dcc3ec5d0eee4e65e219359da6c9e84430ddf8ac15ca8a",
+    "src/core/layout.ts": "2605f283175007baa7912fa4ef05f6bac995dcd3fda3cd77ff857dc38fb49e1c",
+    "src/core/types.ts": "9d4048de93599ee977b3ebb00adcee6f29a824269c2bd3d763745604d9f9baac",
+    "src/data/defaults.ts": "152cc83d6c231b836db40617e935743c891c575d9c51c03c02c26463e060e6e7",
+    "src/props/templates.ts": "ba87ef6dc3cba10d48bf39cd1127b8abb67ec914b874999d8f54ccb634a3efc2"
+  },
+  "proposalRasterStats": {
+    "standing-desk": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 6697,
+        "bounds": {
+          "minX": 12,
+          "minY": 30,
+          "maxX": 116,
+          "maxY": 95
+        }
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "visiblePixels": 682,
+        "bounds": {
+          "minX": 3,
+          "minY": 9,
+          "maxX": 36,
+          "maxY": 29
+        }
+      }
+    },
+    "cubicle-workstation": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 8641,
+        "bounds": {
+          "minX": 13,
+          "minY": 12,
+          "maxX": 114,
+          "maxY": 109
+        }
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "visiblePixels": 901,
+        "bounds": {
+          "minX": 4,
+          "minY": 3,
+          "maxX": 35,
+          "maxY": 34
+        }
+      }
+    },
+    "reception-desk": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 5338,
+        "bounds": {
+          "minX": 17,
+          "minY": 18,
+          "maxX": 109,
+          "maxY": 112
+        }
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "visiblePixels": 571,
+        "bounds": {
+          "minX": 5,
+          "minY": 5,
+          "maxX": 34,
+          "maxY": 35
+        }
+      }
+    },
+    "conference-table": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 7467,
+        "bounds": {
+          "minX": 7,
+          "minY": 21,
+          "maxX": 120,
+          "maxY": 104
+        }
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "visiblePixels": 759,
+        "bounds": {
+          "minX": 2,
+          "minY": 6,
+          "maxX": 37,
+          "maxY": 32
+        }
+      }
+    },
+    "supply-cabinet": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 4432,
+        "bounds": {
+          "minX": 35,
+          "minY": 42,
+          "maxX": 92,
+          "maxY": 121
+        }
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "visiblePixels": 434,
+        "bounds": {
+          "minX": 11,
+          "minY": 13,
+          "maxX": 28,
+          "maxY": 37
+        }
+      }
+    },
+    "desk-lamp": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 1410,
+        "bounds": {
+          "minX": 41,
+          "minY": 70,
+          "maxX": 86,
+          "maxY": 120
+        }
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "visiblePixels": 152,
+        "bounds": {
+          "minX": 13,
+          "minY": 22,
+          "maxX": 26,
+          "maxY": 37
+        }
+      }
+    },
+    "desk-clutter": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 5486,
+        "bounds": {
+          "minX": 19,
+          "minY": 31,
+          "maxX": 108,
+          "maxY": 93
+        }
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "visiblePixels": 560,
+        "bounds": {
+          "minX": 6,
+          "minY": 9,
+          "maxX": 33,
+          "maxY": 29
+        }
+      }
+    }
+  }
+}

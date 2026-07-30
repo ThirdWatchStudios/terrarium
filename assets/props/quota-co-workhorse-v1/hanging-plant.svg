@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="hanging-plant" data-projection="plan">
+  <title>QuotaCo wall-rail hanging plant</title>
+  <desc>Plan-authored wall-slot planter capsule with catalog mounting rail and individually editable trailing vines.</desc>
+  <metadata>Palette tokens: primary foliage, secondary catalog rail, accent service tab. Default trail 24 and fullness 2.</metadata>
+  <g id="art-scale" transform="translate(64 64) scale(.86) translate(-64 -64)">
+    <g id="mount">
+      <rect id="mount-shell" x="39" y="35" width="50" height="13" rx="6" fill="#DED5BD" stroke="#292C2A" stroke-width="3"/>
+      <rect id="mount-rail" data-fill-token="secondary" x="44" y="39" width="40" height="7" rx="3" fill="#355247" stroke="#292C2A" stroke-width="1.7"/>
+      <rect id="mount-service-tab" data-fill-token="accent" x="82" y="39" width="4" height="7" rx="1.5" fill="#B65F4D"/>
+      <path id="mount-hangers" d="M48 48L53 56M80 48L75 56" fill="none" stroke="#262B29" stroke-width="2"/>
+    </g>
+    <g id="shell">
+      <path id="shell-planter" d="M48 55H80L76 69Q64 74 52 69Z" fill="#DED5BD" stroke="#292C2A" stroke-width="2.5"/>
+      <rect id="shell-bay" data-fill-token="secondary" x="52" y="56" width="24" height="7" rx="3" fill="#355247"/>
+    </g>
+    <g id="vine-1">
+      <path id="vine-1-stem" d="M54 65Q47 73.856 52 84.68" fill="none" stroke="#3F7250" stroke-width="2.3"/>
+      <ellipse id="vine-1-leaf-a" cx="53" cy="69.92" rx="3.5" ry="5" fill="#648867" stroke="#292C2A" stroke-width="1.2"/>
+      <ellipse id="vine-1-leaf-b" data-fill-token="primary" cx="50" cy="74.84" rx="3.5" ry="5" fill="#3F7250" stroke="#292C2A" stroke-width="1.2"/>
+      <ellipse id="vine-1-leaf-c" cx="53" cy="79.76" rx="3.5" ry="5" fill="#648867" stroke="#292C2A" stroke-width="1.2"/>
+    </g>
+    <g id="vine-2">
+      <path id="vine-2-stem" d="M61 65Q68 74.72 63 86.6" fill="none" stroke="#3F7250" stroke-width="2.3"/>
+      <ellipse id="vine-2-leaf-a" cx="68" cy="70.4" rx="3.5" ry="5" fill="#648867" stroke="#292C2A" stroke-width="1.2"/>
+      <ellipse id="vine-2-leaf-b" data-fill-token="primary" cx="59" cy="75.8" rx="3.5" ry="5" fill="#3F7250" stroke="#292C2A" stroke-width="1.2"/>
+      <ellipse id="vine-2-leaf-c" cx="68" cy="81.2" rx="3.5" ry="5" fill="#648867" stroke="#292C2A" stroke-width="1.2"/>
+    </g>
+    <g id="vine-3">
+      <path id="vine-3-stem" d="M68 65Q61 75.584 66 88.52" fill="none" stroke="#3F7250" stroke-width="2.3"/>
+      <ellipse id="vine-3-leaf-a" cx="67" cy="70.88" rx="3.5" ry="5" fill="#648867" stroke="#292C2A" stroke-width="1.2"/>
+      <ellipse id="vine-3-leaf-b" data-fill-token="primary" cx="64" cy="76.76" rx="3.5" ry="5" fill="#3F7250" stroke="#292C2A" stroke-width="1.2"/>
+      <ellipse id="vine-3-leaf-c" cx="67" cy="82.64" rx="3.5" ry="5" fill="#648867" stroke="#292C2A" stroke-width="1.2"/>
+    </g>
+    <g id="vine-4" display="none">
+      <path id="vine-4-stem" d="M75 65Q82 73.2 77 82.7" fill="none" stroke="#3F7250" stroke-width="2.3"/>
+      <ellipse id="vine-4-leaf-a" cx="81" cy="69.4" rx="3.5" ry="5" fill="#648867" stroke="#292C2A" stroke-width="1.2"/>
+      <ellipse id="vine-4-leaf-b" data-fill-token="primary" cx="73" cy="74.2" rx="3.5" ry="5" fill="#3F7250" stroke="#292C2A" stroke-width="1.2"/>
+      <ellipse id="vine-4-leaf-c" cx="79" cy="78.8" rx="3.5" ry="5" fill="#648867" stroke="#292C2A" stroke-width="1.2"/>
+    </g>
+  </g>
+</svg>

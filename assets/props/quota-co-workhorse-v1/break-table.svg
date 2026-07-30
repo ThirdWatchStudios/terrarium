@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="break-table" data-projection="plan">
+  <title>QuotaCo institutional break table</title>
+  <desc>Plan-projected washable round meal table with tucked molded stools and a central service caddy.</desc>
+  <g id="art-scale" transform="translate(64 64) scale(.9) translate(-64 -64)">
+    <g id="stools-4">
+      <circle id="stool-4-1-shell" data-fill-token="primary" cx="64" cy="22" r="10" fill="#DED5BD" stroke="#292C2A" stroke-width="2"/>
+      <circle id="stool-4-1-seat" data-fill-token="secondary" cx="64" cy="22" r="6" fill="#355247" stroke="#292C2A" stroke-width="1.4"/>
+      <circle id="stool-4-2-shell" data-fill-token="primary" cx="106" cy="64" r="10" fill="#DED5BD" stroke="#292C2A" stroke-width="2"/>
+      <circle id="stool-4-2-seat" cx="106" cy="64" r="6" fill="#49685A" stroke="#292C2A" stroke-width="1.4"/>
+      <circle id="stool-4-3-shell" data-fill-token="primary" cx="64" cy="106" r="10" fill="#DED5BD" stroke="#292C2A" stroke-width="2"/>
+      <circle id="stool-4-3-seat" data-fill-token="secondary" cx="64" cy="106" r="6" fill="#355247" stroke="#292C2A" stroke-width="1.4"/>
+      <circle id="stool-4-4-shell" data-fill-token="primary" cx="22" cy="64" r="10" fill="#DED5BD" stroke="#292C2A" stroke-width="2"/>
+      <circle id="stool-4-4-seat" cx="22" cy="64" r="6" fill="#49685A" stroke="#292C2A" stroke-width="1.4"/>
+    </g>
+    <g id="stools-3" display="none">
+      <circle id="stool-3-1-shell" data-fill-token="primary" cx="64" cy="22" r="10" fill="#DED5BD" stroke="#292C2A" stroke-width="2"/>
+      <circle id="stool-3-1-seat" data-fill-token="secondary" cx="64" cy="22" r="6" fill="#355247" stroke="#292C2A" stroke-width="1.4"/>
+      <circle id="stool-3-2-shell" data-fill-token="primary" cx="100.373" cy="85" r="10" fill="#DED5BD" stroke="#292C2A" stroke-width="2"/>
+      <circle id="stool-3-2-seat" cx="100.373" cy="85" r="6" fill="#49685A" stroke="#292C2A" stroke-width="1.4"/>
+      <circle id="stool-3-3-shell" data-fill-token="primary" cx="27.627" cy="85" r="10" fill="#DED5BD" stroke="#292C2A" stroke-width="2"/>
+      <circle id="stool-3-3-seat" data-fill-token="secondary" cx="27.627" cy="85" r="6" fill="#355247" stroke="#292C2A" stroke-width="1.4"/>
+    </g>
+    <g id="stools-2" display="none">
+      <circle id="stool-2-1-shell" data-fill-token="primary" cx="64" cy="22" r="10" fill="#DED5BD" stroke="#292C2A" stroke-width="2"/>
+      <circle id="stool-2-1-seat" data-fill-token="secondary" cx="64" cy="22" r="6" fill="#355247" stroke="#292C2A" stroke-width="1.4"/>
+      <circle id="stool-2-2-shell" data-fill-token="primary" cx="64" cy="106" r="10" fill="#DED5BD" stroke="#292C2A" stroke-width="2"/>
+      <circle id="stool-2-2-seat" cx="64" cy="106" r="6" fill="#49685A" stroke="#292C2A" stroke-width="1.4"/>
+    </g>
+    <g id="table">
+      <circle id="shell-table-rim" data-fill-token="primary" cx="64" cy="64" r="29" fill="#DED5BD" stroke="#292C2A" stroke-width="3"/>
+      <circle id="structure-table-surface" cx="64" cy="64" r="22" fill="#77755D" stroke="#292C2A" stroke-width="1.6"/>
+      <rect id="function-service-caddy" data-fill-token="accent" x="58" y="57" width="12" height="14" rx="3" fill="#B65F4D" stroke="#292C2A" stroke-width="1.5"/>
+      <path id="function-caddy-lines" d="M61 61H67M61 65H67" fill="none" stroke="#F4F0E4" stroke-width="1.1"/>
+    </g>
+  </g>
+</svg>

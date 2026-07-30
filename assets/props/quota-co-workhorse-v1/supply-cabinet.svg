@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="supply-cabinet" data-projection="elevation">
+  <title>QuotaCo workhorse supply cabinet</title>
+  <desc>Elevation-projected molded supply cabinet with a catalog bay, labeled double doors, coral handles, and grounded plinth.</desc>
+  <g id="shadow">
+    <ellipse id="shadow-contact" cx="64" cy="117" rx="25" ry="4.5" fill="#000000" opacity=".12"/>
+  </g>
+  <g id="artwork" transform="translate(64 116) scale(.76) translate(-64 -116)">
+    <g id="shell">
+      <rect id="shell-body" data-fill-token="primary" x="37" y="44" width="54" height="72" rx="10" fill="#DED5BD" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    </g>
+    <g id="structure">
+      <rect id="structure-catalog-bay" data-fill-token="secondary" x="44" y="51" width="40" height="24" rx="6" fill="#49685A" stroke="#292C2A" stroke-width="2" stroke-linejoin="round"/>
+      <rect id="structure-left-door" data-fill-token="secondary" x="44" y="83" width="18" height="27" rx="5" fill="#49685A" stroke="#292C2A" stroke-width="2" stroke-linejoin="round"/>
+      <rect id="structure-right-door" data-fill-token="secondary" x="66" y="83" width="18" height="27" rx="5" fill="#49685A" stroke="#292C2A" stroke-width="2" stroke-linejoin="round"/>
+    </g>
+    <g id="inventory">
+      <rect id="inventory-paper-ream" x="48" y="56" width="13" height="7" rx="2" fill="#F4F0E4"/>
+      <rect id="inventory-coral-box" data-fill-token="accent" x="63" y="55" width="9" height="8" rx="2" fill="#B65F4D"/>
+      <rect id="inventory-blue-bottle" x="74" y="53" width="6" height="10" rx="2" fill="#8FB7C0"/>
+      <rect id="inventory-left-label" x="48" y="90" width="10" height="5" rx="2" fill="#F3EEDA"/>
+      <rect id="inventory-right-label" x="70" y="90" width="10" height="5" rx="2" fill="#F3EEDA"/>
+    </g>
+    <g id="function">
+      <rect id="function-left-handle" data-fill-token="accent" x="60" y="94" width="3" height="9" rx="1.5" fill="#B65F4D"/>
+      <rect id="function-right-handle" data-fill-token="accent" x="65" y="94" width="3" height="9" rx="1.5" fill="#B65F4D"/>
+    </g>
+    <g id="foreground">
+      <rect id="structure-plinth" x="42" y="109" width="44" height="7" rx="3" fill="#18211E" stroke="#292C2A" stroke-width="2" stroke-linejoin="round"/>
+    </g>
+  </g>
+</svg>

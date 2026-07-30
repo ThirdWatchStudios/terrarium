@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="shredder" data-projection="elevation">
+  <title>QuotaCo service-system paper shredder</title>
+  <desc>Elevation paper shredder with a broad intake visor, visible feed slot, and legible collection bin.</desc>
+  <g id="art-envelope" transform="translate(64 116) scale(.82) translate(-64 -116)">
+    <g id="shadow">
+      <ellipse id="shadow-contact" cx="64" cy="117" rx="19" ry="4" fill="#000000" opacity=".125"/>
+    </g>
+    <g id="shell">
+      <rect id="shell-bin" data-fill-token="primary" x="44" y="64" width="40" height="52" rx="9" fill="#DED5BD" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+      <rect id="shell-intake-visor" data-fill-token="secondary" x="40" y="61" width="48" height="14" rx="7" fill="#355247" stroke="#292C2A" stroke-width="2.5"/>
+    </g>
+    <g id="function">
+      <rect id="function-feed-slot" x="50" y="66" width="28" height="4" rx="2" fill="#18211E"/>
+      <rect id="function-collection-window" x="49" y="80" width="30" height="29" rx="6" fill="#49685A"/>
+      <path id="function-shred-strips" d="M55 85V104M62 84V106M69 84V106M76 85V103" fill="none" stroke="#C7BDA7" stroke-width="1.5" opacity=".8" stroke-linecap="round"/>
+      <circle id="function-power-light" data-fill-token="accent" cx="82" cy="68" r="2.5" fill="#B65F4D"/>
+    </g>
+    <g id="paper">
+      <path id="paper-feed-sheet" d="M54 57L59 45L64 55L70 42L75 58Z" fill="#F4F0E4" stroke="#292C2A" stroke-width="1.5" stroke-linejoin="round"/>
+    </g>
+  </g>
+</svg>

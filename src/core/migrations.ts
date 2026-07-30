@@ -3,6 +3,7 @@ import { CURRENT_SCHEMA_VERSION } from './types';
 import { DEFAULT_BEHAVIORS, DEFAULT_DEPARTMENTS, DEFAULT_DRIVES, DEFAULT_FLOORS, DEFAULT_GROUND, DEFAULT_PROFILES, DEFAULT_PROPS, DEFAULT_RELATIONSHIP_TYPES, DEFAULT_SCENARIOS, DEFAULT_STYLE, DEFAULT_STYLE_PRESETS, DEFAULT_TRAITS, DEFAULT_WALLS } from '../data/defaults';
 import { mapDepartmentNameToId, slugifyDepartment } from './department';
 import { ensurePresence } from './profile';
+import { authoredPropArt } from '../props/authoredArt';
 
 // Re-export so callers can keep importing the version from the migration module.
 export { CURRENT_SCHEMA_VERSION } from './types';
@@ -47,6 +48,7 @@ export function migrateProject(raw: unknown): ProjectState | null {
   // added after the first saves; backfill them from defaults. Idempotent, so it
   // runs unconditionally as a safety net for partial data.
   backfillV1(project as ProjectState);
+  syncAuthoredPropPalettes(project as ProjectState);
 
   // v1 → v2: reconcile legacy cast ids to the game's AgentIds (the-manager →
   // manager) so the exported atlas family matches the agent the game spawns.
@@ -315,6 +317,20 @@ function reconcileLegacyCastIds(project: ProjectState): void {
     for (const entity of project.scene?.entities ?? []) {
       if (entity.kind === 'character' && entity.refId === from) entity.refId = to;
     }
+  }
+}
+
+/**
+ * Authored SVG source owns its canonical palette when automatic restyling is
+ * off. This runs for every loaded project (including already-current saves) so
+ * browser-persisted palettes from the former procedural art cannot silently
+ * recolour newly imported SVG geometry. Procedural prop palettes remain
+ * user/project owned.
+ */
+function syncAuthoredPropPalettes(project: ProjectState): void {
+  for (const prop of project.props) {
+    const art = authoredPropArt(prop.templateId);
+    if (art) prop.palette = structuredClone(art.paletteDefaults);
   }
 }
 

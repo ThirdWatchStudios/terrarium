@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="printer" data-projection="elevation">
+  <title>QuotaCo service-system printer</title>
+  <desc>Elevation printer with a molded paper path, visible feed and output bays, and a protected control pod.</desc>
+  <g id="art-envelope" transform="translate(64 116) scale(.84) translate(-64 -116)">
+    <g id="shadow">
+      <ellipse id="shadow-contact" cx="64" cy="117" rx="28" ry="4" fill="#000000" opacity=".125"/>
+    </g>
+    <g id="shell">
+      <rect id="shell-body" data-fill-token="primary" x="32" y="72" width="64" height="44" rx="11" fill="#DED5BD" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+      <rect id="shell-lower-plinth" x="39" y="109" width="47" height="6" rx="3" fill="#C7BDA7"/>
+    </g>
+    <g id="structure">
+      <rect id="structure-feed-band" data-fill-token="secondary" x="38" y="77" width="52" height="11" rx="5" fill="#355247"/>
+      <circle id="structure-service-latch" cx="40" cy="82" r="4.2" fill="#98513F" stroke="#292C2A" stroke-width="1.8"/>
+    </g>
+    <g id="function">
+      <rect id="function-output-mouth" x="39" y="92" width="39" height="16" rx="6" fill="#18211E" stroke="#292C2A" stroke-width="2"/>
+      <rect id="function-output-paper" x="45" y="96" width="31" height="12" rx="3" fill="#F4F0E4"/>
+      <rect id="function-control-pod" data-fill-token="accent" x="80" y="89" width="12" height="21" rx="5" fill="#B65F4D" stroke="#292C2A" stroke-width="2"/>
+      <circle id="function-control-light" cx="86" cy="95" r="2.3" fill="#F4F0E4"/>
+      <path id="function-control-mark" d="M83 103H89" fill="none" stroke="#F4F0E4" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+    <g id="paper">
+      <rect id="paper-feed-sheet" x="45" y="61" width="38" height="18" rx="3" fill="#F4F0E4" stroke="#292C2A" stroke-width="1.7"/>
+      <path id="paper-feed-lines" d="M51 67H77M51 72H72" fill="none" stroke="#8E9690" stroke-width="1.2" stroke-linecap="round"/>
+    </g>
+  </g>
+</svg>

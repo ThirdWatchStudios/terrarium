@@ -1,0 +1,681 @@
+{
+  "reviewStatus": "accepted-direction-reference",
+  "productionPromotion": true,
+  "sourceSvgAuthoring": true,
+  "templateMutation": true,
+  "defaultMutation": true,
+  "unityImport": false,
+  "commitCreated": false,
+  "exportContractMutation": false,
+  "schemaMutation": false,
+  "schemaVersion": 19,
+  "authoringCanvas": 128,
+  "acceptedWallDatum": 112,
+  "characterVisualScale": 0.65,
+  "propScalePolicy": "independent-per-noun",
+  "familyDirection": "catalog-personalization-system",
+  "decisions": [
+    {
+      "id": "potted-tree",
+      "label": "Potted tree",
+      "category": "floor greenery",
+      "designRead": "umbrella canopy + molded service planter + employee care tag"
+    },
+    {
+      "id": "hanging-plant",
+      "label": "Hanging plant",
+      "category": "wall greenery",
+      "designRead": "catalog wall rail + planter capsule + three readable trailing vines"
+    },
+    {
+      "id": "floor-lamp",
+      "label": "Floor lamp",
+      "category": "local lighting",
+      "designRead": "institutional task standard + broad warm shade + service control"
+    },
+    {
+      "id": "framed-art",
+      "label": "Framed art",
+      "category": "employee art",
+      "designRead": "deep catalog frame + generous mat + unmistakable landscape image"
+    },
+    {
+      "id": "poster",
+      "label": "Poster",
+      "category": "paper graphic",
+      "designRead": "molded clip rail + loose paper + bold employee-made graphic"
+    },
+    {
+      "id": "wall-clock",
+      "label": "Wall clock",
+      "category": "time fixture",
+      "designRead": "rounded service backplate + circular face + clear hands and ticks"
+    },
+    {
+      "id": "fish-tank",
+      "label": "Fish tank",
+      "category": "living display",
+      "designRead": "broad glass bay + molded service plinth + visible fish and plants"
+    },
+    {
+      "id": "string-lights",
+      "label": "String lights",
+      "category": "employee lighting",
+      "designRead": "simple dark cable + cream mounting clips + warm personal bulbs"
+    },
+    {
+      "id": "rug",
+      "label": "Office rug",
+      "category": "floor personalization",
+      "designRead": "soft zone-defining mat + broad institutional bands + repair patch"
+    }
+  ],
+  "gameplayArtScales": {
+    "potted-tree": 0.78,
+    "hanging-plant": 0.86,
+    "floor-lamp": 0.76,
+    "framed-art": 0.92,
+    "poster": 0.74,
+    "wall-clock": 0.72,
+    "fish-tank": 0.82,
+    "string-lights": 1,
+    "rug": 0.94
+  },
+  "contractValidation": {
+    "pass": true,
+    "errors": [],
+    "contracts": [
+      {
+        "id": "potted-tree",
+        "projection": "elevation",
+        "placement": "floor",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 17,
+          "ry": 4
+        },
+        "params": [
+          {
+            "key": "height",
+            "min": 74,
+            "max": 100,
+            "step": 2,
+            "default": 90
+          },
+          {
+            "key": "fullness",
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "default": 2
+          }
+        ],
+        "defaultInstanceParams": {
+          "height": 90,
+          "fullness": 2
+        }
+      },
+      {
+        "id": "hanging-plant",
+        "projection": "plan",
+        "placement": "wall-slot",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": null,
+        "params": [
+          {
+            "key": "trail",
+            "min": 14,
+            "max": 34,
+            "step": 2,
+            "default": 24
+          },
+          {
+            "key": "fullness",
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "default": 2
+          }
+        ],
+        "defaultInstanceParams": {
+          "trail": 24,
+          "fullness": 2
+        }
+      },
+      {
+        "id": "floor-lamp",
+        "projection": "elevation",
+        "placement": "floor",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 12,
+          "ry": 3.5
+        },
+        "params": [
+          {
+            "key": "height",
+            "min": 78,
+            "max": 104,
+            "step": 2,
+            "default": 92
+          }
+        ],
+        "defaultInstanceParams": {
+          "height": 92
+        }
+      },
+      {
+        "id": "framed-art",
+        "projection": "plan",
+        "placement": "wall-slot",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": null,
+        "params": [
+          {
+            "key": "width",
+            "min": 28,
+            "max": 46,
+            "step": 2,
+            "default": 36
+          },
+          {
+            "key": "scene",
+            "min": 0,
+            "max": 2,
+            "step": 1,
+            "default": 1
+          }
+        ],
+        "defaultInstanceParams": {
+          "width": 36,
+          "scene": 1
+        }
+      },
+      {
+        "id": "poster",
+        "projection": "plan",
+        "placement": "wall-slot",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": null,
+        "params": [
+          {
+            "key": "lines",
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "default": 2
+          }
+        ],
+        "defaultInstanceParams": {
+          "lines": 2
+        }
+      },
+      {
+        "id": "wall-clock",
+        "projection": "plan",
+        "placement": "wall-slot",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": null,
+        "params": [
+          {
+            "key": "time",
+            "min": 0,
+            "max": 11,
+            "step": 1,
+            "default": 10
+          }
+        ],
+        "defaultInstanceParams": {
+          "time": 10
+        }
+      },
+      {
+        "id": "fish-tank",
+        "projection": "elevation",
+        "placement": "floor",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 24,
+          "ry": 4.5
+        },
+        "params": [
+          {
+            "key": "fish",
+            "min": 1,
+            "max": 4,
+            "step": 1,
+            "default": 3
+          }
+        ],
+        "defaultInstanceParams": {
+          "fish": 3
+        }
+      },
+      {
+        "id": "string-lights",
+        "projection": "plan",
+        "placement": "wall-slot",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": null,
+        "params": [
+          {
+            "key": "bulbs",
+            "min": 4,
+            "max": 8,
+            "step": 1,
+            "default": 6
+          }
+        ],
+        "defaultInstanceParams": {
+          "bulbs": 6
+        }
+      },
+      {
+        "id": "rug",
+        "projection": "plan",
+        "placement": "floor",
+        "gridFootprint": {
+          "w": 2,
+          "h": 2
+        },
+        "contactShadow": null,
+        "params": [
+          {
+            "key": "width",
+            "min": 72,
+            "max": 112,
+            "step": 4,
+            "default": 96
+          },
+          {
+            "key": "pattern",
+            "min": 0,
+            "max": 2,
+            "step": 1,
+            "default": 1
+          }
+        ],
+        "defaultInstanceParams": {
+          "width": 96,
+          "pattern": 1
+        }
+      }
+    ]
+  },
+  "sourceAssetPresence": {
+    "potted-tree": true,
+    "hanging-plant": true,
+    "floor-lamp": true,
+    "framed-art": true,
+    "poster": true,
+    "wall-clock": true,
+    "fish-tank": true,
+    "string-lights": true,
+    "rug": true
+  },
+  "protectedSurfaceHashes": {
+    "CONTRACT.md": "1db92f32e263af0887f9841909fb9b82a09e5df1ac7d5d4f809adab9c0b3105d",
+    "src/core/exporter.ts": "29f1bb95a975a578f0dcc3ec5d0eee4e65e219359da6c9e84430ddf8ac15ca8a",
+    "src/core/layout.ts": "2605f283175007baa7912fa4ef05f6bac995dcd3fda3cd77ff857dc38fb49e1c",
+    "src/core/types.ts": "9d4048de93599ee977b3ebb00adcee6f29a824269c2bd3d763745604d9f9baac",
+    "src/data/defaults.ts": "e3edfe2b080d83931d0aad4534130c2379da07fe64b5c0555d1554aa37174e8f",
+    "src/props/templates.ts": "07219763bd3332cc9641fe314b5c863c92365909f463919944b463d656abeb76"
+  },
+  "rasterStats": {
+    "potted-tree": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 2441,
+        "bounds": {
+          "minX": 39,
+          "minY": 47,
+          "maxX": 88,
+          "maxY": 118
+        }
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "visiblePixels": 265,
+        "bounds": {
+          "minX": 12,
+          "minY": 14,
+          "maxX": 27,
+          "maxY": 37
+        }
+      },
+      "currentClose": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 2812,
+        "bounds": {
+          "minX": 37,
+          "minY": 46,
+          "maxX": 90,
+          "maxY": 120
+        }
+      }
+    },
+    "hanging-plant": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 1359,
+        "bounds": {
+          "minX": 41,
+          "minY": 37,
+          "maxX": 86,
+          "maxY": 85
+        }
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "visiblePixels": 165,
+        "bounds": {
+          "minX": 12,
+          "minY": 11,
+          "maxX": 27,
+          "maxY": 26
+        }
+      },
+      "currentClose": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 1669,
+        "bounds": {
+          "minX": 40,
+          "minY": 36,
+          "maxX": 87,
+          "maxY": 86
+        }
+      }
+    },
+    "floor-lamp": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 1077,
+        "bounds": {
+          "minX": 49,
+          "minY": 50,
+          "maxX": 89,
+          "maxY": 118
+        }
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "visiblePixels": 123,
+        "bounds": {
+          "minX": 15,
+          "minY": 15,
+          "maxX": 27,
+          "maxY": 37
+        }
+      },
+      "currentClose": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 1235,
+        "bounds": {
+          "minX": 48,
+          "minY": 48,
+          "maxX": 89,
+          "maxY": 120
+        }
+      }
+    },
+    "framed-art": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 2372,
+        "bounds": {
+          "minX": 36,
+          "minY": 42,
+          "maxX": 91,
+          "maxY": 85
+        }
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "visiblePixels": 240,
+        "bounds": {
+          "minX": 11,
+          "minY": 13,
+          "maxX": 28,
+          "maxY": 26
+        }
+      },
+      "currentClose": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 2472,
+        "bounds": {
+          "minX": 35,
+          "minY": 42,
+          "maxX": 92,
+          "maxY": 85
+        }
+      }
+    },
+    "poster": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 1416,
+        "bounds": {
+          "minX": 48,
+          "minY": 42,
+          "maxX": 79,
+          "maxY": 91
+        }
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "visiblePixels": 159,
+        "bounds": {
+          "minX": 14,
+          "minY": 13,
+          "maxX": 25,
+          "maxY": 28
+        }
+      },
+      "currentClose": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 1639,
+        "bounds": {
+          "minX": 46,
+          "minY": 40,
+          "maxX": 81,
+          "maxY": 93
+        }
+      }
+    },
+    "wall-clock": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 1160,
+        "bounds": {
+          "minX": 47,
+          "minY": 45,
+          "maxX": 80,
+          "maxY": 80
+        }
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "visiblePixels": 132,
+        "bounds": {
+          "minX": 14,
+          "minY": 14,
+          "maxX": 25,
+          "maxY": 25
+        }
+      },
+      "currentClose": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 1364,
+        "bounds": {
+          "minX": 45,
+          "minY": 44,
+          "maxX": 82,
+          "maxY": 82
+        }
+      }
+    },
+    "fish-tank": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 4416,
+        "bounds": {
+          "minX": 28,
+          "minY": 48,
+          "maxX": 99,
+          "maxY": 119
+        }
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "visiblePixels": 456,
+        "bounds": {
+          "minX": 8,
+          "minY": 15,
+          "maxX": 31,
+          "maxY": 37
+        }
+      },
+      "currentClose": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 4746,
+        "bounds": {
+          "minX": 27,
+          "minY": 47,
+          "maxX": 100,
+          "maxY": 121
+        }
+      }
+    },
+    "string-lights": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 1597,
+        "bounds": {
+          "minX": 2,
+          "minY": 42,
+          "maxX": 125,
+          "maxY": 76
+        }
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "visiblePixels": 208,
+        "bounds": {
+          "minX": 0,
+          "minY": 13,
+          "maxX": 39,
+          "maxY": 23
+        }
+      },
+      "currentClose": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 1745,
+        "bounds": {
+          "minX": 2,
+          "minY": 40,
+          "maxX": 125,
+          "maxY": 74
+        }
+      }
+    },
+    "rug": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 4860,
+        "bounds": {
+          "minX": 17,
+          "minY": 37,
+          "maxX": 110,
+          "maxY": 90
+        }
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "visiblePixels": 512,
+        "bounds": {
+          "minX": 5,
+          "minY": 11,
+          "maxX": 34,
+          "maxY": 28
+        }
+      },
+      "currentClose": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 5160,
+        "bounds": {
+          "minX": 16,
+          "minY": 36,
+          "maxX": 111,
+          "maxY": 91
+        }
+      }
+    }
+  },
+  "evaluationContexts": [
+    "close-current-versus-proposal",
+    "normal-employee-lounge",
+    "normal-hallway-gallery",
+    "normal-quiet-nook",
+    "wall-slot-register",
+    "desk-occlusion",
+    "crowded-lounge",
+    "far-gameplay-strip"
+  ]
+}

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="lounge-seating" data-projection="plan">
+  <title>QuotaCo institutional lounge seating</title>
+  <desc>Plan-projected conversation set with modular molded bucket seats around a legible shared low table.</desc>
+  <g id="art-scale" transform="translate(64 64) scale(.9) translate(-64 -64)">
+    <g id="seats-3">
+      <rect id="seat-3-1-shell" data-fill-token="primary" x="52" y="18" width="24" height="24" rx="8" fill="#DED5BD" stroke="#292C2A" stroke-width="2.2"/>
+      <rect id="seat-3-1-insert" data-fill-token="secondary" x="56" y="22" width="16" height="16" rx="5" fill="#355247" stroke="#292C2A" stroke-width="1.5"/>
+      <circle id="seat-3-1-back" cx="64" cy="22" r="4.5" fill="#F3EEDA" stroke="#292C2A" stroke-width="1.4"/>
+      <rect id="seat-3-1-tab" data-fill-token="accent" x="71" y="28" width="3" height="8" rx="1" fill="#B65F4D"/>
+      <rect id="seat-3-2-shell" data-fill-token="primary" x="81.445" y="69" width="24" height="24" rx="8" fill="#DED5BD" stroke="#292C2A" stroke-width="2.2"/>
+      <rect id="seat-3-2-insert" x="85.445" y="73" width="16" height="16" rx="5" fill="#49685A" stroke="#292C2A" stroke-width="1.5"/>
+      <circle id="seat-3-2-back" cx="100.373" cy="85" r="4.5" fill="#F3EEDA" stroke="#292C2A" stroke-width="1.4"/>
+      <rect id="seat-3-2-tab" data-fill-token="accent" x="100.445" y="79" width="3" height="8" rx="1" fill="#B65F4D"/>
+      <rect id="seat-3-3-shell" data-fill-token="primary" x="22.555" y="69" width="24" height="24" rx="8" fill="#DED5BD" stroke="#292C2A" stroke-width="2.2"/>
+      <rect id="seat-3-3-insert" data-fill-token="secondary" x="26.555" y="73" width="16" height="16" rx="5" fill="#355247" stroke="#292C2A" stroke-width="1.5"/>
+      <circle id="seat-3-3-back" cx="27.627" cy="85" r="4.5" fill="#F3EEDA" stroke="#292C2A" stroke-width="1.4"/>
+      <rect id="seat-3-3-tab" data-fill-token="accent" x="41.555" y="79" width="3" height="8" rx="1" fill="#B65F4D"/>
+    </g>
+    <g id="seats-2" display="none">
+      <rect id="seat-2-1-shell" data-fill-token="primary" x="52" y="18" width="24" height="24" rx="8" fill="#DED5BD" stroke="#292C2A" stroke-width="2.2"/>
+      <rect id="seat-2-1-insert" data-fill-token="secondary" x="56" y="22" width="16" height="16" rx="5" fill="#355247" stroke="#292C2A" stroke-width="1.5"/>
+      <circle id="seat-2-1-back" cx="64" cy="22" r="4.5" fill="#F3EEDA" stroke="#292C2A" stroke-width="1.4"/>
+      <rect id="seat-2-1-tab" data-fill-token="accent" x="71" y="28" width="3" height="8" rx="1" fill="#B65F4D"/>
+      <rect id="seat-2-2-shell" data-fill-token="primary" x="52" y="86" width="24" height="24" rx="8" fill="#DED5BD" stroke="#292C2A" stroke-width="2.2"/>
+      <rect id="seat-2-2-insert" x="56" y="90" width="16" height="16" rx="5" fill="#49685A" stroke="#292C2A" stroke-width="1.5"/>
+      <circle id="seat-2-2-back" cx="64" cy="106" r="4.5" fill="#F3EEDA" stroke="#292C2A" stroke-width="1.4"/>
+      <rect id="seat-2-2-tab" data-fill-token="accent" x="71" y="96" width="3" height="8" rx="1" fill="#B65F4D"/>
+    </g>
+    <g id="seats-4" display="none">
+      <rect id="seat-4-1-shell" data-fill-token="primary" x="52" y="18" width="24" height="24" rx="8" fill="#DED5BD" stroke="#292C2A" stroke-width="2.2"/>
+      <rect id="seat-4-1-insert" data-fill-token="secondary" x="56" y="22" width="16" height="16" rx="5" fill="#355247" stroke="#292C2A" stroke-width="1.5"/>
+      <circle id="seat-4-1-back" cx="64" cy="22" r="4.5" fill="#F3EEDA" stroke="#292C2A" stroke-width="1.4"/>
+      <rect id="seat-4-1-tab" data-fill-token="accent" x="71" y="28" width="3" height="8" rx="1" fill="#B65F4D"/>
+      <rect id="seat-4-2-shell" data-fill-token="primary" x="86" y="52" width="24" height="24" rx="8" fill="#DED5BD" stroke="#292C2A" stroke-width="2.2"/>
+      <rect id="seat-4-2-insert" x="90" y="56" width="16" height="16" rx="5" fill="#49685A" stroke="#292C2A" stroke-width="1.5"/>
+      <circle id="seat-4-2-back" cx="106" cy="64" r="4.5" fill="#F3EEDA" stroke="#292C2A" stroke-width="1.4"/>
+      <rect id="seat-4-2-tab" data-fill-token="accent" x="105" y="62" width="3" height="8" rx="1" fill="#B65F4D"/>
+      <rect id="seat-4-3-shell" data-fill-token="primary" x="52" y="86" width="24" height="24" rx="8" fill="#DED5BD" stroke="#292C2A" stroke-width="2.2"/>
+      <rect id="seat-4-3-insert" data-fill-token="secondary" x="56" y="90" width="16" height="16" rx="5" fill="#355247" stroke="#292C2A" stroke-width="1.5"/>
+      <circle id="seat-4-3-back" cx="64" cy="106" r="4.5" fill="#F3EEDA" stroke="#292C2A" stroke-width="1.4"/>
+      <rect id="seat-4-3-tab" data-fill-token="accent" x="71" y="96" width="3" height="8" rx="1" fill="#B65F4D"/>
+      <rect id="seat-4-4-shell" data-fill-token="primary" x="18" y="52" width="24" height="24" rx="8" fill="#DED5BD" stroke="#292C2A" stroke-width="2.2"/>
+      <rect id="seat-4-4-insert" x="22" y="56" width="16" height="16" rx="5" fill="#49685A" stroke="#292C2A" stroke-width="1.5"/>
+      <circle id="seat-4-4-back" cx="22" cy="64" r="4.5" fill="#F3EEDA" stroke="#292C2A" stroke-width="1.4"/>
+      <rect id="seat-4-4-tab" data-fill-token="accent" x="37" y="62" width="3" height="8" rx="1" fill="#B65F4D"/>
+    </g>
+    <g id="table">
+      <circle id="shell-table-rim" data-fill-token="primary" cx="64" cy="64" r="16" fill="#DED5BD" stroke="#292C2A" stroke-width="2.5"/>
+      <circle id="structure-table-surface" cx="64" cy="64" r="11" fill="#77755D" stroke="#292C2A" stroke-width="1.4"/>
+      <rect id="personalization-note" x="60" y="59" width="8" height="10" rx="2" fill="#F4F0E4"/>
+      <circle id="personalization-cup" data-fill-token="accent" cx="69" cy="69" r="3" fill="#B65F4D"/>
+    </g>
+  </g>
+</svg>

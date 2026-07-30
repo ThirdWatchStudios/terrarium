@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="open-shelving" data-projection="elevation">
+  <title>QuotaCo open supply shelving</title>
+  <desc>Elevation-projected open molded rack with structural uprights, shelf lips, removable labeled catalog bins, and a coral service marker.</desc>
+  <g id="shadow">
+    <ellipse id="shadow-contact" cx="64" cy="117" rx="29" ry="4.5" fill="#000000" opacity=".12"/>
+  </g>
+  <g id="art-scale" transform="translate(64 116) scale(.8) translate(-64 -116)">
+    <g id="frame">
+      <rect id="frame-left-upright" data-fill-token="primary" x="35" y="37" width="7" height="79" rx="3.5" fill="#DED5BD" stroke="#292C2A" stroke-width="2.5"/>
+      <rect id="frame-right-upright" data-fill-token="primary" x="86" y="37" width="7" height="79" rx="3.5" fill="#DED5BD" stroke="#292C2A" stroke-width="2.5"/>
+      <rect id="frame-top-cap" x="34" y="34" width="60" height="9" rx="4" fill="#F3EEDA" stroke="#292C2A" stroke-width="2.5"/>
+      <rect id="frame-service-tab" data-fill-token="accent" x="88" y="50" width="3" height="14" rx="1.5" fill="#B65F4D"/>
+    </g>
+    <g id="shelves-4">
+      <rect id="rack-4-1" x="39" y="51" width="50" height="5" rx="2" fill="#DED5BD" stroke="#292C2A" stroke-width="1.5"/>
+      <rect id="rack-4-2" x="39" y="69" width="50" height="5" rx="2" fill="#DED5BD" stroke="#292C2A" stroke-width="1.5"/>
+      <rect id="rack-4-3" x="39" y="87" width="50" height="5" rx="2" fill="#DED5BD" stroke="#292C2A" stroke-width="1.5"/>
+      <rect id="rack-4-4" x="39" y="105" width="50" height="5" rx="2" fill="#DED5BD" stroke="#292C2A" stroke-width="1.5"/>
+      <path id="fill-1-r4-a" data-fill-token="secondary" d="M44 54H56L54 67H46Z" fill="#355247" stroke="#292C2A" stroke-width="1.3"/>
+      <rect id="fill-1-r4-a-label" x="47" y="58" width="6" height="3" rx="1" fill="#F3EEDA"/>
+      <path id="fill-1-r4-b" d="M44 72H56L54 85H46Z" fill="#77755D" stroke="#292C2A" stroke-width="1.3"/>
+      <rect id="fill-1-r4-b-label" x="47" y="76" width="6" height="3" rx="1" fill="#F3EEDA"/>
+      <path id="fill-1-r4-c" data-fill-token="secondary" d="M44 90H56L54 103H46Z" fill="#355247" stroke="#292C2A" stroke-width="1.3"/>
+      <rect id="fill-1-r4-c-label" x="47" y="94" width="6" height="3" rx="1" fill="#F3EEDA"/>
+      <path id="fill-2-r4-a" d="M59 54H72L70 67H61Z" fill="#49685A" stroke="#292C2A" stroke-width="1.3"/>
+      <rect id="fill-2-r4-a-label" x="63" y="58" width="6" height="3" rx="1" fill="#F3EEDA"/>
+      <path id="fill-2-r4-b" data-fill-token="accent" d="M59 72H72L70 85H61Z" fill="#B65F4D" stroke="#292C2A" stroke-width="1.3"/>
+      <rect id="fill-2-r4-b-label" x="63" y="76" width="6" height="3" rx="1" fill="#F3EEDA"/>
+      <path id="fill-2-r4-c" d="M59 90H72L70 103H61Z" fill="#77755D" stroke="#292C2A" stroke-width="1.3"/>
+      <rect id="fill-2-r4-c-label" x="63" y="94" width="6" height="3" rx="1" fill="#F3EEDA"/>
+      <path id="fill-3-r4-a" data-fill-token="accent" d="M75 54H85L83 67H77Z" fill="#B65F4D" stroke="#292C2A" stroke-width="1.3"/>
+      <rect id="fill-3-r4-a-label" x="78" y="58" width="4" height="3" rx="1" fill="#F3EEDA"/>
+      <path id="fill-3-r4-b" data-fill-token="secondary" d="M75 72H85L83 85H77Z" fill="#355247" stroke="#292C2A" stroke-width="1.3"/>
+      <rect id="fill-3-r4-b-label" x="78" y="76" width="4" height="3" rx="1" fill="#F3EEDA"/>
+      <path id="fill-3-r4-c" data-fill-token="accent" d="M75 90H85L83 103H77Z" fill="#B65F4D" stroke="#292C2A" stroke-width="1.3"/>
+      <rect id="fill-3-r4-c-label" x="78" y="94" width="4" height="3" rx="1" fill="#F3EEDA"/>
+    </g>
+    <g id="shelves-3" display="none">
+      <rect id="rack-3-1" x="39" y="58" width="50" height="5" rx="2" fill="#DED5BD" stroke="#292C2A" stroke-width="1.5"/>
+      <rect id="rack-3-2" x="39" y="82" width="50" height="5" rx="2" fill="#DED5BD" stroke="#292C2A" stroke-width="1.5"/>
+      <rect id="rack-3-3" x="39" y="106" width="50" height="5" rx="2" fill="#DED5BD" stroke="#292C2A" stroke-width="1.5"/>
+      <path id="fill-1-r3-a" data-fill-token="secondary" d="M44 61H58L56 80H46Z" fill="#355247" stroke="#292C2A" stroke-width="1.3"/>
+      <path id="fill-1-r3-b" d="M44 85H58L56 104H46Z" fill="#77755D" stroke="#292C2A" stroke-width="1.3"/>
+      <path id="fill-2-r3-a" d="M61 61H74L72 80H63Z" fill="#49685A" stroke="#292C2A" stroke-width="1.3"/>
+      <path id="fill-2-r3-b" data-fill-token="accent" d="M61 85H74L72 104H63Z" fill="#B65F4D" stroke="#292C2A" stroke-width="1.3"/>
+      <path id="fill-3-r3-a" data-fill-token="accent" d="M77 61H85L83 80H79Z" fill="#B65F4D" stroke="#292C2A" stroke-width="1.3"/>
+      <path id="fill-3-r3-b" data-fill-token="secondary" d="M77 85H85L83 104H79Z" fill="#355247" stroke="#292C2A" stroke-width="1.3"/>
+    </g>
+    <g id="shelves-5" display="none">
+      <rect id="rack-5-1" x="39" y="48" width="50" height="4" rx="2" fill="#DED5BD" stroke="#292C2A" stroke-width="1.4"/>
+      <rect id="rack-5-2" x="39" y="63" width="50" height="4" rx="2" fill="#DED5BD" stroke="#292C2A" stroke-width="1.4"/>
+      <rect id="rack-5-3" x="39" y="78" width="50" height="4" rx="2" fill="#DED5BD" stroke="#292C2A" stroke-width="1.4"/>
+      <rect id="rack-5-4" x="39" y="93" width="50" height="4" rx="2" fill="#DED5BD" stroke="#292C2A" stroke-width="1.4"/>
+      <rect id="rack-5-5" x="39" y="108" width="50" height="4" rx="2" fill="#DED5BD" stroke="#292C2A" stroke-width="1.4"/>
+      <path id="fill-1-r5-a" data-fill-token="secondary" d="M44 51H56L54 61H46Z" fill="#355247" stroke="#292C2A" stroke-width="1.2"/>
+      <path id="fill-1-r5-b" d="M44 66H56L54 76H46Z" fill="#77755D" stroke="#292C2A" stroke-width="1.2"/>
+      <path id="fill-1-r5-c" data-fill-token="secondary" d="M44 81H56L54 91H46Z" fill="#355247" stroke="#292C2A" stroke-width="1.2"/>
+      <path id="fill-1-r5-d" d="M44 96H56L54 106H46Z" fill="#77755D" stroke="#292C2A" stroke-width="1.2"/>
+      <path id="fill-2-r5-a" d="M59 51H72L70 61H61Z" fill="#49685A" stroke="#292C2A" stroke-width="1.2"/>
+      <path id="fill-2-r5-b" data-fill-token="accent" d="M59 66H72L70 76H61Z" fill="#B65F4D" stroke="#292C2A" stroke-width="1.2"/>
+      <path id="fill-2-r5-c" d="M59 81H72L70 91H61Z" fill="#49685A" stroke="#292C2A" stroke-width="1.2"/>
+      <path id="fill-2-r5-d" data-fill-token="accent" d="M59 96H72L70 106H61Z" fill="#B65F4D" stroke="#292C2A" stroke-width="1.2"/>
+      <path id="fill-3-r5-a" data-fill-token="accent" d="M75 51H85L83 61H77Z" fill="#B65F4D" stroke="#292C2A" stroke-width="1.2"/>
+      <path id="fill-3-r5-b" data-fill-token="secondary" d="M75 66H85L83 76H77Z" fill="#355247" stroke="#292C2A" stroke-width="1.2"/>
+      <path id="fill-3-r5-c" data-fill-token="accent" d="M75 81H85L83 91H77Z" fill="#B65F4D" stroke="#292C2A" stroke-width="1.2"/>
+      <path id="fill-3-r5-d" data-fill-token="secondary" d="M75 96H85L83 106H77Z" fill="#355247" stroke="#292C2A" stroke-width="1.2"/>
+    </g>
+  </g>
+</svg>

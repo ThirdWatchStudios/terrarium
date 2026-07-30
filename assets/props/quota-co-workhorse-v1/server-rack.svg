@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="server-rack" data-projection="elevation">
+  <title>QuotaCo open server rack</title>
+  <desc>Elevation-projected technical rack with exposed mounting rails, repeated horizontal server units, top cooling fans, status lamps, cable spine, and grounded base.</desc>
+  <g id="shadow">
+    <ellipse id="shadow-contact" cx="64" cy="117" rx="30" ry="4.5" fill="#000000" opacity=".15"/>
+  </g>
+  <g id="art-scale" transform="translate(64 116) scale(.8) translate(-64 -116)">
+    <g id="frame">
+      <rect id="frame-rear-bay" x="39" y="37" width="50" height="74" rx="3" fill="#18211E" stroke="#292C2A" stroke-width="1.8"/>
+      <rect id="frame-top-beam" data-fill-token="primary" x="35" y="30" width="58" height="11" rx="4" fill="#262B29" stroke="#292C2A" stroke-width="2.4"/>
+      <circle id="frame-fan-left" cx="54" cy="35.5" r="3.2" fill="#8E9690" stroke="#292C2A" stroke-width="1"/>
+      <circle id="frame-fan-right" cx="64" cy="35.5" r="3.2" fill="#8E9690" stroke="#292C2A" stroke-width="1"/>
+      <path id="frame-fan-link" d="M51 35.5H67" fill="none" stroke="#18211E" stroke-width=".8" opacity=".7"/>
+      <rect id="frame-left-rail" data-fill-token="primary" x="35" y="37" width="8" height="77" rx="3" fill="#262B29" stroke="#292C2A" stroke-width="2"/>
+      <rect id="frame-right-rail" data-fill-token="primary" x="85" y="37" width="8" height="77" rx="3" fill="#262B29" stroke="#292C2A" stroke-width="2"/>
+      <path id="frame-rail-holes" d="M39 45V106M89 45V106" fill="none" stroke="#8E9690" stroke-width="2" stroke-dasharray="1 8"/>
+      <rect id="frame-cable-spine" data-fill-token="secondary" x="88" y="49" width="6" height="52" rx="2.5" fill="#355247" stroke="#292C2A" stroke-width="1.2"/>
+      <path id="frame-cable" d="M91 55Q99 64 91 73Q84 82 91 91" fill="none" stroke="#B65F4D" stroke-width="2"/>
+      <rect id="frame-base" data-fill-token="primary" x="33" y="109" width="62" height="7" rx="3" fill="#262B29" stroke="#292C2A" stroke-width="2"/>
+      <rect id="frame-base-inset" data-fill-token="secondary" x="40" y="111" width="48" height="4" rx="1.5" fill="#355247"/>
+    </g>
+    <g id="units-5">
+      <g id="unit-5-1"><rect id="unit-5-1-face" data-fill-token="secondary" x="46" y="44" width="36" height="11" rx="1.3" fill="#355247" stroke="#292C2A" stroke-width="1"/><circle id="unit-5-1-led-a" cx="57" cy="49.5" r="1.4" fill="#D5A94B"/><circle id="unit-5-1-led-b" data-fill-token="accent" cx="61" cy="49.5" r="1.2" fill="#B65F4D"/><path id="unit-5-1-slits" d="M65 48H76M65 51H76" fill="none" stroke="#8E9690" stroke-width=".9"/></g>
+      <g id="unit-5-2"><rect id="unit-5-2-face" data-fill-token="primary" x="46" y="57" width="36" height="11" rx="1.3" fill="#262B29" stroke="#292C2A" stroke-width="1"/><circle id="unit-5-2-led-a" cx="57" cy="62.5" r="1.4" fill="#49685A"/><circle id="unit-5-2-led-b" data-fill-token="accent" cx="61" cy="62.5" r="1.2" fill="#B65F4D"/><path id="unit-5-2-slits" d="M65 61H76M65 64H76" fill="none" stroke="#8E9690" stroke-width=".9"/></g>
+      <g id="unit-5-3"><rect id="unit-5-3-face" data-fill-token="secondary" x="46" y="70" width="36" height="11" rx="1.3" fill="#355247" stroke="#292C2A" stroke-width="1"/><circle id="unit-5-3-led-a" cx="57" cy="75.5" r="1.4" fill="#49685A"/><circle id="unit-5-3-led-b" data-fill-token="accent" cx="61" cy="75.5" r="1.2" fill="#B65F4D"/><path id="unit-5-3-slits" d="M65 74H76M65 77H76" fill="none" stroke="#8E9690" stroke-width=".9"/></g>
+      <g id="unit-5-4"><rect id="unit-5-4-face" data-fill-token="primary" x="46" y="83" width="36" height="11" rx="1.3" fill="#262B29" stroke="#292C2A" stroke-width="1"/><circle id="unit-5-4-led-a" cx="57" cy="88.5" r="1.4" fill="#D5A94B"/><circle id="unit-5-4-led-b" data-fill-token="accent" cx="61" cy="88.5" r="1.2" fill="#B65F4D"/><path id="unit-5-4-slits" d="M65 87H76M65 90H76" fill="none" stroke="#8E9690" stroke-width=".9"/></g>
+      <g id="unit-5-5"><rect id="unit-5-5-face" data-fill-token="secondary" x="46" y="96" width="36" height="11" rx="1.3" fill="#355247" stroke="#292C2A" stroke-width="1"/><circle id="unit-5-5-led-a" cx="57" cy="101.5" r="1.4" fill="#49685A"/><circle id="unit-5-5-led-b" data-fill-token="accent" cx="61" cy="101.5" r="1.2" fill="#B65F4D"/><path id="unit-5-5-slits" d="M65 100H76M65 103H76" fill="none" stroke="#8E9690" stroke-width=".9"/></g>
+    </g>
+    <g id="units-3" display="none">
+      <rect id="unit-3-1" data-fill-token="secondary" x="46" y="46" width="36" height="18" rx="2" fill="#355247" stroke="#292C2A" stroke-width="1.2"/>
+      <path id="unit-3-1-detail" d="M53 55H75" fill="none" stroke="#8E9690" stroke-width="1.2"/>
+      <rect id="unit-3-2" data-fill-token="primary" x="46" y="67" width="36" height="18" rx="2" fill="#262B29" stroke="#292C2A" stroke-width="1.2"/>
+      <path id="unit-3-2-detail" d="M53 76H75" fill="none" stroke="#8E9690" stroke-width="1.2"/>
+      <rect id="unit-3-3" data-fill-token="secondary" x="46" y="88" width="36" height="18" rx="2" fill="#355247" stroke="#292C2A" stroke-width="1.2"/>
+      <path id="unit-3-3-detail" d="M53 97H75" fill="none" stroke="#8E9690" stroke-width="1.2"/>
+      <circle id="unit-3-status" data-fill-token="accent" cx="57" cy="55" r="1.5" fill="#B65F4D"/>
+    </g>
+    <g id="units-4" display="none">
+      <rect id="unit-4-1" data-fill-token="secondary" x="46" y="45" width="36" height="14" rx="1.5" fill="#355247" stroke="#292C2A" stroke-width="1.1"/>
+      <rect id="unit-4-2" data-fill-token="primary" x="46" y="61" width="36" height="14" rx="1.5" fill="#262B29" stroke="#292C2A" stroke-width="1.1"/>
+      <rect id="unit-4-3" data-fill-token="secondary" x="46" y="77" width="36" height="14" rx="1.5" fill="#355247" stroke="#292C2A" stroke-width="1.1"/>
+      <rect id="unit-4-4" data-fill-token="primary" x="46" y="93" width="36" height="14" rx="1.5" fill="#262B29" stroke="#292C2A" stroke-width="1.1"/>
+      <path id="unit-4-details" d="M54 52H75M54 68H75M54 84H75M54 100H75" fill="none" stroke="#8E9690" stroke-width="1"/>
+      <circle id="unit-4-status" data-fill-token="accent" cx="57" cy="52" r="1.4" fill="#B65F4D"/>
+    </g>
+    <g id="units-6" display="none">
+      <rect id="unit-6-1" data-fill-token="secondary" x="46" y="43" width="36" height="9" rx="1.2" fill="#355247" stroke="#292C2A" stroke-width=".9"/>
+      <rect id="unit-6-2" data-fill-token="primary" x="46" y="54" width="36" height="9" rx="1.2" fill="#262B29" stroke="#292C2A" stroke-width=".9"/>
+      <rect id="unit-6-3" data-fill-token="secondary" x="46" y="65" width="36" height="9" rx="1.2" fill="#355247" stroke="#292C2A" stroke-width=".9"/>
+      <rect id="unit-6-4" data-fill-token="primary" x="46" y="76" width="36" height="9" rx="1.2" fill="#262B29" stroke="#292C2A" stroke-width=".9"/>
+      <rect id="unit-6-5" data-fill-token="secondary" x="46" y="87" width="36" height="9" rx="1.2" fill="#355247" stroke="#292C2A" stroke-width=".9"/>
+      <rect id="unit-6-6" data-fill-token="primary" x="46" y="98" width="36" height="9" rx="1.2" fill="#262B29" stroke="#292C2A" stroke-width=".9"/>
+      <path id="unit-6-details" d="M54 47.5H75M54 58.5H75M54 69.5H75M54 80.5H75M54 91.5H75M54 102.5H75" fill="none" stroke="#8E9690" stroke-width=".8"/>
+      <circle id="unit-6-status" data-fill-token="accent" cx="57" cy="47.5" r="1.2" fill="#B65F4D"/>
+    </g>
+  </g>
+</svg>

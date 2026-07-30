@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="filing-cabinet" data-projection="elevation">
+  <title>QuotaCo workhorse filing cabinet</title>
+  <desc>Elevation-projected rounded filing cabinet with four labeled drawers and a grounded plinth.</desc>
+  <g id="shadow">
+    <ellipse id="shadow-contact" cx="64" cy="117" rx="23" ry="4" fill="#000000" opacity=".12"/>
+  </g>
+  <g id="artwork" transform="translate(64 116) scale(.76) translate(-64 -116)">
+  <g id="shell">
+    <rect id="shell-body" data-fill-token="primary" x="38" y="27" width="52" height="89" rx="9" fill="#DED5BD" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+  <g id="structure">
+    <rect id="structure-drawer-well" x="44" y="36" width="40" height="70" rx="5" fill="#355247"/>
+  </g>
+  <g id="function">
+    <rect id="function-drawer-1" data-fill-token="secondary" x="48" y="40" width="32" height="14" rx="3" fill="#49685A"/>
+    <rect id="function-drawer-2" data-fill-token="secondary" x="48" y="57" width="32" height="14" rx="3" fill="#49685A"/>
+    <rect id="function-drawer-3" data-fill-token="secondary" x="48" y="74" width="32" height="14" rx="3" fill="#49685A"/>
+    <rect id="function-drawer-4" data-fill-token="secondary" x="48" y="91" width="32" height="11" rx="3" fill="#49685A"/>
+    <rect id="function-pull-1" data-fill-token="accent" x="56" y="44" width="16" height="4" rx="2" fill="#B65F4D"/>
+    <rect id="function-pull-2" data-fill-token="accent" x="56" y="61" width="16" height="4" rx="2" fill="#B65F4D"/>
+    <rect id="function-pull-3" data-fill-token="accent" x="56" y="78" width="16" height="4" rx="2" fill="#B65F4D"/>
+    <rect id="function-pull-4" data-fill-token="accent" x="56" y="94" width="16" height="4" rx="2" fill="#B65F4D"/>
+  </g>
+  <g id="personalization">
+    <rect id="personalization-label-1" x="59" y="49" width="10" height="3" rx="1" fill="#F4F0E4"/>
+    <rect id="personalization-label-2" x="59" y="66" width="10" height="3" rx="1" fill="#F4F0E4"/>
+    <rect id="personalization-label-3" x="59" y="83" width="10" height="3" rx="1" fill="#F4F0E4"/>
+    <rect id="personalization-label-4" x="59" y="99" width="10" height="2" rx="1" fill="#F4F0E4"/>
+  </g>
+  <g id="foreground">
+    <rect id="structure-plinth" x="39" y="107" width="50" height="9" rx="4" fill="#262B29" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+  </g>
+</svg>

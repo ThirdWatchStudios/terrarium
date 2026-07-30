@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="conference-table" data-projection="plan">
+  <title>QuotaCo workhorse conference table</title>
+  <desc>Plan-projected capsule conference table with compact molded chairs and a central cable and service spine.</desc>
+  <g id="chairs">
+    <path id="chair-top-1-shell" data-fill-token="primary" d="M23 20Q23 14 29 12H35Q41 14 41 20V29Q32 35 23 29Z" fill="#DED5BD" stroke="#292C2A" stroke-width="2" stroke-linejoin="round"/>
+    <rect id="chair-top-1-seat" data-fill-token="secondary" x="27" y="21" width="10" height="8" rx="3" fill="#355247"/>
+    <path id="chair-top-2-shell" data-fill-token="primary" d="M48 20Q48 14 54 12H60Q66 14 66 20V29Q57 35 48 29Z" fill="#DED5BD" stroke="#292C2A" stroke-width="2" stroke-linejoin="round"/>
+    <rect id="chair-top-2-seat" data-fill-token="secondary" x="52" y="21" width="10" height="8" rx="3" fill="#355247"/>
+    <path id="chair-top-3-shell" data-fill-token="primary" d="M72 20Q72 14 78 12H84Q90 14 90 20V29Q81 35 72 29Z" fill="#DED5BD" stroke="#292C2A" stroke-width="2" stroke-linejoin="round" display="none"/>
+    <rect id="chair-top-3-seat" data-fill-token="secondary" x="76" y="21" width="10" height="8" rx="3" fill="#355247" display="none"/>
+    <path id="chair-top-4-shell" data-fill-token="primary" d="M97 20Q97 14 103 12H109Q115 14 115 20V29Q106 35 97 29Z" fill="#DED5BD" stroke="#292C2A" stroke-width="2" stroke-linejoin="round"/>
+    <rect id="chair-top-4-seat" data-fill-token="secondary" x="101" y="21" width="10" height="8" rx="3" fill="#355247"/>
+    <path id="chair-bottom-1-shell" data-fill-token="primary" d="M23 99Q32 93 41 99V108Q41 114 35 116H29Q23 114 23 108Z" fill="#DED5BD" stroke="#292C2A" stroke-width="2" stroke-linejoin="round"/>
+    <rect id="chair-bottom-1-seat" data-fill-token="secondary" x="27" y="99" width="10" height="8" rx="3" fill="#355247"/>
+    <path id="chair-bottom-2-shell" data-fill-token="primary" d="M48 99Q57 93 66 99V108Q66 114 60 116H54Q48 114 48 108Z" fill="#DED5BD" stroke="#292C2A" stroke-width="2" stroke-linejoin="round" display="none"/>
+    <rect id="chair-bottom-2-seat" data-fill-token="secondary" x="52" y="99" width="10" height="8" rx="3" fill="#355247" display="none"/>
+    <path id="chair-bottom-3-shell" data-fill-token="primary" d="M72 99Q81 93 90 99V108Q90 114 84 116H78Q72 114 72 108Z" fill="#DED5BD" stroke="#292C2A" stroke-width="2" stroke-linejoin="round"/>
+    <rect id="chair-bottom-3-seat" data-fill-token="secondary" x="76" y="99" width="10" height="8" rx="3" fill="#355247"/>
+    <path id="chair-bottom-4-shell" data-fill-token="primary" d="M97 99Q106 93 115 99V108Q115 114 109 116H103Q97 114 97 108Z" fill="#DED5BD" stroke="#292C2A" stroke-width="2" stroke-linejoin="round"/>
+    <rect id="chair-bottom-4-seat" data-fill-token="secondary" x="101" y="99" width="10" height="8" rx="3" fill="#355247"/>
+  </g>
+  <g id="shell">
+    <rect id="shell-table-body" data-fill-token="primary" x="9" y="37" width="110" height="54" rx="25" fill="#DED5BD" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+  <g id="structure">
+    <rect id="structure-writing-surface" x="17" y="45" width="94" height="38" rx="18" fill="#77755D"/>
+    <path id="structure-left-seam" d="M26 63H49" fill="none" stroke="#C7BDA7" stroke-width="2" stroke-linecap="round"/>
+    <path id="structure-right-seam" d="M79 63H102" fill="none" stroke="#C7BDA7" stroke-width="2" stroke-linecap="round"/>
+    <rect id="structure-service-spine" data-fill-token="secondary" x="54" y="42" width="20" height="44" rx="10" fill="#355247" stroke="#292C2A" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+  <g id="function">
+    <rect id="function-cable-well" x="58" y="52" width="12" height="10" rx="5" fill="#18211E"/>
+    <circle id="function-cable-status" data-fill-token="accent" cx="64" cy="57" r="2.4" fill="#B65F4D"/>
+    <rect id="function-service-hatch" x="58" y="68" width="12" height="8" rx="4" fill="#F3EEDA"/>
+  </g>
+</svg>

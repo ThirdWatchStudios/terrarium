@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="office-plant" data-projection="elevation">
+  <title>QuotaCo workhorse office plant</title>
+  <desc>Elevation-projected organic office plant in a molded institutional planter.</desc>
+  <g id="shadow">
+    <ellipse id="shadow-contact" cx="64" cy="117" rx="19" ry="4" fill="#000000" opacity=".12"/>
+  </g>
+  <g id="structure">
+    <path id="structure-stems" d="M64 84V44M64 69L45 51M64 65L82 46M64 76L39 68M64 75L88 68" fill="none" stroke="#355B34" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="foliage">
+    <path id="foliage-top-left" data-fill-token="primary" d="M62 57Q46 44 52 27Q67 39 64 58Z" fill="#527A45" stroke="#292C2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+    <path id="foliage-top-right" data-fill-token="secondary" d="M66 58Q63 38 75 24Q84 43 68 61Z" fill="#355B34" stroke="#292C2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+    <path id="foliage-left" data-fill-token="secondary" d="M54 63Q35 60 32 43Q51 43 60 61Z" fill="#355B34" stroke="#292C2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+    <path id="foliage-right" data-fill-token="primary" d="M72 62Q85 44 99 49Q93 67 70 68Z" fill="#527A45" stroke="#292C2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+    <path id="foliage-lower-left" data-fill-token="primary" d="M53 75Q34 82 25 69Q42 57 58 68Z" fill="#527A45" stroke="#292C2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+    <path id="foliage-lower-right" data-fill-token="secondary" d="M75 76Q92 59 104 70Q93 84 70 82Z" fill="#355B34" stroke="#292C2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+  <g id="shell">
+    <path id="shell-planter" d="M43 84H85L80 116H48Z" fill="#DED5BD" stroke="#292C2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+    <rect id="shell-rim" x="41" y="80" width="46" height="13" rx="6" fill="#F3EEDA" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="shell-base" x="49" y="99" width="30" height="17" rx="4" fill="#355247" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+  <g id="personalization">
+    <rect id="personalization-maintenance-tag" data-fill-token="accent" x="76" y="99" width="4" height="10" rx="1" fill="#B65F4D"/>
+  </g>
+  <g id="foreground">
+    <ellipse id="shell-soil" cx="64" cy="82" rx="18" ry="5" fill="#3B3028"/>
+  </g>
+</svg>

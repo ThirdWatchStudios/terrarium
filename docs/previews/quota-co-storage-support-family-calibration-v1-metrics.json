@@ -1,0 +1,367 @@
+{
+  "reviewStatus": "accepted-direction-reference",
+  "productionPromotion": true,
+  "sourceSvgAuthoring": true,
+  "templateMutation": true,
+  "exportContractMutation": false,
+  "schemaMutation": false,
+  "unityIntegrationMutation": false,
+  "unityImport": false,
+  "commitCreated": false,
+  "schemaVersion": 19,
+  "sourceAssetsPresent": {
+    "bookshelf": true,
+    "lockers": true,
+    "open-shelving": true,
+    "pantry-shelf": true,
+    "mail-station": true,
+    "server-rack": true,
+    "coat-rack": true
+  },
+  "contractValidation": {
+    "pass": true,
+    "errors": [],
+    "contracts": [
+      {
+        "id": "bookshelf",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 24,
+          "ry": 4.5
+        },
+        "params": [
+          {
+            "key": "shelves",
+            "min": 3,
+            "max": 5,
+            "step": 1,
+            "default": 4
+          },
+          {
+            "key": "fill",
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "default": 3
+          }
+        ],
+        "defaultInstanceParams": {
+          "shelves": 4,
+          "fill": 3
+        },
+        "blocksWalk": true,
+        "interactionType": null
+      },
+      {
+        "id": "lockers",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 27,
+          "ry": 4.5
+        },
+        "params": [
+          {
+            "key": "columns",
+            "min": 2,
+            "max": 4,
+            "step": 1,
+            "default": 3
+          },
+          {
+            "key": "height",
+            "min": 72,
+            "max": 92,
+            "step": 2,
+            "default": 84
+          }
+        ],
+        "defaultInstanceParams": {
+          "columns": 3,
+          "height": 84
+        },
+        "blocksWalk": true,
+        "interactionType": null
+      },
+      {
+        "id": "open-shelving",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 26,
+          "ry": 4.5
+        },
+        "params": [
+          {
+            "key": "shelves",
+            "min": 3,
+            "max": 5,
+            "step": 1,
+            "default": 4
+          },
+          {
+            "key": "fill",
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "default": 3
+          }
+        ],
+        "defaultInstanceParams": {
+          "shelves": 4,
+          "fill": 3
+        },
+        "blocksWalk": true,
+        "interactionType": null
+      },
+      {
+        "id": "pantry-shelf",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 25,
+          "ry": 4.5
+        },
+        "params": [
+          {
+            "key": "shelves",
+            "min": 2,
+            "max": 4,
+            "step": 1,
+            "default": 3
+          }
+        ],
+        "defaultInstanceParams": {
+          "shelves": 3
+        },
+        "blocksWalk": true,
+        "interactionType": null
+      },
+      {
+        "id": "mail-station",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 24,
+          "ry": 4.5
+        },
+        "params": [
+          {
+            "key": "height",
+            "min": 48,
+            "max": 72,
+            "step": 2,
+            "default": 60
+          },
+          {
+            "key": "columns",
+            "min": 3,
+            "max": 5,
+            "step": 1,
+            "default": 4
+          }
+        ],
+        "defaultInstanceParams": {
+          "height": 60,
+          "columns": 4
+        },
+        "blocksWalk": true,
+        "interactionType": "mail_station"
+      },
+      {
+        "id": "server-rack",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 21,
+          "ry": 4.5
+        },
+        "params": [
+          {
+            "key": "height",
+            "min": 72,
+            "max": 94,
+            "step": 2,
+            "default": 86
+          },
+          {
+            "key": "units",
+            "min": 3,
+            "max": 6,
+            "step": 1,
+            "default": 5
+          }
+        ],
+        "defaultInstanceParams": {
+          "height": 86,
+          "units": 5
+        },
+        "blocksWalk": true,
+        "interactionType": null
+      },
+      {
+        "id": "coat-rack",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 12,
+          "ry": 3.5
+        },
+        "params": [
+          {
+            "key": "hooks",
+            "min": 2,
+            "max": 5,
+            "step": 1,
+            "default": 4
+          }
+        ],
+        "defaultInstanceParams": {
+          "hooks": 4
+        },
+        "blocksWalk": true,
+        "interactionType": null
+      }
+    ]
+  },
+  "invariants": {
+    "authoringCanvas": 128,
+    "acceptedWallDatum": 112,
+    "characterVisualScale": 0.65,
+    "propNativeFrameCells": 2,
+    "propCharacterMultiplierApplied": false,
+    "projection": "elevation",
+    "groundPivotY": 116
+  },
+  "gameplayArtScales": {
+    "bookshelf": 0.8,
+    "lockers": 0.8,
+    "open-shelving": 0.8,
+    "pantry-shelf": 0.78,
+    "mail-station": 0.8,
+    "server-rack": 0.8,
+    "coat-rack": 0.72
+  },
+  "rasterRead": {
+    "bookshelf": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "nonTransparentPixels": 3388
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "nonTransparentPixels": 379
+      }
+    },
+    "lockers": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "nonTransparentPixels": 3458
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "nonTransparentPixels": 372
+      }
+    },
+    "open-shelving": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "nonTransparentPixels": 3250
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "nonTransparentPixels": 360
+      }
+    },
+    "pantry-shelf": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "nonTransparentPixels": 2593
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "nonTransparentPixels": 290
+      }
+    },
+    "mail-station": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "nonTransparentPixels": 3672
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "nonTransparentPixels": 396
+      }
+    },
+    "server-rack": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "nonTransparentPixels": 3629
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "nonTransparentPixels": 385
+      }
+    },
+    "coat-rack": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "nonTransparentPixels": 1124
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "nonTransparentPixels": 135
+      }
+    }
+  }
+}

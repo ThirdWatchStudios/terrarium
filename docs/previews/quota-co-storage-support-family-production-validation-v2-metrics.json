@@ -1,0 +1,320 @@
+{
+  "reviewStatus": "production-wired-awaiting-final-family-closeout",
+  "productionPromotion": true,
+  "canonicalSvgCount": 7,
+  "importerGeneratedArt": true,
+  "unityImport": false,
+  "commitCreated": false,
+  "exportContractMutation": false,
+  "schemaMutation": false,
+  "schemaVersion": 19,
+  "contractValidation": {
+    "pass": true,
+    "errors": [],
+    "contracts": [
+      {
+        "id": "bookshelf",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 24,
+          "ry": 4.5
+        },
+        "params": [
+          {
+            "key": "shelves",
+            "min": 3,
+            "max": 5,
+            "step": 1,
+            "default": 4
+          },
+          {
+            "key": "fill",
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "default": 3
+          }
+        ],
+        "defaultInstanceParams": {
+          "shelves": 4,
+          "fill": 3
+        },
+        "blocksWalk": true,
+        "interactionType": null
+      },
+      {
+        "id": "lockers",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 27,
+          "ry": 4.5
+        },
+        "params": [
+          {
+            "key": "columns",
+            "min": 2,
+            "max": 4,
+            "step": 1,
+            "default": 3
+          },
+          {
+            "key": "height",
+            "min": 72,
+            "max": 92,
+            "step": 2,
+            "default": 84
+          }
+        ],
+        "defaultInstanceParams": {
+          "columns": 3,
+          "height": 84
+        },
+        "blocksWalk": true,
+        "interactionType": null
+      },
+      {
+        "id": "open-shelving",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 26,
+          "ry": 4.5
+        },
+        "params": [
+          {
+            "key": "shelves",
+            "min": 3,
+            "max": 5,
+            "step": 1,
+            "default": 4
+          },
+          {
+            "key": "fill",
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "default": 3
+          }
+        ],
+        "defaultInstanceParams": {
+          "shelves": 4,
+          "fill": 3
+        },
+        "blocksWalk": true,
+        "interactionType": null
+      },
+      {
+        "id": "pantry-shelf",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 25,
+          "ry": 4.5
+        },
+        "params": [
+          {
+            "key": "shelves",
+            "min": 2,
+            "max": 4,
+            "step": 1,
+            "default": 3
+          }
+        ],
+        "defaultInstanceParams": {
+          "shelves": 3
+        },
+        "blocksWalk": true,
+        "interactionType": null
+      },
+      {
+        "id": "mail-station",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 24,
+          "ry": 4.5
+        },
+        "params": [
+          {
+            "key": "height",
+            "min": 48,
+            "max": 72,
+            "step": 2,
+            "default": 60
+          },
+          {
+            "key": "columns",
+            "min": 3,
+            "max": 5,
+            "step": 1,
+            "default": 4
+          }
+        ],
+        "defaultInstanceParams": {
+          "height": 60,
+          "columns": 4
+        },
+        "blocksWalk": true,
+        "interactionType": "mail_station"
+      },
+      {
+        "id": "server-rack",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 21,
+          "ry": 4.5
+        },
+        "params": [
+          {
+            "key": "height",
+            "min": 72,
+            "max": 94,
+            "step": 2,
+            "default": 86
+          },
+          {
+            "key": "units",
+            "min": 3,
+            "max": 6,
+            "step": 1,
+            "default": 5
+          }
+        ],
+        "defaultInstanceParams": {
+          "height": 86,
+          "units": 5
+        },
+        "blocksWalk": true,
+        "interactionType": null
+      },
+      {
+        "id": "coat-rack",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 12,
+          "ry": 3.5
+        },
+        "params": [
+          {
+            "key": "hooks",
+            "min": 2,
+            "max": 5,
+            "step": 1,
+            "default": 4
+          }
+        ],
+        "defaultInstanceParams": {
+          "hooks": 4
+        },
+        "blocksWalk": true,
+        "interactionType": null
+      }
+    ]
+  },
+  "sourceProvenance": {
+    "bookshelf": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/bookshelf.svg",
+      "sourceSha256": "e5ff3a54ec03e332a4cdc8299558e90e0a0b1388534679089e70937cdf7dab45",
+      "importedSha256": "e5ff3a54ec03e332a4cdc8299558e90e0a0b1388534679089e70937cdf7dab45",
+      "hashMatchesImportedArt": true,
+      "projectionMatches": true,
+      "variantCount": 9
+    },
+    "lockers": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/lockers.svg",
+      "sourceSha256": "a214bd7613c8223148f1b32c64c2dd04579ef28e068c5366dcc24f36a8a43a71",
+      "importedSha256": "a214bd7613c8223148f1b32c64c2dd04579ef28e068c5366dcc24f36a8a43a71",
+      "hashMatchesImportedArt": true,
+      "projectionMatches": true,
+      "variantCount": 33
+    },
+    "open-shelving": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/open-shelving.svg",
+      "sourceSha256": "7d86837e393cbec6a8247ff391bbf8dd21574289e4da87e2ece60a7a0faff99d",
+      "importedSha256": "7d86837e393cbec6a8247ff391bbf8dd21574289e4da87e2ece60a7a0faff99d",
+      "hashMatchesImportedArt": true,
+      "projectionMatches": true,
+      "variantCount": 9
+    },
+    "pantry-shelf": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/pantry-shelf.svg",
+      "sourceSha256": "d78a360ff8d6ad59d2038bb47fd588a1ad64ca833e0488e7025ed9238f5c01f5",
+      "importedSha256": "d78a360ff8d6ad59d2038bb47fd588a1ad64ca833e0488e7025ed9238f5c01f5",
+      "hashMatchesImportedArt": true,
+      "projectionMatches": true,
+      "variantCount": 3
+    },
+    "mail-station": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/mail-station.svg",
+      "sourceSha256": "cf9bc3a21d19bd284fe7774e8bd894348fcec66429b0decdc00fb84627c8d3dd",
+      "importedSha256": "cf9bc3a21d19bd284fe7774e8bd894348fcec66429b0decdc00fb84627c8d3dd",
+      "hashMatchesImportedArt": true,
+      "projectionMatches": true,
+      "variantCount": 39
+    },
+    "server-rack": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/server-rack.svg",
+      "sourceSha256": "61648316da984d4753faa5e688d410b211870987e16a6107cf2ede74dc466d13",
+      "importedSha256": "61648316da984d4753faa5e688d410b211870987e16a6107cf2ede74dc466d13",
+      "hashMatchesImportedArt": true,
+      "projectionMatches": true,
+      "variantCount": 48
+    },
+    "coat-rack": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/coat-rack.svg",
+      "sourceSha256": "1cd6558d694a2186dff2f0c39a6209dbcfe4b413daa564c8e0319194dd140b88",
+      "importedSha256": "1cd6558d694a2186dff2f0c39a6209dbcfe4b413daa564c8e0319194dd140b88",
+      "hashMatchesImportedArt": true,
+      "projectionMatches": true,
+      "variantCount": 4
+    }
+  },
+  "invariants": {
+    "authoringCanvas": 128,
+    "acceptedWallDatum": 112,
+    "characterVisualScale": 0.65,
+    "propNativeFrameCells": 2,
+    "propCharacterMultiplierApplied": false,
+    "projection": "elevation",
+    "groundPivotY": 116
+  }
+}

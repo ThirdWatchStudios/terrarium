@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="potted-tree" data-projection="elevation">
+  <title>QuotaCo catalog potted tree</title>
+  <desc>Elevation-projected umbrella-canopy tree in a molded service planter with an employee care label.</desc>
+  <metadata>Palette tokens: primary foliage, secondary catalog bay, accent service tab. Default height 90 and fullness 2.</metadata>
+  <g id="shadow">
+    <ellipse id="shadow-contact" cx="64" cy="116" rx="20" ry="4" fill="#262B29" opacity=".22"/>
+  </g>
+  <g id="art-scale" transform="translate(64 116) scale(.78) translate(-64 -116)">
+    <g id="shell">
+      <rect id="shell-planter" x="45" y="89" width="38" height="28" rx="8" fill="#DED5BD" stroke="#292C2A" stroke-width="3"/>
+      <rect id="shell-service-bay" data-fill-token="secondary" x="49" y="93" width="30" height="17" rx="5" fill="#355247" stroke="#292C2A" stroke-width="2"/>
+      <rect id="shell-plinth" x="52" y="110" width="24" height="4" rx="2" fill="#18211E"/>
+      <rect id="shell-service-tab" data-fill-token="accent" x="77" y="98" width="4" height="10" rx="1.5" fill="#B65F4D" stroke="#292C2A" stroke-width="1.4"/>
+    </g>
+    <g id="personalization">
+      <rect id="personalization-care-label" x="53" y="96" width="13" height="7" rx="2" fill="#F4F0E4"/>
+      <path id="personalization-care-mark" d="M56 99H63" fill="none" stroke="#262B29" stroke-width="1.3"/>
+    </g>
+    <g id="structure">
+      <path id="structure-trunk" d="M61 91C60 76 58 64 59 48C62 46 66 46 69 48C70 63 68 76 67 91Z" fill="#72513A" stroke="#292C2A" stroke-width="2"/>
+    </g>
+    <g id="foliage">
+      <ellipse id="foliage-lower" data-fill-token="primary" cx="63" cy="65" rx="23" ry="18" fill="#3F7250" stroke="#292C2A" stroke-width="2.8"/>
+      <ellipse id="foliage-left" cx="49" cy="60" rx="16" ry="14" fill="#648867" stroke="#292C2A" stroke-width="2.4"/>
+      <ellipse id="foliage-right" data-fill-token="primary" cx="78" cy="59" rx="17" ry="15" fill="#3F7250" stroke="#292C2A" stroke-width="2.4"/>
+      <ellipse id="foliage-crown" cx="64" cy="48" rx="22" ry="18" fill="#648867" stroke="#292C2A" stroke-width="2.8"/>
+      <path id="foliage-fold" d="M50 54Q64 63 78 52" fill="none" stroke="#355247" stroke-width="2" opacity=".75"/>
+    </g>
+  </g>
+</svg>

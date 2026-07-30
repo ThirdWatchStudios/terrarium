@@ -1,0 +1,480 @@
+{
+  "reviewStatus": "accepted-direction-reference",
+  "productionPromotion": true,
+  "sourceSvgAuthoring": true,
+  "unityImport": false,
+  "commitCreated": false,
+  "exportChanged": true,
+  "schemaChanged": false,
+  "schemaVersion": 19,
+  "invariants": {
+    "authoringCanvas": 128,
+    "acceptedWallDatum": 112,
+    "characterVisualScale": 0.65,
+    "propNativeFrameCells": 2,
+    "propCharacterMultiplierApplied": false,
+    "gameplayArtScales": {
+      "couch": 0.9,
+      "waiting-bench": 0.9,
+      "coffee-table": 0.82,
+      "break-table": 0.9,
+      "lounge-seating": 0.9,
+      "bean-bag": 0.84,
+      "nap-pod": 0.9
+    }
+  },
+  "contractValidation": {
+    "pass": true,
+    "errors": [],
+    "contracts": [
+      {
+        "id": "couch",
+        "projection": "plan",
+        "gridFootprint": {
+          "w": 2,
+          "h": 1
+        },
+        "contactShadow": null,
+        "params": [
+          {
+            "key": "width",
+            "min": 62,
+            "max": 98,
+            "step": 4,
+            "default": 82
+          },
+          {
+            "key": "cushions",
+            "min": 2,
+            "max": 3,
+            "step": 1,
+            "default": 3
+          }
+        ],
+        "defaultInstanceParams": {
+          "width": 82,
+          "cushions": 3
+        }
+      },
+      {
+        "id": "waiting-bench",
+        "projection": "plan",
+        "gridFootprint": {
+          "w": 2,
+          "h": 1
+        },
+        "contactShadow": null,
+        "params": [
+          {
+            "key": "length",
+            "min": 76,
+            "max": 112,
+            "step": 4,
+            "default": 96
+          },
+          {
+            "key": "seats",
+            "min": 2,
+            "max": 4,
+            "step": 1,
+            "default": 3
+          }
+        ],
+        "defaultInstanceParams": {
+          "length": 96,
+          "seats": 3
+        }
+      },
+      {
+        "id": "coffee-table",
+        "projection": "plan",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": null,
+        "params": [
+          {
+            "key": "width",
+            "min": 48,
+            "max": 76,
+            "step": 4,
+            "default": 62
+          },
+          {
+            "key": "decor",
+            "min": 0,
+            "max": 2,
+            "step": 1,
+            "default": 2
+          }
+        ],
+        "defaultInstanceParams": {
+          "width": 62,
+          "decor": 2
+        }
+      },
+      {
+        "id": "break-table",
+        "projection": "plan",
+        "gridFootprint": {
+          "w": 2,
+          "h": 2
+        },
+        "contactShadow": null,
+        "params": [
+          {
+            "key": "diameter",
+            "min": 40,
+            "max": 64,
+            "step": 4,
+            "default": 52
+          },
+          {
+            "key": "stools",
+            "min": 2,
+            "max": 4,
+            "step": 1,
+            "default": 4
+          }
+        ],
+        "defaultInstanceParams": {
+          "diameter": 52,
+          "stools": 4
+        }
+      },
+      {
+        "id": "lounge-seating",
+        "projection": "plan",
+        "gridFootprint": {
+          "w": 2,
+          "h": 2
+        },
+        "contactShadow": null,
+        "params": [
+          {
+            "key": "seats",
+            "min": 2,
+            "max": 4,
+            "step": 1,
+            "default": 3
+          }
+        ],
+        "defaultInstanceParams": {
+          "seats": 3
+        }
+      },
+      {
+        "id": "bean-bag",
+        "projection": "plan",
+        "gridFootprint": {
+          "w": 1,
+          "h": 1
+        },
+        "contactShadow": null,
+        "params": [
+          {
+            "key": "size",
+            "min": 34,
+            "max": 48,
+            "step": 2,
+            "default": 42
+          }
+        ],
+        "defaultInstanceParams": {
+          "size": 42
+        }
+      },
+      {
+        "id": "nap-pod",
+        "projection": "elevation",
+        "gridFootprint": {
+          "w": 2,
+          "h": 1
+        },
+        "contactShadow": {
+          "cx": 64,
+          "cy": 117,
+          "rx": 34,
+          "ry": 5
+        },
+        "params": [
+          {
+            "key": "visor",
+            "min": 0,
+            "max": 1,
+            "step": 1,
+            "default": 1
+          }
+        ],
+        "defaultInstanceParams": {
+          "visor": 1
+        }
+      }
+    ]
+  },
+  "sourceAssetPresence": {
+    "couch": true,
+    "waiting-bench": true,
+    "coffee-table": true,
+    "break-table": true,
+    "lounge-seating": true,
+    "bean-bag": true,
+    "nap-pod": true
+  },
+  "protectedSurfaceHashes": {
+    "CONTRACT.md": "1db92f32e263af0887f9841909fb9b82a09e5df1ac7d5d4f809adab9c0b3105d",
+    "src/core/exporter.ts": "29f1bb95a975a578f0dcc3ec5d0eee4e65e219359da6c9e84430ddf8ac15ca8a",
+    "src/core/layout.ts": "2605f283175007baa7912fa4ef05f6bac995dcd3fda3cd77ff857dc38fb49e1c",
+    "src/core/types.ts": "9d4048de93599ee977b3ebb00adcee6f29a824269c2bd3d763745604d9f9baac",
+    "src/data/defaults.ts": "f03772b684ef519accd0c0be659bc33310162728f75e4541ce18ca1c1686a3d4",
+    "src/props/templates.ts": "6baeb056ff52fa0378f608e9cc9c579b54487f8f83053dd67b1b21f7b3674e2d"
+  },
+  "proposalRasterStats": {
+    "couch": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 5130,
+        "bounds": {
+          "minX": 11,
+          "minY": 38,
+          "maxX": 116,
+          "maxY": 87
+        }
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "visiblePixels": 550,
+        "bounds": {
+          "minX": 3,
+          "minY": 11,
+          "maxX": 36,
+          "maxY": 27
+        }
+      },
+      "currentClose": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 5440,
+        "bounds": {
+          "minX": 10,
+          "minY": 37,
+          "maxX": 117,
+          "maxY": 88
+        }
+      }
+    },
+    "waiting-bench": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 4437,
+        "bounds": {
+          "minX": 10,
+          "minY": 42,
+          "maxX": 117,
+          "maxY": 83
+        }
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "visiblePixels": 465,
+        "bounds": {
+          "minX": 3,
+          "minY": 13,
+          "maxX": 36,
+          "maxY": 26
+        }
+      },
+      "currentClose": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 4826,
+        "bounds": {
+          "minX": 9,
+          "minY": 40,
+          "maxX": 118,
+          "maxY": 84
+        }
+      }
+    },
+    "coffee-table": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 1877,
+        "bounds": {
+          "minX": 37,
+          "minY": 46,
+          "maxX": 90,
+          "maxY": 81
+        }
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "visiblePixels": 204,
+        "bounds": {
+          "minX": 11,
+          "minY": 14,
+          "maxX": 28,
+          "maxY": 25
+        }
+      },
+      "currentClose": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 2228,
+        "bounds": {
+          "minX": 35,
+          "minY": 44,
+          "maxX": 92,
+          "maxY": 83
+        }
+      }
+    },
+    "break-table": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 3784,
+        "bounds": {
+          "minX": 16,
+          "minY": 16,
+          "maxX": 111,
+          "maxY": 112
+        }
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "visiblePixels": 402,
+        "bounds": {
+          "minX": 5,
+          "minY": 5,
+          "maxX": 34,
+          "maxY": 35
+        }
+      },
+      "currentClose": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 4340,
+        "bounds": {
+          "minX": 14,
+          "minY": 14,
+          "maxX": 113,
+          "maxY": 113
+        }
+      }
+    },
+    "lounge-seating": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 2408,
+        "bounds": {
+          "minX": 25,
+          "minY": 21,
+          "maxX": 102,
+          "maxY": 90
+        }
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "visiblePixels": 274,
+        "bounds": {
+          "minX": 7,
+          "minY": 6,
+          "maxX": 32,
+          "maxY": 28
+        }
+      },
+      "currentClose": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 2897,
+        "bounds": {
+          "minX": 24,
+          "minY": 19,
+          "maxX": 103,
+          "maxY": 92
+        }
+      }
+    },
+    "bean-bag": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 1243,
+        "bounds": {
+          "minX": 45,
+          "minY": 44,
+          "maxX": 82,
+          "maxY": 85
+        }
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "visiblePixels": 128,
+        "bounds": {
+          "minX": 14,
+          "minY": 14,
+          "maxX": 25,
+          "maxY": 26
+        }
+      },
+      "currentClose": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 1422,
+        "bounds": {
+          "minX": 43,
+          "minY": 43,
+          "maxX": 84,
+          "maxY": 86
+        }
+      }
+    },
+    "nap-pod": {
+      "close": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 4199,
+        "bounds": {
+          "minX": 17,
+          "minY": 56,
+          "maxX": 113,
+          "maxY": 121
+        }
+      },
+      "far": {
+        "width": 40,
+        "height": 40,
+        "visiblePixels": 442,
+        "bounds": {
+          "minX": 5,
+          "minY": 17,
+          "maxX": 35,
+          "maxY": 37
+        }
+      },
+      "currentClose": {
+        "width": 128,
+        "height": 128,
+        "visiblePixels": 4518,
+        "bounds": {
+          "minX": 16,
+          "minY": 55,
+          "maxX": 114,
+          "maxY": 121
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="fridge" data-projection="elevation">
+  <title>QuotaCo service-system break-room fridge</title>
+  <desc>Elevation institutional refrigerator softened by employee notes, magnets, and coral service handles.</desc>
+  <g id="art-envelope" transform="translate(64 116) scale(.86) translate(-64 -116)">
+    <g id="shadow">
+      <ellipse id="shadow-contact" cx="64" cy="117" rx="24" ry="4.5" fill="#000000" opacity=".125"/>
+    </g>
+    <g id="shell">
+      <rect id="shell-body" data-fill-token="primary" x="38" y="28" width="52" height="88" rx="11" fill="#DED5BD" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+      <rect id="shell-freezer-door" data-fill-token="secondary" x="43" y="34" width="42" height="24" rx="7" fill="#355247"/>
+      <rect id="shell-fridge-door" x="43" y="62" width="42" height="47" rx="7" fill="#49685A"/>
+      <rect id="shell-base" x="44" y="109" width="40" height="6" rx="3" fill="#18211E"/>
+    </g>
+    <g id="function">
+      <path id="function-door-divider" d="M43 60H85" fill="none" stroke="#C7BDA7" stroke-width="2" stroke-linecap="round"/>
+      <rect id="function-freezer-handle" data-fill-token="accent" x="76" y="40" width="4" height="13" rx="2" fill="#B65F4D"/>
+      <rect id="function-fridge-handle" data-fill-token="accent" x="76" y="70" width="4" height="22" rx="2" fill="#B65F4D"/>
+    </g>
+    <g id="personalization">
+      <rect id="personalization-note" x="50" y="70" width="17" height="17" rx="2" fill="#F4F0E4" stroke="#292C2A" stroke-width="1.2"/>
+      <path id="personalization-note-lines" d="M53 75H64M53 79H61" fill="none" stroke="#8E9690" stroke-width="1.1" stroke-linecap="round"/>
+      <circle id="personalization-coral-magnet" data-fill-token="accent" cx="52" cy="42" r="3" fill="#B65F4D" stroke="#292C2A" stroke-width="1.2"/>
+      <circle id="personalization-blue-magnet" cx="61" cy="47" r="2.7" fill="#8FB7C0" stroke="#292C2A" stroke-width="1.2"/>
+    </g>
+  </g>
+</svg>

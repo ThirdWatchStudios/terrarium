@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="wall-clock" data-projection="plan">
+  <title>QuotaCo wall clock</title>
+  <desc>Plan-authored wall-slot clock with a rounded service backplate, circular paper face, readable ticks, and editable hour hand.</desc>
+  <metadata>Palette tokens: primary molded housing, secondary service backplate, accent service tab and hand hub. Default hour 10.</metadata>
+  <g id="art-scale" transform="translate(64 64) scale(.72) translate(-64 -64)">
+    <g id="shell">
+      <rect id="shell-housing" data-fill-token="primary" x="42" y="40" width="44" height="46" rx="11" fill="#DED5BD" stroke="#292C2A" stroke-width="3"/>
+      <rect id="shell-backplate" data-fill-token="secondary" x="47" y="45" width="34" height="35" rx="8" fill="#355247" stroke="#292C2A" stroke-width="2"/>
+      <circle id="shell-face" cx="64" cy="63" r="15" fill="#F4F0E4" stroke="#292C2A" stroke-width="2"/>
+      <rect id="shell-service-tab" data-fill-token="accent" x="78" y="55" width="4" height="12" rx="1.5" fill="#B65F4D" stroke="#292C2A" stroke-width="1.2"/>
+    </g>
+    <g id="ticks">
+      <circle id="tick-12" cx="64" cy="50" r="1.4" fill="#262B29"/>
+      <circle id="tick-1" cx="70.5" cy="51.74" r=".8" fill="#262B29"/>
+      <circle id="tick-2" cx="75.26" cy="56.5" r=".8" fill="#262B29"/>
+      <circle id="tick-3" cx="77" cy="63" r="1.4" fill="#262B29"/>
+      <circle id="tick-4" cx="75.26" cy="69.5" r=".8" fill="#262B29"/>
+      <circle id="tick-5" cx="70.5" cy="74.26" r=".8" fill="#262B29"/>
+      <circle id="tick-6" cx="64" cy="76" r="1.4" fill="#262B29"/>
+      <circle id="tick-7" cx="57.5" cy="74.26" r=".8" fill="#262B29"/>
+      <circle id="tick-8" cx="52.74" cy="69.5" r=".8" fill="#262B29"/>
+      <circle id="tick-9" cx="51" cy="63" r="1.4" fill="#262B29"/>
+      <circle id="tick-10" cx="52.74" cy="56.5" r=".8" fill="#262B29"/>
+      <circle id="tick-11" cx="57.5" cy="51.74" r=".8" fill="#262B29"/>
+    </g>
+    <g id="hands">
+      <path id="function-hour-hand" d="M64 63L57.07 59" fill="none" stroke="#262B29" stroke-width="2.6"/>
+      <path id="function-minute-hand" d="M64 63V52" fill="none" stroke="#262B29" stroke-width="1.8"/>
+      <circle id="function-hand-hub" data-fill-token="accent" cx="64" cy="63" r="2" fill="#B65F4D"/>
+    </g>
+  </g>
+</svg>

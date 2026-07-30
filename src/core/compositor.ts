@@ -28,6 +28,7 @@ import { ATTENTION_PUFF_ART, type AttentionPuff, type AttentionPuffArt } from '.
 import { getIcon } from '../parts/icons';
 import { getPose, poseVariantFor, type Pose, type PoseTransforms, type PoseVariant } from '../parts/poses';
 import { normalizedRiggedAccessories } from './recipe';
+import { authoredPropArt } from '../props/authoredArt';
 import { PROP_TEMPLATES } from '../props/templates';
 import {
   FLOOR_TEMPLATES,
@@ -1082,7 +1083,7 @@ export function composeGroundOverlayTile(
 // floors coalesce by token (`bucketLayers`).
 // ---------------------------------------------------------------------------
 
-/** The prop/wall/floor palette tokens the sim drives at runtime (the tint levers). */
+/** The procedural prop/floor palette tokens the sim may drive at runtime. */
 export const PROP_PALETTE_TOKENS: PropPaletteToken[] = ['primary', 'secondary', 'accent'];
 
 export interface TileLayer {
@@ -1161,6 +1162,46 @@ function bucketLayers(shapes: ShapeSpec[]): TileLayer[] {
   }));
 }
 
+export interface PropStyleOptions {
+  /**
+   * Authored SVG props keep their canonical strokes and omit compositor-owned
+   * outline/contact-shadow styling by default. Set true only for an explicit
+   * restyling experiment; procedural props retain the historical behavior.
+   */
+  restyleAuthoredSvg?: boolean;
+}
+
+function globalPropStyleEnabled(
+  templateId: string,
+  options?: PropStyleOptions,
+): boolean {
+  return !authoredPropArt(templateId) || options?.restyleAuthoredSvg === true;
+}
+
+/**
+ * The palette that should actually resolve a prop's colour tokens.
+ *
+ * Authored SVGs own their raw/default colours. A persisted instance palette is
+ * only allowed to replace them for an explicit restyle, or when the caller has
+ * deliberately supplied the clinical look. Procedural props retain their
+ * historical instance-palette behaviour.
+ */
+export function propPaletteForRender(
+  prop: PropInstance,
+  style: StyleSheet,
+  options?: PropStyleOptions,
+): PropPalette {
+  const art = authoredPropArt(prop.templateId);
+  if (
+    art &&
+    options?.restyleAuthoredSvg !== true &&
+    !isClinicalStyle(style)
+  ) {
+    return art.paletteDefaults;
+  }
+  return prop.palette;
+}
+
 /** The baked outline layer (untinted) — the same silhouette pass compose* draws under colour. */
 function outlineLayer(shapes: ShapeSpec[], style: StyleSheet): TileLayer | null {
   if (style.outline.width <= 0) return null;
@@ -1169,14 +1210,32 @@ function outlineLayer(shapes: ShapeSpec[], style: StyleSheet): TileLayer | null 
 }
 
 /**
- * A prop as re-tintable layers, stacked bottom→top exactly as composeProp paints:
- * contact shadow (untinted), outline (untinted), then the colour runs. Empty when
- * the template is unknown.
+ * A prop as export layers, stacked bottom→top exactly as composeProp paints.
+ *
+ * Authored SVG props default to one resolved, untinted canonical layer. This
+ * preserves source paint order and keeps their layer atlases compact. The
+ * legacy restyled path remains available as an explicit experiment.
+ *
+ * Procedural props retain their historical contact-shadow, outline, and
+ * re-tintable colour-run layers. Empty when the template is unknown.
  */
-export function propLayers(prop: PropInstance, style: StyleSheet): TileLayer[] {
+export function propLayers(
+  prop: PropInstance,
+  style: StyleSheet,
+  options?: PropStyleOptions,
+): TileLayer[] {
   const template = PROP_TEMPLATES.find((t) => t.id === prop.templateId);
   if (!template) return [];
-  const shapes = template.build(prop.params, prop.palette);
+  const palette = propPaletteForRender(prop, style, options);
+  const shapes = template.build(prop.params, palette);
+  if (!globalPropStyleEnabled(prop.templateId, options)) {
+    const resolve = makePropResolver(palette);
+    return [{
+      key: 'literal-0',
+      tint: null,
+      markup: shapes.map((shape) => emitColorShape(shape, resolve)).join(''),
+    }];
+  }
   const layers: TileLayer[] = [];
   const fp = template.footprint;
   const shadow = fp ? contactShadow(fp.cx, fp.cy, fp.rx, fp.ry, style) : '';
@@ -1269,13 +1328,20 @@ export function composeFloorRepeat(
 }
 
 /** Render a prop instance to an SVG string. */
-export function composeProp(prop: PropInstance, style: StyleSheet, pixelSize?: number): string {
+export function composeProp(
+  prop: PropInstance,
+  style: StyleSheet,
+  pixelSize?: number,
+  options?: PropStyleOptions,
+): string {
   const template = PROP_TEMPLATES.find((t) => t.id === prop.templateId);
   if (!template) return svgWrap('', pixelSize ?? style.render.baseSize);
-  const shapes = template.build(prop.params, prop.palette);
-  const resolve = makePropResolver(prop.palette);
+  const palette = propPaletteForRender(prop, style, options);
+  const shapes = template.build(prop.params, palette);
+  const resolve = makePropResolver(palette);
+  const globalStyle = globalPropStyleEnabled(prop.templateId, options);
   const outline =
-    style.outline.width > 0
+    globalStyle && style.outline.width > 0
       ? shapes
           .filter(shapeIsSilhouette)
           .map((s) => emitOutlineShape(s, style))
@@ -1283,6 +1349,9 @@ export function composeProp(prop: PropInstance, style: StyleSheet, pixelSize?: n
       : '';
   const color = shapes.map((s) => emitColorShape(s, resolve)).join('');
   const fp = template.footprint;
-  const shadow = fp ? contactShadow(fp.cx, fp.cy, fp.rx, fp.ry, style) : '';
+  const shadow =
+    globalStyle && fp
+      ? contactShadow(fp.cx, fp.cy, fp.rx, fp.ry, style)
+      : '';
   return svgWrap(shadow + outline + color, pixelSize ?? style.render.baseSize);
 }

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="framed-art" data-projection="plan">
+  <title>QuotaCo catalog-framed employee art</title>
+  <desc>Plan-authored wall-slot landscape art with a deep molded frame, green inset, generous paper mat, and three editable scenes.</desc>
+  <metadata>Palette tokens: primary molded frame, secondary inset and landscape, accent service tab. Default width 36 and scene 1.</metadata>
+  <g id="art-scale" transform="translate(64 64) scale(.92) translate(-64 -64)">
+    <g id="frame">
+      <rect id="frame-shell" data-fill-token="primary" x="36" y="43" width="56" height="42" rx="7" fill="#DED5BD" stroke="#292C2A" stroke-width="3"/>
+      <rect id="frame-inset" data-fill-token="secondary" x="41" y="48" width="46" height="32" rx="3" fill="#355247" stroke="#292C2A" stroke-width="2"/>
+      <rect id="frame-mat" x="45" y="52" width="38" height="24" rx="2" fill="#F4F0E4"/>
+      <rect id="frame-service-tab" data-fill-token="accent" x="85" y="68" width="4" height="9" rx="1.5" fill="#B65F4D" stroke="#292C2A" stroke-width="1.2"/>
+    </g>
+    <g id="scene-0" display="none">
+      <rect id="scene-0-sky" x="48" y="55" width="32" height="18" rx="1.5" fill="#8FB7C0"/>
+      <circle id="scene-0-sun" cx="72" cy="60" r="4.5" fill="#E1B464"/>
+      <path id="scene-0-hill" data-fill-token="secondary" d="M48 73V66L61.4 60.3L70.4 66.9L80 63.6V73Z" fill="#355247"/>
+    </g>
+    <g id="scene-1">
+      <rect id="scene-1-sky" x="48" y="55" width="32" height="18" rx="1.5" fill="#8FB7C0"/>
+      <circle id="scene-1-sun" cx="72" cy="60" r="4.5" fill="#E1B464"/>
+      <path id="scene-1-hill" d="M48 73V66L61.4 60.3L70.4 66.9L80 63.6V73Z" fill="#3F7250"/>
+      <path id="scene-1-foreground" data-fill-token="secondary" d="M48 73Q64 67 80 70V73Z" fill="#355247"/>
+    </g>
+    <g id="scene-2" display="none">
+      <rect id="scene-2-sky" x="48" y="55" width="32" height="18" rx="1.5" fill="#8FB7C0"/>
+      <circle id="scene-2-sun" cx="72" cy="60" r="4.5" fill="#E1B464"/>
+      <path id="scene-2-hill" data-fill-token="accent" d="M48 73V66L61.4 60.3L70.4 66.9L80 63.6V73Z" fill="#B65F4D"/>
+      <path id="scene-2-foreground" data-fill-token="secondary" d="M48 73Q64 67 80 70V73Z" fill="#355247"/>
+    </g>
+  </g>
+</svg>

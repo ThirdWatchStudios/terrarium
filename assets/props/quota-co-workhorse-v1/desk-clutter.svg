@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="desk-clutter" data-projection="plan">
+  <title>QuotaCo workhorse desk clutter</title>
+  <desc>Plan-projected organized paperwork island with an inset tray, paper stacks, telephone, mug, and front organizer rail.</desc>
+  <g id="shell">
+    <rect id="shell-organizer" data-fill-token="primary" x="21" y="33" width="86" height="59" rx="13" fill="#DED5BD" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+  <g id="structure">
+    <rect id="structure-tray" x="27" y="39" width="74" height="47" rx="9" fill="#77755D"/>
+    <rect id="structure-paper-well" data-fill-token="secondary" x="29" y="41" width="39" height="39" rx="7" fill="#355247"/>
+    <rect id="structure-front-rail" x="26" y="81" width="51" height="6" rx="3" fill="#C7BDA7"/>
+  </g>
+  <g id="papers">
+    <rect id="paper-stack-1" x="34" y="43" width="30" height="17" rx="3" fill="#F4F0E4" stroke="#292C2A" stroke-width="1.7"/>
+    <path id="paper-lines-1" d="M39 49H58M39 54H53" fill="none" stroke="#8E9690" stroke-width="1.2" stroke-linecap="round"/>
+    <rect id="paper-stack-2" x="40" y="50" width="30" height="17" rx="3" fill="#F4F0E4" stroke="#292C2A" stroke-width="1.7"/>
+    <path id="paper-lines-2" d="M45 56H64M45 61H59" fill="none" stroke="#8E9690" stroke-width="1.2" stroke-linecap="round"/>
+    <rect id="paper-stack-3" x="46" y="57" width="30" height="17" rx="3" fill="#F4F0E4" stroke="#292C2A" stroke-width="1.7"/>
+    <path id="paper-lines-3" d="M51 63H70M51 68H65" fill="none" stroke="#8E9690" stroke-width="1.2" stroke-linecap="round"/>
+    <rect id="paper-stack-4" x="39" y="64" width="30" height="17" rx="3" fill="#F4F0E4" stroke="#292C2A" stroke-width="1.7" display="none"/>
+    <path id="paper-lines-4" d="M44 70H63M44 75H58" fill="none" stroke="#8E9690" stroke-width="1.2" stroke-linecap="round" display="none"/>
+  </g>
+  <g id="phone">
+    <rect id="phone-body" data-fill-token="secondary" x="73" y="47" width="25" height="28" rx="7" fill="#355247" stroke="#292C2A" stroke-width="2.5" stroke-linejoin="round"/>
+    <path id="phone-handset" data-fill-token="primary" d="M77 52Q84 46 94 52L91 58Q84 55 79 59Z" fill="#DED5BD" stroke="#292C2A" stroke-width="1.7" stroke-linejoin="round"/>
+    <circle id="phone-status" data-fill-token="accent" cx="79" cy="68" r="2" fill="#B65F4D"/>
+  </g>
+  <g id="personalization">
+    <circle id="personalization-mug" data-fill-token="accent" cx="94" cy="82" r="7" fill="#B65F4D" stroke="#292C2A" stroke-width="2"/>
+    <circle id="personalization-coffee" cx="94" cy="82" r="3" fill="#18211E"/>
+  </g>
+</svg>
