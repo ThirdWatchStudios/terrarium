@@ -1,0 +1,34 @@
+{
+  "status": "combined-review-only",
+  "width": 3600,
+  "height": 5310,
+  "sourceProofsModified": false,
+  "sections": [
+    {
+      "id": "outdoor-direction-calibration",
+      "file": "quota-co-outdoor-construction-calibration-v1.svg",
+      "sourceWidth": 3600,
+      "sourceHeight": 2530,
+      "renderedWidth": 3600,
+      "renderedHeight": 2530,
+      "sha256": "31d1627306dd73a7e9589b03adb0479aa1767ccf9f812bf42485d4b3ea9f53be"
+    },
+    {
+      "id": "systems-first-gap-proof",
+      "file": "quota-co-gameplay-systems-prop-gap-v1.svg",
+      "sourceWidth": 3200,
+      "sourceHeight": 2240,
+      "renderedWidth": 3600,
+      "renderedHeight": 2520,
+      "sha256": "67105b901012f2970e5457a5d5b0c3fdeeecc74cc31d70d8c2b407f2a04529a2"
+    }
+  ],
+  "mutationsPerformed": {
+    "productionSvgSources": false,
+    "templates": false,
+    "exporter": false,
+    "schema": false,
+    "unityRegistration": false,
+    "commit": false
+  }
+}

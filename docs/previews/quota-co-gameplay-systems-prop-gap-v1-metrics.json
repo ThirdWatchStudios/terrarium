@@ -1,0 +1,127 @@
+{
+  "status": "review-only-awaiting-systems-and-visual-approval",
+  "schemaVersion": 19,
+  "authoringCanvas": 128,
+  "wallDatum": 112,
+  "characterVisualScale": 0.65,
+  "propVisualMultiplier": null,
+  "propNativeFrameCells": 2,
+  "candidateCount": 4,
+  "candidates": [
+    {
+      "id": "hvac-condenser",
+      "label": "Exterior HVAC condenser",
+      "projection": "elevation",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 2,
+        "h": 1
+      },
+      "artEnvelopeCells": 1.7,
+      "systemReceiver": "room climate / air-quality coverage and equipment state",
+      "floorConsequence": "rated coverage, equipment noise, and a named outage or degraded zone",
+      "humanConsequence": "people seek, avoid, report, or repair a visibly uncomfortable/noisy condition",
+      "visibleStates": [
+        "RATED",
+        "DEGRADED — FILTER / LOAD",
+        "INOPERATIVE"
+      ],
+      "readiness": "system design required"
+    },
+    {
+      "id": "surveillance-camera",
+      "label": "Wall surveillance camera",
+      "projection": "elevation",
+      "placement": "wall-slot",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "artEnvelopeCells": 0.82,
+      "systemReceiver": "camera coverage / IRIS observation",
+      "floorConsequence": "visible field of view, blind spots, and occlusion by walls or tall landscape",
+      "humanConsequence": "witness exposure and observed behavior change by person and context",
+      "visibleStates": [
+        "MONITORING",
+        "BLIND — OCCLUDED",
+        "OFFLINE / TAMPERED"
+      ],
+      "readiness": "explicit design gap"
+    },
+    {
+      "id": "surveillance-sensor",
+      "label": "Occupancy / access sensor",
+      "projection": "elevation",
+      "placement": "wall-slot",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "artEnvelopeCells": 0.62,
+      "systemReceiver": "presence, access, or badge-event observation",
+      "floorConsequence": "a bounded detection zone distinct from camera sight",
+      "humanConsequence": "entry and attendance become legible records without pretending to know intent",
+      "visibleStates": [
+        "ONLINE",
+        "BLOCKED / MISALIGNED",
+        "OFFLINE / TAMPERED"
+      ],
+      "readiness": "explicit design gap"
+    },
+    {
+      "id": "privacy-hedge",
+      "label": "Connected privacy hedge",
+      "projection": "elevation",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 2,
+        "h": 1
+      },
+      "artEnvelopeCells": 2,
+      "systemReceiver": "pathing, sightline, witness exposure, and camera occlusion",
+      "floorConsequence": "blocks movement and divides visible/observed space without becoming a wall",
+      "humanConsequence": "creates private paths and outdoor gathering edges while also hiding activity",
+      "visibleStates": [
+        "MAINTAINED",
+        "OVERGROWN — NARROW",
+        "GAPPED / REMOVED"
+      ],
+      "readiness": "existing substrate"
+    }
+  ],
+  "existingSystemReuseIds": [
+    "tree-canopy",
+    "park-bench",
+    "picnic-table",
+    "lamp-post",
+    "bike-rack"
+  ],
+  "deferredNonSystemGaps": [
+    "bulldozer or excavator",
+    "generic construction pallets and cones",
+    "decorative mushroom / log / leaf-litter variants",
+    "fire hydrant or transformer without a corresponding system",
+    "warehouse or conveyor-chain props"
+  ],
+  "proofGates": [
+    "close 128-unit source read",
+    "74px-per-cell literal context",
+    "40px-per-cell far crowded context",
+    "wall-slot context",
+    "camera and sensor coverage overlays",
+    "hedge occlusion",
+    "HVAC service approach",
+    "rated, degraded, and inoperative state reads"
+  ],
+  "mutationsPerformed": {
+    "propIds": false,
+    "templates": false,
+    "productionSvgSources": false,
+    "facilityCatalog": false,
+    "gameplaySystems": false,
+    "exporter": false,
+    "schema": false,
+    "unityRegistration": false,
+    "commit": false
+  }
+}

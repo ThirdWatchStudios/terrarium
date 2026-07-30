@@ -1,8 +1,8 @@
 # Authored QuotaCo prop SVG importer
 
 The accepted QuotaCo workhorse, workstation, employee-service machine,
-social-furniture, storage/support, and décor/personalization families are
-authored as forty-five standalone SVG files under
+social-furniture, storage/support, décor/personalization, and accepted exterior
+families are authored as fifty-three standalone SVG files under
 `assets/props/quota-co-workhorse-v1`:
 
 - `printer.svg`
@@ -50,6 +50,14 @@ authored as forty-five standalone SVG files under
 - `fish-tank.svg`
 - `string-lights.svg`
 - `rug.svg`
+- `car.svg`
+- `lot-marking-crosswalk.svg`
+- `lamp-post.svg`
+- `sign-lot.svg`
+- `bike-rack.svg`
+- `park-bench.svg`
+- `picnic-table.svg`
+- `tree-canopy.svg`
 
 These are the canonical, artist-editable sources. `scripts/importQuotaCoWorkhorseProps.ts`
 compiles them into `src/props/generated/quotaCoWorkhorseArt.ts`. The generated
@@ -152,6 +160,13 @@ shipping an SVG parser or procedural geometry to the browser:
 | Fish tank | fish count |
 | String lights | bulb count |
 | Office rug | width, pattern |
+| Campus fleet car | lights |
+| Parking sign | panel |
+| Tree canopy | crown habit, lobes, shape seed |
+
+The crosswalk marking, offset-arm street light, low-staple bike rack, park
+bench, and picnic table have no editable parameters. Their existing template
+IDs, projections, and placement contracts remain unchanged.
 
 Runtime lookup snaps malformed or off-step imported values to the nearest legal
 variant. No project schema or export-contract field is added.
@@ -162,11 +177,13 @@ both of which now compile from canonical SVG sources.
 
 ## Production status
 
-The complete forty-five-source bank passed consolidated close, normal,
+The forty-five-source interior bank passed consolidated close, normal,
 crowded, wall-context, interaction, and far-gameplay review and was visually
-accepted on 2026-07-29. These SVGs are now the Terrarium production sources for
-their existing prop templates. The generated `ShapeSpec` module is a compiled
-derivative and must be regenerated after an artist edits a source.
+accepted on 2026-07-29. The eight-source exterior family subsequently passed
+accepted-reference, canonical-source, compiled-output, normal-context, and
+far-gameplay validation. All fifty-three SVGs are now the Terrarium production
+sources for their existing prop templates. The generated `ShapeSpec` module is
+a compiled derivative and must be regenerated after an artist edits a source.
 
 This promotion does not change template IDs, footprints, projections, pivots,
 interaction anchors, facility registration, export paths, manifest shape,
@@ -181,3 +198,17 @@ confirmed the accepted geometry and canonical palette in Unity after the
 stale browser-palette reconciliation. The Terrarium production source,
 importer, proof artifacts, snapshots, and palette-policy regression coverage
 close together in the corresponding scoped Terrarium commit.
+
+The separate source-only candidate bank at
+`assets/props/quota-co-gameplay-candidates-v1` holds the accepted HVAC
+condenser, surveillance camera, surveillance sensor, and privacy hedge
+concepts. Those files are deliberately outside this importer and do not create
+live IDs, state art, facility entries, exports, or Unity registration.
+
+The exterior extension received a fresh downstream bundle import on 2026-07-30.
+The user confirmed that it introduced no new catalog items, which is the
+expected result: the eight promoted files replace the appearance builders of
+existing carriers, while the four gameplay-system concepts remain source-only.
+An in-world visual smoke test remains deferred because none of the eight
+existing carriers are surfaced in the current build or bare-lot presentation.
+No runtime-appearance conclusion is inferred from their present absence.

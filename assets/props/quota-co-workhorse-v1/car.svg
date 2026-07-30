@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="car" data-projection="plan">
+  <title>QuotaCo campus fleet car</title>
+  <desc>Plan-projected institutional sedan with a clear glazed cabin, service lights, bounded wear, and one employee marker.</desc>
+  <metadata>Accepted lived-campus exterior source. Existing 4x2 footprint and trim parameter remain template-owned.</metadata>
+  <g id="shadow">
+    <ellipse id="shadow-contact" cx="64" cy="96" rx="49" ry="7" fill="#000000" opacity=".12"/>
+  </g>
+  <g id="shell">
+    <rect id="shell-body" data-fill-token="primary" x="10" y="38" width="108" height="52" rx="18" fill="#DED5BD" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <path id="shell-roof" data-fill-token="secondary" d="M35 42H91Q102 42 106 53L100 76Q96 86 84 86H41Q28 86 25 75L22 54Q24 44 35 42Z" fill="#355247" stroke="#292C2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+  <g id="glazing">
+    <path id="glazing-front" d="M45 46H79L87 60H37Z" fill="#8FB7C0" stroke="#292C2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+    <path id="glazing-rear" d="M37 65H87L79 82H44Z" fill="#668E98" stroke="#292C2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+    <path id="glazing-divider" d="M64 46V82" fill="none" stroke="#262B29" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".65"/>
+  </g>
+  <g id="function">
+    <rect id="function-headlight-upper" x="106" y="50" width="6" height="11" rx="3" fill="#F3EEDA" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="function-headlight-lower" x="106" y="69" width="6" height="11" rx="3" fill="#F3EEDA" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="function-tail-light-upper" data-fill-token="accent" x="15" y="51" width="6" height="10" rx="3" fill="#B65F4D" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="function-tail-light-lower" data-fill-token="accent" x="15" y="69" width="6" height="10" rx="3" fill="#B65F4D" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+  <g id="condition">
+    <path id="condition-wear" d="M22 72L34 69L32 82L21 84Z" fill="#98513F" opacity=".7"/>
+    <rect id="condition-lower-edge" x="43" y="84" width="23" height="5" rx="2" fill="#77755D" opacity=".8"/>
+  </g>
+  <g id="personalization">
+    <circle id="personalization-marker" cx="77" cy="54" r="4" fill="#D5B85D" stroke="#292C2A" stroke-width="3"/>
+    <path id="personalization-marker-stem" d="M79 50L83 46" fill="none" stroke="#262B29" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>
+  </g>
+</svg>

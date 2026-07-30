@@ -520,7 +520,7 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     expect(staleDesk.palette.primary).toBe('#A9714B');
   });
 
-  it('exports a $primary re-tint body layer for every parking-lot car', async () => {
+  it('exports bounded layer manifests for every parking-lot car', async () => {
     const { paths, json } = await exportPaths();
     for (const templateId of ['car', 'car-suv', 'car-compact']) {
       const propPath = [...paths].find((path) => {
@@ -530,8 +530,15 @@ describe('default bundle is a complete, sim-importable baseline', () => {
       expect(propPath, `${templateId} did not export`).toBeTruthy();
       const dir = propPath!.slice(0, -'/prop.json'.length);
       const manifest = JSON.parse(json.get(`${dir}/layers-manifest@4x.json`)!);
-      expect(manifest.layers.some((layer: { tint: unknown }) => layer.tint === 'primary'),
-        `${templateId} export lost its $primary body layer`).toBe(true);
+      if (templateId === 'car') {
+        expect(
+          manifest.layers.map((layer: { tint: unknown }) => layer.tint),
+          'authored car must retain canonical resolved source color',
+        ).toEqual([null]);
+      } else {
+        expect(manifest.layers.some((layer: { tint: unknown }) => layer.tint === 'primary'),
+          `${templateId} export lost its $primary body layer`).toBe(true);
+      }
       const frames = Object.values(manifest.frames) as Array<{ x: number; y: number; w: number; h: number }>;
       expect(Math.max(...frames.map(({ x, w }) => x + w)), `${templateId} layer width`).toBeLessThanOrEqual(8192);
       expect(Math.max(...frames.map(({ y, h }) => y + h)), `${templateId} layer height`).toBeLessThanOrEqual(8192);

@@ -1,0 +1,316 @@
+{
+  "status": "review-only-awaiting-visual-approval",
+  "schemaVersion": 19,
+  "authoringCanvas": 128,
+  "wallDatum": 112,
+  "characterVisualScale": 0.65,
+  "propVisualMultiplier": null,
+  "propNativeFrameCells": 2,
+  "inventory": {
+    "templateCount": 38,
+    "subgroups": [
+      {
+        "id": "mobility-lot",
+        "count": 11,
+        "ids": [
+          "car",
+          "car-suv",
+          "parking-line",
+          "lot-marking-accessible",
+          "lot-marking-arrow",
+          "lot-marking-reserved",
+          "lot-marking-crosswalk",
+          "lamp-post",
+          "sign-lot",
+          "car-compact",
+          "bike-rack"
+        ]
+      },
+      {
+        "id": "campus-garden",
+        "count": 12,
+        "ids": [
+          "ground-detail-rake-arc-a",
+          "ground-detail-rake-arc-b",
+          "ground-detail-rake-arc-c",
+          "ground-detail-lilypad-a",
+          "ground-detail-lilypad-b",
+          "ground-detail-stepping-stone-a",
+          "ground-detail-stepping-stone-b",
+          "park-bench",
+          "picnic-table",
+          "stone-lantern",
+          "boulder-arrangement",
+          "reeds-cluster"
+        ]
+      },
+      {
+        "id": "landscape-scatter",
+        "count": 15,
+        "ids": [
+          "tree-canopy",
+          "tree-sapling",
+          "bush-cluster",
+          "wildflower-patch",
+          "tall-grass-clump",
+          "bracken-patch",
+          "boulder",
+          "ground-detail-grass-tuft-a",
+          "ground-detail-grass-tuft-b",
+          "ground-detail-grass-tuft-c",
+          "ground-detail-flower-sprig-a",
+          "ground-detail-flower-sprig-b",
+          "ground-detail-pebble-a",
+          "ground-detail-pebble-b",
+          "ground-detail-twig-a"
+        ]
+      }
+    ],
+    "dedicatedConstructionEquipmentTemplates": [],
+    "constructionReferenceCharacter": "construction-worker"
+  },
+  "directions": [
+    {
+      "id": "current",
+      "label": "CONTROL · CURRENT ART",
+      "note": "Existing procedural exterior sprites at their literal gameplay scale."
+    },
+    {
+      "id": "institutional-site-kit",
+      "label": "A · INSTITUTIONAL SITE KIT",
+      "note": "Rounded standardized shells, deep-green structure, restrained coral hardware."
+    },
+    {
+      "id": "service-coded-edge",
+      "label": "B · SERVICE-CODED EDGE",
+      "note": "Visible access collars, safety bands, replaceable modules, and locator accents."
+    },
+    {
+      "id": "lived-campus",
+      "label": "C · LIVED CAMPUS",
+      "note": "Site-kit bodies softened by weather, locks, stickers, planting, and daily use."
+    }
+  ],
+  "carriers": [
+    {
+      "id": "car",
+      "projection": "plan",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 4,
+        "h": 2
+      },
+      "gridPivot": null,
+      "interactionFootprint": null,
+      "params": [
+        {
+          "key": "trim",
+          "label": "Lights",
+          "min": 0,
+          "max": 1,
+          "step": 1,
+          "default": 1
+        }
+      ]
+    },
+    {
+      "id": "lot-marking-crosswalk",
+      "projection": "plan",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 2,
+        "h": 2
+      },
+      "gridPivot": null,
+      "interactionFootprint": null,
+      "params": []
+    },
+    {
+      "id": "lamp-post",
+      "projection": "elevation",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "gridPivot": null,
+      "interactionFootprint": {
+        "cx": 64,
+        "cy": 117,
+        "rx": 13,
+        "ry": 3.5
+      },
+      "params": []
+    },
+    {
+      "id": "sign-lot",
+      "projection": "elevation",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "gridPivot": null,
+      "interactionFootprint": {
+        "cx": 64,
+        "cy": 117,
+        "rx": 12,
+        "ry": 3.5
+      },
+      "params": [
+        {
+          "key": "variant",
+          "label": "Panel",
+          "min": 0,
+          "max": 1,
+          "step": 1,
+          "default": 0
+        }
+      ]
+    },
+    {
+      "id": "bike-rack",
+      "projection": "plan",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 2,
+        "h": 1
+      },
+      "gridPivot": null,
+      "interactionFootprint": null,
+      "params": []
+    },
+    {
+      "id": "park-bench",
+      "projection": "elevation",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 2,
+        "h": 1
+      },
+      "gridPivot": null,
+      "interactionFootprint": {
+        "cx": 64,
+        "cy": 117,
+        "rx": 44,
+        "ry": 5
+      },
+      "params": []
+    },
+    {
+      "id": "picnic-table",
+      "projection": "plan",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 3,
+        "h": 2
+      },
+      "gridPivot": null,
+      "interactionFootprint": null,
+      "params": []
+    },
+    {
+      "id": "tree-canopy",
+      "projection": "elevation",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 3,
+        "h": 3
+      },
+      "gridPivot": null,
+      "interactionFootprint": {
+        "cx": 64,
+        "cy": 117,
+        "rx": 42,
+        "ry": 6
+      },
+      "params": [
+        {
+          "key": "habit",
+          "label": "Crown habit",
+          "min": 0,
+          "max": 3,
+          "step": 1,
+          "default": 0
+        },
+        {
+          "key": "lobes",
+          "label": "Lobes",
+          "min": 5,
+          "max": 9,
+          "step": 1,
+          "default": 7
+        },
+        {
+          "key": "seed",
+          "label": "Shape seed",
+          "min": 1,
+          "max": 9,
+          "step": 1,
+          "default": 3
+        }
+      ]
+    },
+    {
+      "id": "car-compact",
+      "projection": "plan",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 3,
+        "h": 2
+      },
+      "gridPivot": null,
+      "interactionFootprint": null,
+      "params": [
+        {
+          "key": "spoiler",
+          "label": "Rear lip",
+          "min": 0,
+          "max": 1,
+          "step": 1,
+          "default": 0
+        }
+      ]
+    },
+    {
+      "id": "boulder-arrangement",
+      "projection": "plan",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 2,
+        "h": 1
+      },
+      "gridPivot": null,
+      "interactionFootprint": null,
+      "params": []
+    }
+  ],
+  "stressGates": [
+    "close 128-unit source read",
+    "normal 74px-per-cell literal gameplay context",
+    "far 40px-per-cell crowded context",
+    "accepted wall/facade context",
+    "mixed plan and elevation projections",
+    "tree and bench occlusion",
+    "employee and fabrication-worker approaches",
+    "unchanged occupancy guides"
+  ],
+  "protectedReviewSurfaces": [
+    "assets/props/",
+    "src/props/templates.ts",
+    "src/data/defaults.ts",
+    "src/core/exporter.ts",
+    "src/core/types.ts",
+    "CONTRACT.md",
+    "Unity registration"
+  ],
+  "mutationsPerformed": {
+    "productionSvgSources": false,
+    "propTemplates": false,
+    "defaultInstances": false,
+    "exporter": false,
+    "schema": false,
+    "unityRegistration": false,
+    "commit": false
+  }
+}

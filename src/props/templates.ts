@@ -1813,34 +1813,7 @@ const car: PropTemplate = {
   gridFootprint: { w: 4, h: 2 },
   params: [{ key: 'trim', label: 'Lights', min: 0, max: 1, step: 1, default: 1 }],
   build(params) {
-    const shapes: ShapeSpec[] = [
-      // body shell
-      { d: rr(10, 42, 108, 44, 18), fill: '$primary' },
-      // hood + trunk shut-lines
-      { d: `M 32 44 L 32 84`, stroke: '#00000018', strokeWidth: 1.5, silhouette: false },
-      { d: `M 96 44 L 96 84`, stroke: '#00000018', strokeWidth: 1.5, silhouette: false },
-      // cabin / roof
-      { d: rr(38, 48, 52, 32, 10), fill: '$secondary', silhouette: false },
-      // rear + front glass (trapezoids fore & aft of the roof)
-      { d: `M 34 51 L 40 62 L 40 66 L 34 77 Z`, fill: '$accent', silhouette: false },
-      { d: `M 94 51 L 88 62 L 88 66 L 94 77 Z`, fill: '$accent', silhouette: false },
-      // side windows
-      { d: rr(44, 50, 40, 6, 2), fill: '$accent', silhouette: false },
-      { d: rr(44, 72, 40, 6, 2), fill: '$accent', silhouette: false },
-      // side mirrors
-      { d: rr(86, 40, 6, 3, 1), fill: '$primary', silhouette: false },
-      { d: rr(86, 85, 6, 3, 1), fill: '$primary', silhouette: false },
-    ];
-    if ((params.trim ?? 1) >= 1) {
-      // headlights (nose, east) + tail-lights (tail, west)
-      shapes.push(
-        { d: rr(113, 48, 4, 8, 1.5), fill: '#F7F1D8', silhouette: false },
-        { d: rr(113, 72, 4, 8, 1.5), fill: '#F7F1D8', silhouette: false },
-        { d: rr(11, 48, 4, 8, 1.5), fill: '#C0392B', silhouette: false },
-        { d: rr(11, 72, 4, 8, 1.5), fill: '#C0392B', silhouette: false },
-      );
-    }
-    return shapes;
+    return authoredPropShapes('car', params);
   },
 };
 
@@ -1987,14 +1960,7 @@ const lotMarkingCrosswalk: PropTemplate = {
   gridFootprint: { w: 2, h: 2 },
   params: [],
   build() {
-    const shapes: ShapeSpec[] = [
-      { d: rr(0, 17, 128, 5, 1), fill: '$primary', opacity: 0.72, silhouette: false },
-      { d: rr(0, 106, 128, 5, 1), fill: '$primary', opacity: 0.72, silhouette: false },
-    ];
-    for (let x = 9; x < 128; x += 22) {
-      shapes.push({ d: rr(x, 22, 12, 84, 1), fill: '$primary', opacity: 0.78, silhouette: false });
-    }
-    return shapes;
+    return authoredPropShapes('lot-marking-crosswalk', {});
   },
 };
 
@@ -2014,15 +1980,7 @@ const lampPost: PropTemplate = {
   footprint: { cx: CX, cy: 117, rx: 13, ry: 3.5 },
   params: [],
   build() {
-    return [
-      { d: ellipse(CX, GROUND + 1, 14, 4), fill: '#00000022', silhouette: false },
-      { d: rr(CX - 11, GROUND - 7, 22, 7, 2), fill: '$secondary' },
-      { d: rr(CX - 4, 28, 8, GROUND - 34, 3), fill: '$primary' },
-      { d: rr(CX - 9, 24, 18, 9, 3), fill: '$secondary' },
-      { d: rr(CX - 27, 16, 54, 13, 5), fill: '$primary' },
-      { d: rr(CX - 21, 26, 42, 6, 2), fill: '$accent', silhouette: false },
-      { d: rr(CX - 15, 27, 30, 3, 1.5), fill: '#FFF4C4', opacity: 0.95, silhouette: false },
-    ];
+    return authoredPropShapes('lamp-post', {});
   },
 };
 
@@ -2034,30 +1992,7 @@ const signLot: PropTemplate = {
   footprint: { cx: CX, cy: 117, rx: 12, ry: 3.5 },
   params: [{ key: 'variant', label: 'Panel', min: 0, max: 1, step: 1, default: 0 }],
   build(params) {
-    const compliance = (params.variant ?? 0) >= 1;
-    const shapes: ShapeSpec[] = [
-      { d: ellipse(CX, GROUND + 1, 13, 3.5), fill: '#00000020', silhouette: false },
-      { d: rr(CX - 3, 55, 6, GROUND - 55, 2), fill: '$secondary' },
-      { d: rr(CX - 23, 25, 46, 40, 4), fill: '$primary' },
-      { d: rr(CX - 19, 29, 38, 32, 2), fill: '$accent', silhouette: false },
-    ];
-    if (compliance) {
-      for (let y = 35; y <= 53; y += 6) {
-        const inset = y === 47 ? 6 : 0;
-        shapes.push({
-          d: rr(CX - 14 + inset / 2, y, 28 - inset, 2, 1),
-          fill: '$secondary',
-          opacity: 0.78,
-          silhouette: false,
-        });
-      }
-    } else {
-      shapes.push(
-        { d: rr(CX - 9, 34, 6, 22, 1), fill: '$secondary', silhouette: false },
-        { d: 'M 55 35 L 67 35 C 78 35 79 50 68 51 L 58 51', stroke: '$secondary', strokeWidth: 5, silhouette: false },
-      );
-    }
-    return shapes;
+    return authoredPropShapes('sign-lot', params);
   },
 };
 
@@ -2094,18 +2029,7 @@ const bikeRack: PropTemplate = {
   gridFootprint: { w: 2, h: 1 },
   params: [],
   build() {
-    const shapes: ShapeSpec[] = [
-      { d: rr(17, 55, 94, 18, 7), fill: '$secondary' },
-      { d: rr(21, 59, 86, 10, 5), fill: '$accent', silhouette: false },
-    ];
-    for (const x of [32, 53, 74, 95]) {
-      shapes.push({
-        d: `M ${x - 7} 61 C ${x - 7} 38 ${x + 7} 38 ${x + 7} 61`,
-        stroke: '$primary',
-        strokeWidth: 5,
-      });
-    }
-    return shapes;
+    return authoredPropShapes('bike-rack', {});
   },
 };
 
@@ -2472,18 +2396,7 @@ const parkBench: PropTemplate = {
   footprint: { cx: CX, cy: 117, rx: 44, ry: 5 },
   params: [],
   build() {
-    return [
-      { d: ellipse(CX, GROUND + 1, 46, 5), fill: '#00000020', silhouette: false },
-      { d: rr(18, 50, 92, 10, 4), fill: '$primary' },
-      { d: rr(18, 63, 92, 9, 4), fill: '$primary' },
-      { d: rr(18, 76, 92, 12, 4), fill: '$accent' },
-      { d: 'M 26 53 L 102 53 M 26 66 L 102 66 M 26 81 L 102 81', stroke: '#FFFFFF25', strokeWidth: 1.5, silhouette: false },
-      { d: rr(24, 87, 10, 27, 3), fill: '$secondary' },
-      { d: rr(94, 87, 10, 27, 3), fill: '$secondary' },
-      { d: rr(20, 111, 19, 6, 2), fill: '#A7A39A' },
-      { d: rr(89, 111, 19, 6, 2), fill: '#A7A39A' },
-      { d: 'M 30 50 L 30 88 M 98 50 L 98 88', stroke: '$secondary', strokeWidth: 4 },
-    ];
+    return authoredPropShapes('park-bench', {});
   },
 };
 
@@ -2494,16 +2407,7 @@ const picnicTable: PropTemplate = {
   gridFootprint: { w: 3, h: 2 },
   params: [],
   build() {
-    return [
-      { d: rr(14, 22, 100, 20, 6), fill: '$secondary' },
-      { d: rr(14, 86, 100, 20, 6), fill: '$secondary' },
-      { d: rr(23, 43, 82, 42, 7), fill: '$primary' },
-      { d: 'M 37 46 L 37 82 M 54 46 L 54 82 M 72 46 L 72 82 M 90 46 L 90 82', stroke: '#FFFFFF24', strokeWidth: 1.5, silhouette: false },
-      { d: rr(30, 38, 8, 8, 3), fill: '$accent', silhouette: false },
-      { d: rr(90, 38, 8, 8, 3), fill: '$accent', silhouette: false },
-      { d: rr(30, 82, 8, 8, 3), fill: '$accent', silhouette: false },
-      { d: rr(90, 82, 8, 8, 3), fill: '$accent', silhouette: false },
-    ];
+    return authoredPropShapes('picnic-table', {});
   },
 };
 
@@ -2680,87 +2584,6 @@ function treeTrunk(shapes: ShapeSpec[], topY: number, bottomY: number, width: nu
   });
 }
 
-/** Front-facing/elevation tree crowns. Tall exterior objects follow the same
- * register as filing cabinets and the IRIS workstation: crown above a visible
- * trunk, rooted at the shared y=116 ground line. */
-function elevationBroadleaf(shapes: ShapeSpec[], rng: () => number, habit: number, lobes: number): void {
-  const spreading = habit === 1;
-  const upright = habit === 2;
-  const centerX = spreading ? 60 : 64;
-  const centerY = upright ? 48 : spreading ? 47 : 49;
-  const crownRx = upright ? 30 : spreading ? 55 : 47;
-  const crownRy = upright ? 43 : spreading ? 28 : 37;
-  const trunkTop = upright ? 66 : spreading ? 61 : 67;
-  treeTrunk(shapes, trunkTop, GROUND, upright ? 11 : 13, spreading ? -4 : 0);
-  shapes.push(
-    { d: `M ${CX - 2} ${trunkTop + 7} Q ${centerX - crownRx * 0.48} ${centerY + crownRy * 0.16} ${centerX - crownRx * 0.72} ${centerY + crownRy * 0.02}`, stroke: '#6F5130', strokeWidth: 4, silhouette: false },
-    { d: `M ${CX + 2} ${trunkTop + 5} Q ${centerX + crownRx * 0.42} ${centerY + crownRy * 0.18} ${centerX + crownRx * 0.68} ${centerY - crownRy * 0.02}`, stroke: '#6F5130', strokeWidth: 4, silhouette: false },
-  );
-
-  const crown = smoothBlobPath(centerX, centerY, crownRx, crownRy, upright ? 15 : 14, rng, upright ? 0.13 : 0.17, -0.08);
-  shapes.push({ d: crown, fill: '$secondary' });
-  const crownLobes: Array<{ x: number; y: number; rx: number; ry: number }> = [];
-  for (let i = 0; i < lobes; i++) {
-    const across = lobes <= 1 ? 0.5 : i / (lobes - 1);
-    const x = centerX - crownRx * 0.67 + across * crownRx * 1.34 + (rng() - 0.5) * 9;
-    const arch = Math.abs(across - 0.5) * 2;
-    const y = centerY - crownRy * (0.15 + (1 - arch) * 0.22) + (rng() - 0.5) * 9;
-    crownLobes.push({
-      x,
-      y,
-      rx: 12 + rng() * (upright ? 6 : 9),
-      ry: 11 + rng() * (upright ? 9 : 7),
-    });
-  }
-  for (const lobe of crownLobes) {
-    shapes.push({ d: ellipse(lobe.x, lobe.y, lobe.rx, lobe.ry), fill: '$primary', silhouette: false });
-  }
-  shapes.push({
-    d: smoothBlobPath(centerX - 4, centerY - 6, crownRx * 0.62, crownRy * 0.56, 11, rng, 0.16),
-    fill: '$primary',
-    opacity: 0.82,
-    silhouette: false,
-  });
-  for (let i = 0; i < crownLobes.length; i += 2) {
-    const lobe = crownLobes[i];
-    shapes.push({
-      d: ellipse(lobe.x - 4, lobe.y - 6, lobe.rx * 0.38, lobe.ry * 0.38),
-      fill: '$accent',
-      opacity: 0.78,
-      silhouette: false,
-    });
-  }
-}
-
-function elevationConifer(shapes: ShapeSpec[], rng: () => number): void {
-  treeTrunk(shapes, 76, GROUND, 10);
-  const left = 18 + rng() * 4;
-  const right = 110 - rng() * 4;
-  shapes.push({
-    d: (
-      `M ${CX} 8 ` +
-      `L ${CX + 18} 38 L ${CX + 10} 38 ` +
-      `L ${CX + 31} 64 L ${CX + 20} 64 ` +
-      `L ${right} 92 L ${CX + 10} 86 ` +
-      `L ${CX - 10} 86 L ${left} 92 ` +
-      `L ${CX - 20} 64 L ${CX - 31} 64 ` +
-      `L ${CX - 10} 38 L ${CX - 18} 38 Z`
-    ),
-    fill: '$secondary',
-  });
-  shapes.push({
-    d: 'M 62 17 L 75 40 L 69 40 L 85 61 L 77 61 L 94 82 L 64 76 L 38 83 L 51 61 L 44 61 L 58 40 L 52 40 Z',
-    fill: '$primary',
-    silhouette: false,
-  });
-  shapes.push({
-    d: 'M 58 27 L 68 27 L 62 42 L 74 48 L 61 53 L 72 65 L 55 63 L 49 72 L 45 57 L 52 49 L 48 40 Z',
-    fill: '$accent',
-    opacity: 0.72,
-    silhouette: false,
-  });
-}
-
 const treeCanopy: PropTemplate = {
   id: 'tree-canopy',
   label: 'Tree',
@@ -2774,18 +2597,7 @@ const treeCanopy: PropTemplate = {
     { key: 'seed', label: 'Shape seed', min: 1, max: 9, step: 1, default: 3 },
   ],
   build(params) {
-    const shapes: ShapeSpec[] = [];
-    // Pre-flora-kit saves have no habit field. Preserve the original warm-tree
-    // instance (lobes 6 / seed 7) as the spreading crown instead of silently
-    // collapsing it onto the broad default.
-    const habit = params.habit === undefined
-      ? ((params.lobes ?? 7) === 6 && (params.seed ?? 3) === 7 ? 1 : 0)
-      : Math.round(params.habit);
-    const rng = mulberry32((params.seed ?? 3) * 15053 + habit * 7919);
-    const lobes = params.lobes ?? 7;
-    if (habit === 3) elevationConifer(shapes, rng);
-    else elevationBroadleaf(shapes, rng, habit, habit === 2 ? Math.max(5, lobes - 1) : lobes);
-    return shapes;
+    return authoredPropShapes('tree-canopy', params);
   },
 };
 

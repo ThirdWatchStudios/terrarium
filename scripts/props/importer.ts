@@ -30,7 +30,7 @@ const PRESENTATION_ATTRIBUTES = new Set([
 ]);
 const VISIBLE_TAGS = new Set(['path', 'rect', 'ellipse', 'circle']);
 
-export const QUOTA_CO_WORKHORSE_PROP_IDS = [
+export const QUOTA_CO_INTERIOR_WORKHORSE_PROP_IDS = [
   'printer',
   'printer-jammed',
   'coffee-machine',
@@ -78,6 +78,24 @@ export const QUOTA_CO_WORKHORSE_PROP_IDS = [
   'rug',
 ] as const;
 
+export const QUOTA_CO_EXTERIOR_WORKHORSE_PROP_IDS = [
+  'car',
+  'lot-marking-crosswalk',
+  'lamp-post',
+  'sign-lot',
+  'bike-rack',
+  'park-bench',
+  'picnic-table',
+  'tree-canopy',
+] as const;
+
+export const QUOTA_CO_WORKHORSE_PROP_IDS = [
+  ...QUOTA_CO_INTERIOR_WORKHORSE_PROP_IDS,
+  ...QUOTA_CO_EXTERIOR_WORKHORSE_PROP_IDS,
+] as const;
+
+export type QuotaCoExteriorWorkhorsePropId =
+  (typeof QUOTA_CO_EXTERIOR_WORKHORSE_PROP_IDS)[number];
 export type QuotaCoWorkhorsePropId = (typeof QUOTA_CO_WORKHORSE_PROP_IDS)[number];
 
 export interface ImportedPropArt {
@@ -384,6 +402,54 @@ const MANIFEST: readonly ManifestEntry[] = [
     file: 'rug.svg',
     projection: 'plan',
     paletteDefaults: { primary: '#DED5BD', secondary: '#355247', accent: '#B65F4D' },
+  },
+  {
+    id: 'car',
+    file: 'car.svg',
+    projection: 'plan',
+    paletteDefaults: { primary: '#DED5BD', secondary: '#355247', accent: '#B65F4D' },
+  },
+  {
+    id: 'lot-marking-crosswalk',
+    file: 'lot-marking-crosswalk.svg',
+    projection: 'plan',
+    paletteDefaults: { primary: '#F3EEDA', secondary: '#355247', accent: '#B65F4D' },
+  },
+  {
+    id: 'lamp-post',
+    file: 'lamp-post.svg',
+    projection: 'elevation',
+    paletteDefaults: { primary: '#DED5BD', secondary: '#355247', accent: '#B65F4D' },
+  },
+  {
+    id: 'sign-lot',
+    file: 'sign-lot.svg',
+    projection: 'elevation',
+    paletteDefaults: { primary: '#DED5BD', secondary: '#355247', accent: '#B65F4D' },
+  },
+  {
+    id: 'bike-rack',
+    file: 'bike-rack.svg',
+    projection: 'plan',
+    paletteDefaults: { primary: '#DED5BD', secondary: '#355247', accent: '#B65F4D' },
+  },
+  {
+    id: 'park-bench',
+    file: 'park-bench.svg',
+    projection: 'elevation',
+    paletteDefaults: { primary: '#DED5BD', secondary: '#355247', accent: '#B65F4D' },
+  },
+  {
+    id: 'picnic-table',
+    file: 'picnic-table.svg',
+    projection: 'plan',
+    paletteDefaults: { primary: '#DED5BD', secondary: '#355247', accent: '#B65F4D' },
+  },
+  {
+    id: 'tree-canopy',
+    file: 'tree-canopy.svg',
+    projection: 'elevation',
+    paletteDefaults: { primary: '#527A45', secondary: '#355B34', accent: '#6D8D57' },
   },
 ] as const;
 
@@ -1416,6 +1482,133 @@ function rugVariants(
   return variants;
 }
 
+function staticVariants(
+  elements: readonly SourceElement[],
+): Record<string, ShapeSpec[]> {
+  return { '': clonedShapes(elements) };
+}
+
+function carVariants(
+  elements: readonly SourceElement[],
+): Record<string, ShapeSpec[]> {
+  const lightIds = new Set([
+    'function-headlight-upper',
+    'function-headlight-lower',
+    'function-tail-light-upper',
+    'function-tail-light-lower',
+  ]);
+  return {
+    [variantKey({ trim: 0 })]: clonedShapes(
+      elements.filter(({ id }) => !lightIds.has(id)),
+    ),
+    [variantKey({ trim: 1 })]: clonedShapes(elements),
+  };
+}
+
+function signLotVariants(
+  elements: readonly SourceElement[],
+): Record<string, ShapeSpec[]> {
+  const defaultMarkIds = new Set([
+    'function-primary-mark',
+    'function-secondary-mark',
+  ]);
+  const compliancePrefix = 'variant-compliance-';
+  const defaultElements = elements.filter(
+    ({ id }) => !id.startsWith(compliancePrefix),
+  );
+  const complianceElements = elements
+    .filter(({ id }) => !defaultMarkIds.has(id))
+    .map((element) =>
+      element.id.startsWith(compliancePrefix)
+        ? {
+            ...element,
+            shape: {
+              ...element.shape,
+              opacity: 1,
+            },
+          }
+        : element,
+    );
+  return {
+    [variantKey({ variant: 0 })]: clonedShapes(defaultElements),
+    [variantKey({ variant: 1 })]: clonedShapes(complianceElements),
+  };
+}
+
+function treeCanopyVariants(
+  elements: readonly SourceElement[],
+): Record<string, ShapeSpec[]> {
+  const variants: Record<string, ShapeSpec[]> = {};
+  for (const habit of range(0, 3, 1)) {
+    for (const lobes of range(5, 9, 1)) {
+      for (const seed of range(1, 9, 1)) {
+        if (habit === 3) {
+          const scaleX = 1 + (lobes - 7) * 0.012;
+          const seedOffset = (seed - 9) * 0.2;
+          variants[variantKey({ habit, lobes, seed })] = clonedShapes(
+            elements
+              .filter(({ groupId }) => groupId !== 'foliage')
+              .map((element) => {
+                if (element.groupId !== 'variant-conifer') return element;
+                let active: SourceElement = {
+                  ...element,
+                  shape: {
+                    ...element.shape,
+                    opacity: 1,
+                  },
+                };
+                if (scaleX !== 1) {
+                  active = transformed(active, scaleX, 1, CENTER, 64);
+                }
+                return seedOffset === 0
+                  ? active
+                  : translated(active, seedOffset, -seedOffset * 0.08);
+              }),
+          );
+          continue;
+        }
+
+        const scaleX =
+          (habit === 1 ? 1.08 : habit === 2 ? 0.84 : 1) *
+          (1 + (lobes - 7) * 0.012);
+        const scaleY =
+          (habit === 1 ? 0.92 : habit === 2 ? 1.06 : 1) *
+          (1 + (lobes - 7) * 0.006);
+        const seedOffset = (seed - 3) * 0.24;
+        const selected = elements
+          .filter(({ groupId }) => groupId !== 'variant-conifer')
+          .map((element) => {
+            if (element.groupId !== 'foliage') return element;
+            if (scaleX === 1 && scaleY === 1 && seedOffset === 0) {
+              return element;
+            }
+            const scaled = transformed(
+              element,
+              scaleX,
+              scaleY,
+              CENTER,
+              64,
+            );
+            return seedOffset === 0
+              ? scaled
+              : translated(
+                  scaled,
+                  element.id === 'foliage-main'
+                    ? seedOffset * 0.35
+                    : seedOffset,
+                  element.id === 'foliage-fold'
+                    ? seedOffset * 0.2
+                    : -seedOffset * 0.15,
+                );
+          });
+        variants[variantKey({ habit, lobes, seed })] =
+          clonedShapes(selected);
+      }
+    }
+  }
+  return variants;
+}
+
 function buildVariants(
   id: QuotaCoWorkhorsePropId,
   elements: readonly SourceElement[],
@@ -1474,6 +1667,15 @@ function buildVariants(
     case 'fish-tank': return fishTankVariants(elements);
     case 'string-lights': return stringLightsVariants(elements);
     case 'rug': return rugVariants(elements);
+    case 'car': return carVariants(elements);
+    case 'sign-lot': return signLotVariants(elements);
+    case 'tree-canopy': return treeCanopyVariants(elements);
+    case 'lot-marking-crosswalk':
+    case 'lamp-post':
+    case 'bike-rack':
+    case 'park-bench':
+    case 'picnic-table':
+      return staticVariants(elements);
   }
 }
 

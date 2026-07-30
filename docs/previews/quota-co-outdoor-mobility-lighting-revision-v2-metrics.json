@@ -1,0 +1,88 @@
+{
+  "title": "QuotaCo bike rack and street light revision",
+  "status": "review-only",
+  "authoringCanvas": 128,
+  "wallDatum": 112,
+  "characterVisualScale": 0.65,
+  "schemaVersion": 19,
+  "gameplayZooms": {
+    "normalPixelsPerCell": 74,
+    "farPixelsPerCell": 40
+  },
+  "heldContracts": {
+    "bikeRack": {
+      "templateId": "bike-rack",
+      "projection": "plan",
+      "gridFootprint": {
+        "w": 2,
+        "h": 1
+      }
+    },
+    "lampPost": {
+      "templateId": "lamp-post",
+      "projection": "elevation",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      }
+    },
+    "roots": "unchanged",
+    "collisions": "unchanged",
+    "anchors": "unchanged",
+    "exports": "unchanged",
+    "unityRegistration": "unchanged"
+  },
+  "directions": [
+    {
+      "id": "rack-low-staple",
+      "carrier": "bike-rack",
+      "label": "LOW STAPLE BANK",
+      "cue": "Three broad inverted-U locking hoops and six explicit ground mounts.",
+      "tradeoff": "Strongest conventional rack read with the quietest far silhouette."
+    },
+    {
+      "id": "rack-wheel-channel",
+      "carrier": "bike-rack",
+      "label": "WHEEL CHANNELS",
+      "cue": "Four plan-projected wheel slots terminate in one service rail.",
+      "tradeoff": "Clear parking function up close, but the narrow slots compress at far zoom."
+    },
+    {
+      "id": "rack-docking-rail",
+      "carrier": "bike-rack",
+      "label": "DOCKING RAIL",
+      "cue": "Three lock posts and approach channels make the interaction face explicit.",
+      "tradeoff": "Most QuotaCo-specific, but risks reading as scooter or charging infrastructure."
+    },
+    {
+      "id": "light-offset-arm",
+      "carrier": "lamp-post",
+      "label": "OFFSET SERVICE ARM",
+      "cue": "One bent mast carries a broad, shielded lamp with a visible luminous underside.",
+      "tradeoff": "Most immediate street-light read while retaining a compact 1×1 base."
+    },
+    {
+      "id": "light-twin-head",
+      "carrier": "lamp-post",
+      "label": "TWIN PARKING HEAD",
+      "cue": "A centered mast and two opposing heads establish parking-lot coverage.",
+      "tradeoff": "Strong facility read, though the wide top becomes busier near walls."
+    },
+    {
+      "id": "light-hooded-lantern",
+      "carrier": "lamp-post",
+      "label": "HOODED CAMPUS LANTERN",
+      "cue": "A low shielded cap and glowing core favor paths and employee spaces.",
+      "tradeoff": "Warmest campus character, but less clearly a street light at far zoom."
+    }
+  ],
+  "recommendations": {
+    "bikeRack": "rack-low-staple",
+    "lampPost": "light-offset-arm"
+  },
+  "contextOnly": [
+    "parked-bicycle",
+    "light-cone"
+  ],
+  "productionPromotion": false
+}

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="privacy-hedge" data-projection="elevation" data-status="source-only-candidate">
+  <title>QuotaCo maintained privacy hedge candidate</title>
+  <desc>Rated-state living privacy hedge contained by a manufactured service edge and low maintenance base.</desc>
+  <g id="shadow">
+    <ellipse id="shadow-contact" cx="64" cy="113" rx="54" ry="6" fill="#000000" opacity=".11"/>
+  </g>
+  <g id="structure">
+    <rect id="structure-curb" x="8" y="101" width="112" height="15" rx="6" fill="#C7BDA7" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="structure-service-edge" x="14" y="96" width="100" height="11" rx="5" fill="#355247" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+  <g id="foliage">
+    <path id="foliage-main" d="M11 98V59Q18 43 35 50Q47 29 64 45Q81 29 94 50Q112 43 117 59V98Z" fill="#527A45" stroke="#292C2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+    <path id="foliage-lower" d="M17 76Q34 61 49 73Q64 53 79 73Q96 61 111 76V98H17Z" fill="#355B34" opacity=".9"/>
+  </g>
+</svg>

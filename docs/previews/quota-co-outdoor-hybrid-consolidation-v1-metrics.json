@@ -1,0 +1,216 @@
+{
+  "status": "selected-hybrid-review-only",
+  "schemaVersion": 19,
+  "authoringCanvas": 128,
+  "wallDatum": 112,
+  "characterVisualScale": 0.65,
+  "propVisualMultiplier": null,
+  "propNativeFrameCells": 2,
+  "existingCarrierDecisions": [
+    {
+      "id": "car",
+      "role": "Vehicle",
+      "direction": "lived-campus",
+      "decision": "Site Kit hull and glazing with bounded wear and one employee-owned marker.",
+      "projection": "plan",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 4,
+        "h": 2
+      },
+      "gridPivot": null
+    },
+    {
+      "id": "lot-marking-crosswalk",
+      "role": "Crossing",
+      "direction": "institutional-site-kit",
+      "decision": "Broad clean bars carry recognition; no service frame that could read as a ladder.",
+      "projection": "plan",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 2,
+        "h": 2
+      },
+      "gridPivot": null
+    },
+    {
+      "id": "lamp-post",
+      "role": "Lighting",
+      "direction": "service-coded-edge",
+      "decision": "Service collar, replaceable access panel, and practical-light silhouette.",
+      "projection": "elevation",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "gridPivot": null
+    },
+    {
+      "id": "sign-lot",
+      "role": "Wayfinding",
+      "direction": "lived-campus",
+      "decision": "Catalog sign body with clear face plus one posted-use layer and planted edge.",
+      "projection": "elevation",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "gridPivot": null
+    },
+    {
+      "id": "bike-rack",
+      "role": "Mobility",
+      "direction": "lived-campus",
+      "decision": "Repeated lock hoops remain primary; one lock and edge growth soften the site kit.",
+      "projection": "plan",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 2,
+        "h": 1
+      },
+      "gridPivot": null
+    },
+    {
+      "id": "park-bench",
+      "role": "Seating",
+      "direction": "lived-campus",
+      "decision": "Institutional frame with a readable back/seat and localized wear, not clutter.",
+      "projection": "elevation",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 2,
+        "h": 1
+      },
+      "gridPivot": null
+    },
+    {
+      "id": "picnic-table",
+      "role": "Break surface",
+      "direction": "lived-campus",
+      "decision": "Plan-projected table and separated benches with restrained evidence of use.",
+      "projection": "plan",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 3,
+        "h": 2
+      },
+      "gridPivot": null
+    },
+    {
+      "id": "tree-canopy",
+      "role": "Landscape",
+      "direction": "lived-campus",
+      "decision": "One coherent living canopy with a visible trunk; QuotaCo appears only at the tag/edge.",
+      "projection": "elevation",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 3,
+        "h": 3
+      },
+      "gridPivot": null
+    }
+  ],
+  "systemCandidateDecisions": [
+    {
+      "id": "hvac-condenser",
+      "label": "Exterior HVAC condenser",
+      "projection": "elevation",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 2,
+        "h": 1
+      },
+      "artEnvelopeCells": 1.7,
+      "systemReceiver": "room climate / air-quality coverage and equipment state",
+      "floorConsequence": "rated coverage, equipment noise, and a named outage or degraded zone",
+      "humanConsequence": "people seek, avoid, report, or repair a visibly uncomfortable/noisy condition",
+      "visibleStates": [
+        "RATED",
+        "DEGRADED — FILTER / LOAD",
+        "INOPERATIVE"
+      ],
+      "readiness": "system design required"
+    },
+    {
+      "id": "surveillance-camera",
+      "label": "Wall surveillance camera",
+      "projection": "elevation",
+      "placement": "wall-slot",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "artEnvelopeCells": 0.82,
+      "systemReceiver": "camera coverage / IRIS observation",
+      "floorConsequence": "visible field of view, blind spots, and occlusion by walls or tall landscape",
+      "humanConsequence": "witness exposure and observed behavior change by person and context",
+      "visibleStates": [
+        "MONITORING",
+        "BLIND — OCCLUDED",
+        "OFFLINE / TAMPERED"
+      ],
+      "readiness": "explicit design gap"
+    },
+    {
+      "id": "surveillance-sensor",
+      "label": "Occupancy / access sensor",
+      "projection": "elevation",
+      "placement": "wall-slot",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "artEnvelopeCells": 0.62,
+      "systemReceiver": "presence, access, or badge-event observation",
+      "floorConsequence": "a bounded detection zone distinct from camera sight",
+      "humanConsequence": "entry and attendance become legible records without pretending to know intent",
+      "visibleStates": [
+        "ONLINE",
+        "BLOCKED / MISALIGNED",
+        "OFFLINE / TAMPERED"
+      ],
+      "readiness": "explicit design gap"
+    },
+    {
+      "id": "privacy-hedge",
+      "label": "Connected privacy hedge",
+      "projection": "elevation",
+      "placement": "floor",
+      "gridFootprint": {
+        "w": 2,
+        "h": 1
+      },
+      "artEnvelopeCells": 2,
+      "systemReceiver": "pathing, sightline, witness exposure, and camera occlusion",
+      "floorConsequence": "blocks movement and divides visible/observed space without becoming a wall",
+      "humanConsequence": "creates private paths and outdoor gathering edges while also hiding activity",
+      "visibleStates": [
+        "MAINTAINED",
+        "OVERGROWN — NARROW",
+        "GAPPED / REMOVED"
+      ],
+      "readiness": "existing substrate"
+    }
+  ],
+  "proofGates": [
+    "close current-versus-selected comparison",
+    "74px-per-cell service and campus contexts",
+    "40px-per-cell crowded contexts",
+    "accepted wall context",
+    "camera coverage and HVAC service approach",
+    "tree and hedge occlusion",
+    "rated, degraded, and inoperative system states"
+  ],
+  "mutationsPerformed": {
+    "productionSvgSources": false,
+    "propTemplates": false,
+    "facilityCatalog": false,
+    "gameplaySystems": false,
+    "exporter": false,
+    "schema": false,
+    "unityRegistration": false,
+    "commit": false
+  }
+}

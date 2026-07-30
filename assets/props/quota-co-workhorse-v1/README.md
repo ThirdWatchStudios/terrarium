@@ -2,9 +2,25 @@
 
 Status: **accepted canonical source art; production-wired in Terrarium**
 
-These twenty-two standalone SVG files are the artist-editable source
-counterparts of the accepted workhorse, workstation, and employee-service
-machine prop proofs:
+The fifty-three production-wired standalone SVG files are the artist-editable
+source counterparts of the accepted interior workhorse, workstation,
+employee-service machine, social, storage, personalization, and exterior
+proofs.
+
+The production-wired exterior sources are:
+
+| Exterior prop | Projection | Source |
+| --- | --- | --- |
+| Campus fleet car | plan | `car.svg` |
+| Crosswalk marking | plan | `lot-marking-crosswalk.svg` |
+| Offset-arm street light | elevation | `lamp-post.svg` |
+| Parking sign | elevation | `sign-lot.svg` |
+| Low-staple bike rack | plan | `bike-rack.svg` |
+| Park bench | elevation | `park-bench.svg` |
+| Picnic table | plan | `picnic-table.svg` |
+| Tree canopy | elevation | `tree-canopy.svg` |
+
+The forty-five production-wired interior sources are:
 
 | Prop | Projection | Source |
 | --- | --- | --- |

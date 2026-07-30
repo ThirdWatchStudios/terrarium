@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="sign-lot" data-projection="elevation">
+  <title>QuotaCo campus parking sign</title>
+  <desc>Elevation-projected catalog sign with a broad working face, two grounded supports, a posted-use note, and planted edge.</desc>
+  <metadata>Accepted lived-campus exterior source. Existing 1x1 footprint and panel variant remain template-owned.</metadata>
+  <g id="shadow">
+    <ellipse id="shadow-contact" cx="64" cy="117" rx="18" ry="4" fill="#000000" opacity=".14"/>
+  </g>
+  <g id="shell">
+    <rect id="shell-panel" data-fill-token="primary" x="25" y="27" width="78" height="48" rx="11" fill="#DED5BD" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="shell-face" data-fill-token="secondary" x="33" y="35" width="62" height="32" rx="7" fill="#355247" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="shell-support-left" data-fill-token="secondary" x="34" y="73" width="13" height="39" rx="5" fill="#355247" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="shell-support-right" data-fill-token="secondary" x="81" y="73" width="13" height="39" rx="5" fill="#355247" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="shell-base" x="27" y="107" width="74" height="10" rx="5" fill="#262B29" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+  <g id="function">
+    <rect id="function-primary-mark" x="42" y="42" width="44" height="7" rx="3" fill="#F3EEDA"/>
+    <rect id="function-secondary-mark" data-fill-token="accent" x="49" y="54" width="30" height="6" rx="3" fill="#B65F4D"/>
+  </g>
+  <g id="variant-compliance">
+    <rect id="variant-compliance-line-1" x="43" y="41" width="42" height="3" rx="1.5" fill="#F3EEDA" opacity=".0005"/>
+    <rect id="variant-compliance-line-2" x="43" y="47" width="42" height="3" rx="1.5" fill="#F3EEDA" opacity=".0005"/>
+    <rect id="variant-compliance-line-3" x="46" y="53" width="36" height="3" rx="1.5" fill="#F3EEDA" opacity=".0005"/>
+    <rect id="variant-compliance-line-4" x="43" y="59" width="42" height="3" rx="1.5" fill="#F3EEDA" opacity=".0005"/>
+  </g>
+  <g id="personalization">
+    <rect id="personalization-posted-note" x="62" y="49" width="24" height="13" rx="2" fill="#E5D58F" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <path id="personalization-note-lines" d="M66 54H82M66 58H77" fill="none" stroke="#262B29" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/>
+  </g>
+  <g id="landscape">
+    <path id="landscape-planted-edge" d="M32 108Q19 102 18 91Q29 94 39 108Z" fill="#355B34" stroke="#292C2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+</svg>

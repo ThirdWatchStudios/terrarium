@@ -10,7 +10,11 @@ import {
   CANONICAL_PROP_PORTFOLIO_GROUPS,
   renderQuotaCoCanonicalPropPortfolio,
 } from '../scripts/quotaCoCanonicalPropPortfolioPreview';
-import { QUOTA_CO_WORKHORSE_PROP_IDS } from '../scripts/props/importer';
+import {
+  QUOTA_CO_EXTERIOR_WORKHORSE_PROP_IDS,
+  QUOTA_CO_INTERIOR_WORKHORSE_PROP_IDS,
+  QUOTA_CO_WORKHORSE_PROP_IDS,
+} from '../scripts/props/importer';
 
 describe('QuotaCo canonical prop portfolio', () => {
   it('groups every authored workhorse exactly once while keeping carryovers explicit', () => {
@@ -20,8 +24,9 @@ describe('QuotaCo canonical prop portfolio', () => {
     expect(grouped).toHaveLength(45);
     expect(new Set(grouped).size).toBe(grouped.length);
     expect([...grouped].sort()).toEqual(
-      [...QUOTA_CO_WORKHORSE_PROP_IDS].sort(),
+      [...QUOTA_CO_INTERIOR_WORKHORSE_PROP_IDS].sort(),
     );
+    expect(QUOTA_CO_WORKHORSE_PROP_IDS).toHaveLength(53);
     expect(
       CANONICAL_PROP_PORTFOLIO_GROUPS.find(
         ({ id }) => id === 'handheld-character-relative',
@@ -31,7 +36,7 @@ describe('QuotaCo canonical prop portfolio', () => {
       CANONICAL_PROP_PORTFOLIO_GROUPS.find(
         ({ id }) => id === 'outdoor-construction',
       )?.carryoverIds,
-    ).toEqual(['car', 'lamp-post', 'bike-rack']);
+    ).toEqual(QUOTA_CO_EXTERIOR_WORKHORSE_PROP_IDS);
   });
 
   it('writes the 45-source visual gate with canonical default styling and held boundaries', async () => {
@@ -121,7 +126,7 @@ describe('QuotaCo canonical prop portfolio', () => {
     });
 
     expect(Object.keys(metrics.sourceValidation).sort()).toEqual(
-      [...QUOTA_CO_WORKHORSE_PROP_IDS].sort(),
+      [...QUOTA_CO_INTERIOR_WORKHORSE_PROP_IDS].sort(),
     );
     for (const [id, validation] of Object.entries(metrics.sourceValidation)) {
       expect(validation.sourceHashMatches, `${id} source provenance`).toBe(true);
@@ -151,11 +156,11 @@ describe('QuotaCo canonical prop portfolio', () => {
       'wall-context',
       'desk-occlusion',
       'character-relative-handheld',
-      'procedural-outdoor-carryover',
+      'separately-gated-outdoor-carriers',
     ]));
 
     const svg = await readFile(result.svgPath, 'utf8');
-    expect(svg).toContain('All 45 artist-editable SVGs promoted');
+    expect(svg).toContain('All 45 interior artist-editable SVGs promoted');
     expect(svg).toContain('TERRARIUM PRODUCTION SOURCE · PRE-EXPORT');
     expect(svg).toContain('HANDHELD AND CHARACTER-RELATIVE ITEMS');
     expect(svg).toContain('OUTDOOR AND CONSTRUCTION-SITE PROPS');

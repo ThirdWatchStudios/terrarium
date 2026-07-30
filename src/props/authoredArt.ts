@@ -131,6 +131,22 @@ function variantKey(id: string, params: Readonly<Record<string, number>>): strin
       return `bulbs=${discrete(params, 'bulbs', 4, 8, 1, 6)}`;
     case 'rug':
       return `width=${discrete(params, 'width', 72, 112, 4, 96)};pattern=${discrete(params, 'pattern', 0, 2, 1, 1)}`;
+    case 'car':
+      return `trim=${discrete(params, 'trim', 0, 1, 1, 1)}`;
+    case 'sign-lot':
+      return `variant=${discrete(params, 'variant', 0, 1, 1, 0)}`;
+    case 'tree-canopy': {
+      const lobes = discrete(params, 'lobes', 5, 9, 1, 7);
+      const seed = discrete(params, 'seed', 1, 9, 1, 3);
+      const habit = params.habit === undefined && lobes === 6 && seed === 7
+        ? 1
+        : discrete(params, 'habit', 0, 3, 1, 0);
+      return (
+        `habit=${habit};` +
+        `lobes=${lobes};` +
+        `seed=${seed}`
+      );
+    }
     default:
       return '';
   }

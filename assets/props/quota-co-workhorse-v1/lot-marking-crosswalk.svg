@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="lot-marking-crosswalk" data-projection="plan">
+  <title>QuotaCo campus crosswalk marking</title>
+  <desc>Five broad plan-projected crossing bars with a clean functional silhouette and no service frame.</desc>
+  <metadata>Accepted institutional-site-kit exterior source. Existing 2x2 footprint remains template-owned.</metadata>
+  <g id="marking-approach">
+    <rect id="marking-bar-1" data-fill-token="primary" x="19" y="22" width="90" height="10" rx="3" fill="#F3EEDA" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="marking-bar-2" data-fill-token="primary" x="19" y="40" width="90" height="10" rx="3" fill="#F3EEDA" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+  <g id="marking-center">
+    <rect id="marking-bar-3" data-fill-token="primary" x="19" y="58" width="90" height="10" rx="3" fill="#F3EEDA" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+  <g id="marking-departure">
+    <rect id="marking-bar-4" data-fill-token="primary" x="19" y="76" width="90" height="10" rx="3" fill="#F3EEDA" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="marking-bar-5" data-fill-token="primary" x="19" y="94" width="90" height="10" rx="3" fill="#F3EEDA" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+</svg>

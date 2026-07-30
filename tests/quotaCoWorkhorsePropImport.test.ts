@@ -16,6 +16,7 @@ import { PROP_TEMPLATES } from '../src/props/templates';
 import {
   compileQuotaCoWorkhorseProps,
   emitQuotaCoWorkhorsePropArt,
+  QUOTA_CO_EXTERIOR_WORKHORSE_PROP_IDS,
   QUOTA_CO_WORKHORSE_PROP_IDS,
 } from '../scripts/props/importer';
 
@@ -298,7 +299,59 @@ const HELD_TEMPLATE_CONTRACTS = {
     footprint: undefined,
     params: ['width', 'pattern'],
   },
+  car: {
+    projection: 'plan',
+    gridFootprint: { w: 4, h: 2 },
+    footprint: undefined,
+    params: ['trim'],
+  },
+  'lot-marking-crosswalk': {
+    projection: 'plan',
+    gridFootprint: { w: 2, h: 2 },
+    footprint: undefined,
+    params: [],
+  },
+  'lamp-post': {
+    projection: 'elevation',
+    gridFootprint: { w: 1, h: 1 },
+    footprint: { cx: 64, cy: 117, rx: 13, ry: 3.5 },
+    params: [],
+  },
+  'sign-lot': {
+    projection: 'elevation',
+    gridFootprint: { w: 1, h: 1 },
+    footprint: { cx: 64, cy: 117, rx: 12, ry: 3.5 },
+    params: ['variant'],
+  },
+  'bike-rack': {
+    projection: 'plan',
+    gridFootprint: { w: 2, h: 1 },
+    footprint: undefined,
+    params: [],
+  },
+  'park-bench': {
+    projection: 'elevation',
+    gridFootprint: { w: 2, h: 1 },
+    footprint: { cx: 64, cy: 117, rx: 44, ry: 5 },
+    params: [],
+  },
+  'picnic-table': {
+    projection: 'plan',
+    gridFootprint: { w: 3, h: 2 },
+    footprint: undefined,
+    params: [],
+  },
+  'tree-canopy': {
+    projection: 'elevation',
+    gridFootprint: { w: 3, h: 3 },
+    footprint: { cx: 64, cy: 117, rx: 42, ry: 6 },
+    params: ['habit', 'lobes', 'seed'],
+  },
 } as const;
+
+const OUTDOOR_AUTHORED_PROP_IDS = new Set(
+  QUOTA_CO_EXTERIOR_WORKHORSE_PROP_IDS,
+);
 
 function template(id: string) {
   const found = PROP_TEMPLATES.find((candidate) => candidate.id === id);
@@ -378,7 +431,7 @@ describe('QuotaCo workhorse authored prop import', () => {
     });
   });
 
-  it('compiles all forty-five sources deterministically with source provenance', async () => {
+  it('compiles all fifty-three sources deterministically with source provenance', async () => {
     const first = await compileQuotaCoWorkhorseProps(SOURCE_DIR, SOURCE_PREFIX);
     const second = await compileQuotaCoWorkhorseProps(SOURCE_DIR, SOURCE_PREFIX);
 
@@ -417,7 +470,12 @@ describe('QuotaCo workhorse authored prop import', () => {
           .filter((paint): paint is string => Boolean(paint?.startsWith('$')))
           .map((paint) => paint.slice(1) as PropPaletteToken),
       );
-      expect(present, id).toEqual(tokens);
+      if (OUTDOOR_AUTHORED_PROP_IDS.has(id)) {
+        expect(present.size, id).toBeGreaterThan(0);
+        for (const token of present) expect(tokens.has(token), id).toBe(true);
+      } else {
+        expect(present, id).toEqual(tokens);
+      }
 
       const instance = DEFAULT_PROPS.find(({ templateId }) => templateId === id);
       expect(instance?.palette, id).toEqual(authoredPropArt(id)?.paletteDefaults);

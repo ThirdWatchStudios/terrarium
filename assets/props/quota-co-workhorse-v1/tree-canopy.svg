@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="tree-canopy" data-projection="elevation">
+  <title>QuotaCo lived-campus tree canopy</title>
+  <desc>Elevation-projected mature tree with one coherent living crown, visible trunk, small care tag, and restrained natural asymmetry.</desc>
+  <metadata>Accepted lived-campus exterior source. Existing 3x3 footprint and habit, lobe, and seed parameters remain template-owned.</metadata>
+  <g id="shadow">
+    <ellipse id="shadow-contact" cx="64" cy="117" rx="43" ry="6" fill="#000000" opacity=".13"/>
+  </g>
+  <g id="structure">
+    <path id="structure-trunk" d="M55 74Q50 92 49 112H79Q77 92 71 73Z" fill="#77755D" stroke="#292C2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+  <g id="foliage">
+    <path id="foliage-main" data-fill-token="primary" d="M64 13C50 8 39 16 35 29C21 27 11 38 15 52C7 63 14 76 28 79C35 91 50 94 62 84C75 96 91 91 96 79C110 77 117 64 109 52C113 39 103 28 90 30C86 17 76 10 64 13Z" fill="#527A45" stroke="#292C2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+    <path id="foliage-highlight" data-fill-token="accent" d="M32 56C38 39 49 28 64 25C76 27 88 37 96 53C84 47 75 48 64 57C52 49 43 48 32 56Z" fill="#6D8D57" opacity=".92"/>
+    <path id="foliage-fold" data-fill-token="secondary" d="M35 70C46 59 54 57 64 64C75 56 86 59 94 70C83 83 73 82 63 75C53 83 43 82 35 70Z" fill="#355B34" opacity=".92"/>
+    <path id="foliage-left-growth" data-fill-token="secondary" d="M22 68Q9 58 13 45Q27 44 36 58Q34 70 22 68Z" fill="#355B34" stroke="#292C2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+    <path id="foliage-right-growth" data-fill-token="accent" d="M92 71Q107 58 114 69Q111 84 95 84Z" fill="#6D8D57" stroke="#292C2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+  <g id="variant-conifer">
+    <path id="variant-conifer-main" data-fill-token="primary" d="M64 10L92 50H80L103 82H78L91 105H37L50 82H25L48 50H36Z" fill="#527A45" stroke="#292C2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" opacity=".0005"/>
+    <path id="variant-conifer-highlight" data-fill-token="accent" d="M64 22L78 49H68L83 76H67V98H54V76H43L58 49H50Z" fill="#6D8D57" opacity=".0005"/>
+    <path id="variant-conifer-fold" data-fill-token="secondary" d="M38 82H90L78 103H50Z" fill="#355B34" opacity=".0005"/>
+  </g>
+  <g id="personalization">
+    <rect id="personalization-care-tag" x="53" y="88" width="22" height="8" rx="3" fill="#D7C878" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <path id="personalization-care-line" d="M57 92H71" fill="none" stroke="#262B29" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/>
+  </g>
+</svg>

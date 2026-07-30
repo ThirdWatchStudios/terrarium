@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="surveillance-camera" data-projection="elevation" data-status="source-only-candidate">
+  <title>QuotaCo wall surveillance camera candidate</title>
+  <desc>Rated-state wall camera with a clear mount, shielded body, recessed lens, and compact monitoring indicator.</desc>
+  <g id="mount">
+    <rect id="mount-plate" x="52" y="26" width="24" height="15" rx="7" fill="#355247" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+    <rect id="mount-neck" x="60" y="39" width="8" height="18" rx="4" fill="#355247" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+  <g id="shell">
+    <path id="shell-shield" d="M34 51H94L87 78Q64 88 41 78Z" fill="#DED5BD" stroke="#292C2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+    <rect id="shell-face" x="42" y="57" width="44" height="19" rx="8" fill="#355247" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+  <g id="function">
+    <circle id="function-lens-recess" cx="64" cy="67" r="9" fill="#18211E" stroke="#292C2A" stroke-width="3"/>
+    <circle id="function-lens" cx="64" cy="67" r="4" fill="#8FB7C0" stroke="#292C2A" stroke-width="3"/>
+    <rect id="function-status" x="83" y="58" width="8" height="9" rx="3" fill="#4E7470" stroke="#292C2A" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+</svg>

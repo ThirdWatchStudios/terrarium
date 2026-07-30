@@ -1,12 +1,12 @@
 /**
- * Consolidated visual-acceptance proof for the complete canonical QuotaCo
+ * Consolidated visual-acceptance proof for the canonical QuotaCo interior
  * workhorse SVG bank.
  *
  * This sheet renders the genuine source SVG beside Terrarium's default
  * compositor output for all 45 authored props, then exercises representative
- * nouns in literal gameplay-scale rooms. Handheld and outdoor categories remain
- * visible as unchanged carryover context; they are not counted in the 45-source
- * workhorse bank.
+ * nouns in literal gameplay-scale rooms. Handheld remains character-relative;
+ * the later eight-source exterior family remains visible as separately gated
+ * context and is not counted in this legacy 45-source interior proof.
  */
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
@@ -38,7 +38,8 @@ import {
   PROP_NATIVE_FRAME_CELLS,
 } from './quotaCoWorkstationFamilyCalibrationPreview';
 import {
-  QUOTA_CO_WORKHORSE_PROP_IDS,
+  QUOTA_CO_EXTERIOR_WORKHORSE_PROP_IDS,
+  QUOTA_CO_INTERIOR_WORKHORSE_PROP_IDS,
   type QuotaCoWorkhorsePropId,
 } from './props/importer';
 
@@ -95,10 +96,12 @@ const CARRYOVER_IDS: Readonly<Record<
   furniture: [],
   'facilities-machines': [],
   'wall-mounted-decorative': [],
-  'outdoor-construction': ['car', 'lamp-post', 'bike-rack'],
+  'outdoor-construction': QUOTA_CO_EXTERIOR_WORKHORSE_PROP_IDS,
 };
 
-const AUTHORED_ID_SET = new Set<string>(QUOTA_CO_WORKHORSE_PROP_IDS);
+const INTERIOR_AUTHORED_ID_SET = new Set<string>(
+  QUOTA_CO_INTERIOR_WORKHORSE_PROP_IDS,
+);
 
 export const CANONICAL_PROP_PORTFOLIO_GROUPS:
 readonly CanonicalPortfolioGroup[] = GROUP_ORDER.map((id) => {
@@ -112,7 +115,7 @@ readonly CanonicalPortfolioGroup[] = GROUP_ORDER.map((id) => {
     note: inventory.note,
     authoredIds: inventory.propIds.filter(
       (propId): propId is QuotaCoWorkhorsePropId =>
-        AUTHORED_ID_SET.has(propId),
+        INTERIOR_AUTHORED_ID_SET.has(propId),
     ),
     carryoverIds: CARRYOVER_IDS[id],
   };
@@ -237,7 +240,7 @@ function normalizedPixelDelta(leftSvg: string, rightSvg: string): number {
 async function loadSources(): Promise<Map<QuotaCoWorkhorsePropId, string>> {
   return new Map(
     await Promise.all(
-      QUOTA_CO_WORKHORSE_PROP_IDS.map(async (id) => {
+      QUOTA_CO_INTERIOR_WORKHORSE_PROP_IDS.map(async (id) => {
         const art = authoredPropArt(id);
         if (!art) throw new Error(`Missing imported art ${id}`);
         return [id, await readFile(art.sourceFile, 'utf8')] as const;
@@ -479,11 +482,11 @@ function carryoverPanel(
   const columnWidth = (width - 430) / propIds.length;
   const parts = [
     panel(x, y, width, 220, PANEL_ALT),
-    text(x + 18, y + 28, 'CARRYOVER CATEGORIES · OUTSIDE THE 45-SVG BANK', 13, 760, GREEN),
+    text(x + 18, y + 28, 'SEPARATELY GATED CONTEXT · OUTSIDE THE INTERIOR 45-SVG PROOF', 13, 760, GREEN),
     text(
       x + 18,
       y + 49,
-      'Handheld remains character-relative; outdoor/construction remains procedural and unchanged in this slice.',
+      'Handheld remains character-relative; exterior carriers are production SVGs validated in their dedicated proof.',
       9.5,
       540,
       MUTED,
@@ -495,7 +498,7 @@ function carryoverPanel(
     text(
       x + width - 18,
       y + 49,
-      'not counted in canonicalSvgCount',
+      'not counted in this interior canonicalSvgCount',
       8,
       620,
       CORAL,
@@ -571,7 +574,7 @@ function portfolioSheet(
     text(
       MARGIN,
       67,
-      'All 45 artist-editable SVGs promoted as Terrarium production sources · automatic prop styling disabled',
+      'All 45 interior artist-editable SVGs promoted as Terrarium production sources · automatic prop styling disabled',
       11,
       600,
       MUTED,
@@ -757,7 +760,7 @@ async function portfolioMetrics(
 ): Promise<unknown> {
   const project = defaultProject();
   const sourceValidation = Object.fromEntries(
-    QUOTA_CO_WORKHORSE_PROP_IDS.map((id) => {
+    QUOTA_CO_INTERIOR_WORKHORSE_PROP_IDS.map((id) => {
       const source = sources.get(id);
       const art = authoredPropArt(id);
       const instance = project.props.find(({ templateId }) => templateId === id);
@@ -783,7 +786,7 @@ async function portfolioMetrics(
   );
   return {
     reviewStatus: 'canonical-portfolio-accepted-pre-export',
-    canonicalSvgCount: QUOTA_CO_WORKHORSE_PROP_IDS.length,
+    canonicalSvgCount: QUOTA_CO_INTERIOR_WORKHORSE_PROP_IDS.length,
     sourceSvgAuthoring: true,
     productionPromotion: true,
     bundleExportPerformed: false,
@@ -825,7 +828,7 @@ async function portfolioMetrics(
       'wall-context',
       'desk-occlusion',
       'character-relative-handheld',
-      'procedural-outdoor-carryover',
+      'separately-gated-outdoor-carriers',
     ],
     protectedCounts: {
       defaultCharacters: project.characters.length,
