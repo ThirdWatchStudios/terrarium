@@ -380,17 +380,17 @@ export const DEFAULT_PROPS: PropInstance[] = [
     name: 'IRIS installation unit',
     templateId: 'iris-installation-unit',
     params: { height: 90 },
-    // QuotaCo sterile: paper-white shell, sage-grey panels. IRIS green is a
+    // QuotaCo sterile: cool off-white shell, structural-grey console. IRIS green is a
     // template literal so it remains stable through clinical/runtime re-tints;
     // the accent is retained as useful exported palette metadata.
-    palette: { primary: '#E6E4DC', secondary: '#B9BFB7', accent: '#5BE08A' },
+    palette: { primary: '#DDE2DE', secondary: '#B8C0BC', accent: '#5BE08A' },
   },
   {
     id: 'prop-iris-installation-unit-dormant',
     name: 'IRIS installation unit (dormant)',
     templateId: 'iris-installation-unit-dormant',
     params: { height: 90 },
-    palette: { primary: '#E6E4DC', secondary: '#B9BFB7', accent: '#5BE08A' },
+    palette: { primary: '#DDE2DE', secondary: '#B8C0BC', accent: '#5BE08A' },
   },
   {
     id: 'prop-iris-charging-dock',

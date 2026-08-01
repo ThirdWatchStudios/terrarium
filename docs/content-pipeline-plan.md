@@ -678,8 +678,11 @@ warm-by-default look with sim-owned runtime drain.
 
 The installation unit, charging dock, and fabrication crew are mechanically
 present under stable ids and received a shared sterile-chassis refinement pass
-on 2026-07-10. Their current art is serviceable rather than frozen final art;
-later silhouette/detail polish is an asset pass, not contract or schema work.
+on 2026-07-10. The installation unit received its approved R1+D3 visual
+promotion on 2026-07-31: weighted cool-white/charcoal architecture, recessed
+spine, centered console, keyed service joint, and sparse live-state register.
+The dock and fabrication crew remain visually iterative; none of this art work
+changes the contract or schema shape.
 The locked 2026-07-08 IRIS apparatus command chain supersedes the earlier B1.5
 human construction-worker art proposal: IRIS's construction crew are robots.
 
