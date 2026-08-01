@@ -530,88 +530,116 @@ const serverRack: PropTemplate = {
 };
 
 // --- IRIS installation unit ------------------------------------------------
-// The physical seat of IRIS: a server rack + operator console, installed once
-// per office (the founding tutorial IS this unit booting). Twin pattern like
-// the tampered variants, but in reverse: the sim places the DORMANT unit on
-// the bare lot and swaps to the live template as the boot sequence completes.
-// One green beacon is the only living light — a literal hex so it survives
-// both the clinical drain and runtime re-tint (warmth stays in the people).
+// The physical seat of IRIS: one weighted institutional machine with a centered
+// operator console, installed once per office (the founding tutorial IS this
+// unit booting). Twin pattern like the tampered variants, but in reverse: the
+// sim places the DORMANT unit on the bare lot and swaps to the live template as
+// the boot sequence completes. The live optic and subordinate console trace use
+// literal IRIS green so they survive both the clinical drain and runtime re-tint.
 
 const IRIS_GREEN = '#5BE08A';
-const IRIS_DIAGNOSTIC = '#8C9691';
 const IRIS_DARK = '#202523';
+const IRIS_SPINE = '#18201D';
+const IRIS_SHOULDER = '#4C5551';
+const IRIS_SPINE_PLANE = '#27302D';
+const IRIS_SPINE_RETURN = '#46504B';
+const IRIS_SERVICE_SEAM = '#ABB3AF';
 
 function buildIrisUnit(params: Record<string, number>, live: boolean): ShapeSpec[] {
   const h = params.height ?? 90;
-  const rackW = 38;
-  const rackX = CX - 46;
-  const rackTop = GROUND - h;
-  const conX = CX;
-  const conW = 42;
-  const conTop = GROUND - 68;
-  const mastX = rackX + rackW / 2;
+  const rightTop = GROUND - h - 13;
+  const leftTop = rightTop + 18;
+  const spineTop = rightTop + 16;
+  const opticTop = rightTop + 21;
 
-  // Paint in broad strata instead of alternating per rack row. Besides keeping
-  // the apparatus visually quiet, this keeps its re-tintable 2x layer atlas far
-  // below Unity's 8192px texture ceiling.
-  const structure: ShapeSpec[] = [
-    // One shared plinth makes rack + console read as a single installed machine.
-    { d: rr(rackX - 2, GROUND - 8, conX + conW - rackX + 4, 8, 3), fill: '$primary' },
-    { d: rr(rackX, rackTop, rackW, h, 3), fill: '$primary' },
-    { d: rr(mastX - 5, rackTop - 8, 10, 9, 2), fill: '$primary' },
-    { d: rr(conX, conTop, conW, GROUND - conTop, 3), fill: '$primary' },
+  // R1+D3 production direction: unequal load-bearing masses break the old
+  // paired-rack / game-console alias. The six silhouette shapes are identical
+  // for live and dormant; only the optic and console trace change state.
+  const housing: ShapeSpec[] = [
+    {
+      d: `M 74 108 V ${rightTop + 10} L 84 ${rightTop} H 116 V 108 Z`,
+      fill: '$primary',
+    },
+    {
+      d: `M 13 108 V ${leftTop + 8} L 21 ${leftTop} H 44 V 108 Z`,
+      fill: IRIS_SHOULDER,
+    },
+    { d: `M 44 ${spineTop} H 74 V 108 H 44 Z`, fill: IRIS_SPINE },
   ];
-  const underlays: ShapeSpec[] = [
-    { d: rr(rackX + 3, rackTop + 3, rackW - 6, h - 7, 1), fill: '#111214', silhouette: false },
+  const housingArticulation: ShapeSpec[] = [
+    {
+      d: `M 15 ${leftTop + 8} L 22 ${leftTop + 2} H 43`,
+      stroke: '#76807B',
+      strokeWidth: 2.2,
+      silhouette: false,
+    },
+    {
+      d: 'M 21 50 H 37 V 98',
+      stroke: '#77817C',
+      strokeWidth: 2.2,
+      silhouette: false,
+    },
+    {
+      d: `M 50 ${spineTop + 4} H 68 V 106 H 50 Z`,
+      fill: IRIS_SPINE_PLANE,
+      stroke: '#111714',
+      strokeWidth: 2.2,
+      silhouette: false,
+    },
+    {
+      d: `M 50 ${spineTop + 4} L 55 ${spineTop - 1} H 73 L 68 ${spineTop + 4} Z`,
+      fill: IRIS_SPINE_RETURN,
+      stroke: IRIS_SPINE,
+      strokeWidth: 2,
+      silhouette: false,
+    },
+    {
+      d: `M 56 ${spineTop + 12} H 63 V 99`,
+      stroke: '#5B6560',
+      strokeWidth: 2.4,
+      silhouette: false,
+    },
+    {
+      d: 'M 80 64 H 101 L 108 57 H 113',
+      stroke: IRIS_SERVICE_SEAM,
+      strokeWidth: 1.8,
+      silhouette: false,
+    },
+    {
+      d: rr(98, opticTop, 5, 15, 2),
+      fill: '#5C6662',
+      stroke: IRIS_SPINE,
+      strokeWidth: 1.4,
+      silhouette: false,
+    },
+    {
+      d: rr(99.5, opticTop + 3, 2, 8, 1),
+      fill: live ? IRIS_GREEN : '#3C4440',
+      silhouette: false,
+    },
   ];
-  const panels: ShapeSpec[] = [];
-  const details: ShapeSpec[] = [];
-
-  // Four broad bays survive game distance better than the old five-row field.
-  const units = 4;
-  const bayTop = rackTop + 5;
-  const uh = (h - 10) / units;
-  for (let i = 0; i < units; i++) {
-    const uy = bayTop + i * uh + 1;
-    panels.push({ d: rr(rackX + 5, uy, rackW - 10, uh - 2, 1), fill: '$secondary', silhouette: false });
-    const ledY = uy + (uh - 2) / 2;
-    details.push(
-      { d: circle(rackX + 9, ledY, 1.35), fill: live ? IRIS_DIAGNOSTIC : '#2A2D30', silhouette: false },
-      { d: circle(rackX + 13, ledY, 1.35), fill: live && i === 0 ? '#C7D0CB' : '#2A2D30', silhouette: false },
-      { d: `M ${rackX + 19} ${ledY} L ${rackX + rackW - 8} ${ledY}`, stroke: '#00000040', strokeWidth: 1.1, silhouette: false },
-    );
-  }
-
-  // The beacon is the apparatus's one dominant living tell.
-  if (live) {
-    details.push(
-      { d: circle(mastX, rackTop - 4, 7), fill: `${IRIS_GREEN}28`, silhouette: false },
-      { d: circle(mastX, rackTop - 4, 3.4), fill: IRIS_GREEN, silhouette: false },
-    );
-  } else {
-    details.push({ d: circle(mastX, rackTop - 4, 3.4), fill: '#3A3E42', silhouette: false });
-  }
-
-  panels.push(
-    { d: rr(conX + 4, conTop + 4, conW - 8, 26, 2), fill: '$secondary', silhouette: false },
-    // The keyboard shelf is internal equipment, not another outlined object.
-    { d: `M ${conX + 2} ${GROUND - 27} L ${conX + conW - 2} ${GROUND - 27} L ${conX + conW + 3} ${GROUND - 19} L ${conX - 3} ${GROUND - 19} Z`, fill: '$secondary', silhouette: false },
-    { d: rr(rackX + rackW - 2, GROUND - 7, conX - rackX - rackW + 4, 5, 2), fill: '$secondary', silhouette: false },
-  );
-  details.push({ d: rr(conX + 6, conTop + 6, conW - 12, 22, 1), fill: live ? '#101814' : '#1A1C1E', silhouette: false });
-  if (live) {
-    details.push(
-      { d: `M ${conX + 10} ${conTop + 11} L ${conX + 31} ${conTop + 11} M ${conX + 10} ${conTop + 17} L ${conX + 26} ${conTop + 17}`, stroke: IRIS_GREEN, strokeWidth: 1.6, opacity: 0.78, silhouette: false },
-      { d: rr(conX + 28, conTop + 20, 4, 2.5, 0.5), fill: IRIS_GREEN, opacity: 0.78, silhouette: false },
-    );
-  } else {
-    details.push({ d: `M ${conX + 10} ${conTop + 10} L ${conX + 17} ${conTop + 17}`, stroke: '#FFFFFF14', strokeWidth: 2.5, silhouette: false });
-  }
-  details.push(
-    { d: `M ${conX + 3} ${GROUND - 23} L ${conX + conW} ${GROUND - 23}`, stroke: '#00000030', strokeWidth: 1.2, silhouette: false },
-    { d: `M ${conX + 10} ${GROUND - 10} L ${conX + conW - 10} ${GROUND - 10} M ${conX + 10} ${GROUND - 6} L ${conX + conW - 10} ${GROUND - 6}`, stroke: '#00000030', strokeWidth: 1.2, silhouette: false },
-  );
-  return [...structure, ...underlays, ...panels, ...details];
+  const console: ShapeSpec[] = [
+    {
+      d: 'M 42 67 H 86 L 93 76 L 82 89 H 46 L 35 78 Z',
+      fill: '$secondary',
+    },
+    {
+      d: 'M 48 71 H 80 L 85 76 L 78 83 H 49 L 43 78 Z',
+      fill: live ? '#18211E' : '#1D2421',
+      stroke: '#53605A',
+      strokeWidth: 1.4,
+      silhouette: false,
+    },
+    {
+      d: 'M 56 77 H 73',
+      stroke: live ? IRIS_GREEN : '#59615D',
+      strokeWidth: 1.5,
+      silhouette: false,
+    },
+    { d: 'M 58 88 H 72 V 106 H 58 Z', fill: IRIS_SPINE },
+    { d: 'M 7 108 H 121 V 116 H 7 Z', fill: IRIS_SPINE },
+  ];
+  return [...housing, ...housingArticulation, ...console];
 }
 
 const irisInstallationUnit: PropTemplate = {

@@ -519,9 +519,9 @@ templates (Tier 1/2 below); escalate to authored only where signature:
 
 - [ ] Surveillance camera (wall-slot) — Tier 2 candidate (thematic accent art)
 - [ ] Surveillance sensor/monitor — Tier 1/2
-- [x] IRIS installation unit (rack + console, live/dormant) — mechanically
-      shipped and refined as a Tier-2 signature prop; visual polish remains
-      iterative
+- [x] IRIS installation unit (weighted apparatus + centered console,
+      live/dormant) — mechanically shipped and visually promoted as the
+      approved R1+D3 Tier-2 signature prop
 - [x] IRIS charging dock — mechanically shipped as non-placeable plan hardware;
       visual polish remains iterative
 - [x] IRIS fabrication crew — special `head-fab` + `outfit-fab-chassis` recipe

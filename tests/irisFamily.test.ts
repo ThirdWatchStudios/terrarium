@@ -245,10 +245,18 @@ describe('IRIS installation unit and charging dock contracts', () => {
       const dormantShapes = dormantTemplate.build({ height }, dormant.palette);
       expect(silhouette(liveShapes), `height ${height} silhouette drift`)
         .toEqual(silhouette(dormantShapes));
-      expect(silhouette(liveShapes), `height ${height} silhouette budget`).toHaveLength(4);
+      expect(silhouette(liveShapes), `height ${height} R1+D3 silhouette budget`).toHaveLength(6);
       expect(JSON.stringify(liveShapes).toUpperCase(), `height ${height} active state`).toContain(IRIS_GREEN);
       expect(JSON.stringify(dormantShapes).toUpperCase(), `height ${height} dormant state`)
         .not.toContain(IRIS_GREEN);
+      expect(
+        liveShapes.filter(({ fill, stroke }) => fill === IRIS_GREEN || stroke === IRIS_GREEN),
+        `height ${height} live signal hierarchy`,
+      ).toHaveLength(2);
+      expect(
+        dormantShapes.filter(({ fill, stroke }) => fill === IRIS_GREEN || stroke === IRIS_GREEN),
+        `height ${height} dormant signal hierarchy`,
+      ).toHaveLength(0);
     }
   });
 
