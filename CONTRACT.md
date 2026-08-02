@@ -690,6 +690,119 @@ contextual east/west decision and must not infer new blob indices or duplicate
 the atlas. Contextual presentation adds no duplicate PNG frames and does not
 alter frame names, frame order, pivots, or the shared 256→47 blob mapping.
 
+### 3.20 Department production assets and pneumatic transport
+
+Schema v20 introduced the versioned bundle-root `department-assets.json` manifest for
+QuotaCo's first-class department production units. The sprites themselves keep
+using the ordinary `props/<instance>/sprite@Nx.png`, atlas, layer-manifest, and
+`prop.json` paths; the new manifest binds those baked instances into one machine
+SKU, names fill/queue states, declares suggested footprints, and supplies the
+pneumatic tube/canister composition contract. `footprintPolicy` is
+`"suggested"`: Terrarium provides the accepted grid read, while the sim retains
+authority to adjust final occupancy and collision.
+
+Priority 1 contains `loading_dock`, `sorting_frame`, `franking_machine`,
+`keypunch_bank`, `tabulating_machine`, `intake_tray_small`,
+`intake_tray_large`, `dispatch_station`, `pneumatic_dispatch_node`,
+`tube_straight`, `tube_corner`, `tube_wallpass`, `tube_riser`,
+`canister_base`, and `delivery_uplink`. Loading-dock states are
+`empty|low|high`; tray and dispatch queues are
+`empty|low|high|overflowing`. These are baked sprite variants, never runtime
+tints. `canister_base` is non-placeable transport content; work identity is a
+separate transparent overlay under
+`department-overlays/<work-type>/overlay.{svg,@Nx.png}`. The first overlay ids
+are `raw_records` and `structured_data`.
+
+The ratified farm-form Priority 1 addendum adds `keypunch_console` as the
+single-seat 1×1 Data Processing conversion station and
+`cubicle_partition_straight|corner|endcap` as low acoustic furniture. The
+row-form `keypunch_bank` remains in prop exports for old-save resolution, but
+its department-manifest entry is `placeable:false`; new farms place rows of
+`keypunch_console`. Straight and end-cap partitions use the existing
+`states[]` variant vocabulary with `horizontal|vertical` ids, each backed by a
+separately authored sprite. They are elevation-sorted and never quarter-turned
+at runtime. Their placement value is `cell-edge-furniture-slot`; the corner
+uses `cell-corner-furniture-slot`. These are furniture anchor slots, not
+architectural walls or hidden whole-cell collision. The 1×1 footprint is an
+advisory anchor span; the sim retains final attenuation, approach, and
+collision authority.
+
+The ratified farm-form Priority 2 addendum adds Approvals' 1×1 per-seat
+`adjudication_desk_set` and 1×1 shared `docket_rack` collector. The rack exposes
+the same baked `empty|low|high|overflowing` state vocabulary as the other room
+buffers; its paper mass carries backlog readability without runtime tinting or
+product UI. The Approvals work-type overlays are `applications` and
+`determinations`. These facilities, states, and overlays are content additions
+under department manifest v3 and project schema v21. Browser ZIP and headless
+exports enumerate the same canonical registry and therefore export identical
+Approvals inventory.
+
+Priority 2 extends that same v20 inventory—without changing its shape—with
+`calculating_engine`, `comparator`, `rotary_duplicator`, `binding_press`,
+`verification_comparator`, and `manifest_press`. Their footprints remain
+suggestions: 2×2 for the Calculating Engine, Comparator, Rotary Duplicator, and
+Verification Comparator; 1×2 for the Binding Press and Manifest Press. The
+additional canister overlay ids are `findings`, `reports`, and `requirements`;
+`requirements` also carries Statement-of-Work dossiers. Consumers must enumerate
+the manifest rather than assume the original Priority 1 facility or stamp count.
+
+Priority 3A extends the same content-only inventory with Engineering's
+`terminal_bank` and `compiler_press`, plus Maintenance's `parts_crib` and
+`workbench`. The owner-selected Terminal Bank footprint suggestion is 3×2; the
+other three remain 2×2 suggestions. New canister overlay ids are
+`specifications`, `code`, `release`, and `repairs`. `release` is a downstream
+Documentation control, not an Engineering output. This addition keeps schema
+v20 and manifest version 1; consumers must continue enumerating the manifest.
+
+Priority 3B completes the internal-services inventory with Personnel's
+`records_cabinet` (2×2 suggestion) and `badge_press` (1×2), Payroll's
+`ledger_engine` (2×2) and `envelope_press` (1×2), and Supply's
+`requisition_counter` and `stock_shelving` (both 2×2). New canister overlay ids
+are `personnel_actions` and `supplies`.
+
+Schema v21 advances `department-assets.json` to manifest version 2 by adding
+`handCarriedItems[]`. Each entry is
+`{ id, templateId, displayName, transport:"hand-carried",
+pneumaticCompatible:false, placeable:false, propInstanceId, propDirectory,
+sprites[] }`. The first entry is `pay_envelope`: payday is walked to employees,
+never stamped onto `canister_base`, routed through a dispatch station, or
+registered as a placeable facility. This is derived export inventory and needs
+no stored-project migration.
+
+The farm-form addendum advances the self-versioned department manifest to
+version 3. It adds content and placement/state enum values without changing the
+stored project or the existing JSON field shapes, so the project schema remains
+v21. Browser ZIP and headless exports both derive this inventory from the same
+code-owned template registry.
+
+Department production instances are code-owned bundle inventory. Both the
+headless exporter and the in-browser ZIP call the same `exportAll` path, which
+adds any canonical machine/state instance missing from an older browser-saved
+project to the export snapshot without mutating that live project. This keeps
+every `department-assets.json` sprite path resolvable after content-only catalog
+growth within schema v21.
+
+All department-machine exports are static sprites today. Owner acceptance of
+Priority 2, Priority 3A, and Priority 3B explicitly identified machine animation as necessary follow-up, but
+the frame vocabulary, timing, runtime ownership, and export contract are
+deferred. Consumers must not infer animation frames from filenames or synthesize
+glow, heat haze, fumes, meters, or other baked/product feedback from this static
+promotion.
+
+The accepted two-cell 128u tube frame has logical bounds `32..96`. Sockets are
+west `(32,64)`, east `(96,64)`, and south `(64,96)`. Tube diameters are 28u
+outer / 22u liner / 16u lumen; the canister is 10u, leaving 3u radial clearance.
+Segments meet with butt-ended strokes at exact adjacent-cell sockets, so the sim
+must preserve the declared cell alignment and must not inset or rescale segments
+independently. Floor runs block walking; `tube_wallpass` owns the wall cell.
+No flow meter, queue meter, or other UI readout is baked into a world sprite.
+
+The loading dock's 3×2 suggestion includes a mixed occupancy mask: the pallet
+edge blocks and the apron row is walkable. All remaining Priority 1 footprint
+suggestions and route sockets are carried per facility in the manifest. The
+ordinary `facility-catalog.json` also registers every placeable machine using
+the same ids; it deliberately excludes `canister_base` and `pay_envelope`.
+
 ---
 
 ## 4. Formulas computed **in the tool** (authoritative)
@@ -796,6 +909,6 @@ Things the sim will likely need that the tool does **not** capture yet — decid
 ## 7. Compatibility rules
 
 - **Adding** a suggestion to a free-text vocabulary (drive, trait tag, KPI, location, activity) is **non-breaking** — it only affects authoring autocomplete, never validation or export shape. **Adding an activity badge** is likewise non-breaking: a new shared-atlas cell the sim shows for that `activity` or ignores (§3.9).
-- **Version gating:** `profile.json`, `scenario.json`, and `scenario-template.json` carry `meta.schemaVersion` (currently **19**, the project schema version; migrations remain centralized in `src/core/migrations.ts`). `office-layout.json` carries its **own** payload version (currently **4** — v2 added `rooms[].departmentId` + `wings[]`, v3 added `connectivity[]`, and v4 added optional `tenantRect`, §3.4). v19 adds the `wall-office` atlas `meta.contextualFacing` declaration (§3.19); it is derived at export and needs no stored-project migration. The earlier campus art inventory changes ride existing ground, ground-overlay, prop, part, and facility-catalog paths. The sim version-gates on these — `scenario.json` gates a whole scenario package (the bundled `drives.json`/`traits.json`/`departments.json`/`org-structure.json` are resolved within that already-versioned context); `profile.json` gates the per-character visual-import path. Bare-array catalogs (and the derived `org-structure.json`) are intentionally unversioned — they never travel without a versioned `scenario.json` or `project.json`.
+- **Version gating:** `profile.json`, `scenario.json`, and `scenario-template.json` carry `meta.schemaVersion` (currently **21**, the project schema version; migrations remain centralized in `src/core/migrations.ts`). `office-layout.json` carries its **own** payload version (currently **4** — v2 added `rooms[].departmentId` + `wings[]`, v3 added `connectivity[]`, and v4 added optional `tenantRect`, §3.4). v19 added the `wall-office` atlas `meta.contextualFacing` declaration (§3.19); v20 added `department-assets.json` plus work-canister overlay files; v21 introduced that manifest's v2 `handCarriedItems[]`; the later farm-form addendum advances the self-versioned manifest to v3 without changing stored project data (§3.20). These are derived at export and need no stored-project migration. The earlier campus art inventory changes ride existing ground, ground-overlay, prop, part, and facility-catalog paths. The sim version-gates on these — `scenario.json` gates a whole scenario package (the bundled `drives.json`/`traits.json`/`departments.json`/`org-structure.json` are resolved within that already-versioned context); `profile.json` gates the per-character visual-import path; `department-assets.json` carries its own manifest version plus the project `schemaVersion`. Bare-array catalogs (and the derived `org-structure.json`) are intentionally unversioned — they never travel without a versioned `scenario.json` or `project.json`.
 - **Renaming/removing a field** in §3 **is** breaking — bump `CURRENT_SCHEMA_VERSION` (which flows into `meta.schemaVersion`), add a migration step, and update the sim loader.
 - The sim should **fallback + log**, never hard-fail, on an unrecognized free-text id (drive, KPI, activity). That tolerance is what lets the tool ship a richer vocabulary without lockstep sim releases.

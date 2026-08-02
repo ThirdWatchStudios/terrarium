@@ -1,0 +1,47 @@
+{
+  "reviewStatus": "awaiting-owner-partition-replacement-direction",
+  "scope": "cubicle-partition-replacement-review-only",
+  "recommendedDirection": "b_upholstered_slab",
+  "directions": [
+    {
+      "id": "b_upholstered_slab",
+      "label": "B · Upholstered Slab",
+      "recommendation": "recommended",
+      "read": "broad acoustic furniture; soft molded shoulders; support hardware subordinate"
+    },
+    {
+      "id": "c_molded_carrier",
+      "label": "C · Molded Carrier",
+      "recommendation": "alternate",
+      "read": "stronger machine-family molding; slimmer acoustic band; more institutional"
+    }
+  ],
+  "contractQuestions": [
+    {
+      "id": "connection-state-ownership",
+      "recommendation": "Let body tiles own no internal supports; a terminal/corner/support state owns exactly one shared post at each graph vertex."
+    },
+    {
+      "id": "profile-width",
+      "recommendation": "Allow a 44u outer profile so the acoustic mass survives at 40 px per cell."
+    },
+    {
+      "id": "vertical-presentation",
+      "recommendation": "Author north/south bodies as continuous top-down slabs with feet painted first underneath; never add transverse separators per cell."
+    }
+  ],
+  "productionMutation": false,
+  "canonicalSvgAuthoring": false,
+  "templateRegistration": false,
+  "departmentManifestMutation": false,
+  "exportRun": false,
+  "parityClaim": false,
+  "currentProductionSkuStable": true,
+  "proposedOuterProfileUnits": 44,
+  "normalGameplayPixelsPerCell": 90,
+  "farGameplayPixelsPerCell": 40,
+  "bodyOwnsInternalSupport": false,
+  "oneGraphVertexOwnsOneSupport": true,
+  "verticalTransverseSeparators": false,
+  "unityImport": false
+}

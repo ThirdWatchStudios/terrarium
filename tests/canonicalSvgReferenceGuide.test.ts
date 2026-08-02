@@ -8,8 +8,8 @@ describe('canonical SVG reference guide', () => {
     const { counts, entries, exclusions } = inventory.manifest;
 
     expect(counts).toMatchObject({
-      exactSourceFiles: 259,
-      production: 181,
+      exactSourceFiles: 326,
+      production: 248,
       productionDependencies: 74,
       deferred: 4,
       derivedWallFrames: 47,
@@ -37,6 +37,12 @@ describe('canonical SVG reference guide', () => {
         entry.pattern.includes('part-authoring/scaffolds'),
       )?.count,
     ).toBe(113);
+    expect(counts.byCategory['props/department-machines']).toBe(67);
+    expect(
+      entries
+        .filter((entry) => entry.category === 'props/department-machines')
+        .every((entry) => entry.status === 'production'),
+    ).toBe(true);
   });
 
   it('shows all 47 wall masks while listing only active SVG dependencies', async () => {

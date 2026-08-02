@@ -1,0 +1,272 @@
+{
+  "reviewStatus": "awaiting-owner-direction-and-grid-decisions",
+  "productionPromotion": false,
+  "canonicalSvgAuthoring": false,
+  "templateRegistration": false,
+  "defaultsMutation": false,
+  "exportRun": false,
+  "schemaMutation": false,
+  "unityImport": false,
+  "parityClaim": false,
+  "scope": "priority-1-only",
+  "recommendedDirection": "percussion-line",
+  "assetIds": [
+    "loading_dock",
+    "sorting_frame",
+    "franking_machine",
+    "keypunch_bank",
+    "tabulating_machine",
+    "intake_tray_small",
+    "intake_tray_large",
+    "dispatch_station",
+    "pneumatic_dispatch_node",
+    "tube_straight",
+    "tube_corner",
+    "tube_wallpass",
+    "tube_riser",
+    "canister_base",
+    "delivery_uplink"
+  ],
+  "workTypeStamps": [
+    "raw_records",
+    "structured_data"
+  ],
+  "fillStates": {
+    "loading_dock": [
+      "empty",
+      "low",
+      "high"
+    ],
+    "intake_tray_small": [
+      "empty",
+      "low",
+      "high",
+      "overflowing"
+    ],
+    "intake_tray_large": [
+      "empty",
+      "low",
+      "high",
+      "overflowing"
+    ],
+    "dispatch_station": [
+      "empty",
+      "low",
+      "high",
+      "overflowing"
+    ]
+  },
+  "invariants": {
+    "authoringCanvas": 128,
+    "propNativeFrameCells": 2,
+    "characterVisualScale": 0.65,
+    "characterFrameCells": 1.0075,
+    "amberUsed": false,
+    "roseUsed": false,
+    "bakedUiUsed": false,
+    "cameraCueUsed": false,
+    "standardizedSku": true
+  },
+  "scaleSuggestions": [
+    {
+      "id": "loading_dock",
+      "label": "Loading dock",
+      "projection": "elevation",
+      "gridFootprint": {
+        "w": 3,
+        "h": 2
+      },
+      "status": "open-contract",
+      "note": "apron wants walkable cells while pallet cells block"
+    },
+    {
+      "id": "sorting_frame",
+      "label": "Sorting Frame",
+      "projection": "elevation",
+      "gridFootprint": {
+        "w": 2,
+        "h": 2
+      },
+      "status": "suggested",
+      "note": "pigeonhole wall + clerk approach"
+    },
+    {
+      "id": "franking_machine",
+      "label": "Franking Machine",
+      "projection": "elevation",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "status": "open-contract",
+      "note": "standalone exception unless tabletop attachment exists"
+    },
+    {
+      "id": "keypunch_bank",
+      "label": "Keypunch Bank",
+      "projection": "elevation",
+      "gridFootprint": {
+        "w": 2,
+        "h": 2
+      },
+      "status": "suggested",
+      "note": "three consoles compressed into one loud bank"
+    },
+    {
+      "id": "tabulating_machine",
+      "label": "Tabulating Machine",
+      "projection": "elevation",
+      "gridFootprint": {
+        "w": 3,
+        "h": 2
+      },
+      "status": "open-contract",
+      "note": "three-cell row may need wider or multi-frame art"
+    },
+    {
+      "id": "intake_tray_small",
+      "label": "Intake tray — small",
+      "projection": "elevation",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "status": "suggested",
+      "note": "four explicit fill sprites"
+    },
+    {
+      "id": "intake_tray_large",
+      "label": "Intake tray — large",
+      "projection": "elevation",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "status": "suggested",
+      "note": "same footprint, taller capacity read"
+    },
+    {
+      "id": "dispatch_station",
+      "label": "Dispatch station",
+      "projection": "elevation",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "status": "open-contract",
+      "note": "queue furniture paired with powered node?"
+    },
+    {
+      "id": "pneumatic_dispatch_node",
+      "label": "Pneumatic dispatch node",
+      "projection": "elevation",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "status": "open-contract",
+      "note": "separate powered feeder in this proof"
+    },
+    {
+      "id": "tube_straight",
+      "label": "Tube — straight",
+      "projection": "plan",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "status": "suggested",
+      "note": "floor-run cell blocks walking"
+    },
+    {
+      "id": "tube_corner",
+      "label": "Tube — corner",
+      "projection": "plan",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "status": "suggested",
+      "note": "mechanical quarter-turn rotation only"
+    },
+    {
+      "id": "tube_wallpass",
+      "label": "Tube — wall pass",
+      "projection": "elevation",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "status": "open-contract",
+      "note": "wall-slot recommended; route still occupies wall cell"
+    },
+    {
+      "id": "tube_riser",
+      "label": "Tube — station riser",
+      "projection": "elevation",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "status": "suggested",
+      "note": "route-to-station vertical handoff"
+    },
+    {
+      "id": "canister_base",
+      "label": "Work canister — base",
+      "projection": "overlay",
+      "gridFootprint": null,
+      "status": "open-contract",
+      "note": "item + independent work-type stamp overlay"
+    },
+    {
+      "id": "delivery_uplink",
+      "label": "Delivery uplink",
+      "projection": "elevation",
+      "gridFootprint": {
+        "w": 2,
+        "h": 2
+      },
+      "status": "suggested",
+      "note": "IRIS sibling mass; mechanical outbound hatch, no screen"
+    }
+  ],
+  "openQuestions": [
+    {
+      "id": "state-identity",
+      "label": "STATE EXPORT IDENTITY",
+      "recommendation": "One stable facility id plus explicit named baked variant entries in a small state manifest.",
+      "reason": "The current bundle exports independent PropInstances but has no general state-family discovery contract."
+    },
+    {
+      "id": "dock-occupancy",
+      "label": "LOADING-DOCK OCCUPANCY",
+      "recommendation": "Keep one loading_dock visual family, but let the sim declare a mixed walkable apron / blocking pallet mask.",
+      "reason": "The current facility catalog has one blocksWalk boolean for the whole rectangular footprint."
+    },
+    {
+      "id": "franking-form",
+      "label": "FRANKING FORM",
+      "recommendation": "Use a dedicated 1×1 certified stand as the bounded exception.",
+      "reason": "Terrarium has no prop-on-prop attachment contract for a tabletop-only stamper."
+    },
+    {
+      "id": "three-cell-art",
+      "label": "THREE-CELL ROW ART",
+      "recommendation": "Confirm whether 3×2 is only clearance; otherwise add a deliberate wide/multi-frame prop path.",
+      "reason": "A native 128u prop frame spans two post-rescale cells, so three-cell art cannot be silently inferred."
+    },
+    {
+      "id": "station-node-split",
+      "label": "STATION / NODE SPLIT",
+      "recommendation": "Keep dispatch_station as the visible queue and pneumatic_dispatch_node as the powered feeder.",
+      "reason": "Both requested ids then have distinct nouns and the riser has one unambiguous attachment target."
+    },
+    {
+      "id": "wallpass",
+      "label": "WALL-PASS SEMANTICS",
+      "recommendation": "Author tube_wallpass as a wall-slot visual; the tube route owns continuity through the wall cell.",
+      "reason": "Treating it as another floor blocker would double-charge the already non-walkable full-cell wall."
+    }
+  ]
+}

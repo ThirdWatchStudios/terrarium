@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-prop-id="canister_stamp:applications" data-projection="plan">
+  <title>Applications canister stamp</title>
+  <desc>Transparent per-work-type stamp overlay for canister_base: Applications.</desc>
+  <metadata>{"family":"quota-co-administrative-percussion-v1","id":"canister_stamp:applications","source":"owner-accepted-farm-form-priority2-calibration-v1"}</metadata>
+  <g id="approved-sku"><g id="applications-stamp"><path id="shape-1" d="M 48 57 H 70 V 76 H 48 Z" fill="#4E7D79"/><path id="shape-2" d="M 53 53 H 75 V 72 H 53 Z" fill="#D9D0B9" stroke="#294B3C" stroke-width="2"/><path id="shape-3" d="M 57 58 H 70 M 57 63 H 68 M 57 68 H 71" stroke="#294B3C" stroke-width="1.5"/></g></g>
+</svg>

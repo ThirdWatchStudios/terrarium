@@ -44,6 +44,6 @@ describe('review-only systems-first exterior prop gap', () => {
   });
 
   it('holds the export schema during review', () => {
-    expect(CURRENT_SCHEMA_VERSION).toBe(19);
+    expect(CURRENT_SCHEMA_VERSION).toBe(21);
   });
 });

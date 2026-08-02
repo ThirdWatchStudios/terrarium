@@ -60,6 +60,6 @@ describe('QuotaCo exterior genuine SVG source gate', () => {
   });
 
   it('holds the current export schema', () => {
-    expect(CURRENT_SCHEMA_VERSION).toBe(19);
+    expect(CURRENT_SCHEMA_VERSION).toBe(21);
   });
 });

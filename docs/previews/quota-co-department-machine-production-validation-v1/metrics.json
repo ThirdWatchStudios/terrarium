@@ -1,0 +1,174 @@
+{
+  "status": "owner-accepted-production-validation",
+  "direction": "administrative-percussion",
+  "facilityTemplates": 37,
+  "bakedInstances": 54,
+  "schemaVersion": 21,
+  "departmentAssetManifestVersion": 3,
+  "fillStates": {
+    "loadingDock": 3,
+    "intakeTraySmall": 4,
+    "intakeTrayLarge": 4,
+    "dispatchStation": 4
+  },
+  "tube": {
+    "outerDiameter": 28,
+    "linerDiameter": 22,
+    "lumenDiameter": 16,
+    "canisterDiameter": 10,
+    "radialClearance": 3,
+    "sockets": {
+      "west": {
+        "x": 32,
+        "y": 64
+      },
+      "east": {
+        "x": 96,
+        "y": 64
+      },
+      "south": {
+        "x": 64,
+        "y": 96
+      }
+    },
+    "joinRule": "exact-butt-at-adjacent-cell-boundary",
+    "floorRunBlocksWalk": true,
+    "wallPassOwnsWallCell": true
+  },
+  "workTypeStamps": [
+    "raw_records",
+    "structured_data",
+    "findings",
+    "reports",
+    "requirements",
+    "specifications",
+    "code",
+    "release",
+    "repairs",
+    "personnel_actions",
+    "supplies",
+    "applications",
+    "determinations"
+  ],
+  "farmFormPriority1Promoted": true,
+  "farmFormPriority1": {
+    "keypunchConsole": {
+      "suggestedFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "placement": "floor"
+    },
+    "partitionStraight": {
+      "placement": "cell-edge-furniture-slot",
+      "authoredStates": [
+        "horizontal",
+        "vertical"
+      ]
+    },
+    "partitionCorner": {
+      "placement": "cell-corner-furniture-slot"
+    },
+    "partitionEndcap": {
+      "placement": "cell-edge-furniture-slot",
+      "authoredStates": [
+        "horizontal",
+        "vertical"
+      ]
+    },
+    "keypunchBankBuilderPlaceable": false,
+    "refinementDebt": "replacement review v2 is open; production partition pixels remain stable until owner approval"
+  },
+  "farmFormPriority2Promoted": true,
+  "farmFormPriority2": {
+    "adjudicationDeskSet": {
+      "suggestedFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "placement": "floor"
+    },
+    "docketRack": {
+      "suggestedFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "placement": "floor",
+      "bakedStates": [
+        "empty",
+        "low",
+        "high",
+        "overflowing"
+      ]
+    },
+    "workTypeStamps": [
+      "applications",
+      "determinations"
+    ]
+  },
+  "priority2Promoted": true,
+  "priority3aPromoted": true,
+  "priority3aSuggestedFootprints": {
+    "terminalBank": {
+      "w": 3,
+      "h": 2
+    },
+    "compilerPress": {
+      "w": 2,
+      "h": 2
+    },
+    "partsCrib": {
+      "w": 2,
+      "h": 2
+    },
+    "workbench": {
+      "w": 2,
+      "h": 2
+    }
+  },
+  "priority3bPromoted": true,
+  "priority3bSuggestedFootprints": {
+    "recordsCabinet": {
+      "w": 2,
+      "h": 2
+    },
+    "badgePress": {
+      "w": 1,
+      "h": 2
+    },
+    "ledgerEngine": {
+      "w": 2,
+      "h": 2
+    },
+    "envelopePress": {
+      "w": 1,
+      "h": 2
+    },
+    "requisitionCounter": {
+      "w": 2,
+      "h": 2
+    },
+    "stockShelving": {
+      "w": 2,
+      "h": 2
+    }
+  },
+  "handCarriedItems": [
+    {
+      "id": "pay_envelope",
+      "templateId": "pay_envelope",
+      "displayName": "Pay Envelope",
+      "transport": "hand-carried",
+      "pneumaticCompatible": false,
+      "placeable": false,
+      "propInstanceId": "prop-pay_envelope",
+      "propDirectory": "props/pay-envelope",
+      "sprites": [
+        "props/pay-envelope/sprite@1x.png",
+        "props/pay-envelope/sprite@2x.png",
+        "props/pay-envelope/sprite@4x.png"
+      ]
+    }
+  ],
+  "machineAnimationDeferred": true
+}

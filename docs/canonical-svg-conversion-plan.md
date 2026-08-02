@@ -1,0 +1,402 @@
+# Canonical SVG source-conversion plan
+
+Status: **active; P0 department-machine ownership inversion complete locally**
+
+Recorded: 2026-08-02
+
+This plan records the remaining work required to make Terrarium's deliberately
+authored appearance genuinely source-owned by checked-in SVG files. It is a
+companion to:
+
+- [`content-pipeline-plan.md`](content-pipeline-plan.md), which decides what
+  appearance should be authored instead of procedural;
+- [`hand-editable-svg-pipeline-plan.md`](hand-editable-svg-pipeline-plan.md),
+  which defines the laptop/iPad edit, compile, review, and Unity handoff; and
+- [`core-part-library.md`](core-part-library.md), which tracks the authored
+  visual vocabulary.
+
+This document captures scope and sequence. It does not approve a visual
+direction, promote a proof, change a live importer, export a bundle, update
+Unity, or authorize a commit. Every family remains a bounded visual and
+production migration.
+
+## 1. Objective
+
+Move visual decisions that require human art direction out of TypeScript shape
+builders and into canonical SVG sources without changing the game's behavioral
+contracts.
+
+The desired end state is not “everything is SVG.” It is:
+
+- deliberately authored silhouettes, strokes, paint order, and signature
+  details are easy to edit as source art;
+- procedural code continues to own composition, metadata, bounded variation,
+  and intentionally generated effects;
+- every production appearance has an explicit, auditable authority; and
+- an SVG described as canonical actually controls the production pixels.
+
+## 2. Hard-backed canonical test
+
+An asset is **hard-backed by canonical SVG** only when all of the following are
+true:
+
+1. the checked-in SVG is selected by the live production import registry;
+2. editing that SVG changes the compiled production appearance;
+3. no normal build, test, preview, or freshness command can overwrite it;
+4. generated TypeScript/JSON contains no independent replacement geometry;
+5. source paint order, strokes, token placement, and literal colors survive the
+   importer unless an explicit reviewed adapter says otherwise;
+6. the canonical-source guide reports the SVG as the authority for its live
+   production receiver; and
+7. source, compiled render, exported bundle, and Unity receiver can be traced
+   to the same revision.
+
+Having an `.svg` file in `assets/` is insufficient. A generated SVG, a source
+that is ignored by the live receiver, or a source whose geometry is replaced
+by a fitter remains noncanonical under this definition.
+
+## 3. Ownership classifications
+
+The generated source inventory should classify every visual receiver as one of
+five states:
+
+| Classification | Meaning |
+| --- | --- |
+| `canonical-svg` | Checked-in SVG directly owns the live appearance |
+| `derived-from-svg` | Deterministic mirror/fit/variant derived only from canonical SVG plus declared data |
+| `procedural-intentional` | Code owns appearance by explicit design decision |
+| `source-only` | SVG exists as proof/reference but has no live production receiver |
+| `false-canonical` | SVG exists but a generator, fitter, or alternate builder still owns production pixels |
+
+`false-canonical` is a failing transitional state. The other four may all be
+valid when declared accurately.
+
+The inventory should also report:
+
+- canonical source paths;
+- production receiver ids;
+- importer/adapter;
+- declared mirrors, fits, states, and parameter derivations;
+- whether any command writes the source path;
+- compiled provenance; and
+- latest source/import/Unity evidence.
+
+## 4. Existing source-backed foundation
+
+The current repository already contains substantial source-backed art. Preserve
+and build on these systems rather than replacing them:
+
+- the QuotaCo workhorse prop bank and its source-to-`ShapeSpec` importer;
+- canonical character bodies, human heads, mapped hair bases, and the imported
+  outfit-component system, subject to the hair-production exception below;
+- the Maintained Hybrid floor and base-grass bank with its separate seam-aware
+  importer;
+- canonical bevel and equal-height wall source dependencies plus their approved
+  derivation ledger; and
+- accepted gameplay-candidate SVGs that are honestly marked source-only rather
+  than production-wired.
+
+Counts in generated reference guides are snapshots, not design constants.
+Regenerate the inventory when work resumes and trust live import registries
+over old documentation totals.
+
+## 5. Priority backlog
+
+### P0 — correct false-canonical ownership
+
+#### Department machines
+
+The checked-in department-machine SVGs are currently emitted from accepted
+TypeScript proof builders by `promoteQuotaCoDepartmentMachines.ts`, and the
+source freshness check is part of `assets:check`. They are therefore generated
+artifacts, not visual authority.
+
+Completion note (2026-08-02): the local ownership inversion is complete. The
+code-to-SVG promoter and its normal-build freshness commands are removed. The
+67 checked-in machine/state/overlay SVGs, read-only importer, source-authority
+regression, and canonical reference-guide coverage now form the production
+boundary for 38 templates, 54 baked prop instances, and 13 overlays. Focused
+department-machine validation passed 51/51 checks, source/production pixels
+remain identical for every baked state, the 326-source canonical guide is
+current, and `npm run build` is clean. The safe full runner stopped at its 2 GiB
+watchdog on `bodyArchetypes.test.ts`; that implicated file passed directly
+25/25. No bundle export, Unity import/Play Mode review, commit, or production
+promotion was performed in this slice.
+
+Required migration:
+
+1. freeze the currently accepted source files as the starting canonical bank;
+2. verify that every live template/state/overlay has an explicit source entry;
+3. remove the code-to-SVG generation command from ordinary source/build checks;
+4. retain only SVG-to-generated-art compilation in the normal pipeline;
+5. delete or quarantine obsolete proof builders after confirming no preview or
+   contract still depends on them; and
+6. prove source, compiled output, state/parameter coverage, normal/far context,
+   export, and Unity reception as separate gates.
+
+This is the first conversion because it validates the ownership law against a
+large, current, stateful production family.
+
+#### Head-aware hair production geometry
+
+The hair base SVGs are checked in, but the live all-head fitting path currently
+builds production geometry in `hairFitting.ts`. The apparent SVG source is not
+the complete visual authority.
+
+Preferred migration:
+
+- canonical SVG owns each hair style/facing silhouette and detail;
+- declarative head-fit data may position, scale, clip, or apply other explicitly
+  reviewed bounded transforms;
+- fit code must not redraw a replacement hairstyle; and
+- per-head SVG variants are added only where a bounded transform cannot retain
+  the accepted silhouette/read.
+
+Do not create a full hair-by-head SVG matrix by default. First prove that
+source-owned geometry plus declarative fitting can replace the code-owned
+builders.
+
+### P1 — signature world and character identity
+
+#### IRIS hardware
+
+Convert the live and dormant installation unit plus the charging dock from
+`PropTemplate`/`buildIrisUnit` geometry to canonical SVG sources.
+
+Preserve:
+
+- existing ids and live/dormant state relationship;
+- 2×1 installation and 1×1 dock contracts;
+- projection, pivot, console/interaction anchors, collision, facility
+  registration, and export paths;
+- the accepted distinction between live optic/diagnostics and dormant paint;
+  and
+- the currently approved visual baseline, which must be reconfirmed before
+  source extraction if checkout history is ambiguous.
+
+Live and dormant may share declared source components only if each final state
+remains directly inspectable and source-owned.
+
+#### Special character identity parts
+
+Convert these code-owned visual parts through the character importer/adapter
+system:
+
+- `outfit-dress`;
+- `outfit-hi-vis`;
+- `outfit-fab-chassis`;
+- `outfit-service-apron`; and
+- `acc-hairnet`.
+
+The SVG owns the visible garment/equipment art. Body rigs, facing mirrors,
+body-fit frames, recipe-only/selectability policy, z-order, and anchors remain
+metadata/adapter concerns.
+
+Migration should start with `outfit-fab-chassis` and `outfit-dress`, because
+their distinct silhouettes are the clearest cases of visual identity currently
+encoded as builders. Hi-vis, apron, and hairnet follow through the proven
+component adapter.
+
+### P2 — major gameplay facilities
+
+Convert the cafeteria facility family:
+
+- `serving-line`;
+- `service-scanner`;
+- `commercial-range`;
+- `prep-table`;
+- `dish-return`;
+- `walk-in-front`;
+- `dining-carrel`;
+- `cafeteria-table`; and
+- `tray-stack`.
+
+These are multi-cell or functionally distinctive facilities, not incidental
+clutter. Preserve footprints, plan/elevation projection, blocking rules,
+clinical-drain behavior, service-scanner interaction and literal optic color,
+registration, and export contract.
+
+The family should receive one shared context sheet at literal employee and room
+scale before source extraction, followed by per-asset source/import fidelity.
+
+### P3 — authored UI iconography
+
+Move deliberately authored UI/chrome icons and cursors from code-owned
+`ShapeSpec` paths to canonical SVG sources. Preserve stable catalog ids,
+tint/literal-color policy, tight-crop behavior, theme readability, and the
+clinical-line chrome register.
+
+Scope includes:
+
+- application/control and trim glyphs;
+- department, need, relationship, and other catalog/chrome symbols;
+- UI-state clinical line icons; and
+- cursors.
+
+Keep moods, floor bubbles, attention/emotion overlays, badges/emotes, poses,
+and other explicitly procedural atlases code-owned unless a later visual review
+changes that decision.
+
+Because this is a large vocabulary, migrate it by semantic family rather than
+one flag-day conversion. Add completeness tests against the exported icon
+catalog after each slice.
+
+### P4 — authored exterior base silhouettes
+
+Convert the remaining deliberate flora bases:
+
+- `tree-sapling`;
+- `bush-cluster`;
+- `wildflower-patch`;
+- `tall-grass-clump`; and
+- `bracken-patch`.
+
+The canonical SVG owns the recognizable base silhouette and signature internal
+structure. Seeded lobe, blade, cluster, and other microvariation may remain
+procedural if it derives from and does not replace that source-owned design.
+
+Keep small ground speckles, tufts, rake marks, and similar environmental
+microdetail procedural unless separately promoted.
+
+## 6. Explicit non-conversion set
+
+Do not mechanically convert every code-owned visual. The following remain
+procedural by default:
+
+- palette resolution, outlines, LOD machinery, atlas packing, and composition;
+- moods, bubbles, badges/emotes, attention/emotion overlays, and pose
+  composition;
+- shadows and contact policies that are not literal authored source paint;
+- minor clutter, vents, generic hardware detail, and non-signature accessories;
+- floor/ground microvariation after a human-curated base;
+- per-wall-template material detail where the wall plan retains it;
+- topology transforms and explicitly approved mirrors/derivations; and
+- the separately deferred 47-frame grass fringe until its own visual proof.
+
+Internal renderer-only pictograms such as unit body/head placeholders need not
+become standalone art assets unless they become player-visible identity.
+
+## 7. Family migration protocol
+
+Every family follows the same bounded sequence.
+
+### Gate 1 — current-authority audit
+
+- resolve live receiver ids and all states/facings/parameters;
+- identify which files and functions currently own visible geometry;
+- identify runtime metadata and Unity receivers that must remain unchanged;
+- inspect uncommitted changes and current visual-approval status; and
+- stop if docs, production state, or accepted pixels disagree.
+
+### Gate 2 — source proposal
+
+- render the current production appearance at its real projection and scale;
+- author or extract genuine editor-safe SVG source files;
+- record state/component/facing relationships in a manifest;
+- keep source promotion separate from any redesign unless redesign was
+  explicitly requested; and
+- present the source and production control for visual approval.
+
+### Gate 3 — deterministic importer
+
+- compile source art into the existing production receiver;
+- preserve handwritten ids, metadata, parameters, anchors, footprints, and
+  registration;
+- retain source strokes, paint order, token mapping, and literal colors;
+- emit source-path/hash provenance with generated art; and
+- ensure ordinary builds check freshness but never rewrite sources.
+
+### Gate 4 — source/import proof
+
+- compare standalone source and compiled output at close resolution;
+- compare normal and far gameplay-scale renders;
+- cover crowded/occluded and light/dark contexts where applicable;
+- cover states, facings, parameter extrema, palette behavior, and mirrors/fits;
+- update only intentional snapshots; and
+- stop for owner visual approval.
+
+### Gate 5 — production registration and export
+
+- switch the live receiver from code builder to imported art;
+- verify no fallback path silently restores the old geometry;
+- run focused tests, full relevant asset checks, build, and deterministic
+  headless export;
+- verify manifest/facility/catalog completeness; and
+- report browser/headless evidence separately from Unity evidence.
+
+### Gate 6 — Unity candidate and promotion
+
+- import a fresh revision-stamped bundle through the real Sprite Toolkit path;
+- inspect the actual catalog receiver and composed Play Mode pixels;
+- confirm projection, scale, anchors, navigation/collision, state changes,
+  sorting, and room/employee read;
+- promote only after explicit visual acceptance; and
+- record source revision and bundle digest in the game-side lock.
+
+## 8. Required regression shields
+
+The canonical-source program should add or retain tests for:
+
+- every declared `canonical-svg` receiver resolving to an existing checked-in
+  source;
+- no production check/write command targeting canonical source paths;
+- no `false-canonical` entry in the generated ownership inventory;
+- source file hash/provenance matching compiled output;
+- deterministic compilation from a clean checkout;
+- source-versus-compiled raster fidelity at defined scales;
+- complete state/facing/parameter coverage;
+- no unreviewed fallback to procedural geometry;
+- unchanged ids, footprints, anchors, projections, registration, and export
+  paths; and
+- bundle provenance matching the Unity-side promoted lock.
+
+Editor round-trip interoperability belongs to the hand-editable-pipeline gate,
+but every newly converted family must conform to the qualified SVG profile.
+
+## 9. Completion definition
+
+An asset family is complete only when:
+
+- its visual authority classification is accurate;
+- all required canonical sources and manifests are checked in;
+- ordinary builds cannot overwrite those sources;
+- generated production art is reproducible and carries source provenance;
+- all live receivers use the imported appearance without hidden fallback;
+- focused and full relevant validation passes;
+- the standard source/import and composed visual gates are accepted;
+- a fresh Sprite Toolkit bundle contains the expected art/catalog entries;
+- the real Unity candidate import and Play Mode check are complete; and
+- production promotion, documentation, and revision lock are deliberately
+  recorded.
+
+A passing build, a good standalone SVG, a browser export, or a generated guide
+entry is not sufficient on its own.
+
+## 10. Suggested execution sequence
+
+Run one family at a time, preserving visual approval boundaries:
+
+1. add the ownership classifications and failing `false-canonical` audit;
+2. invert department-machine ownership;
+3. restore canonical authority to production hair fits;
+4. convert IRIS installation/dock art;
+5. convert FAB chassis and dress, then the remaining special parts;
+6. convert the cafeteria facilities;
+7. migrate UI iconography by semantic family; and
+8. convert the five flora base silhouettes.
+
+After each family, leave a clean completion record before starting the next.
+Do not combine unrelated families merely because they share the SVG importer.
+
+## 11. Resume checklist
+
+When canonical-source work resumes:
+
+1. regenerate the live SVG reference guide and ownership inventory;
+2. re-audit the current worktree rather than trusting the 2026-08-02 snapshot;
+3. confirm visual approval and production registration separately;
+4. select the next bounded family from the execution sequence;
+5. preserve the family-specific gameplay and export contracts;
+6. stop after the source/import visual gate for explicit acceptance; and
+7. treat export, Unity Candidate, production promotion, and commit as distinct
+   subsequent decisions.

@@ -4,6 +4,7 @@ import type {
   ShapeSpec,
 } from '../core/types';
 import { QUOTA_CO_WORKHORSE_PROP_ART } from './generated/quotaCoWorkhorseArt';
+import { QUOTA_CO_DEPARTMENT_MACHINE_ART } from './generated/quotaCoDepartmentMachineArt';
 
 export interface ImportedPropArt {
   id: string;
@@ -12,10 +13,13 @@ export interface ImportedPropArt {
   sourceSha256: string;
   paletteDefaults: PropPalette;
   variants: Readonly<Record<string, readonly ShapeSpec[]>>;
+  /** Optional canonical flat SVGs for source-exact authored SKU export. */
+  sourceSvgVariants?: Readonly<Record<string, string>>;
 }
 
 const ART_BY_ID = new Map<string, ImportedPropArt>(
-  QUOTA_CO_WORKHORSE_PROP_ART.map((entry) => [entry.id, entry]),
+  [...QUOTA_CO_WORKHORSE_PROP_ART, ...QUOTA_CO_DEPARTMENT_MACHINE_ART]
+    .map((entry) => [entry.id, entry]),
 );
 
 function discrete(
@@ -45,6 +49,16 @@ function discreteWithCanonical(
 
 function variantKey(id: string, params: Readonly<Record<string, number>>): string {
   switch (id) {
+    case 'loading_dock':
+      return `fill=${discrete(params, 'fill', 0, 2, 1, 0)}`;
+    case 'intake_tray_small':
+    case 'intake_tray_large':
+    case 'dispatch_station':
+    case 'docket_rack':
+      return `fill=${discrete(params, 'fill', 0, 3, 1, 0)}`;
+    case 'cubicle_partition_straight':
+    case 'cubicle_partition_endcap':
+      return `facing=${discrete(params, 'facing', 0, 1, 1, 0)}`;
     case 'printer':
     case 'printer-jammed':
       return `width=${discrete(params, 'width', 44, 72, 2, 56)}`;
@@ -171,4 +185,17 @@ export function authoredPropShapes(
 
 export function authoredPropArt(id: string): ImportedPropArt | undefined {
   return ART_BY_ID.get(id);
+}
+
+/** Resolve a source-exact canonical SVG when an authored family supplies one. */
+export function authoredPropSvg(
+  id: string,
+  params: Readonly<Record<string, number>>,
+): string | undefined {
+  const art = ART_BY_ID.get(id);
+  if (!art?.sourceSvgVariants) return undefined;
+  const key = variantKey(id, params);
+  const svg = art.sourceSvgVariants[key];
+  if (!svg) throw new Error(`Missing authored prop SVG variant ${id}/${key}`);
+  return svg;
 }

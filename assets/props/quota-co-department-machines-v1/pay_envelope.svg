@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-prop-id="pay_envelope" data-projection="plan">
+  <title>Pay Envelope</title>
+  <desc>QuotaCo Certified Pay Envelope. Administrative Percussion family; standardized SKU.</desc>
+  <metadata>{"family":"quota-co-administrative-percussion-v1","id":"pay_envelope","source":"owner-accepted-internal-services-calibration-v1"}</metadata>
+  <g id="approved-sku"><g id="hand-carried-pay-envelope"><path id="shape-1" d="M 40 51 Q 40 47 44 47 H 84 Q 88 47 88 51 V 80 Q 88 84 84 84 H 44 Q 40 84 40 80 Z" fill="#252A28"/><path id="shape-2" d="M 44 51 H 84 V 80 H 44 Z" fill="#D9D0B9"/><path id="sealed-payroll-flap" d="M 44 53 L 64 69 L 84 53 V 60 L 64 76 L 44 60 Z" fill="#294B3C"/><path id="envelope-fold" d="M 44 79 L 57 67 M 84 79 L 71 67" fill="none" stroke="#4E7D79" stroke-width="2" stroke-linecap="round"/><circle id="payroll-seal" cx="64" cy="69" r="5" fill="#4E7D79" stroke="#252A28" stroke-width="2"/></g></g>
+</svg>

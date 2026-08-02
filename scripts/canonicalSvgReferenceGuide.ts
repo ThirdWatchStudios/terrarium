@@ -11,6 +11,10 @@ import { Resvg } from '@resvg/resvg-js';
 
 import type { ShapeSpec } from '../src/core/types';
 import { IMPORTED_PART_PROVENANCE } from '../src/parts/generated/importedPartArt';
+import {
+  DEPARTMENT_MACHINE_TEMPLATE_DEFINITIONS,
+  DEPARTMENT_STAMP_DEFINITIONS,
+} from '../src/props/departmentMachineManifest';
 import { QUOTA_CO_WORKHORSE_PROP_ART } from '../src/props/generated/quotaCoWorkhorseArt';
 import { QUOTA_CO_MAINTAINED_HYBRID_SURFACE_ART } from '../src/tiles/generated/quotaCoMaintainedHybridSurfaceArt';
 import {
@@ -42,6 +46,7 @@ export type CanonicalSvgCategory =
   | 'characters/outfit'
   | 'props/workhorse'
   | 'props/outdoor'
+  | 'props/department-machines'
   | 'props/deferred-gameplay'
   | 'surfaces/floors'
   | 'surfaces/grass'
@@ -320,6 +325,54 @@ export async function collectCanonicalSvgReferenceInventory(
         prop.sourceFile,
         prop.id,
         propCategory(prop.id),
+        'production',
+      ),
+    );
+  }
+
+  const departmentMachineSources: Array<{
+    readonly assetId: string;
+    readonly sourceFile: string;
+  }> = [
+    ...DEPARTMENT_MACHINE_TEMPLATE_DEFINITIONS
+      .flatMap((template) => template.variants.map((variant) => ({
+      assetId: template.id,
+      sourceFile: path.posix.join(
+        'assets/props/quota-co-department-machines-v1',
+        variant.sourceFile,
+      ),
+      }))),
+    ...DEPARTMENT_STAMP_DEFINITIONS.map((overlay) => ({
+      assetId: `canister-stamp-${overlay.id}`,
+      sourceFile: path.posix.join(
+        'assets/props/quota-co-department-machines-v1',
+        overlay.sourceFile,
+      ),
+    })),
+  ];
+  departmentMachineSources.sort(
+    (left, right) => compareText(left.sourceFile, right.sourceFile),
+  );
+  const departmentMachineSourceFiles = departmentMachineSources
+    .map(({ sourceFile }) => sourceFile);
+  const actualDepartmentMachineFiles = relativeFiles(
+    root,
+    await svgFilesUnder(
+      path.join(root, 'assets', 'props', 'quota-co-department-machines-v1'),
+    ),
+  );
+  assertExactCoverage(
+    'Department machine',
+    actualDepartmentMachineFiles,
+    departmentMachineSourceFiles,
+  );
+  for (const source of departmentMachineSources) {
+    entries.push(
+      await sourceEntry(
+        root,
+        source.sourceFile,
+        source.assetId,
+        'props/department-machines',
         'production',
       ),
     );
@@ -855,9 +908,13 @@ function overviewGroups(
     },
     {
       id: 'props',
-      label: 'Workhorse and outdoor props',
-      note: 'Live canonical prop SVGs, including alternate operational states.',
-      entries: entriesFor(inventory, ['props/workhorse', 'props/outdoor']),
+      label: 'Workhorse, outdoor, and department-machine props',
+      note: 'Live canonical prop SVGs, including machine states and canister overlays.',
+      entries: entriesFor(inventory, [
+        'props/workhorse',
+        'props/outdoor',
+        'props/department-machines',
+      ]),
     },
     {
       id: 'surfaces',
@@ -963,6 +1020,12 @@ function propSurfaceSheet(
         label: 'Outdoor carriers',
         note: 'Canonical exterior props on existing live IDs and contracts.',
         entries: entriesFor(inventory, ['props/outdoor']),
+      },
+      {
+        id: 'props-department-machines',
+        label: 'Department machines and transport overlays',
+        note: 'Canonical live machine states, facings, canister SKU, and work-type stamps.',
+        entries: entriesFor(inventory, ['props/department-machines']),
       },
       {
         id: 'floors',
@@ -1117,6 +1180,7 @@ function indexHtml(inventory: CanonicalSvgReferenceInventory): string {
       `${categoryCount(inventory, [
         'props/workhorse',
         'props/outdoor',
+        'props/department-machines',
         'props/deferred-gameplay',
         'surfaces/floors',
         'surfaces/grass',

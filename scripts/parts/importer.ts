@@ -345,8 +345,11 @@ function validateAttributes(
       fail(source, 'group/root opacity cannot be represented by ShapeSpec');
     }
   }
-  if (!ignored && attrs['stroke-linecap'] !== undefined && attrs['stroke-linecap'].toLowerCase() !== 'round') {
-    fail(source, 'only round stroke linecaps are supported');
+  if (!ignored && attrs['stroke-linecap'] !== undefined && !['round', 'butt', 'square'].includes(attrs['stroke-linecap'].toLowerCase())) {
+    fail(source, 'stroke-linecap must be round, butt, or square');
+  }
+  if (!ignored && attrs['stroke-linejoin'] !== undefined && !['round', 'miter', 'bevel'].includes(attrs['stroke-linejoin'].toLowerCase())) {
+    fail(source, 'stroke-linejoin must be round, miter, or bevel');
   }
   if (!ignored && attrs['stroke-linejoin'] !== undefined && attrs['stroke-linejoin'].toLowerCase() !== 'round') {
     fail(source, 'only round stroke linejoins are supported');
@@ -600,8 +603,13 @@ function compilePath(
 
   let strokeWidth: number | undefined;
   if (stroke) {
-    if (paint.strokeLinecap?.toLowerCase() !== 'round' || paint.strokeLinejoin?.toLowerCase() !== 'round') {
-      fail(context.source, 'stroked paths must explicitly use round linecaps and linejoins');
+    const linecap = paint.strokeLinecap?.toLowerCase();
+    const linejoin = paint.strokeLinejoin?.toLowerCase();
+    if (!linecap || !['round', 'butt', 'square'].includes(linecap)) {
+      fail(context.source, 'stroked paths must explicitly use a supported linecap');
+    }
+    if (!linejoin || !['round', 'miter', 'bevel'].includes(linejoin)) {
+      fail(context.source, 'stroked paths must explicitly use a supported linejoin');
     }
     strokeWidth = parsePositiveNumber(context.source, 'stroke-width', paint.strokeWidth);
     strokeWidth = roundNumber(strokeWidth * strokeScale(context.source, matrix));
@@ -641,6 +649,8 @@ function compilePath(
   if (stroke) {
     shape.stroke = stroke;
     shape.strokeWidth = strokeWidth;
+    shape.strokeLinecap = paint.strokeLinecap?.toLowerCase() as ShapeSpec['strokeLinecap'];
+    shape.strokeLinejoin = paint.strokeLinejoin?.toLowerCase() as ShapeSpec['strokeLinejoin'];
   }
   if (opacity !== undefined) {
     const roundedOpacity = roundNumber(opacity);

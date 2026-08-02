@@ -28,7 +28,7 @@ import { ATTENTION_PUFF_ART, type AttentionPuff, type AttentionPuffArt } from '.
 import { getIcon } from '../parts/icons';
 import { getPose, poseVariantFor, type Pose, type PoseTransforms, type PoseVariant } from '../parts/poses';
 import { normalizedRiggedAccessories } from './recipe';
-import { authoredPropArt } from '../props/authoredArt';
+import { authoredPropArt, authoredPropSvg } from '../props/authoredArt';
 import { PROP_TEMPLATES } from '../props/templates';
 import {
   FLOOR_TEMPLATES,
@@ -197,7 +197,7 @@ function emitColorShape(s: ShapeSpec, resolve: ResolveToken): string {
   if (s.stroke) {
     attrs.push(`stroke="${resolve(s.stroke)}"`);
     attrs.push(`stroke-width="${s.strokeWidth ?? 1.5}"`);
-    attrs.push(`stroke-linecap="round" stroke-linejoin="round"`);
+    attrs.push(`stroke-linecap="${s.strokeLinecap ?? 'round'}" stroke-linejoin="${s.strokeLinejoin ?? 'round'}"`);
   }
   if (s.opacity !== undefined) attrs.push(`opacity="${s.opacity}"`);
   return `<path ${attrs.join(' ')}/>`;
@@ -208,13 +208,13 @@ function emitOutlineShape(s: ShapeSpec, style: StyleSheet): string {
   if (s.fill) {
     return (
       `<path d="${s.d}" fill="${color}" stroke="${color}" ` +
-      `stroke-width="${width * 2}" stroke-linejoin="round" stroke-linecap="round"/>`
+      `stroke-width="${width * 2}" stroke-linejoin="${s.strokeLinejoin ?? 'round'}" stroke-linecap="${s.strokeLinecap ?? 'round'}"/>`
     );
   }
   // Stroke-only shape that participates in the silhouette (e.g. mug handle).
   return (
     `<path d="${s.d}" fill="none" stroke="${color}" ` +
-    `stroke-width="${(s.strokeWidth ?? 1.5) + width * 2}" stroke-linejoin="round" stroke-linecap="round"/>`
+    `stroke-width="${(s.strokeWidth ?? 1.5) + width * 2}" stroke-linejoin="${s.strokeLinejoin ?? 'round'}" stroke-linecap="${s.strokeLinecap ?? 'round'}"/>`
   );
 }
 
@@ -742,7 +742,7 @@ function emitMaskShape(s: ShapeSpec): string {
   attrs.push(`fill="${s.fill ? (tokenOf(s.fill) ? '#FFFFFF' : s.fill) : 'none'}"`);
   if (s.stroke) {
     attrs.push(`stroke="${tokenOf(s.stroke) ? '#FFFFFF' : s.stroke}"`);
-    attrs.push(`stroke-width="${s.strokeWidth ?? 1.5}" stroke-linecap="round" stroke-linejoin="round"`);
+    attrs.push(`stroke-width="${s.strokeWidth ?? 1.5}" stroke-linecap="${s.strokeLinecap ?? 'round'}" stroke-linejoin="${s.strokeLinejoin ?? 'round'}"`);
   }
   if (s.opacity !== undefined) attrs.push(`opacity="${s.opacity}"`);
   return `<path ${attrs.join(' ')}/>`;
@@ -759,7 +759,7 @@ function emitIconMask(s: ShapeSpec): string {
   const attrs: string[] = [`d="${s.d}"`, `fill="${s.fill ? '#FFFFFF' : 'none'}"`];
   if (s.stroke) {
     attrs.push('stroke="#FFFFFF"');
-    attrs.push(`stroke-width="${s.strokeWidth ?? 1.5}" stroke-linecap="round" stroke-linejoin="round"`);
+    attrs.push(`stroke-width="${s.strokeWidth ?? 1.5}" stroke-linecap="${s.strokeLinecap ?? 'round'}" stroke-linejoin="${s.strokeLinejoin ?? 'round'}"`);
   }
   if (s.opacity !== undefined) attrs.push(`opacity="${s.opacity}"`);
   return `<path ${attrs.join(' ')}/>`;
@@ -1336,6 +1336,16 @@ export function composeProp(
 ): string {
   const template = PROP_TEMPLATES.find((t) => t.id === prop.templateId);
   if (!template) return svgWrap('', pixelSize ?? style.render.baseSize);
+  const canonicalSvg = authoredPropSvg(prop.templateId, prop.params);
+  if (canonicalSvg && options?.restyleAuthoredSvg !== true && !isClinicalStyle(style)) {
+    const size = pixelSize ?? style.render.baseSize;
+    return canonicalSvg.replace(
+      /<svg\b[^>]*>/,
+      (root) => root
+        .replace(/\bwidth="[^"]*"/, `width="${size}"`)
+        .replace(/\bheight="[^"]*"/, `height="${size}"`),
+    );
+  }
   const palette = propPaletteForRender(prop, style, options);
   const shapes = template.build(prop.params, palette);
   const resolve = makePropResolver(palette);

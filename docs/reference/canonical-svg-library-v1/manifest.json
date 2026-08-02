@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "guide": "Terrarium canonical SVG library",
   "counts": {
-    "exactSourceFiles": 259,
-    "production": 181,
+    "exactSourceFiles": 326,
+    "production": 248,
     "productionDependencies": 74,
     "deferred": 4,
     "derivedWallFrames": 47,
@@ -13,6 +13,7 @@
       "characters/head": 21,
       "characters/outfit": 44,
       "props/deferred-gameplay": 4,
+      "props/department-machines": 67,
       "props/outdoor": 8,
       "props/workhorse": 45,
       "surfaces/floors": 12,
@@ -841,6 +842,475 @@
       "status": "deferred",
       "sourceFile": "assets/props/quota-co-gameplay-candidates-v1/surveillance-sensor.svg",
       "sha256": "3c4c04c7363455fe0b12fd332e613440e1f56bcce588fa0d5e50f5e418602323"
+    },
+    {
+      "assetId": "adjudication_desk_set",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/adjudication_desk_set.svg",
+      "sha256": "65768e8a998ef688b768e5230349e71a570ca8aa09e086b0ff0df701e104dfa4"
+    },
+    {
+      "assetId": "badge_press",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/badge_press.svg",
+      "sha256": "1b640c08d7276bf8ff99c6828590c154fd95f3d7e75e38c24d3729af9ebc9635"
+    },
+    {
+      "assetId": "binding_press",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/binding_press.svg",
+      "sha256": "21d612892e0ff003c8eb550977b06f72ae6e62eac4dd6733c7ec22ce480266e8"
+    },
+    {
+      "assetId": "calculating_engine",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/calculating_engine.svg",
+      "sha256": "4293008f50a1451352864300015420b911015b718d82f73640d2fd0000ccd301"
+    },
+    {
+      "assetId": "canister_base",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_base.svg",
+      "sha256": "c3cbac6faecba3f4ea18e1cbd3cea5a152abf6eab0347a6fdfdad125b22e881d"
+    },
+    {
+      "assetId": "canister-stamp-applications",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_applications.svg",
+      "sha256": "03c6f42466e0fbe71dd014cdb55d86f2d63bdcd83ddf99966795ad0d61737eda"
+    },
+    {
+      "assetId": "canister-stamp-code",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_code.svg",
+      "sha256": "978dbfd5e82f6b041080202446f1434214486f3ab10d5ae9474fade56965c398"
+    },
+    {
+      "assetId": "canister-stamp-determinations",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_determinations.svg",
+      "sha256": "8d3323ff459a7eb0b3fe77cfa2298566d00400c8ff51bdcbedcfd89ff0c4832c"
+    },
+    {
+      "assetId": "canister-stamp-findings",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_findings.svg",
+      "sha256": "d73e0d570eb8f8b961a3e7846b5c35bbe9f5312b264ab757b9f0287b0d7da9f1"
+    },
+    {
+      "assetId": "canister-stamp-personnel_actions",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_personnel_actions.svg",
+      "sha256": "3254002fa1d0f38fe60c71397de3b4fdfa8788096996becb062ae56d41bc4f5b"
+    },
+    {
+      "assetId": "canister-stamp-raw_records",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_raw_records.svg",
+      "sha256": "5d535be51bdf0fe0e53791917779cd0c2e18d9c58ee7659cf5e8a67b2aede608"
+    },
+    {
+      "assetId": "canister-stamp-release",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_release.svg",
+      "sha256": "766dc6ed092447de9633f0b4f20fa780ba5a65767bada442205a59a3980d9078"
+    },
+    {
+      "assetId": "canister-stamp-repairs",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_repairs.svg",
+      "sha256": "5c27da0ac46aa0eaabe8a9fa288133e078ccdb8bb83f5ea518db4de0f0463a62"
+    },
+    {
+      "assetId": "canister-stamp-reports",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_reports.svg",
+      "sha256": "79197aeddf8a0bcad147f95b956097d73a6cecc7f1fe118594f80b3207a9b917"
+    },
+    {
+      "assetId": "canister-stamp-requirements",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_requirements.svg",
+      "sha256": "96c8bfdbaac67babb219a49ebee2412de4b46c7454da7b7f7dee7d52899280c6"
+    },
+    {
+      "assetId": "canister-stamp-specifications",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_specifications.svg",
+      "sha256": "d289f97611ffd547055ab7a8a514d08aea7b32acbc5c5a51b28b745a6f77e04a"
+    },
+    {
+      "assetId": "canister-stamp-structured_data",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_structured_data.svg",
+      "sha256": "6853c26ead0bbec7d79d2782ec0e2e635c51e6856e5b057df2af838dd88682cb"
+    },
+    {
+      "assetId": "canister-stamp-supplies",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_supplies.svg",
+      "sha256": "e3d6ec7500001c2ed1e92949c23ddcf3b109bd3d2714fe40302ca73c718e306b"
+    },
+    {
+      "assetId": "comparator",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/comparator.svg",
+      "sha256": "28d24be2450dd4d32f504e291e1da4706cbdaf0b5b7ca8426525d87be2b87c43"
+    },
+    {
+      "assetId": "compiler_press",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/compiler_press.svg",
+      "sha256": "14811a55b922f95de7712bae8bd537c19c7dcb58e6011979ccd11defd46b4754"
+    },
+    {
+      "assetId": "cubicle_partition_corner",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/cubicle_partition_corner.svg",
+      "sha256": "cb81712784da4cfca6c6aeff2086764b42fc75c420cfe338e7e109a239314956"
+    },
+    {
+      "assetId": "cubicle_partition_endcap",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/cubicle_partition_endcap--horizontal.svg",
+      "sha256": "fdf0a6c24a32feb17030b98ed496110849a9fe5e8eb6eb2d414a9d3556b72842"
+    },
+    {
+      "assetId": "cubicle_partition_endcap",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/cubicle_partition_endcap--vertical.svg",
+      "sha256": "21abd0ca700ed2c2ca54cddb229eff60b42bd7b8a91962dd7c07ca3ee596ffc9"
+    },
+    {
+      "assetId": "cubicle_partition_straight",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/cubicle_partition_straight--horizontal.svg",
+      "sha256": "c2bc4bc8b88ee60efcfad84e8b12107797644b20cb9144ad357a98f6203ede17"
+    },
+    {
+      "assetId": "cubicle_partition_straight",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/cubicle_partition_straight--vertical.svg",
+      "sha256": "a5fc5a7b892d43034d57f832e5a2c34b99b7c88eacd79441bfcaf8301505e29b"
+    },
+    {
+      "assetId": "delivery_uplink",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/delivery_uplink.svg",
+      "sha256": "de8b6b74c5ec21ff2833aa32b50158c4871b3dd34390a838d9d93b73234d8f28"
+    },
+    {
+      "assetId": "dispatch_station",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/dispatch_station--empty.svg",
+      "sha256": "7b5dbf515c62882a7d6521d8cf4ec9ce60608812ee857ba18a0809b6c421d20c"
+    },
+    {
+      "assetId": "dispatch_station",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/dispatch_station--high.svg",
+      "sha256": "2d3ff29d158240192999fa6d97c1b178acfed91c48ffa900d2c464d4144c8404"
+    },
+    {
+      "assetId": "dispatch_station",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/dispatch_station--low.svg",
+      "sha256": "1f5ef517ebd214b49e6af70896c1bf9e59b3b36f7fc042d99437dc8792b70799"
+    },
+    {
+      "assetId": "dispatch_station",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/dispatch_station--overflowing.svg",
+      "sha256": "2fe96b5e35e97b83d499194805d9441b07c8873fe065fc969b2e50cbd1918a0c"
+    },
+    {
+      "assetId": "docket_rack",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/docket_rack--empty.svg",
+      "sha256": "1c8daa6281361a1f3a49dd3e7e1f6956dcf34068f984b62ceb8615e3081663f9"
+    },
+    {
+      "assetId": "docket_rack",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/docket_rack--high.svg",
+      "sha256": "54350caa6b5c964d66b4351d00be39dde90569cacbb3fd2f9eaea164290b7afa"
+    },
+    {
+      "assetId": "docket_rack",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/docket_rack--low.svg",
+      "sha256": "f36d6da55c4ce1d26b8e8339d3b20fc6766fa7128fb57f4dfb36b64eec0054dd"
+    },
+    {
+      "assetId": "docket_rack",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/docket_rack--overflowing.svg",
+      "sha256": "5b49cca81bcac8c1f020199edb7751d956cd6e8349347a670056d60d0ae0f9b0"
+    },
+    {
+      "assetId": "envelope_press",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/envelope_press.svg",
+      "sha256": "febfc0abeabf73f7d38433a8e4387f8730d863001c363f7d72ec9aef5aeaac2c"
+    },
+    {
+      "assetId": "franking_machine",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/franking_machine.svg",
+      "sha256": "63274aacc5f480b22c4d51a89dc28aada028c875e86724eb72c82d7b8eb40523"
+    },
+    {
+      "assetId": "intake_tray_large",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/intake_tray_large--empty.svg",
+      "sha256": "110be12cb6151f9d4bc5f696e8cb0012732f4f26d82665c14dcb8629bf234fac"
+    },
+    {
+      "assetId": "intake_tray_large",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/intake_tray_large--high.svg",
+      "sha256": "09f247084938d3b4567804ec012f0888467d5c78a1ace4f9032e929d2f8d66d3"
+    },
+    {
+      "assetId": "intake_tray_large",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/intake_tray_large--low.svg",
+      "sha256": "de550e1e0c9ae5ed49f5d191c8c793d8265ac0dd34c068c7bf7f5bcf58f44c56"
+    },
+    {
+      "assetId": "intake_tray_large",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/intake_tray_large--overflowing.svg",
+      "sha256": "ba37b0728b641d0074d31806798a6d90650bcb228d3fe695d002bbe5d0147d60"
+    },
+    {
+      "assetId": "intake_tray_small",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/intake_tray_small--empty.svg",
+      "sha256": "740b5d819e9c06a98199505cc4a4c656ade6067a75ba96a7d3f13218b85b5aec"
+    },
+    {
+      "assetId": "intake_tray_small",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/intake_tray_small--high.svg",
+      "sha256": "d8a640f1fe05d7aa1ff223c04e26f57880876193d2d070993ed8eb4b6933284d"
+    },
+    {
+      "assetId": "intake_tray_small",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/intake_tray_small--low.svg",
+      "sha256": "bc98e2b6dd67927b1144100f91cd9427cd16482113e967211a72ab70c503a873"
+    },
+    {
+      "assetId": "intake_tray_small",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/intake_tray_small--overflowing.svg",
+      "sha256": "21b14907a7723efd3a87275c18792eaacb881e49a5e9f2d420e5ef75e3e7d367"
+    },
+    {
+      "assetId": "keypunch_bank",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/keypunch_bank.svg",
+      "sha256": "e9619984b111cde4fd502ed8ac07e49b5cbd008c21db21c6733ddfecd77e46fa"
+    },
+    {
+      "assetId": "keypunch_console",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/keypunch_console.svg",
+      "sha256": "ebdc23f8ac03042223297f8149f24b9e5e62d9f7452962670d70ff8eee2a2488"
+    },
+    {
+      "assetId": "ledger_engine",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/ledger_engine.svg",
+      "sha256": "d5753a56f8c327f2978b26f606819cdc3cfacfd620c544cda84b60a080fb23e0"
+    },
+    {
+      "assetId": "loading_dock",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/loading_dock--empty.svg",
+      "sha256": "f5727ec94685232f75264dac33b08d2369491264b912d2e8d8601125649af3f2"
+    },
+    {
+      "assetId": "loading_dock",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/loading_dock--high.svg",
+      "sha256": "781ab7dd19a9bed1297bfc22ea96acb919bd83dcf7d4a6de141e44e326103c8a"
+    },
+    {
+      "assetId": "loading_dock",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/loading_dock--low.svg",
+      "sha256": "31f8847d09fe6fa5a19cca338d789af62ce98f09b4580080bab5c2be42efc3ed"
+    },
+    {
+      "assetId": "manifest_press",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/manifest_press.svg",
+      "sha256": "92f5031a35182f7306dff59174fd00f42c3232516306dd29e0d51e5618f09bb3"
+    },
+    {
+      "assetId": "parts_crib",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/parts_crib.svg",
+      "sha256": "4a13d307ef79f6fbee569398a0c7b40d606ee2fc496b7fe8d4aa9d670b00ede8"
+    },
+    {
+      "assetId": "pay_envelope",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/pay_envelope.svg",
+      "sha256": "84d92d09c76c24611fc1057373dd961e965ae4b65ed597751f1609fa2f4b4939"
+    },
+    {
+      "assetId": "pneumatic_dispatch_node",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/pneumatic_dispatch_node.svg",
+      "sha256": "f01522a7fb63a4af45343421b76fad5bcd2446159eeed6716c4e5c5fb04cab75"
+    },
+    {
+      "assetId": "records_cabinet",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/records_cabinet.svg",
+      "sha256": "8173aa3e6cdf634fb359831a38b8af5378926ea3bee74a91beaf08a93d60f0e7"
+    },
+    {
+      "assetId": "requisition_counter",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/requisition_counter.svg",
+      "sha256": "cccd539ea8f413793c78327899c97766112a9f47afdd7c9fbfc7900709de1dd8"
+    },
+    {
+      "assetId": "rotary_duplicator",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/rotary_duplicator.svg",
+      "sha256": "2ccd9ba2e495e361591274d39ee346a4c7d5de4da1db84067a2fe975e750af99"
+    },
+    {
+      "assetId": "sorting_frame",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/sorting_frame.svg",
+      "sha256": "0e534fd5bf81e33963a4746d70f64b924702cfe57f601ae07c30bffa1b1634f4"
+    },
+    {
+      "assetId": "stock_shelving",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/stock_shelving.svg",
+      "sha256": "1d987860b2ee6294d94f99fcce3bf62ab0cd44ee2b50690c2c8ffbb9bff68d48"
+    },
+    {
+      "assetId": "tabulating_machine",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/tabulating_machine.svg",
+      "sha256": "0c4035296058fb17b70852ae2ef49ea358cff3c8a93ac6a6c1ef8044bbca457b"
+    },
+    {
+      "assetId": "terminal_bank",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/terminal_bank.svg",
+      "sha256": "318c95d88fc8e5496ce58fb2e569b17583697de16512b5fd0b529cd03d198333"
+    },
+    {
+      "assetId": "tube_corner",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/tube_corner.svg",
+      "sha256": "e12d8fcbc722c8eeda5495adfed51679bccba04f659ed8030af4279adaf22de3"
+    },
+    {
+      "assetId": "tube_riser",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/tube_riser.svg",
+      "sha256": "8f159cc4f18ae2fa1885f8a92c0e626a98cde58f05653c03c5df84d646d942bd"
+    },
+    {
+      "assetId": "tube_straight",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/tube_straight.svg",
+      "sha256": "6c8df683df708a7cc12a4a8ad9a2ac3711ebc185c8e2b86f5605db060ad99de1"
+    },
+    {
+      "assetId": "tube_wallpass",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/tube_wallpass.svg",
+      "sha256": "cbef7de92ffa5879ad55e33b67a7b94ccf22d645c5fc1656294c15ab7d03bb84"
+    },
+    {
+      "assetId": "verification_comparator",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/verification_comparator.svg",
+      "sha256": "edc519e63cdb6f3450035015ed763ce42f8b40c33027965d66243a9cefa06b82"
+    },
+    {
+      "assetId": "workbench",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/workbench.svg",
+      "sha256": "2644584534de985c1af3ffee34deb8fe8a49a769d35dc2504a7dd8a20b25a48f"
     },
     {
       "assetId": "bike-rack",

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-prop-id="canister_stamp:personnel_actions" data-projection="plan">
+  <title>Personnel Actions canister stamp</title>
+  <desc>Transparent per-work-type stamp overlay for canister_base: Personnel Actions.</desc>
+  <metadata>{"family":"quota-co-administrative-percussion-v1","id":"canister_stamp:personnel_actions","source":"owner-accepted-internal-services-calibration-v1"}</metadata>
+  <g id="approved-sku"><g id="personnel-actions-stamp" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle id="shape-1" cx="59" cy="59" r="4"/><circle id="shape-2" cx="69" cy="59" r="4"/><path id="shape-3" d="M 54 71 Q 59 64 64 71 Q 69 64 74 71"/><path id="shape-4" d="M 57 76 H 71 M 68 73 L 72 76 L 68 79"/></g></g>
+</svg>

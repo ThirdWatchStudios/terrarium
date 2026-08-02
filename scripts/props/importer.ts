@@ -115,7 +115,7 @@ interface SourceElement {
 }
 
 interface SourceDocument {
-  id: QuotaCoWorkhorsePropId;
+  id: string;
   projection: Projection;
   normalizedSvg: string;
   elements: Array<{
@@ -126,8 +126,14 @@ interface SourceDocument {
 }
 
 interface ManifestEntry {
-  id: QuotaCoWorkhorsePropId;
+  id: string;
   file: string;
+  projection: Projection;
+  paletteDefaults: PropPalette;
+}
+
+export interface StaticPropSourceDefinition {
+  id: string;
   projection: Projection;
   paletteDefaults: PropPalette;
 }
@@ -548,7 +554,7 @@ function serializePresentationAttributes(node: INode): string {
 function parseSourceDocument(
   source: string,
   input: string,
-  expected: ManifestEntry,
+  expected: StaticPropSourceDefinition,
 ): SourceDocument {
   if (/<!DOCTYPE/i.test(input)) fail(source, 'DOCTYPE declarations are forbidden');
   let root: INode;
@@ -696,7 +702,7 @@ function parseSourceDocument(
 function compileElements(
   source: string,
   input: string,
-  manifest: ManifestEntry,
+  manifest: StaticPropSourceDefinition,
 ): SourceElement[] {
   const document = parseSourceDocument(source, input, manifest);
   const shapes = compileAuthoredSvg(document.normalizedSvg, {
@@ -722,6 +728,8 @@ function compileElements(
         d: shape.d,
         stroke: shape.stroke,
         strokeWidth: shape.strokeWidth,
+        strokeLinecap: shape.strokeLinecap,
+        strokeLinejoin: shape.strokeLinejoin,
         opacity: shape.opacity,
         silhouette: false,
       };
@@ -736,6 +744,19 @@ function compileElements(
     shape.silhouette = Boolean(shape.fill);
     return [{ ...metadata, shape }];
   });
+}
+
+/**
+ * Compile one source-faithful, non-parametric prop SVG through the same strict
+ * authored-art seam as the workhorse catalog. Department machines use this to
+ * keep each accepted fill/queue state as an explicit baked variant.
+ */
+export function compileStaticPropSource(
+  source: string,
+  input: string,
+  definition: StaticPropSourceDefinition,
+): ShapeSpec[] {
+  return compileElements(source, input, definition).map(({ shape }) => ({ ...shape }));
 }
 
 function transformed(
@@ -1694,12 +1715,12 @@ export async function compileQuotaCoWorkhorseProps(
     const input = await readFile(absolutePath, 'utf8');
     const elements = compileElements(sourceFile, input, manifest);
     imports.push({
-      id: manifest.id,
+      id: manifest.id as QuotaCoWorkhorsePropId,
       projection: manifest.projection,
       sourceFile,
       sourceSha256: createHash('sha256').update(input).digest('hex'),
       paletteDefaults: manifest.paletteDefaults,
-      variants: buildVariants(manifest.id, elements),
+      variants: buildVariants(manifest.id as QuotaCoWorkhorsePropId, elements),
     });
   }
   return imports.sort((left, right) => compareText(left.id, right.id));
@@ -1714,6 +1735,8 @@ function emitShape(shape: ShapeSpec): string {
   if (shape.fill !== undefined) fields.push(`fill: ${quote(shape.fill)}`);
   if (shape.stroke !== undefined) fields.push(`stroke: ${quote(shape.stroke)}`);
   if (shape.strokeWidth !== undefined) fields.push(`strokeWidth: ${shape.strokeWidth}`);
+  if (shape.strokeLinecap !== undefined) fields.push(`strokeLinecap: ${quote(shape.strokeLinecap)}`);
+  if (shape.strokeLinejoin !== undefined) fields.push(`strokeLinejoin: ${quote(shape.strokeLinejoin)}`);
   if (shape.opacity !== undefined) fields.push(`opacity: ${shape.opacity}`);
   if (shape.silhouette !== undefined) fields.push(`silhouette: ${shape.silhouette}`);
   return `{ ${fields.join(', ')} }`;

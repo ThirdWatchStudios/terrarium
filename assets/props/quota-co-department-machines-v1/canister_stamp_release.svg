@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-prop-id="canister_stamp:release" data-projection="plan">
+  <title>Release canister stamp</title>
+  <desc>Transparent per-work-type stamp overlay for canister_base: Release.</desc>
+  <metadata>{"family":"quota-co-administrative-percussion-v1","id":"canister_stamp:release","source":"owner-accepted-engineering-maintenance-refinement-v2"}</metadata>
+  <g id="approved-sku"><g id="release-stamp" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"><path id="shape-1" d="M 55 58 H 73 V 72 H 55 Z M 59 54 H 69 V 58"/><path id="shape-2" d="M 59 63 H 69 M 59 67 H 66"/><circle id="shape-3" cx="71" cy="70" r="3"/></g></g>
+</svg>

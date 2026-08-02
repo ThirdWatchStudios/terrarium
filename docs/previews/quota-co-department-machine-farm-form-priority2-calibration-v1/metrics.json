@@ -1,0 +1,62 @@
+{
+  "reviewStatus": "owner-accepted-farm-form-priority-2-static-control",
+  "direction": "administrative-percussion-approvals-farm",
+  "scope": "farm-form-priority-2-addendum-accepted-and-promoted",
+  "productionPromotion": true,
+  "canonicalSvgAuthoring": true,
+  "templateRegistration": true,
+  "departmentManifestMutation": true,
+  "departmentAssetManifestVersion": 3,
+  "exportRun": true,
+  "parityClaim": "terrarium-source-compositor-browser-export-only",
+  "unityImport": false,
+  "assetIds": [
+    "adjudication_desk_set",
+    "docket_rack"
+  ],
+  "workTypeStamps": [
+    "applications",
+    "determinations"
+  ],
+  "scaleSuggestions": [
+    {
+      "id": "adjudication_desk_set",
+      "suggestedFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "role": "per-seat conversion station",
+      "nounRead": "stamp rack + date-punch + guided form bed + twin decision chutes"
+    },
+    {
+      "id": "docket_rack",
+      "suggestedFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "role": "small shared collector",
+      "nounRead": "open backlog cage + indexed docket folios + collection plinth"
+    }
+  ],
+  "openQuestions": [
+    {
+      "id": "approvals-identifiers",
+      "recommendation": "Use adjudication_desk_set and docket_rack as stable facility ids."
+    },
+    {
+      "id": "docket-rack-footprint",
+      "recommendation": "Keep the Docket Rack at 1×1 so the shared collector does not dominate the farm."
+    },
+    {
+      "id": "docket-fill-states",
+      "recommendation": "Bake empty/low/high/overflowing variants; the backlog cage is Approvals saturation read."
+    }
+  ],
+  "docketFillStatesRatified": [
+    "empty",
+    "low",
+    "high",
+    "overflowing"
+  ],
+  "machineAnimationDeferred": true
+}

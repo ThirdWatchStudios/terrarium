@@ -19,6 +19,15 @@
     "parts:check": "npm run parts:import:check && npm run parts:scaffolds:check",
     "props:import": "tsx scripts/importQuotaCoWorkhorseProps.ts",
     "props:import:check": "tsx scripts/importQuotaCoWorkhorseProps.ts --check",
+    "department-machines:import": "tsx scripts/importQuotaCoDepartmentMachines.ts --write",
+    "department-machines:import:check": "tsx scripts/importQuotaCoDepartmentMachines.ts --check",
+    "department-machines:production:preview": "tsx scripts/quotaCoDepartmentMachineProductionValidationPreview.ts",
+    "department-machines:farm-p1:preview": "tsx scripts/quotaCoDepartmentFarmFormPriorityOneCalibrationPreview.ts",
+    "department-machines:farm-p2:preview": "tsx scripts/quotaCoDepartmentFarmFormPriorityTwoCalibrationPreview.ts",
+    "department-machines:partition-replacement:preview": "tsx scripts/quotaCoCubiclePartitionReplacementCalibrationPreview.ts",
+    "department-machines:motion:preview": "tsx scripts/quotaCoDepartmentMachineMotionCalibrationPreview.ts",
+    "department-machines:priority2:preview": "tsx scripts/quotaCoDepartmentMachinePhaseASpineCalibrationPreview.ts",
+    "department-machines:priority3a:preview": "tsx scripts/quotaCoDepartmentMachineEngineeringMaintenanceCalibrationPreview.ts",
     "surfaces:import": "tsx scripts/importQuotaCoMaintainedHybridSurfaces.ts",
     "surfaces:import:check": "tsx scripts/importQuotaCoMaintainedHybridSurfaces.ts --check",
     "surfaces:production:preview": "tsx scripts/quotaCoFloorGrassProductionValidationPreview.ts",
@@ -55,7 +64,7 @@
     "style:serve": "tsx scripts/styleLoop.ts --serve-only",
     "iris:preview": "tsx scripts/irisFamilyPreview.ts",
     "flora:preview": "tsx scripts/floraFieldPreview.ts",
-    "assets:check": "npm run parts:check && npm run props:import:check && npm run surfaces:import:check && npm run walls:import:check"
+    "assets:check": "npm run parts:check && npm run props:import:check && npm run department-machines:import:check && npm run surfaces:import:check && npm run walls:import:check"
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",

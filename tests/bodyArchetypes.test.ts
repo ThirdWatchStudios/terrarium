@@ -214,7 +214,7 @@ describe('production body archetypes', () => {
       ['manager', 'body-large-frame'],
     ]);
     expect(DEFAULT_CAST.every(({ parts }) => !LEGACY_IDS.includes(parts.body))).toBe(true);
-    expect(CURRENT_SCHEMA_VERSION).toBe(19);
+    expect(CURRENT_SCHEMA_VERSION).toBe(21);
   });
 
   it('keeps seeded random and employee generation deterministic and production-only', () => {

@@ -707,7 +707,7 @@ describe('QuotaCo owner-accepted proof-layer equal-height 47-mask ledger', () =>
     validateEqualHeightMaskLedger(EQUAL_HEIGHT_MASK_LEDGER);
     equalHeightMaskContactDescriptor();
     expect(productionSignature()).toBe(productionBefore);
-    expect(CURRENT_SCHEMA_VERSION).toBe(19);
+    expect(CURRENT_SCHEMA_VERSION).toBe(21);
     expect(blobContract()).toMatchObject({ version: 1, tileCount: 47 });
     expect(Object.keys(wallAtlas(DEFAULT_WALLS[0], DEFAULT_STYLE, 1).frames)).toEqual(
       Array.from({ length: BLOB_TILE_COUNT }, (_, index) => `mask_${index}`),

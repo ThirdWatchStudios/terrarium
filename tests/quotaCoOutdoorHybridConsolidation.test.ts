@@ -55,6 +55,6 @@ describe('review-only exterior hybrid consolidation', () => {
   });
 
   it('holds the current export schema', () => {
-    expect(CURRENT_SCHEMA_VERSION).toBe(19);
+    expect(CURRENT_SCHEMA_VERSION).toBe(21);
   });
 });

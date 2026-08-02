@@ -35,6 +35,10 @@ export interface ShapeSpec {
   fill?: string;
   stroke?: string;
   strokeWidth?: number;
+  /** Defaults to round; authored machine tubes use butt to meet cell sockets exactly. */
+  strokeLinecap?: 'round' | 'butt' | 'square';
+  /** Defaults to round. */
+  strokeLinejoin?: 'round' | 'miter' | 'bevel';
   opacity?: number;
   /**
    * Whether this shape contributes to the outline pass. Defaults to true for
@@ -165,13 +169,21 @@ export interface PropParamDef {
  * with characters, never rotates.
  */
 export type Projection = 'plan' | 'elevation';
-export type PropPlacement = 'floor' | 'wall-slot';
+export type PropPlacement =
+  | 'floor'
+  | 'wall-slot'
+  | 'cell-edge-furniture-slot'
+  | 'cell-corner-furniture-slot';
 
 export interface PropTemplate {
   id: string;
   label: string;
   projection: Projection;
-  /** Floor props occupy walkable cells; wall-slot props mount into or over wall runs. */
+  /**
+   * Floor props occupy whole cells; wall-slot props mount into or over wall runs.
+   * Cell-edge/corner furniture slots are low, non-architectural fixtures whose
+   * anchor spans a cell without claiming hidden whole-cell collision.
+   */
   placement?: PropPlacement;
   /**
    * Optional contact-shadow footprint in canvas coords (128 units). When set and
@@ -455,8 +467,14 @@ export const DEFAULT_LOOK: LookId = 'raw';
  * equal-height production wall. It declares the west-authored frames Unity may
  * mirror for east presentation; runtime room context still selects the facing.
  * The metadata is derived at export, so no project data migration is required.
+ * v20 added the Priority 1 department production assets, versioned
+ * `department-assets.json`, and work-canister stamp overlays. The catalog and
+ * overlays are derived at export, so no stored project migration is required.
+ * v21 adds the manifest-v2 `handCarriedItems` category for non-pneumatic
+ * department outputs, beginning with `pay_envelope`. Derived at export; no
+ * stored project migration is required.
  */
-export const CURRENT_SCHEMA_VERSION = 19;
+export const CURRENT_SCHEMA_VERSION = 21;
 
 /** Design-space canvas size. Parts are authored against this; never changes. */
 export const CANVAS = 128;

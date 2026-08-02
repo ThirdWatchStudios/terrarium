@@ -1,0 +1,80 @@
+{
+  "reviewStatus": "awaiting-owner-machine-motion-direction-and-contract-approval",
+  "scope": "department-machine-motion-pilot-review-only",
+  "pilots": [
+    {
+      "id": "tabulating_machine",
+      "pollution": "noise",
+      "primitive": "impact-cycle",
+      "movingParts": [
+        "primary drum index",
+        "secondary drum index",
+        "percussion hammer"
+      ]
+    },
+    {
+      "id": "calculating_engine",
+      "pollution": "heat",
+      "primitive": "continuous-mechanism",
+      "movingParts": [
+        "arithmetic drums",
+        "exhaust louvers",
+        "paper feed"
+      ]
+    },
+    {
+      "id": "rotary_duplicator",
+      "pollution": "fumes",
+      "primitive": "rotary-feed",
+      "movingParts": [
+        "ink drum index",
+        "paper registration mark",
+        "drying fingers"
+      ]
+    },
+    {
+      "id": "comparator",
+      "pollution": "quiet-control",
+      "primitive": "gate-settle",
+      "movingParts": [
+        "comparison gate",
+        "result card"
+      ]
+    }
+  ],
+  "frameCountPerWorkingLoop": 4,
+  "contractQuestions": [
+    {
+      "id": "frame-vocabulary",
+      "recommendation": "Begin with one four-frame working loop per animated SKU; the accepted static sprite remains the idle frame."
+    },
+    {
+      "id": "state-ownership",
+      "recommendation": "The sim chooses idle/working/blocked and playback rate; Terrarium owns aligned pixels and moving-part membership."
+    },
+    {
+      "id": "phase-desynchronization",
+      "recommendation": "The sim assigns a stable per-instance phase offset so machine rows never cycle in lockstep."
+    },
+    {
+      "id": "pollution-boundary",
+      "recommendation": "Motion implies the source mechanically; heat haze, fumes, sound rings, glow, and meters remain separate presentation effects."
+    },
+    {
+      "id": "export-shape",
+      "recommendation": "Add optional animations[] to department manifest v4; keep project schema v21 because this remains derived content."
+    }
+  ],
+  "productionMutation": false,
+  "canonicalSvgAuthoring": false,
+  "templateRegistration": false,
+  "departmentManifestMutation": false,
+  "contractMutation": false,
+  "schemaMutation": false,
+  "exportRun": false,
+  "parityClaim": false,
+  "currentStaticSpritesStable": true,
+  "pollutionEffectsBakedIntoFrames": false,
+  "wholeHousingMotion": false,
+  "unityImport": false
+}

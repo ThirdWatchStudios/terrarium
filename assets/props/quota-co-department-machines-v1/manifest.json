@@ -1,0 +1,791 @@
+{
+  "schemaVersion": 2,
+  "family": "quota-co-administrative-percussion-v1",
+  "authority": "canonical-svg",
+  "sourcePolicy": {
+    "visualAuthority": "checked-in-svg",
+    "compiledOutput": "src/props/generated/quotaCoDepartmentMachineArt.ts",
+    "ordinaryCommandsWriteSources": false
+  },
+  "acceptedProofs": {
+    "priority1": "docs/previews/quota-co-department-machine-readability-refinement-v2",
+    "farmFormPriority1": "docs/previews/quota-co-department-machine-farm-form-priority1-calibration-v1",
+    "farmFormPriority2": "docs/previews/quota-co-department-machine-farm-form-priority2-calibration-v1",
+    "priority2": "docs/previews/quota-co-department-machine-phase-a-spine-calibration-v1",
+    "priority3a": "docs/previews/quota-co-department-machine-engineering-maintenance-refinement-v2",
+    "priority3b": "docs/previews/quota-co-department-machine-internal-services-calibration-v1"
+  },
+  "deferred": {
+    "machineAnimation": "required follow-up; no frame or runtime contract inferred by this canonical static source bank"
+  },
+  "canvas": {
+    "width": 128,
+    "height": 128
+  },
+  "templates": [
+    {
+      "id": "loading_dock",
+      "label": "Loading Dock",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "fill=0",
+          "file": "loading_dock--empty.svg",
+          "propInstanceId": "prop-loading_dock-empty",
+          "params": {
+            "fill": 0
+          },
+          "state": "empty"
+        },
+        {
+          "key": "fill=1",
+          "file": "loading_dock--low.svg",
+          "propInstanceId": "prop-loading_dock-low",
+          "params": {
+            "fill": 1
+          },
+          "state": "low"
+        },
+        {
+          "key": "fill=2",
+          "file": "loading_dock--high.svg",
+          "propInstanceId": "prop-loading_dock-high",
+          "params": {
+            "fill": 2
+          },
+          "state": "high"
+        }
+      ]
+    },
+    {
+      "id": "sorting_frame",
+      "label": "Sorting Frame",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "sorting_frame.svg",
+          "propInstanceId": "prop-sorting_frame",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "franking_machine",
+      "label": "Franking Machine",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "franking_machine.svg",
+          "propInstanceId": "prop-franking_machine",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "keypunch_bank",
+      "label": "Keypunch Bank",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "keypunch_bank.svg",
+          "propInstanceId": "prop-keypunch_bank",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "keypunch_console",
+      "label": "Keypunch Console",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "keypunch_console.svg",
+          "propInstanceId": "prop-keypunch_console",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "cubicle_partition_straight",
+      "label": "Cubicle Partition — Straight",
+      "projection": "elevation",
+      "placement": "cell-edge-furniture-slot",
+      "variants": [
+        {
+          "key": "facing=0",
+          "file": "cubicle_partition_straight--horizontal.svg",
+          "propInstanceId": "prop-cubicle_partition_straight-horizontal",
+          "params": {
+            "facing": 0
+          },
+          "state": "horizontal"
+        },
+        {
+          "key": "facing=1",
+          "file": "cubicle_partition_straight--vertical.svg",
+          "propInstanceId": "prop-cubicle_partition_straight-vertical",
+          "params": {
+            "facing": 1
+          },
+          "state": "vertical"
+        }
+      ]
+    },
+    {
+      "id": "cubicle_partition_corner",
+      "label": "Cubicle Partition — Corner",
+      "projection": "elevation",
+      "placement": "cell-corner-furniture-slot",
+      "variants": [
+        {
+          "key": "",
+          "file": "cubicle_partition_corner.svg",
+          "propInstanceId": "prop-cubicle_partition_corner",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "cubicle_partition_endcap",
+      "label": "Cubicle Partition — End-cap",
+      "projection": "elevation",
+      "placement": "cell-edge-furniture-slot",
+      "variants": [
+        {
+          "key": "facing=0",
+          "file": "cubicle_partition_endcap--horizontal.svg",
+          "propInstanceId": "prop-cubicle_partition_endcap-horizontal",
+          "params": {
+            "facing": 0
+          },
+          "state": "horizontal"
+        },
+        {
+          "key": "facing=1",
+          "file": "cubicle_partition_endcap--vertical.svg",
+          "propInstanceId": "prop-cubicle_partition_endcap-vertical",
+          "params": {
+            "facing": 1
+          },
+          "state": "vertical"
+        }
+      ]
+    },
+    {
+      "id": "adjudication_desk_set",
+      "label": "Adjudication Desk Set",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "adjudication_desk_set.svg",
+          "propInstanceId": "prop-adjudication_desk_set",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "docket_rack",
+      "label": "Docket Rack",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "fill=0",
+          "file": "docket_rack--empty.svg",
+          "propInstanceId": "prop-docket_rack-empty",
+          "params": {
+            "fill": 0
+          },
+          "state": "empty"
+        },
+        {
+          "key": "fill=1",
+          "file": "docket_rack--low.svg",
+          "propInstanceId": "prop-docket_rack-low",
+          "params": {
+            "fill": 1
+          },
+          "state": "low"
+        },
+        {
+          "key": "fill=2",
+          "file": "docket_rack--high.svg",
+          "propInstanceId": "prop-docket_rack-high",
+          "params": {
+            "fill": 2
+          },
+          "state": "high"
+        },
+        {
+          "key": "fill=3",
+          "file": "docket_rack--overflowing.svg",
+          "propInstanceId": "prop-docket_rack-overflowing",
+          "params": {
+            "fill": 3
+          },
+          "state": "overflowing"
+        }
+      ]
+    },
+    {
+      "id": "tabulating_machine",
+      "label": "Tabulating Machine",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "tabulating_machine.svg",
+          "propInstanceId": "prop-tabulating_machine",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "intake_tray_small",
+      "label": "Intake Tray — Small",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "fill=0",
+          "file": "intake_tray_small--empty.svg",
+          "propInstanceId": "prop-intake_tray_small-empty",
+          "params": {
+            "fill": 0
+          },
+          "state": "empty"
+        },
+        {
+          "key": "fill=1",
+          "file": "intake_tray_small--low.svg",
+          "propInstanceId": "prop-intake_tray_small-low",
+          "params": {
+            "fill": 1
+          },
+          "state": "low"
+        },
+        {
+          "key": "fill=2",
+          "file": "intake_tray_small--high.svg",
+          "propInstanceId": "prop-intake_tray_small-high",
+          "params": {
+            "fill": 2
+          },
+          "state": "high"
+        },
+        {
+          "key": "fill=3",
+          "file": "intake_tray_small--overflowing.svg",
+          "propInstanceId": "prop-intake_tray_small-overflowing",
+          "params": {
+            "fill": 3
+          },
+          "state": "overflowing"
+        }
+      ]
+    },
+    {
+      "id": "intake_tray_large",
+      "label": "Intake Tray — Large",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "fill=0",
+          "file": "intake_tray_large--empty.svg",
+          "propInstanceId": "prop-intake_tray_large-empty",
+          "params": {
+            "fill": 0
+          },
+          "state": "empty"
+        },
+        {
+          "key": "fill=1",
+          "file": "intake_tray_large--low.svg",
+          "propInstanceId": "prop-intake_tray_large-low",
+          "params": {
+            "fill": 1
+          },
+          "state": "low"
+        },
+        {
+          "key": "fill=2",
+          "file": "intake_tray_large--high.svg",
+          "propInstanceId": "prop-intake_tray_large-high",
+          "params": {
+            "fill": 2
+          },
+          "state": "high"
+        },
+        {
+          "key": "fill=3",
+          "file": "intake_tray_large--overflowing.svg",
+          "propInstanceId": "prop-intake_tray_large-overflowing",
+          "params": {
+            "fill": 3
+          },
+          "state": "overflowing"
+        }
+      ]
+    },
+    {
+      "id": "dispatch_station",
+      "label": "Dispatch Station",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "fill=0",
+          "file": "dispatch_station--empty.svg",
+          "propInstanceId": "prop-dispatch_station-empty",
+          "params": {
+            "fill": 0
+          },
+          "state": "empty"
+        },
+        {
+          "key": "fill=1",
+          "file": "dispatch_station--low.svg",
+          "propInstanceId": "prop-dispatch_station-low",
+          "params": {
+            "fill": 1
+          },
+          "state": "low"
+        },
+        {
+          "key": "fill=2",
+          "file": "dispatch_station--high.svg",
+          "propInstanceId": "prop-dispatch_station-high",
+          "params": {
+            "fill": 2
+          },
+          "state": "high"
+        },
+        {
+          "key": "fill=3",
+          "file": "dispatch_station--overflowing.svg",
+          "propInstanceId": "prop-dispatch_station-overflowing",
+          "params": {
+            "fill": 3
+          },
+          "state": "overflowing"
+        }
+      ]
+    },
+    {
+      "id": "pneumatic_dispatch_node",
+      "label": "Pneumatic Dispatch Node",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "pneumatic_dispatch_node.svg",
+          "propInstanceId": "prop-pneumatic_dispatch_node",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "tube_straight",
+      "label": "Pneumatic Tube — Straight",
+      "projection": "plan",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "tube_straight.svg",
+          "propInstanceId": "prop-tube_straight",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "tube_corner",
+      "label": "Pneumatic Tube — Corner",
+      "projection": "plan",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "tube_corner.svg",
+          "propInstanceId": "prop-tube_corner",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "tube_wallpass",
+      "label": "Pneumatic Tube — Wall Pass",
+      "projection": "elevation",
+      "placement": "wall-slot",
+      "variants": [
+        {
+          "key": "",
+          "file": "tube_wallpass.svg",
+          "propInstanceId": "prop-tube_wallpass",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "tube_riser",
+      "label": "Pneumatic Tube — Station Riser",
+      "projection": "plan",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "tube_riser.svg",
+          "propInstanceId": "prop-tube_riser",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "canister_base",
+      "label": "Work Canister",
+      "projection": "plan",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "canister_base.svg",
+          "propInstanceId": "prop-canister_base",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "delivery_uplink",
+      "label": "Delivery Uplink",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "delivery_uplink.svg",
+          "propInstanceId": "prop-delivery_uplink",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "calculating_engine",
+      "label": "Calculating Engine",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "calculating_engine.svg",
+          "propInstanceId": "prop-calculating_engine",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "comparator",
+      "label": "Comparator",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "comparator.svg",
+          "propInstanceId": "prop-comparator",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "rotary_duplicator",
+      "label": "Rotary Duplicator",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "rotary_duplicator.svg",
+          "propInstanceId": "prop-rotary_duplicator",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "binding_press",
+      "label": "Binding Press",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "binding_press.svg",
+          "propInstanceId": "prop-binding_press",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "verification_comparator",
+      "label": "Verification Comparator",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "verification_comparator.svg",
+          "propInstanceId": "prop-verification_comparator",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "manifest_press",
+      "label": "Manifest Press",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "manifest_press.svg",
+          "propInstanceId": "prop-manifest_press",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "terminal_bank",
+      "label": "Terminal Bank",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "terminal_bank.svg",
+          "propInstanceId": "prop-terminal_bank",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "compiler_press",
+      "label": "Compiler Press",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "compiler_press.svg",
+          "propInstanceId": "prop-compiler_press",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "parts_crib",
+      "label": "Parts Crib",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "parts_crib.svg",
+          "propInstanceId": "prop-parts_crib",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "workbench",
+      "label": "Workbench",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "workbench.svg",
+          "propInstanceId": "prop-workbench",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "records_cabinet",
+      "label": "Records Cabinet",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "records_cabinet.svg",
+          "propInstanceId": "prop-records_cabinet",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "badge_press",
+      "label": "Badge Press",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "badge_press.svg",
+          "propInstanceId": "prop-badge_press",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "ledger_engine",
+      "label": "Ledger Engine",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "ledger_engine.svg",
+          "propInstanceId": "prop-ledger_engine",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "envelope_press",
+      "label": "Envelope Press",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "envelope_press.svg",
+          "propInstanceId": "prop-envelope_press",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "requisition_counter",
+      "label": "Requisition Counter",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "requisition_counter.svg",
+          "propInstanceId": "prop-requisition_counter",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "stock_shelving",
+      "label": "Stock Shelving",
+      "projection": "elevation",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "stock_shelving.svg",
+          "propInstanceId": "prop-stock_shelving",
+          "params": {}
+        }
+      ]
+    },
+    {
+      "id": "pay_envelope",
+      "label": "Pay Envelope",
+      "projection": "plan",
+      "placement": "floor",
+      "variants": [
+        {
+          "key": "",
+          "file": "pay_envelope.svg",
+          "propInstanceId": "prop-pay_envelope",
+          "params": {}
+        }
+      ]
+    }
+  ],
+  "overlays": [
+    {
+      "id": "raw_records",
+      "file": "canister_stamp_raw_records.svg",
+      "exportDirectory": "department-overlays/raw_records"
+    },
+    {
+      "id": "structured_data",
+      "file": "canister_stamp_structured_data.svg",
+      "exportDirectory": "department-overlays/structured_data"
+    },
+    {
+      "id": "findings",
+      "file": "canister_stamp_findings.svg",
+      "exportDirectory": "department-overlays/findings"
+    },
+    {
+      "id": "reports",
+      "file": "canister_stamp_reports.svg",
+      "exportDirectory": "department-overlays/reports"
+    },
+    {
+      "id": "requirements",
+      "file": "canister_stamp_requirements.svg",
+      "exportDirectory": "department-overlays/requirements"
+    },
+    {
+      "id": "specifications",
+      "file": "canister_stamp_specifications.svg",
+      "exportDirectory": "department-overlays/specifications"
+    },
+    {
+      "id": "code",
+      "file": "canister_stamp_code.svg",
+      "exportDirectory": "department-overlays/code"
+    },
+    {
+      "id": "release",
+      "file": "canister_stamp_release.svg",
+      "exportDirectory": "department-overlays/release"
+    },
+    {
+      "id": "repairs",
+      "file": "canister_stamp_repairs.svg",
+      "exportDirectory": "department-overlays/repairs"
+    },
+    {
+      "id": "personnel_actions",
+      "file": "canister_stamp_personnel_actions.svg",
+      "exportDirectory": "department-overlays/personnel_actions"
+    },
+    {
+      "id": "supplies",
+      "file": "canister_stamp_supplies.svg",
+      "exportDirectory": "department-overlays/supplies"
+    },
+    {
+      "id": "applications",
+      "file": "canister_stamp_applications.svg",
+      "exportDirectory": "department-overlays/applications"
+    },
+    {
+      "id": "determinations",
+      "file": "canister_stamp_determinations.svg",
+      "exportDirectory": "department-overlays/determinations"
+    }
+  ]
+}

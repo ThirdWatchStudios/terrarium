@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-prop-id="canister_stamp:supplies" data-projection="plan">
+  <title>Supplies canister stamp</title>
+  <desc>Transparent per-work-type stamp overlay for canister_base: Supplies.</desc>
+  <metadata>{"family":"quota-co-administrative-percussion-v1","id":"canister_stamp:supplies","source":"owner-accepted-internal-services-calibration-v1"}</metadata>
+  <g id="approved-sku"><g id="supplies-stamp" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path id="shape-1" d="M 54 60 L 64 54 L 74 60 V 72 L 64 78 L 54 72 Z M 54 60 L 64 66 L 74 60 M 64 66 V 78"/></g></g>
+</svg>

@@ -8,6 +8,10 @@ import { MOOD_EMOTES } from '../src/parts/moods';
 import { EMOTIONS } from '../src/parts/emotions';
 import { ATTENTION_PUFFS } from '../src/parts/attention';
 import {
+  DEPARTMENT_MACHINE_DEFAULT_PROPS,
+  DEPARTMENT_MACHINE_TEMPLATE_IDS,
+} from '../src/props/departmentMachineManifest';
+import {
   QUOTA_CO_EQUAL_HEIGHT_AUTHORED_FACING,
   QUOTA_CO_EQUAL_HEIGHT_MIRROR_X_MASKS,
 } from '../src/tiles/quotaCoEqualHeightWallContract';
@@ -59,6 +63,7 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     'scenario-template.json', // cast-agnostic template library (Epic 4)
     'office-layout.json', // rooms / wings / anchors (Epic 1)
     'facility-catalog.json', // placeable-facility catalog (office-builder pivot, §1) — provisional v0
+    'department-assets.json', // department machine states + tube/canister composition (§3.20)
     'conversation-style.json',
     'activity-badges-atlas@1x.json',
     'mood-emotes-atlas@1x.json',
@@ -81,6 +86,7 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     'floors/',
     'ground/', // outdoor ground surfaces — the distinct ground kind (B1.5 / D2)
     'construction-crew/', // authored construction persona the sim spawns the crew from (B1.5 / D4)
+    'department-overlays/', // typed work-unit stamps layered over canister_base
     'scenarios/', // authored scenario run package
     'icons/', // UI icon set — SVG + PNG ladder (docs/ui-art-plan.md)
     'cursors/', // cursor textures — PNG-only + hotspots (docs/ui-art-plan.md)
@@ -236,6 +242,194 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     expect(cooler.isInteractionAnchor).toBe(true);
     expect(cooler.interactionType).toBe('water_cooler');
     expect((byId.get('conference_table')!.gridFootprint as { w: number }).w).toBeGreaterThan(1);
+  });
+
+  it('ships the complete department-asset contract including the farm-form addendum', async () => {
+    const { paths, json } = await exportPaths();
+    const manifest = JSON.parse(json.get('department-assets.json')!);
+    expect(manifest).toMatchObject({
+      kind: 'department-assets',
+      version: 3,
+      schemaVersion: 21,
+      footprintPolicy: 'suggested',
+      family: {
+        id: 'quota-co-administrative-percussion-v1',
+        direction: 'administrative-percussion',
+        standardizedSku: true,
+        worldSpriteOnly: true,
+      },
+      tube: {
+        outerDiameter: 28,
+        linerDiameter: 22,
+        lumenDiameter: 16,
+        canisterDiameter: 10,
+        radialClearance: 3,
+        joinRule: 'exact-butt-at-adjacent-cell-boundary',
+      },
+      canister: {
+        baseTemplateId: 'canister_base',
+        overlayComposition: 'base-plus-one-work-type-stamp',
+      },
+    });
+    expect(manifest.facilities.map(({ id }: { id: string }) => id)).toEqual([
+      'loading_dock',
+      'sorting_frame',
+      'franking_machine',
+      'keypunch_bank',
+      'keypunch_console',
+      'cubicle_partition_straight',
+      'cubicle_partition_corner',
+      'cubicle_partition_endcap',
+      'adjudication_desk_set',
+      'docket_rack',
+      'tabulating_machine',
+      'intake_tray_small',
+      'intake_tray_large',
+      'dispatch_station',
+      'pneumatic_dispatch_node',
+      'tube_straight',
+      'tube_corner',
+      'tube_wallpass',
+      'tube_riser',
+      'canister_base',
+      'delivery_uplink',
+      'calculating_engine',
+      'comparator',
+      'rotary_duplicator',
+      'binding_press',
+      'verification_comparator',
+      'manifest_press',
+      'terminal_bank',
+      'compiler_press',
+      'parts_crib',
+      'workbench',
+      'records_cabinet',
+      'badge_press',
+      'ledger_engine',
+      'envelope_press',
+      'requisition_counter',
+      'stock_shelving',
+    ]);
+    const byId = new Map<string, any>(manifest.facilities.map((item: any) => [item.id, item]));
+    expect(byId.get('loading_dock').states.map(({ id }: { id: string }) => id))
+      .toEqual(['empty', 'low', 'high']);
+    expect(byId.get('intake_tray_small').states.map(({ id }: { id: string }) => id))
+      .toEqual(['empty', 'low', 'high', 'overflowing']);
+    expect(byId.get('dispatch_station').states.map(({ id }: { id: string }) => id))
+      .toEqual(['empty', 'low', 'high', 'overflowing']);
+    expect(byId.get('keypunch_bank').placeable).toBe(false);
+    expect(byId.get('keypunch_console')).toMatchObject({
+      placeable: true,
+      placement: 'floor',
+      suggestedFootprint: { w: 1, h: 1 },
+    });
+    expect(byId.get('cubicle_partition_straight')).toMatchObject({
+      placement: 'cell-edge-furniture-slot',
+      placeable: true,
+    });
+    expect(byId.get('cubicle_partition_straight').states.map(({ id }: { id: string }) => id))
+      .toEqual(['horizontal', 'vertical']);
+    expect(byId.get('cubicle_partition_corner').placement)
+      .toBe('cell-corner-furniture-slot');
+    expect(byId.get('adjudication_desk_set')).toMatchObject({
+      placeable: true,
+      placement: 'floor',
+      suggestedFootprint: { w: 1, h: 1 },
+      interactionType: 'adjudication_desk_set',
+    });
+    expect(byId.get('docket_rack')).toMatchObject({
+      placeable: true,
+      placement: 'floor',
+      suggestedFootprint: { w: 1, h: 1 },
+      interactionType: 'docket_rack',
+    });
+    expect(byId.get('docket_rack').states.map(({ id }: { id: string }) => id))
+      .toEqual(['empty', 'low', 'high', 'overflowing']);
+    expect(byId.get('loading_dock').occupancy.rows).toEqual([
+      ['blocking', 'blocking', 'blocking'],
+      ['walkable', 'walkable', 'walkable'],
+    ]);
+    expect(manifest.canister.stamps.map(({ workType }: { workType: string }) => workType))
+      .toEqual([
+        'raw_records',
+        'structured_data',
+        'findings',
+        'reports',
+        'requirements',
+        'specifications',
+        'code',
+        'release',
+        'repairs',
+        'personnel_actions',
+        'supplies',
+        'applications',
+        'determinations',
+      ]);
+    for (const workType of [
+      'raw_records',
+      'structured_data',
+      'findings',
+      'reports',
+      'requirements',
+      'specifications',
+      'code',
+      'release',
+      'repairs',
+      'personnel_actions',
+      'supplies',
+      'applications',
+      'determinations',
+    ]) {
+      expect(paths.has(`department-overlays/${workType}/overlay.svg`)).toBe(true);
+      for (const scale of [1, 2, 4]) {
+        expect(paths.has(`department-overlays/${workType}/overlay@${scale}x.png`)).toBe(true);
+      }
+    }
+    expect(manifest.handCarriedItems).toEqual([expect.objectContaining({
+      id: 'pay_envelope',
+      transport: 'hand-carried',
+      pneumaticCompatible: false,
+      placeable: false,
+      propInstanceId: 'prop-pay_envelope',
+      propDirectory: 'props/pay-envelope',
+    })]);
+    expect(paths.has('props/pay-envelope/sprite@1x.png')).toBe(true);
+
+    const facilities = JSON.parse(json.get('facility-catalog.json')!).facilities;
+    const facilityIds = new Set(facilities.map(({ id }: { id: string }) => id));
+    expect(facilityIds.has('canister_base')).toBe(false);
+    expect(facilityIds.has('pay_envelope')).toBe(false);
+    expect(facilityIds.has('keypunch_bank')).toBe(false);
+    expect(facilityIds.has('keypunch_console')).toBe(true);
+    expect(facilityIds.has('cubicle_partition_straight')).toBe(true);
+    const facilityById = new Map<string, any>(facilities.map((item: any) => [item.id, item]));
+    expect(facilityById.get('cubicle_partition_straight')).toMatchObject({
+      placement: 'cell-edge-furniture-slot',
+      rotatable: false,
+      blocksWalk: false,
+    });
+    for (const id of manifest.facilities.filter(({ placeable }: { placeable: boolean }) => placeable)
+      .map(({ id }: { id: string }) => id)) {
+      expect(facilityIds.has(id), `${id} missing from facility-catalog.json`).toBe(true);
+    }
+  });
+
+  it('keeps browser exports complete when a saved project predates the code-owned machine inventory', async () => {
+    const project = structuredClone(defaultBaseline());
+    const templateIds = new Set<string>(DEPARTMENT_MACHINE_TEMPLATE_IDS);
+    project.props = project.props.filter(({ templateId }) => !templateIds.has(templateId));
+    const liveIdsBefore = project.props.map(({ id }) => id);
+
+    const { paths, json } = await exportPaths(project);
+    expect(project.props.map(({ id }) => id)).toEqual(liveIdsBefore);
+    const exportedProject = JSON.parse(json.get('project.json')!);
+    const exportedIds = new Set<string>(exportedProject.props.map(({ id }: { id: string }) => id));
+    for (const prop of DEPARTMENT_MACHINE_DEFAULT_PROPS) {
+      expect(exportedIds.has(prop.id), `${prop.id} missing from browser export snapshot`).toBe(true);
+      const slug = prop.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      expect(paths.has(`props/${slug}/sprite@1x.png`), `${prop.id} sprite missing`).toBe(true);
+      expect(paths.has(`props/${slug}/prop.json`), `${prop.id} prop record missing`).toBe(true);
+    }
   });
 
   it('ships the outdoor ground as a DISTINCT kind, not interior floor (B1.5 / D2)', async () => {

@@ -8,6 +8,12 @@ deliberately authored primitives are tracked by milestone in
 may be written directly, generated and curated, or edited in a compatible
 vector editor. No particular editor is a production dependency. Nothing here
 changes the export contract except where explicitly flagged (floor variants).
+The deferred laptop/iPad editing, deterministic compilation, revision-stamped
+bundle, and Unity candidate/promotion workflow is recorded in
+[`hand-editable-svg-pipeline-plan.md`](hand-editable-svg-pipeline-plan.md).
+The audited backlog for remaining code-owned visual families and the
+family-by-family source-authority migration law is recorded in
+[`canonical-svg-conversion-plan.md`](canonical-svg-conversion-plan.md).
 
 > **Current Water Cooler art-direction amendment (owner-locked 2026-07-19):** the next environment proof is
 > [QuotaCo high-oblique geometry](quota-co-high-oblique-geometry-ask.md): a transparent production-scale

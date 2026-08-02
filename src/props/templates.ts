@@ -3,6 +3,7 @@ import { rr, circle, ellipse } from '../core/geometry';
 import { mulberry32 } from '../core/random';
 import { FLOWER_HUES } from '../tiles/templates';
 import { authoredPropShapes } from './authoredArt';
+import { DEPARTMENT_MACHINE_TEMPLATES } from './departmentMachineTemplates';
 
 /**
  * Parametric prop templates. Conventions:
@@ -3341,4 +3342,5 @@ export const PROP_TEMPLATES: PropTemplate[] = [
   groundDetailPebbleA,
   groundDetailPebbleB,
   groundDetailTwigA,
+  ...DEPARTMENT_MACHINE_TEMPLATES,
 ];

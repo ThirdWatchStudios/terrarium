@@ -18,6 +18,7 @@ import { deriveDepartments } from '../core/companyStructure';
 import { generatePopulation, employeeRecipe, getProfile } from '../core/employee';
 import { generateEmployeePersona } from '../core/populationPersona';
 import { generateRelationshipGraph } from '../core/relationshipGraph';
+import { DEPARTMENT_MACHINE_DEFAULT_PROPS } from '../props/departmentMachineManifest';
 
 export const DEFAULT_STYLE: StyleSheet = {
   outline: {
@@ -1145,6 +1146,7 @@ export const DEFAULT_PROPS: PropInstance[] = [
     params: { seed: 3 },
     palette: { primary: '#7A5B38', secondary: '#59422A', accent: '#9C7B4E' },
   },
+  ...DEPARTMENT_MACHINE_DEFAULT_PROPS,
 ];
 
 export const DEFAULT_WALLS: TileInstance[] = [

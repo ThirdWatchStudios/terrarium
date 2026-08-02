@@ -1,0 +1,100 @@
+{
+  "reviewStatus": "owner-accepted-farm-form-priority-1-static-control",
+  "direction": "administrative-percussion-farm-form",
+  "scope": "farm-form-priority-1-addendum-accepted-and-promoted",
+  "productionPromotion": true,
+  "canonicalSvgAuthoring": true,
+  "templateRegistration": true,
+  "defaultsMutation": true,
+  "departmentManifestMutation": true,
+  "departmentAssetManifestVersion": 3,
+  "exportRun": true,
+  "parityClaim": "terrarium-source-compositor-browser-export-only",
+  "unityImport": false,
+  "priorityTwoStarted": false,
+  "keypunchBankRetired": false,
+  "keypunchBankBuilderPlaceable": false,
+  "assetIds": [
+    "keypunch_console",
+    "cubicle_partition_straight",
+    "cubicle_partition_corner",
+    "cubicle_partition_endcap"
+  ],
+  "scaleSuggestions": [
+    {
+      "id": "keypunch_console",
+      "label": "Keypunch Console",
+      "suggestedFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "placement": "whole-cell",
+      "note": "one integrated desk-height punch station per staffed seat"
+    },
+    {
+      "id": "cubicle_partition_straight",
+      "label": "Cubicle partition — straight",
+      "suggestedFootprint": {
+        "w": 1,
+        "h": 0
+      },
+      "placement": "cell-edge-furniture-slot",
+      "note": "one-cell-long acoustic baffle; authored horizontal and vertical views"
+    },
+    {
+      "id": "cubicle_partition_corner",
+      "label": "Cubicle partition — corner",
+      "suggestedFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "placement": "cell-corner-furniture-slot",
+      "note": "joins two edge slots without becoming a structural wall junction"
+    },
+    {
+      "id": "cubicle_partition_endcap",
+      "label": "Cubicle partition — end-cap",
+      "suggestedFootprint": {
+        "w": 1,
+        "h": 0
+      },
+      "placement": "cell-edge-furniture-slot",
+      "note": "terminates a baffle run with a visible rounded post and freestanding foot"
+    }
+  ],
+  "ratifiedDecisions": [
+    {
+      "id": "partition-identifiers",
+      "recommendation": "Use cubicle_partition_straight / corner / endcap as the stable family ids.",
+      "reason": "The addendum ratifies the three forms but does not spell their sim-facing ids."
+    },
+    {
+      "id": "partition-grid-slot",
+      "recommendation": "Add a cell-edge furniture slot; do not charge a whole placement cell for a low baffle.",
+      "reason": "Whole-cell occupancy would erase farm density, aisle tuning, and adjacency to the protected seat."
+    },
+    {
+      "id": "partition-facing-export",
+      "recommendation": "Export authored horizontal/vertical facing variants under each stable family id.",
+      "reason": "Runtime quarter-turns would invert the fixed high-oblique face and violate the owner-locked projection."
+    }
+  ],
+  "invariants": {
+    "authoringCanvas": 128,
+    "normalGameplayPixelsPerCell": 90,
+    "farGameplayPixelsPerCell": 40,
+    "propNativeFrameCells": 2,
+    "partitionOuterProfileUnits": 38,
+    "amberUsedOnProducts": false,
+    "roseUsedOnProducts": false,
+    "bakedUiUsed": false,
+    "cameraCueUsed": false,
+    "wearOrClutterBakedIntoSku": false,
+    "footprintsSuggestedOnly": true,
+    "authoredPartitionFacingsProposed": true,
+    "sharedSupportSocketOwnership": true,
+    "verticalSupportTreatment": "topdown-baffle-over-shared-underfoot",
+    "horizontalStretchShown": true,
+    "verticalStretchShown": true
+  }
+}

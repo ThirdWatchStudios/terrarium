@@ -1,0 +1,86 @@
+{
+  "reviewStatus": "awaiting-owner-priority-3a-visual-approval",
+  "direction": "administrative-percussion",
+  "scope": "priority-3a-engineering-maintenance-review-only",
+  "productionPromotion": false,
+  "canonicalSvgAuthoring": false,
+  "templateRegistration": false,
+  "defaultsMutation": false,
+  "departmentManifestMutation": false,
+  "exportRun": false,
+  "schemaMutation": false,
+  "unityImport": false,
+  "parityClaim": false,
+  "machineAnimationDeferred": true,
+  "assetIds": [
+    "terminal_bank",
+    "compiler_press",
+    "parts_crib",
+    "workbench"
+  ],
+  "workTypeStamps": [
+    "specifications",
+    "code",
+    "release",
+    "repairs"
+  ],
+  "scaleSuggestions": [
+    {
+      "id": "terminal_bank",
+      "department": "Engineering",
+      "label": "Terminal Bank",
+      "suggestedFootprint": {
+        "w": 3,
+        "h": 2
+      },
+      "nounRead": "three deep CRT hoods + three keyboards + one rear thermal spine",
+      "pollution": "heat"
+    },
+    {
+      "id": "compiler_press",
+      "department": "Engineering",
+      "label": "Compiler Press",
+      "suggestedFootprint": {
+        "w": 2,
+        "h": 2
+      },
+      "nounRead": "impact hammer bridge + sprocket listing throat + accordion output",
+      "pollution": "noise"
+    },
+    {
+      "id": "parts_crib",
+      "department": "Maintenance",
+      "label": "Parts Crib",
+      "suggestedFootprint": {
+        "w": 2,
+        "h": 2
+      },
+      "nounRead": "caged bin wall + controlled issue hatch + standardized drawers",
+      "pollution": "quiet"
+    },
+    {
+      "id": "workbench",
+      "department": "Maintenance",
+      "label": "Workbench",
+      "suggestedFootprint": {
+        "w": 2,
+        "h": 2
+      },
+      "nounRead": "heavy service bed + mounted vise + overhead machine yoke",
+      "pollution": "quiet"
+    }
+  ],
+  "invariants": {
+    "authoringCanvas": 128,
+    "normalGameplayPixelsPerCell": 90,
+    "farGameplayPixelsPerCell": 40,
+    "propNativeFrameCells": 2,
+    "releaseIsDownstreamDocumentationControl": true,
+    "amberUsed": false,
+    "roseUsed": false,
+    "bakedUiUsed": false,
+    "cameraCueUsed": false,
+    "wearOrClutterBakedIntoSku": false,
+    "footprintsSuggestedOnly": true
+  }
+}

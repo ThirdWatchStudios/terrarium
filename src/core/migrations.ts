@@ -132,6 +132,14 @@ export function migrateProject(raw: unknown): ProjectState | null {
   // equal-height production wall. Derived at export — no project data
   // changed; version bump only.
 
+  // v19 → v20: Priority 1 department machines, the department-assets catalog,
+  // and work-canister stamp overlays. Derived/export inventory only; no stored
+  // project data changed, so the common version bump below is sufficient.
+
+  // v20 → v21: department-assets manifest v2 adds handCarriedItems for walked,
+  // non-pneumatic outputs such as pay_envelope. Derived/export inventory only;
+  // no stored project data changed.
+
   project.version = CURRENT_SCHEMA_VERSION;
   return project as ProjectState;
 }

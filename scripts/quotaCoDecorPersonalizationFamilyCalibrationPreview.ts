@@ -170,7 +170,7 @@ readonly FamilyDecision[] = [
 interface ContractSnapshot {
   readonly id: DecorPersonalizationFamilyId;
   readonly projection: 'plan' | 'elevation';
-  readonly placement: 'floor' | 'wall-slot';
+  readonly placement: NonNullable<PropTemplate['placement']>;
   readonly gridFootprint: { readonly w: number; readonly h: number };
   readonly contactShadow: PropTemplate['footprint'] | null;
   readonly params: readonly {

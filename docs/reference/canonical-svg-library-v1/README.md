@@ -17,8 +17,8 @@ by the live import registries; it does not reconstruct the art from TypeScript.
 
 ## Current inventory
 
-- 259 exact SVG source files
-- 181 production sources
+- 326 exact SVG source files
+- 248 production sources
 - 74 live production dependencies
 - 4 accepted-but-deferred concepts
 - 47 composed equal-height wall frames shown for context
