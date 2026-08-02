@@ -24,14 +24,14 @@
     <path id="reference/context-head-round/shape-003" d="M5.4 0C5.4 0.929 5.896 1.787 6.7 2.252 7.504 2.716 8.496 2.716 9.3 2.252 10.104 1.787 10.6 0.929 10.6 0 10.6-0.929 10.104-1.787 9.3-2.252 8.496-2.716 7.504-2.716 6.7-2.252 5.896-1.787 5.4-0.929 5.4 0Z" fill="#66747A" fill-rule="nonzero"/>
   </g>
   <g id="reference/hair-ponytail" opacity="0.22" transform="translate(64 44)">
-    <path id="reference/hair-ponytail/shape-001" d="M -19.4164878389476 -8 A 21 21 0 0 1 19.4164878389476 -8 Z" fill="#66747A" fill-rule="nonzero"/>
-    <path id="reference/hair-ponytail/shape-002" d="M 12 -13 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0 Z" fill="#66747A" fill-rule="nonzero"/>
-    <path id="reference/hair-ponytail/shape-003" d="M 18 -16 C 29 -17 34 -8 29 0 C 34 8 29 20 21 25 C 15 21 17 12 21 6 C 16 1 15 -8 18 -16 Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/hair-ponytail/shape-001" d="M-22-2C-20.2-16-10.6-22 0-22 11-22 20.2-16 22-2L12.8 1C5.5-4-4.8-4-13.2 1Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/hair-ponytail/shape-002" d="M16-2C16 0.761 18.239 3 21 3 23.761 3 26 0.761 26-2 26-4.761 23.761-7 21-7 18.239-7 16-4.761 16-2Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/hair-ponytail/shape-003" d="M21-7C32-10 37-1 31 6 36 13 31 23 22 27 16 21 17 13 22 6 17 2 17-3 21-7Z" fill="#66747A" fill-rule="nonzero"/>
   </g>
   <g id="art" transform="translate(64 44)">
-    <path id="art/shape-001" d="M -19.4164878389476 -8 A 21 21 0 0 1 19.4164878389476 -8 Z" fill="#00FFFF" fill-rule="nonzero"/>
-    <path id="art/shape-002" d="M 12 -13 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
-    <path id="art/shape-003" d="M 18 -16 C 29 -17 34 -8 29 0 C 34 8 29 20 21 25 C 15 21 17 12 21 6 C 16 1 15 -8 18 -16 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/shape-001" d="M-22-2C-20.2-16-10.6-22 0-22 11-22 20.2-16 22-2L12.8 1C5.5-4-4.8-4-13.2 1Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/shape-002" d="M16-2C16 0.761 18.239 3 21 3 23.761 3 26 0.761 26-2 26-4.761 23.761-7 21-7 18.239-7 16-4.761 16-2Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/shape-003" d="M21-7C32-10 37-1 31 6 36 13 31 23 22 27 16 21 17 13 22 6 17 2 17-3 21-7Z" fill="#00FFFF" fill-rule="nonzero"/>
   </g>
   <g id="swatches">
     <path id="swatches/skin" d="M 4 4 H 12 V 12 H 4 Z" fill="#FF00FF" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>

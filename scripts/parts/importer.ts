@@ -29,6 +29,7 @@ import {
   type CanonicalHairHeadId,
 } from './canonicalHairFit';
 import { fitCanonicalShortVariant } from './canonicalShortFit';
+import { fitCanonicalPonytailVariant } from './canonicalPonytailFit';
 import { SENTINEL_TO_PALETTE_REF } from './sentinels';
 
 const SUPPORTED_SLOTS = ['body', 'head', 'hair', 'outfit'] as const;
@@ -1151,6 +1152,11 @@ function expandHeadFittedVariants(
     fitVariant = fitCanonicalShortVariant;
   } else if (target.headFitAdapter === 'canonical-bun-v1' && target.id === 'hair-bun') {
     fitVariant = fitCanonicalBunVariant;
+  } else if (
+    target.headFitAdapter === 'canonical-ponytail-v1'
+    && target.id === 'hair-ponytail'
+  ) {
+    fitVariant = fitCanonicalPonytailVariant;
   } else {
     fail(source, `unsupported head-fit adapter ${target.headFitAdapter ?? 'none'} for ${target.id}`);
   }

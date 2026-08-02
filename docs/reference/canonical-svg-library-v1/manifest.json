@@ -302,21 +302,21 @@
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/ponytail.east.svg",
-      "sha256": "f53bad0df3651203975d4d6e8aea630a864bee58e0a1c41be0419d3e9ca6dfd2"
+      "sha256": "943243f84863eab7878665954680b8312d47623a4c80d08c0db375553e423326"
     },
     {
       "assetId": "hair-ponytail",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/ponytail.north.svg",
-      "sha256": "8aefaa71806cc2a2a76c57c125cd8f8e6801cde99fdbcbebf5363ad70a00eb24"
+      "sha256": "31763372d2c332d3cb17e1766be6d391f8f0501c1cc17cd4d1a12d7126c3c284"
     },
     {
       "assetId": "hair-ponytail",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/ponytail.south.svg",
-      "sha256": "3c29a0a00b84438c3a59546b25b4d14234b60d808ac61242ff8eb28f399dda29"
+      "sha256": "a96dfa1dc393ef570b200f632a8e08fe381aa6ff73047b617565f47c01c98d36"
     },
     {
       "assetId": "hair-short",

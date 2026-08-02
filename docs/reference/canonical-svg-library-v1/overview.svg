@@ -369,29 +369,28 @@
     <path id="art/fringe" d="M -18 -4 L -10 3 L -3 -2 L 4 4 L 11 -2 L 19 2 L 18 -8 L -17 -8 Z" fill="#00FFFF" fill-rule="nonzero"/>
   </g>
 </svg><text x="1307.125" y="608" fill="#292C2A" font-family="Inter,Arial,sans-serif" font-size="7.4" font-weight="700" text-anchor="middle">pixie.south</text></a><a href="../../../assets/parts/hair/ponytail.east.svg"><title>assets/parts/hair/ponytail.east.svg</title><rect x="1408.75" y="490" width="187.25" height="138" rx="10" fill="#F6F1E6" stroke="#355647" stroke-width="1"/><rect x="1408.75" y="490" width="6" height="138" rx="3" fill="#355647"/><rect x="1459.375" y="502" width="86" height="86" rx="6" fill="#E1DDD2"/><svg x="1459.375" y="502" width="86" height="86" viewBox="0 0 128 128" preserveAspectRatio="xMidYMid meet" overflow="hidden">
-  <title>Terrarium hair-ponytail east authored art</title>
-  <desc>Current production ponytail profile with an unmistakable rearward fall.</desc>
+  <title>Terrarium hair-ponytail east canonical art</title>
+  <desc>Profile cap, rear tie, and directional tail authored on the shared round-head fit frame.</desc>
   <g id="art" transform="translate(64 44)">
-    <path id="art/cap" d="M -19.4164878389476 -8 A 21 21 0 0 1 19.4164878389476 -8 Z" fill="#00FFFF" fill-rule="nonzero"/>
-    <path id="art/back" d="M -17 -9 h 0 a 4 4 0 0 1 4 4 v 8 a 4 4 0 0 1 -4 4 h 0 a 4 4 0 0 1 -4 -4 v -8 a 4 4 0 0 1 4 -4 Z" fill="#00FFFF" fill-rule="nonzero"/>
-    <path id="art/tie" d="M -24 -10 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
-    <path id="art/tail" d="M -21 -14 C -33 -18 -38 -7 -31 1 C -37 10 -32 24 -23 29 C -15 25 -16 14 -22 7 C -16 1 -16 -8 -21 -14 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/cap" d="M -22 -2 C -20 -16 -10.6 -22 -2 -22 C 9 -22 14 -15 14 -7 L 10 -2 L 4 1 L -2 -2 C -7 -5 -14 -3 -17 1 L -22 9 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/tie" d="M -27 -3 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/tail" d="M -22 -8 C -35 -12 -40 -2 -33 5 C -40 13 -34 25 -24 29 C -17 23 -18 14 -24 7 C -18 2 -18 -4 -22 -8 Z" fill="#00FFFF" fill-rule="nonzero"/>
   </g>
 </svg><text x="1502.375" y="608" fill="#292C2A" font-family="Inter,Arial,sans-serif" font-size="7.4" font-weight="700" text-anchor="middle">ponytail.east</text></a><a href="../../../assets/parts/hair/ponytail.north.svg"><title>assets/parts/hair/ponytail.north.svg</title><rect x="1604" y="490" width="187.25" height="138" rx="10" fill="#F6F1E6" stroke="#355647" stroke-width="1"/><rect x="1604" y="490" width="6" height="138" rx="3" fill="#355647"/><rect x="1654.625" y="502" width="86" height="86" rx="6" fill="#E1DDD2"/><svg x="1654.625" y="502" width="86" height="86" viewBox="0 0 128 128" preserveAspectRatio="xMidYMid meet" overflow="hidden">
-  <title>Terrarium hair-ponytail north authored art</title>
-  <desc>Current production ponytail rear silhouette with visible tie and tail.</desc>
+  <title>Terrarium hair-ponytail north canonical art</title>
+  <desc>Rear cap, tie, and hanging tail authored on the shared round-head fit frame.</desc>
   <g id="art" transform="translate(64 44)">
-    <path id="art/cap" d="M -20.396078054371138 5 A 21 21 0 1 1 20.396078054371138 5 Z" fill="#00FFFF" fill-rule="nonzero"/>
-    <path id="art/tie" d="M 11 -14 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
-    <path id="art/tail" d="M 17 -18 C 29 -22 36 -12 29 -3 C 35 8 31 23 22 29 C 15 24 17 13 21 6 C 15 0 14 -10 17 -18 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/cap" d="M -22 6 C -20.2 -16 -10.6 -22 0 -22 C 11 -22 20.2 -16 22 6 L 12.8 9 C 5.5 4 -4.8 4 -13.2 9 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/tie" d="M 15 -3 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/tail" d="M 20 -8 C 32 -12 36 -2 30 5 C 35 13 30 24 21 28 C 15 22 17 14 22 7 C 17 2 17 -4 20 -8 Z" fill="#00FFFF" fill-rule="nonzero"/>
   </g>
 </svg><text x="1697.625" y="608" fill="#292C2A" font-family="Inter,Arial,sans-serif" font-size="7.4" font-weight="700" text-anchor="middle">ponytail.north</text></a><a href="../../../assets/parts/hair/ponytail.south.svg"><title>assets/parts/hair/ponytail.south.svg</title><rect x="1799.25" y="490" width="187.25" height="138" rx="10" fill="#F6F1E6" stroke="#355647" stroke-width="1"/><rect x="1799.25" y="490" width="6" height="138" rx="3" fill="#355647"/><rect x="1849.875" y="502" width="86" height="86" rx="6" fill="#E1DDD2"/><svg x="1849.875" y="502" width="86" height="86" viewBox="0 0 128 128" preserveAspectRatio="xMidYMid meet" overflow="hidden">
-  <title>Terrarium hair-ponytail south authored art</title>
-  <desc>Current production high ponytail front silhouette with a side peek.</desc>
+  <title>Terrarium hair-ponytail south canonical art</title>
+  <desc>Cap, tie, and hanging tail authored on the shared round-head fit frame.</desc>
   <g id="art" transform="translate(64 44)">
-    <path id="art/cap" d="M -19.4164878389476 -8 A 21 21 0 0 1 19.4164878389476 -8 Z" fill="#00FFFF" fill-rule="nonzero"/>
-    <path id="art/tie" d="M 12 -13 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
-    <path id="art/tail" d="M 18 -16 C 29 -17 34 -8 29 0 C 34 8 29 20 21 25 C 15 21 17 12 21 6 C 16 1 15 -8 18 -16 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/cap" d="M -22 -2 C -20.2 -16 -10.6 -22 0 -22 C 11 -22 20.2 -16 22 -2 L 12.8 1 C 5.5 -4 -4.8 -4 -13.2 1 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/tie" d="M 16 -2 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/tail" d="M 21 -7 C 32 -10 37 -1 31 6 C 36 13 31 23 22 27 C 16 21 17 13 22 6 C 17 2 17 -3 21 -7 Z" fill="#00FFFF" fill-rule="nonzero"/>
   </g>
 </svg><text x="1892.875" y="608" fill="#292C2A" font-family="Inter,Arial,sans-serif" font-size="7.4" font-weight="700" text-anchor="middle">ponytail.south</text></a><a href="../../../assets/parts/hair/short.east.svg"><title>assets/parts/hair/short.east.svg</title><rect x="1994.5" y="490" width="187.25" height="138" rx="10" fill="#F6F1E6" stroke="#355647" stroke-width="1"/><rect x="1994.5" y="490" width="6" height="138" rx="3" fill="#355647"/><rect x="2045.125" y="502" width="86" height="86" rx="6" fill="#E1DDD2"/><svg x="2045.125" y="502" width="86" height="86" viewBox="0 0 128 128" preserveAspectRatio="xMidYMid meet" overflow="hidden">
   <title>Terrarium hair-short east canonical art</title>

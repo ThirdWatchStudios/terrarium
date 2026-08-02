@@ -24,7 +24,7 @@ const CANONICAL_HAIRS = [
   ['hair-balding', 'balding', [2, 1, 1]],
   ['hair-side-part', 'side-part', [3, 4, 2]],
   ['hair-pixie', 'pixie', [2, 3, 1]],
-  ['hair-ponytail', 'ponytail', [3, 4, 3]],
+  ['hair-ponytail', 'ponytail', [3, 3, 3]],
   ['hair-long-straight', 'long-straight', [1, 1, 1]],
   ['hair-coils', 'coils', [1, 1, 1]],
 ] as const;
@@ -135,13 +135,13 @@ describe('canonical production hair families', () => {
     expect(fittedHairVariant('hair-short', 'head-fab', 'south')).toBeUndefined();
   });
 
-  it('locks the approved source-fitted Short and Bob with the preserved Ponytail carrier', () => {
+  it('locks the approved source-fitted Short, Bob, and Ponytail carrier', () => {
     const approved = ['hair-short', 'hair-bob', 'hair-ponytail'];
     const payload = approved.flatMap((hair) =>
       FITTED_HAIR_HEAD_IDS.flatMap((head) =>
         FACINGS.map((facing) => fittedHairVariant(hair, head, facing))));
     expect(createHash('sha256').update(JSON.stringify(payload)).digest('hex'))
-      .toBe('888f7544bd8de17d899a36c613dfe1fc231ef09f5559d3120180cbdd2fe62f0f');
+      .toBe('9d6348833312297aa0e1525c2d8bf4dd3531cb6fec474c3188eaac62f847e719');
   });
 
   it('uses the same fitted geometry in flat and reconstructable production output', () => {

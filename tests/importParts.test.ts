@@ -1045,14 +1045,17 @@ describe('part source tree and generated registration', () => {
       { id: 'hair-balding', slug: 'balding', counts: [2, 1, 1] },
       { id: 'hair-side-part', slug: 'side-part', counts: [3, 4, 2] },
       { id: 'hair-pixie', slug: 'pixie', counts: [2, 3, 1] },
-      { id: 'hair-ponytail', slug: 'ponytail', counts: [3, 4, 3] },
+      { id: 'hair-ponytail', slug: 'ponytail', counts: [3, 3, 3] },
       { id: 'hair-long-straight', slug: 'long-straight', counts: [1, 1, 1] },
       { id: 'hair-coils', slug: 'coils', counts: [1, 1, 1] },
     ] as const;
     const exactPathStableHairShapes: string[] = [];
     for (const { id, slug, counts } of canonicalHairs) {
       const candidate = imports.find((imported) => imported.id === id)!;
-      const hair = id === 'hair-bob' || id === 'hair-short' || id === 'hair-bun'
+      const hair = id === 'hair-bob'
+        || id === 'hair-short'
+        || id === 'hair-bun'
+        || id === 'hair-ponytail'
         ? headFittedImport(candidate)
         : staticImport(candidate);
       expect(hair).toMatchObject({
@@ -1070,7 +1073,12 @@ describe('part source tree and generated registration', () => {
         expect(shapes, `${id}/${facing}`).toHaveLength(counts[facingIndex]);
         expect(shapes[0], `${id}/${facing} silhouette`).toMatchObject({ fill: '$hair' });
         expect(shapes[0]?.silhouette, `${id}/${facing} silhouette role`).not.toBe(false);
-        if (id !== 'hair-bob' && id !== 'hair-short' && id !== 'hair-bun') {
+        if (
+          id !== 'hair-bob'
+          && id !== 'hair-short'
+          && id !== 'hair-bun'
+          && id !== 'hair-ponytail'
+        ) {
           for (const shape of shapes) {
             exactPathStableHairShapes.push(`${id}/${facing}/${JSON.stringify(shape)}`);
           }
@@ -1082,6 +1090,7 @@ describe('part source tree and generated registration', () => {
       ['hair-short', 1],
       ['hair-bob', 2],
       ['hair-bun', 2],
+      ['hair-ponytail', 3],
     ] as const) {
       const fittedHair = headFittedImport(imports.find((candidate) => candidate.id === id)!);
       expect(Object.keys(fittedHair.headVariants).sort(), id).toEqual([
@@ -1108,9 +1117,9 @@ describe('part source tree and generated registration', () => {
         silhouette: false,
       });
     }
-    expect(exactPathStableHairShapes).toHaveLength(50);
+    expect(exactPathStableHairShapes).toHaveLength(40);
     expect(createHash('sha256').update(exactPathStableHairShapes.join('\n')).digest('hex'))
-      .toBe('7bd1a22e679ce3a36e35e92fd184f8fe19032849bf895aa8470830d4ee36aacb');
+      .toBe('f20f14ba6bce629a6348c305862f7a5f74d3448d2b7007eae219f3eec51f4f0e');
 
     for (const slug of ['round', 'oval', 'boxy', 'long', 'angular', 'soft-square']) {
       const id = `head-${slug}`;
@@ -1574,7 +1583,6 @@ describe('imported art overlay', () => {
         'hair-balding',
         'hair-side-part',
         'hair-pixie',
-        'hair-ponytail',
         'hair-long-straight',
         'hair-coils',
       ]);

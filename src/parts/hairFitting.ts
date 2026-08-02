@@ -294,47 +294,6 @@ function pixieFacings(fit: HeadHairFit): Record<Facing, PartVariant> {
   };
 }
 
-function ponytailFacings(fit: HeadHairFit): Record<Facing, PartVariant> {
-  const southWidth = compact(fit.southHalf + 1);
-  const northWidth = compact(fit.northHalf + 1);
-  const back = compact(fit.eastBack - 1);
-  return {
-    south: hairVariant(
-      fittedCap(fit.southHalf, fit.crownY, 1),
-      hairShape(circle(compact(southWidth - 1), -2, 5)),
-      hairShape(
-        `M ${compact(southWidth - 1)} -7 ` +
-        `C ${compact(southWidth + 10)} -10 ${compact(southWidth + 15)} -1 ${compact(southWidth + 9)} 6 ` +
-        `C ${compact(southWidth + 14)} 13 ${compact(southWidth + 9)} 23 ${southWidth} 27 ` +
-        `C ${compact(southWidth - 6)} 21 ${compact(southWidth - 5)} 13 ${southWidth} 6 ` +
-        `C ${compact(southWidth - 5)} 2 ${compact(southWidth - 5)} -3 ${compact(southWidth - 1)} -7 Z`,
-      ),
-    ),
-    east: hairVariant(
-      profileCap(fit, { hairlineY: -2, backDrop: 9 }),
-      hairShape(circle(back, -3, 5)),
-      hairShape(
-        `M ${back} -8 ` +
-        `C ${compact(back - 13)} -12 ${compact(back - 18)} -2 ${compact(back - 11)} 5 ` +
-        `C ${compact(back - 18)} 13 ${compact(back - 12)} 25 ${compact(back - 2)} 29 ` +
-        `C ${compact(back + 5)} 23 ${compact(back + 4)} 14 ${compact(back - 2)} 7 ` +
-        `C ${compact(back + 4)} 2 ${compact(back + 4)} -4 ${back} -8 Z`,
-      ),
-    ),
-    north: hairVariant(
-      fittedCap(fit.northHalf, fit.crownY, 9),
-      hairShape(circle(compact(northWidth - 2), -3, 5)),
-      hairShape(
-        `M ${compact(northWidth - 2)} -8 ` +
-        `C ${compact(northWidth + 10)} -12 ${compact(northWidth + 14)} -2 ${compact(northWidth + 8)} 5 ` +
-        `C ${compact(northWidth + 13)} 13 ${compact(northWidth + 8)} 24 ${compact(northWidth - 1)} 28 ` +
-        `C ${compact(northWidth - 7)} 22 ${compact(northWidth - 5)} 14 ${northWidth} 7 ` +
-        `C ${compact(northWidth - 5)} 2 ${compact(northWidth - 5)} -4 ${compact(northWidth - 2)} -8 Z`,
-      ),
-    ),
-  };
-}
-
 function longStraightFacings(fit: HeadHairFit): Record<Facing, PartVariant> {
   const southWidth = compact(fit.southHalf + 3);
   const northWidth = compact(fit.northHalf + 3);
@@ -419,11 +378,14 @@ function coilsFacings(fit: HeadHairFit): Record<Facing, PartVariant> {
   };
 }
 
-type CanonicalFittedHairId = 'hair-short' | 'hair-bob' | 'hair-bun';
+type CanonicalFittedHairId = 'hair-short' | 'hair-bob' | 'hair-bun' | 'hair-ponytail';
 type CodeFittedHairId = Exclude<FittedHairId, CanonicalFittedHairId>;
 
 const isCanonicalFittedHairId = (hairId: FittedHairId): hairId is CanonicalFittedHairId =>
-  hairId === 'hair-short' || hairId === 'hair-bob' || hairId === 'hair-bun';
+  hairId === 'hair-short'
+  || hairId === 'hair-bob'
+  || hairId === 'hair-bun'
+  || hairId === 'hair-ponytail';
 
 const CODE_FITTED_HAIR_IDS = FITTED_HAIR_IDS.filter(
   (hairId): hairId is CodeFittedHairId => !isCanonicalFittedHairId(hairId),
@@ -434,7 +396,6 @@ const BUILDERS: Record<CodeFittedHairId, (fit: HeadHairFit) => Record<Facing, Pa
   'hair-balding': baldingFacings,
   'hair-side-part': sidePartFacings,
   'hair-pixie': pixieFacings,
-  'hair-ponytail': ponytailFacings,
   'hair-long-straight': longStraightFacings,
   'hair-coils': coilsFacings,
 };

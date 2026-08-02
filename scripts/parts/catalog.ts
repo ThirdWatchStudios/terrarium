@@ -12,7 +12,8 @@ export type BodyDetailFrame = 'upper-torso' | 'lower-torso';
 export type HeadFitAdapter =
   | 'canonical-bob-v1'
   | 'canonical-short-v1'
-  | 'canonical-bun-v1';
+  | 'canonical-bun-v1'
+  | 'canonical-ponytail-v1';
 
 export interface PartImportComponent {
   readonly id: string;
@@ -96,7 +97,12 @@ export const PART_IMPORT_TARGETS: readonly PartImportTarget[] = [
   byteStableTarget('hair-balding', 'hair'),
   byteStableTarget('hair-side-part', 'hair'),
   byteStableTarget('hair-pixie', 'hair'),
-  byteStableTarget('hair-ponytail', 'hair'),
+  {
+    ...target('hair-ponytail', 'hair'),
+    importMode: 'head-fitted-art',
+    headFitAdapter: 'canonical-ponytail-v1',
+    variantZ: 50,
+  },
   byteStableTarget('hair-long-straight', 'hair'),
   byteStableTarget('hair-coils', 'hair'),
   target('head-fab', 'head'),
