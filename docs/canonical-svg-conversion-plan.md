@@ -1,6 +1,6 @@
 # Canonical SVG source-conversion plan
 
-Status: **active; P0 department machines plus Bob/Short/Bun/Ponytail/Long straight source authority complete locally**
+Status: **active; P0 department machines plus Bob/Short/Bun/Ponytail/Long straight/Balding source authority complete locally**
 
 Recorded: 2026-08-02
 
@@ -139,12 +139,12 @@ large, current, stateful production family.
 
 #### Head-aware hair production geometry
 
-The hair base SVGs are checked in. The first five bounded source-authority slices
+The hair base SVGs are checked in. The first six bounded source-authority slices
 are complete for `hair-bob`, `hair-short`, `hair-bun`, `hair-ponytail`, and
-`hair-long-straight`: each three-facing canonical set
+`hair-long-straight`, plus `hair-balding`: each three-facing canonical set
 compiles through a declared `head-fitted-art` adapter into six deterministic
 head variants, and the live resolver consumes those generated records without
-a Bob, Short, Bun, Ponytail, or Long straight path builder. The other five mapped styles still build their
+a Bob, Short, Bun, Ponytail, Long straight, or Balding path builder. The other four mapped styles still build their
 live head-specific geometry in `hairFitting.ts`, so their apparent SVG sources
 are not yet complete visual authority.
 
@@ -164,7 +164,9 @@ source can be refined before promotion; Bun proved disconnected components can
 retain separate declarative frames without redrawing; Ponytail proved that its
 tie and tail can share one attachment transform while the cap fits independently.
 Long straight proved that a tall curtain and two-piece east profile can share a
-single bounded fit frame without losing the open face. All five styles passed
+single bounded fit frame without losing the open face. Balding proved that
+independently editable tapered temples, rear piece, and horseshoe can retain
+their character under declarative component fitting. All six styles passed
 six-head, three-facing, literal 48/32 px review and received visual approval on
 2026-08-02. Apply the same bounded source/import/review gate
 one style at a time; add a per-head source only when the reviewed transform is

@@ -22,6 +22,7 @@
     "hair:canonical-bun:production-preview": "tsx scripts/canonicalBunSourceFitProof.ts",
     "hair:canonical-ponytail:production-preview": "tsx scripts/canonicalPonytailSourceFitProof.ts",
     "hair:canonical-long-straight:production-preview": "tsx scripts/canonicalLongStraightSourceFitProof.ts",
+    "hair:canonical-balding:production-preview": "tsx scripts/canonicalBaldingSourceFitProof.ts",
     "props:import": "tsx scripts/importQuotaCoWorkhorseProps.ts",
     "props:import:check": "tsx scripts/importQuotaCoWorkhorseProps.ts --check",
     "department-machines:import": "tsx scripts/importQuotaCoDepartmentMachines.ts --write",

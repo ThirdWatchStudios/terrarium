@@ -1057,6 +1057,7 @@ describe('part source tree and generated registration', () => {
         || id === 'hair-bun'
         || id === 'hair-ponytail'
         || id === 'hair-long-straight'
+        || id === 'hair-balding'
         ? headFittedImport(candidate)
         : staticImport(candidate);
       expect(hair).toMatchObject({
@@ -1080,6 +1081,7 @@ describe('part source tree and generated registration', () => {
           && id !== 'hair-bun'
           && id !== 'hair-ponytail'
           && id !== 'hair-long-straight'
+          && id !== 'hair-balding'
         ) {
           for (const shape of shapes) {
             exactPathStableHairShapes.push(`${id}/${facing}/${JSON.stringify(shape)}`);
@@ -1094,6 +1096,7 @@ describe('part source tree and generated registration', () => {
       ['hair-bun', [2, 2, 2]],
       ['hair-ponytail', [3, 3, 3]],
       ['hair-long-straight', [1, 2, 1]],
+      ['hair-balding', [2, 1, 1]],
     ] as const) {
       const fittedHair = headFittedImport(imports.find((candidate) => candidate.id === id)!);
       expect(Object.keys(fittedHair.headVariants).sort(), id).toEqual([
@@ -1121,9 +1124,9 @@ describe('part source tree and generated registration', () => {
         silhouette: false,
       });
     }
-    expect(exactPathStableHairShapes).toHaveLength(37);
+    expect(exactPathStableHairShapes).toHaveLength(33);
     expect(createHash('sha256').update(exactPathStableHairShapes.join('\n')).digest('hex'))
-      .toBe('5fcd0958f825e14e881326c5cc4298efd1e41c035edc1aed64bf6e489af04445');
+      .toBe('3f895039e3435bffcd024c6822030eacf6674f6a8c929b91f40ce5f5cb4fc909');
 
     for (const slug of ['round', 'oval', 'boxy', 'long', 'angular', 'soft-square']) {
       const id = `head-${slug}`;
@@ -1584,7 +1587,6 @@ describe('imported art overlay', () => {
     expect(sourceTargets.filter(({ preserveLocalPaths }) => preserveLocalPaths).map(({ id }) => id))
       .toEqual([
         'hair-curly',
-        'hair-balding',
         'hair-side-part',
         'hair-pixie',
         'hair-coils',

@@ -185,32 +185,6 @@ function curlyFacings(fit: HeadHairFit): Record<Facing, PartVariant> {
   };
 }
 
-function baldingFacings(fit: HeadHairFit): Record<Facing, PartVariant> {
-  const southX = compact(fit.southHalf * 0.9);
-  const northWidth = compact(fit.northHalf + 1);
-  const templeWidth = Math.max(4, compact(fit.southHalf * 0.22));
-  const back = compact(fit.eastBack + 4);
-  const crown = compact(fit.crownY + 5);
-  return {
-    south: hairVariant(
-      hairShape(ellipse(-southX, 5, templeWidth, 7.5)),
-      hairShape(ellipse(southX, 5, templeWidth, 7.5)),
-    ),
-    east: hairVariant(
-      hairShape(ellipse(back, 5, Math.max(5, templeWidth), 7.5)),
-    ),
-    north: hairVariant(
-      hairShape(
-        `M ${-northWidth} -2 ` +
-        `C ${compact(-northWidth * 0.88)} ${compact(crown - 7)} ${compact(-northWidth * 0.42)} ${crown} 0 ${crown} ` +
-        `C ${compact(northWidth * 0.42)} ${crown} ${compact(northWidth * 0.88)} ${compact(crown - 7)} ${northWidth} -2 ` +
-        `L ${compact(northWidth - 1)} 10 ` +
-        `C ${compact(northWidth * 0.45)} 5 ${compact(-northWidth * 0.45)} 5 ${compact(-northWidth + 1)} 10 Z`,
-      ),
-    ),
-  };
-}
-
 function sidePartFacings(fit: HeadHairFit): Record<Facing, PartVariant> {
   const southWidth = compact(fit.southHalf + 2);
   const northWidth = compact(fit.northHalf + 2);
@@ -338,7 +312,8 @@ type CanonicalFittedHairId =
   | 'hair-bob'
   | 'hair-bun'
   | 'hair-ponytail'
-  | 'hair-long-straight';
+  | 'hair-long-straight'
+  | 'hair-balding';
 type CodeFittedHairId = Exclude<FittedHairId, CanonicalFittedHairId>;
 
 const isCanonicalFittedHairId = (hairId: FittedHairId): hairId is CanonicalFittedHairId =>
@@ -346,7 +321,8 @@ const isCanonicalFittedHairId = (hairId: FittedHairId): hairId is CanonicalFitte
   || hairId === 'hair-bob'
   || hairId === 'hair-bun'
   || hairId === 'hair-ponytail'
-  || hairId === 'hair-long-straight';
+  || hairId === 'hair-long-straight'
+  || hairId === 'hair-balding';
 
 const CODE_FITTED_HAIR_IDS = FITTED_HAIR_IDS.filter(
   (hairId): hairId is CodeFittedHairId => !isCanonicalFittedHairId(hairId),
@@ -354,7 +330,6 @@ const CODE_FITTED_HAIR_IDS = FITTED_HAIR_IDS.filter(
 
 const BUILDERS: Record<CodeFittedHairId, (fit: HeadHairFit) => Record<Facing, PartVariant>> = {
   'hair-curly': curlyFacings,
-  'hair-balding': baldingFacings,
   'hair-side-part': sidePartFacings,
   'hair-pixie': pixieFacings,
   'hair-coils': coilsFacings,

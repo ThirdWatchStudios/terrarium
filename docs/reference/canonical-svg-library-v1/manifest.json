@@ -155,21 +155,21 @@
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/balding.east.svg",
-      "sha256": "1421062d7f9d5183c14eefdf014b995b394e4e9875286db5913f442c748048a3"
+      "sha256": "4f826ccbeed80c391abe13eefb7171f3f3d65d66e0433f858b5236832d0963dd"
     },
     {
       "assetId": "hair-balding",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/balding.north.svg",
-      "sha256": "79ce48594730253e5a90eb3fdbece05171d92030ac84b766176d29a1e96bcf2b"
+      "sha256": "01c3dcc4184e6146d63b011c372e8051724ec974cfd5b9ae76aa5b9e41a5c09f"
     },
     {
       "assetId": "hair-balding",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/balding.south.svg",
-      "sha256": "c352e315b8b978c3e1656da616b4dfc762a53e550126765150832d795e7618f8"
+      "sha256": "f484756c87a2a6f1e8f6eb50fe5ea3c0a17986b7c5827745f89846eca7d437c3"
     },
     {
       "assetId": "hair-bob",
