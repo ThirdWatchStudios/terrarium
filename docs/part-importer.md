@@ -113,20 +113,21 @@ is validated after applying that canvas translation but deliberately preserves
 its established local `d` strings byte-for-byte; visible body paths must remain
 directly under the canonical translation group.
 
-Every current hair target except `hair-bob`, `hair-short`, `hair-bun`, and `hair-ponytail` also preserves its
+Every current hair target except `hair-bob`, `hair-short`, `hair-bun`, `hair-ponytail`, and
+`hair-long-straight` also preserves its
 canonical local path strings after canvas validation. Their arc- and
 curve-heavy geometry measurably changes under generic flattening even at
 production sizes, so those explicit targets require visible paths directly
-under `translate(64 44)`. Bob, Short, Bun, and Ponytail retain the normal transform-baking
+under `translate(64 44)`. Bob, Short, Bun, Ponytail, and Long straight retain the normal transform-baking
 path as approved interoperability controls.
 
 For all ten mapped hair IDs, the compositor resolves a fixed fitted variant
-from the selected production head ID. Bob, Short, Bun, and Ponytail are complete source-owned
+from the selected production head ID. Bob, Short, Bun, Ponytail, and Long straight are complete source-owned
 routes: `head-fitted-art` compiles each three-facing SVG set through six
 declarative head envelopes into ordinary generated `PartVariant` records.
 Editing any of these canonical source sets, then running `npm run parts:import`, changes
-its live all-head geometry; there is no second Bob/Short/Bun/Ponytail path builder or
-silent human-head fallback. The remaining six hair IDs still use the deterministic
+that style's live all-head geometry; there is no second Bob/Short/Bun/Ponytail/Long straight path builder or
+silent human-head fallback. The remaining five hair IDs still use the deterministic
 code-owned fit table, so editing those SVGs changes only their static fallback
 until each style passes the same bounded migration gate. No fit metadata,
 `buildVariant`, recipe field, or export-schema field is added. Flat and

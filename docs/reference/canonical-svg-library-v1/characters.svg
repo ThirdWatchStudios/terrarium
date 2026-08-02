@@ -579,22 +579,23 @@
     <path id="art/curl-right" d="M 6 -9 a 9 9 0 1 0 18 0 a 9 9 0 1 0 -18 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
   </g>
 </svg><text x="687.6666666666666" y="1516" fill="#292C2A" font-family="Inter,Arial,sans-serif" font-size="8.7" font-weight="700" text-anchor="middle">curly.south</text><text x="687.6666666666666" y="1531" fill="#626861" font-family="Inter,Arial,sans-serif" font-size="7" font-weight="560" text-anchor="middle">hair</text></a><a href="../../../assets/parts/hair/long-straight.east.svg"><title>assets/parts/hair/long-straight.east.svg</title><rect x="823.9999999999999" y="1354" width="248.66666666666666" height="188" rx="10" fill="#F6F1E6" stroke="#355647" stroke-width="1"/><rect x="823.9999999999999" y="1354" width="6" height="188" rx="3" fill="#355647"/><rect x="889.3333333333333" y="1369" width="118" height="118" rx="6" fill="#E1DDD2"/><svg x="889.3333333333333" y="1369" width="118" height="118" viewBox="0 0 128 128" preserveAspectRatio="xMidYMid meet" overflow="hidden">
-  <title>Terrarium hair-long-straight east authored art</title>
-  <desc>Current production long straight profile silhouette with one rear fall.</desc>
+  <title>Terrarium hair-long-straight east canonical art</title>
+  <desc>Asymmetric profile curtain and narrow forward lock authored on the shared round-head fit frame.</desc>
   <g id="art" transform="translate(64 44)">
-    <path id="art/silhouette" d="M -22 -5 A 23 23 0 0 1 23 -5 C 23 1 21 6 17 10 L 15 8 C 16 -3 10 -11 1 -12 C -8 -12 -13 -7 -14 1 L -12 30 L -24 30 L -24 7 C -24 1 -23 -3 -22 -5 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/rear-curtain" d="M -24 30 L -24 -3 C -22 -16 -10.8 -23 -2 -23 C 10 -23 15 -15 15 -5 L 4 0 C -2 -5 -8 -5 -16 1 L -15 30 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/front-lock" d="M 2 -1 C 5 7 3 19 0 28 L -5 28 L -2 2 Z" fill="#00FFFF" fill-rule="nonzero"/>
   </g>
 </svg><text x="948.3333333333333" y="1516" fill="#292C2A" font-family="Inter,Arial,sans-serif" font-size="8.7" font-weight="700" text-anchor="middle">long-straight.east</text><text x="948.3333333333333" y="1531" fill="#626861" font-family="Inter,Arial,sans-serif" font-size="7" font-weight="560" text-anchor="middle">hair</text></a><a href="../../../assets/parts/hair/long-straight.north.svg"><title>assets/parts/hair/long-straight.north.svg</title><rect x="1084.6666666666665" y="1354" width="248.66666666666666" height="188" rx="10" fill="#F6F1E6" stroke="#355647" stroke-width="1"/><rect x="1084.6666666666665" y="1354" width="6" height="188" rx="3" fill="#355647"/><rect x="1149.9999999999998" y="1369" width="118" height="118" rx="6" fill="#E1DDD2"/><svg x="1149.9999999999998" y="1369" width="118" height="118" viewBox="0 0 128 128" preserveAspectRatio="xMidYMid meet" overflow="hidden">
-  <title>Terrarium hair-long-straight north authored art</title>
-  <desc>Current production long straight rear curtain silhouette.</desc>
+  <title>Terrarium hair-long-straight north canonical art</title>
+  <desc>Full rear curtain authored on the shared round-head fit frame.</desc>
   <g id="art" transform="translate(64 44)">
-    <path id="art/silhouette" d="M -23 -4 A 23 23 0 0 1 23 -4 L 23 31 L -23 31 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/silhouette" d="M -24 -4 C -21.6 -17 -10.8 -23 0 -23 C 11.5 -23 22.1 -17 24 -4 L 24 31 H -24 Z" fill="#00FFFF" fill-rule="nonzero"/>
   </g>
 </svg><text x="1208.9999999999998" y="1516" fill="#292C2A" font-family="Inter,Arial,sans-serif" font-size="8.7" font-weight="700" text-anchor="middle">long-straight.north</text><text x="1208.9999999999998" y="1531" fill="#626861" font-family="Inter,Arial,sans-serif" font-size="7" font-weight="560" text-anchor="middle">hair</text></a><a href="../../../assets/parts/hair/long-straight.south.svg"><title>assets/parts/hair/long-straight.south.svg</title><rect x="1345.333333333333" y="1354" width="248.66666666666666" height="188" rx="10" fill="#F6F1E6" stroke="#355647" stroke-width="1"/><rect x="1345.333333333333" y="1354" width="6" height="188" rx="3" fill="#355647"/><rect x="1410.6666666666663" y="1369" width="118" height="118" rx="6" fill="#E1DDD2"/><svg x="1410.6666666666663" y="1369" width="118" height="118" viewBox="0 0 128 128" preserveAspectRatio="xMidYMid meet" overflow="hidden">
-  <title>Terrarium hair-long-straight south authored art</title>
-  <desc>Current production long straight front silhouette with open face.</desc>
+  <title>Terrarium hair-long-straight south canonical art</title>
+  <desc>Open-face front curtain authored on the shared round-head fit frame.</desc>
   <g id="art" transform="translate(64 44)">
-    <path id="art/silhouette" d="M -23 -5 A 23 23 0 0 1 23 -5 L 23 29 L 14 29 L 11 -2 A 12 12 0 0 0 -11 -2 L -14 29 L -23 29 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/silhouette" d="M -24 -4 C -21.6 -17 -10.8 -23 0 -23 C 11.5 -23 22.1 -17 24 -4 L 24 30 L 15.8 30 L 11.8 -1 C 7.3 -8 -7.3 -8 -11.8 -1 L -15.8 30 L -24 30 Z" fill="#00FFFF" fill-rule="nonzero"/>
   </g>
 </svg><text x="1469.6666666666663" y="1516" fill="#292C2A" font-family="Inter,Arial,sans-serif" font-size="8.7" font-weight="700" text-anchor="middle">long-straight.south</text><text x="1469.6666666666663" y="1531" fill="#626861" font-family="Inter,Arial,sans-serif" font-size="7" font-weight="560" text-anchor="middle">hair</text></a><a href="../../../assets/parts/hair/pixie.east.svg"><title>assets/parts/hair/pixie.east.svg</title><rect x="1605.9999999999998" y="1354" width="248.66666666666666" height="188" rx="10" fill="#F6F1E6" stroke="#355647" stroke-width="1"/><rect x="1605.9999999999998" y="1354" width="6" height="188" rx="3" fill="#355647"/><rect x="1671.333333333333" y="1369" width="118" height="118" rx="6" fill="#E1DDD2"/><svg x="1671.333333333333" y="1369" width="118" height="118" viewBox="0 0 128 128" preserveAspectRatio="xMidYMid meet" overflow="hidden">
   <title>Terrarium hair-pixie east authored art</title>

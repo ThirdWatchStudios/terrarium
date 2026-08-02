@@ -63,17 +63,18 @@ high-contrast sheets received visual approval on 2026-07-28.
 The promoted hair fitting is a Terrarium composition/export concern: recipes
 retain their stable hair IDs, flat and reconstructable layer output use the
 same fixed variant, and Unity receives ordinary baked art without fit metadata
-or animation state. Bob, Short, Bun, and Ponytail canonical SVGs now own their six
-production-head fits through build-time declarative envelopes; the other six
+or animation state. Bob, Short, Bun, Ponytail, and Long straight canonical SVGs now own their six
+production-head fits through build-time declarative envelopes; the other five
 mapped hair SVG sets remain authored source/fallback until their builders
 receive the same bounded migration. Unmapped special heads retain static
 fallback behavior. The
 remaining scale review script temporarily
 installs candidates through real registered parts, renders through the
-production compositor, and restores the original references. Bob, Short, Bun, and
-Ponytail consume build-time SVG-derived head variants with no replacement path
+production compositor, and restores the original references. Bob, Short, Bun, Ponytail, and
+Long straight consume build-time SVG-derived head variants with no replacement path
 builder; Bun keeps its cap and knot as separate authored components, while
-Ponytail fits its cap separately from the shared tie/tail attachment. The head-gap
+Ponytail fits its cap separately from the shared tie/tail attachment and Long
+straight fits its rear curtain and east front lock through one frame. The head-gap
 proof is historical evidence for the promoted sources and
 anchors; its PNGs no longer describe an unpromoted candidate.
 

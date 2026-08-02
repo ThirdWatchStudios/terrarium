@@ -260,21 +260,21 @@
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/long-straight.east.svg",
-      "sha256": "98d370eb902ab3ffed3d82c99adf8dcc1f225b73148e28d82b9284ce90169bcd"
+      "sha256": "db3c48fb6eb20a969af7a3a7e0757de732a866b50ae77e04d80973ced5e3e259"
     },
     {
       "assetId": "hair-long-straight",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/long-straight.north.svg",
-      "sha256": "86010331f0f2af924f1105e8d765b101c756d52f6a7ae03f613819c3165a1dc7"
+      "sha256": "a88f59a3430a310b80bea5c0980b5adb2de167ce4ed663fa4c012d93a9bc42fa"
     },
     {
       "assetId": "hair-long-straight",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/long-straight.south.svg",
-      "sha256": "5ac587335ad21a9ae8775b7471b6bc404e877babf6bd60bf8a498ea2b4b8b4f4"
+      "sha256": "e4dd82a6ca27d87864e9ae13cf4856e069bee20e53223f62337492454b5d7f39"
     },
     {
       "assetId": "hair-pixie",

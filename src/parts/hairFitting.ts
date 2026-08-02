@@ -294,51 +294,6 @@ function pixieFacings(fit: HeadHairFit): Record<Facing, PartVariant> {
   };
 }
 
-function longStraightFacings(fit: HeadHairFit): Record<Facing, PartVariant> {
-  const southWidth = compact(fit.southHalf + 3);
-  const northWidth = compact(fit.northHalf + 3);
-  const opening = compact(Math.max(8, fit.southHalf * 0.56));
-  const crown = compact(fit.crownY - 2);
-  const back = compact(fit.eastBack - 3);
-  const front = compact(fit.eastFront + 1);
-  const profileOpening = compact(Math.min(7, front - 11));
-  return {
-    south: hairVariant(
-      hairShape(
-        `M ${-southWidth} -4 ` +
-        `C ${compact(-southWidth * 0.9)} ${compact(crown + 6)} ${compact(-southWidth * 0.45)} ${crown} 0 ${crown} ` +
-        `C ${compact(southWidth * 0.48)} ${crown} ${compact(southWidth * 0.92)} ${compact(crown + 6)} ${southWidth} -4 ` +
-        `L ${southWidth} 30 L ${compact(opening + 4)} 30 L ${opening} -1 ` +
-        `C ${compact(opening * 0.62)} -8 ${compact(-opening * 0.62)} -8 ${-opening} -1 ` +
-        `L ${compact(-opening - 4)} 30 L ${-southWidth} 30 Z`,
-      ),
-    ),
-    east: hairVariant(
-      hairShape(
-        `M ${back} 30 L ${back} -3 ` +
-        `C ${compact(back + 2)} ${compact(crown + 7)} ${compact(back * 0.45)} ${crown} -2 ${crown} ` +
-        `C ${compact(front - 5)} ${crown} ${front} ${compact(crown + 8)} ${front} -5 ` +
-        `L ${profileOpening} 0 ` +
-        `C ${compact(profileOpening - 6)} -5 ${compact(profileOpening - 12)} -5 ${compact(back + 8)} 1 ` +
-        `L ${compact(back + 9)} 30 Z`,
-      ),
-      hairShape(
-        `M ${compact(front - 13)} -1 ` +
-        `C ${compact(front - 10)} 7 ${compact(front - 12)} 19 ${compact(front - 15)} 28 ` +
-        `L ${compact(front - 20)} 28 L ${compact(front - 17)} 2 Z`,
-      ),
-    ),
-    north: hairVariant(
-      hairShape(
-        `M ${-northWidth} -4 ` +
-        `C ${compact(-northWidth * 0.9)} ${compact(crown + 6)} ${compact(-northWidth * 0.45)} ${crown} 0 ${crown} ` +
-        `C ${compact(northWidth * 0.48)} ${crown} ${compact(northWidth * 0.92)} ${compact(crown + 6)} ${northWidth} -4 ` +
-        `L ${northWidth} 31 H ${-northWidth} Z`,
-      ),
-    ),
-  };
-}
-
 function coilsFacings(fit: HeadHairFit): Record<Facing, PartVariant> {
   const southWidth = fit.southHalf + 4;
   const northWidth = fit.northHalf + 4;
@@ -378,14 +333,20 @@ function coilsFacings(fit: HeadHairFit): Record<Facing, PartVariant> {
   };
 }
 
-type CanonicalFittedHairId = 'hair-short' | 'hair-bob' | 'hair-bun' | 'hair-ponytail';
+type CanonicalFittedHairId =
+  | 'hair-short'
+  | 'hair-bob'
+  | 'hair-bun'
+  | 'hair-ponytail'
+  | 'hair-long-straight';
 type CodeFittedHairId = Exclude<FittedHairId, CanonicalFittedHairId>;
 
 const isCanonicalFittedHairId = (hairId: FittedHairId): hairId is CanonicalFittedHairId =>
   hairId === 'hair-short'
   || hairId === 'hair-bob'
   || hairId === 'hair-bun'
-  || hairId === 'hair-ponytail';
+  || hairId === 'hair-ponytail'
+  || hairId === 'hair-long-straight';
 
 const CODE_FITTED_HAIR_IDS = FITTED_HAIR_IDS.filter(
   (hairId): hairId is CodeFittedHairId => !isCanonicalFittedHairId(hairId),
@@ -396,7 +357,6 @@ const BUILDERS: Record<CodeFittedHairId, (fit: HeadHairFit) => Record<Facing, Pa
   'hair-balding': baldingFacings,
   'hair-side-part': sidePartFacings,
   'hair-pixie': pixieFacings,
-  'hair-long-straight': longStraightFacings,
   'hair-coils': coilsFacings,
 };
 
