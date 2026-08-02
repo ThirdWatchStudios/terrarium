@@ -1047,7 +1047,7 @@ describe('part source tree and generated registration', () => {
       { id: 'hair-pixie', slug: 'pixie', counts: [3, 3, 2] },
       { id: 'hair-ponytail', slug: 'ponytail', counts: [3, 3, 3] },
       { id: 'hair-long-straight', slug: 'long-straight', counts: [1, 2, 1] },
-      { id: 'hair-coils', slug: 'coils', counts: [1, 1, 1] },
+      { id: 'hair-coils', slug: 'coils', counts: [8, 6, 8] },
     ] as const;
     const exactPathStableHairShapes: string[] = [];
     for (const { id, slug, counts } of canonicalHairs) {
@@ -1061,6 +1061,7 @@ describe('part source tree and generated registration', () => {
         || id === 'hair-pixie'
         || id === 'hair-side-part'
         || id === 'hair-curly'
+        || id === 'hair-coils'
         ? headFittedImport(candidate)
         : staticImport(candidate);
       expect(hair).toMatchObject({
@@ -1088,6 +1089,7 @@ describe('part source tree and generated registration', () => {
           && id !== 'hair-pixie'
           && id !== 'hair-side-part'
           && id !== 'hair-curly'
+          && id !== 'hair-coils'
         ) {
           for (const shape of shapes) {
             exactPathStableHairShapes.push(`${id}/${facing}/${JSON.stringify(shape)}`);
@@ -1106,6 +1108,7 @@ describe('part source tree and generated registration', () => {
       ['hair-pixie', [3, 3, 2]],
       ['hair-side-part', [3, 3, 2]],
       ['hair-curly', [5, 4, 5]],
+      ['hair-coils', [8, 6, 8]],
     ] as const) {
       const fittedHair = headFittedImport(imports.find((candidate) => candidate.id === id)!);
       expect(Object.keys(fittedHair.headVariants).sort(), id).toEqual([
@@ -1141,9 +1144,9 @@ describe('part source tree and generated registration', () => {
         silhouette: false,
       });
     }
-    expect(exactPathStableHairShapes).toHaveLength(3);
+    expect(exactPathStableHairShapes).toHaveLength(0);
     expect(createHash('sha256').update(exactPathStableHairShapes.join('\n')).digest('hex'))
-      .toBe('52be8db205e57315369149054022fdc8bf8b659413f89192fb65db680a33dd16');
+      .toBe('e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855');
 
     for (const slug of ['round', 'oval', 'boxy', 'long', 'angular', 'soft-square']) {
       const id = `head-${slug}`;

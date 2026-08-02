@@ -1,10 +1,9 @@
-import { circle } from '../core/geometry';
-import type { Facing, PartVariant, ShapeSpec } from '../core/types';
+import type { Facing, PartVariant } from '../core/types';
 import { IMPORTED_PART_ART } from './generated/importedPartArt';
 import type { ImportedHeadFittedPartOverlay, ImportedPartOverlay } from './importedArt';
 
 /**
- * The first promoted head-aware hair carriers.
+ * The ten promoted head-aware hair carriers.
  *
  * Recipes keep these stable IDs. Terrarium resolves one fixed facing variant
  * from the recipe's head ID before flat or layered composition, so Unity still
@@ -45,147 +44,6 @@ const CANONICAL_HEAD_FITTED_BY_ID = new Map(
   CANONICAL_HEAD_FITTED_ART.map((entry) => [entry.id, entry]),
 );
 
-interface HeadHairFit {
-  southHalf: number;
-  northHalf: number;
-  crownY: number;
-  eastBack: number;
-  eastFront: number;
-}
-
-const HEAD_HAIR_FITS: Record<FittedHairHeadId, HeadHairFit> = {
-  'head-round': {
-    southHalf: 21,
-    northHalf: 21,
-    crownY: -21,
-    eastBack: -21,
-    eastFront: 14,
-  },
-  'head-oval': {
-    southHalf: 27,
-    northHalf: 27,
-    crownY: -20,
-    eastBack: -26,
-    eastFront: 17,
-  },
-  'head-long': {
-    southHalf: 14,
-    northHalf: 14,
-    crownY: -22,
-    eastBack: -16,
-    eastFront: 10,
-  },
-  'head-boxy': {
-    southHalf: 20,
-    northHalf: 20,
-    crownY: -21,
-    eastBack: -20,
-    eastFront: 14,
-  },
-  'head-angular': {
-    southHalf: 23,
-    northHalf: 23,
-    crownY: -21,
-    eastBack: -21,
-    eastFront: 16,
-  },
-  'head-soft-square': {
-    southHalf: 15,
-    northHalf: 15,
-    crownY: -21,
-    eastBack: -22,
-    eastFront: 10,
-  },
-};
-
-const compact = (value: number): number => Number(value.toFixed(1));
-const hairShape = (d: string): ShapeSpec => ({ d, fill: '$hair' });
-const hairVariant = (...shapes: ShapeSpec[]): PartVariant => ({ z: 50, shapes });
-
-function coilsFacings(fit: HeadHairFit): Record<Facing, PartVariant> {
-  const southWidth = fit.southHalf + 4;
-  const northWidth = fit.northHalf + 4;
-  const crown = fit.crownY + 3;
-  const back = fit.eastBack;
-  const front = fit.eastFront;
-  const radius = Math.max(6, Math.min(9, compact(fit.southHalf * 0.36)));
-  return {
-    south: hairVariant(
-      hairShape(circle(compact(-southWidth), 0, radius)),
-      hairShape(circle(compact(-southWidth * 0.72), compact(crown + 9), radius + 1)),
-      hairShape(circle(compact(-southWidth * 0.3), compact(crown + 5), radius)),
-      hairShape(circle(compact(southWidth * 0.18), compact(crown + 5), radius)),
-      hairShape(circle(compact(southWidth * 0.64), compact(crown + 9), radius + 1)),
-      hairShape(circle(compact(southWidth), 0, radius)),
-      hairShape(circle(compact(-southWidth), 8, Math.max(6, radius - 1))),
-      hairShape(circle(compact(southWidth), 8, Math.max(6, radius - 1))),
-    ),
-    east: hairVariant(
-      hairShape(circle(compact(back), 0, radius)),
-      hairShape(circle(compact(back + 5), compact(crown + 9), radius + 1)),
-      hairShape(circle(compact(back + 15), compact(crown + 4), radius)),
-      hairShape(circle(compact(back + 26), compact(crown + 5), radius)),
-      hairShape(circle(compact(front - 2), compact(crown + 10), Math.max(6, radius - 1))),
-      hairShape(circle(compact(back - 1), 10, Math.max(6, radius - 1))),
-    ),
-    north: hairVariant(
-      hairShape(circle(compact(-northWidth), 0, radius)),
-      hairShape(circle(compact(-northWidth * 0.72), compact(crown + 9), radius + 1)),
-      hairShape(circle(compact(-northWidth * 0.3), compact(crown + 5), radius)),
-      hairShape(circle(compact(northWidth * 0.18), compact(crown + 5), radius)),
-      hairShape(circle(compact(northWidth * 0.64), compact(crown + 9), radius + 1)),
-      hairShape(circle(compact(northWidth), 0, radius)),
-      hairShape(circle(compact(-northWidth), 9, Math.max(6, radius - 1))),
-      hairShape(circle(compact(northWidth), 9, Math.max(6, radius - 1))),
-    ),
-  };
-}
-
-type CanonicalFittedHairId =
-  | 'hair-short'
-  | 'hair-bob'
-  | 'hair-bun'
-  | 'hair-ponytail'
-  | 'hair-long-straight'
-  | 'hair-balding'
-  | 'hair-pixie'
-  | 'hair-side-part'
-  | 'hair-curly';
-type CodeFittedHairId = Exclude<FittedHairId, CanonicalFittedHairId>;
-
-const isCanonicalFittedHairId = (hairId: FittedHairId): hairId is CanonicalFittedHairId =>
-  hairId === 'hair-short'
-  || hairId === 'hair-bob'
-  || hairId === 'hair-bun'
-  || hairId === 'hair-ponytail'
-  || hairId === 'hair-long-straight'
-  || hairId === 'hair-balding'
-  || hairId === 'hair-pixie'
-  || hairId === 'hair-side-part'
-  || hairId === 'hair-curly';
-
-const CODE_FITTED_HAIR_IDS = FITTED_HAIR_IDS.filter(
-  (hairId): hairId is CodeFittedHairId => !isCanonicalFittedHairId(hairId),
-);
-
-const BUILDERS: Record<CodeFittedHairId, (fit: HeadHairFit) => Record<Facing, PartVariant>> = {
-  'hair-coils': coilsFacings,
-};
-
-const CODE_FITTED_VARIANTS: Readonly<
-  Record<CodeFittedHairId, Readonly<Record<FittedHairHeadId, Readonly<Record<Facing, PartVariant>>>>>
-> = Object.fromEntries(
-  CODE_FITTED_HAIR_IDS.map((hairId) => [
-    hairId,
-    Object.fromEntries(
-      FITTED_HAIR_HEAD_IDS.map((headId) => [
-        headId,
-        BUILDERS[hairId](HEAD_HAIR_FITS[headId]),
-      ]),
-    ),
-  ]),
-) as Record<CodeFittedHairId, Record<FittedHairHeadId, Record<Facing, PartVariant>>>;
-
 const isFittedHairId = (id: string): id is FittedHairId =>
   (FITTED_HAIR_IDS as readonly string[]).includes(id);
 
@@ -198,12 +56,9 @@ export function fittedHairVariant(
   facing: Facing,
 ): PartVariant | undefined {
   if (!isFittedHairId(hairId) || !isFittedHairHeadId(headId)) return undefined;
-  if (isCanonicalFittedHairId(hairId)) {
-    const variant = CANONICAL_HEAD_FITTED_BY_ID.get(hairId)?.headVariants[headId]?.[facing];
-    if (!variant) {
-      throw new Error(`Canonical ${hairId} fit is missing ${headId}/${facing}`);
-    }
-    return variant;
+  const variant = CANONICAL_HEAD_FITTED_BY_ID.get(hairId)?.headVariants[headId]?.[facing];
+  if (!variant) {
+    throw new Error(`Canonical ${hairId} fit is missing ${headId}/${facing}`);
   }
-  return CODE_FITTED_VARIANTS[hairId][headId][facing];
+  return variant;
 }

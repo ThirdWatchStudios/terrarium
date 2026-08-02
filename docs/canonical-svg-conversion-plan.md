@@ -1,6 +1,6 @@
 # Canonical SVG source-conversion plan
 
-Status: **active; P0 department machines plus Bob/Short/Bun/Ponytail/Long straight/Balding/Pixie/Side-part/Curly source authority complete locally**
+Status: **active; P0 department machines plus all ten fitted hairstyles have complete source authority locally**
 
 Recorded: 2026-08-02
 
@@ -139,15 +139,14 @@ large, current, stateful production family.
 
 #### Head-aware hair production geometry
 
-The hair base SVGs are checked in. The first nine bounded source-authority slices
+The hair base SVGs are checked in. All ten bounded source-authority slices
 are complete for `hair-bob`, `hair-short`, `hair-bun`, `hair-ponytail`,
 `hair-long-straight`, `hair-balding`, `hair-pixie`, `hair-side-part`, and
-`hair-curly`: each three-facing canonical set
+`hair-curly`, plus `hair-coils`: each three-facing canonical set
 compiles through a declared `head-fitted-art` adapter into six deterministic
 head variants, and the live resolver consumes those generated records without
-a Bob, Short, Bun, Ponytail, Long straight, Balding, Pixie, Side-part, or Curly path builder. The remaining mapped style still builds its
-live head-specific geometry in `hairFitting.ts`, so their apparent SVG sources
-are not yet complete visual authority.
+a Bob, Short, Bun, Ponytail, Long straight, Balding, Pixie, Side-part, Curly, or
+Coils path builder. No mapped hairstyle retains code-owned production geometry.
 
 Preferred migration:
 
@@ -172,7 +171,8 @@ cap/fringe can fit independently from directional side tufts. Side-part proved
 that a swept cap, separate side/rear mass, and source-owned parting crease can
 share bounded declarative fitting without losing direction. Curly proved that
 each editable lobe can retain its own center/radius frame while preserving a
-soft cluster distinct from Coils. All nine styles passed
+soft cluster distinct from Coils. Coils proved the same component contract can
+retain a wider, denser 8/6/8-lobe cloud distinct from Curly. All ten styles passed
 six-head, three-facing, literal 48/32 px review and received visual approval on
 2026-08-02. Apply the same bounded source/import/review gate
 one style at a time; add a per-head source only when the reviewed transform is

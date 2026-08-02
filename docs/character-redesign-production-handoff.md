@@ -63,22 +63,21 @@ high-contrast sheets received visual approval on 2026-07-28.
 The promoted hair fitting is a Terrarium composition/export concern: recipes
 retain their stable hair IDs, flat and reconstructable layer output use the
 same fixed variant, and Unity receives ordinary baked art without fit metadata
-or animation state. Bob, Short, Bun, Ponytail, Long straight, Balding, Pixie, Side-part, and Curly canonical SVGs now own their six
-production-head fits through build-time declarative envelopes; the remaining
-mapped hair SVG set remains authored source/fallback until its builder
-receive the same bounded migration. Unmapped special heads retain static
+or animation state. All ten mapped canonical hair SVG sets now own their six
+production-head fits through build-time declarative envelopes. No mapped hair
+style retains a replacement path builder. Unmapped special heads retain static
 fallback behavior. The
 remaining scale review script temporarily
 installs candidates through real registered parts, renders through the
 production compositor, and restores the original references. Bob, Short, Bun, Ponytail,
-Long straight, Balding, Pixie, Side-part, and Curly consume build-time SVG-derived head variants with no replacement path
+Long straight, Balding, Pixie, Side-part, Curly, and Coils consume build-time SVG-derived head variants with no replacement path
 builder; Bun keeps its cap and knot as separate authored components, while
 Ponytail fits its cap separately from the shared tie/tail attachment and Long
 straight fits its rear curtain and east front lock through one frame. Balding
 fits its tapered temple, rear, and horseshoe components independently; Pixie
 fits its broken cap/fringe independently from its directional tufts; Side-part
 fits its swept cap and source-owned crease independently from its side/rear mass;
-Curly fits each source-owned lobe through an independent center/radius frame. The head-gap
+Curly and Coils fit each source-owned lobe through an independent center/radius frame. The head-gap
 proof is historical evidence for the promoted sources and
 anchors; its PNGs no longer describe an unpromoted candidate.
 

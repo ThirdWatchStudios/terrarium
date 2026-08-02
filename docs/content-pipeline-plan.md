@@ -453,7 +453,7 @@ icons), not by upfront design.
    4,320-cell hair/body/head/facing/style matrix, full head-accessory matrices,
    and distance proof pass. These final four received visual approval on
    2026-07-10.
-   Bob, Short, Bun, Ponytail, Long straight, Balding, Pixie, Side-part, and Curly completed the first nine production source-authority
+   All ten mapped hairstyles completed their production source-authority
    follow-ups on 2026-08-02. Each three-source set compiles through a bounded
    declarative head-fit adapter into all 18 production head/facing variants.
    Bun retains separately fitted authored cap/knot components; Ponytail fits its
@@ -463,8 +463,8 @@ icons), not by upfront design.
    horseshoe components; Pixie fits its broken cap/fringe independently from
    directional side tufts; Side-part fits its swept cap and source-owned crease
    independently from its side/rear mass; Curly fits every source-owned lobe
-   through an independent center/radius frame. All nine old path builders are removed; Coils remains code-owned
-   migration backlog.
+   through an independent center/radius frame; Coils uses the same component
+   contract for its denser 8/6/8-lobe cloud. All ten old path builders are removed.
 8. **Anchored outfit-detail adapter**: `outfit-tee` is the first body-aware
    intake target. Its south/east SVGs are authored once over `body-balanced`,
    with the body origin at `(64, 87)` and neck at `(64, 58)`. Every visible

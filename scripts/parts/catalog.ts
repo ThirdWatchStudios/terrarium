@@ -18,7 +18,8 @@ export type HeadFitAdapter =
   | 'canonical-balding-v1'
   | 'canonical-pixie-v1'
   | 'canonical-side-part-v1'
-  | 'canonical-curly-v1';
+  | 'canonical-curly-v1'
+  | 'canonical-coils-v1';
 
 export interface PartImportComponent {
   readonly id: string;
@@ -49,10 +50,6 @@ const target = (id: string, slot: 'head' | 'hair'): PartImportTarget => ({
   slot,
   anchor: 'headCenter',
   facings: allFacings,
-});
-const byteStableTarget = (id: string, slot: 'head' | 'hair'): PartImportTarget => ({
-  ...target(id, slot),
-  preserveLocalPaths: true,
 });
 const bodyTarget = (id: BodyArchetypeId): PartImportTarget => ({
   id,
@@ -135,7 +132,13 @@ export const PART_IMPORT_TARGETS: readonly PartImportTarget[] = [
     headFitAdapter: 'canonical-long-straight-v1',
     variantZ: 50,
   },
-  byteStableTarget('hair-coils', 'hair'),
+  {
+    ...target('hair-coils', 'hair'),
+    preserveLocalPaths: true,
+    importMode: 'head-fitted-art',
+    headFitAdapter: 'canonical-coils-v1',
+    variantZ: 50,
+  },
   target('head-fab', 'head'),
   {
     id: 'outfit-tee',

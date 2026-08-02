@@ -26,7 +26,7 @@ const CANONICAL_HAIRS = [
   ['hair-pixie', 'pixie', [3, 3, 2]],
   ['hair-ponytail', 'ponytail', [3, 3, 3]],
   ['hair-long-straight', 'long-straight', [1, 2, 1]],
-  ['hair-coils', 'coils', [1, 1, 1]],
+  ['hair-coils', 'coils', [8, 6, 8]],
 ] as const;
 
 const HUMAN_HEADS = [

@@ -113,26 +113,20 @@ is validated after applying that canvas translation but deliberately preserves
 its established local `d` strings byte-for-byte; visible body paths must remain
 directly under the canonical translation group.
 
-Every current hair target except `hair-bob`, `hair-short`, `hair-bun`, `hair-ponytail`,
-`hair-long-straight`, `hair-balding`, `hair-pixie`, `hair-side-part`, and `hair-curly` also preserves its
-canonical local path strings after canvas validation. Their arc- and
-curve-heavy geometry measurably changes under generic flattening even at
-production sizes, so those explicit targets require visible paths directly
-under `translate(64 44)`. Curly also preserves its authored local arc paths
-through `head-fitted-art`; generic arc flattening dropped its 32 px separation
-from Short below the accepted family-distance floor. Bob, Short, Bun, Ponytail,
-Long straight, Balding, Pixie, and Side-part retain the normal transform-baking
-path as approved interoperability controls.
+Curly and Coils preserve their authored local arc paths through
+`head-fitted-art`; generic arc flattening dropped Curly's 32 px separation from
+Short below the accepted family-distance floor. Both targets require visible
+paths directly under `translate(64 44)`. Bob, Short, Bun, Ponytail, Long
+straight, Balding, Pixie, and Side-part retain the normal transform-baking path
+as approved interoperability controls.
 
 For all ten mapped hair IDs, the compositor resolves a fixed fitted variant
-from the selected production head ID. Bob, Short, Bun, Ponytail, Long straight, Balding, Pixie, Side-part, and Curly are complete source-owned
-routes: `head-fitted-art` compiles each three-facing SVG set through six
+from the selected production head ID. All ten mapped hairstyles are complete
+source-owned routes: `head-fitted-art` compiles each three-facing SVG set through six
 declarative head envelopes into ordinary generated `PartVariant` records.
 Editing any of these canonical source sets, then running `npm run parts:import`, changes
-that style's live all-head geometry; there is no second Bob/Short/Bun/Ponytail/Long straight/Balding/Pixie/Side-part/Curly path builder or
-silent human-head fallback. Coils still uses the deterministic
-code-owned fit table, so editing those SVGs changes only their static fallback
-until each style passes the same bounded migration gate. No fit metadata,
+that style's live all-head geometry; there is no second path builder or silent
+human-head fallback for any mapped hairstyle. No fit metadata,
 `buildVariant`, recipe field, or export-schema field is added. Flat and
 reconstructable routes share the resolver.
 

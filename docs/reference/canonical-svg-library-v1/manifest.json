@@ -218,21 +218,21 @@
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/coils.east.svg",
-      "sha256": "c3bc04e3964a40d5a0368d9b70fbf2315b93088b326e7c12b62e442f97077c92"
+      "sha256": "2d1566cc2a7a5d9fe181ea85e9d19d953f7712f564bd9db85c00eda76fd515c1"
     },
     {
       "assetId": "hair-coils",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/coils.north.svg",
-      "sha256": "ad14aa5b87ab417ccda45fb337b5a0966809e835d1c7412fd2ee668182e1932a"
+      "sha256": "7c9c3ef6ae180e4de1c440457278f2f9c854feb60bfcfecea8ee6ca5175c9b49"
     },
     {
       "assetId": "hair-coils",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/coils.south.svg",
-      "sha256": "9313bdf6daa58227bb5f0320800d0d42f9c983aa27919b1f703c9c828d1c34e5"
+      "sha256": "c837fe6b57ea363cf38b35f76138895439703ad812c7fb3dcb0490fa8070ede0"
     },
     {
       "assetId": "hair-curly",

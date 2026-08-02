@@ -26,6 +26,7 @@
     "hair:canonical-pixie:production-preview": "tsx scripts/canonicalPixieSourceFitProof.ts",
     "hair:canonical-side-part:production-preview": "tsx scripts/canonicalSidePartSourceFitProof.ts",
     "hair:canonical-curly:production-preview": "tsx scripts/canonicalCurlySourceFitProof.ts",
+    "hair:canonical-coils:production-preview": "tsx scripts/canonicalCoilsSourceFitProof.ts",
     "props:import": "tsx scripts/importQuotaCoWorkhorseProps.ts",
     "props:import:check": "tsx scripts/importQuotaCoWorkhorseProps.ts --check",
     "department-machines:import": "tsx scripts/importQuotaCoDepartmentMachines.ts --write",

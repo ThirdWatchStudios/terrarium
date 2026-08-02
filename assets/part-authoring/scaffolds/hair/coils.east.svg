@@ -23,10 +23,20 @@
     <path id="reference/context-head-round/shape-002" d="M8.4 0C8.4 0.929 8.896 1.787 9.7 2.252 10.504 2.716 11.496 2.716 12.3 2.252 13.104 1.787 13.6 0.929 13.6 0 13.6-0.929 13.104-1.787 12.3-2.252 11.496-2.716 10.504-2.716 9.7-2.252 8.896-1.787 8.4-0.929 8.4 0Z" fill="#66747A" fill-rule="nonzero"/>
   </g>
   <g id="reference/hair-coils" opacity="0.22" transform="translate(64 44)">
-    <path id="reference/hair-coils/shape-001" d="M -27 6 C -32 1 -31 -9 -26 -13 C -29 -20 -21 -25 -13 -24 C -8 -29 2 -29 7 -24 C 14 -26 21 -20 19 -14 C 24 -11 25 -5 21 0 C 23 6 19 11 14 8 C 14 0 9 -7 2 -9 C -6 -9 -11 -4 -12 3 C -13 9 -18 12 -22 9 C -25 8 -27 7 -27 6 Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/hair-coils/shape-001" d="M -28.6 0 a 7.6 7.6 0 1 0 15.2 0 a 7.6 7.6 0 1 0 -15.2 0 Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/hair-coils/shape-002" d="M -24.6 -9 a 8.6 8.6 0 1 0 17.2 0 a 8.6 8.6 0 1 0 -17.2 0 Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/hair-coils/shape-003" d="M -13.6 -14 a 7.6 7.6 0 1 0 15.2 0 a 7.6 7.6 0 1 0 -15.2 0 Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/hair-coils/shape-004" d="M -2.6 -13 a 7.6 7.6 0 1 0 15.2 0 a 7.6 7.6 0 1 0 -15.2 0 Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/hair-coils/shape-005" d="M 5.4 -8 a 6.6 6.6 0 1 0 13.2 0 a 6.6 6.6 0 1 0 -13.2 0 Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/hair-coils/shape-006" d="M -28.6 10 a 6.6 6.6 0 1 0 13.2 0 a 6.6 6.6 0 1 0 -13.2 0 Z" fill="#66747A" fill-rule="nonzero"/>
   </g>
   <g id="art" transform="translate(64 44)">
-    <path id="art/shape-001" d="M -27 6 C -32 1 -31 -9 -26 -13 C -29 -20 -21 -25 -13 -24 C -8 -29 2 -29 7 -24 C 14 -26 21 -20 19 -14 C 24 -11 25 -5 21 0 C 23 6 19 11 14 8 C 14 0 9 -7 2 -9 C -6 -9 -11 -4 -12 3 C -13 9 -18 12 -22 9 C -25 8 -27 7 -27 6 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/shape-001" d="M -28.6 0 a 7.6 7.6 0 1 0 15.2 0 a 7.6 7.6 0 1 0 -15.2 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/shape-002" d="M -24.6 -9 a 8.6 8.6 0 1 0 17.2 0 a 8.6 8.6 0 1 0 -17.2 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/shape-003" d="M -13.6 -14 a 7.6 7.6 0 1 0 15.2 0 a 7.6 7.6 0 1 0 -15.2 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/shape-004" d="M -2.6 -13 a 7.6 7.6 0 1 0 15.2 0 a 7.6 7.6 0 1 0 -15.2 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/shape-005" d="M 5.4 -8 a 6.6 6.6 0 1 0 13.2 0 a 6.6 6.6 0 1 0 -13.2 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/shape-006" d="M -28.6 10 a 6.6 6.6 0 1 0 13.2 0 a 6.6 6.6 0 1 0 -13.2 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
   </g>
   <g id="swatches">
     <path id="swatches/skin" d="M 4 4 H 12 V 12 H 4 Z" fill="#FF00FF" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
