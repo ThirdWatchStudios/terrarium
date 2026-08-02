@@ -1,0 +1,23 @@
+{
+  "status": "review-only-source-authority-proof",
+  "sourceFiles": [
+    "docs/previews/canonical-iris-hardware-source-fit-v1/sources/iris-installation-unit.svg",
+    "docs/previews/canonical-iris-hardware-source-fit-v1/sources/iris-installation-unit-dormant.svg",
+    "docs/previews/canonical-iris-hardware-source-fit-v1/sources/iris-charging-dock.svg"
+  ],
+  "productionWiringChanged": false,
+  "productionBuilderChanged": false,
+  "exportOrUnityChanged": false,
+  "method": {
+    "geometryOwner": "three directly inspectable SVG proposals",
+    "installationVariants": "live and dormant each remain independently inspectable",
+    "heightDerivation": "eight declared SVG element roles; no replacement path builder",
+    "chargingDock": "static source"
+  },
+  "audit": {
+    "installationHeightCount": 11,
+    "pixelParityCases": 23,
+    "pixelMismatches": [],
+    "deterministicDigest": "03ad84aa6c946b682b71fd2636c94231ea78a5bdda5a8b11ee475edc05925086"
+  }
+}
