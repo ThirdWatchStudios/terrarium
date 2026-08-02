@@ -344,21 +344,21 @@
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/side-part.east.svg",
-      "sha256": "fa8340ac8869325c39af41814d76cffd9ec771855ee8b92781b4f256306e1bac"
+      "sha256": "1ca98d4eb3779af0c4224cd88adecb9dc623a48ac5ecbf70bb9bdc1bec9e4d08"
     },
     {
       "assetId": "hair-side-part",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/side-part.north.svg",
-      "sha256": "111c5caa12924f6090a89d4b04146730f9d34400a7a7347dc1ca05312ab64ad9"
+      "sha256": "bb6d70b53af5213511faf1cc811d17decfb9cde75364d24982d1d070061bffa8"
     },
     {
       "assetId": "hair-side-part",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/side-part.south.svg",
-      "sha256": "28b6f09ad80e5a6a05107178e1ff58f948321ff6a63e6d33ffb3b8d0bc410bec"
+      "sha256": "5d10f71ad35f82dab309b5f472407e9ed315208c8cd01355c76423fa5094bb55"
     },
     {
       "assetId": "head-angular",

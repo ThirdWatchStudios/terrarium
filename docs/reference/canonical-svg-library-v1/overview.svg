@@ -414,27 +414,26 @@
     <path id="art/silhouette" d="M -22 -3 C -20.2 -14 -10.6 -20 0 -20 C 11 -20 20.2 -14 22 -3 L 15 0 L 8.4 -4 L 1.8 0 L -5.5 -4 L -13.6 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
   </g>
 </svg><text x="2478.625" y="608" fill="#292C2A" font-family="Inter,Arial,sans-serif" font-size="7.4" font-weight="700" text-anchor="middle">short.south</text></a><a href="../../../assets/parts/hair/side-part.east.svg"><title>assets/parts/hair/side-part.east.svg</title><rect x="2580.25" y="490" width="187.25" height="138" rx="10" fill="#F6F1E6" stroke="#355647" stroke-width="1"/><rect x="2580.25" y="490" width="6" height="138" rx="3" fill="#355647"/><rect x="2630.875" y="502" width="86" height="86" rx="6" fill="#E1DDD2"/><svg x="2630.875" y="502" width="86" height="86" viewBox="0 0 128 128" preserveAspectRatio="xMidYMid meet" overflow="hidden">
-  <title>Terrarium hair-side-part east authored art</title>
-  <desc>Current production side-part profile silhouette with a swept front.</desc>
+  <title>Terrarium hair-side-part east canonical art</title>
+  <desc>Swept profile cap, rear mass, and visible parting crease authored on the shared round-head fit frame.</desc>
   <g id="art" transform="translate(64 44)">
-    <path id="art/cap" d="M -19.79898987322333 -7 A 21 21 0 0 1 19.79898987322333 -7 Z" fill="#00FFFF" fill-rule="nonzero"/>
-    <path id="art/back" d="M -17 -8 h 0 a 4 4 0 0 1 4 4 v 8 a 4 4 0 0 1 -4 4 h 0 a 4 4 0 0 1 -4 -4 v -8 a 4 4 0 0 1 4 -4 Z" fill="#00FFFF" fill-rule="nonzero"/>
-    <path id="art/sweep" d="M -6 -16 C 6 -16 16 -10 19 -3 L 12 2 C 5 -4 -3 -5 -11 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/cap" d="M -22 -3 C -20 -16 -10.6 -22 -1.7 -22 C 11 -22 16 -15 16 -8 L 12 -3 L 6 0 L 0 -3 C -5 -6 -14 -4 -17 0 L -22 10 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/rear-mass" d="M -23 -3 C -31 1 -31 12 -24 17 C -17 14 -16 6 -19 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
     <path id="detail/parting" d="M -5 -15 C -2 -9 -1 -4 -1 1" fill="none" stroke="#00000024" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
 </svg><text x="2673.875" y="608" fill="#292C2A" font-family="Inter,Arial,sans-serif" font-size="7.4" font-weight="700" text-anchor="middle">side-part.east</text></a><a href="../../../assets/parts/hair/side-part.north.svg"><title>assets/parts/hair/side-part.north.svg</title><rect x="2775.5" y="490" width="187.25" height="138" rx="10" fill="#F6F1E6" stroke="#355647" stroke-width="1"/><rect x="2775.5" y="490" width="6" height="138" rx="3" fill="#355647"/><rect x="2826.125" y="502" width="86" height="86" rx="6" fill="#E1DDD2"/><svg x="2826.125" y="502" width="86" height="86" viewBox="0 0 128 128" preserveAspectRatio="xMidYMid meet" overflow="hidden">
-  <title>Terrarium hair-side-part north authored art</title>
-  <desc>Current production side-part rear silhouette with a subtle rear part.</desc>
+  <title>Terrarium hair-side-part north canonical art</title>
+  <desc>Swept rear cap and subtle parting crease authored on the shared round-head fit frame.</desc>
   <g id="art" transform="translate(64 44)">
-    <path id="art/silhouette" d="M -20.396078054371138 5 A 21 21 0 1 1 20.396078054371138 5 L 20 13 L -20 13 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/cap" d="M -23 -3 C -19.6 -17 -7.4 -22 4 -22 C 14.3 -22 23 -15 23 -3 L 20.7 11 H -16.6 L -23 6 Z" fill="#00FFFF" fill-rule="nonzero"/>
     <path id="detail/parting" d="M -3 -16 C -5 -8 -5 0 -3 8" fill="none" stroke="#00000024" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
 </svg><text x="2869.125" y="608" fill="#292C2A" font-family="Inter,Arial,sans-serif" font-size="7.4" font-weight="700" text-anchor="middle">side-part.north</text></a><a href="../../../assets/parts/hair/side-part.south.svg"><title>assets/parts/hair/side-part.south.svg</title><rect x="2970.75" y="490" width="187.25" height="138" rx="10" fill="#F6F1E6" stroke="#355647" stroke-width="1"/><rect x="2970.75" y="490" width="6" height="138" rx="3" fill="#355647"/><rect x="3021.375" y="502" width="86" height="86" rx="6" fill="#E1DDD2"/><svg x="3021.375" y="502" width="86" height="86" viewBox="0 0 128 128" preserveAspectRatio="xMidYMid meet" overflow="hidden">
-  <title>Terrarium hair-side-part south authored art</title>
-  <desc>Current production side-part front silhouette with a visible parting crease.</desc>
+  <title>Terrarium hair-side-part south canonical art</title>
+  <desc>Swept cap, side mass, and visible parting crease authored on the shared round-head fit frame.</desc>
   <g id="art" transform="translate(64 44)">
-    <path id="art/cap" d="M -19.79898987322333 -7 A 21 21 0 0 1 19.79898987322333 -7 Z" fill="#00FFFF" fill-rule="nonzero"/>
-    <path id="art/sweep" d="M -19 -6 C -7 -18 8 -19 20 -7 L 15 1 C 5 -7 -6 -8 -17 1 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/cap" d="M -23 -3 C -19.6 -17 -8 -22 3 -22 C 13.3 -22 23 -15 23 -4 L 15.2 3 C 5.5 -5 -4.6 -7 -14.3 1 L -20.2 9 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/side-mass" d="M 15 5 a 5 10 0 1 0 10 0 a 5 10 0 1 0 -10 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
     <path id="detail/parting" d="M -5 -15 C -3 -8 -2 -2 -2 7" fill="none" stroke="#00000024" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
 </svg><text x="3064.375" y="608" fill="#292C2A" font-family="Inter,Arial,sans-serif" font-size="7.4" font-weight="700" text-anchor="middle">side-part.south</text></a><a href="../../../assets/parts/head/angular.east.svg"><title>assets/parts/head/angular.east.svg</title><rect x="42" y="636" width="187.25" height="138" rx="10" fill="#F6F1E6" stroke="#355647" stroke-width="1"/><rect x="42" y="636" width="6" height="138" rx="3" fill="#355647"/><rect x="92.625" y="648" width="86" height="86" rx="6" fill="#E1DDD2"/><svg x="92.625" y="648" width="86" height="86" viewBox="0 0 128 128" preserveAspectRatio="xMidYMid meet" overflow="hidden">

@@ -1,6 +1,6 @@
 # Canonical SVG source-conversion plan
 
-Status: **active; P0 department machines plus Bob/Short/Bun/Ponytail/Long straight/Balding/Pixie source authority complete locally**
+Status: **active; P0 department machines plus Bob/Short/Bun/Ponytail/Long straight/Balding/Pixie/Side-part source authority complete locally**
 
 Recorded: 2026-08-02
 
@@ -139,12 +139,12 @@ large, current, stateful production family.
 
 #### Head-aware hair production geometry
 
-The hair base SVGs are checked in. The first seven bounded source-authority slices
-are complete for `hair-bob`, `hair-short`, `hair-bun`, `hair-ponytail`, and
-`hair-long-straight`, plus `hair-balding` and `hair-pixie`: each three-facing canonical set
+The hair base SVGs are checked in. The first eight bounded source-authority slices
+are complete for `hair-bob`, `hair-short`, `hair-bun`, `hair-ponytail`,
+`hair-long-straight`, `hair-balding`, `hair-pixie`, and `hair-side-part`: each three-facing canonical set
 compiles through a declared `head-fitted-art` adapter into six deterministic
 head variants, and the live resolver consumes those generated records without
-a Bob, Short, Bun, Ponytail, Long straight, Balding, or Pixie path builder. The other three mapped styles still build their
+a Bob, Short, Bun, Ponytail, Long straight, Balding, Pixie, or Side-part path builder. The other two mapped styles still build their
 live head-specific geometry in `hairFitting.ts`, so their apparent SVG sources
 are not yet complete visual authority.
 
@@ -167,7 +167,9 @@ Long straight proved that a tall curtain and two-piece east profile can share a
 single bounded fit frame without losing the open face. Balding proved that
 independently editable tapered temples, rear piece, and horseshoe can retain
 their character under declarative component fitting. Pixie proved that a broken
-cap/fringe can fit independently from directional side tufts. All seven styles passed
+cap/fringe can fit independently from directional side tufts. Side-part proved
+that a swept cap, separate side/rear mass, and source-owned parting crease can
+share bounded declarative fitting without losing direction. All eight styles passed
 six-head, three-facing, literal 48/32 px review and received visual approval on
 2026-08-02. Apply the same bounded source/import/review gate
 one style at a time; add a per-head source only when the reviewed transform is

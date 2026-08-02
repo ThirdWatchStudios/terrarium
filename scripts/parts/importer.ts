@@ -33,6 +33,7 @@ import { fitCanonicalPonytailVariant } from './canonicalPonytailFit';
 import { fitCanonicalLongStraightVariant } from './canonicalLongStraightFit';
 import { fitCanonicalBaldingVariant } from './canonicalBaldingFit';
 import { fitCanonicalPixieVariant } from './canonicalPixieFit';
+import { fitCanonicalSidePartVariant } from './canonicalSidePartFit';
 import { SENTINEL_TO_PALETTE_REF } from './sentinels';
 
 const SUPPORTED_SLOTS = ['body', 'head', 'hair', 'outfit'] as const;
@@ -1175,6 +1176,11 @@ function expandHeadFittedVariants(
     && target.id === 'hair-pixie'
   ) {
     fitVariant = fitCanonicalPixieVariant;
+  } else if (
+    target.headFitAdapter === 'canonical-side-part-v1'
+    && target.id === 'hair-side-part'
+  ) {
+    fitVariant = fitCanonicalSidePartVariant;
   } else {
     fail(source, `unsupported head-fit adapter ${target.headFitAdapter ?? 'none'} for ${target.id}`);
   }

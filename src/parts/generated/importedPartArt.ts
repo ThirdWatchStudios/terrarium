@@ -1252,24 +1252,176 @@ export const IMPORTED_PART_ART = [
     },
   },
   {
+    kind: "head-fitted-art",
     id: "hair-side-part",
     slot: "hair",
     facings: {
       south: [
-        { d: "M -19.79898987322333 -7 A 21 21 0 0 1 19.79898987322333 -7 Z", fill: "$hair" },
-        { d: "M -19 -6 C -7 -18 8 -19 20 -7 L 15 1 C 5 -7 -6 -8 -17 1 Z", fill: "$hair" },
-        { d: "M -5 -15 C -3 -8 -2 -2 -2 7", stroke: "#00000024", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+        { d: "M-23-3C-19.6-17-8-22 3-22 13.3-22 23-15 23-4L15.2 3C5.5-5-4.6-7-14.3 1L-20.2 9Z", fill: "$hair" },
+        { d: "M15 5C15 10.523 17.239 15 20 15 22.761 15 25 10.523 25 5 25-0.523 22.761-5 20-5 17.239-5 15-0.523 15 5Z", fill: "$hair" },
+        { d: "M-5-15C-3-8-2-2-2 7", stroke: "#00000024", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
       ],
       east: [
-        { d: "M -19.79898987322333 -7 A 21 21 0 0 1 19.79898987322333 -7 Z", fill: "$hair" },
-        { d: "M -17 -8 h 0 a 4 4 0 0 1 4 4 v 8 a 4 4 0 0 1 -4 4 h 0 a 4 4 0 0 1 -4 -4 v -8 a 4 4 0 0 1 4 -4 Z", fill: "$hair" },
-        { d: "M -6 -16 C 6 -16 16 -10 19 -3 L 12 2 C 5 -4 -3 -5 -11 0 Z", fill: "$hair" },
-        { d: "M -5 -15 C -2 -9 -1 -4 -1 1", stroke: "#00000024", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+        { d: "M-22-3C-20-16-10.6-22-1.7-22 11-22 16-15 16-8L12-3 6 0 0-3C-5-6-14-4-17 0L-22 10Z", fill: "$hair" },
+        { d: "M-23-3C-31 1-31 12-24 17-17 14-16 6-19 0Z", fill: "$hair" },
+        { d: "M-5-15C-2-9-1-4-1 1", stroke: "#00000024", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
       ],
       north: [
-        { d: "M -20.396078054371138 5 A 21 21 0 1 1 20.396078054371138 5 L 20 13 L -20 13 Z", fill: "$hair" },
-        { d: "M -3 -16 C -5 -8 -5 0 -3 8", stroke: "#00000024", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+        { d: "M-23-3C-19.6-17-7.4-22 4-22 14.3-22 23-15 23-3L20.7 11H-16.6L-23 6Z", fill: "$hair" },
+        { d: "M-3-16C-5-8-5 0-3 8", stroke: "#00000024", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
       ],
+    },
+    headVariants: {
+      "head-angular": {
+        south: {
+          z: 50,
+          shapes: [
+            { d: "M-25-3C-21.338-17-8.846-22 3-22 14.33-22 25-15 25-4L16.42 3C5.75-5-5.185-7-15.631 1L-21.985 9Z", fill: "$hair" },
+            { d: "M17 5C17 10.523 19.239 15 22 15 24.761 15 27 10.523 27 5 27-0.523 24.761-5 22-5 19.239-5 17-0.523 17 5Z", fill: "$hair" },
+            { d: "M-5.615-15C-3.462-8-2.385-2-2.385 7", stroke: "#00000024", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          ],
+        },
+        east: {
+          z: 50,
+          shapes: [
+            { d: "M-22-3C-20-16-10.6-22-1.7-22 12.435-22 18-15 18-8L13.548-3 6.87 0 0.192-3C-5-6-14-4-17 0L-22 10Z", fill: "$hair" },
+            { d: "M-23-3C-31 1-31 12-24 17-17 14-16 6-19 0Z", fill: "$hair" },
+            { d: "M-5-15C-2-9-0.921-4-0.921 1", stroke: "#00000024", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          ],
+        },
+        north: {
+          z: 50,
+          shapes: [
+            { d: "M-25-3C-21.348-17-8.244-22 4-22 15.384-22 25-15 25-3L22.458 11-18.126 11-25 6Z", fill: "$hair" },
+            { d: "M-3.519-16C-5.667-8-5.667 0-3.519 8", stroke: "#00000024", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          ],
+        },
+      },
+      "head-boxy": {
+        south: {
+          z: 50,
+          shapes: [
+            { d: "M-22-3C-18.731-17-7.577-22 3-22 12.785-22 22-15 22-4L14.59 3C5.375-5-4.308-7-13.635 1L-19.308 9Z", fill: "$hair" },
+            { d: "M14 5C14 10.523 16.239 15 19 15 21.761 15 24 10.523 24 5 24-0.523 21.761-5 19-5 16.239-5 14-0.523 14 5Z", fill: "$hair" },
+            { d: "M-4.692-15C-2.769-8-1.808-2-1.808 7", stroke: "#00000024", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          ],
+        },
+        east: {
+          z: 50,
+          shapes: [
+            { d: "M-21-3C-19.099-16-10.162-22-1.7-22 11-22 16-15 16-8L12-3 6 0 0-3C-4.837-6-13.394-4-16.246 0L-21 10Z", fill: "$hair" },
+            { d: "M-22-3C-30 1-30 12-23 17-16 14-15 6-18 0Z", fill: "$hair" },
+            { d: "M-4.837-15C-1.985-9-1-4-1 1", stroke: "#00000024", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          ],
+        },
+        north: {
+          z: 50,
+          shapes: [
+            { d: "M-22-3C-18.726-17-6.978-22 4-22 13.758-22 22-15 22-3L19.821 11-15.837 11-22 6Z", fill: "$hair" },
+            { d: "M-2.741-16C-4.667-8-4.667 0-2.741 8", stroke: "#00000024", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          ],
+        },
+      },
+      "head-long": {
+        south: {
+          z: 50,
+          shapes: [
+            { d: "M-16-3C-13.515-17.737-5.038-23 3-23 9.695-23 16-15.632 16-4.053L10.93 3C4.625-5.105-2.554-7.211-9.642 1L-13.954 9Z", fill: "$hair" },
+            { d: "M8 5C8 10.523 10.239 15 13 15 15.761 15 18 10.523 18 5 18-0.523 15.761-5 13-5 10.239-5 8-0.523 8 5Z", fill: "$hair" },
+            { d: "M-2.846-15.632C-1.385-8.263-0.654-2-0.654 7", stroke: "#00000024", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          ],
+        },
+        east: {
+          z: 50,
+          shapes: [
+            { d: "M-17-3C-15.493-16.684-8.408-23-1.7-23 8.13-23 12-15.632 12-8.263L8.904-3 4.26 0-0.384-3C-4.187-6.158-10.97-4.053-13.232 0L-17 10Z", fill: "$hair" },
+            { d: "M-18-3C-26 1-26 12-19 17-12 14-11 6-14 0Z", fill: "$hair" },
+            { d: "M-4.187-15.632C-1.926-9.316-1.158-4.053-1.158 1", stroke: "#00000024", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          ],
+        },
+        north: {
+          z: 50,
+          shapes: [
+            { d: "M-16-3C-13.481-17.737-4.444-23 4-23 10.505-23 16-15.632 16-3L14.547 11-11.259 11-16 6Z", fill: "$hair" },
+            { d: "M-1.185-16.684C-2.667-8.263-2.667 0-1.185 8", stroke: "#00000024", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          ],
+        },
+      },
+      "head-oval": {
+        south: {
+          z: 50,
+          shapes: [
+            { d: "M-29-3C-24.815-16.263-10.538-21 3-21 16.39-21 29-14.368 29-3.947L18.86 3C6.25-4.895-6.354-6.789-18.292 1L-25.554 9Z", fill: "$hair" },
+            { d: "M21 5C21 10.523 23.239 15 26 15 28.761 15 31 10.523 31 5 31-0.523 28.761-5 26-5 23.239-5 21-0.523 21 5Z", fill: "$hair" },
+            { d: "M-6.846-14.368C-4.385-7.737-3.154-2-3.154 7", stroke: "#00000024", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          ],
+        },
+        east: {
+          z: 50,
+          shapes: [
+            { d: "M-27-3C-24.507-15.316-12.792-21-1.7-21 13.153-21 19-14.368 19-7.737L14.322-3 7.305 0 0.288-3C-5.813-5.842-17.03-3.947-20.768 0L-27 10Z", fill: "$hair" },
+            { d: "M-28-3C-36 1-36 12-29 17-22 14-21 6-24 0Z", fill: "$hair" },
+            { d: "M-5.813-14.368C-2.074-8.684-0.881-3.947-0.881 1", stroke: "#00000024", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          ],
+        },
+        north: {
+          z: 50,
+          shapes: [
+            { d: "M-29-3C-24.844-16.263-9.933-21 4-21 17.553-21 29-14.368 29-3L25.974 11-21.178 11-29 6Z", fill: "$hair" },
+            { d: "M-4.556-15.316C-7-7.737-7 0-4.556 8", stroke: "#00000024", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          ],
+        },
+      },
+      "head-round": {
+        south: {
+          z: 50,
+          shapes: [
+            { d: "M-23-3C-19.6-17-8-22 3-22 13.3-22 23-15 23-4L15.2 3C5.5-5-4.6-7-14.3 1L-20.2 9Z", fill: "$hair" },
+            { d: "M15 5C15 10.523 17.239 15 20 15 22.761 15 25 10.523 25 5 25-0.523 22.761-5 20-5 17.239-5 15-0.523 15 5Z", fill: "$hair" },
+            { d: "M-5-15C-3-8-2-2-2 7", stroke: "#00000024", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          ],
+        },
+        east: {
+          z: 50,
+          shapes: [
+            { d: "M-22-3C-20-16-10.6-22-1.7-22 11-22 16-15 16-8L12-3 6 0 0-3C-5-6-14-4-17 0L-22 10Z", fill: "$hair" },
+            { d: "M-23-3C-31 1-31 12-24 17-17 14-16 6-19 0Z", fill: "$hair" },
+            { d: "M-5-15C-2-9-1-4-1 1", stroke: "#00000024", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          ],
+        },
+        north: {
+          z: 50,
+          shapes: [
+            { d: "M-23-3C-19.6-17-7.4-22 4-22 14.3-22 23-15 23-3L20.7 11-16.6 11-23 6Z", fill: "$hair" },
+            { d: "M-3-16C-5-8-5 0-3 8", stroke: "#00000024", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          ],
+        },
+      },
+      "head-soft-square": {
+        south: {
+          z: 50,
+          shapes: [
+            { d: "M-17-3C-14.385-17-5.462-22 3-22 10.21-22 17-15 17-4L11.54 3C4.75-5-2.846-7-10.308 1L-14.846 9Z", fill: "$hair" },
+            { d: "M9 5C9 10.523 11.239 15 14 15 16.761 15 19 10.523 19 5 19-0.523 16.761-5 14-5 11.239-5 9-0.523 9 5Z", fill: "$hair" },
+            { d: "M-3.154-15C-1.615-8-0.846-2-0.846 7", stroke: "#00000024", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          ],
+        },
+        east: {
+          z: 50,
+          shapes: [
+            { d: "M-23-3C-20.901-16-11.038-22-1.7-22 8.13-22 12-15 12-8L8.904-3 4.26 0-0.384-3C-5.163-6-14.606-4-17.754 0L-23 10Z", fill: "$hair" },
+            { d: "M-24-3C-32 1-32 12-25 17-18 14-17 6-20 0Z", fill: "$hair" },
+            { d: "M-5.163-15C-2.015-9-1.158-4-1.158 1", stroke: "#00000024", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          ],
+        },
+        north: {
+          z: 50,
+          shapes: [
+            { d: "M-17-3C-14.356-17-4.867-22 4-22 11.047-22 17-15 17-3L15.426 11-12.022 11-17 6Z", fill: "$hair" },
+            { d: "M-1.444-16C-3-8-3 0-1.444 8", stroke: "#00000024", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          ],
+        },
+      },
     },
   },
   {

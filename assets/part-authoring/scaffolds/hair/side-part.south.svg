@@ -24,14 +24,14 @@
     <path id="reference/context-head-round/shape-003" d="M5.4 0C5.4 0.929 5.896 1.787 6.7 2.252 7.504 2.716 8.496 2.716 9.3 2.252 10.104 1.787 10.6 0.929 10.6 0 10.6-0.929 10.104-1.787 9.3-2.252 8.496-2.716 7.504-2.716 6.7-2.252 5.896-1.787 5.4-0.929 5.4 0Z" fill="#66747A" fill-rule="nonzero"/>
   </g>
   <g id="reference/hair-side-part" opacity="0.22" transform="translate(64 44)">
-    <path id="reference/hair-side-part/shape-001" d="M -19.79898987322333 -7 A 21 21 0 0 1 19.79898987322333 -7 Z" fill="#66747A" fill-rule="nonzero"/>
-    <path id="reference/hair-side-part/shape-002" d="M -19 -6 C -7 -18 8 -19 20 -7 L 15 1 C 5 -7 -6 -8 -17 1 Z" fill="#66747A" fill-rule="nonzero"/>
-    <path id="reference/hair-side-part/shape-003" d="M -5 -15 C -3 -8 -2 -2 -2 7" fill="none" stroke="#66747A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="reference/hair-side-part/shape-001" d="M-23-3C-19.6-17-8-22 3-22 13.3-22 23-15 23-4L15.2 3C5.5-5-4.6-7-14.3 1L-20.2 9Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/hair-side-part/shape-002" d="M15 5C15 10.523 17.239 15 20 15 22.761 15 25 10.523 25 5 25-0.523 22.761-5 20-5 17.239-5 15-0.523 15 5Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/hair-side-part/shape-003" d="M-5-15C-3-8-2-2-2 7" fill="none" stroke="#66747A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
   <g id="art" transform="translate(64 44)">
-    <path id="art/shape-001" d="M -19.79898987322333 -7 A 21 21 0 0 1 19.79898987322333 -7 Z" fill="#00FFFF" fill-rule="nonzero"/>
-    <path id="art/shape-002" d="M -19 -6 C -7 -18 8 -19 20 -7 L 15 1 C 5 -7 -6 -8 -17 1 Z" fill="#00FFFF" fill-rule="nonzero"/>
-    <path id="detail/shape-003" d="M -5 -15 C -3 -8 -2 -2 -2 7" fill="none" stroke="#00000024" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="art/shape-001" d="M-23-3C-19.6-17-8-22 3-22 13.3-22 23-15 23-4L15.2 3C5.5-5-4.6-7-14.3 1L-20.2 9Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/shape-002" d="M15 5C15 10.523 17.239 15 20 15 22.761 15 25 10.523 25 5 25-0.523 22.761-5 20-5 17.239-5 15-0.523 15 5Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="detail/shape-003" d="M-5-15C-3-8-2-2-2 7" fill="none" stroke="#00000024" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
   <g id="swatches">
     <path id="swatches/skin" d="M 4 4 H 12 V 12 H 4 Z" fill="#FF00FF" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>

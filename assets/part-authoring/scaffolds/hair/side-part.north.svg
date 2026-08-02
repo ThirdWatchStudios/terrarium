@@ -22,12 +22,12 @@
     <path id="reference/context-head-round/shape-001" d="M0-21C13-21 21-13 21 0 21 12 12 21 0 21-12 21-21 12-21 0-21-13-13-21 0-21Z" fill="#66747A" fill-rule="nonzero"/>
   </g>
   <g id="reference/hair-side-part" opacity="0.22" transform="translate(64 44)">
-    <path id="reference/hair-side-part/shape-001" d="M -20.396078054371138 5 A 21 21 0 1 1 20.396078054371138 5 L 20 13 L -20 13 Z" fill="#66747A" fill-rule="nonzero"/>
-    <path id="reference/hair-side-part/shape-002" d="M -3 -16 C -5 -8 -5 0 -3 8" fill="none" stroke="#66747A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="reference/hair-side-part/shape-001" d="M-23-3C-19.6-17-7.4-22 4-22 14.3-22 23-15 23-3L20.7 11H-16.6L-23 6Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/hair-side-part/shape-002" d="M-3-16C-5-8-5 0-3 8" fill="none" stroke="#66747A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
   <g id="art" transform="translate(64 44)">
-    <path id="art/shape-001" d="M -20.396078054371138 5 A 21 21 0 1 1 20.396078054371138 5 L 20 13 L -20 13 Z" fill="#00FFFF" fill-rule="nonzero"/>
-    <path id="detail/shape-002" d="M -3 -16 C -5 -8 -5 0 -3 8" fill="none" stroke="#00000024" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="art/shape-001" d="M-23-3C-19.6-17-7.4-22 4-22 14.3-22 23-15 23-3L20.7 11H-16.6L-23 6Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="detail/shape-002" d="M-3-16C-5-8-5 0-3 8" fill="none" stroke="#00000024" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
   <g id="swatches">
     <path id="swatches/skin" d="M 4 4 H 12 V 12 H 4 Z" fill="#FF00FF" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>

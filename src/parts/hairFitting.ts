@@ -1,4 +1,4 @@
-import { circle, ellipse } from '../core/geometry';
+import { circle } from '../core/geometry';
 import type { Facing, PartVariant, ShapeSpec } from '../core/types';
 import { IMPORTED_PART_ART } from './generated/importedPartArt';
 import type { ImportedHeadFittedPartOverlay, ImportedPartOverlay } from './importedArt';
@@ -102,28 +102,6 @@ const compact = (value: number): number => Number(value.toFixed(1));
 const hairShape = (d: string): ShapeSpec => ({ d, fill: '$hair' });
 const hairVariant = (...shapes: ShapeSpec[]): PartVariant => ({ z: 50, shapes });
 
-function profileCap(
-  fit: HeadHairFit,
-  options: { hairlineY?: number; backDrop?: number; sweep?: number } = {},
-): ShapeSpec {
-  const hairlineY = options.hairlineY ?? -2;
-  const backDrop = options.backDrop ?? 7;
-  const sweep = options.sweep ?? 0;
-  const back = compact(fit.eastBack - 1);
-  const front = compact(fit.eastFront + sweep);
-  const crown = compact(fit.crownY - 1);
-  return hairShape(
-    `M ${back} ${hairlineY} ` +
-    `C ${compact(back + 2)} ${compact(crown + 6)} ${compact(back * 0.48)} ${crown} ${compact(-2 + sweep * 0.15)} ${crown} ` +
-    `C ${compact(front - 5)} ${crown} ${front} ${compact(crown + 7)} ${front} ${hairlineY - 5} ` +
-    `L ${compact(front - 4)} ${hairlineY} ` +
-    `L ${compact(front - 10)} ${hairlineY + 3} ` +
-    `L ${compact(front - 16)} ${hairlineY} ` +
-    `C ${compact(front - 21)} ${hairlineY - 3} ${compact(back + 8)} ${hairlineY - 1} ${compact(back + 5)} ${hairlineY + 3} ` +
-    `L ${back} ${backDrop} Z`,
-  );
-}
-
 function curlyFacings(fit: HeadHairFit): Record<Facing, PartVariant> {
   const southWidth = fit.southHalf;
   const northWidth = fit.northHalf;
@@ -151,42 +129,6 @@ function curlyFacings(fit: HeadHairFit): Record<Facing, PartVariant> {
       hairShape(circle(0, compact(crown + 4), radius + 1)),
       hairShape(circle(compact(northWidth * 0.48), compact(crown + 9), radius + 2)),
       hairShape(circle(compact(northWidth * 0.86), 3, radius + 1)),
-    ),
-  };
-}
-
-function sidePartFacings(fit: HeadHairFit): Record<Facing, PartVariant> {
-  const southWidth = compact(fit.southHalf + 2);
-  const northWidth = compact(fit.northHalf + 2);
-  const crown = compact(fit.crownY - 1);
-  const back = compact(fit.eastBack - 2);
-  return {
-    south: hairVariant(
-      hairShape(
-        `M ${-southWidth} -3 ` +
-        `C ${compact(-southWidth * 0.85)} ${compact(crown + 5)} ${compact(-southWidth * 0.35)} ${crown} 3 ${crown} ` +
-        `C ${compact(southWidth * 0.58)} ${crown} ${southWidth} ${compact(crown + 7)} ${southWidth} -4 ` +
-        `L ${compact(southWidth * 0.66)} 3 ` +
-        `C ${compact(southWidth * 0.24)} -5 ${compact(-southWidth * 0.2)} -7 ${compact(-southWidth * 0.62)} 1 ` +
-        `L ${compact(-southWidth * 0.88)} 9 Z`,
-      ),
-      hairShape(ellipse(compact(southWidth - 3), 5, 5, 10)),
-    ),
-    east: hairVariant(
-      profileCap(fit, { hairlineY: -3, backDrop: 10, sweep: 2 }),
-      hairShape(
-        `M ${back} -3 ` +
-        `C ${compact(back - 8)} 1 ${compact(back - 8)} 12 ${compact(back - 1)} 17 ` +
-        `C ${compact(back + 6)} 14 ${compact(back + 7)} 6 ${compact(back + 4)} 0 Z`,
-      ),
-    ),
-    north: hairVariant(
-      hairShape(
-        `M ${-northWidth} -3 ` +
-        `C ${compact(-northWidth * 0.85)} ${compact(crown + 5)} ${compact(-northWidth * 0.32)} ${crown} 4 ${crown} ` +
-        `C ${compact(northWidth * 0.62)} ${crown} ${northWidth} ${compact(crown + 7)} ${northWidth} -3 ` +
-        `L ${compact(northWidth * 0.9)} 11 H ${compact(-northWidth * 0.72)} L ${-northWidth} 6 Z`,
-      ),
     ),
   };
 }
@@ -237,7 +179,8 @@ type CanonicalFittedHairId =
   | 'hair-ponytail'
   | 'hair-long-straight'
   | 'hair-balding'
-  | 'hair-pixie';
+  | 'hair-pixie'
+  | 'hair-side-part';
 type CodeFittedHairId = Exclude<FittedHairId, CanonicalFittedHairId>;
 
 const isCanonicalFittedHairId = (hairId: FittedHairId): hairId is CanonicalFittedHairId =>
@@ -247,7 +190,8 @@ const isCanonicalFittedHairId = (hairId: FittedHairId): hairId is CanonicalFitte
   || hairId === 'hair-ponytail'
   || hairId === 'hair-long-straight'
   || hairId === 'hair-balding'
-  || hairId === 'hair-pixie';
+  || hairId === 'hair-pixie'
+  || hairId === 'hair-side-part';
 
 const CODE_FITTED_HAIR_IDS = FITTED_HAIR_IDS.filter(
   (hairId): hairId is CodeFittedHairId => !isCanonicalFittedHairId(hairId),
@@ -255,7 +199,6 @@ const CODE_FITTED_HAIR_IDS = FITTED_HAIR_IDS.filter(
 
 const BUILDERS: Record<CodeFittedHairId, (fit: HeadHairFit) => Record<Facing, PartVariant>> = {
   'hair-curly': curlyFacings,
-  'hair-side-part': sidePartFacings,
   'hair-coils': coilsFacings,
 };
 
