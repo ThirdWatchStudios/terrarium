@@ -453,10 +453,11 @@ icons), not by upfront design.
    4,320-cell hair/body/head/facing/style matrix, full head-accessory matrices,
    and distance proof pass. These final four received visual approval on
    2026-07-10.
-   Bob and Short completed the first two production source-authority follow-ups
-   on 2026-08-02. Each three-source set compiles through a bounded declarative
-   head-fit adapter into all 18 production head/facing variants. Both old path
-   builders are removed; the other eight accepted fits remain code-owned
+   Bob, Short, and Bun completed the first three production source-authority
+   follow-ups on 2026-08-02. Each three-source set compiles through a bounded
+   declarative head-fit adapter into all 18 production head/facing variants.
+   Bun retains separately fitted authored cap/knot components. All three old
+   path builders are removed; the other seven accepted fits remain code-owned
    migration backlog.
 8. **Anchored outfit-detail adapter**: `outfit-tee` is the first body-aware
    intake target. Its south/east SVGs are authored once over `body-balanced`,

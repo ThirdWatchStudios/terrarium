@@ -197,21 +197,21 @@
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/bun.east.svg",
-      "sha256": "962a42e5c7e1268fbe752fc738e6f452a932b9325b3ae07d9d2d00da82e7c313"
+      "sha256": "bfa31113a12fb6573eed07d5554fbccfb9fec05b60fc98414db5f2399ebec849"
     },
     {
       "assetId": "hair-bun",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/bun.north.svg",
-      "sha256": "573f93b38eb279900b3e87961ca59896b58028f24ce945859c1f2e88997d1a30"
+      "sha256": "d08e742a3d16b42b13abe8b6917fcc183bda6b891a6782fa0fa32d16373f18be"
     },
     {
       "assetId": "hair-bun",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/bun.south.svg",
-      "sha256": "ce6e7f1231f8884f8e7c43c0a96708b8a58ae896cb3ecc854b265f8af30ed6b5"
+      "sha256": "b3be7ffbf3d36557738a65ce20799cdb6f4303878587b9a29031d24eb60499c5"
     },
     {
       "assetId": "hair-coils",

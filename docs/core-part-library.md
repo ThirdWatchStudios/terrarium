@@ -306,9 +306,10 @@ All ten redesigned head-aware hairstyles are now live in production. Each
 stable hair ID resolves a fixed south/east/north variant for all six production
 head IDs. Resolution happens inside the compositor, so flat sprites, portraits,
 operational units, and reconstructable hair layers agree while recipes keep the
-same IDs. Bob and Short now own their live geometry through approved
-`head-fitted-art` adapters and six declarative envelopes; both former code path
-builders are removed. The other eight canonical imports remain source/fallback
+same IDs. Bob, Short, and Bun now own their live geometry through approved
+`head-fitted-art` adapters and six declarative envelopes; all three former code
+path builders are removed. Bun's cap and disconnected knot retain separate
+declarative fit frames. The other seven canonical imports remain source/fallback
 geometry pending equivalent bounded migrations. Ponytail retains its prior
 code-fit lock; the completion slice adds Pixie,
 Side-part, Bun, Curly, Coils, Long straight, and Balding. Every fitted pair

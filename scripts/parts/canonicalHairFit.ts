@@ -80,6 +80,13 @@ export interface CanonicalHairFitFrame {
   readonly y: CanonicalHairAxisFrame;
 }
 
+export interface CanonicalHairComponentFrame {
+  readonly centerX: number;
+  readonly centerY: number;
+  readonly radiusX: number;
+  readonly radiusY: number;
+}
+
 function remapAxis(
   value: number,
   source: CanonicalHairAxisFrame,
@@ -192,5 +199,22 @@ export function fitCanonicalHairVariant(
   return {
     ...sourceVariant,
     shapes: fitCanonicalHairShapes(sourceVariant.shapes, source, target),
+  };
+}
+
+/** Affine component fit for disconnected source shapes such as knots/tails. */
+export function fitCanonicalHairComponent(
+  sourceShape: ShapeSpec,
+  source: CanonicalHairComponentFrame,
+  target: CanonicalHairComponentFrame,
+): ShapeSpec {
+  return {
+    ...sourceShape,
+    d: svgpath(sourceShape.d)
+      .translate(-source.centerX, -source.centerY)
+      .scale(target.radiusX / source.radiusX, target.radiusY / source.radiusY)
+      .translate(target.centerX, target.centerY)
+      .round(3)
+      .toString(),
   };
 }

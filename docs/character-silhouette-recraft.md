@@ -546,9 +546,10 @@ top-overflow debt from the pre-fitting 766 cases to 467 high-contrast-only
 cases, with no non-top overflow. See
 `docs/previews/character-hair-fitting-completion-v2.png` and its metrics JSON.
 
-Canonical-source follow-up (2026-08-02): Bob and Short are now the first two
+Canonical-source follow-up (2026-08-02): Bob, Short, and Bun are now the first three
 fitted styles whose three SVG facings own live production geometry. The importer
 applies their visually approved bounded landmark warps and emits all 18
 head/facing variants per style; the resolver consumes those generated records
-and both former path builders are removed. Ponytail and the seven completion
+and all three former path builders are removed. Bun retains separate declarative
+cap and knot frames. Ponytail and the six remaining completion
 styles retain their accepted code-owned fits until migrated one style at a time.

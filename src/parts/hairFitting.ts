@@ -154,28 +154,6 @@ function profileCap(
   );
 }
 
-function bunFacings(fit: HeadHairFit): Record<Facing, PartVariant> {
-  const knotY = compact(fit.crownY + 3);
-  const southKnotX = compact(-fit.southHalf * 0.65);
-  const northKnotX = compact(fit.northHalf * 0.65);
-  const profileKnotX = compact(fit.eastBack);
-  const knotRadiusX = Math.max(6, compact(fit.southHalf * 0.32));
-  return {
-    south: hairVariant(
-      fittedCap(fit.southHalf, fit.crownY, 1),
-      hairShape(ellipse(southKnotX, knotY, knotRadiusX, 5.5)),
-    ),
-    east: hairVariant(
-      profileCap(fit, { hairlineY: -1, backDrop: 7 }),
-      hairShape(ellipse(profileKnotX, knotY, Math.max(6, knotRadiusX * 0.85), 5.5)),
-    ),
-    north: hairVariant(
-      fittedCap(fit.northHalf, fit.crownY, 9),
-      hairShape(ellipse(northKnotX, knotY, knotRadiusX, 5.5)),
-    ),
-  };
-}
-
 function curlyFacings(fit: HeadHairFit): Record<Facing, PartVariant> {
   const southWidth = fit.southHalf;
   const northWidth = fit.northHalf;
@@ -441,18 +419,17 @@ function coilsFacings(fit: HeadHairFit): Record<Facing, PartVariant> {
   };
 }
 
-type CanonicalFittedHairId = 'hair-short' | 'hair-bob';
+type CanonicalFittedHairId = 'hair-short' | 'hair-bob' | 'hair-bun';
 type CodeFittedHairId = Exclude<FittedHairId, CanonicalFittedHairId>;
 
 const isCanonicalFittedHairId = (hairId: FittedHairId): hairId is CanonicalFittedHairId =>
-  hairId === 'hair-short' || hairId === 'hair-bob';
+  hairId === 'hair-short' || hairId === 'hair-bob' || hairId === 'hair-bun';
 
 const CODE_FITTED_HAIR_IDS = FITTED_HAIR_IDS.filter(
   (hairId): hairId is CodeFittedHairId => !isCanonicalFittedHairId(hairId),
 );
 
 const BUILDERS: Record<CodeFittedHairId, (fit: HeadHairFit) => Record<Facing, PartVariant>> = {
-  'hair-bun': bunFacings,
   'hair-curly': curlyFacings,
   'hair-balding': baldingFacings,
   'hair-side-part': sidePartFacings,

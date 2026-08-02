@@ -23,6 +23,7 @@ import type {
 import {
   fitCanonicalBobVariant,
 } from './canonicalBobFit';
+import { fitCanonicalBunVariant } from './canonicalBunFit';
 import {
   CANONICAL_HAIR_HEAD_IDS,
   type CanonicalHairHeadId,
@@ -1148,6 +1149,8 @@ function expandHeadFittedVariants(
     fitVariant = fitCanonicalBobVariant;
   } else if (target.headFitAdapter === 'canonical-short-v1' && target.id === 'hair-short') {
     fitVariant = fitCanonicalShortVariant;
+  } else if (target.headFitAdapter === 'canonical-bun-v1' && target.id === 'hair-bun') {
+    fitVariant = fitCanonicalBunVariant;
   } else {
     fail(source, `unsupported head-fit adapter ${target.headFitAdapter ?? 'none'} for ${target.id}`);
   }

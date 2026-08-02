@@ -113,20 +113,20 @@ is validated after applying that canvas translation but deliberately preserves
 its established local `d` strings byte-for-byte; visible body paths must remain
 directly under the canonical translation group.
 
-Every current hair target except `hair-bob` and `hair-short` also preserves its
+Every current hair target except `hair-bob`, `hair-short`, and `hair-bun` also preserves its
 canonical local path strings after canvas validation. Their arc- and
 curve-heavy geometry measurably changes under generic flattening even at
 production sizes, so those explicit targets require visible paths directly
-under `translate(64 44)`. Bob and Short retain the normal transform-baking path
-as approved interoperability controls.
+under `translate(64 44)`. Bob, Short, and Bun retain the normal transform-baking
+path as approved interoperability controls.
 
 For all ten mapped hair IDs, the compositor resolves a fixed fitted variant
-from the selected production head ID. Bob and Short are complete source-owned
+from the selected production head ID. Bob, Short, and Bun are complete source-owned
 routes: `head-fitted-art` compiles each three-facing SVG set through six
 declarative head envelopes into ordinary generated `PartVariant` records.
 Editing either canonical source set, then running `npm run parts:import`, changes
-its live all-head geometry; there is no second Bob/Short path builder or silent
-human-head fallback. The remaining eight hair IDs still use the deterministic
+its live all-head geometry; there is no second Bob/Short/Bun path builder or
+silent human-head fallback. The remaining seven hair IDs still use the deterministic
 code-owned fit table, so editing those SVGs changes only their static fallback
 until each style passes the same bounded migration gate. No fit metadata,
 `buildVariant`, recipe field, or export-schema field is added. Flat and

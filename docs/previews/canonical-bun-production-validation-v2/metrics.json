@@ -1,0 +1,26 @@
+{
+  "status": "approved-production-source-authority",
+  "sourceFiles": [
+    "assets/parts/hair/bun.south.svg",
+    "assets/parts/hair/bun.east.svg",
+    "assets/parts/hair/bun.north.svg"
+  ],
+  "productionWiringChanged": true,
+  "canonicalSourceSvgChanged": true,
+  "reviewSourceSvgAdded": false,
+  "perHeadSvgVariantsAdded": 0,
+  "method": {
+    "geometryOwner": "three imported canonical Bun SVG facings",
+    "capFit": "bounded piecewise-linear landmark warp",
+    "knotFit": "separate declarative affine component frame",
+    "replacementPathBuilders": 0
+  },
+  "audit": {
+    "variantCount": 18,
+    "sourceShapeCount": 6,
+    "derivedShapeCount": 36,
+    "missingHairAtLiteralScale": [],
+    "productionDifferences": [],
+    "deterministicDigest": "53c0f0d8d1e1e3cc8514e835ce3ef5ad510b815821d6e26e5e214153e18e0b08"
+  }
+}

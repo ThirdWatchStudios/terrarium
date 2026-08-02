@@ -19,6 +19,7 @@
     "parts:check": "npm run parts:import:check && npm run parts:scaffolds:check",
     "hair:canonical-bob:production-preview": "tsx scripts/canonicalBobSourceFitProof.ts",
     "hair:canonical-short:production-preview": "tsx scripts/canonicalShortSourceFitProof.ts",
+    "hair:canonical-bun:production-preview": "tsx scripts/canonicalBunSourceFitProof.ts",
     "props:import": "tsx scripts/importQuotaCoWorkhorseProps.ts",
     "props:import:check": "tsx scripts/importQuotaCoWorkhorseProps.ts --check",
     "department-machines:import": "tsx scripts/importQuotaCoDepartmentMachines.ts --write",
