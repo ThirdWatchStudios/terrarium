@@ -120,14 +120,17 @@ explicit targets require visible paths directly under `translate(64 44)`.
 Bob retains the normal transform-baking path as the approved interoperability
 control.
 
-For all ten mapped hair IDs, the compositor now resolves a fixed fitted variant
-from the selected production head ID after import. The importer and source
-contract remain static: no fit envelope is inferred from SVG, no
-`buildVariant` is added to imported definitions, and no recipe or export-schema
-field changes. Flat and reconstructable layer routes share this resolver.
-Editing one of these canonical hair SVGs alone therefore changes its
-fallback/source geometry, but does not replace the six promoted head-specific
-fits; update and review the deterministic fit table as part of that work.
+For all ten mapped hair IDs, the compositor resolves a fixed fitted variant
+from the selected production head ID. Bob is the first complete source-owned
+route: `head-fitted-art` compiles its three imported SVG facings through six
+declarative head envelopes into ordinary generated `PartVariant` records.
+Editing a Bob source, then running `npm run parts:import`, therefore changes the
+live all-head geometry; there is no second Bob path builder or silent human-head
+fallback. The remaining nine hair IDs still use the deterministic code-owned
+fit table, so editing those SVGs changes only their static fallback until each
+style passes the same bounded migration gate. No fit metadata, `buildVariant`,
+recipe field, or export-schema field is added. Flat and reconstructable routes
+share the resolver.
 
 ## Sentinel palette
 

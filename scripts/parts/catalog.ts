@@ -3,11 +3,13 @@ import type { BodyArchetypeId } from '../../src/parts/bodyArchetypes';
 
 export type PartImportMode =
   | 'static'
+  | 'head-fitted-art'
   | 'body-art'
   | 'anchored-detail'
   | 'component-detail';
 export type BodyDetailPointAnchor = 'neck';
 export type BodyDetailFrame = 'upper-torso' | 'lower-torso';
+export type HeadFitAdapter = 'canonical-bob-v1';
 
 export interface PartImportComponent {
   readonly id: string;
@@ -25,6 +27,8 @@ export interface PartImportTarget {
   readonly bodyAnchors?: unknown;
   readonly preserveLocalPaths?: boolean;
   readonly importMode?: PartImportMode;
+  readonly headFitAdapter?: HeadFitAdapter;
+  readonly variantZ?: number;
   readonly referenceBodyId?: BodyArchetypeId;
   readonly placementAnchor?: BodyDetailPointAnchor;
   readonly components?: readonly PartImportComponent[];
@@ -68,7 +72,12 @@ export const PART_IMPORT_TARGETS: readonly PartImportTarget[] = [
   target('head-angular', 'head'),
   target('head-soft-square', 'head'),
   byteStableTarget('hair-short', 'hair'),
-  target('hair-bob', 'hair'),
+  {
+    ...target('hair-bob', 'hair'),
+    importMode: 'head-fitted-art',
+    headFitAdapter: 'canonical-bob-v1',
+    variantZ: 50,
+  },
   byteStableTarget('hair-bun', 'hair'),
   byteStableTarget('hair-curly', 'hair'),
   byteStableTarget('hair-balding', 'hair'),

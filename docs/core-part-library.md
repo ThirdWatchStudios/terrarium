@@ -307,8 +307,11 @@ All ten redesigned head-aware hairstyles are now live in production. Each
 stable hair ID resolves a fixed south/east/north variant for all six production
 head IDs. Resolution happens inside the compositor, so flat sprites, portraits,
 operational units, and reconstructable hair layers agree while recipes keep the
-same IDs. The canonical imported SVGs remain source/fallback geometry. The
-first Short/Bob/Ponytail slice is byte-locked; the completion slice adds Pixie,
+same IDs. Bob's three canonical SVG facings now own its live geometry through
+the approved `head-fitted-art` adapter and six declarative envelopes; its former
+code path builder is removed. The other nine canonical imports remain
+source/fallback geometry pending equivalent bounded migrations. Short and
+Ponytail retain their prior code-fit lock; the completion slice adds Pixie,
 Side-part, Bun, Curly, Coils, Long straight, and Balding. Every fitted pair
 remains distinct at 32 px across the authored facings. The 4,320-cell
 top-overflow audit improves from the pre-fitting 766 to 467 high-contrast-only

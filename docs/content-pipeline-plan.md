@@ -453,6 +453,10 @@ icons), not by upfront design.
    4,320-cell hair/body/head/facing/style matrix, full head-accessory matrices,
    and distance proof pass. These final four received visual approval on
    2026-07-10.
+   Bob completed the first production source-authority follow-up on 2026-08-02:
+   its three sources now compile through a bounded declarative head-fit adapter
+   into all 18 production head/facing variants. The old Bob path builder is
+   removed; the other nine accepted fits remain code-owned migration backlog.
 8. **Anchored outfit-detail adapter**: `outfit-tee` is the first body-aware
    intake target. Its south/east SVGs are authored once over `body-balanced`,
    with the body origin at `(64, 87)` and neck at `(64, 58)`. Every visible

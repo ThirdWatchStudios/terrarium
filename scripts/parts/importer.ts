@@ -6,11 +6,12 @@ import svgpath from 'svgpath';
 import { parseSync, type INode } from 'svgson';
 import { optimize } from 'svgo';
 
-import type { BodyFacingAnchors, Facing, ShapeSpec } from '../../src/core/types';
+import type { BodyFacingAnchors, Facing, PartVariant, ShapeSpec } from '../../src/core/types';
 import { FACINGS } from '../../src/core/types';
 import { BODY_ARCHETYPES } from '../../src/parts/bodyArchetypes';
 import type {
   ImportedBodyDetailOverlay,
+  ImportedHeadFittedPartOverlay,
   ImportedPartArt,
   ImportedPartSourceKind,
 } from '../../src/parts/importedArt';
@@ -19,6 +20,10 @@ import type {
   PartImportComponent,
   PartImportTarget,
 } from './catalog';
+import {
+  CANONICAL_BOB_HEAD_IDS,
+  fitCanonicalBobVariant,
+} from './canonicalBobFit';
 import { SENTINEL_TO_PALETTE_REF } from './sentinels';
 
 const SUPPORTED_SLOTS = ['body', 'head', 'hair', 'outfit'] as const;
@@ -848,7 +853,17 @@ function validateTarget(group: MutableImportGroup, target: PartImportTarget | un
   ) {
     fail(group.id, 'preserveLocalPaths is supported only for static head/hair targets');
   }
-  if (mode === 'body-art') {
+  if (mode === 'head-fitted-art') {
+    if (
+      target.slot !== 'hair' ||
+      target.anchor !== 'headCenter' ||
+      target.buildVariant ||
+      !target.headFitAdapter ||
+      !Number.isFinite(target.variantZ)
+    ) {
+      fail(group.id, 'head-fitted-art targets require static head-anchored hair, an adapter, and variant z-order');
+    }
+  } else if (mode === 'body-art') {
     if (
       target.slot !== 'body' ||
       target.anchor !== 'body' ||
@@ -1114,6 +1129,51 @@ function expandComponentDetailVariants(
   return bodyVariants;
 }
 
+function expandHeadFittedVariants(
+  source: string,
+  target: PartImportTarget,
+  facings: Partial<Record<Facing, readonly ShapeSpec[]>>,
+): ImportedHeadFittedPartOverlay['headVariants'] {
+  if (target.headFitAdapter !== 'canonical-bob-v1' || target.id !== 'hair-bob') {
+    fail(source, `unsupported head-fit adapter ${target.headFitAdapter ?? 'none'}`);
+  }
+  if (target.variantZ === undefined) {
+    fail(source, 'head-fitted-art target has no variant z-order');
+  }
+
+  const headVariants: Record<string, Partial<Record<Facing, PartVariant>>> = {};
+  for (const headId of CANONICAL_BOB_HEAD_IDS) {
+    const variants: Partial<Record<Facing, PartVariant>> = {};
+    for (const facing of FACINGS) {
+      const sourceShapes = facings[facing]
+        ?? fail(source, `head-fitted-art is missing ${facing} source geometry`);
+      const fitted = fitCanonicalBobVariant(
+        { z: target.variantZ, shapes: sourceShapes },
+        headId,
+        facing,
+      );
+      const origin = PART_AUTHORING_ORIGINS.hair;
+      fitted.shapes.forEach((shape, index) => {
+        const canvasPath = svgpath(shape.d)
+          .translate(origin.x, origin.y)
+          .round(PATH_PRECISION)
+          .toString();
+        validateBounds(
+          `${source}/${headId}/${facing}/shape-${index + 1}`,
+          canvasPath,
+          shape.fill,
+          shape.stroke,
+          shape.strokeWidth,
+          shape.silhouette !== false,
+        );
+      });
+      variants[facing] = fitted;
+    }
+    headVariants[headId] = variants;
+  }
+  return headVariants;
+}
+
 /** Compile a source tree atomically in memory. No output is written on failure. */
 export async function compilePartDirectory(
   options: CompilePartDirectoryOptions,
@@ -1208,7 +1268,16 @@ export async function compilePartDirectory(
       sourceKind: options.sourceKind ?? 'authored' as const,
       sourceFiles: provenanceFiles.sort(compareText),
     };
-    if (target.importMode === 'body-art') {
+    if (target.importMode === 'head-fitted-art') {
+      imports.push({
+        kind: 'head-fitted-art',
+        id: group.id,
+        slot: 'hair',
+        facings,
+        headVariants: expandHeadFittedVariants(group.id, target, facings),
+        ...provenance,
+      });
+    } else if (target.importMode === 'body-art') {
       imports.push({
         kind: 'body-art',
         id: group.id,
@@ -1253,6 +1322,8 @@ function emitShape(shape: ShapeSpec): string {
   if (shape.fill !== undefined) properties.push(`fill: ${quote(shape.fill)}`);
   if (shape.stroke !== undefined) properties.push(`stroke: ${quote(shape.stroke)}`);
   if (shape.strokeWidth !== undefined) properties.push(`strokeWidth: ${shape.strokeWidth}`);
+  if (shape.strokeLinecap !== undefined) properties.push(`strokeLinecap: ${quote(shape.strokeLinecap)}`);
+  if (shape.strokeLinejoin !== undefined) properties.push(`strokeLinejoin: ${quote(shape.strokeLinejoin)}`);
   if (shape.opacity !== undefined) properties.push(`opacity: ${shape.opacity}`);
   if (shape.silhouette !== undefined) properties.push(`silhouette: ${shape.silhouette}`);
   return `{ ${properties.join(', ')} }`;
@@ -1297,6 +1368,7 @@ export function emitImportedPartArt(imports: readonly ImportedPartArt[]): string
       continue;
     }
     if (imported.kind === 'body-art') lines.push('    kind: "body-art",');
+    if (imported.kind === 'head-fitted-art') lines.push('    kind: "head-fitted-art",');
     lines.push(`    id: ${quote(imported.id)},`);
     lines.push(`    slot: ${quote(imported.slot)},`);
     lines.push('    facings: {');
@@ -1308,6 +1380,25 @@ export function emitImportedPartArt(imports: readonly ImportedPartArt[]): string
       lines.push('      ],');
     }
     lines.push('    },');
+    if (imported.kind === 'head-fitted-art') {
+      lines.push('    headVariants: {');
+      for (const headId of Object.keys(imported.headVariants).sort(compareText)) {
+        const variants = imported.headVariants[headId];
+        lines.push(`      ${quote(headId)}: {`);
+        for (const facing of FACINGS) {
+          const variant = variants?.[facing];
+          if (!variant) continue;
+          lines.push(`        ${facing}: {`);
+          lines.push(`          z: ${variant.z},`);
+          lines.push('          shapes: [');
+          for (const shape of variant.shapes) lines.push(`            ${emitShape(shape)},`);
+          lines.push('          ],');
+          lines.push('        },');
+        }
+        lines.push('      },');
+      }
+      lines.push('    },');
+    }
     lines.push('  },');
   }
   lines.push('] as const satisfies readonly ImportedPartOverlay[];');

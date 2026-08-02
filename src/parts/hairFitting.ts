@@ -1,5 +1,7 @@
 import { circle, ellipse } from '../core/geometry';
 import type { Facing, PartVariant, ShapeSpec } from '../core/types';
+import { IMPORTED_PART_ART } from './generated/importedPartArt';
+import type { ImportedHeadFittedPartOverlay, ImportedPartOverlay } from './importedArt';
 
 /**
  * The first promoted head-aware hair carriers.
@@ -33,6 +35,11 @@ export const FITTED_HAIR_HEAD_IDS = [
 ] as const;
 
 export type FittedHairHeadId = typeof FITTED_HAIR_HEAD_IDS[number];
+
+const CANONICAL_BOB_ART = (
+  IMPORTED_PART_ART as readonly ImportedPartOverlay[]
+).find((entry): entry is ImportedHeadFittedPartOverlay =>
+  entry.kind === 'head-fitted-art' && entry.id === 'hair-bob');
 
 interface HeadHairFit {
   southHalf: number;
@@ -148,46 +155,6 @@ function shortFacings(fit: HeadHairFit): Record<Facing, PartVariant> {
     south: hairVariant(fittedCap(fit.southHalf, fit.crownY + 2, 0, true)),
     east: hairVariant(profileCap(fit, { hairlineY: -1, backDrop: 6 })),
     north: hairVariant(fittedCap(fit.northHalf, fit.crownY + 2, 7, true)),
-  };
-}
-
-function bobFacings(fit: HeadHairFit): Record<Facing, PartVariant> {
-  const southWidth = compact(fit.southHalf + 3);
-  const northWidth = compact(fit.northHalf + 3);
-  const opening = compact(Math.max(8, fit.southHalf * 0.58));
-  const crown = compact(fit.crownY - 2);
-  const back = compact(fit.eastBack - 3);
-  const front = compact(fit.eastFront + 1);
-  return {
-    south: hairVariant(hairShape(
-      `M ${-southWidth} -4 ` +
-      `C ${compact(-southWidth * 0.9)} ${compact(crown + 6)} ${compact(-southWidth * 0.45)} ${crown} 0 ${crown} ` +
-      `C ${compact(southWidth * 0.48)} ${crown} ${compact(southWidth * 0.92)} ${compact(crown + 6)} ${southWidth} -4 ` +
-      `L ${compact(southWidth - 1)} 17 L ${compact(opening + 3)} 23 L ${opening} -1 ` +
-      `C ${compact(opening * 0.62)} -8 ${compact(-opening * 0.62)} -8 ${-opening} -1 ` +
-      `L ${compact(-opening - 3)} 23 L ${compact(-southWidth + 1)} 17 Z`,
-    )),
-    east: hairVariant(
-      hairShape(
-        `M ${back} 18 L ${back} -3 ` +
-        `C ${compact(back + 2)} ${compact(crown + 7)} ${compact(back * 0.45)} ${crown} -2 ${crown} ` +
-        `C ${compact(front - 5)} ${crown} ${front} ${compact(crown + 8)} ${front} -5 ` +
-        `L ${compact(front - 4)} 0 ` +
-        `C ${compact(front - 11)} -5 ${compact(front - 19)} -5 ${compact(back + 8)} 1 ` +
-        `L ${compact(back + 8)} 18 Z`,
-      ),
-      hairShape(
-        `M ${compact(front - 10)} -1 ` +
-        `C ${compact(front - 7)} 5 ${compact(front - 9)} 13 ${compact(front - 12)} 18 ` +
-        `L ${compact(front - 16)} 17 L ${compact(front - 14)} 2 Z`,
-      ),
-    ),
-    north: hairVariant(hairShape(
-      `M ${-northWidth} -4 ` +
-      `C ${compact(-northWidth * 0.9)} ${compact(crown + 6)} ${compact(-northWidth * 0.45)} ${crown} 0 ${crown} ` +
-      `C ${compact(northWidth * 0.48)} ${crown} ${compact(northWidth * 0.92)} ${compact(crown + 6)} ${northWidth} -4 ` +
-      `L ${compact(northWidth - 1)} 22 H ${compact(-northWidth + 1)} Z`,
-    )),
   };
 }
 
@@ -478,9 +445,14 @@ function coilsFacings(fit: HeadHairFit): Record<Facing, PartVariant> {
   };
 }
 
-const BUILDERS: Record<FittedHairId, (fit: HeadHairFit) => Record<Facing, PartVariant>> = {
+type CodeFittedHairId = Exclude<FittedHairId, 'hair-bob'>;
+
+const CODE_FITTED_HAIR_IDS = FITTED_HAIR_IDS.filter(
+  (hairId): hairId is CodeFittedHairId => hairId !== 'hair-bob',
+);
+
+const BUILDERS: Record<CodeFittedHairId, (fit: HeadHairFit) => Record<Facing, PartVariant>> = {
   'hair-short': shortFacings,
-  'hair-bob': bobFacings,
   'hair-bun': bunFacings,
   'hair-curly': curlyFacings,
   'hair-balding': baldingFacings,
@@ -491,10 +463,10 @@ const BUILDERS: Record<FittedHairId, (fit: HeadHairFit) => Record<Facing, PartVa
   'hair-coils': coilsFacings,
 };
 
-const FITTED_VARIANTS: Readonly<
-  Record<FittedHairId, Readonly<Record<FittedHairHeadId, Readonly<Record<Facing, PartVariant>>>>>
+const CODE_FITTED_VARIANTS: Readonly<
+  Record<CodeFittedHairId, Readonly<Record<FittedHairHeadId, Readonly<Record<Facing, PartVariant>>>>>
 > = Object.fromEntries(
-  FITTED_HAIR_IDS.map((hairId) => [
+  CODE_FITTED_HAIR_IDS.map((hairId) => [
     hairId,
     Object.fromEntries(
       FITTED_HAIR_HEAD_IDS.map((headId) => [
@@ -503,7 +475,7 @@ const FITTED_VARIANTS: Readonly<
       ]),
     ),
   ]),
-) as Record<FittedHairId, Record<FittedHairHeadId, Record<Facing, PartVariant>>>;
+) as Record<CodeFittedHairId, Record<FittedHairHeadId, Record<Facing, PartVariant>>>;
 
 const isFittedHairId = (id: string): id is FittedHairId =>
   (FITTED_HAIR_IDS as readonly string[]).includes(id);
@@ -517,5 +489,12 @@ export function fittedHairVariant(
   facing: Facing,
 ): PartVariant | undefined {
   if (!isFittedHairId(hairId) || !isFittedHairHeadId(headId)) return undefined;
-  return FITTED_VARIANTS[hairId][headId][facing];
+  if (hairId === 'hair-bob') {
+    const variant = CANONICAL_BOB_ART?.headVariants[headId]?.[facing];
+    if (!variant) {
+      throw new Error(`Canonical Bob fit is missing ${headId}/${facing}`);
+    }
+    return variant;
+  }
+  return CODE_FITTED_VARIANTS[hairId][headId][facing];
 }

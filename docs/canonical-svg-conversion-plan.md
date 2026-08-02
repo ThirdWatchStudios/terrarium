@@ -139,9 +139,13 @@ large, current, stateful production family.
 
 #### Head-aware hair production geometry
 
-The hair base SVGs are checked in, but the live all-head fitting path currently
-builds production geometry in `hairFitting.ts`. The apparent SVG source is not
-the complete visual authority.
+The hair base SVGs are checked in. The first bounded source-authority slice is
+complete for `hair-bob`: its three canonical facings compile through the
+`head-fitted-art` adapter into six deterministic head variants, and the live
+resolver consumes those generated variants without a Bob path builder. The
+other nine mapped styles still build their live head-specific geometry in
+`hairFitting.ts`, so their apparent SVG sources are not yet complete visual
+authority.
 
 Preferred migration:
 
@@ -154,7 +158,10 @@ Preferred migration:
 
 Do not create a full hair-by-head SVG matrix by default. First prove that
 source-owned geometry plus declarative fitting can replace the code-owned
-builders.
+builders. Bob proved that mechanism across all six heads and three authored
+facings, including literal 48/32 px review, and received visual approval on
+2026-08-02. Apply the same bounded source/import/review gate one style at a
+time; add a per-head source only when the reviewed transform is insufficient.
 
 ### P1 — signature world and character identity
 

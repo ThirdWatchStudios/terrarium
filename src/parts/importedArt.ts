@@ -1,4 +1,4 @@
-import type { Facing, PartDef, ShapeSpec, Slot } from '../core/types';
+import type { Facing, PartDef, PartVariant, ShapeSpec, Slot } from '../core/types';
 import { FACINGS } from '../core/types';
 
 export type ImportedPartSourceKind = 'authored' | 'generated' | 'curated';
@@ -15,6 +15,23 @@ export interface ImportedStaticPartOverlay {
   readonly id: string;
   readonly slot: Slot;
   readonly facings: Partial<Record<Facing, readonly ShapeSpec[]>>;
+}
+
+/**
+ * Static canonical art plus build-time-expanded, head-specific variants.
+ *
+ * The SVG facings remain the only visible geometry source. Head variants are
+ * generated from those shapes and declarative fit data; they are ordinary
+ * baked PartVariants and add no recipe, runtime, or export-schema state.
+ */
+export interface ImportedHeadFittedPartOverlay {
+  readonly kind: 'head-fitted-art';
+  readonly id: string;
+  readonly slot: 'hair';
+  readonly facings: Partial<Record<Facing, readonly ShapeSpec[]>>;
+  readonly headVariants: Readonly<
+    Record<string, Partial<Record<Facing, PartVariant>>>
+  >;
 }
 
 /**
@@ -51,6 +68,7 @@ export interface ImportedBodyDetailOverlay {
 
 export type ImportedPartOverlay =
   | ImportedStaticPartOverlay
+  | ImportedHeadFittedPartOverlay
   | ImportedBodyArtOverlay
   | ImportedBodyDetailOverlay;
 
@@ -90,6 +108,22 @@ export function applyImportedPartArt(
     const base = result[index];
     if (base.slot !== imported.slot) {
       fail(`${imported.id} declares slot ${imported.slot}, expected ${base.slot}`);
+    }
+    if (imported.kind === 'head-fitted-art') {
+      if (base.slot !== 'hair' || base.anchor !== 'headCenter' || base.buildVariant) {
+        fail(`${imported.id} head-fitted-art overlays require static head-anchored hair`);
+      }
+      const headIds = Object.keys(imported.headVariants);
+      if (headIds.length === 0) fail(`${imported.id} contains no head-fitted variants`);
+      for (const headId of headIds) {
+        const variants = imported.headVariants[headId];
+        for (const facing of FACINGS) {
+          const variant = variants?.[facing];
+          if (!variant || variant.shapes.length === 0) {
+            fail(`${imported.id}/${headId}/${facing} contains no fitted art`);
+          }
+        }
+      }
     }
     if (imported.kind === 'body-art') {
       if (base.slot !== 'body' || base.anchor !== 'body') {

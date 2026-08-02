@@ -63,8 +63,11 @@ high-contrast sheets received visual approval on 2026-07-28.
 The promoted hair fitting is a Terrarium composition/export concern: recipes
 retain their stable hair IDs, flat and reconstructable layer output use the
 same fixed variant, and Unity receives ordinary baked art without fit metadata
-or animation state. Canonical hair SVGs remain the authored source/fallback for
-unmapped special heads. The remaining scale review script temporarily
+or animation state. Bob's canonical SVGs now own its six production-head fits
+through build-time declarative envelopes; the other mapped hair SVGs remain
+authored source/fallback until their builders receive the same bounded
+migration. Unmapped special heads retain static fallback behavior. The
+remaining scale review script temporarily
 installs candidates through real registered parts, renders through the
 production compositor, and restores the original references. The head-gap
 proof is now historical evidence for the promoted sources and anchors; its PNGs
