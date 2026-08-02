@@ -1,10 +1,11 @@
 /**
- * Review-only proof for moving IRIS apparatus geometry into three SVG sources.
+ * Production validation for canonical IRIS apparatus SVG source authority.
  *
  *   npx tsx scripts/canonicalIrisHardwareSourceFitProof.ts [outDir]
  *
- * The live PropTemplates remain untouched. The green column is rendered from
- * the proposal SVGs plus declared height-role transforms.
+ * The brown column uses the live SVG-backed PropTemplates. The green column is
+ * compiled independently from the canonical sources plus declared height-role
+ * transforms, so exact parity catches production routing drift.
  */
 import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -102,7 +103,7 @@ function comparisonCard(
     text(x + 18, y + 28, `HEIGHT ${height}`, 12, 750),
     text(x + 18, y + 48, 'same 2x1 footprint + centered console', 10, 450, COLORS.muted),
     text(x + 110, y + 74, 'PRODUCTION', 9, 720, COLORS.current, 'middle'),
-    text(x + 318, y + 74, 'SVG SOURCE', 9, 720, COLORS.source, 'middle'),
+    text(x + 318, y + 74, 'DIRECT SOURCE', 9, 720, COLORS.source, 'middle'),
     `<rect x="${x + 35}" y="${y + 84}" width="150" height="150" rx="8" fill="#FFFFFF" stroke="${COLORS.current}"/>`,
     `<rect x="${x + 243}" y="${y + 84}" width="150" height="150" rx="8" fill="#FFFFFF" stroke="${COLORS.source}"/>`,
     nested(currentSvg(id, { height }), x + 46, y + 95, 128),
@@ -120,8 +121,8 @@ function paritySheet(): string {
   header(
     parts,
     'Canonical IRIS hardware — source / production parity',
-    'Review only: three editable SVG proposals; live templates, exporter, catalog, and Unity remain unchanged.',
-    '1 / SOURCE FIT',
+    'Three canonical editable SVGs independently reproduce the live SVG-backed production receivers.',
+    '1 / AUTHORITY',
   );
   const heights = [78, 90, 98];
   (['iris-installation-unit', 'iris-installation-unit-dormant'] as const).forEach((id, row) => {
@@ -140,8 +141,8 @@ function paritySheet(): string {
     nested(currentSvg('iris-charging-dock', {}), 360, dockY - 46, 64),
     text(392, dockY + 30, 'production', 9, 650, COLORS.current, 'middle'),
     nested(sourceSvg('iris-charging-dock', {}), 470, dockY - 46, 64),
-    text(502, dockY + 30, 'SVG source', 9, 650, COLORS.source, 'middle'),
-    text(WIDTH - 28, HEIGHT - 18, 'stop for visual source-fit approval', 10, 720, COLORS.source, 'end'),
+    text(502, dockY + 30, 'direct source', 9, 650, COLORS.source, 'middle'),
+    text(WIDTH - 28, HEIGHT - 18, 'canonical source and production parity', 10, 720, COLORS.source, 'end'),
   );
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${WIDTH}" height="${HEIGHT}" viewBox="0 0 ${WIDTH} ${HEIGHT}">${parts.join('')}</svg>`;
 }
@@ -161,7 +162,7 @@ function contextPanel(parts: string[], x: number, y: number, useSource: boolean)
   const height = 550;
   parts.push(
     `<rect x="${x}" y="${y}" width="${width}" height="${height}" rx="12" fill="${COLORS.panel}" stroke="${useSource ? COLORS.source : COLORS.current}"/>`,
-    text(x + 20, y + 32, useSource ? 'SVG SOURCE FAMILY' : 'CURRENT PRODUCTION', 13, 780, useSource ? COLORS.source : COLORS.current),
+    text(x + 20, y + 32, useSource ? 'DIRECT SOURCE ADAPTER' : 'PRODUCTION REGISTRY', 13, 780, useSource ? COLORS.source : COLORS.current),
     text(x + 20, y + 54, 'literal prop scale; fabrication units remain at game character scale', 10, 450, COLORS.muted),
   );
   const floorX = x + 18;
@@ -190,14 +191,14 @@ function contextSheet(): string {
   header(
     parts,
     'Canonical IRIS hardware — literal context',
-    'The proposal preserves the approved asymmetry, sparse live register, dock relationship, and gameplay-scale hierarchy.',
+    'Production and direct-source paths preserve the approved asymmetry, sparse live register, dock relationship, and gameplay-scale hierarchy.',
     '2 / CONTEXT',
   );
   contextPanel(parts, 28, 118, false);
   contextPanel(parts, 722, 118, true);
   parts.push(
-    text(28, HEIGHT - 22, 'review-only SVG proposals · no source registration, production replacement, export, bundle, or Unity change', 10, 680, COLORS.current),
-    text(WIDTH - 28, HEIGHT - 22, 'visual approval required before promotion', 10, 720, COLORS.source, 'end'),
+    text(28, HEIGHT - 22, 'canonical SVG source authority is live · export/bundle and Unity remain separate validation gates', 10, 680, COLORS.current),
+    text(WIDTH - 28, HEIGHT - 22, 'production promotion validation', 10, 720, COLORS.source, 'end'),
   );
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${WIDTH}" height="${HEIGHT}" viewBox="0 0 ${WIDTH} ${HEIGHT}">${parts.join('')}</svg>`;
 }
@@ -241,13 +242,13 @@ for (const [name, svg] of sheets) {
 
 const parity = pixelParity();
 const metrics = {
-  status: 'review-only-source-authority-proof',
+  status: 'production-source-authority-validation',
   sourceFiles: Object.values(CANONICAL_IRIS_SOURCE_FILES),
-  productionWiringChanged: false,
-  productionBuilderChanged: false,
+  productionWiringChanged: true,
+  handwrittenBuilderPresent: false,
   exportOrUnityChanged: false,
   method: {
-    geometryOwner: 'three directly inspectable SVG proposals',
+    geometryOwner: 'three checked-in canonical SVG sources',
     installationVariants: 'live and dormant each remain independently inspectable',
     heightDerivation: 'eight declared SVG element roles; no replacement path builder',
     chargingDock: 'static source',
@@ -261,32 +262,33 @@ const metrics = {
 };
 writeFileSync(join(outDir, 'metrics.json'), `${JSON.stringify(metrics, null, 2)}\n`);
 
-const readme = `# Canonical IRIS hardware source-fit proof v1
+const readme = `# Canonical IRIS hardware source-authority validation v1
 
-Review-only gate for replacing the code-owned IRIS installation-unit and
-charging-dock builders with three directly inspectable SVG sources.
+The approved source-fit proof has been promoted. Three directly inspectable SVG
+files now own the live IRIS installation-unit and charging-dock geometry.
 
 - \`01-source-production-parity.png\`: live and dormant at the 78, 90, and 98
-  rack-height boundaries, plus the static dock, beside current production.
-- \`02-literal-context.png\`: current and source-derived families at literal
+  rack-height boundaries, plus the static dock, beside SVG-backed production.
+- \`02-literal-context.png\`: production and independently source-derived families at literal
   prop and game-character scale.
 - \`metrics.json\`: all ${parity.cases} live/dormant height and dock cases are
   checked for exact raster parity.
-- \`sources/\`: the proposed editable live, dormant, and dock SVG files.
+- \`../../../assets/props/iris-hardware-v1/\`: the canonical editable live,
+  dormant, and dock SVG files.
 
 The declared adapter changes only source element paths tagged with one of eight
-height roles. It does not redraw any replacement geometry. Production templates,
-export, bundle generation, facility registration, and Unity remain unchanged
-until explicit visual approval.
+height roles. It does not redraw any replacement geometry. Production templates
+now consume compiled source art; export/bundle validation, facility registration,
+and Unity visual acceptance remain separate gates.
 `;
 writeFileSync(join(outDir, 'README.md'), readme);
 
 for (const path of Object.values(CANONICAL_IRIS_SOURCE_FILES)) {
   if (!readFileSync(resolve(path), 'utf8').includes('data-prop-id=')) {
-    throw new Error(`Malformed IRIS proposal source ${path}`);
+    throw new Error(`Malformed canonical IRIS source ${path}`);
   }
 }
 process.stdout.write(
-  `Wrote canonical IRIS source-fit proof to ${outDir}\n` +
+  `Wrote canonical IRIS source-authority validation to ${outDir}\n` +
   `Pixel parity: ${parity.cases - parity.mismatches.length}/${parity.cases}\n`,
 );

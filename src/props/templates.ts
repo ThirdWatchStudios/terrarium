@@ -539,109 +539,6 @@ const serverRack: PropTemplate = {
 // literal IRIS green so they survive both the clinical drain and runtime re-tint.
 
 const IRIS_GREEN = '#5BE08A';
-const IRIS_DARK = '#202523';
-const IRIS_SPINE = '#18201D';
-const IRIS_SHOULDER = '#4C5551';
-const IRIS_SPINE_PLANE = '#27302D';
-const IRIS_SPINE_RETURN = '#46504B';
-const IRIS_SERVICE_SEAM = '#ABB3AF';
-
-function buildIrisUnit(params: Record<string, number>, live: boolean): ShapeSpec[] {
-  const h = params.height ?? 90;
-  const rightTop = GROUND - h - 13;
-  const leftTop = rightTop + 18;
-  const spineTop = rightTop + 16;
-  const opticTop = rightTop + 21;
-
-  // R1+D3 production direction: unequal load-bearing masses break the old
-  // paired-rack / game-console alias. The six silhouette shapes are identical
-  // for live and dormant; only the optic and console trace change state.
-  const housing: ShapeSpec[] = [
-    {
-      d: `M 74 108 V ${rightTop + 10} L 84 ${rightTop} H 116 V 108 Z`,
-      fill: '$primary',
-    },
-    {
-      d: `M 13 108 V ${leftTop + 8} L 21 ${leftTop} H 44 V 108 Z`,
-      fill: IRIS_SHOULDER,
-    },
-    { d: `M 44 ${spineTop} H 74 V 108 H 44 Z`, fill: IRIS_SPINE },
-  ];
-  const housingArticulation: ShapeSpec[] = [
-    {
-      d: `M 15 ${leftTop + 8} L 22 ${leftTop + 2} H 43`,
-      stroke: '#76807B',
-      strokeWidth: 2.2,
-      silhouette: false,
-    },
-    {
-      d: 'M 21 50 H 37 V 98',
-      stroke: '#77817C',
-      strokeWidth: 2.2,
-      silhouette: false,
-    },
-    {
-      d: `M 50 ${spineTop + 4} H 68 V 106 H 50 Z`,
-      fill: IRIS_SPINE_PLANE,
-      stroke: '#111714',
-      strokeWidth: 2.2,
-      silhouette: false,
-    },
-    {
-      d: `M 50 ${spineTop + 4} L 55 ${spineTop - 1} H 73 L 68 ${spineTop + 4} Z`,
-      fill: IRIS_SPINE_RETURN,
-      stroke: IRIS_SPINE,
-      strokeWidth: 2,
-      silhouette: false,
-    },
-    {
-      d: `M 56 ${spineTop + 12} H 63 V 99`,
-      stroke: '#5B6560',
-      strokeWidth: 2.4,
-      silhouette: false,
-    },
-    {
-      d: 'M 80 64 H 101 L 108 57 H 113',
-      stroke: IRIS_SERVICE_SEAM,
-      strokeWidth: 1.8,
-      silhouette: false,
-    },
-    {
-      d: rr(98, opticTop, 5, 15, 2),
-      fill: '#5C6662',
-      stroke: IRIS_SPINE,
-      strokeWidth: 1.4,
-      silhouette: false,
-    },
-    {
-      d: rr(99.5, opticTop + 3, 2, 8, 1),
-      fill: live ? IRIS_GREEN : '#3C4440',
-      silhouette: false,
-    },
-  ];
-  const console: ShapeSpec[] = [
-    {
-      d: 'M 42 67 H 86 L 93 76 L 82 89 H 46 L 35 78 Z',
-      fill: '$secondary',
-    },
-    {
-      d: 'M 48 71 H 80 L 85 76 L 78 83 H 49 L 43 78 Z',
-      fill: live ? '#18211E' : '#1D2421',
-      stroke: '#53605A',
-      strokeWidth: 1.4,
-      silhouette: false,
-    },
-    {
-      d: 'M 56 77 H 73',
-      stroke: live ? IRIS_GREEN : '#59615D',
-      strokeWidth: 1.5,
-      silhouette: false,
-    },
-    { d: 'M 58 88 H 72 V 106 H 58 Z', fill: IRIS_SPINE },
-    { d: 'M 7 108 H 121 V 116 H 7 Z', fill: IRIS_SPINE },
-  ];
-  return [...housing, ...housingArticulation, ...console];
-}
 
 const irisInstallationUnit: PropTemplate = {
   id: 'iris-installation-unit',
@@ -651,7 +548,7 @@ const irisInstallationUnit: PropTemplate = {
   gridFootprint: { w: 2, h: 1 },
   params: [{ key: 'height', label: 'Rack height', min: 78, max: 98, step: 2, default: 90 }],
   build(params) {
-    return buildIrisUnit(params, true);
+    return authoredPropShapes('iris-installation-unit', params);
   },
 };
 
@@ -663,7 +560,7 @@ const irisInstallationUnitDormant: PropTemplate = {
   gridFootprint: { w: 2, h: 1 },
   params: [{ key: 'height', label: 'Rack height', min: 78, max: 98, step: 2, default: 90 }],
   build(params) {
-    return buildIrisUnit(params, false);
+    return authoredPropShapes('iris-installation-unit-dormant', params);
   },
 };
 
@@ -680,26 +577,7 @@ const irisChargingDock: PropTemplate = {
   gridFootprint: { w: 1, h: 1 },
   params: [],
   build() {
-    const c = CX;
-    return [
-      { d: rr(c - 28, c - 26, 56, 54, 7), fill: '$primary' },
-      { d: rr(c - 21, c - 19, 42, 38, 5), fill: '$secondary', silhouette: false },
-      // Four metal capture lugs make this floor hardware, not a HUD reticle.
-      { d: rr(c - 23, c - 23, 12, 7, 2), fill: '$secondary', silhouette: false },
-      { d: rr(c + 11, c - 23, 12, 7, 2), fill: '$secondary', silhouette: false },
-      { d: rr(c - 23, c + 14, 12, 7, 2), fill: '$secondary', silhouette: false },
-      { d: rr(c + 11, c + 14, 12, 7, 2), fill: '$secondary', silhouette: false },
-      // A front contact tongue stays readable below a docked unit.
-      { d: rr(c - 13, c + 18, 26, 9, 3), fill: '$secondary', silhouette: false },
-      { d: circle(c, c, 15), fill: `${IRIS_GREEN}12`, silhouette: false },
-      { d: circle(c, c, 15), stroke: IRIS_GREEN, strokeWidth: 1.8, opacity: 0.62, silhouette: false },
-      { d: circle(c, c, 5), fill: IRIS_DARK, silhouette: false },
-      { d: circle(c, c + 22, 2.4), fill: IRIS_GREEN, opacity: 0.82, silhouette: false },
-      { d: circle(c - 17, c - 17, 1.5), fill: '#D9DEDA', silhouette: false },
-      { d: circle(c + 17, c - 17, 1.5), fill: '#D9DEDA', silhouette: false },
-      { d: circle(c - 17, c + 17, 1.5), fill: '#D9DEDA', silhouette: false },
-      { d: circle(c + 17, c + 17, 1.5), fill: '#D9DEDA', silhouette: false },
-    ];
+    return authoredPropShapes('iris-charging-dock', {});
   },
 };
 

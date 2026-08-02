@@ -5,6 +5,7 @@ import type {
 } from '../core/types';
 import { QUOTA_CO_WORKHORSE_PROP_ART } from './generated/quotaCoWorkhorseArt';
 import { QUOTA_CO_DEPARTMENT_MACHINE_ART } from './generated/quotaCoDepartmentMachineArt';
+import { IRIS_HARDWARE_ART } from './generated/irisHardwareArt';
 
 export interface ImportedPropArt {
   id: string;
@@ -18,7 +19,11 @@ export interface ImportedPropArt {
 }
 
 const ART_BY_ID = new Map<string, ImportedPropArt>(
-  [...QUOTA_CO_WORKHORSE_PROP_ART, ...QUOTA_CO_DEPARTMENT_MACHINE_ART]
+  [
+    ...QUOTA_CO_WORKHORSE_PROP_ART,
+    ...IRIS_HARDWARE_ART,
+    ...QUOTA_CO_DEPARTMENT_MACHINE_ART,
+  ]
     .map((entry) => [entry.id, entry]),
 );
 
@@ -49,6 +54,9 @@ function discreteWithCanonical(
 
 function variantKey(id: string, params: Readonly<Record<string, number>>): string {
   switch (id) {
+    case 'iris-installation-unit':
+    case 'iris-installation-unit-dormant':
+      return `height=${discrete(params, 'height', 78, 98, 2, 90)}`;
     case 'loading_dock':
       return `fill=${discrete(params, 'fill', 0, 2, 1, 0)}`;
     case 'intake_tray_small':

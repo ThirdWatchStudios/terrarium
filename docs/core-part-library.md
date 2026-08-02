@@ -528,9 +528,11 @@ templates (Tier 1/2 below); escalate to authored only where signature:
 - [ ] Surveillance sensor/monitor — Tier 1/2
 - [x] IRIS installation unit (weighted apparatus + centered console,
       live/dormant) — mechanically shipped and visually promoted as the
-      approved R1+D3 Tier-2 signature prop
+      approved R1+D3 Tier-2 signature prop; live geometry is now owned by the
+      canonical SVGs in `assets/props/iris-hardware-v1/`
 - [x] IRIS charging dock — mechanically shipped as non-placeable plan hardware;
-      visual polish remains iterative
+      its canonical SVG now owns production geometry while visual polish
+      remains iterative
 - [x] IRIS fabrication crew — special `head-fab` + `outfit-fab-chassis` recipe
       on `body-large-frame`; resolvable-only parts, never general picker options
 - [ ] QuotaCo-standard facility variants — per sim Q5: explicit paired

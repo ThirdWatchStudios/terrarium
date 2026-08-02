@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "guide": "Terrarium canonical SVG library",
   "counts": {
-    "exactSourceFiles": 326,
-    "production": 248,
+    "exactSourceFiles": 329,
+    "production": 251,
     "productionDependencies": 74,
     "deferred": 4,
     "derivedWallFrames": 47,
@@ -14,6 +14,7 @@
       "characters/outfit": 44,
       "props/deferred-gameplay": 4,
       "props/department-machines": 67,
+      "props/iris-hardware": 3,
       "props/outdoor": 8,
       "props/workhorse": 45,
       "surfaces/floors": 12,
@@ -1311,6 +1312,27 @@
       "status": "production",
       "sourceFile": "assets/props/quota-co-department-machines-v1/workbench.svg",
       "sha256": "2644584534de985c1af3ffee34deb8fe8a49a769d35dc2504a7dd8a20b25a48f"
+    },
+    {
+      "assetId": "iris-charging-dock",
+      "category": "props/iris-hardware",
+      "status": "production",
+      "sourceFile": "assets/props/iris-hardware-v1/iris-charging-dock.svg",
+      "sha256": "884b96bdb30f037698468863d0da56b327a6bef5a6952c07cdd056411800b7be"
+    },
+    {
+      "assetId": "iris-installation-unit-dormant",
+      "category": "props/iris-hardware",
+      "status": "production",
+      "sourceFile": "assets/props/iris-hardware-v1/iris-installation-unit-dormant.svg",
+      "sha256": "b40797f0895a327c0340bf3edad592ccb5a4ab74d0c7ea4fab766389069c5fff"
+    },
+    {
+      "assetId": "iris-installation-unit",
+      "category": "props/iris-hardware",
+      "status": "production",
+      "sourceFile": "assets/props/iris-hardware-v1/iris-installation-unit.svg",
+      "sha256": "6dbab24fcc2e9e9c2fce1c1f76f2b7964a1d3afb744c8e5a834704a2c18b829a"
     },
     {
       "assetId": "bike-rack",

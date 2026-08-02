@@ -699,8 +699,13 @@ present under stable ids and received a shared sterile-chassis refinement pass
 on 2026-07-10. The installation unit received its approved R1+D3 visual
 promotion on 2026-07-31: weighted cool-white/charcoal architecture, recessed
 spine, centered console, keyed service joint, and sparse live-state register.
-The dock and fabrication crew remain visually iterative; none of this art work
-changes the contract or schema shape.
+On 2026-08-02 the live installation, dormant installation, and dock geometry
+moved from handwritten prop builders to the three canonical SVGs under
+`assets/props/iris-hardware-v1/`; a read-only importer derives the declared
+height variants without replacing source geometry. The dock and fabrication
+crew remain visually iterative. This source-authority change preserves ids,
+footprints, anchors, registration, export paths, contract, and schema shape;
+bundle and Unity visual checks remain separate promotion evidence.
 The locked 2026-07-08 IRIS apparatus command chain supersedes the earlier B1.5
 human construction-worker art proposal: IRIS's construction crew are robots.
 

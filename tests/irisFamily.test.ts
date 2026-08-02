@@ -260,13 +260,13 @@ describe('IRIS installation unit and charging dock contracts', () => {
     }
   });
 
-  it('keeps re-tint layer runs compact and every exported atlas below Unity limits', () => {
+  it('keeps canonical source layers compact and every exported atlas below Unity limits', () => {
     const cases = [
       ...[78, 90, 98].flatMap((height) => [
-        { prop: { ...live, params: { height } }, keys: ['shadow', 'outline', 'primary', 'literal-0', 'secondary', 'literal-1'] },
-        { prop: { ...dormant, params: { height } }, keys: ['shadow', 'outline', 'primary', 'literal-0', 'secondary', 'literal-1'] },
+        { prop: { ...live, params: { height } }, keys: ['literal-0'] },
+        { prop: { ...dormant, params: { height } }, keys: ['literal-0'] },
       ]),
-      { prop: dock, keys: ['outline', 'primary', 'secondary', 'literal-0'] },
+      { prop: dock, keys: ['literal-0'] },
     ];
 
     for (const { prop, keys } of cases) {

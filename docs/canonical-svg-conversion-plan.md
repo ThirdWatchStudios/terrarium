@@ -1,6 +1,6 @@
 # Canonical SVG source-conversion plan
 
-Status: **active; P0 department machines plus all ten fitted hairstyles have complete source authority locally**
+Status: **active; P0 department machines, all ten fitted hairstyles, and P1 IRIS hardware have complete source authority locally**
 
 Recorded: 2026-08-02
 
@@ -117,11 +117,10 @@ code-to-SVG promoter and its normal-build freshness commands are removed. The
 regression, and canonical reference-guide coverage now form the production
 boundary for 38 templates, 54 baked prop instances, and 13 overlays. Focused
 department-machine validation passed 51/51 checks, source/production pixels
-remain identical for every baked state, the 326-source canonical guide is
-current, and `npm run build` is clean. The safe full runner stopped at its 2 GiB
-watchdog on `bodyArchetypes.test.ts`; that implicated file passed directly
-25/25. No bundle export, Unity import/Play Mode review, commit, or production
-promotion was performed in this slice.
+remain identical for every baked state, the canonical guide is current, and
+`npm run build` is clean. The safe full runner stopped at its 2 GiB watchdog on
+`bodyArchetypes.test.ts`; that implicated file passed directly 25/25. Bundle
+export and Unity import/Play Mode review remain separate gates.
 
 Required migration:
 
@@ -182,8 +181,19 @@ insufficient.
 
 #### IRIS hardware
 
-Convert the live and dormant installation unit plus the charging dock from
-`PropTemplate`/`buildIrisUnit` geometry to canonical SVG sources.
+Completion note (2026-08-02): the approved three-source fit is promoted locally.
+`assets/props/iris-hardware-v1/` now owns the live installation unit, dormant
+installation unit, and charging dock. A read-only importer compiles the two
+declared height families and static dock into the production art registry;
+`PropTemplate` retains ids, parameters, footprints, and anchors but no longer
+contains the handwritten `buildIrisUnit` or dock geometry. All 23 height/state/
+dock renders retain exact default source/production pixels. Under the clinical
+lens, both installation families remain exact and the curved dock stays within
+three antialiased pixels at a maximum four-channel-value delta; the approved
+source was not rewritten to erase that renderer-normalization difference. A
+source-edit regression proves all declared installation heights change from the
+checked-in SVG, and the canonical guide includes all three production sources.
+No bundle export or Unity import/Play Mode review is claimed.
 
 Preserve:
 
@@ -401,7 +411,7 @@ Run one family at a time, preserving visual approval boundaries:
 1. add the ownership classifications and failing `false-canonical` audit;
 2. invert department-machine ownership;
 3. restore canonical authority to production hair fits;
-4. convert IRIS installation/dock art;
+4. convert IRIS installation/dock art — complete locally; export and Unity gates remain;
 5. convert FAB chassis and dress, then the remaining special parts;
 6. convert the cafeteria facilities;
 7. migrate UI iconography by semantic family; and

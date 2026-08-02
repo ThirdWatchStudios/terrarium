@@ -8,8 +8,8 @@ describe('canonical SVG reference guide', () => {
     const { counts, entries, exclusions } = inventory.manifest;
 
     expect(counts).toMatchObject({
-      exactSourceFiles: 326,
-      production: 248,
+      exactSourceFiles: 329,
+      production: 251,
       productionDependencies: 74,
       deferred: 4,
       derivedWallFrames: 47,
@@ -38,6 +38,12 @@ describe('canonical SVG reference guide', () => {
       )?.count,
     ).toBe(113);
     expect(counts.byCategory['props/department-machines']).toBe(67);
+    expect(counts.byCategory['props/iris-hardware']).toBe(3);
+    expect(
+      entries
+        .filter((entry) => entry.category === 'props/iris-hardware')
+        .every((entry) => entry.status === 'production'),
+    ).toBe(true);
     expect(
       entries
         .filter((entry) => entry.category === 'props/department-machines')

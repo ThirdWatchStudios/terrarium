@@ -15,6 +15,7 @@ import {
   DEPARTMENT_MACHINE_TEMPLATE_DEFINITIONS,
   DEPARTMENT_STAMP_DEFINITIONS,
 } from '../src/props/departmentMachineManifest';
+import { IRIS_HARDWARE_ART } from '../src/props/generated/irisHardwareArt';
 import { QUOTA_CO_WORKHORSE_PROP_ART } from '../src/props/generated/quotaCoWorkhorseArt';
 import { QUOTA_CO_MAINTAINED_HYBRID_SURFACE_ART } from '../src/tiles/generated/quotaCoMaintainedHybridSurfaceArt';
 import {
@@ -46,6 +47,7 @@ export type CanonicalSvgCategory =
   | 'characters/outfit'
   | 'props/workhorse'
   | 'props/outdoor'
+  | 'props/iris-hardware'
   | 'props/department-machines'
   | 'props/deferred-gameplay'
   | 'surfaces/floors'
@@ -325,6 +327,32 @@ export async function collectCanonicalSvgReferenceInventory(
         prop.sourceFile,
         prop.id,
         propCategory(prop.id),
+        'production',
+      ),
+    );
+  }
+
+  const irisHardwareSourceFiles = IRIS_HARDWARE_ART
+    .map((prop) => prop.sourceFile)
+    .sort(compareText);
+  const actualIrisHardwareFiles = relativeFiles(
+    root,
+    await svgFilesUnder(
+      path.join(root, 'assets', 'props', 'iris-hardware-v1'),
+    ),
+  );
+  assertExactCoverage(
+    'IRIS hardware',
+    actualIrisHardwareFiles,
+    irisHardwareSourceFiles,
+  );
+  for (const prop of IRIS_HARDWARE_ART) {
+    entries.push(
+      await sourceEntry(
+        root,
+        prop.sourceFile,
+        prop.id,
+        'props/iris-hardware',
         'production',
       ),
     );
@@ -908,11 +936,12 @@ function overviewGroups(
     },
     {
       id: 'props',
-      label: 'Workhorse, outdoor, and department-machine props',
-      note: 'Live canonical prop SVGs, including machine states and canister overlays.',
+      label: 'Workhorse, IRIS, outdoor, and department-machine props',
+      note: 'Live canonical prop SVGs, including IRIS hardware, machine states, and canister overlays.',
       entries: entriesFor(inventory, [
         'props/workhorse',
         'props/outdoor',
+        'props/iris-hardware',
         'props/department-machines',
       ]),
     },
@@ -1020,6 +1049,12 @@ function propSurfaceSheet(
         label: 'Outdoor carriers',
         note: 'Canonical exterior props on existing live IDs and contracts.',
         entries: entriesFor(inventory, ['props/outdoor']),
+      },
+      {
+        id: 'props-iris-hardware',
+        label: 'IRIS installation hardware',
+        note: 'Canonical live, dormant, and dock sources; installation heights use declared source roles.',
+        entries: entriesFor(inventory, ['props/iris-hardware']),
       },
       {
         id: 'props-department-machines',
@@ -1180,6 +1215,7 @@ function indexHtml(inventory: CanonicalSvgReferenceInventory): string {
       `${categoryCount(inventory, [
         'props/workhorse',
         'props/outdoor',
+        'props/iris-hardware',
         'props/department-machines',
         'props/deferred-gameplay',
         'surfaces/floors',

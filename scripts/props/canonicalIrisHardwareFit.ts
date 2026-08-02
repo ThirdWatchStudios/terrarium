@@ -5,18 +5,22 @@ import svgpath from 'svgpath';
 import { parseSync, stringify, type INode } from 'svgson';
 
 import type { PropPalette, ShapeSpec } from '../../src/core/types';
+import {
+  IRIS_HARDWARE_HEIGHTS,
+  IRIS_HARDWARE_SOURCE_PREFIX,
+} from '../../src/props/irisHardwareManifest';
 import { fitCanonicalHairShapes } from '../parts/canonicalHairFit';
 
 export const CANONICAL_IRIS_HEIGHT = 90;
-export const CANONICAL_IRIS_HEIGHTS = [78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98] as const;
+export const CANONICAL_IRIS_HEIGHTS = IRIS_HARDWARE_HEIGHTS;
 
 export const CANONICAL_IRIS_SOURCE_FILES = {
   'iris-installation-unit':
-    'docs/previews/canonical-iris-hardware-source-fit-v1/sources/iris-installation-unit.svg',
+    `${IRIS_HARDWARE_SOURCE_PREFIX}/iris-installation-unit.svg`,
   'iris-installation-unit-dormant':
-    'docs/previews/canonical-iris-hardware-source-fit-v1/sources/iris-installation-unit-dormant.svg',
+    `${IRIS_HARDWARE_SOURCE_PREFIX}/iris-installation-unit-dormant.svg`,
   'iris-charging-dock':
-    'docs/previews/canonical-iris-hardware-source-fit-v1/sources/iris-charging-dock.svg',
+    `${IRIS_HARDWARE_SOURCE_PREFIX}/iris-charging-dock.svg`,
 } as const;
 
 export type CanonicalIrisHardwareId = keyof typeof CANONICAL_IRIS_SOURCE_FILES;
@@ -100,7 +104,7 @@ function visit(node: INode, height: number, palette: PropPalette | undefined): v
 }
 
 /**
- * Compile a review-only final SVG from one directly inspectable source.
+ * Compile a final SVG from one directly inspectable source.
  * Visible paths come only from the source; the adapter applies declared height
  * roles and palette tokens without constructing replacement geometry.
  */
@@ -110,7 +114,18 @@ export function canonicalIrisHardwareSvg(
   palette?: PropPalette,
   size = 128,
 ): string {
-  const root = parseSync(sourceText(id));
+  return fitCanonicalIrisHardwareSourceSvg(sourceText(id), id, params, palette, size);
+}
+
+/** Apply the declared adapter to a supplied canonical source document. */
+export function fitCanonicalIrisHardwareSourceSvg(
+  source: string,
+  id: CanonicalIrisHardwareId,
+  params: Readonly<Record<string, number>> = {},
+  palette?: PropPalette,
+  size = 128,
+): string {
+  const root = parseSync(source);
   const height = id === 'iris-charging-dock'
     ? CANONICAL_IRIS_HEIGHT
     : snappedHeight(params.height);

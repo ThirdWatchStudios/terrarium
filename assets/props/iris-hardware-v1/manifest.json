@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "family": "iris-hardware-v1",
+  "authority": "canonical-svg",
+  "sourcePolicy": {
+    "visualAuthority": "checked-in-svg",
+    "compiledOutput": "src/props/generated/irisHardwareArt.ts",
+    "ordinaryCommandsWriteSources": false
+  },
+  "assets": [
+    {
+      "id": "iris-installation-unit",
+      "sourceFile": "iris-installation-unit.svg",
+      "projection": "elevation",
+      "variants": {
+        "parameter": "height",
+        "values": [78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98],
+        "adapter": "declared-height-roles"
+      }
+    },
+    {
+      "id": "iris-installation-unit-dormant",
+      "sourceFile": "iris-installation-unit-dormant.svg",
+      "projection": "elevation",
+      "variants": {
+        "parameter": "height",
+        "values": [78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98],
+        "adapter": "declared-height-roles"
+      }
+    },
+    {
+      "id": "iris-charging-dock",
+      "sourceFile": "iris-charging-dock.svg",
+      "projection": "plan",
+      "variants": {
+        "adapter": "static"
+      }
+    }
+  ]
+}

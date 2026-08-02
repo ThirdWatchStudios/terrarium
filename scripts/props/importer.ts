@@ -111,6 +111,7 @@ interface SourceElement {
   id: string;
   groupId: string;
   fillToken?: PropPaletteToken;
+  silhouette?: boolean;
   shape: ShapeSpec;
 }
 
@@ -122,6 +123,7 @@ interface SourceDocument {
     id: string;
     groupId: string;
     fillToken?: PropPaletteToken;
+    silhouette?: boolean;
   }>;
 }
 
@@ -616,6 +618,7 @@ function parseSourceDocument(
     node: INode,
     groupId: string | undefined,
     ignored: boolean,
+    inheritedSilhouette: boolean | undefined,
   ): void => {
     if (node.type === 'text') {
       if (node.value.trim()) fail(source, 'rendered text outside title/desc is forbidden');
@@ -643,8 +646,15 @@ function parseSourceDocument(
       if (!id) fail(source, 'every editor group requires an id');
       const skip = ignored;
       if (skip) return;
+      const rawSilhouette = node.attributes['data-silhouette'];
+      if (rawSilhouette !== undefined && rawSilhouette !== 'true' && rawSilhouette !== 'false') {
+        fail(source, `data-silhouette on ${id} must be true or false`);
+      }
+      const silhouette = rawSilhouette === undefined
+        ? inheritedSilhouette
+        : rawSilhouette === 'true';
       normalized.push(`<g id="${escapeAttribute(id)}"${serializePresentationAttributes(node)}>`);
-      for (const child of node.children) visit(child, id, false);
+      for (const child of node.children) visit(child, id, false, silhouette);
       normalized.push('</g>');
       return;
     }
@@ -683,10 +693,17 @@ function parseSourceDocument(
     normalized.push(
       `<path id="${escapeAttribute(id)}" d="${escapeAttribute(d)}"${attributes}${strokeDefaults}/>`
     );
-    elements.push({ id, groupId, fillToken });
+    const rawSilhouette = node.attributes['data-silhouette'];
+    if (rawSilhouette !== undefined && rawSilhouette !== 'true' && rawSilhouette !== 'false') {
+      fail(source, `data-silhouette on ${id} must be true or false`);
+    }
+    const silhouette = rawSilhouette === undefined
+      ? inheritedSilhouette
+      : rawSilhouette === 'true';
+    elements.push({ id, groupId, fillToken, silhouette });
   };
 
-  for (const child of root.children) visit(child, undefined, false);
+  for (const child of root.children) visit(child, undefined, false, undefined);
   if (elements.length === 0) fail(source, 'source contains no production elements');
 
   return {
@@ -735,13 +752,13 @@ function compileElements(
       };
       delete shape.stroke;
       delete shape.strokeWidth;
-      shape.silhouette = true;
+      shape.silhouette = metadata.silhouette ?? true;
       return [
         { ...metadata, shape },
         { ...metadata, shape: stroke },
       ];
     }
-    shape.silhouette = Boolean(shape.fill);
+    shape.silhouette = metadata.silhouette ?? Boolean(shape.fill);
     return [{ ...metadata, shape }];
   });
 }
