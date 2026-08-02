@@ -32,6 +32,7 @@ import { fitCanonicalShortVariant } from './canonicalShortFit';
 import { fitCanonicalPonytailVariant } from './canonicalPonytailFit';
 import { fitCanonicalLongStraightVariant } from './canonicalLongStraightFit';
 import { fitCanonicalBaldingVariant } from './canonicalBaldingFit';
+import { fitCanonicalPixieVariant } from './canonicalPixieFit';
 import { SENTINEL_TO_PALETTE_REF } from './sentinels';
 
 const SUPPORTED_SLOTS = ['body', 'head', 'hair', 'outfit'] as const;
@@ -1169,6 +1170,11 @@ function expandHeadFittedVariants(
     && target.id === 'hair-balding'
   ) {
     fitVariant = fitCanonicalBaldingVariant;
+  } else if (
+    target.headFitAdapter === 'canonical-pixie-v1'
+    && target.id === 'hair-pixie'
+  ) {
+    fitVariant = fitCanonicalPixieVariant;
   } else {
     fail(source, `unsupported head-fit adapter ${target.headFitAdapter ?? 'none'} for ${target.id}`);
   }

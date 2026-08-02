@@ -1044,7 +1044,7 @@ describe('part source tree and generated registration', () => {
       { id: 'hair-curly', slug: 'curly', counts: [6, 5, 4] },
       { id: 'hair-balding', slug: 'balding', counts: [2, 1, 1] },
       { id: 'hair-side-part', slug: 'side-part', counts: [3, 4, 2] },
-      { id: 'hair-pixie', slug: 'pixie', counts: [2, 3, 1] },
+      { id: 'hair-pixie', slug: 'pixie', counts: [3, 3, 2] },
       { id: 'hair-ponytail', slug: 'ponytail', counts: [3, 3, 3] },
       { id: 'hair-long-straight', slug: 'long-straight', counts: [1, 2, 1] },
       { id: 'hair-coils', slug: 'coils', counts: [1, 1, 1] },
@@ -1058,6 +1058,7 @@ describe('part source tree and generated registration', () => {
         || id === 'hair-ponytail'
         || id === 'hair-long-straight'
         || id === 'hair-balding'
+        || id === 'hair-pixie'
         ? headFittedImport(candidate)
         : staticImport(candidate);
       expect(hair).toMatchObject({
@@ -1082,6 +1083,7 @@ describe('part source tree and generated registration', () => {
           && id !== 'hair-ponytail'
           && id !== 'hair-long-straight'
           && id !== 'hair-balding'
+          && id !== 'hair-pixie'
         ) {
           for (const shape of shapes) {
             exactPathStableHairShapes.push(`${id}/${facing}/${JSON.stringify(shape)}`);
@@ -1097,6 +1099,7 @@ describe('part source tree and generated registration', () => {
       ['hair-ponytail', [3, 3, 3]],
       ['hair-long-straight', [1, 2, 1]],
       ['hair-balding', [2, 1, 1]],
+      ['hair-pixie', [3, 3, 2]],
     ] as const) {
       const fittedHair = headFittedImport(imports.find((candidate) => candidate.id === id)!);
       expect(Object.keys(fittedHair.headVariants).sort(), id).toEqual([
@@ -1124,9 +1127,9 @@ describe('part source tree and generated registration', () => {
         silhouette: false,
       });
     }
-    expect(exactPathStableHairShapes).toHaveLength(33);
+    expect(exactPathStableHairShapes).toHaveLength(27);
     expect(createHash('sha256').update(exactPathStableHairShapes.join('\n')).digest('hex'))
-      .toBe('3f895039e3435bffcd024c6822030eacf6674f6a8c929b91f40ce5f5cb4fc909');
+      .toBe('18491fd10019b62ce58a2392eb2665d25a46ac5ab732b701106434c510a9f4cc');
 
     for (const slug of ['round', 'oval', 'boxy', 'long', 'angular', 'soft-square']) {
       const id = `head-${slug}`;
@@ -1588,7 +1591,6 @@ describe('imported art overlay', () => {
       .toEqual([
         'hair-curly',
         'hair-side-part',
-        'hair-pixie',
         'hair-coils',
       ]);
 

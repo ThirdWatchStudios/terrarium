@@ -453,14 +453,15 @@ icons), not by upfront design.
    4,320-cell hair/body/head/facing/style matrix, full head-accessory matrices,
    and distance proof pass. These final four received visual approval on
    2026-07-10.
-   Bob, Short, Bun, Ponytail, Long straight, and Balding completed the first six production source-authority
+   Bob, Short, Bun, Ponytail, Long straight, Balding, and Pixie completed the first seven production source-authority
    follow-ups on 2026-08-02. Each three-source set compiles through a bounded
    declarative head-fit adapter into all 18 production head/facing variants.
    Bun retains separately fitted authored cap/knot components; Ponytail fits its
    cap independently while its tie and tail share one attachment transform; Long
    straight retains its open-face curtain and two-piece east profile under one
    bounded frame; Balding retains independent tapered temple, rear, and
-   horseshoe components. All six old path builders are removed; the other four accepted fits remain code-owned
+   horseshoe components; Pixie fits its broken cap/fringe independently from
+   directional side tufts. All seven old path builders are removed; the other three accepted fits remain code-owned
    migration backlog.
 8. **Anchored outfit-detail adapter**: `outfit-tee` is the first body-aware
    intake target. Its south/east SVGs are authored once over `body-balanced`,

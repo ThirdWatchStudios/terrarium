@@ -281,21 +281,21 @@
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/pixie.east.svg",
-      "sha256": "15eec4ba4ab053ca6a5ebf51e11be51797b2f157acd86058fc5f836d11bc8ee1"
+      "sha256": "a50f7a18398891dc7f7ec7777dfdc7ad49d2b45449d74c499aa97fde78d659f8"
     },
     {
       "assetId": "hair-pixie",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/pixie.north.svg",
-      "sha256": "89690638d775459ca6ce8bd0363b37d148c2a6a3768f296a5e56415a7b549576"
+      "sha256": "ff6f9dab6faeaf8fcfca4d5df00644c39b450556cddb1e80d1d71298c262e5c0"
     },
     {
       "assetId": "hair-pixie",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/pixie.south.svg",
-      "sha256": "64962477178cda8e1eab4b2f9f8232c01040a182ed17027fc2f0e88020cc2856"
+      "sha256": "cb1ccdede75d613c83d437d06bf153f2cbdc8f8973fa52c896521889cca73d4d"
     },
     {
       "assetId": "hair-ponytail",
