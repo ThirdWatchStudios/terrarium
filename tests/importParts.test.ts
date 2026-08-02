@@ -484,7 +484,7 @@ describe('part source tree and generated registration', () => {
     })).rejects.toThrow(/only replaces an existing selectable production part/);
   });
 
-  it('limits byte-stable local paths to static head and hair targets', async () => {
+  it('limits byte-stable local paths to static or head-fitted head and hair targets', async () => {
     const hairRoot = await sourceTree({
       south: validHairSvg(),
       east: validHairSvg(),
@@ -495,7 +495,7 @@ describe('part source tree and generated registration', () => {
       inputDir: hairRoot,
       sourcePathPrefix: 'assets/parts',
       catalog: [{ ...bob, preserveLocalPaths: true, importMode: 'body-art' }],
-    })).rejects.toThrow(/preserveLocalPaths is supported only for static head\/hair targets/);
+    })).rejects.toThrow(/preserveLocalPaths is supported only for static or head-fitted head\/hair targets/);
 
     const outfitRoot = await outfitSourceTree({
       south: validOutfitDetailSvg(),
@@ -511,7 +511,7 @@ describe('part source tree and generated registration', () => {
         buildVariant: undefined,
         preserveLocalPaths: true,
       }],
-    })).rejects.toThrow(/preserveLocalPaths is supported only for static head\/hair targets/);
+    })).rejects.toThrow(/preserveLocalPaths is supported only for static or head-fitted head\/hair targets/);
   });
 
   it('preserves the byte-stable static overlay module shape', () => {
@@ -1041,7 +1041,7 @@ describe('part source tree and generated registration', () => {
       { id: 'hair-short', slug: 'short', counts: [1, 1, 1] },
       { id: 'hair-bob', slug: 'bob', counts: [2, 2, 2] },
       { id: 'hair-bun', slug: 'bun', counts: [2, 2, 2] },
-      { id: 'hair-curly', slug: 'curly', counts: [6, 5, 4] },
+      { id: 'hair-curly', slug: 'curly', counts: [5, 4, 5] },
       { id: 'hair-balding', slug: 'balding', counts: [2, 1, 1] },
       { id: 'hair-side-part', slug: 'side-part', counts: [3, 3, 2] },
       { id: 'hair-pixie', slug: 'pixie', counts: [3, 3, 2] },
@@ -1060,6 +1060,7 @@ describe('part source tree and generated registration', () => {
         || id === 'hair-balding'
         || id === 'hair-pixie'
         || id === 'hair-side-part'
+        || id === 'hair-curly'
         ? headFittedImport(candidate)
         : staticImport(candidate);
       expect(hair).toMatchObject({
@@ -1086,6 +1087,7 @@ describe('part source tree and generated registration', () => {
           && id !== 'hair-balding'
           && id !== 'hair-pixie'
           && id !== 'hair-side-part'
+          && id !== 'hair-curly'
         ) {
           for (const shape of shapes) {
             exactPathStableHairShapes.push(`${id}/${facing}/${JSON.stringify(shape)}`);
@@ -1103,6 +1105,7 @@ describe('part source tree and generated registration', () => {
       ['hair-balding', [2, 1, 1]],
       ['hair-pixie', [3, 3, 2]],
       ['hair-side-part', [3, 3, 2]],
+      ['hair-curly', [5, 4, 5]],
     ] as const) {
       const fittedHair = headFittedImport(imports.find((candidate) => candidate.id === id)!);
       expect(Object.keys(fittedHair.headVariants).sort(), id).toEqual([
@@ -1138,9 +1141,9 @@ describe('part source tree and generated registration', () => {
         silhouette: false,
       });
     }
-    expect(exactPathStableHairShapes).toHaveLength(18);
+    expect(exactPathStableHairShapes).toHaveLength(3);
     expect(createHash('sha256').update(exactPathStableHairShapes.join('\n')).digest('hex'))
-      .toBe('1996fd58fbae1939dc1f4afb7c81412f6c875581841e1c4842e3d77947434d75');
+      .toBe('52be8db205e57315369149054022fdc8bf8b659413f89192fb65db680a33dd16');
 
     for (const slug of ['round', 'oval', 'boxy', 'long', 'angular', 'soft-square']) {
       const id = `head-${slug}`;

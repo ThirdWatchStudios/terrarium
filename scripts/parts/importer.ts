@@ -34,6 +34,7 @@ import { fitCanonicalLongStraightVariant } from './canonicalLongStraightFit';
 import { fitCanonicalBaldingVariant } from './canonicalBaldingFit';
 import { fitCanonicalPixieVariant } from './canonicalPixieFit';
 import { fitCanonicalSidePartVariant } from './canonicalSidePartFit';
+import { fitCanonicalCurlyVariant } from './canonicalCurlyFit';
 import { SENTINEL_TO_PALETTE_REF } from './sentinels';
 
 const SUPPORTED_SLOTS = ['body', 'head', 'hair', 'outfit'] as const;
@@ -102,8 +103,8 @@ export interface CompilePartSvgContext {
   slot: SupportedSlot;
   /**
    * Keep canonical part-local path syntax after validating its canvas-space
-   * geometry. Body promotion and explicit byte-stable static migration targets
-   * use this to avoid normalization-only render and snapshot drift.
+   * geometry. Body promotion and explicit byte-stable static or head-fitted
+   * migration targets use this to avoid normalization-only render drift.
    */
   preserveLocalPaths?: boolean;
 }
@@ -859,9 +860,12 @@ function validateTarget(group: MutableImportGroup, target: PartImportTarget | un
   const mode = target.importMode ?? 'static';
   if (
     target.preserveLocalPaths &&
-    (mode !== 'static' || (target.slot !== 'head' && target.slot !== 'hair'))
+    (
+      (mode !== 'static' && mode !== 'head-fitted-art')
+      || (target.slot !== 'head' && target.slot !== 'hair')
+    )
   ) {
-    fail(group.id, 'preserveLocalPaths is supported only for static head/hair targets');
+    fail(group.id, 'preserveLocalPaths is supported only for static or head-fitted head/hair targets');
   }
   if (mode === 'head-fitted-art') {
     if (
@@ -1181,6 +1185,11 @@ function expandHeadFittedVariants(
     && target.id === 'hair-side-part'
   ) {
     fitVariant = fitCanonicalSidePartVariant;
+  } else if (
+    target.headFitAdapter === 'canonical-curly-v1'
+    && target.id === 'hair-curly'
+  ) {
+    fitVariant = fitCanonicalCurlyVariant;
   } else {
     fail(source, `unsupported head-fit adapter ${target.headFitAdapter ?? 'none'} for ${target.id}`);
   }

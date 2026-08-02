@@ -20,7 +20,7 @@ const CANONICAL_HAIRS = [
   ['hair-short', 'short', [1, 1, 1]],
   ['hair-bob', 'bob', [2, 2, 2]],
   ['hair-bun', 'bun', [2, 2, 2]],
-  ['hair-curly', 'curly', [6, 5, 4]],
+  ['hair-curly', 'curly', [5, 4, 5]],
   ['hair-balding', 'balding', [2, 1, 1]],
   ['hair-side-part', 'side-part', [3, 3, 2]],
   ['hair-pixie', 'pixie', [3, 3, 2]],

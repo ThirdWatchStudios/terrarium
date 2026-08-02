@@ -306,8 +306,8 @@ All ten redesigned head-aware hairstyles are now live in production. Each
 stable hair ID resolves a fixed south/east/north variant for all six production
 head IDs. Resolution happens inside the compositor, so flat sprites, portraits,
 operational units, and reconstructable hair layers agree while recipes keep the
-same IDs. Bob, Short, Bun, Ponytail, Long straight, Balding, Pixie, and Side-part now own their live geometry through approved
-`head-fitted-art` adapters and six declarative envelopes; all eight former code
+same IDs. Bob, Short, Bun, Ponytail, Long straight, Balding, Pixie, Side-part, and Curly now own their live geometry through approved
+`head-fitted-art` adapters and six declarative envelopes; all nine former code
 path builders are removed. Bun's cap and disconnected knot retain separate
 declarative fit frames; Ponytail's tie and tail share one attachment transform
 while its cap fits independently. Long straight retains a tall curtain with an
@@ -315,8 +315,9 @@ open south face and a two-piece east profile under one bounded frame. Balding
 retains independently editable tapered temples, rear piece, and low horseshoe.
 Pixie retains an independently fitted broken cap/fringe and directional side
 tufts. Side-part retains its swept cap and source-owned crease independently
-from its side/rear mass. The other two canonical imports remain source/fallback geometry pending
-equivalent bounded migrations. The completion slice adds Curly and Coils. Every fitted pair
+from its side/rear mass. Curly retains one independent center/radius frame per
+editable lobe. Coils is the final canonical import that remains source/fallback
+geometry pending an equivalent bounded migration. Every fitted pair
 remains distinct at 32 px across the authored facings. The 4,320-cell
 top-overflow audit improves from the pre-fitting 766 to 467 high-contrast-only
 cells without non-top overflow; this promotion adds no animation or

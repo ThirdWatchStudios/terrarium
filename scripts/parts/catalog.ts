@@ -17,7 +17,8 @@ export type HeadFitAdapter =
   | 'canonical-long-straight-v1'
   | 'canonical-balding-v1'
   | 'canonical-pixie-v1'
-  | 'canonical-side-part-v1';
+  | 'canonical-side-part-v1'
+  | 'canonical-curly-v1';
 
 export interface PartImportComponent {
   readonly id: string;
@@ -97,7 +98,13 @@ export const PART_IMPORT_TARGETS: readonly PartImportTarget[] = [
     headFitAdapter: 'canonical-bun-v1',
     variantZ: 50,
   },
-  byteStableTarget('hair-curly', 'hair'),
+  {
+    ...target('hair-curly', 'hair'),
+    preserveLocalPaths: true,
+    importMode: 'head-fitted-art',
+    headFitAdapter: 'canonical-curly-v1',
+    variantZ: 50,
+  },
   {
     ...target('hair-balding', 'hair'),
     importMode: 'head-fitted-art',

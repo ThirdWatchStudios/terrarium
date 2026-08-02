@@ -239,21 +239,21 @@
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/curly.east.svg",
-      "sha256": "92b8a991fa4fb27f0d0eaa72cb02744bcf468ad91d3b9c4b57922f9b5e01c57b"
+      "sha256": "6dc78ae4aecb45b5ce78f62ac77f0e73d709d769bf21f06e0f243d76a648db18"
     },
     {
       "assetId": "hair-curly",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/curly.north.svg",
-      "sha256": "05fa3741b1f4bddc6bcccd67bc93c3934d9b6fa206339aa9da10c7305a32e049"
+      "sha256": "5ec515d1e60c8b7d94172ee1ccf360def005fece4396a0412273b903f89658f9"
     },
     {
       "assetId": "hair-curly",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/curly.south.svg",
-      "sha256": "f14cc6b1b17eace84cf87d0b7749050b34284f6d60778617948eb8f857402090"
+      "sha256": "995ad05ad3770c52eb6abef9c9730b71b56ebc52b643905736ab64a9e1d7b61d"
     },
     {
       "assetId": "hair-long-straight",
