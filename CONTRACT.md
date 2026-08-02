@@ -41,6 +41,14 @@ Coordinate convention: scene grids are row-major `[y][x]`; anchors/spawns carry 
 
 ## 2. Export bundle
 
+**Canonical game handoff:** every bundle imported into The Water Cooler must
+come from Terrarium's in-browser **Export all (zip)** action. The headless
+`npm run export` command shares `exportAll` inventory and contracts, but uses
+Resvg instead of the browser Canvas rasterizer; it is verification/CI tooling,
+not an alternate production handoff. Cross-backend PNG byte differences are
+therefore not a freshness failure. Unity import and visual acceptance evidence
+must name the browser-produced ZIP, never substitute a headless render.
+
 | File | Built by | Per | Contents |
 |---|---|---|---|
 | `<name>-recipe.json` | recipe (verbatim) | character | Visual recipe (§3.1). |

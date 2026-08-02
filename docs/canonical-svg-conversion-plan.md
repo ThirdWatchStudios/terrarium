@@ -1,6 +1,6 @@
 # Canonical SVG source-conversion plan
 
-Status: **active; P0 department machines, all ten fitted hairstyles, and P1 IRIS hardware have complete source authority locally**
+Status: **active; P0 department machines, all ten fitted hairstyles, and P1 IRIS hardware have complete source authority locally; IRIS browser handoff and Unity visual acceptance are complete**
 
 Recorded: 2026-08-02
 
@@ -193,7 +193,13 @@ three antialiased pixels at a maximum four-channel-value delta; the approved
 source was not rewritten to erase that renderer-normalization difference. A
 source-edit regression proves all declared installation heights change from the
 checked-in SVG, and the canonical guide includes all three production sources.
-No bundle export or Unity import/Play Mode review is claimed.
+The owner then imported the normal Terrarium in-browser **Export all (zip)**
+bundle into Unity and accepted the fresh result. A second browser export from
+Terrarium revision `d15851f` was checked against the timestamped Unity import
+`water-cooler-sprites-20260802-152648`; every non-Unity-metadata file in all
+three IRIS prop directories matched byte-for-byte. This closes the IRIS browser
+handoff and Unity visual gate. Stable Candidate/Current receivers and the
+revision-stamped promotion lock remain pipeline work.
 
 Preserve:
 
@@ -411,7 +417,9 @@ Run one family at a time, preserving visual approval boundaries:
 1. add the ownership classifications and failing `false-canonical` audit;
 2. invert department-machine ownership;
 3. restore canonical authority to production hair fits;
-4. convert IRIS installation/dock art — complete locally; export and Unity gates remain;
+4. convert IRIS installation/dock art — canonical source, browser handoff, and
+   Unity visual acceptance complete; durable Candidate/Current promotion lock
+   remains pipeline work;
 5. convert FAB chassis and dress, then the remaining special parts;
 6. convert the cafeteria facilities;
 7. migrate UI iconography by semantic family; and

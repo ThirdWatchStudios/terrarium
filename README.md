@@ -56,12 +56,19 @@ npm test         # compositor golden-snapshot tests
 Work is auto-saved to localStorage. Use **Export project JSON** / **Import project** in
 the top bar to move a project between machines or check it into git.
 
-### Headless export
+### Game export (standard)
+
+For every bundle intended for Unity, run Terrarium and click **Export all
+(zip)**. That in-browser ZIP is the canonical game handoff and the only export
+artifact used for Unity import, Play Mode review, or visual acceptance.
+
+### Headless export (verification only)
 
 Regenerate the full asset tree from a project file without a browser — the same
-contents as the in-app "Export all" zip (characters / character-layers / props /
-walls / floors PNGs + atlas JSON at 1x/2x/4x, plus `project.json` and, when the
-project has a scene, `office-layout.json`):
+logical inventory and directory structure as the in-app "Export all" zip
+(characters / character-layers / props / walls / floors PNGs + atlas JSON at
+1x/2x/4x, plus `project.json` and, when the project has a scene,
+`office-layout.json`):
 
 ```sh
 npm run export -- path/to/project.json out/
@@ -71,7 +78,10 @@ npm run export -- default out/   # built-in project + a seeded office layout
 SVG→PNG is rendered with [resvg-js](https://github.com/yisibl/resvg-js); the
 in-app export uses the browser canvas. Both share one code path
 (`exportAll()` in `src/core/exporter.ts`) behind a `Rasterizer` interface, so the
-trees match — output is deterministic (identical bytes across runs).
+trees match structurally. Each backend is deterministic within its own path,
+but Canvas and Resvg PNG bytes can differ and must not be compared as a
+freshness signal. The headless command is for CI, structural checks, and
+diagnosis; it is never a substitute for the browser ZIP in the game handoff.
 
 ## Web portal
 

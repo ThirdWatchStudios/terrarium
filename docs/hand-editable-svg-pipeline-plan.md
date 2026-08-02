@@ -127,8 +127,8 @@ npm run art:sync -- <asset-id|source-path|--changed>
 npm run art:check -- <asset-id|source-path|--changed>
 npm run art:preview -- <asset-id>
 npm run art:watch -- <asset-id>
-npm run art:bundle
-npm run art:game
+npm run art:bundle -- path/to/water-cooler-sprites.zip
+npm run art:game -- path/to/water-cooler-sprites.zip
 ```
 
 - `art:open` resolves and opens the canonical source in the platform-default
@@ -139,9 +139,13 @@ npm run art:game
   runs focused source/import fidelity checks without mutation.
 - `art:preview` produces the asset's standard review sheet.
 - `art:watch` reruns sync and preview after source saves on a laptop.
-- `art:bundle` performs the normal deterministic export and adds source
-  revision/provenance.
-- `art:game` imports the resulting bundle into the local Unity candidate slot.
+- Terrarium's in-browser **Export all (zip)** action is the sole standard game
+  export path.
+- `art:bundle` validates a browser-produced ZIP, records its source
+  revision/provenance, and emits a digest sidecar. It never regenerates PNGs
+  through the headless exporter.
+- `art:game` accepts that verified browser bundle and imports it into the local
+  Unity candidate slot.
 
 The family-specific commands remain available for diagnosis; artists should
 not need to know which one owns an asset.
@@ -177,8 +181,9 @@ game-scale result.
 5. Run `art:check <id>`.
 6. Commit the canonical SVG, intentional compiled derivatives, relevant
    snapshots, and no unrelated files.
-7. Run `art:game` and inspect the candidate in Play Mode before production
-   promotion.
+7. Open Terrarium from the checked-out revision and click **Export all (zip)**.
+8. Run `art:bundle <downloaded-zip>`, then `art:game <downloaded-zip>` and
+   inspect the candidate in Play Mode before production promotion.
 
 Generated derivatives remain checked in initially to minimize architectural
 change. They must be reproducible exactly from committed sources and must
@@ -193,20 +198,22 @@ never contain independent visual decisions.
 4. Export it as SVG over the same Working Copy path, preserving the canvas and
    vector-only profile.
 5. Review the SVG diff in Working Copy and commit/push the source-only change.
-6. CI runs `art:sync`, validation, focused tests, preview rendering, and bundle
-   export.
+6. CI runs `art:sync`, validation, focused tests, preview rendering, and a
+   headless structural export audit.
 7. Automation contributes the deterministic derivative update to the branch
    or supplies an exact patch; the artist never edits generated TypeScript on
    the iPad.
+8. When the branch is ready for the game, open that revision in Terrarium and
+   create the handoff with **Export all (zip)** in a browser.
 
-CI should publish the standard review sheet and revision-stamped Sprite
-Toolkit bundle for every source-art pull request. Source-only iPad commits must
-be a first-class supported path, not an exception that requires a later manual
-reconstruction of the edit.
+CI should publish the standard review sheet and headless structural audit for
+every source-art pull request. It may not label a headless artifact as the game
+bundle. Source-only iPad commits must be a first-class supported path, not an
+exception that requires a later manual reconstruction of the edit.
 
 ## 9. Revision-stamped export
 
-`art:bundle` should use the existing shared `exportAll` path and produce:
+Terrarium's in-browser **Export all (zip)** action should embed or accompany:
 
 - the normal Sprite Toolkit tree/zip;
 - Terrarium git commit;
@@ -216,8 +223,11 @@ reconstruction of the edit.
 - build timestamp as informational metadata only; and
 - a SHA-256 digest of the final bundle.
 
-The commit and digests provide identity. A timestamp must not be the only way
-to identify an import.
+`art:bundle` verifies those fields against a browser-produced ZIP and writes a
+sidecar/receipt without rerasterizing or replacing its contents. The commit and
+digests provide identity. A timestamp must not be the only way to identify an
+import. The headless Resvg export remains useful for CI and diagnosis, but is
+never eligible for Unity Candidate or Current.
 
 ## 10. Unity candidate and promotion flow
 
