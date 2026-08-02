@@ -1038,7 +1038,7 @@ describe('part source tree and generated registration', () => {
         'head-soft-square',
       ]);
     const canonicalHairs = [
-      { id: 'hair-short', slug: 'short', counts: [1, 2, 1] },
+      { id: 'hair-short', slug: 'short', counts: [1, 1, 1] },
       { id: 'hair-bob', slug: 'bob', counts: [2, 2, 2] },
       { id: 'hair-bun', slug: 'bun', counts: [2, 3, 2] },
       { id: 'hair-curly', slug: 'curly', counts: [6, 5, 4] },
@@ -1052,7 +1052,9 @@ describe('part source tree and generated registration', () => {
     const exactPathStableHairShapes: string[] = [];
     for (const { id, slug, counts } of canonicalHairs) {
       const candidate = imports.find((imported) => imported.id === id)!;
-      const hair = id === 'hair-bob' ? headFittedImport(candidate) : staticImport(candidate);
+      const hair = id === 'hair-bob' || id === 'hair-short'
+        ? headFittedImport(candidate)
+        : staticImport(candidate);
       expect(hair).toMatchObject({
         id,
         slot: 'hair',
@@ -1068,7 +1070,7 @@ describe('part source tree and generated registration', () => {
         expect(shapes, `${id}/${facing}`).toHaveLength(counts[facingIndex]);
         expect(shapes[0], `${id}/${facing} silhouette`).toMatchObject({ fill: '$hair' });
         expect(shapes[0]?.silhouette, `${id}/${facing} silhouette role`).not.toBe(false);
-        if (id !== 'hair-bob') {
+        if (id !== 'hair-bob' && id !== 'hair-short') {
           for (const shape of shapes) {
             exactPathStableHairShapes.push(`${id}/${facing}/${JSON.stringify(shape)}`);
           }
@@ -1076,22 +1078,25 @@ describe('part source tree and generated registration', () => {
       }
     }
 
-    const bob = headFittedImport(imports.find(({ id }) => id === 'hair-bob')!);
-    expect(Object.keys(bob.headVariants).sort()).toEqual([
-      'head-angular',
-      'head-boxy',
-      'head-long',
-      'head-oval',
-      'head-round',
-      'head-soft-square',
-    ]);
-    for (const variants of Object.values(bob.headVariants)) {
-      expect(Object.keys(variants)).toEqual(FACINGS);
-      for (const facing of FACINGS) {
-        expect(variants[facing]?.z).toBe(50);
-        expect(variants[facing]?.shapes).toHaveLength(2);
+    for (const [id, shapeCount] of [['hair-short', 1], ['hair-bob', 2]] as const) {
+      const fittedHair = headFittedImport(imports.find((candidate) => candidate.id === id)!);
+      expect(Object.keys(fittedHair.headVariants).sort(), id).toEqual([
+        'head-angular',
+        'head-boxy',
+        'head-long',
+        'head-oval',
+        'head-round',
+        'head-soft-square',
+      ]);
+      for (const variants of Object.values(fittedHair.headVariants)) {
+        expect(Object.keys(variants), id).toEqual(FACINGS);
+        for (const facing of FACINGS) {
+          expect(variants[facing]?.z, `${id}/${facing}`).toBe(50);
+          expect(variants[facing]?.shapes, `${id}/${facing}`).toHaveLength(shapeCount);
+        }
       }
     }
+    const bob = headFittedImport(imports.find(({ id }) => id === 'hair-bob')!);
     for (const facing of FACINGS) {
       expect(bob.facings[facing]?.[1]).toMatchObject({
         stroke: '#00000024',
@@ -1099,9 +1104,9 @@ describe('part source tree and generated registration', () => {
         silhouette: false,
       });
     }
-    expect(exactPathStableHairShapes).toHaveLength(61);
+    expect(exactPathStableHairShapes).toHaveLength(57);
     expect(createHash('sha256').update(exactPathStableHairShapes.join('\n')).digest('hex'))
-      .toBe('e7be7ae721fc8f7c28345a6dba4221203d743f2faf01174d7f5b5ffd52947320');
+      .toBe('fe6e880fdfc6791bed9df927cdc2f5e5a14fc2ae900720997bb8684eabc5495a');
 
     for (const slug of ['round', 'oval', 'boxy', 'long', 'angular', 'soft-square']) {
       const id = `head-${slug}`;
@@ -1561,7 +1566,6 @@ describe('imported art overlay', () => {
     }
     expect(sourceTargets.filter(({ preserveLocalPaths }) => preserveLocalPaths).map(({ id }) => id))
       .toEqual([
-        'hair-short',
         'hair-bun',
         'hair-curly',
         'hair-balding',

@@ -644,23 +644,22 @@
     <path id="art/tail" d="M 18 -16 C 29 -17 34 -8 29 0 C 34 8 29 20 21 25 C 15 21 17 12 21 6 C 16 1 15 -8 18 -16 Z" fill="#00FFFF" fill-rule="nonzero"/>
   </g>
 </svg><text x="3033.6666666666665" y="1516" fill="#292C2A" font-family="Inter,Arial,sans-serif" font-size="8.7" font-weight="700" text-anchor="middle">ponytail.south</text><text x="3033.6666666666665" y="1531" fill="#626861" font-family="Inter,Arial,sans-serif" font-size="7" font-weight="560" text-anchor="middle">hair</text></a><a href="../../../assets/parts/hair/short.east.svg"><title>assets/parts/hair/short.east.svg</title><rect x="42" y="1554" width="248.66666666666666" height="188" rx="10" fill="#F6F1E6" stroke="#355647" stroke-width="1"/><rect x="42" y="1554" width="6" height="188" rx="3" fill="#355647"/><rect x="107.33333333333333" y="1569" width="118" height="118" rx="6" fill="#E1DDD2"/><svg x="107.33333333333333" y="1569" width="118" height="118" viewBox="0 0 128 128" preserveAspectRatio="xMidYMid meet" overflow="hidden">
-  <title>Terrarium hair-short east authored art</title>
-  <desc>Current production short profile cap with rear coverage.</desc>
+  <title>Terrarium hair-short east canonical art</title>
+  <desc>Sculpted profile silhouette authored on the shared round-head fit frame.</desc>
   <g id="art" transform="translate(64 44)">
-    <path id="art/cap" d="M -19.4164878389476 -8 A 21 21 0 0 1 19.4164878389476 -8 Z" fill="#00FFFF" fill-rule="nonzero"/>
-    <path id="art/back" d="M -17 -9 h 0 a 4 4 0 0 1 4 4 v 9 a 4 4 0 0 1 -4 4 h 0 a 4 4 0 0 1 -4 -4 v -9 a 4 4 0 0 1 4 -4 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/silhouette" d="M -22 -1 C -20 -16 -10.6 -22 -2 -22 C 9 -22 14 -15 14 -6 L 10 -1 L 4 2 L -2 -1 C -7 -4 -14 -2 -17 2 L -22 6 Z" fill="#00FFFF" fill-rule="nonzero"/>
   </g>
 </svg><text x="166.33333333333331" y="1716" fill="#292C2A" font-family="Inter,Arial,sans-serif" font-size="8.7" font-weight="700" text-anchor="middle">short.east</text><text x="166.33333333333331" y="1731" fill="#626861" font-family="Inter,Arial,sans-serif" font-size="7" font-weight="560" text-anchor="middle">hair</text></a><a href="../../../assets/parts/hair/short.north.svg"><title>assets/parts/hair/short.north.svg</title><rect x="302.66666666666663" y="1554" width="248.66666666666666" height="188" rx="10" fill="#F6F1E6" stroke="#355647" stroke-width="1"/><rect x="302.66666666666663" y="1554" width="6" height="188" rx="3" fill="#355647"/><rect x="367.99999999999994" y="1569" width="118" height="118" rx="6" fill="#E1DDD2"/><svg x="367.99999999999994" y="1569" width="118" height="118" viewBox="0 0 128 128" preserveAspectRatio="xMidYMid meet" overflow="hidden">
-  <title>Terrarium hair-short north authored art</title>
-  <desc>Current production short rear cap silhouette.</desc>
+  <title>Terrarium hair-short north canonical art</title>
+  <desc>Textured rear silhouette authored on the shared round-head fit frame.</desc>
   <g id="art" transform="translate(64 44)">
-    <path id="art/cap" d="M -19.79898987322333 7 A 21 21 0 1 1 19.79898987322333 7 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/silhouette" d="M -22 4 C -20.2 -14 -10.6 -20 0 -20 C 11 -20 20.2 -14 22 4 L 15 7 L 8.4 3 L 1.8 7 L -5.5 3 L -13.6 7 Z" fill="#00FFFF" fill-rule="nonzero"/>
   </g>
 </svg><text x="426.99999999999994" y="1716" fill="#292C2A" font-family="Inter,Arial,sans-serif" font-size="8.7" font-weight="700" text-anchor="middle">short.north</text><text x="426.99999999999994" y="1731" fill="#626861" font-family="Inter,Arial,sans-serif" font-size="7" font-weight="560" text-anchor="middle">hair</text></a><a href="../../../assets/parts/hair/short.south.svg"><title>assets/parts/hair/short.south.svg</title><rect x="563.3333333333333" y="1554" width="248.66666666666666" height="188" rx="10" fill="#F6F1E6" stroke="#355647" stroke-width="1"/><rect x="563.3333333333333" y="1554" width="6" height="188" rx="3" fill="#355647"/><rect x="628.6666666666666" y="1569" width="118" height="118" rx="6" fill="#E1DDD2"/><svg x="628.6666666666666" y="1569" width="118" height="118" viewBox="0 0 128 128" preserveAspectRatio="xMidYMid meet" overflow="hidden">
-  <title>Terrarium hair-short south authored art</title>
-  <desc>Current production short front cap silhouette.</desc>
+  <title>Terrarium hair-short south canonical art</title>
+  <desc>Textured front silhouette authored on the shared round-head fit frame.</desc>
   <g id="art" transform="translate(64 44)">
-    <path id="art/cap" d="M -19.4164878389476 -8 A 21 21 0 0 1 19.4164878389476 -8 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/silhouette" d="M -22 -3 C -20.2 -14 -10.6 -20 0 -20 C 11 -20 20.2 -14 22 -3 L 15 0 L 8.4 -4 L 1.8 0 L -5.5 -4 L -13.6 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
   </g>
 </svg><text x="687.6666666666666" y="1716" fill="#292C2A" font-family="Inter,Arial,sans-serif" font-size="8.7" font-weight="700" text-anchor="middle">short.south</text><text x="687.6666666666666" y="1731" fill="#626861" font-family="Inter,Arial,sans-serif" font-size="7" font-weight="560" text-anchor="middle">hair</text></a><a href="../../../assets/parts/hair/side-part.east.svg"><title>assets/parts/hair/side-part.east.svg</title><rect x="823.9999999999999" y="1554" width="248.66666666666666" height="188" rx="10" fill="#F6F1E6" stroke="#355647" stroke-width="1"/><rect x="823.9999999999999" y="1554" width="6" height="188" rx="3" fill="#355647"/><rect x="889.3333333333333" y="1569" width="118" height="118" rx="6" fill="#E1DDD2"/><svg x="889.3333333333333" y="1569" width="118" height="118" viewBox="0 0 128 128" preserveAspectRatio="xMidYMid meet" overflow="hidden">
   <title>Terrarium hair-side-part east authored art</title>

@@ -36,10 +36,14 @@ export const FITTED_HAIR_HEAD_IDS = [
 
 export type FittedHairHeadId = typeof FITTED_HAIR_HEAD_IDS[number];
 
-const CANONICAL_BOB_ART = (
+const CANONICAL_HEAD_FITTED_ART = (
   IMPORTED_PART_ART as readonly ImportedPartOverlay[]
-).find((entry): entry is ImportedHeadFittedPartOverlay =>
-  entry.kind === 'head-fitted-art' && entry.id === 'hair-bob');
+).filter((entry): entry is ImportedHeadFittedPartOverlay =>
+  entry.kind === 'head-fitted-art');
+
+const CANONICAL_HEAD_FITTED_BY_ID = new Map(
+  CANONICAL_HEAD_FITTED_ART.map((entry) => [entry.id, entry]),
+);
 
 interface HeadHairFit {
   southHalf: number;
@@ -148,14 +152,6 @@ function profileCap(
     `C ${compact(front - 21)} ${hairlineY - 3} ${compact(back + 8)} ${hairlineY - 1} ${compact(back + 5)} ${hairlineY + 3} ` +
     `L ${back} ${backDrop} Z`,
   );
-}
-
-function shortFacings(fit: HeadHairFit): Record<Facing, PartVariant> {
-  return {
-    south: hairVariant(fittedCap(fit.southHalf, fit.crownY + 2, 0, true)),
-    east: hairVariant(profileCap(fit, { hairlineY: -1, backDrop: 6 })),
-    north: hairVariant(fittedCap(fit.northHalf, fit.crownY + 2, 7, true)),
-  };
 }
 
 function bunFacings(fit: HeadHairFit): Record<Facing, PartVariant> {
@@ -445,14 +441,17 @@ function coilsFacings(fit: HeadHairFit): Record<Facing, PartVariant> {
   };
 }
 
-type CodeFittedHairId = Exclude<FittedHairId, 'hair-bob'>;
+type CanonicalFittedHairId = 'hair-short' | 'hair-bob';
+type CodeFittedHairId = Exclude<FittedHairId, CanonicalFittedHairId>;
+
+const isCanonicalFittedHairId = (hairId: FittedHairId): hairId is CanonicalFittedHairId =>
+  hairId === 'hair-short' || hairId === 'hair-bob';
 
 const CODE_FITTED_HAIR_IDS = FITTED_HAIR_IDS.filter(
-  (hairId): hairId is CodeFittedHairId => hairId !== 'hair-bob',
+  (hairId): hairId is CodeFittedHairId => !isCanonicalFittedHairId(hairId),
 );
 
 const BUILDERS: Record<CodeFittedHairId, (fit: HeadHairFit) => Record<Facing, PartVariant>> = {
-  'hair-short': shortFacings,
   'hair-bun': bunFacings,
   'hair-curly': curlyFacings,
   'hair-balding': baldingFacings,
@@ -489,10 +488,10 @@ export function fittedHairVariant(
   facing: Facing,
 ): PartVariant | undefined {
   if (!isFittedHairId(hairId) || !isFittedHairHeadId(headId)) return undefined;
-  if (hairId === 'hair-bob') {
-    const variant = CANONICAL_BOB_ART?.headVariants[headId]?.[facing];
+  if (isCanonicalFittedHairId(hairId)) {
+    const variant = CANONICAL_HEAD_FITTED_BY_ID.get(hairId)?.headVariants[headId]?.[facing];
     if (!variant) {
-      throw new Error(`Canonical Bob fit is missing ${headId}/${facing}`);
+      throw new Error(`Canonical ${hairId} fit is missing ${headId}/${facing}`);
     }
     return variant;
   }

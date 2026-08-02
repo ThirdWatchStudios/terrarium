@@ -1,0 +1,46 @@
+{
+  "status": "approved-for-production-promotion",
+  "approvedOn": "2026-08-02",
+  "sourceFiles": [
+    "docs/previews/canonical-short-source-fit-v2/sources/short.south.svg",
+    "docs/previews/canonical-short-source-fit-v2/sources/short.east.svg",
+    "docs/previews/canonical-short-source-fit-v2/sources/short.north.svg"
+  ],
+  "productionWiringChanged": false,
+  "canonicalSourceSvgChanged": false,
+  "reviewSourceSvgAdded": true,
+  "perHeadSvgVariantsAdded": 0,
+  "method": {
+    "geometryOwner": "three editable review-source Short SVG facings",
+    "fitData": "six shared declarative head envelopes plus Short offsets",
+    "transform": "bounded piecewise-linear x/y landmark warp",
+    "replacementPathBuilders": 0
+  },
+  "audit": {
+    "variantCount": 18,
+    "sourceShapeCount": 3,
+    "derivedShapeCount": 18,
+    "missingHairAtLiteralScale": [],
+    "productionDifferences": [
+      "head-round/south",
+      "head-round/east",
+      "head-round/north",
+      "head-oval/south",
+      "head-oval/east",
+      "head-oval/north",
+      "head-boxy/south",
+      "head-boxy/east",
+      "head-boxy/north",
+      "head-long/south",
+      "head-long/east",
+      "head-long/north",
+      "head-angular/south",
+      "head-angular/east",
+      "head-angular/north",
+      "head-soft-square/south",
+      "head-soft-square/east",
+      "head-soft-square/north"
+    ],
+    "deterministicDigest": "0c3e48d06ced6d16509378e2ec72cfe39ea7799c652a32ea17a60d791a6fcd46"
+  }
+}

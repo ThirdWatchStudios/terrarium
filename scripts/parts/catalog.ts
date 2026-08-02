@@ -9,7 +9,7 @@ export type PartImportMode =
   | 'component-detail';
 export type BodyDetailPointAnchor = 'neck';
 export type BodyDetailFrame = 'upper-torso' | 'lower-torso';
-export type HeadFitAdapter = 'canonical-bob-v1';
+export type HeadFitAdapter = 'canonical-bob-v1' | 'canonical-short-v1';
 
 export interface PartImportComponent {
   readonly id: string;
@@ -71,7 +71,12 @@ export const PART_IMPORT_TARGETS: readonly PartImportTarget[] = [
   target('head-long', 'head'),
   target('head-angular', 'head'),
   target('head-soft-square', 'head'),
-  byteStableTarget('hair-short', 'hair'),
+  {
+    ...target('hair-short', 'hair'),
+    importMode: 'head-fitted-art',
+    headFitAdapter: 'canonical-short-v1',
+    variantZ: 50,
+  },
   {
     ...target('hair-bob', 'hair'),
     importMode: 'head-fitted-art',

@@ -17,7 +17,7 @@ import {
 import { getPart, partsForSlot } from '../src/parts/library';
 
 const CANONICAL_HAIRS = [
-  ['hair-short', 'short', [1, 2, 1]],
+  ['hair-short', 'short', [1, 1, 1]],
   ['hair-bob', 'bob', [2, 2, 2]],
   ['hair-bun', 'bun', [2, 3, 2]],
   ['hair-curly', 'curly', [6, 5, 4]],
@@ -135,13 +135,13 @@ describe('canonical production hair families', () => {
     expect(fittedHairVariant('hair-short', 'head-fab', 'south')).toBeUndefined();
   });
 
-  it('locks the approved source-fitted Bob with the preserved Short and Ponytail carriers', () => {
+  it('locks the approved source-fitted Short and Bob with the preserved Ponytail carrier', () => {
     const approved = ['hair-short', 'hair-bob', 'hair-ponytail'];
     const payload = approved.flatMap((hair) =>
       FITTED_HAIR_HEAD_IDS.flatMap((head) =>
         FACINGS.map((facing) => fittedHairVariant(hair, head, facing))));
     expect(createHash('sha256').update(JSON.stringify(payload)).digest('hex'))
-      .toBe('cee2d7f8bb52535def150ede875af14a391a9162a8e836716c4cebfcfb52545e');
+      .toBe('888f7544bd8de17d899a36c613dfe1fc231ef09f5559d3120180cbdd2fe62f0f');
   });
 
   it('uses the same fitted geometry in flat and reconstructable production output', () => {

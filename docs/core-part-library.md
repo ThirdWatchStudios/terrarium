@@ -276,12 +276,11 @@ detail, committed in `240ee03`. Its inventory boxes record the approved
 drawings; broader M1 scene/crowd gates remain open.
 
 `hair-short` and `hair-long-straight` now have six canonical south/east/north
-sources, with Bob as the Medium-family control. The explicit byte-stable
-targets prevent generic arc normalization from changing pixels while still
-enforcing the full SVG intake contract. Short and the Long straight south/north
-facings preserve their prior silhouettes exactly; Long straight east is the
-one authored refinement, using a single rear fall and short temple edge so the
-profile turn reads distinctly. Run
+sources, with Bob as the Medium-family control. Short's approved textured
+front/rear edge and sculpted profile compile through the shared head-fit adapter;
+Long straight remains an explicit byte-stable target. Long straight east uses
+a single rear fall and short temple edge so the profile turn reads distinctly.
+Run
 `npx tsx scripts/hairFamilyPreview.ts` to regenerate the all-head/facing
 compatibility and 128/64/48/32 px distance proofs under
 `docs/previews/hair-families-*`. Their inventory cells record visual approval
@@ -307,11 +306,11 @@ All ten redesigned head-aware hairstyles are now live in production. Each
 stable hair ID resolves a fixed south/east/north variant for all six production
 head IDs. Resolution happens inside the compositor, so flat sprites, portraits,
 operational units, and reconstructable hair layers agree while recipes keep the
-same IDs. Bob's three canonical SVG facings now own its live geometry through
-the approved `head-fitted-art` adapter and six declarative envelopes; its former
-code path builder is removed. The other nine canonical imports remain
-source/fallback geometry pending equivalent bounded migrations. Short and
-Ponytail retain their prior code-fit lock; the completion slice adds Pixie,
+same IDs. Bob and Short now own their live geometry through approved
+`head-fitted-art` adapters and six declarative envelopes; both former code path
+builders are removed. The other eight canonical imports remain source/fallback
+geometry pending equivalent bounded migrations. Ponytail retains its prior
+code-fit lock; the completion slice adds Pixie,
 Side-part, Bun, Curly, Coils, Long straight, and Balding. Every fitted pair
 remains distinct at 32 px across the authored facings. The 4,320-cell
 top-overflow audit improves from the pre-fitting 766 to 467 high-contrast-only

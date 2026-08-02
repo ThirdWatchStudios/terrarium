@@ -21,9 +21,13 @@ import type {
   PartImportTarget,
 } from './catalog';
 import {
-  CANONICAL_BOB_HEAD_IDS,
   fitCanonicalBobVariant,
 } from './canonicalBobFit';
+import {
+  CANONICAL_HAIR_HEAD_IDS,
+  type CanonicalHairHeadId,
+} from './canonicalHairFit';
+import { fitCanonicalShortVariant } from './canonicalShortFit';
 import { SENTINEL_TO_PALETTE_REF } from './sentinels';
 
 const SUPPORTED_SLOTS = ['body', 'head', 'hair', 'outfit'] as const;
@@ -1134,20 +1138,30 @@ function expandHeadFittedVariants(
   target: PartImportTarget,
   facings: Partial<Record<Facing, readonly ShapeSpec[]>>,
 ): ImportedHeadFittedPartOverlay['headVariants'] {
-  if (target.headFitAdapter !== 'canonical-bob-v1' || target.id !== 'hair-bob') {
-    fail(source, `unsupported head-fit adapter ${target.headFitAdapter ?? 'none'}`);
+  type FitVariant = (
+    variant: Pick<PartVariant, 'z'> & { readonly shapes: readonly ShapeSpec[] },
+    headId: CanonicalHairHeadId,
+    facing: Facing,
+  ) => PartVariant;
+  let fitVariant: FitVariant;
+  if (target.headFitAdapter === 'canonical-bob-v1' && target.id === 'hair-bob') {
+    fitVariant = fitCanonicalBobVariant;
+  } else if (target.headFitAdapter === 'canonical-short-v1' && target.id === 'hair-short') {
+    fitVariant = fitCanonicalShortVariant;
+  } else {
+    fail(source, `unsupported head-fit adapter ${target.headFitAdapter ?? 'none'} for ${target.id}`);
   }
   if (target.variantZ === undefined) {
     fail(source, 'head-fitted-art target has no variant z-order');
   }
 
   const headVariants: Record<string, Partial<Record<Facing, PartVariant>>> = {};
-  for (const headId of CANONICAL_BOB_HEAD_IDS) {
+  for (const headId of CANONICAL_HAIR_HEAD_IDS) {
     const variants: Partial<Record<Facing, PartVariant>> = {};
     for (const facing of FACINGS) {
       const sourceShapes = facings[facing]
         ?? fail(source, `head-fitted-art is missing ${facing} source geometry`);
-      const fitted = fitCanonicalBobVariant(
+      const fitted = fitVariant(
         { z: target.variantZ, shapes: sourceShapes },
         headId,
         facing,

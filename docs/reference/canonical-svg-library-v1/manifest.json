@@ -323,21 +323,21 @@
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/short.east.svg",
-      "sha256": "34d82f2a28610a3b8e24ff3c5957402481fcfefbfd2d13050b4c79a11c742c04"
+      "sha256": "b726d7cba53127855f3bb2e5dd1caed6abb521351ad95478a275d3a787703442"
     },
     {
       "assetId": "hair-short",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/short.north.svg",
-      "sha256": "dce6004e94812865ded3be0ace9f30d7c93e95992f43bba9f6fda77ff92c3e31"
+      "sha256": "5a5704211b0165b737fdc9975e738ea7698cf2acb3fe55ef17cf1ecfc1e05e55"
     },
     {
       "assetId": "hair-short",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/short.south.svg",
-      "sha256": "634487e7b3c6d273de15c8695272197f9593120492ba5b9af2ea2a9655463333"
+      "sha256": "e74e5356695233c52f495d31bbf808aa60115437d0bd5a05a961abb8607adb04"
     },
     {
       "assetId": "hair-side-part",

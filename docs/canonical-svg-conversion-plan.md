@@ -1,6 +1,6 @@
 # Canonical SVG source-conversion plan
 
-Status: **active; P0 department-machine ownership inversion complete locally**
+Status: **active; P0 department machines plus Bob/Short source authority complete locally**
 
 Recorded: 2026-08-02
 
@@ -139,13 +139,13 @@ large, current, stateful production family.
 
 #### Head-aware hair production geometry
 
-The hair base SVGs are checked in. The first bounded source-authority slice is
-complete for `hair-bob`: its three canonical facings compile through the
-`head-fitted-art` adapter into six deterministic head variants, and the live
-resolver consumes those generated variants without a Bob path builder. The
-other nine mapped styles still build their live head-specific geometry in
-`hairFitting.ts`, so their apparent SVG sources are not yet complete visual
-authority.
+The hair base SVGs are checked in. The first two bounded source-authority slices
+are complete for `hair-bob` and `hair-short`: each three-facing canonical set
+compiles through a declared `head-fitted-art` adapter into six deterministic
+head variants, and the live resolver consumes those generated records without
+a Bob or Short path builder. The other eight mapped styles still build their
+live head-specific geometry in `hairFitting.ts`, so their apparent SVG sources
+are not yet complete visual authority.
 
 Preferred migration:
 
@@ -158,10 +158,12 @@ Preferred migration:
 
 Do not create a full hair-by-head SVG matrix by default. First prove that
 source-owned geometry plus declarative fitting can replace the code-owned
-builders. Bob proved that mechanism across all six heads and three authored
-facings, including literal 48/32 px review, and received visual approval on
-2026-08-02. Apply the same bounded source/import/review gate one style at a
-time; add a per-head source only when the reviewed transform is insufficient.
+builders. Bob proved the mechanism; Short then proved that a visually weak
+legacy source can be refined as three review-source SVGs before promotion. Both
+styles passed six-head, three-facing, literal 48/32 px review and received
+visual approval on 2026-08-02. Apply the same bounded source/import/review gate
+one style at a time; add a per-head source only when the reviewed transform is
+insufficient.
 
 ### P1 — signature world and character identity
 
