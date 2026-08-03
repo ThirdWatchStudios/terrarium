@@ -23,5 +23,6 @@ Amber stays reserved for dormant Capture. Rose stays reserved for emotion.
 
 The renderer deliberately uses the approved department-era world image only as
 a composition reference. That image is not copied here and is not a production
-master. New glyphs shown in the rendered sheets remain review candidates until
-the owner explicitly approves their silhouettes and literal-scale behavior.
+master. The 19 approved department glyphs now resolve through canonical SVGs
+under `assets/ui/canonical-department-glyphs-v1/`; layout and runtime geometry
+remain deferred to the later joint Unity pass.

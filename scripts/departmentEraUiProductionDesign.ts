@@ -1,9 +1,9 @@
 /**
  * Terrarium-owned department-era UI production-design renderer.
  *
- * This renders visual design authority and review candidates only. It does not
- * write Unity assets, UXML/USS, runtime state, export bundles, or canonical SVG
- * candidates beyond the already-approved UI-E1 source batch.
+ * This renders the approved Terrarium visual design authority using the live
+ * canonical UI source registry. It does not write Unity assets, UXML/USS,
+ * runtime state, or export bundles.
  */
 import { createHash } from 'node:crypto';
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
@@ -143,59 +143,8 @@ function icon(id: string, x: number, y: number, size: number, tint?: string): st
   return `<svg x="${x}" y="${y}" width="${size}" height="${size}" viewBox="0 0 128 128">${svgBody(svg)}</svg>`;
 }
 
-function candidateGlyphBody(id: string, color: string): string {
-  switch (id) {
-    case 'work-intake':
-      return pathMark('M4 15H20V20H4ZM12 3V13M8 9L12 13L16 9', color, 2);
-    case 'work-data-processing':
-      return [
-        pathMark('M4 4H20V20H4Z', color, 2),
-        '<circle cx="8" cy="8" r="1.4" fill="currentColor"/>',
-        '<circle cx="12" cy="8" r="1.4" fill="currentColor"/>',
-        '<circle cx="16" cy="8" r="1.4" fill="currentColor"/>',
-        pathMark('M7 13H17M7 17H14', color, 2),
-      ].join('').replaceAll('currentColor', color);
-    case 'work-delivery':
-      return pathMark('M4 15H20V20H4ZM12 15V4M8 8L12 4L16 8', color, 2);
-    case 'ready-room':
-      return pathMark('M4 4H20V20H4ZM12 4V20M12 15H16', color, 2);
-    case 'ready-designated':
-      return pathMark('M5 4H19V11H5ZM8 11V16H16V20H8', color, 2);
-    case 'ready-equipped':
-      return pathMark('M5 19L11 13M9 5L13 9L17 5L19 7L15 11L19 15L15 19L11 15L7 19L5 17L9 13L5 9Z', color, 1.8);
-    case 'ready-io':
-      return pathMark('M3 8H13M9 4L13 8L9 12M21 16H11M15 12L11 16L15 20', color, 2);
-    case 'ready-connected':
-      return pathMark('M9 15L15 9M8 18H6A4 4 0 010 12A4 4 0 014 8H8M16 6H18A4 4 0 0124 12A4 4 0 0120 16H16', color, 2);
-    case 'ready-staffed':
-      return pathMark('M8 11A3 3 0 108 5A3 3 0 008 11ZM2 20C2 15 4 13 8 13C12 13 14 15 14 20M17 11A2.5 2.5 0 1017 6A2.5 2.5 0 0017 11ZM15 14C19 13 22 15 22 20', color, 2);
-    case 'ready-flowing':
-      return pathMark('M3 17H7V7H12V17H17V7H21M5 4H19', color, 2);
-    case 'ready-all':
-      return pathMark('M12 2L22 12L12 22L2 12ZM7 12L10.5 15.5L17 8.5', color, 2);
-    case 'state-complete':
-      return pathMark('M4 12L9 17L20 6', color, 2.5);
-    case 'state-missing':
-      return pathMark('M5 5H19V19H5Z', color, 2);
-    case 'state-blocked':
-      return pathMark('M5 5L19 19M19 5L5 19', color, 2.5);
-    case 'state-unavailable':
-      return pathMark('M4 12A8 8 0 1020 12A8 8 0 004 12ZM6 18L18 6', color, 2);
-    case 'route-input':
-      return pathMark('M3 12H15M11 8L15 12L11 16M19 7V17', color, 2);
-    case 'route-output':
-      return pathMark('M5 7V17M9 12H21M17 8L21 12L17 16', color, 2);
-    case 'route-wall-pass':
-      return pathMark('M9 2V22M15 2V22M3 12H21', color, 2);
-    case 'route-repair':
-      return pathMark('M4 19L10 13M9 5L13 9L17 5L19 7L15 11L19 15L15 19L11 15L6 20Z', color, 2);
-    default:
-      return pathMark('M5 5H19V19H5Z', color, 2);
-  }
-}
-
-function candidateGlyph(id: string, x: number, y: number, size: number, color: string): string {
-  return `<g transform="translate(${x} ${y}) scale(${size / 24})">${candidateGlyphBody(id, color)}</g>`;
+function departmentGlyph(id: string, x: number, y: number, size: number, color: string): string {
+  return icon(id, x, y, size, color);
 }
 
 function controlButton(
@@ -238,7 +187,7 @@ function controlButton(
     text(x + width / 2, y + yOffset + height / 2 + 5.5 * scale, label, 14 * scale, labelColor, 500, 'middle', 'IBM Plex Sans Condensed', 0.65 * scale),
   ];
   if (state === 'focus') parts.push(focusCorners(x, y + yOffset, width, height, scale));
-  if (state === 'invalid') parts.push(candidateGlyph('state-blocked', x + width - 27 * scale, y + yOffset + 9 * scale, 20 * scale, P.invalidRust));
+  if (state === 'invalid') parts.push(departmentGlyph('state-blocked', x + width - 27 * scale, y + yOffset + 9 * scale, 20 * scale, P.invalidRust));
   return parts.join('');
 }
 
@@ -333,13 +282,13 @@ function designSystemSheet(fontCss: string): string {
   parts.push(panel(1722, sourceY + 32, 1020, 142, P.utilityChassis));
   parts.push(text(1746, sourceY + 66, 'SOURCE BOUNDARY', 13, P.focus, 500, 'start', 'IBM Plex Sans Condensed', 1));
   parts.push(multiline(1746, sourceY + 94, [
-    'Five approved SVGs own only the stateless mark geometry.',
+    'Twenty-four approved SVGs own only stateless mark geometry.',
     'No carrier, state surface, text, table, route, or footprint is baked.',
   ], 14, P.utilityTextMuted, 24));
 
   const glyphY = 1230;
-  parts.push(text(42, glyphY, 'DEPARTMENT SLICE · GLYPH CANDIDATES', 19, P.utilityText, 500, 'start', 'IBM Plex Sans Condensed', 1.3));
-  parts.push(text(width - 42, glyphY, 'REVIEW CANDIDATES ONLY · NOT CANONICAL', 12, P.invalidRust, 500, 'end', 'IBM Plex Sans Condensed', 1));
+  parts.push(text(42, glyphY, 'DEPARTMENT SLICE · CANONICAL GLYPHS', 19, P.utilityText, 500, 'start', 'IBM Plex Sans Condensed', 1.3));
+  parts.push(text(width - 42, glyphY, 'APPROVED TERRARIUM SVG AUTHORITY', 12, P.focus, 500, 'end', 'IBM Plex Sans Condensed', 1));
   const groups = [
     { label: 'WORK TYPE', ids: ['work-intake', 'work-data-processing', 'work-delivery'] },
     { label: 'READINESS', ids: ['ready-room', 'ready-designated', 'ready-equipped', 'ready-io', 'ready-connected', 'ready-staffed', 'ready-flowing', 'ready-all'] },
@@ -354,7 +303,7 @@ function designSystemSheet(fontCss: string): string {
     group.ids.forEach((id, index) => {
       const x = groupX + 14 + index * cellWidth;
       parts.push(rect(x, glyphY + 75, 100, 100, P.utilityWellDeep, P.utilitySleeve, 1, 1));
-      parts.push(candidateGlyph(id, x + 26, glyphY + 101, 48, id === 'state-blocked' ? P.invalidRust : P.utilityText));
+      parts.push(departmentGlyph(id, x + 26, glyphY + 101, 48, id === 'state-blocked' ? P.invalidRust : P.utilityText));
       parts.push(text(x + 50, glyphY + 195, id.replace(/^(work|ready|state|route)-/, '').replaceAll('-', ' ').toUpperCase(), 8.5, P.utilityTextMuted, 500, 'middle', 'IBM Plex Sans Condensed', 0.4));
     });
     groupX += groupWidth + 22;
@@ -364,7 +313,7 @@ function designSystemSheet(fontCss: string): string {
   parts.push(panel(42, ownershipY, width - 84, 465, P.utilityChassis));
   parts.push(text(68, ownershipY + 40, 'CREATION / IMPLEMENTATION LEDGER', 18, P.utilityText, 500, 'start', 'IBM Plex Sans Condensed', 1.2));
   const ownershipColumns = [
-    { x: 68, title: 'CREATED IN TERRARIUM NOW', color: P.focus, lines: ['Palette, typography, material and state decisions', 'Literal 1280×720 compositions and scale reflow', 'Canonical shared marks and review-only glyph candidates'] },
+    { x: 68, title: 'CREATED IN TERRARIUM NOW', color: P.focus, lines: ['Palette, typography, material and state decisions', 'Literal 1280×720 compositions and scale reflow', 'Twenty-four canonical shared and department marks'] },
     { x: 955, title: 'TRANSLATED TO UNITY TOGETHER LATER', color: P.utilityText, lines: ['TextCore assets and licensed font packaging', 'UXML/USS controls, carriers, layout and accessibility', 'Authoritative data binding, interaction and focus behavior'] },
     { x: 1842, title: 'ALWAYS RUNTIME GEOMETRY', color: P.quotaCoPaperLight, lines: ['Room and department focus', 'Placement footprint, cells, facing and validity', 'Authored tube route, endpoints, wall pass and repair'] },
   ] as const;
@@ -382,7 +331,7 @@ function designSystemSheet(fontCss: string): string {
   parts.push(text(948, ownershipY + 319, 'TEAL · SELECTION', 13, P.utilityTextMuted, 400, 'start', 'IBM Plex Sans'));
   parts.push(rect(1260, ownershipY + 300, 24, 24, P.utilityWell, P.invalidRust, 2, 1));
   parts.push(text(1298, ownershipY + 319, 'RUST · INVALID + REPAIR', 13, P.utilityTextMuted, 400, 'start', 'IBM Plex Sans'));
-  parts.push(text(width - 68, ownershipY + 413, 'TERRARIUM DESIGN SOURCE · STOP FOR VISUAL APPROVAL BEFORE NEW GLYPH PROMOTION', 12, P.invalidRust, 500, 'end', 'IBM Plex Sans Condensed', 1));
+  parts.push(text(width - 68, ownershipY + 413, 'APPROVED TERRARIUM DESIGN SOURCE · GLYPH PROMOTION RECORDED · UNITY DEFERRED', 12, P.focus, 500, 'end', 'IBM Plex Sans Condensed', 1));
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
 }
 
@@ -413,7 +362,7 @@ function chainNode(x: number, y: number, width: number, label: string, status: s
   const fill = selected ? P.selection : P.utilityWell;
   const stroke = selected ? P.selectionEdge : P.utilitySleeve;
   const parts = [rect(x, y, width, height, fill, stroke, selected ? 2 : 1, 2)];
-  parts.push(candidateGlyph(glyphId, x + 9 * scale, y + 8 * scale, 22 * scale, selected ? P.utilityText : P.utilityTextMuted));
+  parts.push(departmentGlyph(glyphId, x + 9 * scale, y + 8 * scale, 22 * scale, selected ? P.utilityText : P.utilityTextMuted));
   parts.push(text(x + 40 * scale, y + 17 * scale, label, 12.5 * scale, P.utilityText, 500, 'start', 'IBM Plex Sans Condensed', 0.45 * scale));
   parts.push(text(x + 40 * scale, y + 32 * scale, status, 10.5 * scale, selected ? P.focus : P.utilityTextMuted, 400, 'start', 'IBM Plex Sans', 0.2 * scale));
   if (selected) parts.push(focusCorners(x, y, width, height, scale));
@@ -424,9 +373,9 @@ function readinessRow(x: number, y: number, glyphId: string, label: string, stat
   const statusColor = status === 'complete' ? P.selectionEdge : status === 'missing' ? P.invalidRust : P.disabled;
   const stateId = status === 'complete' ? 'state-complete' : status === 'missing' ? 'state-missing' : 'state-unavailable';
   return [
-    candidateGlyph(glyphId, x, y, 17 * scale, P.ink),
+    departmentGlyph(glyphId, x, y, 17 * scale, P.ink),
     text(x + 24 * scale, y + 13 * scale, label, 11.5 * scale, P.ink, 400, 'start', 'Courier Prime'),
-    candidateGlyph(stateId, x + 131 * scale, y, 17 * scale, statusColor),
+    departmentGlyph(stateId, x + 131 * scale, y, 17 * scale, statusColor),
   ].join('');
 }
 
@@ -474,7 +423,7 @@ function irisDiagnostic(x: number, y: number, width: number, height: number, tit
   body.forEach((copy, index) => parts.push(text(x + 13 * scale, y + 59 * scale + index * 21 * scale, copy, 10.5 * scale, P.irisSignal, 400, 'start', 'IBM Plex Mono')));
   if (invalid) {
     parts.push(rect(x + 4 * scale, y + 5 * scale, 4 * scale, height - 10 * scale, P.invalidRust));
-    parts.push(candidateGlyph('state-blocked', x + width - 31 * scale, y + 11 * scale, 20 * scale, P.invalidRust));
+    parts.push(departmentGlyph('state-blocked', x + width - 31 * scale, y + 11 * scale, 20 * scale, P.invalidRust));
   }
   return parts.join('');
 }
@@ -573,11 +522,11 @@ function routeShelf140(shelfY: number): string {
   ], true, 1.25));
   parts.push(rect(944, shelfY + 75, 318, 207, P.utilityWell, P.utilitySleeve, 2, 2));
   parts.push(text(962, shelfY + 109, 'ROUTE TOOL', 15, P.focus, 500, 'start', 'IBM Plex Sans Condensed', 0.8));
-  parts.push(candidateGlyph('route-output', 964, shelfY + 128, 34, P.utilityText));
+  parts.push(departmentGlyph('route-output', 964, shelfY + 128, 34, P.utilityText));
   parts.push(text(1008, shelfY + 151, 'OUTPUT LOCKED', 14, P.utilityText, 400, 'start', 'IBM Plex Sans'));
-  parts.push(candidateGlyph('route-input', 964, shelfY + 169, 34, P.utilityText));
+  parts.push(departmentGlyph('route-input', 964, shelfY + 169, 34, P.utilityText));
   parts.push(text(1008, shelfY + 192, 'INPUT LOCKED', 14, P.utilityText, 400, 'start', 'IBM Plex Sans'));
-  parts.push(candidateGlyph('route-wall-pass', 964, shelfY + 210, 34, P.invalidRust));
+  parts.push(departmentGlyph('route-wall-pass', 964, shelfY + 210, 34, P.invalidRust));
   parts.push(text(1008, shelfY + 233, 'WALL PASS MISSING', 14, P.invalidRust, 500, 'start', 'IBM Plex Sans'));
   parts.push(text(1244, shelfY + 270, `${Math.round(scale * 100)}% TYPE REFLOW`, 12, P.utilityTextMuted, 500, 'end', 'IBM Plex Sans Condensed', 0.6));
   return parts.join('');
@@ -630,9 +579,9 @@ function routeOverlay(topHeight: number, shelfY: number): string {
   points.forEach(([px, py], index) => {
     if (index !== 0 && index !== points.length - 1) parts.push(rect(px - 6, py - 6, 12, 12, index === 4 ? P.invalidRust : P.selectionEdge, P.darkRule, 2, 1));
   });
-  parts.push(candidateGlyph('route-output', points[0][0] - 19, points[0][1] - 19, 38, P.utilityText));
-  parts.push(candidateGlyph('route-input', points.at(-1)![0] - 19, points.at(-1)![1] - 19, 38, P.utilityText));
-  parts.push(candidateGlyph('route-wall-pass', 704, y - 129, 32, P.invalidRust));
+  parts.push(departmentGlyph('route-output', points[0][0] - 19, points[0][1] - 19, 38, P.utilityText));
+  parts.push(departmentGlyph('route-input', points.at(-1)![0] - 19, points.at(-1)![1] - 19, 38, P.utilityText));
+  parts.push(departmentGlyph('route-wall-pass', 704, y - 129, 32, P.invalidRust));
   parts.push(rect(744, y - 175, 280, 60, P.irisNavy, P.invalidRust, 2, 2));
   parts.push(text(760, y - 150, 'INVALID WALL CROSSING', 14, P.irisSignal, 400, 'start', 'IBM Plex Mono'));
   parts.push(text(760, y - 128, 'Choose shared wall bay.', 12, P.irisSignal, 400, 'start', 'IBM Plex Mono'));
@@ -670,7 +619,7 @@ function literalScreensSheet(fontCss: string, worldDataUrl: string): string {
     parts.push(text(entry.x, entry.y - 18, entry.label, 16, index === 3 ? P.irisSignal : P.focus, 500, 'start', 'IBM Plex Sans Condensed', 1));
     parts.push(`<g transform="translate(${entry.x} ${entry.y})">${screenScenario(entry.id, worldDataUrl, `world-${index}`)}</g>`);
   });
-  parts.push(text(width - 50, height - 20, 'WORLD IMAGE IS APPROVED COMPOSITION REFERENCE ONLY · NEW GLYPHS REMAIN REVIEW CANDIDATES · UNITY UNTOUCHED', 11, P.invalidRust, 500, 'end', 'IBM Plex Sans Condensed', 0.9));
+  parts.push(text(width - 50, height - 20, 'WORLD IMAGE IS APPROVED COMPOSITION REFERENCE ONLY · GLYPHS RESOLVE FROM CANONICAL TERRARIUM SOURCES · UNITY UNTOUCHED', 11, P.focus, 500, 'end', 'IBM Plex Sans Condensed', 0.9));
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
 }
 
@@ -704,7 +653,7 @@ async function stageApprovedFonts(fontCss: string): Promise<{ directory: string;
 function readme(): string {
   return `# Department-era UI production design v1
 
-Status: **Terrarium production-design source; stopped for visual approval**
+Status: **approved Terrarium production-design source; Unity deferred**
 
 This package creates the department-era UI in Terrarium before any Unity
 implementation begins. It converts the approved UI-E0 v3 material grammar and
@@ -723,9 +672,9 @@ Route failure with one repair sentence. The office remains the dominant image.
 
 ## Source boundaries
 
-- The five already-approved UI-E1 marks are canonical production SVGs.
-- Work-type, readiness, state, endpoint, wall-pass, and repair glyphs shown here
-  are review candidates only.
+- Five shared UI-E1 marks are canonical production SVGs.
+- Nineteen work-type, readiness, state, endpoint, wall-pass, and repair glyphs
+  now resolve through canonical Terrarium production SVGs.
 - Product illustrations are monochrome treatments derived from current
   canonical department-machine geometry; they are not separately redrawn SKUs.
 - Panels, cards, text, state surfaces, focus placement, room highlights,
@@ -779,7 +728,7 @@ export async function renderDepartmentEraUiProductionDesign(check = false): Prom
   const manifestSource = await readFile('assets/ui/department-era-design-v1/manifest.json', 'utf8');
   const worldBytes = await readFile(WORLD_REFERENCE);
   const metrics = {
-    status: 'terrarium-production-design-source-stopped-for-visual-approval',
+    status: 'terrarium-production-design-source-approved',
     source: {
       manifest: 'assets/ui/department-era-design-v1/manifest.json',
       manifestSha256: sha256(manifestSource),
@@ -799,7 +748,10 @@ export async function renderDepartmentEraUiProductionDesign(check = false): Prom
       { id: 'placement-valid', viewport: '1280x720', uiScale: 1, armed: true },
       { id: 'route-invalid', viewport: '1280x720', uiScale: 1.4, armed: true },
     ],
-    canonicalMarks: design.shapeLedger.canonicalNow,
+    canonicalMarks: [
+      ...design.shapeLedger.canonicalNow,
+      ...design.shapeLedger.promotedDepartmentGlyphs,
+    ],
     reviewCandidateMarks: design.shapeLedger.reviewCandidatesOnly,
     reservations: design.reservations,
     productionChanges: [

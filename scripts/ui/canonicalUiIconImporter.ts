@@ -31,6 +31,11 @@ interface Manifest {
   readonly icons: readonly ManifestIcon[];
 }
 
+export interface CanonicalUiIconFamilyContract {
+  readonly family: string;
+  readonly expectedIds: readonly string[];
+}
+
 export interface ImportedCanonicalUiIconArt {
   readonly id: string;
   readonly label: string;
@@ -42,7 +47,35 @@ export interface ImportedCanonicalUiIconArt {
   readonly shapes: readonly ShapeSpec[];
 }
 
-const EXPECTED_IDS = ['ui-divider', 'ui-corner', 'ui-focus', 'iris-mark', 'quotaco-mark'] as const;
+export const SHARED_UI_ICON_FAMILY = {
+  family: 'canonical-ui-shared-primitives-v1',
+  expectedIds: ['ui-divider', 'ui-corner', 'ui-focus', 'iris-mark', 'quotaco-mark'],
+} as const satisfies CanonicalUiIconFamilyContract;
+
+export const DEPARTMENT_UI_ICON_FAMILY = {
+  family: 'canonical-ui-department-glyphs-v1',
+  expectedIds: [
+    'work-intake',
+    'work-data-processing',
+    'work-delivery',
+    'ready-room',
+    'ready-designated',
+    'ready-equipped',
+    'ready-io',
+    'ready-connected',
+    'ready-staffed',
+    'ready-flowing',
+    'ready-all',
+    'state-complete',
+    'state-missing',
+    'state-blocked',
+    'state-unavailable',
+    'route-input',
+    'route-output',
+    'route-wall-pass',
+    'route-repair',
+  ],
+} as const satisfies CanonicalUiIconFamilyContract;
 const ALLOWED_ROOT_ATTRIBUTES = new Set([
   'xmlns', 'width', 'height', 'viewBox', 'data-ui-icon-id', 'data-icon-mode',
 ]);
@@ -215,16 +248,20 @@ function compareText(left: string, right: string): number {
   return left < right ? -1 : left > right ? 1 : 0;
 }
 
-function validateManifest(source: string, manifest: Manifest): void {
-  if (manifest.schemaVersion !== 1 || manifest.family !== 'canonical-ui-shared-primitives-v1' || manifest.authority !== 'canonical-svg') {
+function validateManifest(
+  source: string,
+  manifest: Manifest,
+  contract: CanonicalUiIconFamilyContract,
+): void {
+  if (manifest.schemaVersion !== 1 || manifest.family !== contract.family || manifest.authority !== 'canonical-svg') {
     fail(source, 'manifest identity or schema is unsupported');
   }
   if (manifest.canvas.width !== 128 || manifest.canvas.height !== 128 || manifest.canvas.origin.join(',') !== '64,64') {
     fail(source, 'manifest canvas must be 128 with origin 64,64');
   }
   const ids = manifest.icons.map((entry) => entry.id);
-  if ([...ids].sort(compareText).join(',') !== [...EXPECTED_IDS].sort(compareText).join(',')) {
-    fail(source, `manifest must contain exactly ${EXPECTED_IDS.join(', ')}`);
+  if ([...ids].sort(compareText).join(',') !== [...contract.expectedIds].sort(compareText).join(',')) {
+    fail(source, `manifest must contain exactly ${contract.expectedIds.join(', ')}`);
   }
   if (new Set(ids).size !== ids.length) fail(source, 'manifest repeats an icon id');
   for (const entry of manifest.icons) {
@@ -244,6 +281,7 @@ function validateManifest(source: string, manifest: Manifest): void {
 export async function compileCanonicalUiIconArt(
   inputDir: string,
   sourcePathPrefix: string,
+  contract: CanonicalUiIconFamilyContract = SHARED_UI_ICON_FAMILY,
 ): Promise<ImportedCanonicalUiIconArt[]> {
   const manifestFile = path.join(inputDir, 'manifest.json');
   const manifestSource = await readFile(manifestFile, 'utf8');
@@ -253,7 +291,7 @@ export async function compileCanonicalUiIconArt(
   } catch (error) {
     fail(manifestFile, `invalid JSON (${error instanceof Error ? error.message : String(error)})`);
   }
-  validateManifest(manifestFile, manifest);
+  validateManifest(manifestFile, manifest, contract);
 
   const imports = await Promise.all(manifest.icons.map(async (entry) => {
     const sourceFile = path.posix.join(sourcePathPrefix.replaceAll('\\', '/'), entry.file);

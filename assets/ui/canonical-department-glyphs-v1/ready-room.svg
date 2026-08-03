@@ -1,0 +1,6 @@
+<svg data-ui-icon-id="ready-room" data-icon-mode="tintable" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Room ready</title>
+  <desc>Approved department-era enclosed room and door mark.</desc>
+  <metadata>{"family":"canonical-ui-department-glyphs-v1","decision":"approved-redesign"}</metadata>
+  <g id="approved-mark" transform="translate(64 64)"><path id="room-frame" d="M -38.4 -38.4 H 38.4 V 38.4 H -38.4 Z" fill="none" stroke="#FFFFFF" stroke-width="9.6" stroke-linecap="square" stroke-linejoin="miter"/><path id="room-door" d="M 0 -38.4 V 38.4 M 0 14.4 H 19.2" fill="none" stroke="#FFFFFF" stroke-width="9.6" stroke-linecap="square" stroke-linejoin="miter"/></g>
+</svg>

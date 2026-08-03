@@ -1,8 +1,8 @@
 {
-  "status": "terrarium-production-design-source-stopped-for-visual-approval",
+  "status": "terrarium-production-design-source-approved",
   "source": {
     "manifest": "assets/ui/department-era-design-v1/manifest.json",
-    "manifestSha256": "ffcd913f9d60d08049a414ecbe9dfcc0b3d4d8b06af321b8ba26df750b3fee33",
+    "manifestSha256": "793c6c22133af7097393fb5db6045f3520e0e65e2227d2f54859a6f57addde2a",
     "fontPayload": "docs/previews/ui-e1a-source-fit-font-pilot-v1/01-production-font-pilot.svg",
     "worldReference": "/Users/tombiagioni/.codex/generated_images/019fc31e-f42d-7f23-b0ee-6635d674450b/exec-1244ea64-482b-4484-b7c9-576da0a93593.png",
     "worldReferenceSha256": "e2e660355ff79f7acdb4b501472b605650dbb7bed71b6d2e9345fd4e78752fe4"
@@ -10,15 +10,15 @@
   "outputs": [
     {
       "svg": "00-production-design-system.svg",
-      "svgSha256": "e95697d8dec280dcf0450bda8dd4fa0161b998f866caba000795bf1c2306a2ad",
+      "svgSha256": "d83d305305b1b83502062c8780cfa1600f0ed173f303026d968704aaa7524eb0",
       "png": "00-production-design-system.png",
-      "pngSha256": "1d5ea11a4dccbac0bf108eb0d26204f13e091eb385abab85ac2e61640467d39c"
+      "pngSha256": "5585f4bb14dc664d0cd3622bf1b32684a5fcef640b3ad775588a9dda20aedd5d"
     },
     {
       "svg": "01-literal-department-screens.svg",
-      "svgSha256": "18880c6a705d4de3cf8b0d8d1fdfd20078a936dfd01c7d089ffbbc2c80e4c51f",
+      "svgSha256": "3a184c5b123ec97a60c64a5c1f25ae1b7510992ed67187ccaa87bf2616b3bcff",
       "png": "01-literal-department-screens.png",
-      "pngSha256": "e830b3280b0e64777ab3dd46a8fbc3b4a133b3117e2df00e9929fb469e30a811"
+      "pngSha256": "0599d72bcb0d0bad54910b004b24a324df5879a464bc7eb1ea3c4802f0c75bfe"
     }
   ],
   "literalScreens": [
@@ -52,9 +52,7 @@
     "ui-corner",
     "ui-focus",
     "iris-mark",
-    "quotaco-mark"
-  ],
-  "reviewCandidateMarks": [
+    "quotaco-mark",
     "work-intake",
     "work-data-processing",
     "work-delivery",
@@ -75,6 +73,7 @@
     "route-wall-pass",
     "route-repair"
   ],
+  "reviewCandidateMarks": [],
   "reservations": {
     "amber": "dormant Capture only; absent from active department UI",
     "rose": "emotion only; absent from active department UI",

@@ -1,0 +1,6 @@
+<svg data-ui-icon-id="ready-flowing" data-icon-mode="tintable" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Flow ready</title>
+  <desc>Approved department-era repeating process-flow trace.</desc>
+  <metadata>{"family":"canonical-ui-department-glyphs-v1","decision":"approved-redesign"}</metadata>
+  <g id="approved-mark" transform="translate(64 64)"><path id="flow-trace" d="M -43.2 24 H -24 V -24 H 0 V 24 H 24 V -24 H 43.2" fill="none" stroke="#FFFFFF" stroke-width="9.6" stroke-linecap="square" stroke-linejoin="miter"/><path id="flow-header" d="M -33.6 -38.4 H 33.6" fill="none" stroke="#FFFFFF" stroke-width="9.6" stroke-linecap="square" stroke-linejoin="miter"/></g>
+</svg>

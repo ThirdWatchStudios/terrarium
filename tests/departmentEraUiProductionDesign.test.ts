@@ -23,6 +23,7 @@ interface DesignManifest {
   departmentSlice: { requiredScreens: string[] };
   shapeLedger: {
     canonicalNow: string[];
+    promotedDepartmentGlyphs: string[];
     reviewCandidatesOnly: string[];
     mustRemainLayoutOrRuntimeGeometry: string[];
   };
@@ -56,7 +57,7 @@ describe('department-era UI production design source', () => {
   it('locks the Terrarium and deferred Unity ownership boundary', async () => {
     const design = JSON.parse(await readFile(SOURCE, 'utf8')) as DesignManifest;
 
-    expect(design.status).toBe('terrarium-production-design-source');
+    expect(design.status).toBe('terrarium-production-design-source-approved');
     expect(design.ownership.terrarium).toEqual(expect.arrayContaining([
       'visual design tokens',
       'literal screen compositions',
@@ -104,9 +105,14 @@ describe('department-era UI production design source', () => {
     ]);
   });
 
-  it('separates the five approved shapes from review-only candidates and layout geometry', async () => {
+  it('separates the 24 approved SVG shapes from layout and runtime geometry', async () => {
     const design = JSON.parse(await readFile(SOURCE, 'utf8')) as DesignManifest;
-    const { canonicalNow, reviewCandidatesOnly, mustRemainLayoutOrRuntimeGeometry } = design.shapeLedger;
+    const {
+      canonicalNow,
+      promotedDepartmentGlyphs,
+      reviewCandidatesOnly,
+      mustRemainLayoutOrRuntimeGeometry,
+    } = design.shapeLedger;
 
     expect(canonicalNow).toEqual([
       'ui-divider',
@@ -115,9 +121,10 @@ describe('department-era UI production design source', () => {
       'iris-mark',
       'quotaco-mark',
     ]);
-    expect(reviewCandidatesOnly).toHaveLength(19);
-    expect(new Set(reviewCandidatesOnly).size).toBe(reviewCandidatesOnly.length);
-    expect(reviewCandidatesOnly.some((id) => canonicalNow.includes(id))).toBe(false);
+    expect(promotedDepartmentGlyphs).toHaveLength(19);
+    expect(new Set(promotedDepartmentGlyphs).size).toBe(promotedDepartmentGlyphs.length);
+    expect(promotedDepartmentGlyphs.some((id) => canonicalNow.includes(id))).toBe(false);
+    expect(reviewCandidatesOnly).toEqual([]);
     expect(mustRemainLayoutOrRuntimeGeometry).toEqual(expect.arrayContaining([
       'all panels and cards',
       'placement footprints and cell validity',
@@ -134,7 +141,7 @@ describe('department-era UI production design source', () => {
     const metrics = JSON.parse(metricsSource) as Metrics;
     const packageJson = JSON.parse(packageSource) as { scripts: Record<string, string> };
 
-    expect(metrics.status).toBe('terrarium-production-design-source-stopped-for-visual-approval');
+    expect(metrics.status).toBe('terrarium-production-design-source-approved');
     expect(metrics.source.manifestSha256).toBe(sha256(manifestSource));
     expect(metrics.literalScreens).toEqual([
       { id: 'chain-browse', viewport: '1280x720', uiScale: 1, armed: false },
@@ -146,6 +153,8 @@ describe('department-era UI production design source', () => {
       'tsx scripts/departmentEraUiProductionDesign.ts',
     );
     expect(packageJson.scripts['ui:department-design:check']).toContain('--check');
+    expect(metrics.canonicalMarks).toHaveLength(24);
+    expect(metrics.reviewCandidateMarks).toEqual([]);
 
     for (const output of metrics.outputs) {
       const [svg, png] = await Promise.all([
@@ -167,6 +176,7 @@ describe('department-era UI production design source', () => {
     expect(literalScreens).not.toContain('#A45A6C');
     expect(literalScreens).toContain('REPAIR: CHOOSE THE SHARED WALL BAY.');
     expect(literalScreens).toContain('WORLD IMAGE IS APPROVED COMPOSITION REFERENCE ONLY');
+    expect(literalScreens).toContain('GLYPHS RESOLVE FROM CANONICAL TERRARIUM SOURCES');
     expect(literalScreens).toContain('UNITY UNTOUCHED');
   });
 });

@@ -8,8 +8,8 @@ describe('canonical SVG reference guide', () => {
     const { counts, entries, exclusions } = inventory.manifest;
 
     expect(counts).toMatchObject({
-      exactSourceFiles: 385,
-      production: 307,
+      exactSourceFiles: 404,
+      production: 326,
       productionDependencies: 74,
       deferred: 4,
       derivedWallFrames: 47,
@@ -43,6 +43,7 @@ describe('canonical SVG reference guide', () => {
     expect(counts.byCategory['characters/outfit']).toBe(83);
     expect(counts.byCategory['props/iris-hardware']).toBe(3);
     expect(counts.byCategory['ui/shared-primitives']).toBe(5);
+    expect(counts.byCategory['ui/department-glyphs']).toBe(19);
     expect(
       entries
         .filter((entry) => entry.category === 'props/iris-hardware')
@@ -63,6 +64,31 @@ describe('canonical SVG reference guide', () => {
       'ui-corner',
       'ui-divider',
       'ui-focus',
+    ]);
+    expect(
+      entries
+        .filter((entry) => entry.category === 'ui/department-glyphs')
+        .map((entry) => entry.assetId),
+    ).toEqual([
+      'ready-all',
+      'ready-connected',
+      'ready-designated',
+      'ready-equipped',
+      'ready-flowing',
+      'ready-io',
+      'ready-room',
+      'ready-staffed',
+      'route-input',
+      'route-output',
+      'route-repair',
+      'route-wall-pass',
+      'state-blocked',
+      'state-complete',
+      'state-missing',
+      'state-unavailable',
+      'work-data-processing',
+      'work-delivery',
+      'work-intake',
     ]);
   });
 

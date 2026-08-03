@@ -1,6 +1,6 @@
 # Department-era UI production design v1
 
-Status: **Terrarium production-design source; stopped for visual approval**
+Status: **approved Terrarium production-design source; Unity deferred**
 
 This package creates the department-era UI in Terrarium before any Unity
 implementation begins. It converts the approved UI-E0 v3 material grammar and
@@ -19,9 +19,9 @@ Route failure with one repair sentence. The office remains the dominant image.
 
 ## Source boundaries
 
-- The five already-approved UI-E1 marks are canonical production SVGs.
-- Work-type, readiness, state, endpoint, wall-pass, and repair glyphs shown here
-  are review candidates only.
+- Five shared UI-E1 marks are canonical production SVGs.
+- Nineteen work-type, readiness, state, endpoint, wall-pass, and repair glyphs
+  now resolve through canonical Terrarium production SVGs.
 - Product illustrations are monochrome treatments derived from current
   canonical department-machine geometry; they are not separately redrawn SKUs.
 - Panels, cards, text, state surfaces, focus placement, room highlights,

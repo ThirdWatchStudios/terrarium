@@ -315,6 +315,15 @@ to own carriers, states, typography, accessibility, interaction, and layout.
 Browser export, Unity import, and the separate Direction B font-asset/USS gate
 remain downstream work; this Terrarium source promotion does not claim them.
 
+After approval of the literal department-era production-design sheet, the
+second UI-E1 source slice promoted 19 additional tintable stable IDs under
+`assets/ui/canonical-department-glyphs-v1/`: three work-type marks, eight
+readiness marks, four state marks, and four route marks. Their SVGs preserve
+the approved silhouettes and compile into the same generated receiver as the
+five shared primitives. Panels, cards, text, control surfaces, room and
+placement overlays, and tube path segments remain Unity UI Toolkit or runtime
+geometry; this source slice does not move those boundaries.
+
 ### P4 — authored exterior base silhouettes
 
 Convert the remaining deliberate flora bases:

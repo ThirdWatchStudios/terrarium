@@ -173,6 +173,27 @@ export const ICONS: IconDef[] = [
     shapes: [stroke('M -26 -14 L -6 -14 L 0 -8 L 26 -8 L 26 20 L -26 20 Z', 8)],
   },
 
+  // --- Department-era Build work, readiness, state, and route glyphs -------
+  { id: 'work-intake', label: 'Intake work', mode: 'tintable', shapes: canonicalUiIconShapes('work-intake', 'tintable') },
+  { id: 'work-data-processing', label: 'Data processing work', mode: 'tintable', shapes: canonicalUiIconShapes('work-data-processing', 'tintable') },
+  { id: 'work-delivery', label: 'Delivery work', mode: 'tintable', shapes: canonicalUiIconShapes('work-delivery', 'tintable') },
+  { id: 'ready-room', label: 'Room ready', mode: 'tintable', shapes: canonicalUiIconShapes('ready-room', 'tintable') },
+  { id: 'ready-designated', label: 'Designation ready', mode: 'tintable', shapes: canonicalUiIconShapes('ready-designated', 'tintable') },
+  { id: 'ready-equipped', label: 'Equipment ready', mode: 'tintable', shapes: canonicalUiIconShapes('ready-equipped', 'tintable') },
+  { id: 'ready-io', label: 'Input and output ready', mode: 'tintable', shapes: canonicalUiIconShapes('ready-io', 'tintable') },
+  { id: 'ready-connected', label: 'Connection ready', mode: 'tintable', shapes: canonicalUiIconShapes('ready-connected', 'tintable') },
+  { id: 'ready-staffed', label: 'Staffing ready', mode: 'tintable', shapes: canonicalUiIconShapes('ready-staffed', 'tintable') },
+  { id: 'ready-flowing', label: 'Flow ready', mode: 'tintable', shapes: canonicalUiIconShapes('ready-flowing', 'tintable') },
+  { id: 'ready-all', label: 'Department ready', mode: 'tintable', shapes: canonicalUiIconShapes('ready-all', 'tintable') },
+  { id: 'state-complete', label: 'Complete state', mode: 'tintable', shapes: canonicalUiIconShapes('state-complete', 'tintable') },
+  { id: 'state-missing', label: 'Missing state', mode: 'tintable', shapes: canonicalUiIconShapes('state-missing', 'tintable') },
+  { id: 'state-blocked', label: 'Blocked state', mode: 'tintable', shapes: canonicalUiIconShapes('state-blocked', 'tintable') },
+  { id: 'state-unavailable', label: 'Unavailable state', mode: 'tintable', shapes: canonicalUiIconShapes('state-unavailable', 'tintable') },
+  { id: 'route-input', label: 'Route input', mode: 'tintable', shapes: canonicalUiIconShapes('route-input', 'tintable') },
+  { id: 'route-output', label: 'Route output', mode: 'tintable', shapes: canonicalUiIconShapes('route-output', 'tintable') },
+  { id: 'route-wall-pass', label: 'Route wall pass', mode: 'tintable', shapes: canonicalUiIconShapes('route-wall-pass', 'tintable') },
+  { id: 'route-repair', label: 'Route repair', mode: 'tintable', shapes: canonicalUiIconShapes('route-repair', 'tintable') },
+
   // --- Need glyphs (tintable) — the six canonical needs ----------------------
   { id: 'need-recognition', label: 'Recognition', mode: 'tintable', shapes: [fill('M 0 -28 L 8 -8 L 30 -8 L 12 6 L 18 28 L 0 14 L -18 28 L -12 6 L -30 -8 L -8 -8 Z')] },
   { id: 'need-competence', label: 'Competence', mode: 'tintable', shapes: [stroke('M -22 0 L -6 18 L 24 -20', 10)] },

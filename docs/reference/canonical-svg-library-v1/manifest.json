@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "guide": "Terrarium canonical SVG library",
   "counts": {
-    "exactSourceFiles": 385,
-    "production": 307,
+    "exactSourceFiles": 404,
+    "production": 326,
     "productionDependencies": 74,
     "deferred": 4,
     "derivedWallFrames": 47,
@@ -20,6 +20,7 @@
       "props/workhorse": 54,
       "surfaces/floors": 12,
       "surfaces/grass": 3,
+      "ui/department-glyphs": 19,
       "ui/shared-primitives": 5,
       "walls/bevel": 12,
       "walls/equal-height-direct": 10,
@@ -2168,6 +2169,139 @@
       "status": "production",
       "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/ground/ground-grass.svg",
       "sha256": "cb4ba412d9a2a1382406f816a53e759cc51233dd3f83e4930dfadeab6391cda7"
+    },
+    {
+      "assetId": "ready-all",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/ready-all.svg",
+      "sha256": "465778a430df38e3bc6039199555c49bc1512ccdf1321f9b0b8f3743e724efae"
+    },
+    {
+      "assetId": "ready-connected",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/ready-connected.svg",
+      "sha256": "30d1eeabd06ec10f58a6f853268c3a3bbe54d812c8deeb604d57b0b21f811c1c"
+    },
+    {
+      "assetId": "ready-designated",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/ready-designated.svg",
+      "sha256": "6481102da7e1ebc6cfde2774aabc9a65ebdb8a39ba70156c02776d6b012cc791"
+    },
+    {
+      "assetId": "ready-equipped",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/ready-equipped.svg",
+      "sha256": "3c5f44cfc89fc9aaf578a4a5e4fe6708070acef72b1cf6d607035c0d4a822ae7"
+    },
+    {
+      "assetId": "ready-flowing",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/ready-flowing.svg",
+      "sha256": "cd472f0db6e808489b1bae49f118ddb2ed4111daca9494f8f25ccbf85264345c"
+    },
+    {
+      "assetId": "ready-io",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/ready-io.svg",
+      "sha256": "634269572e4df0023bf0a4cbb951cbb5c44db5b5ae7b69861411f919b5cf928f"
+    },
+    {
+      "assetId": "ready-room",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/ready-room.svg",
+      "sha256": "e3022f864f440c2c609940e450b5edef172034de02cad0b5a02d141493884130"
+    },
+    {
+      "assetId": "ready-staffed",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/ready-staffed.svg",
+      "sha256": "7efbdc4d14a228b329d387adde58ea81c29194fb04a4f44ae0001b39401e95f3"
+    },
+    {
+      "assetId": "route-input",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/route-input.svg",
+      "sha256": "4d5340433913c1e58283ef3bd6733dc2c52a73cabc64b2ef46f0a4679e955fd1"
+    },
+    {
+      "assetId": "route-output",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/route-output.svg",
+      "sha256": "2ca528c402ffe22d5a41213c895961a5fa0a7a2d95dd59dd91a623996264c8e3"
+    },
+    {
+      "assetId": "route-repair",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/route-repair.svg",
+      "sha256": "50766ba1355052e8cbdf500d3cbae70f8808a08609d2bd028b0109bb9ac84c8a"
+    },
+    {
+      "assetId": "route-wall-pass",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/route-wall-pass.svg",
+      "sha256": "63e2993db68daf9161a97a9c0187632e311db79a669a6ca42b46c1d566c93531"
+    },
+    {
+      "assetId": "state-blocked",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/state-blocked.svg",
+      "sha256": "6c75d59c4233be316b908074b0a233458cfd516ac6b4958b447a9f6f8031960b"
+    },
+    {
+      "assetId": "state-complete",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/state-complete.svg",
+      "sha256": "25865ddc8bf7449938f2f04850e85241629d988415fb18ab8466ea339732f475"
+    },
+    {
+      "assetId": "state-missing",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/state-missing.svg",
+      "sha256": "589401a1fbf7e24cc102bda9b65335595d51468772a820491d9ac6653530a9f4"
+    },
+    {
+      "assetId": "state-unavailable",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/state-unavailable.svg",
+      "sha256": "4c2c8f9b6ffad325a0791a0419544bf8644cc9324c64649266eb7d6f8acf8c20"
+    },
+    {
+      "assetId": "work-data-processing",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/work-data-processing.svg",
+      "sha256": "ffd0ae8b7137dcf3094aeeb2d842bcca369c17ed805d54e160a2fca6ff1bb5ed"
+    },
+    {
+      "assetId": "work-delivery",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/work-delivery.svg",
+      "sha256": "0fd6b7fd9fc27c0c616375c4c9458ebbd890a75dd04c2e13ee8c9a855d708d44"
+    },
+    {
+      "assetId": "work-intake",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/work-intake.svg",
+      "sha256": "ffee3617699131b198524ab321515e9387efc31933845e45a380728289311a32"
     },
     {
       "assetId": "iris-mark",

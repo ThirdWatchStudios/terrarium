@@ -55,6 +55,7 @@ export type CanonicalSvgCategory =
   | 'surfaces/floors'
   | 'surfaces/grass'
   | 'ui/shared-primitives'
+  | 'ui/department-glyphs'
   | 'walls/equal-height-direct'
   | 'walls/equal-height-promoted-proof'
   | 'walls/bevel';
@@ -362,23 +363,42 @@ export async function collectCanonicalSvgReferenceInventory(
     );
   }
 
-  const uiSourceFiles = CANONICAL_UI_ICON_ART
+  const uiSharedSourceFiles = CANONICAL_UI_ICON_ART
+    .filter((icon) => icon.sourceFile.startsWith('assets/ui/canonical-shared-primitives-v1/'))
     .map((icon) => icon.sourceFile)
     .sort(compareText);
-  const actualUiFiles = relativeFiles(
+  const actualUiSharedFiles = relativeFiles(
     root,
     await svgFilesUnder(
       path.join(root, 'assets', 'ui', 'canonical-shared-primitives-v1'),
     ),
   );
-  assertExactCoverage('UI shared primitive', actualUiFiles, uiSourceFiles);
+  assertExactCoverage('UI shared primitive', actualUiSharedFiles, uiSharedSourceFiles);
+
+  const uiDepartmentSourceFiles = CANONICAL_UI_ICON_ART
+    .filter((icon) => icon.sourceFile.startsWith('assets/ui/canonical-department-glyphs-v1/'))
+    .map((icon) => icon.sourceFile)
+    .sort(compareText);
+  const actualUiDepartmentFiles = relativeFiles(
+    root,
+    await svgFilesUnder(
+      path.join(root, 'assets', 'ui', 'canonical-department-glyphs-v1'),
+    ),
+  );
+  assertExactCoverage('UI department glyph', actualUiDepartmentFiles, uiDepartmentSourceFiles);
+
   for (const icon of CANONICAL_UI_ICON_ART) {
+    const category: CanonicalSvgCategory = icon.sourceFile.startsWith(
+      'assets/ui/canonical-shared-primitives-v1/',
+    )
+      ? 'ui/shared-primitives'
+      : 'ui/department-glyphs';
     entries.push(
       await sourceEntry(
         root,
         icon.sourceFile,
         icon.id,
-        'ui/shared-primitives',
+        category,
         'production',
       ),
     );
@@ -983,9 +1003,12 @@ function overviewGroups(
     },
     {
       id: 'ui',
-      label: 'Shared UI primitives',
-      note: 'Approved UI-E1 exact inversions and redesigns on existing stable export ids.',
-      entries: entriesFor(inventory, ['ui/shared-primitives']),
+      label: 'Shared and department UI glyphs',
+      note: 'Approved UI-E1 shared marks plus department-era work, readiness, state, and route glyphs.',
+      entries: entriesFor(inventory, [
+        'ui/shared-primitives',
+        'ui/department-glyphs',
+      ]),
     },
     {
       id: 'walls',
@@ -1159,9 +1182,9 @@ function wallSheet(inventory: CanonicalSvgReferenceInventory): string {
 
 function uiSheet(inventory: CanonicalSvgReferenceInventory): string {
   return renderSourceSheet({
-    title: 'Terrarium canonical SVG library · shared UI primitives',
+    title: 'Terrarium canonical SVG library · UI marks and glyphs',
     subtitle:
-      'Five UI-E1 source-owned marks · carriers, states, text, and interaction remain Unity-owned',
+      'Twenty-four source-owned marks · carriers, state surfaces, text, paths, and interaction remain Unity-owned',
     groups: [
       {
         id: 'ui-shared-primitives',
@@ -1169,9 +1192,15 @@ function uiSheet(inventory: CanonicalSvgReferenceInventory): string {
         note: 'Exact authority inversions plus the approved square-corner and four-tick-focus redesigns.',
         entries: entriesFor(inventory, ['ui/shared-primitives']),
       },
+      {
+        id: 'ui-department-glyphs',
+        label: 'Department-era work, readiness, state, and route marks',
+        note: 'Nineteen approved tintable silhouettes promoted from the literal department design source.',
+        entries: entriesFor(inventory, ['ui/department-glyphs']),
+      },
     ],
-    columns: 5,
-    cellHeight: 330,
+    columns: 6,
+    cellHeight: 280,
   });
 }
 
@@ -1282,8 +1311,11 @@ function indexHtml(inventory: CanonicalSvgReferenceInventory): string {
     ],
     [
       'ui',
-      'Shared UI primitives',
-      `${categoryCount(inventory, ['ui/shared-primitives'])} exact files`,
+      'UI marks and glyphs',
+      `${categoryCount(inventory, [
+        'ui/shared-primitives',
+        'ui/department-glyphs',
+      ])} exact files`,
     ],
     [
       'walls',

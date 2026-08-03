@@ -3,40 +3,53 @@ import path from 'node:path';
 
 import {
   compileCanonicalUiIconArt,
+  DEPARTMENT_UI_ICON_FAMILY,
   emitCanonicalUiIconArt,
+  SHARED_UI_ICON_FAMILY,
 } from './ui/canonicalUiIconImporter';
 
 interface Options {
   readonly check: boolean;
-  readonly input: string;
   readonly output: string;
 }
 
 function parseArgs(argv: readonly string[]): Options {
   let check = false;
-  let input = path.resolve('assets/ui/canonical-shared-primitives-v1');
   let output = path.resolve('src/parts/generated/canonicalUiIconArt.ts');
   for (let index = 0; index < argv.length; index += 1) {
     const argument = argv[index];
     if (argument === '--check') check = true;
     else if (argument === '--write') check = false;
-    else if (argument === '--input' || argument === '--out') {
+    else if (argument === '--out') {
       const value = argv[++index];
       if (!value) throw new Error(`${argument} requires a path`);
-      if (argument === '--input') input = path.resolve(value);
-      else output = path.resolve(value);
+      output = path.resolve(value);
     } else if (argument === '--help' || argument === '-h') {
-      process.stdout.write('Usage: tsx scripts/importCanonicalUiIcons.ts [--check|--write] [--input <dir>] [--out <file>]\n');
+      process.stdout.write('Usage: tsx scripts/importCanonicalUiIcons.ts [--check|--write] [--out <file>]\n');
       process.exit(0);
     } else throw new Error(`Unknown argument ${argument}`);
   }
-  return { check, input, output };
+  return { check, output };
 }
+
+const SOURCE_FAMILIES = [
+  {
+    input: 'assets/ui/canonical-shared-primitives-v1',
+    contract: SHARED_UI_ICON_FAMILY,
+  },
+  {
+    input: 'assets/ui/canonical-department-glyphs-v1',
+    contract: DEPARTMENT_UI_ICON_FAMILY,
+  },
+] as const;
 
 async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
-  const prefix = path.relative(process.cwd(), options.input).replaceAll(path.sep, '/');
-  const imported = await compileCanonicalUiIconArt(options.input, prefix);
+  const imported = (await Promise.all(SOURCE_FAMILIES.map(async ({ input, contract }) => {
+    const directory = path.resolve(input);
+    const prefix = path.relative(process.cwd(), directory).replaceAll(path.sep, '/');
+    return compileCanonicalUiIconArt(directory, prefix, contract);
+  }))).flat().sort((left, right) => left.id.localeCompare(right.id));
   const expected = emitCanonicalUiIconArt(imported);
   const current = await readFile(options.output, 'utf8').catch(() => undefined);
   if (options.check) {

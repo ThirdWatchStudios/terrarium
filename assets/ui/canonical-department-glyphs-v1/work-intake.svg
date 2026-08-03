@@ -1,0 +1,6 @@
+<svg data-ui-icon-id="work-intake" data-icon-mode="tintable" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Intake work</title>
+  <desc>Approved department-era tray and inbound arrow mark for Intake work.</desc>
+  <metadata>{"family":"canonical-ui-department-glyphs-v1","decision":"approved-redesign"}</metadata>
+  <g id="approved-mark" transform="translate(64 64)"><path id="intake-tray" d="M -38.4 14.4 H 38.4 V 38.4 H -38.4 Z" fill="none" stroke="#FFFFFF" stroke-width="9.6" stroke-linecap="square" stroke-linejoin="miter"/><path id="intake-arrow" d="M 0 -43.2 V 4.8 M -19.2 -14.4 L 0 4.8 L 19.2 -14.4" fill="none" stroke="#FFFFFF" stroke-width="9.6" stroke-linecap="square" stroke-linejoin="miter"/></g>
+</svg>

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "department-era-design-v1",
-  "status": "terrarium-production-design-source",
+  "status": "terrarium-production-design-source-approved",
   "approvalBasis": [
     "docs/previews/ui-e0-construction-kit-v3",
     "docs/previews/ui-e1a-source-fit-font-pilot-v1",
@@ -170,7 +170,7 @@
       "iris-mark",
       "quotaco-mark"
     ],
-    "reviewCandidatesOnly": [
+    "promotedDepartmentGlyphs": [
       "work-intake",
       "work-data-processing",
       "work-delivery",
@@ -191,6 +191,7 @@
       "route-wall-pass",
       "route-repair"
     ],
+    "reviewCandidatesOnly": [],
     "mustRemainLayoutOrRuntimeGeometry": [
       "all panels and cards",
       "all text and tables",
