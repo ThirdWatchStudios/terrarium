@@ -10,6 +10,7 @@ import path from 'node:path';
 import { Resvg } from '@resvg/resvg-js';
 
 import type { ShapeSpec } from '../src/core/types';
+import { CANONICAL_UI_ICON_ART } from '../src/parts/generated/canonicalUiIconArt';
 import { IMPORTED_PART_PROVENANCE } from '../src/parts/generated/importedPartArt';
 import {
   DEPARTMENT_MACHINE_TEMPLATE_DEFINITIONS,
@@ -53,6 +54,7 @@ export type CanonicalSvgCategory =
   | 'props/deferred-gameplay'
   | 'surfaces/floors'
   | 'surfaces/grass'
+  | 'ui/shared-primitives'
   | 'walls/equal-height-direct'
   | 'walls/equal-height-promoted-proof'
   | 'walls/bevel';
@@ -355,6 +357,28 @@ export async function collectCanonicalSvgReferenceInventory(
         prop.sourceFile,
         prop.id,
         'props/iris-hardware',
+        'production',
+      ),
+    );
+  }
+
+  const uiSourceFiles = CANONICAL_UI_ICON_ART
+    .map((icon) => icon.sourceFile)
+    .sort(compareText);
+  const actualUiFiles = relativeFiles(
+    root,
+    await svgFilesUnder(
+      path.join(root, 'assets', 'ui', 'canonical-shared-primitives-v1'),
+    ),
+  );
+  assertExactCoverage('UI shared primitive', actualUiFiles, uiSourceFiles);
+  for (const icon of CANONICAL_UI_ICON_ART) {
+    entries.push(
+      await sourceEntry(
+        root,
+        icon.sourceFile,
+        icon.id,
+        'ui/shared-primitives',
         'production',
       ),
     );
@@ -958,6 +982,12 @@ function overviewGroups(
       ]),
     },
     {
+      id: 'ui',
+      label: 'Shared UI primitives',
+      note: 'Approved UI-E1 exact inversions and redesigns on existing stable export ids.',
+      entries: entriesFor(inventory, ['ui/shared-primitives']),
+    },
+    {
       id: 'walls',
       label: 'Active wall source dependencies',
       note: 'Only exact SVGs referenced by the live 47-frame mapping, plus the bevel kit.',
@@ -1127,6 +1157,24 @@ function wallSheet(inventory: CanonicalSvgReferenceInventory): string {
   });
 }
 
+function uiSheet(inventory: CanonicalSvgReferenceInventory): string {
+  return renderSourceSheet({
+    title: 'Terrarium canonical SVG library · shared UI primitives',
+    subtitle:
+      'Five UI-E1 source-owned marks · carriers, states, text, and interaction remain Unity-owned',
+    groups: [
+      {
+        id: 'ui-shared-primitives',
+        label: 'Shared marks and ornaments',
+        note: 'Exact authority inversions plus the approved square-corner and four-tick-focus redesigns.',
+        entries: entriesFor(inventory, ['ui/shared-primitives']),
+      },
+    ],
+    columns: 5,
+    cellHeight: 330,
+  });
+}
+
 function markdownGuide(
   inventory: CanonicalSvgReferenceInventory,
 ): string {
@@ -1150,6 +1198,7 @@ by the live import registries; it does not reconstruct the art from TypeScript.
 - [Complete one-sheet](./overview.svg) ([PNG](./overview.png))
 - [Character sources](./characters.svg) ([PNG](./characters.png))
 - [Props and surfaces](./props-surfaces.svg) ([PNG](./props-surfaces.png))
+- [Shared UI primitives](./ui.svg) ([PNG](./ui.png))
 - [Wall system](./walls.svg) ([PNG](./walls.png))
 - [Machine-readable manifest](./manifest.json)
 - [Browser index](./index.html)
@@ -1230,6 +1279,11 @@ function indexHtml(inventory: CanonicalSvgReferenceInventory): string {
         'surfaces/floors',
         'surfaces/grass',
       ])} exact files`,
+    ],
+    [
+      'ui',
+      'Shared UI primitives',
+      `${categoryCount(inventory, ['ui/shared-primitives'])} exact files`,
     ],
     [
       'walls',
@@ -1331,6 +1385,7 @@ export async function renderCanonicalSvgReferenceGuide(
     ['overview', overviewSheet(inventory)],
     ['characters', characterSheet(inventory)],
     ['props-surfaces', propSurfaceSheet(inventory)],
+    ['ui', uiSheet(inventory)],
     ['walls', wallSheet(inventory)],
   ] as const;
   if (!check) await mkdir(output, { recursive: true });

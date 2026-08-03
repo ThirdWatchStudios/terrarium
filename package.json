@@ -39,6 +39,10 @@
     "cafeteria-facilities:context:preview": "tsx scripts/canonicalCafeteriaFacilityContextReview.ts",
     "cafeteria-facilities:source-fit:preview": "tsx scripts/canonicalCafeteriaFacilitySourceFitProof.ts",
     "ui-foundation:context:preview": "tsx scripts/canonicalUiFoundationContextReview.ts",
+    "ui-shared:import": "tsx scripts/importCanonicalUiIcons.ts --write",
+    "ui-shared:import:check": "tsx scripts/importCanonicalUiIcons.ts --check",
+    "ui:department-design": "tsx scripts/departmentEraUiProductionDesign.ts",
+    "ui:department-design:check": "tsx scripts/departmentEraUiProductionDesign.ts --check",
     "department-machines:import": "tsx scripts/importQuotaCoDepartmentMachines.ts --write",
     "department-machines:import:check": "tsx scripts/importQuotaCoDepartmentMachines.ts --check",
     "department-machines:production:preview": "tsx scripts/quotaCoDepartmentMachineProductionValidationPreview.ts",
@@ -84,7 +88,7 @@
     "style:serve": "tsx scripts/styleLoop.ts --serve-only",
     "iris:preview": "tsx scripts/irisFamilyPreview.ts",
     "flora:preview": "tsx scripts/floraFieldPreview.ts",
-    "assets:check": "npm run parts:check && npm run props:import:check && npm run iris-hardware:import:check && npm run department-machines:import:check && npm run surfaces:import:check && npm run walls:import:check"
+    "assets:check": "npm run parts:check && npm run props:import:check && npm run iris-hardware:import:check && npm run department-machines:import:check && npm run surfaces:import:check && npm run walls:import:check && npm run ui-shared:import:check"
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",

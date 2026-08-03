@@ -8,8 +8,8 @@ describe('canonical SVG reference guide', () => {
     const { counts, entries, exclusions } = inventory.manifest;
 
     expect(counts).toMatchObject({
-      exactSourceFiles: 380,
-      production: 302,
+      exactSourceFiles: 385,
+      production: 307,
       productionDependencies: 74,
       deferred: 4,
       derivedWallFrames: 47,
@@ -42,6 +42,7 @@ describe('canonical SVG reference guide', () => {
     expect(counts.byCategory['characters/accessory']).toBe(3);
     expect(counts.byCategory['characters/outfit']).toBe(83);
     expect(counts.byCategory['props/iris-hardware']).toBe(3);
+    expect(counts.byCategory['ui/shared-primitives']).toBe(5);
     expect(
       entries
         .filter((entry) => entry.category === 'props/iris-hardware')
@@ -52,6 +53,17 @@ describe('canonical SVG reference guide', () => {
         .filter((entry) => entry.category === 'props/department-machines')
         .every((entry) => entry.status === 'production'),
     ).toBe(true);
+    expect(
+      entries
+        .filter((entry) => entry.category === 'ui/shared-primitives')
+        .map((entry) => entry.assetId),
+    ).toEqual([
+      'iris-mark',
+      'quotaco-mark',
+      'ui-corner',
+      'ui-divider',
+      'ui-focus',
+    ]);
   });
 
   it('shows all 47 wall masks while listing only active SVG dependencies', async () => {

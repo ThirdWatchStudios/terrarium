@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-ui-icon-id="ui-corner" data-icon-mode="tintable">
+  <title>Corner ornament</title>
+  <desc>Square open administrative corner bracket approved by the UI-E1a source-fit gate.</desc>
+  <metadata>{"family":"canonical-ui-shared-primitives-v1","decision":"approved-redesign"}</metadata>
+  <g id="approved-mark" transform="translate(64 64)">
+    <path id="square-corner" d="M -28 28 V -28 H 28" fill="none" stroke="#FFFFFF" stroke-width="8" stroke-linecap="square" stroke-linejoin="miter"/>
+  </g>
+</svg>

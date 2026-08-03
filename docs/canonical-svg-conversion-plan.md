@@ -303,6 +303,18 @@ Because this is a large vocabulary, migrate it by semantic family rather than
 one flag-day conversion. Add completeness tests against the exported icon
 catalog after each slice.
 
+The first UI-E1 slice entered Terrarium production source authority on
+2026-08-03 after explicit approval of the UI-E1a source-fit gate. Five exact
+stable IDs are now backed by checked-in SVGs under
+`assets/ui/canonical-shared-primitives-v1/`: exact authority inversions for
+`ui-divider`, `iris-mark`, and `quotaco-mark`, plus the approved square
+`ui-corner` and four-tick `ui-focus` redesigns. The strict importer generates
+the disposable `ShapeSpec` receiver, ordinary asset checks are read-only, and
+pixel-parity tests cover every approved literal review size. Unity continues
+to own carriers, states, typography, accessibility, interaction, and layout.
+Browser export, Unity import, and the separate Direction B font-asset/USS gate
+remain downstream work; this Terrarium source promotion does not claim them.
+
 ### P4 — authored exterior base silhouettes
 
 Convert the remaining deliberate flora bases:

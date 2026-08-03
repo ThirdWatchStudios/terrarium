@@ -81,10 +81,10 @@ function text(
   y: number,
   value: string,
   size = 16,
-  color = C.cream,
+  color: string = C.cream,
   weight = 500,
   anchor: TextAnchor = 'start',
-  family = bodyFont,
+  family: string = bodyFont,
   letterSpacing = 0,
 ): string {
   return `<text x="${x}" y="${y}" fill="${color}" font-family="${family}" font-size="${size}" font-weight="${weight}" text-anchor="${anchor}" letter-spacing="${letterSpacing}">${esc(value)}</text>`;
@@ -95,9 +95,9 @@ function multiline(
   y: number,
   lines: readonly string[],
   size = 15,
-  color = C.creamMuted,
+  color: string = C.creamMuted,
   lineHeight = 22,
-  family = bodyFont,
+  family: string = bodyFont,
   weight = 400,
 ): string {
   return lines.map((line, index) => text(x, y + index * lineHeight, line, size, color, weight, 'start', family)).join('');
@@ -117,7 +117,7 @@ function rect(
   return `<rect x="${x}" y="${y}" width="${width}" height="${height}" rx="${radius}" fill="${fill}" stroke="${stroke}" stroke-width="${strokeWidth}" ${extra}/>`;
 }
 
-function line(x1: number, y1: number, x2: number, y2: number, color = C.creamMuted, width = 1): string {
+function line(x1: number, y1: number, x2: number, y2: number, color: string = C.creamMuted, width = 1): string {
   return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${width}"/>`;
 }
 
@@ -125,7 +125,7 @@ function svgBody(svg: string): string {
   return svg.replace(/^<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '');
 }
 
-function icon(id: string, x: number, y: number, size: number, tint = C.cream): string {
+function icon(id: string, x: number, y: number, size: number, tint: string = C.cream): string {
   const definition = getIcon(id);
   if (!definition) throw new Error(`Missing icon ${id}`);
   const composed = composeIcon(id, 128);
@@ -149,9 +149,9 @@ function focusCorners(x: number, y: number, width: number, height: number, scale
   ].map((path) => `<path d="${path}" fill="none" stroke="${C.focus}" stroke-width="${sw}"/>`).join('');
 }
 
-function reviewGlyph(name: string, x: number, y: number, size: number, color = C.cream): string {
+function reviewGlyph(name: string, x: number, y: number, size: number, color: string = C.cream): string {
   const s = size / 24;
-  const p = (value: string, fill = 'none', stroke = color, width = 2): string =>
+  const p = (value: string, fill: string = 'none', stroke: string = color, width = 2): string =>
     `<path d="${value}" fill="${fill}" stroke="${stroke}" stroke-width="${width}" stroke-linecap="square" stroke-linejoin="miter"/>`;
   let body = '';
   switch (name) {
@@ -174,7 +174,7 @@ function reviewGlyph(name: string, x: number, y: number, size: number, color = C
   return `<g transform="translate(${x} ${y}) scale(${s})">${body}</g>`;
 }
 
-function panel(x: number, y: number, width: number, height: number, fill = C.chassis): string {
+function panel(x: number, y: number, width: number, height: number, fill: string = C.chassis): string {
   return [
     rect(x + 3, y + 5, width, height, '#11120E88', 'none', 0, 4),
     rect(x, y, width, height, fill, '#181914', 2, 3),
@@ -209,9 +209,9 @@ function button(
   scale = 1,
   glyph?: string,
 ): string {
-  let fill = C.sleeve;
-  let stroke = '#24251E';
-  let labelColor = C.cream;
+  let fill: string = C.sleeve;
+  let stroke: string = '#24251E';
+  let labelColor: string = C.cream;
   let yOffset = 0;
   let shadow = 4 * scale;
   let opacity = 1;

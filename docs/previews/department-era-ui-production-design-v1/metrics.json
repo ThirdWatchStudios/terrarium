@@ -1,0 +1,97 @@
+{
+  "status": "terrarium-production-design-source-stopped-for-visual-approval",
+  "source": {
+    "manifest": "assets/ui/department-era-design-v1/manifest.json",
+    "manifestSha256": "ffcd913f9d60d08049a414ecbe9dfcc0b3d4d8b06af321b8ba26df750b3fee33",
+    "fontPayload": "docs/previews/ui-e1a-source-fit-font-pilot-v1/01-production-font-pilot.svg",
+    "worldReference": "/Users/tombiagioni/.codex/generated_images/019fc31e-f42d-7f23-b0ee-6635d674450b/exec-1244ea64-482b-4484-b7c9-576da0a93593.png",
+    "worldReferenceSha256": "e2e660355ff79f7acdb4b501472b605650dbb7bed71b6d2e9345fd4e78752fe4"
+  },
+  "outputs": [
+    {
+      "svg": "00-production-design-system.svg",
+      "svgSha256": "e95697d8dec280dcf0450bda8dd4fa0161b998f866caba000795bf1c2306a2ad",
+      "png": "00-production-design-system.png",
+      "pngSha256": "1d5ea11a4dccbac0bf108eb0d26204f13e091eb385abab85ac2e61640467d39c"
+    },
+    {
+      "svg": "01-literal-department-screens.svg",
+      "svgSha256": "18880c6a705d4de3cf8b0d8d1fdfd20078a936dfd01c7d089ffbbc2c80e4c51f",
+      "png": "01-literal-department-screens.png",
+      "pngSha256": "e830b3280b0e64777ab3dd46a8fbc3b4a133b3117e2df00e9929fb469e30a811"
+    }
+  ],
+  "literalScreens": [
+    {
+      "id": "chain-browse",
+      "viewport": "1280x720",
+      "uiScale": 1,
+      "armed": false
+    },
+    {
+      "id": "requirement-selected",
+      "viewport": "1280x720",
+      "uiScale": 1,
+      "armed": false
+    },
+    {
+      "id": "placement-valid",
+      "viewport": "1280x720",
+      "uiScale": 1,
+      "armed": true
+    },
+    {
+      "id": "route-invalid",
+      "viewport": "1280x720",
+      "uiScale": 1.4,
+      "armed": true
+    }
+  ],
+  "canonicalMarks": [
+    "ui-divider",
+    "ui-corner",
+    "ui-focus",
+    "iris-mark",
+    "quotaco-mark"
+  ],
+  "reviewCandidateMarks": [
+    "work-intake",
+    "work-data-processing",
+    "work-delivery",
+    "ready-room",
+    "ready-designated",
+    "ready-equipped",
+    "ready-io",
+    "ready-connected",
+    "ready-staffed",
+    "ready-flowing",
+    "ready-all",
+    "state-complete",
+    "state-missing",
+    "state-blocked",
+    "state-unavailable",
+    "route-input",
+    "route-output",
+    "route-wall-pass",
+    "route-repair"
+  ],
+  "reservations": {
+    "amber": "dormant Capture only; absent from active department UI",
+    "rose": "emotion only; absent from active department UI",
+    "selection": "muted teal plus shape or material change",
+    "invalid": "rust plus warning geometry and one repair sentence"
+  },
+  "productionChanges": [
+    "Terrarium design manifest",
+    "Terrarium deterministic design renderer",
+    "literal department UI compositions"
+  ],
+  "deferred": [
+    "TextCore font assets",
+    "UXML and USS implementation",
+    "responsive layout and accessibility",
+    "interaction and runtime state binding",
+    "world geometry",
+    "import and Play Mode validation"
+  ]
+}

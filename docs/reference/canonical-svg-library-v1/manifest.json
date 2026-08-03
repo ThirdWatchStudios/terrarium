@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "guide": "Terrarium canonical SVG library",
   "counts": {
-    "exactSourceFiles": 380,
-    "production": 302,
+    "exactSourceFiles": 385,
+    "production": 307,
     "productionDependencies": 74,
     "deferred": 4,
     "derivedWallFrames": 47,
@@ -20,6 +20,7 @@
       "props/workhorse": 54,
       "surfaces/floors": 12,
       "surfaces/grass": 3,
+      "ui/shared-primitives": 5,
       "walls/bevel": 12,
       "walls/equal-height-direct": 10,
       "walls/equal-height-promoted-proof": 52
@@ -2167,6 +2168,41 @@
       "status": "production",
       "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/ground/ground-grass.svg",
       "sha256": "cb4ba412d9a2a1382406f816a53e759cc51233dd3f83e4930dfadeab6391cda7"
+    },
+    {
+      "assetId": "iris-mark",
+      "category": "ui/shared-primitives",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-shared-primitives-v1/iris-mark.svg",
+      "sha256": "eed540ae41dd7efd9ac01df168045ada2ca0eaeae0dc17140845617b7c8a4a59"
+    },
+    {
+      "assetId": "quotaco-mark",
+      "category": "ui/shared-primitives",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-shared-primitives-v1/quotaco-mark.svg",
+      "sha256": "201b50da955db49f032f87e9b8209050a1168973a935b2e5568a7d79e848ee79"
+    },
+    {
+      "assetId": "ui-corner",
+      "category": "ui/shared-primitives",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-shared-primitives-v1/ui-corner.svg",
+      "sha256": "56a5387574eb5dccf5518a2da7826bbda895cd23cbc477c8590c61fecd975ecb"
+    },
+    {
+      "assetId": "ui-divider",
+      "category": "ui/shared-primitives",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-shared-primitives-v1/ui-divider.svg",
+      "sha256": "d73915188546bf12addb0d0472be9e7d67f43b0b96cafa4b8422c32dec20db84"
+    },
+    {
+      "assetId": "ui-focus",
+      "category": "ui/shared-primitives",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-shared-primitives-v1/ui-focus.svg",
+      "sha256": "a4f9159914ca14786af2ff535e9015563be67295c180a035f7ef8cffa6f5052c"
     },
     {
       "assetId": "concave-ne",

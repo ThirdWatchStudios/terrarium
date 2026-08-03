@@ -2,6 +2,7 @@ import type { ShapeSpec } from '../core/types';
 import { circle, rr } from '../core/geometry';
 import { UI_PALETTE } from '../data/uiPalette';
 import { EMOTION_ICONS } from './emotions';
+import { CANONICAL_UI_ICON_ART } from './generated/canonicalUiIconArt';
 import { STATE_ICONS } from './stateIcons';
 import { REACTION_ICONS } from './reactions';
 
@@ -50,6 +51,17 @@ export interface CursorDef extends IconDef {
   hotspot: { x: number; y: number };
 }
 
+const CANONICAL_UI_ICON_ART_BY_ID = new Map(
+  CANONICAL_UI_ICON_ART.map((entry) => [entry.id, entry] as const),
+);
+
+function canonicalUiIconShapes(id: string, mode: IconMode): ShapeSpec[] {
+  const entry = CANONICAL_UI_ICON_ART_BY_ID.get(id as (typeof CANONICAL_UI_ICON_ART)[number]['id']);
+  if (!entry) throw new Error(`Missing generated canonical UI icon art for ${id}`);
+  if (entry.mode !== mode) throw new Error(`Canonical UI icon mode mismatch for ${id}: expected ${mode}, got ${entry.mode}`);
+  return entry.shapes.map((shape) => ({ ...shape })) as ShapeSpec[];
+}
+
 // --- tintable helpers (color ignored — emitted as a white mask) -------------
 const ACC = '$accent'; // marker only; recolored by the framework
 const stroke = (d: string, strokeWidth = 9): ShapeSpec => ({ d, stroke: ACC, strokeWidth, silhouette: false });
@@ -83,31 +95,6 @@ const CAPTURE_BRACKETS: ShapeSpec[] = [
   stroke('M -14 26 L -26 26 L -26 14', 7),
 ];
 
-// QuotaCo mark — a centered-hexagonal dot lattice with a halftone radius falloff
-// (large core dots → fine rim dots). 37 dots; axial hex coords scaled to fit the
-// canvas. Desaturated cool slate, shipped literal so the chrome never tints it.
-const QUOTACO_INK = '#727A80';
-const QUOTACO_DOTS: ShapeSpec[] = (() => {
-  const N = 3,
-    FIT = 44,
-    S3 = Math.sqrt(3);
-  const raw: { x: number; y: number; dist: number }[] = [];
-  for (let q = -N; q <= N; q++) {
-    for (let r = -N; r <= N; r++) {
-      if (Math.max(Math.abs(q), Math.abs(r), Math.abs(q + r)) > N) continue;
-      raw.push({
-        x: S3 * (q + r / 2),
-        y: 1.5 * r,
-        dist: (Math.abs(q) + Math.abs(r) + Math.abs(q + r)) / 2,
-      });
-    }
-  }
-  const k = FIT / Math.max(...raw.flatMap((p) => [Math.abs(p.x), Math.abs(p.y)]));
-  return raw.map((p) =>
-    lit(circle(+(p.x * k).toFixed(1), +(p.y * k).toFixed(1), +(6.2 - 1.1 * p.dist).toFixed(1)), QUOTACO_INK),
-  );
-})();
-
 export const ICONS: IconDef[] = [
   // --- Control glyphs (tintable) --------------------------------------------
   {
@@ -136,13 +123,13 @@ export const ICONS: IconDef[] = [
     id: 'ui-divider',
     label: 'Divider',
     mode: 'tintable',
-    shapes: [stroke('M -36 0 L -10 0', 6), stroke('M 10 0 L 36 0', 6), fill('M 0 -9 L 9 0 L 0 9 L -9 0 Z')],
+    shapes: canonicalUiIconShapes('ui-divider', 'tintable'),
   },
   {
     id: 'ui-corner',
     label: 'Corner ornament',
     mode: 'tintable',
-    shapes: [stroke('M -28 28 L -28 -20 Q -28 -28 -20 -28 L 28 -28', 8)],
+    shapes: canonicalUiIconShapes('ui-corner', 'tintable'),
   },
   {
     id: 'ui-spinner',
@@ -246,14 +233,7 @@ export const ICONS: IconDef[] = [
     id: 'ui-focus',
     label: 'Focus',
     mode: 'tintable',
-    shapes: [
-      stroke(circle(0, 0, 20), 7),
-      stroke('M 0 -30 L 0 -24'),
-      stroke('M 0 24 L 0 30'),
-      stroke('M -30 0 L -24 0'),
-      stroke('M 24 0 L 30 0'),
-      fill(circle(0, 0, 4)),
-    ],
+    shapes: canonicalUiIconShapes('ui-focus', 'tintable'),
   },
 
   // --- Layer toggles (Tier 2: names / relationships / information / beliefs / environment)
@@ -432,8 +412,7 @@ export const ICONS: IconDef[] = [
     id: 'iris-mark',
     label: 'IRIS',
     mode: 'tintable',
-    // An eye — IRIS, the surveillance chrome voice.
-    shapes: [stroke('M -28 0 Q 0 -18 28 0 Q 0 18 -28 0 Z', 7), stroke(circle(0, 0, 9), 6), fill(circle(0, 0, 4))],
+    shapes: canonicalUiIconShapes('iris-mark', 'tintable'),
   },
 
   // --- QuotaOS shell — first wave (docs/design/quotaos-shell-build-plan.md §2) -
@@ -444,9 +423,7 @@ export const ICONS: IconDef[] = [
     id: 'quotaco-mark',
     label: 'QuotaCo',
     mode: 'literal',
-    // Desaturated halftone hexagon — a centered-hex dot lattice (big core → fine
-    // rim) that reads as an etched corporate seal, not a friendly logo.
-    shapes: QUOTACO_DOTS,
+    shapes: canonicalUiIconShapes('quotaco-mark', 'literal'),
   },
   {
     id: 'app-behavioral-optimization',

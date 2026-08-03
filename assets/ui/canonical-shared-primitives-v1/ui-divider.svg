@@ -1,0 +1,6 @@
+<svg data-ui-icon-id="ui-divider" data-icon-mode="tintable" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Divider</title>
+  <desc>Lean administrative seam and central registration diamond approved for exact UI-E1 authority inversion.</desc>
+  <metadata>{"family":"canonical-ui-shared-primitives-v1","decision":"exact-authority-inversion"}</metadata>
+  <g id="approved-mark" transform="translate(64 64)"><path id="shape-01" d="M -36 0 L -10 0" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path id="shape-02" d="M 10 0 L 36 0" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path id="shape-03" d="M 0 -9 L 9 0 L 0 9 L -9 0 Z" fill="#FFFFFF"/></g>
+</svg>
