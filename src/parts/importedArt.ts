@@ -68,6 +68,24 @@ export interface ImportedBodyVariantArtOverlay {
 }
 
 /**
+ * Complete SVG-owned detail overlay selected from an exact body/facing matrix.
+ *
+ * Unlike silhouette-altering body-variant art, every shape deliberately opts
+ * out of the outline pass. `preservePaintRuns` keeps authored tint layering
+ * intact for uniforms that return to a palette token later in the stack.
+ */
+export interface ImportedBodyVariantOverlayArtOverlay {
+  readonly kind: 'body-variant-overlay-art';
+  readonly id: string;
+  readonly slot: 'outfit';
+  readonly z: number;
+  readonly preservePaintRuns?: boolean;
+  readonly bodyVariants: Readonly<
+    Record<string, Partial<Record<Facing, readonly ShapeSpec[]>>>
+  >;
+}
+
+/**
  * Complete SVG-owned overlay for an outfit locked to one production body rig.
  *
  * The source supplies every visible shape. The adapter supplies only the
@@ -104,6 +122,7 @@ export type ImportedPartOverlay =
   | ImportedHeadFittedPartOverlay
   | ImportedBodyArtOverlay
   | ImportedBodyVariantArtOverlay
+  | ImportedBodyVariantOverlayArtOverlay
   | ImportedFixedBodyArtOverlay
   | ImportedBodyDetailOverlay;
 
@@ -220,6 +239,45 @@ export function applyImportedPartArt(
       }
       result[index] = {
         ...base,
+        buildVariant: (facing, context) => {
+          const shapes = context.bodyId
+            ? imported.bodyVariants[context.bodyId]?.[facing]
+            : undefined;
+          if (!shapes) return undefined;
+          return {
+            z: imported.z,
+            shapes: shapes.map((shape) => ({ ...shape })),
+          };
+        },
+      };
+      continue;
+    }
+    if (imported.kind === 'body-variant-overlay-art') {
+      if (base.slot !== 'outfit' || base.anchor !== 'body') {
+        fail(`${imported.id} body-variant-overlay-art overlays require a body-anchored outfit`);
+      }
+      if (base.buildVariant) {
+        fail(`${imported.id} body-variant-overlay-art overlays cannot retain handwritten buildVariant geometry`);
+      }
+      if (!Number.isFinite(imported.z)) {
+        fail(`${imported.id} body-variant-overlay-art overlay requires finite z-order`);
+      }
+      const bodyIds = Object.keys(imported.bodyVariants);
+      if (bodyIds.length === 0) fail(`${imported.id} contains no body-variant overlay art`);
+      for (const bodyId of bodyIds) {
+        for (const facing of FACINGS) {
+          const shapes = imported.bodyVariants[bodyId]?.[facing];
+          if (!shapes || shapes.length === 0) {
+            fail(`${imported.id}/${bodyId}/${facing} contains no body-variant overlay art`);
+          }
+          if (shapes.some((shape) => shape.silhouette !== false)) {
+            fail(`${imported.id}/${bodyId}/${facing} contains non-overlay geometry`);
+          }
+        }
+      }
+      result[index] = {
+        ...base,
+        preservePaintRuns: imported.preservePaintRuns === true,
         buildVariant: (facing, context) => {
           const shapes = context.bodyId
             ? imported.bodyVariants[context.bodyId]?.[facing]

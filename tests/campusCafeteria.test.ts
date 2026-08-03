@@ -1,7 +1,7 @@
 import { Resvg } from '@resvg/resvg-js';
 import { describe, expect, it } from 'vitest';
 
-import { composeCharacter } from '../src/core/compositor';
+import { characterLayers, composeCharacter } from '../src/core/compositor';
 import { generateEmployee, generationProfiles } from '../src/core/employee';
 import { EXPORT_SCALES, propLayerManifest } from '../src/core/exporter';
 import { facilityCatalogJson, INTERACTION_PROP_TYPES } from '../src/core/layout';
@@ -17,6 +17,7 @@ import {
   defaultGoldenProject,
 } from '../src/data/defaults';
 import { getPart, partsForSlot } from '../src/parts/library';
+import { BODY_ARCHETYPES } from '../src/parts/bodyArchetypes';
 import { POSES } from '../src/parts/poses';
 import { PROP_TEMPLATES } from '../src/props/templates';
 
@@ -155,6 +156,10 @@ describe('campus Bundle 2 — cafeteria and kitchen (CE-22)', () => {
     expect(KITCHEN_STAFF).toHaveLength(1);
     expect(KITCHEN_STAFF[0]).toMatchObject({
       id: 'kitchen-worker',
+      palette: {
+        outfitPrimary: '#E7E1D5',
+        outfitSecondary: '#657A82',
+      },
       parts: {
         outfit: 'outfit-service-apron',
         accessories: ['acc-hairnet'],
@@ -188,6 +193,59 @@ describe('campus Bundle 2 — cafeteria and kitchen (CE-22)', () => {
           }
         }
       }
+    }
+  });
+
+  it('uses canonical SVG receivers for every apron body/facing and each hairnet facing', () => {
+    const apron = getPart('outfit-service-apron')!;
+    const hairnet = getPart('acc-hairnet')!;
+    expect(apron.preservePaintRuns).toBe(true);
+    expect(apron.buildVariant).toBeTypeOf('function');
+    for (const body of BODY_ARCHETYPES) {
+      for (const facing of FACINGS) {
+        const variant = apron.buildVariant?.(facing, { bodyId: body.id });
+        expect(variant?.z, `${body.id}/${facing}`).toBe(20);
+        expect(variant?.shapes.length, `${body.id}/${facing}`).toBeGreaterThan(0);
+        expect(variant?.shapes.every(({ silhouette }) => silhouette === false), `${body.id}/${facing}`)
+          .toBe(true);
+      }
+    }
+    expect(apron.buildVariant?.('south', { bodyId: 'body-future' })).toBeUndefined();
+    for (const facing of FACINGS) {
+      expect(hairnet.facings[facing]?.shapes.length, facing).toBeGreaterThan(0);
+      expect(hairnet.facings[facing]?.shapes.every(({ silhouette }) => silhouette === false), facing)
+        .toBe(true);
+    }
+  });
+
+  it('preserves the apron pocket paint run and reconstructs flat cafeteria sprites exactly', () => {
+    const style = structuredClone(DEFAULT_STYLE);
+    style.render.contactShadow = 0;
+    const layers = characterLayers(KITCHEN_STAFF[0], style);
+    for (const facing of ['south', 'east', 'west'] as const) {
+      expect(layers.find(({ key }) => key === 'outfit-service-apron__outfitSecondary')?.markup[facing])
+        .not.toBe('');
+      expect(layers.find(({ key }) => key === 'outfit-service-apron__outfitPrimary')?.markup[facing])
+        .not.toBe('');
+      expect(layers.find(({ key }) => key === 'outfit-service-apron__outfitSecondary__run2')?.markup[facing])
+        .not.toBe('');
+    }
+    expect(layers.find(({ key }) => key === 'outfit-service-apron__outfitSecondary__run2')?.markup.north)
+      .toBe('');
+
+    for (const facing of [...FACINGS, 'west'] as const) {
+      const flat = composeCharacter(KITCHEN_STAFF[0], style, facing, CANVAS, 'normal', { badge: false });
+      const markup = layers
+        .filter(({ mood }) => mood === null)
+        .map((layer) => layer.tint
+          ? layer.markup[facing].replaceAll('#FFFFFF', KITCHEN_STAFF[0].palette[layer.tint])
+          : layer.markup[facing])
+        .join('');
+      const reconstructed = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">${markup}</svg>`;
+      expect(
+        Buffer.compare(new Resvg(flat).render().asPng(), new Resvg(reconstructed).render().asPng()),
+        `${facing} layer reconstruction diverged from the flat cafeteria sprite`,
+      ).toBe(0);
     }
   });
 

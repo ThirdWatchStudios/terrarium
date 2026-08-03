@@ -224,19 +224,31 @@ system:
   sources (six production bodies × three authored facings), with exact
   body/facing selection and no fit math or production-body handwritten
   geometry fallback;
-- `outfit-hi-vis`;
+- [—] `outfit-hi-vis` — retired human construction-crew art, superseded by the
+  IRIS FAB recipe (`head-fab` + `outfit-fab-chassis`); retain only as dormant
+  compatibility/authoring content and exclude it from canonical-source
+  migration unless the human crew is explicitly reactivated;
 - [x] `outfit-fab-chassis` — promoted 2026-08-02 as three canonical facings
   with a `body-large-frame`-only receiver and no handwritten geometry fallback;
-- `outfit-service-apron`; and
-- `acc-hairnet`.
+- [x] `outfit-service-apron` — promoted 2026-08-02 as eighteen complete
+  detail-only canonical overlays (six production bodies × three authored
+  facings), with exact body/facing selection, ordered tint-run preservation,
+  and no handwritten geometry fallback; and
+- [x] `acc-hairnet` — promoted 2026-08-02 as three complete canonical
+  head-center overlays with no remaining static handwritten geometry.
 
 The SVG owns the visible garment/equipment art. Body rigs, facing mirrors,
 body-fit frames, recipe-only/selectability policy, z-order, and anchors remain
 metadata/adapter concerns.
 
-The FAB chassis completed the fixed-body pilot, and Dress now completes the
-per-body silhouette pilot. Hi-vis, apron, and hairnet follow through the proven
-component adapter.
+The FAB chassis completed the fixed-body pilot, Dress completed the per-body
+silhouette pilot, and the apron/hairnet pair completed the body-variant detail
+and static accessory source paths. All active special character identity parts
+are now source-owned; retired Hi-vis is not part of that completion set.
+The cafeteria pair completed the normal browser export and fresh Unity import
+on 2026-08-02. Because the sim cannot yet surface cafeteria workers in action,
+its downstream gameplay-scale visual check is explicitly deferred rather than
+inferred from import success.
 
 ### P2 — major gameplay facilities
 
@@ -423,7 +435,8 @@ Run one family at a time, preserving visual approval boundaries:
 4. convert IRIS installation/dock art — canonical source, browser handoff, and
    Unity visual acceptance complete; durable Candidate/Current promotion lock
    remains pipeline work;
-5. [x] convert FAB chassis and dress; then convert the remaining special parts;
+5. [x] convert FAB chassis, dress, `outfit-service-apron`, and `acc-hairnet`,
+   explicitly excluding the retired human Hi-vis outfit;
 6. convert the cafeteria facilities;
 7. migrate UI iconography by semantic family; and
 8. convert the five flora base silhouettes.

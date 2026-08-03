@@ -16,6 +16,7 @@ import { FACINGS } from '../src/core/types';
 import { BODY_ARCHETYPES } from '../src/parts/bodyArchetypes';
 import type {
   ImportedBodyArtOverlay,
+  ImportedBodyVariantOverlayArtOverlay,
   ImportedBodyVariantArtOverlay,
   ImportedFixedBodyArtOverlay,
   ImportedHeadFittedPartOverlay,
@@ -46,6 +47,7 @@ function staticPart(id: string, slot: 'head' | 'hair' = 'hair'): PartDef {
 type ImportedStaticPartArt = ImportedStaticPartOverlay & ImportedPartProvenance;
 type ImportedBodyPartArt = ImportedBodyArtOverlay & ImportedPartProvenance;
 type ImportedBodyVariantPartArt = ImportedBodyVariantArtOverlay & ImportedPartProvenance;
+type ImportedBodyVariantOverlayPartArt = ImportedBodyVariantOverlayArtOverlay & ImportedPartProvenance;
 type ImportedFixedBodyPartArt = ImportedFixedBodyArtOverlay & ImportedPartProvenance;
 type ImportedHeadFittedPartArt = ImportedHeadFittedPartOverlay & ImportedPartProvenance;
 
@@ -54,10 +56,18 @@ function staticImport(imported: ImportedPartArt): ImportedStaticPartArt {
     imported.kind === 'body-detail' ||
     imported.kind === 'body-art' ||
     imported.kind === 'body-variant-art' ||
+    imported.kind === 'body-variant-overlay-art' ||
     imported.kind === 'fixed-body-art' ||
     imported.kind === 'head-fitted-art'
   ) {
     throw new Error(`Expected static import, received ${imported.id}`);
+  }
+  return imported;
+}
+
+function bodyVariantOverlayImport(imported: ImportedPartArt): ImportedBodyVariantOverlayPartArt {
+  if (imported.kind !== 'body-variant-overlay-art') {
+    throw new Error(`Expected body-variant-overlay-art import, received ${imported.id}`);
   }
   return imported;
 }
@@ -449,7 +459,7 @@ describe('strict part SVG compiler', () => {
 
 describe('part source tree and generated registration', () => {
   it.each([
-    ['accessory source', 'accessory/mug.south.svg', /slot must be one of body, head, hair, outfit/],
+    ['unknown slot source', 'badge/mug.south.svg', /slot must be one of body, head, hair, outfit, accessory/],
     ['west source', 'hair/bob.west.svg', /west is runtime-mirrored/],
   ])('rejects unsupported v1 %s', async (_label, relativePath, message) => {
     const root = await singleSource(relativePath);
@@ -550,7 +560,12 @@ describe('part source tree and generated registration', () => {
       inputDir: hairRoot,
       sourcePathPrefix: 'assets/parts',
       catalog: [{ ...bob, preserveLocalPaths: true, importMode: 'body-art' }],
-    })).rejects.toThrow(/preserveLocalPaths is supported only for body-variant-art, fixed-body-art, or static\/head-fitted head\/hair targets/);
+    })).rejects.toThrow(/preserveLocalPaths is supported only for body-variant art, fixed-body-art, or static\/head-fitted head\/hair\/accessory targets/);
+    await expect(compilePartDirectory({
+      inputDir: hairRoot,
+      sourcePathPrefix: 'assets/parts',
+      catalog: [{ ...bob, preservePaintRuns: true }],
+    })).rejects.toThrow(/preservePaintRuns is supported only for body-variant-overlay-art targets/);
 
     const outfitRoot = await outfitSourceTree({
       south: validOutfitDetailSvg(),
@@ -566,7 +581,7 @@ describe('part source tree and generated registration', () => {
         buildVariant: undefined,
         preserveLocalPaths: true,
       }],
-    })).rejects.toThrow(/preserveLocalPaths is supported only for body-variant-art, fixed-body-art, or static\/head-fitted head\/hair targets/);
+    })).rejects.toThrow(/preserveLocalPaths is supported only for body-variant art, fixed-body-art, or static\/head-fitted head\/hair\/accessory targets/);
   });
 
   it('preserves the byte-stable static overlay module shape', () => {
@@ -1084,14 +1099,15 @@ describe('part source tree and generated registration', () => {
     expect(generated).toBe(emitImportedPartArt(imports));
   });
 
-  it('keeps six bodies, ten canonical hairs, seven heads, and ten authored outfits as thirty-three deliberate overlays', async () => {
+  it('keeps the complete canonical part source inventory as thirty-six deliberate overlays', async () => {
     const imports = await compilePartDirectory({
       inputDir: path.resolve('assets/parts'),
       sourcePathPrefix: 'assets/parts',
       catalog: PART_IMPORT_TARGETS,
     });
-    expect(imports).toHaveLength(34);
+    expect(imports).toHaveLength(36);
     expect(imports.map(({ id }) => id)).toEqual([
+      'acc-hairnet',
       'body-balanced',
       'body-compact',
       'body-large-frame',
@@ -1121,6 +1137,7 @@ describe('part source tree and generated registration', () => {
       'outfit-fab-chassis',
       'outfit-hoodie',
       'outfit-polo',
+      'outfit-service-apron',
       'outfit-shirt-tie',
       'outfit-suit-jacket',
       'outfit-tee',
@@ -1173,8 +1190,13 @@ describe('part source tree and generated registration', () => {
       .toBe('8881ba1f607d010d621c0e1390fc41d23677862836fa85b2cb9fba14b039ca84');
 
     expect(imports.filter(({ kind }) =>
-      kind !== 'body-detail' && kind !== 'body-art' && kind !== 'body-variant-art' && kind !== 'fixed-body-art').map(({ id }) => id))
+      kind !== 'body-detail'
+      && kind !== 'body-art'
+      && kind !== 'body-variant-art'
+      && kind !== 'body-variant-overlay-art'
+      && kind !== 'fixed-body-art').map(({ id }) => id))
       .toEqual([
+        'acc-hairnet',
         'hair-balding',
         'hair-bob',
         'hair-bun',
@@ -1292,6 +1314,21 @@ describe('part source tree and generated registration', () => {
         silhouette: false,
       });
     }
+
+    const hairnet = staticImport(imports.find(({ id }) => id === 'acc-hairnet')!);
+    expect(hairnet).toMatchObject({
+      id: 'acc-hairnet',
+      slot: 'accessory',
+      sourceKind: 'authored',
+      sourceFiles: [
+        'assets/parts/accessory/hairnet.east.svg',
+        'assets/parts/accessory/hairnet.north.svg',
+        'assets/parts/accessory/hairnet.south.svg',
+      ],
+    });
+    expect(FACINGS.every((facing) =>
+      hairnet.facings[facing]?.every(({ silhouette }) => silhouette === false)))
+      .toBe(true);
     const sidePart = headFittedImport(imports.find(({ id }) => id === 'hair-side-part')!);
     for (const facing of FACINGS) {
       expect(sidePart.facings[facing]?.at(-1)).toMatchObject({
@@ -1395,6 +1432,27 @@ describe('part source tree and generated registration', () => {
       expect(FACINGS.every((facing) =>
         dress.bodyVariants[archetype.id][facing]?.some(({ silhouette }) => silhouette !== false)))
         .toBe(true);
+    }
+
+    const apron = bodyVariantOverlayImport(imports.find(({ id }) => id === 'outfit-service-apron')!);
+    expect(apron).toMatchObject({
+      kind: 'body-variant-overlay-art',
+      id: 'outfit-service-apron',
+      slot: 'outfit',
+      z: 20,
+      preservePaintRuns: true,
+      sourceKind: 'authored',
+      sourceFiles: BODY_ARCHETYPES.flatMap(({ id }) => FACINGS.map((facing) =>
+        `assets/parts/outfit/service-apron.${id}.${facing}.svg`)).sort(),
+    });
+    expect(Object.keys(apron.bodyVariants)).toEqual(BODY_ARCHETYPES.map(({ id }) => id));
+    for (const archetype of BODY_ARCHETYPES) {
+      for (const facing of FACINGS) {
+        expect(apron.bodyVariants[archetype.id][facing]?.length, `${archetype.id}/${facing}`)
+          .toBeGreaterThan(0);
+        expect(apron.bodyVariants[archetype.id][facing]?.every(({ silhouette }) => silhouette === false))
+          .toBe(true);
+      }
     }
 
     const tee = imports.find(({ id }) => id === 'outfit-tee')!;
@@ -1854,6 +1912,55 @@ describe('imported art overlay', () => {
     }])).toThrow(/cannot retain handwritten buildVariant geometry/);
   });
 
+  it('installs complete detail-only body-variant art with ordered tint-run metadata', () => {
+    const emptyVariant = { z: 20, shapes: [] };
+    const outfit: PartDef = {
+      id: 'outfit-service-apron',
+      label: 'Service apron',
+      slot: 'outfit',
+      anchor: 'body',
+      facings: { south: emptyVariant, east: emptyVariant, north: emptyVariant },
+    };
+    const shapes = {
+      south: [
+        { d: 'M-10-10L10-10 10 10-10 10Z', fill: '$outfitSecondary', silhouette: false as const },
+        { d: 'M-8-8L8-8 8 8-8 8Z', fill: '$outfitPrimary', silhouette: false as const },
+        { d: 'M-3 1L3 1 3 5-3 5Z', fill: '$outfitSecondary', silhouette: false as const },
+      ],
+      east: [{ d: 'M-4-10L6-10 6 10-4 10Z', fill: '$outfitPrimary', silhouette: false as const }],
+      north: [{ d: 'M-10-10L10-10 10 10-10 10Z', fill: '$outfitPrimary', silhouette: false as const }],
+    };
+    const [result] = applyImportedPartArt([outfit], [{
+      kind: 'body-variant-overlay-art',
+      id: outfit.id,
+      slot: 'outfit',
+      z: 20,
+      preservePaintRuns: true,
+      bodyVariants: { 'body-balanced': shapes },
+    }]);
+
+    expect(result.preservePaintRuns).toBe(true);
+    expect(result.buildVariant?.('south', { bodyId: 'body-balanced' }))
+      .toEqual({ z: 20, shapes: shapes.south });
+    expect(result.buildVariant?.('south', { bodyId: 'body-future' })).toBeUndefined();
+    expect(result.buildVariant?.('south', { bodyId: 'body-balanced' })?.shapes[0])
+      .not.toBe(shapes.south[0]);
+
+    expect(() => applyImportedPartArt([{ ...outfit, buildVariant: () => emptyVariant }], [{
+      kind: 'body-variant-overlay-art', id: outfit.id, slot: 'outfit', z: 20,
+      bodyVariants: { 'body-balanced': shapes },
+    }])).toThrow(/cannot retain handwritten buildVariant geometry/);
+    expect(() => applyImportedPartArt([outfit], [{
+      kind: 'body-variant-overlay-art', id: outfit.id, slot: 'outfit', z: 20,
+      bodyVariants: {
+        'body-balanced': {
+          ...shapes,
+          south: [{ d: 'M-1-1L1-1 0 1Z', fill: '$outfitPrimary' }],
+        },
+      },
+    }])).toThrow(/contains non-overlay geometry/);
+  });
+
   it('rejects body-detail overlays that could replace the conforming torso silhouette', () => {
     const outfit = dynamicOutfit();
     expect(() => applyImportedPartArt([outfit], [{
@@ -1892,7 +1999,8 @@ describe('imported art overlay', () => {
       .filter((part) => (part.slot === 'head' || part.slot === 'hair') && part.id !== 'hair-none');
     const sourceTargets = PART_IMPORT_TARGETS.filter((part) => {
       const mode = part.importMode ?? 'static';
-      return mode === 'static' || mode === 'head-fitted-art';
+      return (part.slot === 'head' || part.slot === 'hair')
+        && (mode === 'static' || mode === 'head-fitted-art');
     });
     expect(sourceTargets.map((part) => part.id)).toEqual(productionTargets.map((part) => part.id));
     for (const target of sourceTargets) {
@@ -1936,6 +2044,32 @@ describe('imported art overlay', () => {
       variantZ: 20,
     });
     expect(productionDress.buildVariant).toBeTypeOf('function');
+
+    const apronTarget = PART_IMPORT_TARGETS.find(({ id }) => id === 'outfit-service-apron')!;
+    const productionApron = PART_LIBRARY.find(({ id }) => id === apronTarget.id)!;
+    expect(apronTarget).toMatchObject({
+      slot: 'outfit',
+      anchor: 'body',
+      facings: { south: true, east: true, north: true },
+      importMode: 'body-variant-overlay-art',
+      preserveLocalPaths: true,
+      preservePaintRuns: true,
+      bodyVariantIds: BODY_ARCHETYPES.map(({ id }) => id),
+      variantZ: 20,
+    });
+    expect(productionApron.buildVariant).toBeTypeOf('function');
+    expect(productionApron.preservePaintRuns).toBe(true);
+
+    const hairnetTarget = PART_IMPORT_TARGETS.find(({ id }) => id === 'acc-hairnet')!;
+    const productionHairnet = PART_LIBRARY.find(({ id }) => id === hairnetTarget.id)!;
+    expect(hairnetTarget).toMatchObject({
+      slot: 'accessory',
+      anchor: 'headCenter',
+      facings: { south: true, east: true, north: true },
+      preserveLocalPaths: true,
+    });
+    expect(productionHairnet.buildVariant).toBeUndefined();
+    expect(FACINGS.every((facing) => (productionHairnet.facings[facing]?.shapes.length ?? 0) > 0)).toBe(true);
 
     const bodyDetailTarget = PART_IMPORT_TARGETS.find(({ importMode }) => importMode === 'anchored-detail')!;
     const productionOutfit = PART_LIBRARY.find(({ id }) => id === bodyDetailTarget.id)!;

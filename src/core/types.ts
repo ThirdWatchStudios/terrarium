@@ -118,6 +118,12 @@ export interface PartDef {
    */
   buildVariant?: (facing: Facing, context: PartBuildContext) => PartVariant | undefined;
   /**
+   * Keep consecutive palette runs as distinct character-atlas layers. Most
+   * parts can coalesce equal tint tokens; layered garments may deliberately
+   * return to a tint after painting another one (tee -> apron -> pocket).
+   */
+  preservePaintRuns?: boolean;
+  /**
    * Hand-attached accessories only: held props may be suppressed when a pose
    * occupies both hands; wrist wear always follows the anatomical right wrist.
    */

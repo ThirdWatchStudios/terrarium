@@ -299,19 +299,21 @@ The complete durable backlog and migration gates now live in
 [`canonical-svg-conversion-plan.md`](canonical-svg-conversion-plan.md); the
 summary below remains the hand-editing pipeline's dependency view.
 
-Highest-priority known gaps:
+Highest-priority remaining gaps:
 
 1. department machines — present SVGs are currently regenerated from
    TypeScript proof builders and must become true source authority;
-2. IRIS installation live/dormant art and charging dock;
-3. silhouette/identity character parts including dress, hi-vis, FAB chassis,
-   service apron, and hairnet;
-4. production head-aware hair geometry, which currently overrides the apparent
-   base-SVG authority;
-5. major cafeteria facilities;
-6. UI/chrome iconography and cursors, excluding intentionally procedural
+2. the durable Candidate/Current promotion lock for the already-canonical IRIS
+   installation live/dormant art and charging dock;
+3. major cafeteria facilities;
+4. UI/chrome iconography and cursors, excluding intentionally procedural
    moods, bubbles, badges, and overlays; and
-7. authored flora base silhouettes, while keeping microvariation procedural.
+5. authored flora base silhouettes, while keeping microvariation procedural.
+
+The production head-aware hair geometry and the active special identity set
+(Dress, FAB chassis, service apron, and hairnet) completed canonical-source
+promotion on 2026-08-02. The retired human Hi-vis outfit is superseded by the
+FAB bots and is not an active canonical-source target.
 
 Do not convert every code-owned prop mechanically. Minor clutter, vents,
 shadows, ground microdetail, per-wall material detail, procedural overlays, and

@@ -6,6 +6,7 @@ export type PartImportMode =
   | 'head-fitted-art'
   | 'body-art'
   | 'body-variant-art'
+  | 'body-variant-overlay-art'
   | 'fixed-body-art'
   | 'anchored-detail'
   | 'component-detail';
@@ -38,6 +39,7 @@ export interface PartImportTarget {
   readonly buildVariant?: unknown;
   readonly bodyAnchors?: unknown;
   readonly preserveLocalPaths?: boolean;
+  readonly preservePaintRuns?: boolean;
   readonly importMode?: PartImportMode;
   readonly headFitAdapter?: HeadFitAdapter;
   readonly variantZ?: number;
@@ -170,6 +172,24 @@ export const PART_IMPORT_TARGETS: readonly PartImportTarget[] = [
     preserveLocalPaths: true,
     referenceBodyId: 'body-large-frame',
     variantZ: 20,
+  },
+  {
+    id: 'outfit-service-apron',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: allFacings,
+    importMode: 'body-variant-overlay-art',
+    preserveLocalPaths: true,
+    preservePaintRuns: true,
+    bodyVariantIds: allBodyVariantIds,
+    variantZ: 20,
+  },
+  {
+    id: 'acc-hairnet',
+    slot: 'accessory',
+    anchor: 'headCenter',
+    facings: allFacings,
+    preserveLocalPaths: true,
   },
   {
     id: 'outfit-tee',

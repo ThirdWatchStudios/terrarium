@@ -554,7 +554,17 @@ icons), not by upfront design.
    complete canonical SVGs (six production bodies × three authored facings).
    The imported receiver performs exact body/facing selection only; the former
    anchor-driven geometry builder has been removed.
-18. **Provenance**: each imported asset records source
+18. **Cafeteria uniform source authority**: Direction A received visual
+   approval on 2026-08-02: chef white (`#E7E1D5`) for the coat/apron and muted
+   steel (`#657A82`) for the undershirt/pocket. The former apron builder is now
+   eighteen complete detail-only canonical SVGs selected by exact body/facing;
+   three complete head-center SVGs replace the static hairnet geometry.
+   Ordered tint-run layers preserve the secondary pocket above the primary
+   apron. The normal browser export and fresh Unity import completed on
+   2026-08-02. In-action Unity inspection is deferred until the sim can surface
+   cafeteria workers; the successful import is recorded separately from that
+   future visual gate.
+19. **Provenance**: each imported asset records source
    (`authored | generated | curated`) in its generated module, so lints and
    future audits know what's re-generatable. `authored` means deliberate
    canonical repo SVG regardless of authoring tool; `generated` means
@@ -562,8 +572,8 @@ icons), not by upfront design.
    generator output.
 
 The approved body and six-head sets, all ten approved mapped hair source sets,
-and the complete per-body Dress matrix now form the canonical silhouette
-foundation. The remaining outfit
+the complete per-body Dress matrix, FAB chassis, and cafeteria apron/hairnet
+pair now form the canonical character-identity foundation. The remaining outfit
 manifests and the separate runtime-scale integration can follow the
 componentized Blazer/Polo/Shirt + Tie/Turtleneck/Cardigan/Suit Jacket/Hoodie/Vest
 slices.

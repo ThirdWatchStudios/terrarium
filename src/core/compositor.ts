@@ -785,6 +785,7 @@ export function composeIcon(iconId: string, pixelSize: number = CANVAS): string 
 interface IdPlaced {
   partId: string;
   slot: string;
+  preservePaintRuns: boolean;
   anchor: { x: number; y: number };
   group: 'body' | 'head';
   variant: PartVariant;
@@ -812,6 +813,7 @@ function placeForLayers(recipe: CharacterRecipe, facing: Facing, rig: ResolvedCh
     out.push({
       partId: id,
       slot,
+      preservePaintRuns: part.preservePaintRuns === true,
       anchor,
       group: HEAD_ANCHORS.includes(part.anchor) ? 'head' : 'body',
       variant,
@@ -826,6 +828,7 @@ function placeForLayers(recipe: CharacterRecipe, facing: Facing, rig: ResolvedCh
     out.push({
       partId: 'pose-neutral-back',
       slot: 'pose',
+      preservePaintRuns: false,
       anchor: rig.anchors.body,
       group: 'body',
       variant: { shapes: neutralVariant.back, z: POSE_BACK_Z },
@@ -835,6 +838,7 @@ function placeForLayers(recipe: CharacterRecipe, facing: Facing, rig: ResolvedCh
     out.push({
       partId: 'pose-neutral-front',
       slot: 'pose',
+      preservePaintRuns: false,
       anchor: rig.anchors.body,
       group: 'body',
       variant: { shapes: neutralVariant.front, z: POSE_FRONT_Z },
@@ -876,27 +880,51 @@ export function characterLayers(recipe: CharacterRecipe, style: StyleSheet): Cha
     placed.splice(1, 0, {
       partId: 'neck-shadow',
       slot: 'body',
+      preservePaintRuns: false,
       anchor: rig.anchors.body,
       group: 'body',
       variant: { shapes: [{ d: ellipse(neck.x, neck.y + 7, facing === 'east' ? 9 : 12, 4), fill: '#00000018', silhouette: false }], z: 35 },
     });
 
     for (const p of placed) {
-      // split the part's shapes into buckets by colour source, preserving order
-      const buckets = new Map<string, ShapeSpec[]>();
-      const bucketOrder: string[] = [];
-      for (const s of p.variant.shapes) {
-        const bk = tokenOf(s.fill) ?? tokenOf(s.stroke) ?? 'literal';
-        if (!buckets.has(bk)) {
-          buckets.set(bk, []);
-          bucketOrder.push(bk);
+      // Most parts coalesce equal tint sources into one compact atlas layer.
+      // Explicit layered garments keep consecutive paint runs separate so a
+      // tint can appear below and above another tint without reordering art.
+      const paintGroups: Array<{ bucket: string; keySuffix: string; shapes: ShapeSpec[] }> = [];
+      if (p.preservePaintRuns) {
+        const occurrences = new Map<string, number>();
+        for (const shape of p.variant.shapes) {
+          const bucket = tokenOf(shape.fill) ?? tokenOf(shape.stroke) ?? 'literal';
+          const current = paintGroups.at(-1);
+          if (current?.bucket === bucket) {
+            current.shapes.push(shape);
+            continue;
+          }
+          const occurrence = (occurrences.get(bucket) ?? 0) + 1;
+          occurrences.set(bucket, occurrence);
+          paintGroups.push({
+            bucket,
+            keySuffix: occurrence === 1 ? bucket : `${bucket}__run${occurrence}`,
+            shapes: [shape],
+          });
         }
-        buckets.get(bk)!.push(s);
+      } else {
+        const groups = new Map<string, ShapeSpec[]>();
+        for (const shape of p.variant.shapes) {
+          const bucket = tokenOf(shape.fill) ?? tokenOf(shape.stroke) ?? 'literal';
+          let shapes = groups.get(bucket);
+          if (!shapes) {
+            shapes = [];
+            groups.set(bucket, shapes);
+            paintGroups.push({ bucket, keySuffix: bucket, shapes });
+          }
+          shapes.push(shape);
+        }
       }
-      for (const bk of bucketOrder) {
-        const shapes = buckets.get(bk)!;
+      for (const { bucket, keySuffix, shapes } of paintGroups) {
+        const bk = bucket;
         const tint = bk === 'literal' ? null : (bk as PaletteToken);
-        const layer = ensure(`${p.partId}__${bk}`, p.slot, p.partId, p.variant.z, tint, null);
+        const layer = ensure(`${p.partId}__${keySuffix}`, p.slot, p.partId, p.variant.z, tint, null);
         const emit = tint ? emitMaskShape : (s: ShapeSpec) => emitColorShape(s, identityResolve);
         layer.markup[facing] = positioned(p.group, facing, style, rig.anchors, p.anchor, shapes.map(emit).join(''));
       }

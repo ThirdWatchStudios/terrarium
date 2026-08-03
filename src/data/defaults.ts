@@ -1682,8 +1682,8 @@ export const KITCHEN_STAFF: CharacterRecipe[] = [
     palette: {
       skin: '#B97850',
       hair: '#3A2A22',
-      outfitPrimary: '#526B67',
-      outfitSecondary: '#E8E4D9',
+      outfitPrimary: '#E7E1D5',
+      outfitSecondary: '#657A82',
       accent: '#C69B52',
     },
   },

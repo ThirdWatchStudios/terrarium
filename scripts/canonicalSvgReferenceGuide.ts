@@ -45,6 +45,7 @@ export type CanonicalSvgCategory =
   | 'characters/head'
   | 'characters/hair'
   | 'characters/outfit'
+  | 'characters/accessory'
   | 'props/workhorse'
   | 'props/outdoor'
   | 'props/iris-hardware'
@@ -254,7 +255,8 @@ function partCategory(sourceFile: string): CanonicalSvgCategory {
     slot !== 'body' &&
     slot !== 'head' &&
     slot !== 'hair' &&
-    slot !== 'outfit'
+    slot !== 'outfit' &&
+    slot !== 'accessory'
   ) {
     throw new Error(`Unknown canonical character slot for ${sourceFile}`);
   }
@@ -926,12 +928,13 @@ function overviewGroups(
     {
       id: 'characters',
       label: 'Character source library',
-      note: 'Bodies, heads, hair, and garment components — every authored facing/component file.',
+      note: 'Bodies, heads, hair, garments, and accessories — every authored facing/component file.',
       entries: entriesFor(inventory, [
         'characters/body',
         'characters/head',
         'characters/hair',
         'characters/outfit',
+        'characters/accessory',
       ]),
     },
     {
@@ -1014,6 +1017,11 @@ function characterSheet(inventory: CanonicalSvgReferenceInventory): string {
       'characters/outfit',
       'Garment components',
       'Exact detail sources; conforming torso geometry remains rig-owned.',
+    ],
+    [
+      'characters/accessory',
+      'Accessories',
+      'Complete head-center overlays; currently the cafeteria hairnet.',
     ],
   ];
   return renderSourceSheet({
@@ -1207,6 +1215,7 @@ function indexHtml(inventory: CanonicalSvgReferenceInventory): string {
         'characters/head',
         'characters/hair',
         'characters/outfit',
+        'characters/accessory',
       ])} exact files`,
     ],
     [

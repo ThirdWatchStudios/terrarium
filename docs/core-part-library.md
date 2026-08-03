@@ -239,12 +239,16 @@ than frozen final art.
 
 ### 2c. Cafeteria service staff — special recipe-only parts
 
-- [x] `outfit-service-apron`: body-anchor-driven bib apron over a tee; the
-      apron uses `$outfitPrimary` and the tee/sleeve field uses
-      `$outfitSecondary` across every production body and facing.
-- [x] `acc-hairnet`: translucent head-center overlay above the hair layer; its
-      outline/net mesh opts out of silhouette generation so every underlying
-      hairstyle remains readable.
+- [x] `outfit-service-apron`: eighteen canonical SVG overlays under
+      `assets/parts/outfit/service-apron.<body-id>.<facing>.svg`; the apron uses
+      `$outfitPrimary` and the tee/sleeve field and pocket use
+      `$outfitSecondary`. Exact body/facing selection replaces the former
+      handwritten builder, while ordered tint runs keep the pocket above the
+      apron in reconstructable layer exports.
+- [x] `acc-hairnet`: three canonical SVG overlays under
+      `assets/parts/accessory/hairnet.<facing>.svg`; its translucent cap and
+      mesh opt out of silhouette generation so every underlying hairstyle
+      remains readable. No static handwritten geometry remains.
 
 Both ids are resolvable by the code-owned `kitchen-worker` recipe in
 `KITCHEN_STAFF`, but are filtered by `NON_SELECTABLE_PART_IDS` from ordinary
@@ -253,6 +257,13 @@ pickers and random/seeded employee generation. The recipe remains outside
 poses or animation frames and does not introduce a new staff export folder;
 the sim-owned campus population lane binds staff when its stable config id is
 ratified.
+
+Direction A received visual approval and production promotion on 2026-08-02:
+warm chef white `#E7E1D5` owns the coat/apron field and muted steel `#657A82`
+owns the undershirt/pocket. The normal Terrarium browser export and fresh Unity
+import completed on 2026-08-02. The sim cannot yet surface cafeteria workers
+in action, so the downstream gameplay-scale visual check is explicitly
+deferred; import success is not treated as that visual acceptance.
 
 ### 3. Hair — organized as families (design system)
 

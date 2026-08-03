@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Canonical hairnet — north</title>
+  <desc>Production complete acc-hairnet overlay.</desc>
+  <metadata>{"status":"production","target":"acc-hairnet","facing":"north","ownership":"complete-hairnet-overlay"}</metadata>
+  <g transform="translate(64 44)">
+    <path id="detail/hairnet/shape-1" d="M -25 4 C -24 -21 -12 -29 0 -29 C 13 -29 24 -21 25 4 C 14 -1 -14 -1 -25 4 Z" fill="#DDEBEA24" stroke="#EEF5F2B8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill-rule="nonzero"/>
+    <path id="detail/hairnet/shape-2" d="M -19 -13 Q 0 -23 19 -13 M -22 -4 Q 0 -14 22 -4" fill="none" stroke="#EEF5F278" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="detail/hairnet/shape-3" d="M -12 -25 L -8 -2 M 0 -29 L 0 -1 M 12 -25 L 8 -2" fill="none" stroke="#EEF5F25C" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
+
