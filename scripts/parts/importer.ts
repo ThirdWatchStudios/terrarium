@@ -862,11 +862,14 @@ function validateTarget(group: MutableImportGroup, target: PartImportTarget | un
   if (
     target.preserveLocalPaths &&
     (
-      (mode !== 'static' && mode !== 'head-fitted-art')
-      || (target.slot !== 'head' && target.slot !== 'hair')
+      mode !== 'fixed-body-art'
+      && (
+        (mode !== 'static' && mode !== 'head-fitted-art')
+        || (target.slot !== 'head' && target.slot !== 'hair')
+      )
     )
   ) {
-    fail(group.id, 'preserveLocalPaths is supported only for static or head-fitted head/hair targets');
+    fail(group.id, 'preserveLocalPaths is supported only for fixed-body-art or static/head-fitted head/hair targets');
   }
   if (mode === 'head-fitted-art') {
     if (
@@ -886,6 +889,17 @@ function validateTarget(group: MutableImportGroup, target: PartImportTarget | un
       !target.bodyAnchors
     ) {
       fail(group.id, 'body-art targets must be body-anchored rigged static parts');
+    }
+  } else if (mode === 'fixed-body-art') {
+    if (
+      target.slot !== 'outfit' ||
+      target.anchor !== 'body' ||
+      target.buildVariant ||
+      !target.referenceBodyId ||
+      !Number.isFinite(target.variantZ) ||
+      target.preserveLocalPaths !== true
+    ) {
+      fail(group.id, 'fixed-body-art targets require a path-stable static body-anchored outfit, reference body, and z-order');
     }
   } else if (mode === 'anchored-detail') {
     if (target.slot !== 'outfit' || target.anchor !== 'body' || !target.buildVariant) {
@@ -1312,7 +1326,10 @@ export async function compilePartDirectory(
         facings[facing] = compilePartSvg(input, {
           source: descriptor.sourcePath,
           slot: descriptor.slot,
-          preserveLocalPaths: target.importMode === 'body-art' || target.preserveLocalPaths === true,
+          preserveLocalPaths:
+            target.importMode === 'body-art'
+            || target.importMode === 'fixed-body-art'
+            || target.preserveLocalPaths === true,
         });
         provenanceFiles.push(descriptor.sourcePath);
       }
@@ -1323,6 +1340,17 @@ export async function compilePartDirectory(
         const shapes = facings[facing];
         if (!shapes?.some((shape) => shape.silhouette !== false)) {
           fail(group.id, `body-art ${facing} must contain silhouette geometry`);
+        }
+      }
+    }
+    if (target.importMode === 'fixed-body-art') {
+      for (const facing of FACINGS) {
+        const shapes = facings[facing];
+        if (!shapes || shapes.length === 0) {
+          fail(group.id, `fixed-body-art ${facing} must contain visible geometry`);
+        }
+        if (shapes.some((shape) => shape.silhouette !== false)) {
+          fail(group.id, `fixed-body-art ${facing} must contain overlay detail shapes only`);
         }
       }
     }
@@ -1344,6 +1372,16 @@ export async function compilePartDirectory(
         kind: 'body-art',
         id: group.id,
         slot: 'body',
+        facings,
+        ...provenance,
+      });
+    } else if (target.importMode === 'fixed-body-art') {
+      imports.push({
+        kind: 'fixed-body-art',
+        id: group.id,
+        slot: 'outfit',
+        bodyId: target.referenceBodyId!,
+        z: target.variantZ!,
         facings,
         ...provenance,
       });
@@ -1424,6 +1462,24 @@ export function emitImportedPartArt(imports: readonly ImportedPartArt[]): string
           lines.push('        ],');
         }
         lines.push('      },');
+      }
+      lines.push('    },');
+      lines.push('  },');
+      continue;
+    }
+    if (imported.kind === 'fixed-body-art') {
+      lines.push('    kind: "fixed-body-art",');
+      lines.push(`    id: ${quote(imported.id)},`);
+      lines.push(`    slot: ${quote(imported.slot)},`);
+      lines.push(`    bodyId: ${quote(imported.bodyId)},`);
+      lines.push(`    z: ${imported.z},`);
+      lines.push('    facings: {');
+      for (const facing of FACINGS) {
+        const shapes = imported.facings[facing];
+        if (!shapes) continue;
+        lines.push(`      ${facing}: [`);
+        for (const shape of shapes) lines.push(`        ${emitShape(shape)},`);
+        lines.push('      ],');
       }
       lines.push('    },');
       lines.push('  },');

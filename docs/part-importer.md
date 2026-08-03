@@ -8,8 +8,11 @@ every file succeeds.
 The generated data is an **appearance overlay** on an existing selectable
 production part. Static head/hair registration replaces matching facing
 geometry. The dedicated `body-art` mode updates the already-shared production
-body `PartDef` in place, while the explicit `outfit-tee` adapter replaces the
-detail shapes returned by its body-aware builder for known production bodies.
+body `PartDef` in place. The `fixed-body-art` mode installs the complete
+SVG-owned `outfit-fab-chassis` overlay only when the recipe uses
+`body-large-frame`; no handwritten geometry or cross-rig fallback remains.
+The explicit `outfit-tee` adapter replaces the detail shapes returned by its
+body-aware builder for known production bodies.
 The `outfit-blazer` component adapter does the same after deterministically
 aggregating separately authored lapels, buttons, and pocket pieces;
 `outfit-polo` reuses that contract for independent collar and placket pieces.
@@ -22,7 +25,7 @@ turn, `outfit-hoodie` uses a three-facing hood plus only the directional
 drawstring and pocket pieces that exist. `outfit-vest` follows with a
 south-only panel, V-neck inset, and buttons. In every mode labels, picker order,
 seeded-generation order, anchors, z-order, body rigs, and other runtime
-metadata remain owned by the handwritten `PartDef`.
+metadata remain code-owned; the SVGs own the imported visible art.
 
 ## Commands
 
@@ -69,6 +72,9 @@ or Cardigan/Suit Jacket component deliberately require south/east only; their
 north detail remains on the handwritten fallback. Turtleneck explicitly
 requires south/east/north. Hoodie declares its asymmetric component facings;
 Vest declares south-only detail.
+`fab-chassis.south.svg`, `fab-chassis.east.svg`, and
+`fab-chassis.north.svg` form one complete fixed-body source set and are accepted
+only for the `body-large-frame` receiver declared in the import catalog.
 Putting a valid complete set in this canonical directory makes it compiler
 input; visual acceptance remains a separate Definition of Done gate. These
 static hair overlays remain the canonical authored source and fallback
@@ -80,6 +86,10 @@ The importer currently accepts:
 - `body`, authored around canvas point `(64, 87)`, through the explicit
   complete-facing `body-art` adapter.
 - `head` and `hair`, authored around canvas point `(64, 44)`.
+- `outfit-fab-chassis` as complete three-facing `fixed-body-art`, authored over
+  `body-large-frame` around `(64, 87)`. Its SVGs own every visible chassis
+  plane, panel, seam, and optic; the adapter owns only body-id gating, facing,
+  west mirroring, body anchor, and z-order.
 - `outfit-tee` as an anchored-detail target, authored over `body-balanced`
   around the body origin `(64, 87)`. Its neck is canvas point `(64, 58)`, and
   the canonical source set is `tee.south.svg` plus `tee.east.svg`.
@@ -164,8 +174,9 @@ Facing files must agree on relative bucket order for the same reason.
 - Flat fill/stroke paint via presentation attributes or inline style.
 - Nested `matrix`, `translate`, `scale`, `rotate`, `skewX`, and `skewY`
   transforms. The compiler bakes them into path data for normal static and
-  anchored-detail imports. Byte-stable body art instead requires the one
-  canonical `translate(64 87)` group and no additional visible-path transform.
+  anchored-detail imports. Byte-stable body art and fixed-body art instead
+  require the one canonical `translate(64 87)` group and no additional
+  visible-path transform.
 - Stroke width is unitless. Strokes must explicitly use round linecaps and
   linejoins, matching the compositor.
 - Path opacity is supported from `(0, 1]`; group opacity is rejected because a

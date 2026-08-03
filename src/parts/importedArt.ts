@@ -51,6 +51,22 @@ export interface ImportedBodyArtOverlay {
 }
 
 /**
+ * Complete SVG-owned overlay for an outfit locked to one production body rig.
+ *
+ * The source supplies every visible shape. The adapter supplies only the
+ * allowed body id and z-order; it deliberately has no handwritten geometry or
+ * unknown-body fallback.
+ */
+export interface ImportedFixedBodyArtOverlay {
+  readonly kind: 'fixed-body-art';
+  readonly id: string;
+  readonly slot: 'outfit';
+  readonly bodyId: string;
+  readonly z: number;
+  readonly facings: Partial<Record<Facing, readonly ShapeSpec[]>>;
+}
+
+/**
  * Pre-expanded detail art for body-rig-aware builders.
  *
  * Each entry replaces only the builder's detail shapes for one production body
@@ -70,6 +86,7 @@ export type ImportedPartOverlay =
   | ImportedStaticPartOverlay
   | ImportedHeadFittedPartOverlay
   | ImportedBodyArtOverlay
+  | ImportedFixedBodyArtOverlay
   | ImportedBodyDetailOverlay;
 
 export interface ImportedPartProvenance {
@@ -158,6 +175,42 @@ export function applyImportedPartArt(
       // retain their original identity.
       base.facings = facings;
       result[index] = base;
+      continue;
+    }
+    if (imported.kind === 'fixed-body-art') {
+      if (base.slot !== 'outfit' || base.anchor !== 'body') {
+        fail(`${imported.id} fixed-body-art overlays require a body-anchored outfit`);
+      }
+      if (base.buildVariant) {
+        fail(`${imported.id} fixed-body-art overlays cannot retain handwritten buildVariant geometry`);
+      }
+      if (!imported.bodyId || !Number.isFinite(imported.z)) {
+        fail(`${imported.id} fixed-body-art overlay requires a body id and finite z-order`);
+      }
+      for (const facing of FACINGS) {
+        const shapes = imported.facings[facing];
+        if (!base.facings[facing]) {
+          fail(`${imported.id}/${facing} has no production facing metadata`);
+        }
+        if (!shapes || shapes.length === 0) {
+          fail(`${imported.id}/${facing} contains no fixed-body art`);
+        }
+        if (shapes.some((shape) => shape.silhouette !== false)) {
+          fail(`${imported.id}/${facing} contains non-overlay geometry`);
+        }
+      }
+      result[index] = {
+        ...base,
+        buildVariant: (facing, context) => {
+          if (context.bodyId !== imported.bodyId) return undefined;
+          const shapes = imported.facings[facing];
+          if (!shapes) fail(`${imported.id}/${facing} is missing fixed-body art`);
+          return {
+            z: imported.z,
+            shapes: shapes.map((shape) => ({ ...shape })),
+          };
+        },
+      };
       continue;
     }
     if (imported.kind === 'body-detail') {

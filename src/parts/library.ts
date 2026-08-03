@@ -1659,72 +1659,6 @@ const ACCESSORIES: PartDef[] = [
 
 const IRIS_OPTIC = '#5BE08A';
 
-/** Body-aware fabrication plating. The approved production body supplies the
- * mobile silhouette and rig; these broad planes make it read as a machine
- * without inventing a second pose skeleton. */
-function anchoredFabChassis(facing: Facing, body: BodyFacingAnchors): PartVariant {
-  const n = body.neck;
-  const chest = body.chest;
-  const hip = body.hip;
-  const hem = spanCenter(body.hem);
-  const topY = n.y + 3;
-  const bottomY = hem.y - 2;
-  const top = bodyInteriorSpan(body, topY + 4, 2);
-  const middle = bodyInteriorSpan(body, chest.y, 3);
-  const bottom = bodyInteriorSpan(body, bottomY, 4);
-  const shell = {
-    d: `M ${top.left} ${topY} L ${top.right} ${topY} L ${bottom.right} ${bottomY} L ${bottom.left} ${bottomY} Z`,
-    fill: '$skin',
-    silhouette: false,
-  } as const;
-
-  if (facing === 'east') {
-    const forwardX = middle.right;
-    return {
-      z: 20,
-      shapes: [
-        shell,
-        { d: rr(forwardX - 9, topY + 5, 9, 14, 2), fill: '$outfitSecondary', silhouette: false },
-        { d: rr(forwardX - 10, hip.y - 2, 10, 8, 2), fill: '$outfitSecondary', silhouette: false },
-        { d: `M ${top.right - 2} ${topY + 3} L ${bottom.right - 2} ${bottomY - 2}`, stroke: '#00000030', strokeWidth: 1.7, silhouette: false },
-        { d: circle(forwardX - 3, chest.y, 4.5), fill: `${IRIS_OPTIC}28`, silhouette: false },
-        { d: circle(forwardX - 3, chest.y, 2.5), fill: IRIS_OPTIC, silhouette: false },
-      ],
-    };
-  }
-
-  const shoulderY = spanCenter(body.shoulders).y + 2;
-  const shoulder = bodyInteriorSpan(body, shoulderY, 3);
-  const yokeWidth = clampValue(8, 14, (shoulder.right - shoulder.left) * 0.2);
-  if (facing === 'north') {
-    return {
-      z: 20,
-      shapes: [
-        shell,
-        { d: rr(shoulder.left, shoulderY, yokeWidth, 11, 2), fill: '$outfitSecondary', silhouette: false },
-        { d: rr(shoulder.right - yokeWidth, shoulderY, yokeWidth, 11, 2), fill: '$outfitSecondary', silhouette: false },
-        { d: rr(chest.x - 12, chest.y - 5, 24, 13, 3), fill: '$outfitSecondary', silhouette: false },
-        { d: circle(chest.x, chest.y + 1, 4.2), fill: `${IRIS_OPTIC}20`, silhouette: false },
-        { d: circle(chest.x, chest.y + 1, 2.4), fill: IRIS_OPTIC, silhouette: false },
-        { d: rr(hip.x - 11, hip.y - 2, 22, 7, 2), fill: '$outfitSecondary', silhouette: false },
-      ],
-    };
-  }
-
-  return {
-    z: 20,
-    shapes: [
-      shell,
-      { d: rr(shoulder.left, shoulderY, yokeWidth, 12, 2), fill: '$outfitSecondary', silhouette: false },
-      { d: rr(shoulder.right - yokeWidth, shoulderY, yokeWidth, 12, 2), fill: '$outfitSecondary', silhouette: false },
-      { d: rr(chest.x - 13, hip.y - 3, 26, 8, 2), fill: '$outfitSecondary', silhouette: false },
-      { d: `M ${chest.x} ${topY + 4} L ${hip.x} ${bottomY - 2}`, stroke: '#00000030', strokeWidth: 1.7, silhouette: false },
-      { d: circle(chest.x, chest.y, 5), fill: `${IRIS_OPTIC}28`, silhouette: false },
-      { d: circle(chest.x, chest.y, 2.8), fill: IRIS_OPTIC, silhouette: false },
-    ],
-  };
-}
-
 const FAB_PARTS: PartDef[] = [
   {
     id: 'head-fab',
@@ -1770,39 +1704,13 @@ const FAB_PARTS: PartDef[] = [
     label: 'Fabrication chassis',
     slot: 'outfit',
     anchor: 'body',
+    // Facing presence and z-order remain catalog metadata. The fixed-body-art
+    // receiver installs every visible shape from the canonical SVGs.
     facings: {
-      south: {
-        z: 20,
-        shapes: [
-          { d: rr(-12, -29, 24, 49, 4), fill: '$outfitPrimary', silhouette: false }, // chest plate
-          { d: rr(-12, -29, 5, 13, 2), fill: '$outfitSecondary', silhouette: false }, // L shoulder panel
-          { d: rr(7, -29, 5, 13, 2), fill: '$outfitSecondary', silhouette: false }, // R shoulder panel
-          { d: rr(-12, -2, 24, 5, 1), fill: '$outfitSecondary', silhouette: false }, // vent band
-          { d: `M 0 -22 L 0 20`, stroke: '#00000030', strokeWidth: 1.5, silhouette: false }, // seam
-          { d: circle(0, -17, 4), fill: `${IRIS_OPTIC}30`, silhouette: false }, // core halo
-          { d: circle(0, -17, 2.2), fill: IRIS_OPTIC, silhouette: false }, // IRIS core light
-        ],
-      },
-      north: {
-        z: 20,
-        shapes: [
-          { d: rr(-12, -29, 24, 49, 3), fill: '$outfitPrimary', silhouette: false },
-          { d: rr(-12, -29, 5, 13, 2), fill: '$outfitSecondary', silhouette: false },
-          { d: rr(7, -29, 5, 13, 2), fill: '$outfitSecondary', silhouette: false },
-          { d: rr(-9, -6, 18, 5, 1), fill: '$outfitSecondary', silhouette: false }, // back vent
-        ],
-      },
-      east: {
-        z: 20,
-        shapes: [
-          { d: rr(7, -29, 10, 49, 4), fill: '$outfitPrimary', silhouette: false },
-          { d: rr(7, -29, 5, 13, 2), fill: '$outfitSecondary', silhouette: false },
-          { d: rr(7, -2, 10, 5, 1), fill: '$outfitSecondary', silhouette: false },
-          { d: circle(12, -17, 2), fill: IRIS_OPTIC, silhouette: false },
-        ],
-      },
+      south: { z: 20, shapes: [] },
+      east: { z: 20, shapes: [] },
+      north: { z: 20, shapes: [] },
     },
-    buildVariant: (facing, context) => context.bodyAnchors && anchoredFabChassis(facing, context.bodyAnchors),
   },
 ];
 

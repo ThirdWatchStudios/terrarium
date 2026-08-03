@@ -222,7 +222,8 @@ system:
 
 - `outfit-dress`;
 - `outfit-hi-vis`;
-- `outfit-fab-chassis`;
+- [x] `outfit-fab-chassis` — promoted 2026-08-02 as three canonical facings
+  with a `body-large-frame`-only receiver and no handwritten geometry fallback;
 - `outfit-service-apron`; and
 - `acc-hairnet`.
 
@@ -230,10 +231,10 @@ The SVG owns the visible garment/equipment art. Body rigs, facing mirrors,
 body-fit frames, recipe-only/selectability policy, z-order, and anchors remain
 metadata/adapter concerns.
 
-Migration should start with `outfit-fab-chassis` and `outfit-dress`, because
-their distinct silhouettes are the clearest cases of visual identity currently
-encoded as builders. Hi-vis, apron, and hairnet follow through the proven
-component adapter.
+The FAB chassis is the completed fixed-body pilot. Continue with
+`outfit-dress`, whose distinct silhouette is the next clearest case of visual
+identity still encoded as a builder. Hi-vis, apron, and hairnet follow through
+the proven component adapter.
 
 ### P2 — major gameplay facilities
 

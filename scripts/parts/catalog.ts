@@ -5,6 +5,7 @@ export type PartImportMode =
   | 'static'
   | 'head-fitted-art'
   | 'body-art'
+  | 'fixed-body-art'
   | 'anchored-detail'
   | 'component-detail';
 export type BodyDetailPointAnchor = 'neck';
@@ -140,6 +141,16 @@ export const PART_IMPORT_TARGETS: readonly PartImportTarget[] = [
     variantZ: 50,
   },
   target('head-fab', 'head'),
+  {
+    id: 'outfit-fab-chassis',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: allFacings,
+    importMode: 'fixed-body-art',
+    preserveLocalPaths: true,
+    referenceBodyId: 'body-large-frame',
+    variantZ: 20,
+  },
   {
     id: 'outfit-tee',
     slot: 'outfit',

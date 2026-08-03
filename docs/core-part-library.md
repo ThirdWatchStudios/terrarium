@@ -222,16 +222,20 @@ sheet under `docs/previews/head-silhouettes-*`.
 - [x] `head-fab`: complete south/east/north canonical SVG sources under
       `assets/parts/head/fab.*.svg`, with a machine silhouette, no human face,
       and the IRIS optic as the only green focal point.
-- [x] `outfit-fab-chassis`: body-anchor-driven chassis art on the approved
-      `body-large-frame` production rig.
+- [x] `outfit-fab-chassis`: complete canonical south/east/north SVG sources
+      under `assets/parts/outfit/fab-chassis.*.svg`, received only on the
+      approved `body-large-frame` production rig. The former handwritten
+      `anchoredFabChassis()` geometry has been removed.
 
 These two ids are intentionally **resolvable but non-selectable**: the
 `construction-worker` recipe and compositor snapshots resolve them through
 `getPart()`, while `partsForSlot()` filters them out of character pickers and
 random/seeded employee generation. They belong to IRIS's fabrication robot,
 not the human part alphabet. The set is mechanically complete and received a
-shared visual refinement pass on 2026-07-10; its current silhouette/detail
-language remains intentionally iterative rather than frozen final art.
+shared visual refinement pass on 2026-07-10. The chassis SVG source-fit
+received explicit visual approval and production promotion on 2026-08-02; its
+appearance remains visually iterative through those canonical files rather
+than frozen final art.
 
 ### 2c. Cafeteria service staff — special recipe-only parts
 

@@ -2198,6 +2198,41 @@ export const IMPORTED_PART_ART = [
     },
   },
   {
+    kind: "fixed-body-art",
+    id: "outfit-fab-chassis",
+    slot: "outfit",
+    bodyId: "body-large-frame",
+    z: 20,
+    facings: {
+      south: [
+        { d: "M -19 -29 L 19 -29 L 9.091 23 L -9.091 23 Z", fill: "$skin", silhouette: false },
+        { d: "M -27.25 -19 h 7.7 a 2 2 0 0 1 2 2 v 8 a 2 2 0 0 1 -2 2 h -7.7 a 2 2 0 0 1 -2 -2 v -8 a 2 2 0 0 1 2 -2 Z", fill: "$outfitSecondary", silhouette: false },
+        { d: "M 19.55 -19 h 7.7 a 2 2 0 0 1 2 2 v 8 a 2 2 0 0 1 -2 2 h -7.7 a 2 2 0 0 1 -2 -2 v -8 a 2 2 0 0 1 2 -2 Z", fill: "$outfitSecondary", silhouette: false },
+        { d: "M -11 10 h 22 a 2 2 0 0 1 2 2 v 4 a 2 2 0 0 1 -2 2 h -22 a 2 2 0 0 1 -2 -2 v -4 a 2 2 0 0 1 2 -2 Z", fill: "$outfitSecondary", silhouette: false },
+        { d: "M 0 -25 L 0 21", stroke: "#00000030", strokeWidth: 1.7, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+        { d: "M -5 -8 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0 Z", fill: "#5BE08A28", silhouette: false },
+        { d: "M -2.8 -8 a 2.8 2.8 0 1 0 5.6 0 a 2.8 2.8 0 1 0 -5.6 0 Z", fill: "#5BE08A", silhouette: false },
+      ],
+      east: [
+        { d: "M -0.545 -29 L 3.091 -29 L 9.818 23 L -6.636 23 Z", fill: "$skin", silhouette: false },
+        { d: "M 5.583 -24 h 5 a 2 2 0 0 1 2 2 v 10 a 2 2 0 0 1 -2 2 h -5 a 2 2 0 0 1 -2 -2 v -10 a 2 2 0 0 1 2 -2 Z", fill: "$outfitSecondary", silhouette: false },
+        { d: "M 4.583 11 h 6 a 2 2 0 0 1 2 2 v 4 a 2 2 0 0 1 -2 2 h -6 a 2 2 0 0 1 -2 -2 v -4 a 2 2 0 0 1 2 -2 Z", fill: "$outfitSecondary", silhouette: false },
+        { d: "M 1.091 -26 L 7.818 21", stroke: "#00000030", strokeWidth: 1.7, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+        { d: "M 5.083 -8 a 4.5 4.5 0 1 0 9 0 a 4.5 4.5 0 1 0 -9 0 Z", fill: "#5BE08A28", silhouette: false },
+        { d: "M 7.083 -8 a 2.5 2.5 0 1 0 5 0 a 2.5 2.5 0 1 0 -5 0 Z", fill: "#5BE08A", silhouette: false },
+      ],
+      north: [
+        { d: "M -19 -29 L 19 -29 L 9.091 23 L -9.091 23 Z", fill: "$skin", silhouette: false },
+        { d: "M -27.25 -19 h 7.7 a 2 2 0 0 1 2 2 v 7 a 2 2 0 0 1 -2 2 h -7.7 a 2 2 0 0 1 -2 -2 v -7 a 2 2 0 0 1 2 -2 Z", fill: "$outfitSecondary", silhouette: false },
+        { d: "M 19.55 -19 h 7.7 a 2 2 0 0 1 2 2 v 7 a 2 2 0 0 1 -2 2 h -7.7 a 2 2 0 0 1 -2 -2 v -7 a 2 2 0 0 1 2 -2 Z", fill: "$outfitSecondary", silhouette: false },
+        { d: "M -9 -13 h 18 a 3 3 0 0 1 3 3 v 7 a 3 3 0 0 1 -3 3 h -18 a 3 3 0 0 1 -3 -3 v -7 a 3 3 0 0 1 3 -3 Z", fill: "$outfitSecondary", silhouette: false },
+        { d: "M -9 11 h 18 a 2 2 0 0 1 2 2 v 3 a 2 2 0 0 1 -2 2 h -18 a 2 2 0 0 1 -2 -2 v -3 a 2 2 0 0 1 2 -2 Z", fill: "$outfitSecondary", silhouette: false },
+        { d: "M -4.2 -7 a 4.2 4.2 0 1 0 8.4 0 a 4.2 4.2 0 1 0 -8.4 0 Z", fill: "#5BE08A20", silhouette: false },
+        { d: "M -2.4 -7 a 2.4 2.4 0 1 0 4.8 0 a 2.4 2.4 0 1 0 -4.8 0 Z", fill: "#5BE08A", silhouette: false },
+      ],
+    },
+  },
+  {
     kind: "body-detail",
     id: "outfit-hoodie",
     slot: "outfit",
@@ -3005,6 +3040,15 @@ export const IMPORTED_PART_PROVENANCE = [
       "assets/parts/outfit/cardigan.button-line.south.svg",
       "assets/parts/outfit/cardigan.trim.east.svg",
       "assets/parts/outfit/cardigan.trim.south.svg",
+    ],
+  },
+  {
+    id: "outfit-fab-chassis",
+    sourceKind: "authored",
+    sourceFiles: [
+      "assets/parts/outfit/fab-chassis.east.svg",
+      "assets/parts/outfit/fab-chassis.north.svg",
+      "assets/parts/outfit/fab-chassis.south.svg",
     ],
   },
   {
