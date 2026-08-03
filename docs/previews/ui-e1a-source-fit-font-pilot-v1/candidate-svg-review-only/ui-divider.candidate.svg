@@ -1,0 +1,2 @@
+<!-- REVIEW ONLY: UI-E1a candidate; not canonical or production authority. Decision: exact-authority-inversion. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128"><g transform="translate(64 64)"><path d="M -36 0 L -10 0" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M 10 0 L 36 0" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M 0 -9 L 9 0 L 0 9 L -9 0 Z" fill="#FFFFFF"/></g></svg>
