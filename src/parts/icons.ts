@@ -62,6 +62,17 @@ function canonicalUiIconShapes(id: string, mode: IconMode): ShapeSpec[] {
   return entry.shapes.map((shape) => ({ ...shape })) as ShapeSpec[];
 }
 
+function canonicalUiCursor(id: string): Pick<CursorDef, 'shapes' | 'hotspot'> {
+  const entry = CANONICAL_UI_ICON_ART_BY_ID.get(id as (typeof CANONICAL_UI_ICON_ART)[number]['id']);
+  if (!entry) throw new Error(`Missing generated canonical UI cursor art for ${id}`);
+  if (entry.mode !== 'literal') throw new Error(`Canonical UI cursor mode mismatch for ${id}`);
+  if (!('hotspot' in entry)) throw new Error(`Canonical UI cursor hotspot missing for ${id}`);
+  return {
+    shapes: entry.shapes.map((shape) => ({ ...shape })) as ShapeSpec[],
+    hotspot: { ...entry.hotspot },
+  };
+}
+
 // --- tintable helpers (color ignored — emitted as a white mask) -------------
 const ACC = '$accent'; // marker only; recolored by the framework
 const stroke = (d: string, strokeWidth = 9): ShapeSpec => ({ d, stroke: ACC, strokeWidth, silhouette: false });
@@ -117,6 +128,12 @@ export const ICONS: IconDef[] = [
     mode: 'tintable',
     shapes: [stroke(rr(-30, -30, 60, 60, 8), 8), fill(rr(-14, 8, 28, 22, 3)), fill(rr(-8, -30, 22, 16, 2))],
   },
+  { id: 'action-rotate', label: 'Rotate', mode: 'tintable', shapes: canonicalUiIconShapes('action-rotate', 'tintable') },
+  { id: 'action-undo', label: 'Undo', mode: 'tintable', shapes: canonicalUiIconShapes('action-undo', 'tintable') },
+  { id: 'action-redo', label: 'Redo', mode: 'tintable', shapes: canonicalUiIconShapes('action-redo', 'tintable') },
+  { id: 'action-move', label: 'Move', mode: 'tintable', shapes: canonicalUiIconShapes('action-move', 'tintable') },
+  { id: 'action-delete', label: 'Delete', mode: 'tintable', shapes: canonicalUiIconShapes('action-delete', 'tintable') },
+  { id: 'world-facing', label: 'World facing', mode: 'tintable', shapes: canonicalUiIconShapes('world-facing', 'tintable') },
 
   // --- Decorative trim (tintable; animation is the framework's) --------------
   {
@@ -689,64 +706,34 @@ export const ICONS: IconDef[] = [
   ...REACTION_ICONS,
 ];
 
-// --- Cursors (PNG-only; literal so the ink fill + light halo render) ---------
-// USS `cursor` and uGUI both need a texture, not a vector — so cursors export
-// PNG only. Dark fill under a light halo so the pointer reads on any background.
-const INK = UI_PALETTE.ink;
-const HALO = UI_PALETTE.onColor;
-/** Filled glyph: light halo underneath, ink fill on top. */
-const curFill = (d: string): ShapeSpec[] => [
-  { d, fill: HALO, stroke: HALO, strokeWidth: 7, silhouette: false },
-  { d, fill: INK, silhouette: false },
-];
-/** Stroked glyph: wide light halo underneath, narrower ink stroke on top. */
-const curStroke = (d: string, strokeWidth = 7): ShapeSpec[] => [
-  { d, stroke: HALO, strokeWidth: strokeWidth + 6, silhouette: false },
-  { d, stroke: INK, strokeWidth, silhouette: false },
-];
-
+// --- Cursors (canonical SVG geometry; downstream PNG handoff remains later) --
+// The literal ink + light halo and normalized hotspot are compiled together
+// from the approved source manifest. No texture export or Unity import happens
+// at this source-authority boundary.
 export const CURSORS: CursorDef[] = [
   {
     id: 'cursor-default',
     label: 'Pointer',
     mode: 'literal',
-    // Tip at local (-22,-26) → canvas (42,38) → hotspot below.
-    shapes: curFill('M -22 -26 L -22 14 L -12 4 L -4 22 L 2 19 L -6 2 L 8 2 Z'),
-    hotspot: { x: 42 / 128, y: 38 / 128 },
+    ...canonicalUiCursor('cursor-default'),
   },
   {
     id: 'cursor-grab',
     label: 'Move',
     mode: 'literal',
-    shapes: [
-      ...curStroke('M 0 -28 L 0 28', 6),
-      ...curStroke('M -28 0 L 28 0', 6),
-      ...curFill('M 0 -30 L 8 -20 L -8 -20 Z'),
-      ...curFill('M 0 30 L 8 20 L -8 20 Z'),
-      ...curFill('M -30 0 L -20 -8 L -20 8 Z'),
-      ...curFill('M 30 0 L 20 -8 L 20 8 Z'),
-    ],
-    hotspot: { x: 0.5, y: 0.5 },
+    ...canonicalUiCursor('cursor-grab'),
   },
   {
     id: 'cursor-place',
     label: 'Place',
     mode: 'literal',
-    shapes: [
-      ...curStroke('M 0 -26 L 0 -8'),
-      ...curStroke('M 0 8 L 0 26'),
-      ...curStroke('M -26 0 L -8 0'),
-      ...curStroke('M 8 0 L 26 0'),
-      ...curFill(circle(0, 0, 4)),
-    ],
-    hotspot: { x: 0.5, y: 0.5 },
+    ...canonicalUiCursor('cursor-place'),
   },
   {
     id: 'cursor-invalid',
     label: 'Invalid',
     mode: 'literal',
-    shapes: [...curStroke(circle(0, 0, 24)), ...curStroke('M -17 -17 L 17 17')],
-    hotspot: { x: 0.5, y: 0.5 },
+    ...canonicalUiCursor('cursor-invalid'),
   },
 ];
 

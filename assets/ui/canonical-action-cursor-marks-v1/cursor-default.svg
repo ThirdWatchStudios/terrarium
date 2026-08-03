@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-ui-icon-id="cursor-default" data-icon-mode="literal">
+  <title>Pointer cursor</title>
+  <desc>Exact authority inversion of the established ink pointer with white visibility halo.</desc>
+  <metadata>{"family":"canonical-ui-action-cursor-marks-v1","decision":"exact-authority-inversion","hotspot":{"x":0.328125,"y":0.296875}}</metadata>
+  <g id="approved-mark" transform="translate(64 64)">
+    <path id="pointer-halo" d="M -22 -26 L -22 14 L -12 4 L -4 22 L 2 19 L -6 2 L 8 2 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="pointer-ink" d="M -22 -26 L -22 14 L -12 4 L -4 22 L 2 19 L -6 2 L 8 2 Z" fill="#2C2C2A"/>
+  </g>
+</svg>

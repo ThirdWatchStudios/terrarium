@@ -3,6 +3,8 @@
   "source": {
     "manifest": "assets/ui/department-era-design-v1/manifest.json",
     "manifestSha256": "793c6c22133af7097393fb5db6045f3520e0e65e2227d2f54859a6f57addde2a",
+    "componentManifest": "assets/ui/department-era-component-library-v1/manifest.json",
+    "componentManifestSha256": "af829d375f35f0ddb9f3133c02165ffe44dea60ad4848b6e652468c779d29ac5",
     "fontPayload": "docs/previews/ui-e1a-source-fit-font-pilot-v1/01-production-font-pilot.svg",
     "worldReference": "/Users/tombiagioni/.codex/generated_images/019fc31e-f42d-7f23-b0ee-6635d674450b/exec-1244ea64-482b-4484-b7c9-576da0a93593.png",
     "worldReferenceSha256": "e2e660355ff79f7acdb4b501472b605650dbb7bed71b6d2e9345fd4e78752fe4"
@@ -19,6 +21,18 @@
       "svgSha256": "3a184c5b123ec97a60c64a5c1f25ae1b7510992ed67187ccaa87bf2616b3bcff",
       "png": "01-literal-department-screens.png",
       "pngSha256": "0599d72bcb0d0bad54910b004b24a324df5879a464bc7eb1ea3c4802f0c75bfe"
+    },
+    {
+      "svg": "02-reusable-component-library.svg",
+      "svgSha256": "07f4200ae01a963372fdd898e448841836ae6265b6a13921c39ed94eacb9a9ad",
+      "png": "02-reusable-component-library.png",
+      "pngSha256": "dcc7dbbb70c9500d4831dc9a61f1112379cbc3cd9c7b339b595ab8a0dcff226b"
+    },
+    {
+      "svg": "03-purpose-catalog-handoff-screens.svg",
+      "svgSha256": "8291cae939ad7790a558533016fd2e4d0df2bebf5d9776cee569940a94dff264",
+      "png": "03-purpose-catalog-handoff-screens.png",
+      "pngSha256": "8a554bf782ed11d6e1e4d4f3f9072cd9b5caec3cab0ff312a2e8f7d50654ada7"
     }
   ],
   "literalScreens": [
@@ -45,6 +59,30 @@
       "viewport": "1280x720",
       "uiScale": 1.4,
       "armed": true
+    },
+    {
+      "id": "all-items-browse",
+      "viewport": "1280x720",
+      "uiScale": 1,
+      "armed": false
+    },
+    {
+      "id": "all-items-search-focused",
+      "viewport": "1280x720",
+      "uiScale": 1,
+      "armed": false
+    },
+    {
+      "id": "people-handoff",
+      "viewport": "1280x720",
+      "uiScale": 1,
+      "armed": false
+    },
+    {
+      "id": "designation-management-receipt",
+      "viewport": "1280x720",
+      "uiScale": 1.4,
+      "armed": false
     }
   ],
   "canonicalMarks": [
@@ -71,9 +109,32 @@
     "route-input",
     "route-output",
     "route-wall-pass",
-    "route-repair"
+    "route-repair",
+    "action-rotate",
+    "action-undo",
+    "action-redo",
+    "action-move",
+    "action-delete",
+    "world-facing",
+    "cursor-default",
+    "cursor-grab",
+    "cursor-place",
+    "cursor-invalid"
   ],
-  "reviewCandidateMarks": [],
+  "promotedActionMarks": [
+    "action-rotate",
+    "action-undo",
+    "action-redo",
+    "action-move",
+    "action-delete",
+    "world-facing"
+  ],
+  "canonicalCursorSources": [
+    "cursor-default",
+    "cursor-grab",
+    "cursor-place",
+    "cursor-invalid"
+  ],
   "reservations": {
     "amber": "dormant Capture only; absent from active department UI",
     "rose": "emotion only; absent from active department UI",

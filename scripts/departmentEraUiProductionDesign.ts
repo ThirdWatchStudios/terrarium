@@ -13,8 +13,10 @@ import path from 'node:path';
 import { Resvg } from '@resvg/resvg-js';
 
 import design from '../assets/ui/department-era-design-v1/manifest.json';
+import components from '../assets/ui/department-era-component-library-v1/manifest.json';
 import { composeIcon } from '../src/core/compositor';
 import type { ShapeSpec } from '../src/core/types';
+import { getIcon } from '../src/parts/icons';
 import { QUOTA_CO_DEPARTMENT_MACHINE_ART } from '../src/props/generated/quotaCoDepartmentMachineArt';
 
 const OUTPUT = 'docs/previews/department-era-ui-production-design-v1';
@@ -27,6 +29,7 @@ const P = design.palette;
 type Anchor = 'start' | 'middle' | 'end';
 type ControlState = keyof typeof design.states;
 type ScreenScenario = 'chain-browse' | 'requirement-selected' | 'placement-valid' | 'route-invalid-140';
+type ExpandedScreenScenario = 'all-items-browse' | 'all-items-search-focused' | 'people-handoff' | 'designation-management-receipt';
 
 interface RenderedOutput {
   readonly filename: string;
@@ -144,6 +147,10 @@ function icon(id: string, x: number, y: number, size: number, tint?: string): st
 }
 
 function departmentGlyph(id: string, x: number, y: number, size: number, color: string): string {
+  return icon(id, x, y, size, color);
+}
+
+function actionGlyph(id: string, x: number, y: number, size: number, color: string): string {
   return icon(id, x, y, size, color);
 }
 
@@ -332,6 +339,202 @@ function designSystemSheet(fontCss: string): string {
   parts.push(rect(1260, ownershipY + 300, 24, 24, P.utilityWell, P.invalidRust, 2, 1));
   parts.push(text(1298, ownershipY + 319, 'RUST · INVALID + REPAIR', 13, P.utilityTextMuted, 400, 'start', 'IBM Plex Sans'));
   parts.push(text(width - 68, ownershipY + 413, 'APPROVED TERRARIUM DESIGN SOURCE · GLYPH PROMOTION RECORDED · UNITY DEFERRED', 12, P.focus, 500, 'end', 'IBM Plex Sans Condensed', 1));
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+}
+
+function componentLibrarySheet(fontCss: string): string {
+  const width = 2800;
+  const height = 2380;
+  const parts: string[] = [backdrop(width, height), `<style>${fontCss}</style>`];
+  parts.push(text(48, 54, 'DEPARTMENT-ERA UI · REUSABLE COMPONENT LIBRARY', 30, P.utilityText, 500, 'start', 'IBM Plex Sans Condensed', 2));
+  parts.push(text(48, 84, 'LITERAL CONSTRUCTION CONTRACT · 34 CANONICAL MARKS + SOURCE-OWNED CURSOR HOTSPOTS · UNITY DEFERRED', 13, P.utilityTextMuted, 500, 'start', 'IBM Plex Sans Condensed', 1));
+
+  const carrierY = 130;
+  parts.push(text(48, carrierY, 'F-03 / F-04 / F-05 / F-06 / F-11 · CARRIERS AND TECHNICAL PRINT', 18, P.focus, 500, 'start', 'IBM Plex Sans Condensed', 1.2));
+  const carrierX = [48, 730, 1412, 2094] as const;
+  parts.push(panel(carrierX[0], carrierY + 28, 642, 292));
+  parts.push(text(carrierX[0] + 20, carrierY + 62, 'CONTINUOUS CHASSIS', 13, P.utilityText, 500, 'start', 'IBM Plex Sans Condensed', 0.8));
+  parts.push(rect(carrierX[0] + 20, carrierY + 82, 602, 70, P.utilityWell, P.darkRule, 2, 2));
+  parts.push(rect(carrierX[0] + 36, carrierY + 97, 170, 40, P.utilitySleeve, P.darkRule, 1, 2));
+  parts.push(rect(carrierX[0] + 220, carrierY + 97, 170, 40, P.selection, P.selectionEdge, 2, 2));
+  parts.push(rect(carrierX[0] + 404, carrierY + 97, 202, 40, '#565342', P.darkRule, 1, 2));
+  parts.push(text(carrierX[0] + 121, carrierY + 123, 'RAISED SLEEVE', 12, P.utilityText, 500, 'middle', 'IBM Plex Sans Condensed', 0.5));
+  parts.push(text(carrierX[0] + 305, carrierY + 123, 'SELECTED RAIL', 12, P.utilityText, 500, 'middle', 'IBM Plex Sans Condensed', 0.5));
+  parts.push(text(carrierX[0] + 505, carrierY + 123, 'DISABLED · READABLE', 12, P.utilityTextMuted, 500, 'middle', 'IBM Plex Sans Condensed', 0.5));
+  parts.push(multiline(carrierX[0] + 20, carrierY + 185, ['USS: shallow border, one-pixel upper edge, restrained shadow.', 'No whole-panel SVG; dimensions remain responsive.'], 13, P.utilityTextMuted, 24));
+
+  parts.push(paper(carrierX[1], carrierY + 28, 642, 292));
+  parts.push(text(carrierX[1] + 22, carrierY + 65, 'QT–C05 · QUOTACO RECORD CARRIER', 16, P.ink, 700, 'start', 'Courier Prime'));
+  parts.push(line(carrierX[1] + 22, carrierY + 79, carrierX[1] + 620, carrierY + 79, P.quotaCoPaperRule, 1));
+  parts.push(text(carrierX[1] + 22, carrierY + 116, 'PURPOSE     OFFICIAL FACTS AND RECOVERABLE RECEIPTS', 13, P.ink, 400, 'start', 'Courier Prime'));
+  parts.push(text(carrierX[1] + 22, carrierY + 148, 'MATERIAL    MANILA / DARK RULE / LIVE TYPE', 13, P.ink, 400, 'start', 'Courier Prime'));
+  parts.push(text(carrierX[1] + 22, carrierY + 180, 'NOT IRIS    NO CLAIMS ABOUT PEOPLE OR MOTIVE', 13, P.ink, 400, 'start', 'Courier Prime'));
+  parts.push(controlButton(carrierX[1] + 400, carrierY + 220, 210, 42, 'FILE RECEIPT', 'default'));
+
+  parts.push(irisPanel(carrierX[2], carrierY + 28, 642, 292));
+  parts.push(icon('iris-mark', carrierX[2] + 22, carrierY + 48, 30, P.irisSignal));
+  parts.push(text(carrierX[2] + 64, carrierY + 70, 'IRIS // OBSERVED BREAK', 15, P.irisSignal, 400, 'start', 'IBM Plex Mono', 0.5));
+  parts.push(line(carrierX[2] + 22, carrierY + 88, carrierX[2] + 620, carrierY + 88, P.irisSignal, 1));
+  parts.push(multiline(carrierX[2] + 22, carrierY + 126, ['OBSERVED: DISPATCH HAS NO LEGAL ROUTE.', 'REPAIR: START TUBE ROUTE FROM OUTPUT.', 'UNCERTAINTY: STAFFING AUTHORITY UNAVAILABLE.'], 13, P.irisSignal, 30, 'IBM Plex Mono'));
+  parts.push(text(carrierX[2] + 620, carrierY + 290, 'CONTAINED · NEVER GLOBAL SHELL', 11, P.irisSignal, 400, 'end', 'IBM Plex Mono'));
+
+  parts.push(paper(carrierX[3], carrierY + 28, 642, 292));
+  parts.push(text(carrierX[3] + 22, carrierY + 64, 'F-11 · DERIVED TECHNICAL PRINT', 15, P.ink, 700, 'start', 'Courier Prime'));
+  const machineSpecs = [
+    ['sorting_frame', 'SORTING FRAME'],
+    ['franking_machine', 'FRANKING MACHINE'],
+    ['dispatch_station', 'DISPATCH STATION'],
+  ] as const;
+  machineSpecs.forEach(([id, label], index) => {
+    const x = carrierX[3] + 24 + index * 202;
+    parts.push(rect(x, carrierY + 88, 184, 154, index === 1 ? '#B7AA8B' : P.quotaCoPaperLight, P.ink, index === 1 ? 3 : 1, 1));
+    parts.push(technicalMachine(id, x + 52, carrierY + 96, 80));
+    parts.push(text(x + 92, carrierY + 224, label, 9, P.ink, 700, 'middle', 'Courier Prime'));
+  });
+  parts.push(text(carrierX[3] + 620, carrierY + 290, 'ONE-COLOR DERIVATION · NO REDRAWN SKU', 11, P.ink, 400, 'end', 'Courier Prime'));
+
+  const controlY = 505;
+  parts.push(text(48, controlY, 'C-01 / C-03 / F-10 · ACTION AND VIEW-STATE GRAMMAR', 18, P.focus, 500, 'start', 'IBM Plex Sans Condensed', 1.2));
+  (Object.keys(design.states) as ControlState[]).forEach((state, index) => {
+    const x = 48 + index * 390;
+    parts.push(controlButton(x, controlY + 34, 340, 52, state.toUpperCase(), state));
+    parts.push(text(x + 170, controlY + 112, state === 'focus' ? 'KEYBOARD / GAMEPAD' : design.states[state], 10.5, P.utilityTextMuted, 400, 'middle', 'IBM Plex Sans'));
+  });
+  const tabsY = controlY + 150;
+  parts.push(panel(48, tabsY, 1030, 94, P.utilityChassis));
+  parts.push(text(68, tabsY + 28, 'SEGMENTED VIEW SWITCHER', 11, P.utilityTextMuted, 500, 'start', 'IBM Plex Sans Condensed', 0.7));
+  parts.push(controlButton(68, tabsY + 40, 210, 38, 'CHAIN', 'selected'));
+  parts.push(controlButton(286, tabsY + 40, 250, 38, 'ALL ITEMS', 'default'));
+  parts.push(controlButton(544, tabsY + 40, 210, 38, 'PEOPLE', 'focus'));
+  parts.push(controlButton(762, tabsY + 40, 290, 38, 'UNAVAILABLE', 'disabled'));
+  parts.push(panel(1110, tabsY, 1642, 94, P.utilityChassis));
+  parts.push(text(1130, tabsY + 28, 'INDEX RAIL · WHOLE ROW ACTION', 11, P.utilityTextMuted, 500, 'start', 'IBM Plex Sans Condensed', 0.7));
+  const railRows = [
+    ['01', 'STRUCTURE', 'default'],
+    ['02', 'DEPARTMENTS', 'selected'],
+    ['03', 'PRODUCTION · UNREAD 2', 'focus'],
+    ['04', 'PREFABS', 'disabled'],
+  ] as const;
+  railRows.forEach(([number, label, state], index) => {
+    const x = 1130 + index * 394;
+    const selected = state === 'selected';
+    parts.push(rect(x, tabsY + 40, 370, 38, selected ? P.selection : P.utilityWell, selected ? P.selectionEdge : P.darkRule, selected ? 2 : 1, 1, state === 'disabled' ? 'opacity="0.62"' : ''));
+    parts.push(text(x + 16, tabsY + 65, number, 13, selected ? P.focus : P.utilityTextMuted, 400, 'start', 'IBM Plex Mono'));
+    parts.push(text(x + 58, tabsY + 65, label, 12, selected ? P.utilityText : P.utilityTextMuted, 500, 'start', 'IBM Plex Sans Condensed', 0.5));
+    if (state === 'focus') parts.push(focusCorners(x, tabsY + 40, 370, 38));
+  });
+
+  const cellY = 805;
+  parts.push(text(48, cellY, 'C-05 THROUGH C-12 · DENSE REUSABLE MECHANICS', 18, P.focus, 500, 'start', 'IBM Plex Sans Condensed', 1.2));
+  parts.push(panel(48, cellY + 28, 650, 322));
+  parts.push(text(70, cellY + 60, 'SEARCH OWNS TYPE ONLY WHILE FOCUSED', 12, P.utilityText, 500, 'start', 'IBM Plex Sans Condensed', 0.7));
+  parts.push(rect(70, cellY + 78, 500, 44, P.utilityWellDeep, P.focus, 2, 2));
+  parts.push(icon('ui-focus', 78, cellY + 86, 28, P.focus));
+  parts.push(text(118, cellY + 107, 'station', 15, P.utilityText, 400, 'start', 'IBM Plex Sans'));
+  parts.push(text(584, cellY + 107, '⌫', 16, P.utilityTextMuted, 400, 'middle', 'IBM Plex Sans'));
+  parts.push(text(70, cellY + 148, 'SCROLL VIEWPORT', 11, P.utilityTextMuted, 500, 'start', 'IBM Plex Sans Condensed', 0.6));
+  parts.push(rect(70, cellY + 162, 500, 120, P.utilityWell, P.darkRule, 1, 1));
+  [0, 1, 2].forEach((index) => {
+    parts.push(rect(84, cellY + 176 + index * 32, 448, 26, index === 1 ? P.selection : P.utilitySleeve, index === 1 ? P.selectionEdge : P.darkRule, 1, 1));
+    parts.push(text(98, cellY + 194 + index * 32, ['INTAKE STATION', 'DISPATCH STATION', 'FILING STATION'][index], 11, P.utilityText, 500, 'start', 'IBM Plex Sans Condensed', 0.4));
+  });
+  parts.push(rect(546, cellY + 166, 10, 112, P.utilityWellDeep, P.darkRule, 1, 2));
+  parts.push(rect(547, cellY + 184, 8, 40, P.utilityTextMuted, P.darkRule, 1, 2));
+
+  parts.push(panel(730, cellY + 28, 650, 322));
+  parts.push(text(752, cellY + 60, 'READINESS FACTS STAY INDEPENDENT', 12, P.utilityText, 500, 'start', 'IBM Plex Sans Condensed', 0.7));
+  const readiness = [
+    ['ready-room', 'ROOM', 'state-complete', P.selectionEdge],
+    ['ready-equipped', 'EQUIPPED', 'state-missing', P.invalidRust],
+    ['ready-connected', 'CONNECTED', 'state-blocked', P.invalidRust],
+    ['ready-staffed', 'STAFFED 0 / 2', 'state-unavailable', P.disabled],
+  ] as const;
+  readiness.forEach(([fact, label, state, color], index) => {
+    const y = cellY + 82 + index * 56;
+    parts.push(rect(752, y, 606, 44, P.utilityWell, index === 2 ? P.invalidRust : P.darkRule, index === 2 ? 2 : 1, 1));
+    parts.push(departmentGlyph(fact, 764, y + 8, 28, P.utilityText));
+    parts.push(text(808, y + 28, label, 13, P.utilityText, 500, 'start', 'IBM Plex Sans Condensed', 0.5));
+    parts.push(departmentGlyph(state, 1314, y + 10, 24, color));
+  });
+
+  parts.push(panel(1412, cellY + 28, 650, 322));
+  parts.push(text(1434, cellY + 60, 'ATTENTION BROWSES · REPAIR EXPLAINS', 12, P.utilityText, 500, 'start', 'IBM Plex Sans Condensed', 0.7));
+  parts.push(rect(1434, cellY + 82, 606, 72, P.utilityWell, P.invalidRust, 2, 2));
+  parts.push(icon('ui-alert', 1448, cellY + 98, 34, P.invalidRust));
+  parts.push(text(1496, cellY + 108, 'ACTION NEEDED · INTAKE EQUIPMENT', 13, P.utilityText, 500, 'start', 'IBM Plex Sans Condensed', 0.5));
+  parts.push(text(1496, cellY + 134, 'Open Build selects Sorting Frame; it does not arm placement.', 12, P.utilityTextMuted, 400, 'start', 'IBM Plex Sans'));
+  parts.push(irisDiagnostic(1434, cellY + 174, 606, 126, 'IRIS // ONE REPAIR', [
+    'OBSERVED: OUTPUT HAS NO SHARED-WALL PASS.',
+    'REPAIR: START TUBE ROUTE FROM OUTPUT.',
+  ], true));
+
+  parts.push(paper(2094, cellY + 28, 658, 322));
+  parts.push(text(2116, cellY + 64, 'QT–R12 · RECOVERABLE EDIT RECEIPT', 15, P.ink, 700, 'start', 'Courier Prime'));
+  parts.push(line(2116, cellY + 78, 2730, cellY + 78, P.quotaCoPaperRule, 1));
+  parts.push(text(2116, cellY + 112, 'PLACED       SORTING FRAME', 13, P.ink, 400, 'start', 'Courier Prime'));
+  parts.push(text(2116, cellY + 142, 'DEPARTMENT    INTAKE', 13, P.ink, 400, 'start', 'Courier Prime'));
+  parts.push(text(2116, cellY + 172, 'AUTHORITY     REVALIDATED', 13, P.ink, 400, 'start', 'Courier Prime'));
+  parts.push(controlButton(2116, cellY + 210, 190, 44, 'UNDO', 'default'));
+  parts.push(controlButton(2318, cellY + 210, 190, 44, 'REDO', 'disabled'));
+  parts.push(controlButton(2520, cellY + 210, 210, 44, 'FOCUS ITEM', 'selected'));
+  parts.push(text(2730, cellY + 292, 'UNDO IS RECOVERY · NOT DURABLE MANAGEMENT', 11, P.ink, 400, 'end', 'Courier Prime'));
+
+  const actionY = 1215;
+  parts.push(text(48, actionY, 'C-11 / C-12 / W-03 · CANONICAL ACTION MARKS AT LITERAL SIZES', 18, P.focus, 500, 'start', 'IBM Plex Sans Condensed', 1.2));
+  parts.push(text(width - 48, actionY, 'APPROVED TERRARIUM SVG AUTHORITY', 12, P.focus, 500, 'end', 'IBM Plex Sans Condensed', 0.9));
+  const actionSizes = [16, 20, 24, 32, 42] as const;
+  components.promotedActionMarks.forEach((id, index) => {
+    const x = 48 + index * 452;
+    parts.push(panel(x, actionY + 30, 420, 280, P.utilityWell));
+    parts.push(text(x + 20, actionY + 62, id.toUpperCase().replaceAll('-', ' '), 12, P.utilityText, 500, 'start', 'IBM Plex Sans Condensed', 0.6));
+    let cursorX = x + 22;
+    actionSizes.forEach((size) => {
+      parts.push(rect(cursorX, actionY + 88, Math.max(54, size + 20), 70, P.utilityWellDeep, P.darkRule, 1, 1));
+      parts.push(actionGlyph(id, cursorX + (Math.max(54, size + 20) - size) / 2, actionY + 101 + (42 - size) / 2, size, P.utilityText));
+      parts.push(text(cursorX + Math.max(54, size + 20) / 2, actionY + 180, `${size}px`, 10, P.utilityTextMuted, 400, 'middle', 'IBM Plex Mono'));
+      cursorX += Math.max(62, size + 28);
+    });
+    parts.push(controlButton(x + 20, actionY + 208, 180, 42, id.replace('action-', '').replace('world-', '').toUpperCase(), index === 4 ? 'invalid' : 'default'));
+    parts.push(text(x + 218, actionY + 234, index === 4 ? 'RUST + LABEL' : 'ICON NEVER SOLE LABEL', 10.5, index === 4 ? P.invalidRust : P.utilityTextMuted, 500, 'start', 'IBM Plex Sans Condensed', 0.5));
+  });
+
+  const cursorY = 1585;
+  parts.push(text(48, cursorY, 'F-09 · CANONICAL CURSOR SVG FAMILY + SOURCE HOTSPOTS', 18, P.focus, 500, 'start', 'IBM Plex Sans Condensed', 1.2));
+  parts.push(text(width - 48, cursorY, 'PNG HANDOFF LATER · HOTSPOTS PRESERVED', 12, P.utilityTextMuted, 500, 'end', 'IBM Plex Sans Condensed', 0.9));
+  components.canonicalCursorSources.forEach((id, index) => {
+    const x = 48 + index * 682;
+    const definition = getIcon(id);
+    if (!definition || !('hotspot' in definition)) throw new Error(`Missing cursor hotspot ${id}`);
+    const hotspot = definition.hotspot as { readonly x: number; readonly y: number };
+    parts.push(panel(x, cursorY + 30, 650, 470, P.utilityChassis));
+    parts.push(text(x + 22, cursorY + 64, id.toUpperCase().replaceAll('-', ' '), 13, P.utilityText, 500, 'start', 'IBM Plex Sans Condensed', 0.7));
+    const underlays = [P.quotaCoPaperLight, P.irisNavy] as const;
+    underlays.forEach((underlay, underlayIndex) => {
+      const baseY = cursorY + 88 + underlayIndex * 170;
+      parts.push(rect(x + 22, baseY, 606, 146, underlay, underlay === P.irisNavy ? P.irisSignal : P.ink, 1, 2));
+      [24, 32, 48].forEach((size, sizeIndex) => {
+        const iconX = x + 90 + sizeIndex * 170;
+        const iconY = baseY + 34;
+        parts.push(icon(id, iconX, iconY, size));
+        const hotX = iconX + size * hotspot.x;
+        const hotY = iconY + size * hotspot.y;
+        parts.push(line(hotX - 5, hotY, hotX + 5, hotY, P.invalidRust, 1.5));
+        parts.push(line(hotX, hotY - 5, hotX, hotY + 5, P.invalidRust, 1.5));
+        parts.push(text(iconX + size / 2, baseY + 118, `${size}px`, 10, underlay === P.irisNavy ? P.irisSignal : P.ink, 400, 'middle', 'IBM Plex Mono'));
+      });
+    });
+    parts.push(text(x + 22, cursorY + 440, `HOTSPOT ${hotspot.x.toFixed(3)} / ${hotspot.y.toFixed(3)}`, 11, P.utilityTextMuted, 400, 'start', 'IBM Plex Mono'));
+    parts.push(text(x + 628, cursorY + 440, 'SOURCE AUTHORITY', 11, P.focus, 500, 'end', 'IBM Plex Sans Condensed', 0.7));
+  });
+
+  parts.push(panel(48, 2115, width - 96, 205, P.utilityChassis));
+  parts.push(text(70, 2152, 'OWNERSHIP LOCK', 14, P.focus, 500, 'start', 'IBM Plex Sans Condensed', 0.9));
+  parts.push(multiline(70, 2184, [
+    'TERRARIUM: visible design, 34 canonical stateless marks, source-owned cursor hotspots, derived technical print.',
+    'UNITY LATER: semantic controls, layout, focus order, tooltips, live text, data binding, world geometry, and accessibility.',
+    'SIGNALS: teal selection/valid · rust invalid/repair · amber dormant Capture only · rose emotion only.',
+  ], 13, P.utilityTextMuted, 28));
+  parts.push(text(width - 70, 2298, 'ACTION/CURSOR SOURCE PROMOTION APPROVED · EXPORT AND UNITY REMAIN CLOSED', 12, P.focus, 500, 'end', 'IBM Plex Sans Condensed', 0.9));
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
 }
 
@@ -623,6 +826,183 @@ function literalScreensSheet(fontCss: string, worldDataUrl: string): string {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
 }
 
+function allItemsShelf(shelfY: number, searchFocused: boolean): string {
+  const parts = [rect(0, shelfY, 1280, 720 - shelfY, P.utilityChassis, P.darkRule, 2), line(1, shelfY + 1, 1279, shelfY + 1, '#969075', 1)];
+  parts.push(text(16, shelfY + 27, 'BUILD · ALL ITEMS', 15, P.utilityText, 500, 'start', 'IBM Plex Sans Condensed', 0.85));
+  parts.push(controlButton(930, shelfY + 8, 104, 30, 'CHAIN', 'default'));
+  parts.push(controlButton(1038, shelfY + 8, 132, 30, 'ALL ITEMS', 'selected'));
+  parts.push(controlButton(1174, shelfY + 8, 90, 30, 'DONE', 'default'));
+  const categories = ['STRUCTURE', 'DEPARTMENTS', 'PRODUCTION', 'LOGISTICS', 'AMENITIES', 'SURFACES', 'OUTDOOR', 'PREFABS'] as const;
+  categories.forEach((label, index) => {
+    const x = 16 + index * 118;
+    const selected = index === 2;
+    parts.push(rect(x, shelfY + 48, 110, 30, selected ? P.selection : P.utilityWell, selected ? P.selectionEdge : P.darkRule, selected ? 2 : 1, 1));
+    parts.push(text(x + 55, shelfY + 68, label, 8.8, selected ? P.utilityText : P.utilityTextMuted, 500, 'middle', 'IBM Plex Sans Condensed', 0.35));
+  });
+  const searchX = 974;
+  parts.push(rect(searchX, shelfY + 48, 290, 30, P.utilityWellDeep, searchFocused ? P.focus : P.darkRule, searchFocused ? 2 : 1, 2));
+  parts.push(text(searchX + 12, shelfY + 68, searchFocused ? 'station' : 'Search all items', 11.5, searchFocused ? P.utilityText : P.utilityTextMuted, 400, 'start', 'IBM Plex Sans'));
+  if (searchFocused) parts.push(focusCorners(searchX, shelfY + 48, 290, 30));
+
+  const cards = searchFocused
+    ? [
+        ['dispatch_station', 'DISPATCH STATION', 'LOGISTICS · 1 × 1'],
+        ['franking_machine', 'FRANKING STATION', 'PRODUCTION · 1 × 1'],
+        ['sorting_frame', 'SORTING STATION', 'PRODUCTION · 2 × 2'],
+      ] as const
+    : [
+        ['sorting_frame', 'SORTING FRAME', 'PRODUCTION · 2 × 2'],
+        ['franking_machine', 'FRANKING MACHINE', 'PRODUCTION · 1 × 1'],
+        ['dispatch_station', 'DISPATCH STATION', 'LOGISTICS · 1 × 1'],
+        ['workbench', 'INTAKE WORKBENCH', 'PRODUCTION · 2 × 1'],
+        ['route-tool', 'TUBE ROUTE', 'LOGISTICS · GEOMETRY TOOL'],
+      ] as const;
+  const cardWidth = searchFocused ? 285 : 226;
+  cards.forEach(([id, label, detail], index) => {
+    const x = 16 + index * (cardWidth + 12);
+    const selected = searchFocused && index === 0;
+    parts.push(rect(x, shelfY + 93, cardWidth, 138, selected ? '#B7AA8B' : P.quotaCoPaper, selected ? P.selection : P.ink, selected ? 3 : 1, 1));
+    if (id === 'route-tool') {
+      parts.push(departmentGlyph('route-output', x + 12, shelfY + 111, 38, P.ink));
+      parts.push(departmentGlyph('route-wall-pass', x + 42, shelfY + 111, 38, P.ink));
+      parts.push(departmentGlyph('route-input', x + 72, shelfY + 111, 38, P.ink));
+    } else {
+      parts.push(technicalMachine(id, x + 12, shelfY + 102, 76));
+    }
+    parts.push(text(x + 96, shelfY + 123, label, 11, P.ink, 700, 'start', 'Courier Prime'));
+    parts.push(text(x + 96, shelfY + 146, detail, 9.5, P.ink, 400, 'start', 'Courier Prime'));
+    parts.push(text(x + 96, shelfY + 169, selected ? 'SELECTED · INERT' : 'WHOLE CELL ACTION', 9, selected ? P.selection : P.quotaCoPaperRule, 700, 'start', 'Courier Prime'));
+    parts.push(text(x + 12, shelfY + 215, selected ? 'PRESS PLACE TO ARM' : 'BROWSE', 9, selected ? P.selection : P.ink, 700, 'start', 'Courier Prime'));
+    if (selected) parts.push(focusCorners(x, shelfY + 93, cardWidth, 138));
+  });
+  const noteX = searchFocused ? 940 : 1202;
+  const noteWidth = searchFocused ? 324 : 62;
+  if (searchFocused) {
+    parts.push(irisDiagnostic(noteX, shelfY + 93, noteWidth, 138, 'IRIS // INPUT OWNERSHIP', [
+      'SEARCH OWNS TYPING WHILE FOCUSED.',
+      'WASD DOES NOT MOVE CAMERA NOW.',
+      'SELECTION REMAINS INERT.',
+    ]));
+  } else {
+    parts.push(rect(noteX, shelfY + 93, noteWidth, 138, P.utilityWell, P.darkRule, 1, 1));
+    parts.push(rect(noteX + 45, shelfY + 108, 8, 106, P.utilityWellDeep, P.darkRule, 1, 2));
+    parts.push(rect(noteX + 46, shelfY + 131, 6, 36, P.utilityTextMuted, P.darkRule, 1, 2));
+  }
+  return parts.join('');
+}
+
+function peopleHandoffShelf(shelfY: number): string {
+  const parts = [rect(0, shelfY, 1280, 720 - shelfY, P.utilityChassis, P.darkRule, 2), line(1, shelfY + 1, 1279, shelfY + 1, '#969075', 1)];
+  parts.push(text(16, shelfY + 27, 'PEOPLE · INTAKE STAFFING', 15, P.utilityText, 500, 'start', 'IBM Plex Sans Condensed', 0.85));
+  parts.push(text(304, shelfY + 27, 'FILTERED HANDOFF FROM BUILD · NO ASSIGNMENT OCCURRED', 11, P.focus, 500, 'start', 'IBM Plex Sans Condensed', 0.55));
+  parts.push(controlButton(1110, shelfY + 8, 154, 30, 'RETURN BUILD', 'default'));
+  parts.push(paper(16, shelfY + 52, 300, 178));
+  parts.push(text(30, shelfY + 80, 'QT–P08 · STAFFING NEED', 14, P.ink, 700, 'start', 'Courier Prime'));
+  parts.push(line(30, shelfY + 91, 302, shelfY + 91, P.quotaCoPaperRule, 1));
+  parts.push(departmentGlyph('ready-staffed', 30, shelfY + 108, 36, P.ink));
+  parts.push(text(78, shelfY + 127, 'DEPARTMENT  INTAKE', 11.5, P.ink, 400, 'start', 'Courier Prime'));
+  parts.push(text(78, shelfY + 151, 'REQUIRED    2 OPERATORS', 11.5, P.ink, 400, 'start', 'Courier Prime'));
+  parts.push(text(78, shelfY + 175, 'ASSIGNED    0 / 2', 11.5, P.invalidRust, 700, 'start', 'Courier Prime'));
+  parts.push(text(30, shelfY + 211, 'BUILD MAY FILTER · PEOPLE OWNS ASSIGNMENT', 9.5, P.ink, 700, 'start', 'Courier Prime'));
+
+  parts.push(panel(334, shelfY + 52, 590, 178, P.utilityWell));
+  parts.push(text(352, shelfY + 79, 'AVAILABLE PEOPLE', 12, P.utilityTextMuted, 500, 'start', 'IBM Plex Sans Condensed', 0.7));
+  const people = [
+    ['001', 'BEV PATEL', 'UNASSIGNED · OPERATOR FIT', 'selected'],
+    ['002', 'MARA VOSS', 'DATA PROCESSING · BUSY', 'default'],
+    ['003', 'ELI GRANT', 'UNASSIGNED · TRAINING NEEDED', 'disabled'],
+  ] as const;
+  people.forEach(([number, name, detail, state], index) => {
+    const y = shelfY + 92 + index * 42;
+    const selected = state === 'selected';
+    parts.push(rect(352, y, 554, 34, selected ? P.selection : P.utilitySleeve, selected ? P.selectionEdge : P.darkRule, selected ? 2 : 1, 1, state === 'disabled' ? 'opacity="0.62"' : ''));
+    parts.push(text(366, y + 22, number, 11, selected ? P.focus : P.utilityTextMuted, 400, 'start', 'IBM Plex Mono'));
+    parts.push(text(410, y + 22, name, 12, P.utilityText, 500, 'start', 'IBM Plex Sans Condensed', 0.5));
+    parts.push(text(560, y + 22, detail, 10.5, P.utilityTextMuted, 400, 'start', 'IBM Plex Sans'));
+    if (selected) parts.push(focusCorners(352, y, 554, 34));
+  });
+
+  parts.push(irisDiagnostic(942, shelfY + 52, 322, 178, 'IRIS // HANDOFF', [
+    'BUILD CONTEXT: INTAKE 0 / 2.',
+    'FILTER APPLIED. NO PERSON MOVED.',
+    'ASSIGNMENT REQUIRES PEOPLE AUTHORITY.',
+    'RETURN PRESERVES BUILD CONTEXT.',
+  ]));
+  return parts.join('');
+}
+
+function designationReceiptShelf140(shelfY: number): string {
+  const parts = [rect(0, shelfY, 1280, 720 - shelfY, P.utilityChassis, P.darkRule, 2), line(1, shelfY + 1, 1279, shelfY + 1, '#969075', 1)];
+  parts.push(text(18, shelfY + 38, 'BUILD · DEPARTMENT MANAGEMENT · INTAKE', 21, P.utilityText, 500, 'start', 'IBM Plex Sans Condensed', 1.1));
+  parts.push(controlButton(1088, shelfY + 11, 174, 48, 'RETURN CHAIN', 'default', 1.2));
+  parts.push(paper(18, shelfY + 76, 360, 198));
+  parts.push(text(36, shelfY + 111, 'QT–D01 · INTAKE DESIGNATION', 17, P.ink, 700, 'start', 'Courier Prime'));
+  parts.push(line(36, shelfY + 124, 360, shelfY + 124, P.quotaCoPaperRule, 1));
+  parts.push(text(36, shelfY + 157, 'ROOM          NORTHWEST 01', 15, P.ink, 400, 'start', 'Courier Prime'));
+  parts.push(text(36, shelfY + 190, 'DESIGNATION   INTAKE', 15, P.ink, 400, 'start', 'Courier Prime'));
+  parts.push(text(36, shelfY + 223, 'READINESS     2 / 8', 15, P.invalidRust, 700, 'start', 'Courier Prime'));
+  parts.push(text(36, shelfY + 257, 'DESIGNATED ≠ READY', 13, P.invalidRust, 700, 'start', 'Courier Prime'));
+
+  parts.push(panel(398, shelfY + 76, 388, 198, P.utilityWell));
+  parts.push(text(416, shelfY + 108, 'DURABLE ACTIONS', 14, P.focus, 500, 'start', 'IBM Plex Sans Condensed', 0.8));
+  const actions = [
+    ['world-facing', 'FOCUS ROOM', 'selected'],
+    ['action-rotate', 'CHANGE DESIGNATION', 'default'],
+    ['action-delete', 'WITHDRAW', 'invalid'],
+  ] as const;
+  actions.forEach(([glyph, label, state], index) => {
+    const y = shelfY + 126 + index * 46;
+    parts.push(controlButton(416, y, 344, 38, label, state as ControlState, 1));
+    parts.push(actionGlyph(glyph, 430, y + 7, 24, state === 'invalid' ? P.invalidRust : P.utilityText));
+  });
+
+  parts.push(paper(806, shelfY + 76, 456, 198));
+  parts.push(text(824, shelfY + 111, 'QT–R12 · DESIGNATION RECEIPT', 17, P.ink, 700, 'start', 'Courier Prime'));
+  parts.push(line(824, shelfY + 124, 1244, shelfY + 124, P.quotaCoPaperRule, 1));
+  parts.push(text(824, shelfY + 157, 'LAST EDIT     DESIGNATED INTAKE', 14, P.ink, 400, 'start', 'Courier Prime'));
+  parts.push(text(824, shelfY + 190, 'RECOVERY      UNDO AVAILABLE 00:12', 14, P.ink, 400, 'start', 'Courier Prime'));
+  parts.push(controlButton(824, shelfY + 214, 174, 44, 'UNDO', 'default', 1.1));
+  parts.push(actionGlyph('action-undo', 838, shelfY + 224, 24, P.utilityText));
+  parts.push(controlButton(1010, shelfY + 214, 174, 44, 'REDO', 'disabled', 1.1));
+  parts.push(actionGlyph('action-redo', 1024, shelfY + 224, 24, P.disabled));
+  parts.push(text(1244, shelfY + 260, 'SHORT-LIVED RECOVERY', 11, P.ink, 700, 'end', 'Courier Prime'));
+  return parts.join('');
+}
+
+function expandedScreenScenario(scenario: ExpandedScreenScenario, worldDataUrl: string, clipId: string): string {
+  const scale = scenario === 'designation-management-receipt' ? 1.4 : 1;
+  const topHeight = Math.round(48 * scale);
+  const shelfHeight = scenario === 'designation-management-receipt' ? 288 : 248;
+  const shelfY = 720 - shelfHeight;
+  const parts = [rect(0, 0, 1280, 720, P.page, P.quotaCoPaper, 2), worldImage(worldDataUrl, topHeight, shelfY, clipId), topStrip(scale)];
+  if (scenario === 'all-items-browse') parts.push(allItemsShelf(shelfY, false));
+  if (scenario === 'all-items-search-focused') parts.push(allItemsShelf(shelfY, true));
+  if (scenario === 'people-handoff') parts.push(peopleHandoffShelf(shelfY));
+  if (scenario === 'designation-management-receipt') parts.push(designationReceiptShelf140(shelfY));
+  parts.push(rect(0, 0, 1280, 720, 'none', P.quotaCoPaper, 2));
+  return parts.join('');
+}
+
+function expandedScreensSheet(fontCss: string, worldDataUrl: string): string {
+  const width = 2720;
+  const height = 1720;
+  const parts: string[] = [backdrop(width, height), `<style>${fontCss}</style>`];
+  parts.push(text(50, 52, 'DEPARTMENT BUILD · PURPOSE CATALOG, HANDOFF, AND DURABLE EDIT COMPOSITIONS', 29, P.utilityText, 500, 'start', 'IBM Plex Sans Condensed', 1.8));
+  parts.push(text(50, 84, 'B-08 / B-10 / B-11 + C-05 / C-12 · OFFICE DOMINANT · NO BROWSE ACTION ARMS A WORLD TOOL', 13, P.utilityTextMuted, 500, 'start', 'IBM Plex Sans Condensed', 1));
+  const scenarios = [
+    { x: 50, y: 145, id: 'all-items-browse' as const, label: '05 · ALL ITEMS · 100% · PURPOSE TAXONOMY · INERT BROWSE' },
+    { x: 1390, y: 145, id: 'all-items-search-focused' as const, label: '06 · SEARCH FOCUSED · 100% · TYPE OWNERSHIP · STILL INERT' },
+    { x: 50, y: 945, id: 'people-handoff' as const, label: '07 · PEOPLE HANDOFF · 100% · FILTERED · NO ASSIGNMENT' },
+    { x: 1390, y: 945, id: 'designation-management-receipt' as const, label: '08 · DESIGNATION MANAGEMENT · 140% · DURABLE ACTIONS + RECEIPT' },
+  ];
+  scenarios.forEach((entry, index) => {
+    parts.push(text(entry.x, entry.y - 18, entry.label, 16, index === 3 ? P.irisSignal : P.focus, 500, 'start', 'IBM Plex Sans Condensed', 0.9));
+    parts.push(`<g transform="translate(${entry.x} ${entry.y})">${expandedScreenScenario(entry.id, worldDataUrl, `expanded-world-${index}`)}</g>`);
+  });
+  parts.push(text(width - 50, height - 20, 'ACTION MARKS AND CURSORS RESOLVE FROM CANONICAL TERRARIUM SOURCES · COMPONENT BEHAVIOR REMAINS UNITY-OWNED', 11, P.focus, 500, 'end', 'IBM Plex Sans Condensed', 0.9));
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+}
+
 function sha256(value: string | Uint8Array): string {
   return createHash('sha256').update(value).digest('hex');
 }
@@ -653,7 +1033,7 @@ async function stageApprovedFonts(fontCss: string): Promise<{ directory: string;
 function readme(): string {
   return `# Department-era UI production design v1
 
-Status: **approved Terrarium production-design source; Unity deferred**
+Status: **approved Terrarium component source; Unity deferred**
 
 This package creates the department-era UI in Terrarium before any Unity
 implementation begins. It converts the approved UI-E0 v3 material grammar and
@@ -664,25 +1044,29 @@ compositions.
 
 - [Production design system](./00-production-design-system.png) ([SVG](./00-production-design-system.svg))
 - [Literal department screens](./01-literal-department-screens.png) ([SVG](./01-literal-department-screens.svg))
+- [Reusable component library](./02-reusable-component-library.png) ([SVG](./02-reusable-component-library.svg))
+- [Purpose Catalog and handoff screens](./03-purpose-catalog-handoff-screens.png) ([SVG](./03-purpose-catalog-handoff-screens.svg))
 - [Machine-readable metrics](./metrics.json)
 
-The literal sheet contains four exact 1280×720 compositions: inert Chain
-browsing, inert requirement selection, armed valid placement, and a 140% Tube
-Route failure with one repair sentence. The office remains the dominant image.
+The literal sheets contain eight exact 1280×720 compositions covering Chain,
+placement, Tube Route, purpose-led All Items, focused search, People handoff,
+designation management, and receipt recovery. The office remains dominant.
 
 ## Source boundaries
 
 - Five shared UI-E1 marks are canonical production SVGs.
 - Nineteen work-type, readiness, state, endpoint, wall-pass, and repair glyphs
   now resolve through canonical Terrarium production SVGs.
+- Six action and world-facing marks now resolve through canonical tintable SVGs.
+- Four ink-and-halo cursors now resolve through canonical literal SVGs with
+  their normalized hotspots in the source manifest. PNG handoff remains later.
 - Product illustrations are monochrome treatments derived from current
   canonical department-machine geometry; they are not separately redrawn SKUs.
 - Panels, cards, text, state surfaces, focus placement, room highlights,
   footprints, and tube paths are compositions—not SVG assets to export.
 - The embedded office image remains a visual reference, not a production master.
-
-No Unity file, browser export, runtime implementation, staging, or commit is
-performed by this renderer.
+No Unity file, browser export, runtime implementation, or cursor texture handoff
+is performed by this renderer.
 `;
 }
 
@@ -695,6 +1079,8 @@ async function renderOutputs(): Promise<RenderedOutput[]> {
   const sources = [
     ['00-production-design-system', designSystemSheet(fontCss)],
     ['01-literal-department-screens', literalScreensSheet(fontCss, worldDataUrl)],
+    ['02-reusable-component-library', componentLibrarySheet(fontCss)],
+    ['03-purpose-catalog-handoff-screens', expandedScreensSheet(fontCss, worldDataUrl)],
   ] as const;
   const staged = await stageApprovedFonts(fontCss);
   try {
@@ -725,13 +1111,18 @@ export async function renderDepartmentEraUiProductionDesign(check = false): Prom
     await writeOrCheck(path.join(OUTPUT, `${output.filename}.svg`), output.source, check);
     await writeOrCheck(path.join(OUTPUT, `${output.filename}.png`), output.png, check);
   }
-  const manifestSource = await readFile('assets/ui/department-era-design-v1/manifest.json', 'utf8');
+  const [manifestSource, componentManifestSource] = await Promise.all([
+    readFile('assets/ui/department-era-design-v1/manifest.json', 'utf8'),
+    readFile('assets/ui/department-era-component-library-v1/manifest.json', 'utf8'),
+  ]);
   const worldBytes = await readFile(WORLD_REFERENCE);
   const metrics = {
     status: 'terrarium-production-design-source-approved',
     source: {
       manifest: 'assets/ui/department-era-design-v1/manifest.json',
       manifestSha256: sha256(manifestSource),
+      componentManifest: 'assets/ui/department-era-component-library-v1/manifest.json',
+      componentManifestSha256: sha256(componentManifestSource),
       fontPayload: FONT_PILOT,
       worldReference: WORLD_REFERENCE,
       worldReferenceSha256: sha256(worldBytes),
@@ -747,12 +1138,19 @@ export async function renderDepartmentEraUiProductionDesign(check = false): Prom
       { id: 'requirement-selected', viewport: '1280x720', uiScale: 1, armed: false },
       { id: 'placement-valid', viewport: '1280x720', uiScale: 1, armed: true },
       { id: 'route-invalid', viewport: '1280x720', uiScale: 1.4, armed: true },
+      { id: 'all-items-browse', viewport: '1280x720', uiScale: 1, armed: false },
+      { id: 'all-items-search-focused', viewport: '1280x720', uiScale: 1, armed: false },
+      { id: 'people-handoff', viewport: '1280x720', uiScale: 1, armed: false },
+      { id: 'designation-management-receipt', viewport: '1280x720', uiScale: 1.4, armed: false },
     ],
     canonicalMarks: [
       ...design.shapeLedger.canonicalNow,
       ...design.shapeLedger.promotedDepartmentGlyphs,
+      ...components.promotedActionMarks,
+      ...components.canonicalCursorSources,
     ],
-    reviewCandidateMarks: design.shapeLedger.reviewCandidatesOnly,
+    promotedActionMarks: components.promotedActionMarks,
+    canonicalCursorSources: components.canonicalCursorSources,
     reservations: design.reservations,
     productionChanges: [
       'Terrarium design manifest',

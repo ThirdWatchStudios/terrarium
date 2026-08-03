@@ -324,6 +324,17 @@ five shared primitives. Panels, cards, text, control surfaces, room and
 placement overlays, and tube path segments remain Unity UI Toolkit or runtime
 geometry; this source slice does not move those boundaries.
 
+After approval of the reusable component-library sheet, the third UI-E1 source
+slice promoted six tintable action/facing marks and four literal cursors under
+`assets/ui/canonical-action-cursor-marks-v1/`. The action marks preserve the
+approved literal-size silhouettes. The cursor SVGs are exact authority
+inversions of the established ink-and-halo geometry, and their normalized
+hotspots now compile from the same source manifest instead of remaining
+handwritten registry data. Stable IDs, labels, tint/literal policy, and the
+future PNG cursor handoff contract remain unchanged. Browser export, cursor
+texture generation/import settings, Unity import, UXML/USS, runtime behavior,
+and Play Mode acceptance remain separate downstream gates.
+
 ### P4 — authored exterior base silhouettes
 
 Convert the remaining deliberate flora bases:

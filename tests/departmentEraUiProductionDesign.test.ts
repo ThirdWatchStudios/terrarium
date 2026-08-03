@@ -6,6 +6,10 @@ import { describe, expect, it } from 'vitest';
 
 const ROOT = process.cwd();
 const SOURCE = path.join(ROOT, 'assets/ui/department-era-design-v1/manifest.json');
+const COMPONENT_SOURCE = path.join(
+  ROOT,
+  'assets/ui/department-era-component-library-v1/manifest.json',
+);
 const OUTPUT = path.join(ROOT, 'docs/previews/department-era-ui-production-design-v1');
 
 interface DesignManifest {
@@ -31,7 +35,10 @@ interface DesignManifest {
 
 interface Metrics {
   status: string;
-  source: { manifestSha256: string };
+  source: {
+    manifestSha256: string;
+    componentManifestSha256: string;
+  };
   outputs: Array<{
     svg: string;
     svgSha256: string;
@@ -45,8 +52,19 @@ interface Metrics {
     armed: boolean;
   }>;
   canonicalMarks: string[];
-  reviewCandidateMarks: string[];
+  promotedActionMarks: string[];
+  canonicalCursorSources: string[];
   deferred: string[];
+}
+
+interface ComponentManifest {
+  status: string;
+  families: Array<{ id: string; construction: string }>;
+  canonicalMarks: string[];
+  promotedActionMarks: string[];
+  canonicalCursorSources: string[];
+  literalScreens: Array<{ id: string; viewport: string; uiScale: number }>;
+  stopBoundary: string[];
 }
 
 function sha256(value: string | Uint8Array): string {
@@ -133,8 +151,9 @@ describe('department-era UI production design source', () => {
   });
 
   it('keeps the rendered review sheets current and records all literal states', async () => {
-    const [manifestSource, metricsSource, packageSource] = await Promise.all([
+    const [manifestSource, componentManifestSource, metricsSource, packageSource] = await Promise.all([
       readFile(SOURCE, 'utf8'),
+      readFile(COMPONENT_SOURCE, 'utf8'),
       readFile(path.join(OUTPUT, 'metrics.json'), 'utf8'),
       readFile(path.join(ROOT, 'package.json'), 'utf8'),
     ]);
@@ -143,18 +162,36 @@ describe('department-era UI production design source', () => {
 
     expect(metrics.status).toBe('terrarium-production-design-source-approved');
     expect(metrics.source.manifestSha256).toBe(sha256(manifestSource));
+    expect(metrics.source.componentManifestSha256).toBe(sha256(componentManifestSource));
     expect(metrics.literalScreens).toEqual([
       { id: 'chain-browse', viewport: '1280x720', uiScale: 1, armed: false },
       { id: 'requirement-selected', viewport: '1280x720', uiScale: 1, armed: false },
       { id: 'placement-valid', viewport: '1280x720', uiScale: 1, armed: true },
       { id: 'route-invalid', viewport: '1280x720', uiScale: 1.4, armed: true },
+      { id: 'all-items-browse', viewport: '1280x720', uiScale: 1, armed: false },
+      { id: 'all-items-search-focused', viewport: '1280x720', uiScale: 1, armed: false },
+      { id: 'people-handoff', viewport: '1280x720', uiScale: 1, armed: false },
+      { id: 'designation-management-receipt', viewport: '1280x720', uiScale: 1.4, armed: false },
     ]);
     expect(packageJson.scripts['ui:department-design']).toBe(
       'tsx scripts/departmentEraUiProductionDesign.ts',
     );
     expect(packageJson.scripts['ui:department-design:check']).toContain('--check');
-    expect(metrics.canonicalMarks).toHaveLength(24);
-    expect(metrics.reviewCandidateMarks).toEqual([]);
+    expect(metrics.canonicalMarks).toHaveLength(34);
+    expect(metrics.promotedActionMarks).toEqual([
+      'action-rotate',
+      'action-undo',
+      'action-redo',
+      'action-move',
+      'action-delete',
+      'world-facing',
+    ]);
+    expect(metrics.canonicalCursorSources).toEqual([
+      'cursor-default',
+      'cursor-grab',
+      'cursor-place',
+      'cursor-invalid',
+    ]);
 
     for (const output of metrics.outputs) {
       const [svg, png] = await Promise.all([
@@ -166,11 +203,37 @@ describe('department-era UI production design source', () => {
     }
   });
 
+  it('keeps component construction and the approved source boundary explicit', async () => {
+    const component = JSON.parse(
+      await readFile(COMPONENT_SOURCE, 'utf8'),
+    ) as ComponentManifest;
+
+    expect(component.status).toBe('terrarium-production-design-source-approved');
+    expect(component.families.map(({ id }) => id)).toEqual([
+      'F-03', 'F-04', 'F-05', 'F-06', 'F-09', 'F-10', 'F-11',
+      'C-01', 'C-03', 'C-04', 'C-05', 'C-06', 'C-07', 'C-08',
+      'C-09', 'C-10', 'C-11', 'C-12',
+    ]);
+    expect(component.families.filter(({ construction }) => construction.includes('Unity USS'))).toHaveLength(16);
+    expect(component.canonicalMarks).toHaveLength(24);
+    expect(component.promotedActionMarks).toHaveLength(6);
+    expect(component.canonicalCursorSources).toHaveLength(4);
+    expect(component.literalScreens.map(({ id }) => id)).toEqual([
+      'all-items-browse',
+      'all-items-search-focused',
+      'people-handoff',
+      'designation-management-receipt',
+    ]);
+    expect(component.stopBoundary).toContain('no browser export');
+    expect(component.stopBoundary).toContain('no Unity import or implementation');
+    expect(component.stopBoundary).toContain('no runtime cursor texture or import-setting changes');
+  });
+
   it('does not activate reserved amber or rose in the literal gameplay screens', async () => {
-    const literalScreens = await readFile(
-      path.join(OUTPUT, '01-literal-department-screens.svg'),
-      'utf8',
-    );
+    const literalScreens = await Promise.all([
+      readFile(path.join(OUTPUT, '01-literal-department-screens.svg'), 'utf8'),
+      readFile(path.join(OUTPUT, '03-purpose-catalog-handoff-screens.svg'), 'utf8'),
+    ]).then((sources) => sources.join('\n'));
 
     expect(literalScreens).not.toContain('#D08010');
     expect(literalScreens).not.toContain('#A45A6C');
@@ -178,5 +241,9 @@ describe('department-era UI production design source', () => {
     expect(literalScreens).toContain('WORLD IMAGE IS APPROVED COMPOSITION REFERENCE ONLY');
     expect(literalScreens).toContain('GLYPHS RESOLVE FROM CANONICAL TERRARIUM SOURCES');
     expect(literalScreens).toContain('UNITY UNTOUCHED');
+    expect(literalScreens).toContain('SEARCH OWNS TYPING WHILE FOCUSED.');
+    expect(literalScreens).toContain('FILTER APPLIED. NO PERSON MOVED.');
+    expect(literalScreens).toContain('DESIGNATED ≠ READY');
+    expect(literalScreens).toContain('ACTION MARKS AND CURSORS RESOLVE FROM CANONICAL TERRARIUM SOURCES');
   });
 });

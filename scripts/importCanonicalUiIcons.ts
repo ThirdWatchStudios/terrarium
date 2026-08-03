@@ -2,6 +2,7 @@ import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 import {
+  ACTION_CURSOR_UI_ICON_FAMILY,
   compileCanonicalUiIconArt,
   DEPARTMENT_UI_ICON_FAMILY,
   emitCanonicalUiIconArt,
@@ -40,6 +41,10 @@ const SOURCE_FAMILIES = [
   {
     input: 'assets/ui/canonical-department-glyphs-v1',
     contract: DEPARTMENT_UI_ICON_FAMILY,
+  },
+  {
+    input: 'assets/ui/canonical-action-cursor-marks-v1',
+    contract: ACTION_CURSOR_UI_ICON_FAMILY,
   },
 ] as const;
 

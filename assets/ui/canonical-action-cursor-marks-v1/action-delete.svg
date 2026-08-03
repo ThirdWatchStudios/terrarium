@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-ui-icon-id="action-delete" data-icon-mode="tintable">
+  <title>Delete</title>
+  <desc>Approved squared waste-bin destructive action mark.</desc>
+  <metadata>{"family":"canonical-ui-action-cursor-marks-v1","decision":"approved-redesign"}</metadata>
+  <g id="approved-mark" transform="translate(64 64)">
+    <path id="delete-bin" d="M -37.3333333333 -26.6666666667 H 37.3333333333 M -16 -26.6666666667 V -42.6666666667 H 16 V -26.6666666667 M -26.6666666667 -26.6666666667 L -21.3333333333 48 H 21.3333333333 L 26.6666666667 -26.6666666667 M -10.6666666667 -10.6666666667 V 32 M 10.6666666667 -10.6666666667 V 32" fill="none" stroke="#FFFFFF" stroke-width="10.6666666667" stroke-linecap="square" stroke-linejoin="miter"/>
+  </g>
+</svg>

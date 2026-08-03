@@ -56,6 +56,7 @@ export type CanonicalSvgCategory =
   | 'surfaces/grass'
   | 'ui/shared-primitives'
   | 'ui/department-glyphs'
+  | 'ui/action-cursor-marks'
   | 'walls/equal-height-direct'
   | 'walls/equal-height-promoted-proof'
   | 'walls/bevel';
@@ -387,12 +388,26 @@ export async function collectCanonicalSvgReferenceInventory(
   );
   assertExactCoverage('UI department glyph', actualUiDepartmentFiles, uiDepartmentSourceFiles);
 
+  const uiActionCursorSourceFiles = CANONICAL_UI_ICON_ART
+    .filter((icon) => icon.sourceFile.startsWith('assets/ui/canonical-action-cursor-marks-v1/'))
+    .map((icon) => icon.sourceFile)
+    .sort(compareText);
+  const actualUiActionCursorFiles = relativeFiles(
+    root,
+    await svgFilesUnder(
+      path.join(root, 'assets', 'ui', 'canonical-action-cursor-marks-v1'),
+    ),
+  );
+  assertExactCoverage('UI action and cursor mark', actualUiActionCursorFiles, uiActionCursorSourceFiles);
+
   for (const icon of CANONICAL_UI_ICON_ART) {
     const category: CanonicalSvgCategory = icon.sourceFile.startsWith(
       'assets/ui/canonical-shared-primitives-v1/',
     )
       ? 'ui/shared-primitives'
-      : 'ui/department-glyphs';
+      : icon.sourceFile.startsWith('assets/ui/canonical-department-glyphs-v1/')
+        ? 'ui/department-glyphs'
+        : 'ui/action-cursor-marks';
     entries.push(
       await sourceEntry(
         root,
@@ -1003,11 +1018,12 @@ function overviewGroups(
     },
     {
       id: 'ui',
-      label: 'Shared and department UI glyphs',
-      note: 'Approved UI-E1 shared marks plus department-era work, readiness, state, and route glyphs.',
+      label: 'Shared, department, action, and cursor UI glyphs',
+      note: 'Approved shared marks plus department-era work, readiness, state, route, action, and cursor families.',
       entries: entriesFor(inventory, [
         'ui/shared-primitives',
         'ui/department-glyphs',
+        'ui/action-cursor-marks',
       ]),
     },
     {
@@ -1184,7 +1200,7 @@ function uiSheet(inventory: CanonicalSvgReferenceInventory): string {
   return renderSourceSheet({
     title: 'Terrarium canonical SVG library · UI marks and glyphs',
     subtitle:
-      'Twenty-four source-owned marks · carriers, state surfaces, text, paths, and interaction remain Unity-owned',
+      'Thirty-four source-owned marks · carriers, state surfaces, text, paths, and interaction remain Unity-owned',
     groups: [
       {
         id: 'ui-shared-primitives',
@@ -1197,6 +1213,12 @@ function uiSheet(inventory: CanonicalSvgReferenceInventory): string {
         label: 'Department-era work, readiness, state, and route marks',
         note: 'Nineteen approved tintable silhouettes promoted from the literal department design source.',
         entries: entriesFor(inventory, ['ui/department-glyphs']),
+      },
+      {
+        id: 'ui-action-cursor-marks',
+        label: 'Action, facing, and cursor marks',
+        note: 'Six approved tintable actions plus four exact-inversion literal cursors with preserved hotspots.',
+        entries: entriesFor(inventory, ['ui/action-cursor-marks']),
       },
     ],
     columns: 6,
@@ -1227,7 +1249,7 @@ by the live import registries; it does not reconstruct the art from TypeScript.
 - [Complete one-sheet](./overview.svg) ([PNG](./overview.png))
 - [Character sources](./characters.svg) ([PNG](./characters.png))
 - [Props and surfaces](./props-surfaces.svg) ([PNG](./props-surfaces.png))
-- [Shared UI primitives](./ui.svg) ([PNG](./ui.png))
+- [UI marks, actions, and cursors](./ui.svg) ([PNG](./ui.png))
 - [Wall system](./walls.svg) ([PNG](./walls.png))
 - [Machine-readable manifest](./manifest.json)
 - [Browser index](./index.html)
@@ -1311,10 +1333,11 @@ function indexHtml(inventory: CanonicalSvgReferenceInventory): string {
     ],
     [
       'ui',
-      'UI marks and glyphs',
+      'UI marks, actions, and cursors',
       `${categoryCount(inventory, [
         'ui/shared-primitives',
         'ui/department-glyphs',
+        'ui/action-cursor-marks',
       ])} exact files`,
     ],
     [

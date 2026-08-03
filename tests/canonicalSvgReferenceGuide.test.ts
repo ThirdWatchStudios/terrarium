@@ -8,8 +8,8 @@ describe('canonical SVG reference guide', () => {
     const { counts, entries, exclusions } = inventory.manifest;
 
     expect(counts).toMatchObject({
-      exactSourceFiles: 404,
-      production: 326,
+      exactSourceFiles: 414,
+      production: 336,
       productionDependencies: 74,
       deferred: 4,
       derivedWallFrames: 47,
@@ -44,6 +44,7 @@ describe('canonical SVG reference guide', () => {
     expect(counts.byCategory['props/iris-hardware']).toBe(3);
     expect(counts.byCategory['ui/shared-primitives']).toBe(5);
     expect(counts.byCategory['ui/department-glyphs']).toBe(19);
+    expect(counts.byCategory['ui/action-cursor-marks']).toBe(10);
     expect(
       entries
         .filter((entry) => entry.category === 'props/iris-hardware')
@@ -89,6 +90,22 @@ describe('canonical SVG reference guide', () => {
       'work-data-processing',
       'work-delivery',
       'work-intake',
+    ]);
+    expect(
+      entries
+        .filter((entry) => entry.category === 'ui/action-cursor-marks')
+        .map((entry) => entry.assetId),
+    ).toEqual([
+      'action-delete',
+      'action-move',
+      'action-redo',
+      'action-rotate',
+      'action-undo',
+      'cursor-default',
+      'cursor-grab',
+      'cursor-invalid',
+      'cursor-place',
+      'world-facing',
     ]);
   });
 

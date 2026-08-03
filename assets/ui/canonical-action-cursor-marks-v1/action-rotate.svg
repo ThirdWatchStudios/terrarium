@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-ui-icon-id="action-rotate" data-icon-mode="tintable">
+  <title>Rotate</title>
+  <desc>Approved square-ended rotate action mark.</desc>
+  <metadata>{"family":"canonical-ui-action-cursor-marks-v1","decision":"approved-redesign"}</metadata>
+  <g id="approved-mark" transform="translate(64 64)">
+    <path id="upper-arc" d="M -37.3333333333 5.3333333333 A 37.3333333333 37.3333333333 0 0 1 26.6666666667 -26.6666666667" fill="none" stroke="#FFFFFF" stroke-width="10.6666666667" stroke-linecap="square" stroke-linejoin="miter"/>
+    <path id="upper-arrow" d="M 26.6666666667 -48 V -21.3333333333 H 0" fill="none" stroke="#FFFFFF" stroke-width="10.6666666667" stroke-linecap="square" stroke-linejoin="miter"/>
+    <path id="lower-arc" d="M 37.3333333333 -5.3333333333 A 37.3333333333 37.3333333333 0 0 1 -26.6666666667 26.6666666667" fill="none" stroke="#FFFFFF" stroke-width="10.6666666667" stroke-linecap="square" stroke-linejoin="miter"/>
+  </g>
+</svg>

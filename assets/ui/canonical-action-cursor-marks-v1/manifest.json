@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "family": "canonical-ui-action-cursor-marks-v1",
+  "authority": "canonical-svg",
+  "sourcePolicy": {
+    "visualAuthority": "checked-in-svg",
+    "compiledOutput": "src/parts/generated/canonicalUiIconArt.ts",
+    "ordinaryCommandsWriteSources": false,
+    "cursorTextureHandoff": "downstream-not-authorized"
+  },
+  "acceptedProof": "docs/previews/department-era-ui-production-design-v1",
+  "canvas": {
+    "width": 128,
+    "height": 128,
+    "origin": [64, 64]
+  },
+  "icons": [
+    {
+      "id": "action-rotate",
+      "label": "Rotate",
+      "mode": "tintable",
+      "file": "action-rotate.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32, 42]
+    },
+    {
+      "id": "action-undo",
+      "label": "Undo",
+      "mode": "tintable",
+      "file": "action-undo.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32, 42]
+    },
+    {
+      "id": "action-redo",
+      "label": "Redo",
+      "mode": "tintable",
+      "file": "action-redo.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32, 42]
+    },
+    {
+      "id": "action-move",
+      "label": "Move",
+      "mode": "tintable",
+      "file": "action-move.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32, 42]
+    },
+    {
+      "id": "action-delete",
+      "label": "Delete",
+      "mode": "tintable",
+      "file": "action-delete.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32, 42]
+    },
+    {
+      "id": "world-facing",
+      "label": "World facing",
+      "mode": "tintable",
+      "file": "world-facing.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32, 42]
+    },
+    {
+      "id": "cursor-default",
+      "label": "Pointer",
+      "mode": "literal",
+      "file": "cursor-default.svg",
+      "decision": "exact-authority-inversion",
+      "literalReviewSizes": [24, 32, 48],
+      "hotspot": { "x": 0.328125, "y": 0.296875 }
+    },
+    {
+      "id": "cursor-grab",
+      "label": "Move cursor",
+      "mode": "literal",
+      "file": "cursor-grab.svg",
+      "decision": "exact-authority-inversion",
+      "literalReviewSizes": [24, 32, 48],
+      "hotspot": { "x": 0.5, "y": 0.5 }
+    },
+    {
+      "id": "cursor-place",
+      "label": "Place cursor",
+      "mode": "literal",
+      "file": "cursor-place.svg",
+      "decision": "exact-authority-inversion",
+      "literalReviewSizes": [24, 32, 48],
+      "hotspot": { "x": 0.5, "y": 0.5 }
+    },
+    {
+      "id": "cursor-invalid",
+      "label": "Invalid cursor",
+      "mode": "literal",
+      "file": "cursor-invalid.svg",
+      "decision": "exact-authority-inversion",
+      "literalReviewSizes": [24, 32, 48],
+      "hotspot": { "x": 0.5, "y": 0.5 }
+    }
+  ]
+}

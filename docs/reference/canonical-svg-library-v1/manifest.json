@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "guide": "Terrarium canonical SVG library",
   "counts": {
-    "exactSourceFiles": 404,
-    "production": 326,
+    "exactSourceFiles": 414,
+    "production": 336,
     "productionDependencies": 74,
     "deferred": 4,
     "derivedWallFrames": 47,
@@ -20,6 +20,7 @@
       "props/workhorse": 54,
       "surfaces/floors": 12,
       "surfaces/grass": 3,
+      "ui/action-cursor-marks": 10,
       "ui/department-glyphs": 19,
       "ui/shared-primitives": 5,
       "walls/bevel": 12,
@@ -2169,6 +2170,76 @@
       "status": "production",
       "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/ground/ground-grass.svg",
       "sha256": "cb4ba412d9a2a1382406f816a53e759cc51233dd3f83e4930dfadeab6391cda7"
+    },
+    {
+      "assetId": "action-delete",
+      "category": "ui/action-cursor-marks",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-action-cursor-marks-v1/action-delete.svg",
+      "sha256": "50d5fb147c7a387412e3dfdce47546592e2da02d3437e90135d171fcf8455aa8"
+    },
+    {
+      "assetId": "action-move",
+      "category": "ui/action-cursor-marks",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-action-cursor-marks-v1/action-move.svg",
+      "sha256": "bc8cff05fde7b1590efe28fc3947dfca4d950e45e12f0d4220a2f5edf7db2489"
+    },
+    {
+      "assetId": "action-redo",
+      "category": "ui/action-cursor-marks",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-action-cursor-marks-v1/action-redo.svg",
+      "sha256": "6c8e4314d0579bb3bea95d967601acbdd8eac9d42ca95d1e48677df0ff4f919c"
+    },
+    {
+      "assetId": "action-rotate",
+      "category": "ui/action-cursor-marks",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-action-cursor-marks-v1/action-rotate.svg",
+      "sha256": "49dce902485e5d4503989e3aa0229934d888de5a33cfd14438e39d0f6d81a6ce"
+    },
+    {
+      "assetId": "action-undo",
+      "category": "ui/action-cursor-marks",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-action-cursor-marks-v1/action-undo.svg",
+      "sha256": "e4c4313600a60115d9cf5e6c75682b41a95d964a38fd9cf15c8e1e9f47d670c7"
+    },
+    {
+      "assetId": "cursor-default",
+      "category": "ui/action-cursor-marks",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-action-cursor-marks-v1/cursor-default.svg",
+      "sha256": "8923e71eebeec78aba925260c6c525c0b980a13de747195473e665fb514fb3d6"
+    },
+    {
+      "assetId": "cursor-grab",
+      "category": "ui/action-cursor-marks",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-action-cursor-marks-v1/cursor-grab.svg",
+      "sha256": "edfb6bf2217650933945121227c012c2f78f171d8ecb0b6433f475087ef31681"
+    },
+    {
+      "assetId": "cursor-invalid",
+      "category": "ui/action-cursor-marks",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-action-cursor-marks-v1/cursor-invalid.svg",
+      "sha256": "eaa4358e1e50d55914dc55e9232973dfdeb19f6bc8c7782f32dbbf673abf5603"
+    },
+    {
+      "assetId": "cursor-place",
+      "category": "ui/action-cursor-marks",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-action-cursor-marks-v1/cursor-place.svg",
+      "sha256": "5037a11a3e6fda11c57dbbba049ba720efc8d02d32e5a79708526d416ddd5090"
+    },
+    {
+      "assetId": "world-facing",
+      "category": "ui/action-cursor-marks",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-action-cursor-marks-v1/world-facing.svg",
+      "sha256": "f42e88874a86ff6017cadc0d59769f48334adb300ce52498dedaec34e4e1c95f"
     },
     {
       "assetId": "ready-all",

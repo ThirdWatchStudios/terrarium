@@ -1,0 +1,199 @@
+{
+  "schemaVersion": 1,
+  "id": "department-era-component-library-v1",
+  "status": "terrarium-production-design-source-approved",
+  "extends": "assets/ui/department-era-design-v1/manifest.json",
+  "catalogAuthority": "/Users/tombiagioni/git/The-Water-Cooler/docs/design/ui-element-family-catalog.md",
+  "ownership": {
+    "terrarium": [
+      "component appearance and literal composition",
+      "stateless canonical icon geometry",
+      "canonical action marks and cursor source geometry",
+      "technical illustrations derived from canonical facility geometry"
+    ],
+    "unityLater": [
+      "UXML and USS carriers and controls",
+      "responsive layout and accessibility semantics",
+      "keyboard gamepad and pointer interaction",
+      "authoritative presentation models and state binding",
+      "world overlays and spatial geometry",
+      "TextCore assets and import validation"
+    ]
+  },
+  "families": [
+    {
+      "id": "F-03",
+      "name": "Continuous chassis panel",
+      "construction": "Unity USS",
+      "review": ["100 percent", "140 percent", "world dominant"]
+    },
+    {
+      "id": "F-04",
+      "name": "Recessed well sleeve and index rail",
+      "construction": "Unity USS",
+      "review": ["inset", "raised", "selected", "disabled"]
+    },
+    {
+      "id": "F-05",
+      "name": "QuotaCo paper record carrier",
+      "construction": "Unity USS and live text",
+      "review": ["record", "requirement", "receipt"]
+    },
+    {
+      "id": "F-06",
+      "name": "IRIS diagnostic carrier",
+      "construction": "Unity USS and canonical iris-mark",
+      "review": ["observation", "warning", "one repair"]
+    },
+    {
+      "id": "F-09",
+      "name": "Pointer cursor family",
+      "construction": "Canonical Terrarium SVG and PNG handoff later",
+      "review": ["light world", "dark world", "hotspot", "24 32 48 pixels"]
+    },
+    {
+      "id": "F-10",
+      "name": "Control surface grammar",
+      "construction": "Unity USS",
+      "review": ["default", "hover", "focus", "pressed", "selected", "disabled", "invalid"]
+    },
+    {
+      "id": "F-11",
+      "name": "Product technical illustration",
+      "construction": "Derived from canonical Terrarium facility geometry",
+      "review": ["manila carrier", "selected carrier", "disabled carrier"]
+    },
+    {
+      "id": "C-01",
+      "name": "Text action button",
+      "construction": "Unity USS"
+    },
+    {
+      "id": "C-03",
+      "name": "Tab and segmented view switcher",
+      "construction": "Unity USS"
+    },
+    {
+      "id": "C-04",
+      "name": "Indexed navigation row",
+      "construction": "Unity USS and optional canonical icon"
+    },
+    {
+      "id": "C-05",
+      "name": "Text and search field",
+      "construction": "Unity USS and live text"
+    },
+    {
+      "id": "C-06",
+      "name": "Scroll track and viewport",
+      "construction": "Unity USS"
+    },
+    {
+      "id": "C-07",
+      "name": "Selectable card and cell",
+      "construction": "Unity USS and derived technical illustration"
+    },
+    {
+      "id": "C-08",
+      "name": "Readiness fact",
+      "construction": "Unity USS and canonical readiness and state glyphs"
+    },
+    {
+      "id": "C-09",
+      "name": "Attention advisory row",
+      "construction": "Unity USS and existing icon"
+    },
+    {
+      "id": "C-10",
+      "name": "Inline repair notice",
+      "construction": "Unity USS and canonical route repair or blocked mark"
+    },
+    {
+      "id": "C-11",
+      "name": "Grouped action bank",
+      "construction": "Unity USS and canonical action marks"
+    },
+    {
+      "id": "C-12",
+      "name": "Receipt with Undo and Redo",
+      "construction": "Unity USS live text and canonical action marks"
+    }
+  ],
+  "canonicalMarks": [
+    "ui-divider",
+    "ui-corner",
+    "ui-focus",
+    "iris-mark",
+    "quotaco-mark",
+    "work-intake",
+    "work-data-processing",
+    "work-delivery",
+    "ready-room",
+    "ready-designated",
+    "ready-equipped",
+    "ready-io",
+    "ready-connected",
+    "ready-staffed",
+    "ready-flowing",
+    "ready-all",
+    "state-complete",
+    "state-missing",
+    "state-blocked",
+    "state-unavailable",
+    "route-input",
+    "route-output",
+    "route-wall-pass",
+    "route-repair"
+  ],
+  "promotedActionMarks": [
+    "action-rotate",
+    "action-undo",
+    "action-redo",
+    "action-move",
+    "action-delete",
+    "world-facing"
+  ],
+  "canonicalCursorSources": [
+    "cursor-default",
+    "cursor-grab",
+    "cursor-place",
+    "cursor-invalid"
+  ],
+  "literalScreens": [
+    {
+      "id": "all-items-browse",
+      "viewport": "1280x720",
+      "uiScale": 1,
+      "contract": "purpose taxonomy and inert whole-cell browse"
+    },
+    {
+      "id": "all-items-search-focused",
+      "viewport": "1280x720",
+      "uiScale": 1,
+      "contract": "typing ownership only while focused and no tool arming"
+    },
+    {
+      "id": "people-handoff",
+      "viewport": "1280x720",
+      "uiScale": 1,
+      "contract": "Build opens People filtered but never assigns"
+    },
+    {
+      "id": "designation-management-receipt",
+      "viewport": "1280x720",
+      "uiScale": 1.4,
+      "contract": "durable designation actions plus short-lived recoverable receipt"
+    }
+  ],
+  "signalReservations": {
+    "amber": "dormant Capture only",
+    "rose": "emotion only",
+    "teal": "selection focus and valid geometry",
+    "rust": "invalid blocked and repair"
+  },
+  "stopBoundary": [
+    "no browser export",
+    "no Unity import or implementation",
+    "no runtime cursor texture or import-setting changes"
+  ]
+}

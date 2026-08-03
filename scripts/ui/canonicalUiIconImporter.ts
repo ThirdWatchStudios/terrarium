@@ -17,6 +17,10 @@ interface ManifestIcon {
   readonly file: string;
   readonly decision: CanonicalUiIconDecision;
   readonly literalReviewSizes: readonly number[];
+  readonly hotspot?: {
+    readonly x: number;
+    readonly y: number;
+  };
 }
 
 interface Manifest {
@@ -44,6 +48,10 @@ export interface ImportedCanonicalUiIconArt {
   readonly sourceFile: string;
   readonly sourceSha256: string;
   readonly literalReviewSizes: readonly number[];
+  readonly hotspot?: {
+    readonly x: number;
+    readonly y: number;
+  };
   readonly shapes: readonly ShapeSpec[];
 }
 
@@ -74,6 +82,22 @@ export const DEPARTMENT_UI_ICON_FAMILY = {
     'route-output',
     'route-wall-pass',
     'route-repair',
+  ],
+} as const satisfies CanonicalUiIconFamilyContract;
+
+export const ACTION_CURSOR_UI_ICON_FAMILY = {
+  family: 'canonical-ui-action-cursor-marks-v1',
+  expectedIds: [
+    'action-rotate',
+    'action-undo',
+    'action-redo',
+    'action-move',
+    'action-delete',
+    'world-facing',
+    'cursor-default',
+    'cursor-grab',
+    'cursor-place',
+    'cursor-invalid',
   ],
 } as const satisfies CanonicalUiIconFamilyContract;
 const ALLOWED_ROOT_ATTRIBUTES = new Set([
@@ -275,6 +299,23 @@ function validateManifest(
     if (entry.literalReviewSizes.length === 0 || entry.literalReviewSizes.some((size) => !Number.isInteger(size) || size <= 0)) {
       fail(source, `${entry.id} needs positive literal review sizes`);
     }
+    const isCursor = entry.id.startsWith('cursor-');
+    if (isCursor) {
+      if (entry.mode !== 'literal') fail(source, `${entry.id} cursor geometry must be literal`);
+      if (!entry.hotspot) fail(source, `${entry.id} needs a normalized hotspot`);
+      if (
+        !Number.isFinite(entry.hotspot.x)
+        || !Number.isFinite(entry.hotspot.y)
+        || entry.hotspot.x < 0
+        || entry.hotspot.x > 1
+        || entry.hotspot.y < 0
+        || entry.hotspot.y > 1
+      ) {
+        fail(source, `${entry.id} hotspot must be finite and normalized from zero to one`);
+      }
+    } else if (entry.hotspot !== undefined) {
+      fail(source, `${entry.id} non-cursor source cannot declare a hotspot`);
+    }
   }
 }
 
@@ -304,6 +345,7 @@ export async function compileCanonicalUiIconArt(
       sourceFile,
       sourceSha256: hash(svg),
       literalReviewSizes: [...entry.literalReviewSizes],
+      ...(entry.hotspot ? { hotspot: { ...entry.hotspot } } : {}),
       shapes: parseSource(sourceFile, svg, entry),
     } satisfies ImportedCanonicalUiIconArt;
   }));
@@ -340,6 +382,9 @@ export function emitCanonicalUiIconArt(imports: readonly ImportedCanonicalUiIcon
     lines.push(`    sourceFile: ${quote(imported.sourceFile)},`);
     lines.push(`    sourceSha256: ${quote(imported.sourceSha256)},`);
     lines.push(`    literalReviewSizes: ${JSON.stringify(imported.literalReviewSizes)},`);
+    if (imported.hotspot) {
+      lines.push(`    hotspot: { x: ${imported.hotspot.x}, y: ${imported.hotspot.y} },`);
+    }
     lines.push('    shapes: [');
     for (const shape of imported.shapes) lines.push(`      ${emitShape(shape)},`);
     lines.push('    ],');
