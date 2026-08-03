@@ -767,98 +767,6 @@ function anchoredSuitJacket(facing: Facing, body: BodyFacingAnchors): PartVarian
   };
 }
 
-// Dedicated silhouette pass: preserve each accepted upper-body rhythm, soften
-// the waist transition, and give the hem enough drop to read as a garment at
-// gameplay scale without introducing legs or a second pose rig.
-const COMPACT_DRESS = { flareScale: 1.12, bottomDrop: 8 };
-const BALANCED_DRESS = { flareScale: 1.08, bottomDrop: 9 };
-const LARGE_FRAME_DRESS = { flareScale: 1.1, bottomDrop: 8 };
-const TALL_DRESS = { flareScale: 1.2, bottomDrop: 10 };
-const SOFT_DRESS = { flareScale: 1.2, bottomDrop: 8 };
-const PINCH_DRESS = { flareScale: 1.1, bottomDrop: 9 };
-const DRESS_PROFILES: Record<string, { flareScale: number; bottomDrop: number }> = {
-  'body-compact': COMPACT_DRESS,
-  'body-balanced': BALANCED_DRESS,
-  'body-large-frame': LARGE_FRAME_DRESS,
-  'body-tall': TALL_DRESS,
-  'body-soft': SOFT_DRESS,
-  'body-pinch': PINCH_DRESS,
-};
-
-/** Body-specific A-line silhouette with anchor-driven neckline and seam art. */
-function anchoredDress(facing: Facing, body: BodyFacingAnchors, bodyId?: string): PartVariant {
-  const profile = DRESS_PROFILES[bodyId ?? ''] ?? BALANCED_DRESS;
-  const waist = spanCenter(body.waist);
-  const hem = spanCenter(body.hem);
-  const waistHalf = spanWidth(body.waist) / 2;
-  const hemHalf = spanWidth(body.hem) / 2;
-  const flareHalf = clampValue(
-    20,
-    40,
-    Math.max(hemHalf + 4, waistHalf + 4) * profile.flareScale,
-  );
-  const profileHalf = clampValue(18, 32, flareHalf * 0.78);
-  const bottomY = hem.y + profile.bottomDrop;
-  const leftBottom = facing === 'east'
-    ? Math.max(-38, Math.min(body.waist.left.x, hem.x - profileHalf * 0.55))
-    : hem.x - flareHalf;
-  const rightBottom = facing === 'east'
-    ? Math.min(38, Math.max(body.waist.right.x, hem.x + profileHalf))
-    : hem.x + flareHalf;
-  const shoulderY = spanCenter(body.shoulders).y;
-  const leftTransitionX = body.waist.left.x
-    + (body.waist.left.x - body.shoulders.left.x) * 0.32;
-  const rightTransitionX = body.waist.right.x
-    + (body.waist.right.x - body.shoulders.right.x) * 0.32;
-  const transitionY = waist.y + (waist.y - shoulderY) * 0.32;
-  const lowerY = mix(waist.y, bottomY, 0.64);
-  const skirt: PartVariant['shapes'][number] = {
-    d: `M ${body.neck.x} ${body.neck.y} Q ${body.shoulders.left.x} ${shoulderY} ${body.waist.left.x} ${waist.y} C ${leftTransitionX} ${transitionY} ${leftBottom} ${lowerY} ${leftBottom} ${bottomY} Q ${hem.x} ${bottomY + 2} ${rightBottom} ${bottomY} C ${rightBottom} ${lowerY} ${rightTransitionX} ${transitionY} ${body.waist.right.x} ${waist.y} Q ${body.shoulders.right.x} ${shoulderY} ${body.neck.x} ${body.neck.y} Z`,
-    fill: '$outfitPrimary',
-  };
-  const waistBand: PartVariant['shapes'][number] = {
-    d: `M ${body.waist.left.x} ${waist.y} L ${body.waist.right.x} ${waist.y}`,
-    stroke: '$outfitSecondary',
-    strokeWidth: 4,
-    silhouette: false,
-  };
-
-  if (facing === 'north') {
-    const neckHalf = clampValue(7, 11, spanWidth(body.shoulders) * 0.17);
-    return {
-      z: 20,
-      shapes: [
-        skirt,
-        { d: rr(body.neck.x - neckHalf, body.neck.y, neckHalf * 2, 4, 2), fill: '$outfitSecondary', silhouette: false },
-        waistBand,
-        { d: `M ${hem.x} ${waist.y + 5} L ${hem.x} ${bottomY - 3}`, stroke: '#00000018', strokeWidth: 1.2, silhouette: false },
-      ],
-    };
-  }
-  if (facing === 'east') {
-    const collarY = body.neck.y + 4;
-    const collarSpan = bodyInteriorSpan(body, collarY, 0.5);
-    const necklineY = mix(body.neck.y, body.chest.y, 0.55);
-    return {
-      z: 20,
-      shapes: [
-        skirt,
-        { d: `M ${collarSpan.left} ${collarY} Q ${bodyInteriorSpan(body, necklineY, 1.5).right} ${necklineY} ${collarSpan.right} ${collarY} Z`, fill: '$skin', silhouette: false },
-      ],
-    };
-  }
-  const neckHalf = clampValue(7, 11, spanWidth(body.shoulders) * 0.17);
-  return {
-    z: 20,
-    shapes: [
-      skirt,
-      { d: `M ${body.neck.x - neckHalf} ${body.neck.y} Q ${body.neck.x} ${mix(body.neck.y, body.chest.y, 0.58)} ${body.neck.x + neckHalf} ${body.neck.y} Z`, fill: '$skin', silhouette: false },
-      waistBand,
-      { d: `M ${hem.x - flareHalf * 0.25} ${waist.y + 6} L ${hem.x - flareHalf * 0.4} ${bottomY - 3} M ${hem.x + flareHalf * 0.25} ${waist.y + 6} L ${hem.x + flareHalf * 0.4} ${bottomY - 3}`, stroke: '#00000018', strokeWidth: 1.2, silhouette: false },
-    ],
-  };
-}
-
 /** Anchor-driven rolled collar. */
 function anchoredTurtleneck(facing: Facing, body: BodyFacingAnchors): PartVariant {
   const n = body.neck;
@@ -1188,12 +1096,14 @@ const OUTFITS: PartDef[] = [
     buildVariant: (facing, context) => context.bodyAnchors && anchoredSuitJacket(facing, context.bodyAnchors),
   },
   {
-    // Legacy fallback dress: detail-only art on the old capsule. Body-owned
-    // rigs use anchoredDress(), whose A-line silhouette expands per body id.
     id: 'outfit-dress',
     label: 'Dress',
     slot: 'outfit',
     anchor: 'body',
+    // Facing presence and z-order remain catalog metadata. The body-variant-art
+    // receiver selects one complete canonical SVG by exact production body id
+    // and facing. Dormant legacy bodies retain their prior static detail-only
+    // compatibility art below; it never supplies production-body geometry.
     facings: {
       south: {
         z: 20,
@@ -1221,7 +1131,6 @@ const OUTFITS: PartDef[] = [
         ],
       },
     },
-    buildVariant: (facing, context) => context.bodyAnchors && anchoredDress(facing, context.bodyAnchors, context.bodyId),
   },
   {
     // High rolled collar covering the neck — distinct, minimal silhouette read.

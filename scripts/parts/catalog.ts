@@ -5,6 +5,7 @@ export type PartImportMode =
   | 'static'
   | 'head-fitted-art'
   | 'body-art'
+  | 'body-variant-art'
   | 'fixed-body-art'
   | 'anchored-detail'
   | 'component-detail';
@@ -41,11 +42,20 @@ export interface PartImportTarget {
   readonly headFitAdapter?: HeadFitAdapter;
   readonly variantZ?: number;
   readonly referenceBodyId?: BodyArchetypeId;
+  readonly bodyVariantIds?: readonly BodyArchetypeId[];
   readonly placementAnchor?: BodyDetailPointAnchor;
   readonly components?: readonly PartImportComponent[];
 }
 
 const allFacings = { south: true, east: true, north: true } as const;
+const allBodyVariantIds = [
+  'body-compact',
+  'body-balanced',
+  'body-large-frame',
+  'body-tall',
+  'body-soft',
+  'body-pinch',
+] as const satisfies readonly BodyArchetypeId[];
 const target = (id: string, slot: 'head' | 'hair'): PartImportTarget => ({
   id,
   slot,
@@ -141,6 +151,16 @@ export const PART_IMPORT_TARGETS: readonly PartImportTarget[] = [
     variantZ: 50,
   },
   target('head-fab', 'head'),
+  {
+    id: 'outfit-dress',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: allFacings,
+    importMode: 'body-variant-art',
+    preserveLocalPaths: true,
+    bodyVariantIds: allBodyVariantIds,
+    variantZ: 20,
+  },
   {
     id: 'outfit-fab-chassis',
     slot: 'outfit',

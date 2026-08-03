@@ -33,6 +33,7 @@
     "iris-hardware:import:check": "tsx scripts/importIrisHardware.ts --check",
     "iris-hardware:production:preview": "tsx scripts/canonicalIrisHardwareSourceFitProof.ts",
     "fab-chassis:production:preview": "tsx scripts/canonicalFabChassisSourceFitProof.ts",
+    "dress:production:preview": "tsx scripts/canonicalDressSourceFitProof.ts",
     "department-machines:import": "tsx scripts/importQuotaCoDepartmentMachines.ts --write",
     "department-machines:import:check": "tsx scripts/importQuotaCoDepartmentMachines.ts --check",
     "department-machines:production:preview": "tsx scripts/quotaCoDepartmentMachineProductionValidationPreview.ts",

@@ -550,7 +550,10 @@ icons), not by upfront design.
    weight without adding a new rig or animation surface. The literal 40/48 px
    `character-dress-silhouette-fit-v1.png` sheet and high-contrast
    `body-archetypes-dress-styles.png` stress sheet received visual approval on
-   2026-07-28.
+   2026-07-28. On 2026-08-02, the approved pixels were promoted to eighteen
+   complete canonical SVGs (six production bodies × three authored facings).
+   The imported receiver performs exact body/facing selection only; the former
+   anchor-driven geometry builder has been removed.
 18. **Provenance**: each imported asset records source
    (`authored | generated | curated`) in its generated module, so lints and
    future audits know what's re-generatable. `authored` means deliberate
@@ -558,8 +561,9 @@ icons), not by upfront design.
    generator-owned and reproducible; `curated` means selected and frozen
    generator output.
 
-The approved body and six-head sets plus all ten approved mapped hair source
-sets now form the canonical silhouette foundation. The remaining outfit
+The approved body and six-head sets, all ten approved mapped hair source sets,
+and the complete per-body Dress matrix now form the canonical silhouette
+foundation. The remaining outfit
 manifests and the separate runtime-scale integration can follow the
 componentized Blazer/Polo/Shirt + Tie/Turtleneck/Cardigan/Suit Jacket/Hoodie/Vest
 slices.

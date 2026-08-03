@@ -505,7 +505,7 @@ The only place the body-count multiplier is paid; kept small on purpose.
 
 | Garment | Matrix | Status |
 |---|---|---|
-| dress | bodies × 3 facings | mechanically and visually approved |
+| dress | 6 bodies × 3 facings | canonical SVG authority promoted |
 | (long coat — only if added) | bodies × 3 | deferred |
 
 > **Dress refinement v1 (visually approved):** the per-body implementation now
@@ -515,6 +515,15 @@ The only place the body-count multiplier is paid; kept small on purpose.
 > new rig or animation surface. `character-dress-silhouette-fit-v1.png` at
 > 40/48 px and `body-archetypes-dress-styles.png` in high contrast received
 > visual approval on 2026-07-28.
+
+> **Dress source authority (promoted 2026-08-02):** eighteen complete canonical
+> SVGs under `assets/parts/outfit/dress.<body-id>.<facing>.svg` now own every
+> visible dress shape. The production adapter only selects the exact body and
+> facing, while the compositor owns west mirroring, palette resolution, shared
+> poses, and baking. The former `anchoredDress()` production builder has been
+> removed. Deprecated legacy body ids retain their existing static detail-only
+> compatibility facings so old saved recipes remain byte-stable; those records
+> never supply geometry to the six production-body routes.
 
 ### 7. Conditional — only if the readability lints flag them
 

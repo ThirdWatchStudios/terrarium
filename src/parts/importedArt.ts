@@ -51,6 +51,23 @@ export interface ImportedBodyArtOverlay {
 }
 
 /**
+ * Complete SVG-owned outfit art selected from an explicit body/facing matrix.
+ *
+ * Every body variant is independently authored. The adapter only performs an
+ * exact body-id/facing lookup and supplies z-order; it does not fit, scale,
+ * translate, or reconstruct visible geometry.
+ */
+export interface ImportedBodyVariantArtOverlay {
+  readonly kind: 'body-variant-art';
+  readonly id: string;
+  readonly slot: 'outfit';
+  readonly z: number;
+  readonly bodyVariants: Readonly<
+    Record<string, Partial<Record<Facing, readonly ShapeSpec[]>>>
+  >;
+}
+
+/**
  * Complete SVG-owned overlay for an outfit locked to one production body rig.
  *
  * The source supplies every visible shape. The adapter supplies only the
@@ -86,6 +103,7 @@ export type ImportedPartOverlay =
   | ImportedStaticPartOverlay
   | ImportedHeadFittedPartOverlay
   | ImportedBodyArtOverlay
+  | ImportedBodyVariantArtOverlay
   | ImportedFixedBodyArtOverlay
   | ImportedBodyDetailOverlay;
 
@@ -175,6 +193,44 @@ export function applyImportedPartArt(
       // retain their original identity.
       base.facings = facings;
       result[index] = base;
+      continue;
+    }
+    if (imported.kind === 'body-variant-art') {
+      if (base.slot !== 'outfit' || base.anchor !== 'body') {
+        fail(`${imported.id} body-variant-art overlays require a body-anchored outfit`);
+      }
+      if (base.buildVariant) {
+        fail(`${imported.id} body-variant-art overlays cannot retain handwritten buildVariant geometry`);
+      }
+      if (!Number.isFinite(imported.z)) {
+        fail(`${imported.id} body-variant-art overlay requires finite z-order`);
+      }
+      const bodyIds = Object.keys(imported.bodyVariants);
+      if (bodyIds.length === 0) fail(`${imported.id} contains no body-variant art`);
+      for (const bodyId of bodyIds) {
+        for (const facing of FACINGS) {
+          const shapes = imported.bodyVariants[bodyId]?.[facing];
+          if (!shapes || shapes.length === 0) {
+            fail(`${imported.id}/${bodyId}/${facing} contains no body-variant art`);
+          }
+          if (!shapes.some((shape) => shape.silhouette !== false)) {
+            fail(`${imported.id}/${bodyId}/${facing} contains no silhouette geometry`);
+          }
+        }
+      }
+      result[index] = {
+        ...base,
+        buildVariant: (facing, context) => {
+          const shapes = context.bodyId
+            ? imported.bodyVariants[context.bodyId]?.[facing]
+            : undefined;
+          if (!shapes) return undefined;
+          return {
+            z: imported.z,
+            shapes: shapes.map((shape) => ({ ...shape })),
+          };
+        },
+      };
       continue;
     }
     if (imported.kind === 'fixed-body-art') {

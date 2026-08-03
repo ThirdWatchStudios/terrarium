@@ -99,7 +99,7 @@ export type BodyAnchors = Record<Facing, BodyFacingAnchors>;
 export interface PartBuildContext {
   /** Present when the active body owns a sub-rig; absent for legacy bodies. */
   bodyAnchors?: BodyFacingAnchors;
-  /** Stable resolved body part id for rare body-specific variants such as dresses. */
+  /** Stable resolved body part id for exact body-specific source selection. */
   bodyId?: string;
 }
 

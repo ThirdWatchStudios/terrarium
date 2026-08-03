@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Canonical dress — body-compact south</title>
+  <desc>Production complete outfit-dress art for body-compact.</desc>
+  <metadata>{"status":"production","target":"outfit-dress","bodyId":"body-compact","facing":"south"}</metadata>
+  <g transform="translate(64 87)">
+    <path id="art/dress/skirt" d="M0-29Q-29-20-29 5C-29 13-36.96 22.92-36.96 33Q0 35 36.96 33C36.96 22.92 29 13 29 5Q29-20 0-29Z" fill="#FF0000" fill-rule="nonzero"/>
+    <path id="detail/dress/neckline" d="M-9.86-29Q0-15.08 9.86-29Z" fill="#FF00FF" fill-rule="nonzero"/>
+    <path id="detail/dress/waist" d="M-29 5L29 5" fill="none" stroke="#00FF00" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="detail/dress/seams" d="M-9.24 11L-14.784 30M9.24 11L14.784 30" fill="none" stroke="#00000018" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

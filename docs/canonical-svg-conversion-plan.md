@@ -220,7 +220,10 @@ remains directly inspectable and source-owned.
 Convert these code-owned visual parts through the character importer/adapter
 system:
 
-- `outfit-dress`;
+- [x] `outfit-dress` — promoted 2026-08-02 as eighteen complete canonical
+  sources (six production bodies × three authored facings), with exact
+  body/facing selection and no fit math or production-body handwritten
+  geometry fallback;
 - `outfit-hi-vis`;
 - [x] `outfit-fab-chassis` — promoted 2026-08-02 as three canonical facings
   with a `body-large-frame`-only receiver and no handwritten geometry fallback;
@@ -231,10 +234,9 @@ The SVG owns the visible garment/equipment art. Body rigs, facing mirrors,
 body-fit frames, recipe-only/selectability policy, z-order, and anchors remain
 metadata/adapter concerns.
 
-The FAB chassis is the completed fixed-body pilot. Continue with
-`outfit-dress`, whose distinct silhouette is the next clearest case of visual
-identity still encoded as a builder. Hi-vis, apron, and hairnet follow through
-the proven component adapter.
+The FAB chassis completed the fixed-body pilot, and Dress now completes the
+per-body silhouette pilot. Hi-vis, apron, and hairnet follow through the proven
+component adapter.
 
 ### P2 — major gameplay facilities
 
@@ -421,7 +423,7 @@ Run one family at a time, preserving visual approval boundaries:
 4. convert IRIS installation/dock art — canonical source, browser handoff, and
    Unity visual acceptance complete; durable Candidate/Current promotion lock
    remains pipeline work;
-5. convert FAB chassis and dress, then the remaining special parts;
+5. [x] convert FAB chassis and dress; then convert the remaining special parts;
 6. convert the cafeteria facilities;
 7. migrate UI iconography by semantic family; and
 8. convert the five flora base silhouettes.

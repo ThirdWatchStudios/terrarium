@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Canonical dress — body-large-frame east</title>
+  <desc>Production complete outfit-dress art for body-large-frame.</desc>
+  <metadata>{"status":"production","target":"outfit-dress","bodyId":"body-large-frame","facing":"east"}</metadata>
+  <g transform="translate(64 87)">
+    <path id="art/dress/skirt" d="M0-32Q-4-21-17 3C-21.16 10.68-17 22.2-17 33Q1.5 35 22 33C22 22.2 26.48 10.68 22 3Q8-21 0-32Z" fill="#FF0000" fill-rule="nonzero"/>
+    <path id="detail/dress/neckline" d="M-0.954545-28Q7.783333-18.8 2.409091-28Z" fill="#FF00FF" fill-rule="nonzero"/>
+  </g>
+</svg>

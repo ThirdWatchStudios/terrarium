@@ -11,6 +11,12 @@ geometry. The dedicated `body-art` mode updates the already-shared production
 body `PartDef` in place. The `fixed-body-art` mode installs the complete
 SVG-owned `outfit-fab-chassis` overlay only when the recipe uses
 `body-large-frame`; no handwritten geometry or cross-rig fallback remains.
+The `body-variant-art` mode installs the complete eighteen-file
+`outfit-dress` matrix and selects one exact SVG by production body id and
+facing; it performs no fit, scale, translation, or geometry reconstruction and
+does not fabricate an unknown-body source variant. Deprecated legacy-body
+recipes retain the static compatibility facings on the base `PartDef`; those
+records are outside the six-body production matrix.
 The explicit `outfit-tee` adapter replaces the detail shapes returned by its
 body-aware builder for known production bodies.
 The `outfit-blazer` component adapter does the same after deterministically
@@ -75,6 +81,9 @@ Vest declares south-only detail.
 `fab-chassis.south.svg`, `fab-chassis.east.svg`, and
 `fab-chassis.north.svg` form one complete fixed-body source set and are accepted
 only for the `body-large-frame` receiver declared in the import catalog.
+`dress.<body-id>.<facing>.svg` forms one atomic `body-variant-art` set: all six
+production body ids and all three authored facings must be present before the
+generated receiver can change.
 Putting a valid complete set in this canonical directory makes it compiler
 input; visual acceptance remains a separate Definition of Done gate. These
 static hair overlays remain the canonical authored source and fallback
@@ -90,6 +99,11 @@ The importer currently accepts:
   `body-large-frame` around `(64, 87)`. Its SVGs own every visible chassis
   plane, panel, seam, and optic; the adapter owns only body-id gating, facing,
   west mirroring, body anchor, and z-order.
+- `outfit-dress` as complete eighteen-file `body-variant-art`, with one
+  independently authored south/east/north source set for each of the six
+  production body ids around `(64, 87)`. Its SVGs own the complete skirt
+  silhouette, neckline/collar, waist treatment, and seams; the adapter owns
+  only exact body/facing selection and z-order.
 - `outfit-tee` as an anchored-detail target, authored over `body-balanced`
   around the body origin `(64, 87)`. Its neck is canvas point `(64, 58)`, and
   the canonical source set is `tee.south.svg` plus `tee.east.svg`.
@@ -174,7 +188,7 @@ Facing files must agree on relative bucket order for the same reason.
 - Flat fill/stroke paint via presentation attributes or inline style.
 - Nested `matrix`, `translate`, `scale`, `rotate`, `skewX`, and `skewY`
   transforms. The compiler bakes them into path data for normal static and
-  anchored-detail imports. Byte-stable body art and fixed-body art instead
+  anchored-detail imports. Byte-stable body, body-variant, and fixed-body art instead
   require the one canonical `translate(64 87)` group and no additional
   visible-path transform.
 - Stroke width is unitless. Strokes must explicitly use round linecaps and

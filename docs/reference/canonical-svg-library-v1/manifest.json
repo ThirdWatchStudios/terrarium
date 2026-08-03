@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "guide": "Terrarium canonical SVG library",
   "counts": {
-    "exactSourceFiles": 332,
-    "production": 254,
+    "exactSourceFiles": 350,
+    "production": 272,
     "productionDependencies": 74,
     "deferred": 4,
     "derivedWallFrames": 47,
@@ -11,7 +11,7 @@
       "characters/body": 18,
       "characters/hair": 30,
       "characters/head": 21,
-      "characters/outfit": 47,
+      "characters/outfit": 65,
       "props/deferred-gameplay": 4,
       "props/department-machines": 67,
       "props/iris-hardware": 3,
@@ -577,6 +577,132 @@
       "status": "production",
       "sourceFile": "assets/parts/outfit/cardigan.trim.south.svg",
       "sha256": "1816d66d2742cb3e62c7d3cb15ca6678962a8147c568996bdb8ced694ee2bb7d"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-balanced.east.svg",
+      "sha256": "46c67e3761cb32497cb516a2db65f30e6a0944caefdac88dc434f49d7c780b0e"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-balanced.north.svg",
+      "sha256": "b6274bcea05f016084adaffdfd16436d8b7df4e38f9c80ada13457df97eb1664"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-balanced.south.svg",
+      "sha256": "99afb5df57135a2c1f2e41db7398f40500b4a8b85b7d212c012f6dcf8173fd64"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-compact.east.svg",
+      "sha256": "5c445ce5906a4c5e7d20fd2b27bf2f7c94cfcfed24c117cd15a3dfe0de831687"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-compact.north.svg",
+      "sha256": "4a38322f0d62fa5656c509ee9e3b49840ab048e60c0a0e1bed2248ec8c9537a0"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-compact.south.svg",
+      "sha256": "3bf148dd0ee052b35fb880a00ccc917d3575fb19a05e25f9b06548e6bcf4dd0e"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-large-frame.east.svg",
+      "sha256": "9b4a96aef854a89bfb55c41461a12b80172ecb1ad4b5498c1e1f2e7eb37578a3"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-large-frame.north.svg",
+      "sha256": "63c8f43ae13a000ed3207dc3faf9d3967bdd9eeb787f520e5b77f5e48a1e9a71"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-large-frame.south.svg",
+      "sha256": "7caab8f9209ff6643f58380dc3533825a0841f34f1fdac2b2925ac93f2a0b84d"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-pinch.east.svg",
+      "sha256": "41efad3bad7bc721f0788cf7d6e47c77d76036500504163a8bd1d7c238b58e25"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-pinch.north.svg",
+      "sha256": "9885547c8245bb7ca65d5c577542f78527eab6621da332d69519d41e7c02f6fd"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-pinch.south.svg",
+      "sha256": "0d88da8b98c8d66bd394cb686f576e3950d920b42ac72612dd01e9fce99507c0"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-soft.east.svg",
+      "sha256": "989470edfc6b91420e0c2728b4c0a94b72188fb712ad7ff4f5d5042a59017686"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-soft.north.svg",
+      "sha256": "9ae42506ce1cc684cc44438864000ec916b66b7ca698ffe90b30906e81f1161e"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-soft.south.svg",
+      "sha256": "e374dbbfb4c3fb2fc86e1c689c3fd43142ba0f283b1cc99509369cef2d01755c"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-tall.east.svg",
+      "sha256": "9afa1cdce9706066a6dda3bd60bd5bd65cd24c6181064aa78a97af187e60ebbd"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-tall.north.svg",
+      "sha256": "f96758322427b48751dbff1c31bfa7edc01d304ae7aabdbb4ecd0ea7028def37"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-tall.south.svg",
+      "sha256": "c874216a29e2afc59bac421bf08129af5b31e8326f6ab7610456262cf9fad1d4"
     },
     {
       "assetId": "outfit-fab-chassis",

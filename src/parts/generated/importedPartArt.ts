@@ -2198,6 +2198,122 @@ export const IMPORTED_PART_ART = [
     },
   },
   {
+    kind: "body-variant-art",
+    id: "outfit-dress",
+    slot: "outfit",
+    z: 20,
+    bodyVariants: {
+      "body-compact": {
+        south: [
+          { d: "M0-29Q-29-20-29 5C-29 13-36.96 22.92-36.96 33Q0 35 36.96 33C36.96 22.92 29 13 29 5Q29-20 0-29Z", fill: "$outfitPrimary" },
+          { d: "M-9.86-29Q0-15.08 9.86-29Z", fill: "$skin", silhouette: false },
+          { d: "M-29 5L29 5", stroke: "$outfitSecondary", strokeWidth: 4, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          { d: "M-9.24 11L-14.784 30M9.24 11L14.784 30", stroke: "#00000018", strokeWidth: 1.2, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+        ],
+        east: [
+          { d: "M0-29Q-4-20-22 5C-27.76 13-22 22.92-22 33Q1 35 24.5872 33C24.5872 22.92 29.44 13 24 5Q7-20 0-29Z", fill: "$outfitPrimary" },
+          { d: "M-1.277778-25Q8.356-15.8 2.611111-25Z", fill: "$skin", silhouette: false },
+        ],
+        north: [
+          { d: "M0-29Q-29-20-29 5C-29 13-36.96 22.92-36.96 33Q0 35 36.96 33C36.96 22.92 29 13 29 5Q29-20 0-29Z", fill: "$outfitPrimary" },
+          { d: "M-7.86-29H7.86A2 2 0 0 1 9.86-27V-27A2 2 0 0 1 7.86-25H-7.86A2 2 0 0 1-9.86-27V-27A2 2 0 0 1-7.86-29Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-29 5L29 5", stroke: "$outfitSecondary", strokeWidth: 4, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          { d: "M0 10L0 30", stroke: "#00000018", strokeWidth: 1.2, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+        ],
+      },
+      "body-balanced": {
+        south: [
+          { d: "M0-29Q-25-18-31 4C-32.92 11.04-37.8 23.2-37.8 34Q0 36 37.8 34C37.8 23.2 32.92 11.04 31 4Q25-18 0-29Z", fill: "$outfitPrimary" },
+          { d: "M-8.5-29Q0-15.08 8.5-29Z", fill: "$skin", silhouette: false },
+          { d: "M-31 4L31 4", stroke: "$outfitSecondary", strokeWidth: 4, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          { d: "M-9.45 10L-15.12 31M9.45 10L15.12 31", stroke: "#00000018", strokeWidth: 1.2, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+        ],
+        east: [
+          { d: "M0-29Q-3-18-21 4C-26.76 11.04-21 23.2-21 34Q2 36 27 34C27 23.2 33.4 11.04 27 4Q7-18 0-29Z", fill: "$outfitPrimary" },
+          { d: "M-0.590909-25Q7.5-15.8 2.045455-25Z", fill: "$skin", silhouette: false },
+        ],
+        north: [
+          { d: "M0-29Q-25-18-31 4C-32.92 11.04-37.8 23.2-37.8 34Q0 36 37.8 34C37.8 23.2 32.92 11.04 31 4Q25-18 0-29Z", fill: "$outfitPrimary" },
+          { d: "M-6.5-29H6.5A2 2 0 0 1 8.5-27V-27A2 2 0 0 1 6.5-25H-6.5A2 2 0 0 1-8.5-27V-27A2 2 0 0 1-6.5-29Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-31 4L31 4", stroke: "$outfitSecondary", strokeWidth: 4, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          { d: "M0 9L0 31", stroke: "#00000018", strokeWidth: 1.2, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+        ],
+      },
+      "body-large-frame": {
+        south: [
+          { d: "M0-32Q-33-21-24 3C-21.12 10.68-30.8 22.2-30.8 33Q0 35 30.8 33C30.8 22.2 21.12 10.68 24 3Q33-21 0-32Z", fill: "$outfitPrimary" },
+          { d: "M-11-32Q0-18.08 11-32Z", fill: "$skin", silhouette: false },
+          { d: "M-24 3L24 3", stroke: "$outfitSecondary", strokeWidth: 4, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          { d: "M-7.7 9L-12.32 30M7.7 9L12.32 30", stroke: "#00000018", strokeWidth: 1.2, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+        ],
+        east: [
+          { d: "M0-32Q-4-21-17 3C-21.16 10.68-17 22.2-17 33Q1.5 35 22 33C22 22.2 26.48 10.68 22 3Q8-21 0-32Z", fill: "$outfitPrimary" },
+          { d: "M-0.954545-28Q7.783333-18.8 2.409091-28Z", fill: "$skin", silhouette: false },
+        ],
+        north: [
+          { d: "M0-32Q-33-21-24 3C-21.12 10.68-30.8 22.2-30.8 33Q0 35 30.8 33C30.8 22.2 21.12 10.68 24 3Q33-21 0-32Z", fill: "$outfitPrimary" },
+          { d: "M-9-32H9A2 2 0 0 1 11-30V-30A2 2 0 0 1 9-28H-9A2 2 0 0 1-11-30V-30A2 2 0 0 1-9-32Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-24 3L24 3", stroke: "$outfitSecondary", strokeWidth: 4, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          { d: "M0 8L0 30", stroke: "#00000018", strokeWidth: 1.2, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+        ],
+      },
+      "body-tall": {
+        south: [
+          { d: "M0-34Q-18-24-17 4C-16.68 12.96-25.2 23.84-25.2 35Q0 37 25.2 35C25.2 23.84 16.68 12.96 17 4Q18-24 0-34Z", fill: "$outfitPrimary" },
+          { d: "M-7-34Q0-19.5 7-34Z", fill: "$skin", silhouette: false },
+          { d: "M-17 4L17 4", stroke: "$outfitSecondary", strokeWidth: 4, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          { d: "M-6.3 10L-10.08 32M6.3 10L10.08 32", stroke: "#00000018", strokeWidth: 1.2, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+        ],
+        east: [
+          { d: "M0-34Q-2-24-14 4C-17.84 12.96-14 23.84-14 35Q1 37 19 35C19 23.84 19.84 12.96 16 4Q4-24 0-34Z", fill: "$outfitPrimary" },
+          { d: "M-0.3-30Q4.107143-20.25 1.1-30Z", fill: "$skin", silhouette: false },
+        ],
+        north: [
+          { d: "M0-34Q-18-24-17 4C-16.68 12.96-25.2 23.84-25.2 35Q0 37 25.2 35C25.2 23.84 16.68 12.96 17 4Q18-24 0-34Z", fill: "$outfitPrimary" },
+          { d: "M-5-34H5A2 2 0 0 1 7-32V-32A2 2 0 0 1 5-30H-5A2 2 0 0 1-7-32V-32A2 2 0 0 1-5-34Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-17 4L17 4", stroke: "$outfitSecondary", strokeWidth: 4, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          { d: "M0 9L0 32", stroke: "#00000018", strokeWidth: 1.2, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+        ],
+      },
+      "body-soft": {
+        south: [
+          { d: "M0-28Q-20-17-28 7C-30.56 14.68-38.4 23.64-38.4 33Q0 35 38.4 33C38.4 23.64 30.56 14.68 28 7Q20-17 0-28Z", fill: "$outfitPrimary" },
+          { d: "M-7-28Q0-14.08 7-28Z", fill: "$skin", silhouette: false },
+          { d: "M-28 7L28 7", stroke: "$outfitSecondary", strokeWidth: 4, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          { d: "M-9.6 13L-15.36 30M9.6 13L15.36 30", stroke: "#00000018", strokeWidth: 1.2, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+        ],
+        east: [
+          { d: "M0-28Q-3-17-20 7C-25.44 14.68-20 23.64-20 33Q2.5 35 28.24 33C28.24 23.64 33.72 14.68 27 7Q6-17 0-28Z", fill: "$outfitPrimary" },
+          { d: "M-0.590909-24Q6.425-14.8 1.681818-24Z", fill: "$skin", silhouette: false },
+        ],
+        north: [
+          { d: "M0-28Q-20-17-28 7C-30.56 14.68-38.4 23.64-38.4 33Q0 35 38.4 33C38.4 23.64 30.56 14.68 28 7Q20-17 0-28Z", fill: "$outfitPrimary" },
+          { d: "M-5-28H5A2 2 0 0 1 7-26V-26A2 2 0 0 1 5-24H-5A2 2 0 0 1-7-26V-26A2 2 0 0 1-5-28Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-28 7L28 7", stroke: "$outfitSecondary", strokeWidth: 4, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          { d: "M0 12L0 30", stroke: "#00000018", strokeWidth: 1.2, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+        ],
+      },
+      "body-pinch": {
+        south: [
+          { d: "M0-29Q-20-18-19 4C-18.68 11.04-36.3 23.2-36.3 34Q0 36 36.3 34C36.3 23.2 18.68 11.04 19 4Q20-18 0-29Z", fill: "$outfitPrimary" },
+          { d: "M-7-29Q0-15.66 7-29Z", fill: "$skin", silhouette: false },
+          { d: "M-19 4L19 4", stroke: "$outfitSecondary", strokeWidth: 4, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          { d: "M-9.075 10L-14.52 31M9.075 10L14.52 31", stroke: "#00000018", strokeWidth: 1.2, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+        ],
+        east: [
+          { d: "M0-29Q-3-18-17 4C-21.48 11.04-17 23.2-17 34Q2 36 27.74 34C27.74 23.2 24.16 11.04 20 4Q7-18 0-29Z", fill: "$outfitPrimary" },
+          { d: "M-0.590909-25Q6.475-16.35 2.045455-25Z", fill: "$skin", silhouette: false },
+        ],
+        north: [
+          { d: "M0-29Q-20-18-19 4C-18.68 11.04-36.3 23.2-36.3 34Q0 36 36.3 34C36.3 23.2 18.68 11.04 19 4Q20-18 0-29Z", fill: "$outfitPrimary" },
+          { d: "M-5-29H5A2 2 0 0 1 7-27V-27A2 2 0 0 1 5-25H-5A2 2 0 0 1-7-27V-27A2 2 0 0 1-5-29Z", fill: "$outfitSecondary", silhouette: false },
+          { d: "M-19 4L19 4", stroke: "$outfitSecondary", strokeWidth: 4, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+          { d: "M0 9L0 31", stroke: "#00000018", strokeWidth: 1.2, strokeLinecap: "round", strokeLinejoin: "round", silhouette: false },
+        ],
+      },
+    },
+  },
+  {
     kind: "fixed-body-art",
     id: "outfit-fab-chassis",
     slot: "outfit",
@@ -3040,6 +3156,30 @@ export const IMPORTED_PART_PROVENANCE = [
       "assets/parts/outfit/cardigan.button-line.south.svg",
       "assets/parts/outfit/cardigan.trim.east.svg",
       "assets/parts/outfit/cardigan.trim.south.svg",
+    ],
+  },
+  {
+    id: "outfit-dress",
+    sourceKind: "authored",
+    sourceFiles: [
+      "assets/parts/outfit/dress.body-balanced.east.svg",
+      "assets/parts/outfit/dress.body-balanced.north.svg",
+      "assets/parts/outfit/dress.body-balanced.south.svg",
+      "assets/parts/outfit/dress.body-compact.east.svg",
+      "assets/parts/outfit/dress.body-compact.north.svg",
+      "assets/parts/outfit/dress.body-compact.south.svg",
+      "assets/parts/outfit/dress.body-large-frame.east.svg",
+      "assets/parts/outfit/dress.body-large-frame.north.svg",
+      "assets/parts/outfit/dress.body-large-frame.south.svg",
+      "assets/parts/outfit/dress.body-pinch.east.svg",
+      "assets/parts/outfit/dress.body-pinch.north.svg",
+      "assets/parts/outfit/dress.body-pinch.south.svg",
+      "assets/parts/outfit/dress.body-soft.east.svg",
+      "assets/parts/outfit/dress.body-soft.north.svg",
+      "assets/parts/outfit/dress.body-soft.south.svg",
+      "assets/parts/outfit/dress.body-tall.east.svg",
+      "assets/parts/outfit/dress.body-tall.north.svg",
+      "assets/parts/outfit/dress.body-tall.south.svg",
     ],
   },
   {
