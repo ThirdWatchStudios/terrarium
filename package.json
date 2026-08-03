@@ -36,6 +36,8 @@
     "dress:production:preview": "tsx scripts/canonicalDressSourceFitProof.ts",
     "cafeteria-uniform:source-fit:preview": "tsx scripts/canonicalCafeteriaUniformSourceFitProof.ts",
     "cafeteria-uniform:color:preview": "tsx scripts/cafeteriaUniformColorDirectionPreview.ts",
+    "cafeteria-facilities:context:preview": "tsx scripts/canonicalCafeteriaFacilityContextReview.ts",
+    "cafeteria-facilities:source-fit:preview": "tsx scripts/canonicalCafeteriaFacilitySourceFitProof.ts",
     "department-machines:import": "tsx scripts/importQuotaCoDepartmentMachines.ts --write",
     "department-machines:import:check": "tsx scripts/importQuotaCoDepartmentMachines.ts --check",
     "department-machines:production:preview": "tsx scripts/quotaCoDepartmentMachineProductionValidationPreview.ts",

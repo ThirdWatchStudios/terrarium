@@ -76,6 +76,15 @@ export const QUOTA_CO_INTERIOR_WORKHORSE_PROP_IDS = [
   'fish-tank',
   'string-lights',
   'rug',
+  'serving-line',
+  'service-scanner',
+  'commercial-range',
+  'prep-table',
+  'dish-return',
+  'walk-in-front',
+  'dining-carrel',
+  'cafeteria-table',
+  'tray-stack',
 ] as const;
 
 export const QUOTA_CO_EXTERIOR_WORKHORSE_PROP_IDS = [
@@ -410,6 +419,60 @@ const MANIFEST: readonly ManifestEntry[] = [
     file: 'rug.svg',
     projection: 'plan',
     paletteDefaults: { primary: '#DED5BD', secondary: '#355247', accent: '#B65F4D' },
+  },
+  {
+    id: 'serving-line',
+    file: 'serving-line.svg',
+    projection: 'elevation',
+    paletteDefaults: { primary: '#AEB5B5', secondary: '#5A6265', accent: '#D8D1BC' },
+  },
+  {
+    id: 'service-scanner',
+    file: 'service-scanner.svg',
+    projection: 'elevation',
+    paletteDefaults: { primary: '#D7DBD8', secondary: '#565E5B', accent: '#B7BDBA' },
+  },
+  {
+    id: 'commercial-range',
+    file: 'commercial-range.svg',
+    projection: 'elevation',
+    paletteDefaults: { primary: '#9EA5A7', secondary: '#5B6366', accent: '#C8CFD0' },
+  },
+  {
+    id: 'prep-table',
+    file: 'prep-table.svg',
+    projection: 'plan',
+    paletteDefaults: { primary: '#A8B0B2', secondary: '#D3D8D8', accent: '#697276' },
+  },
+  {
+    id: 'dish-return',
+    file: 'dish-return.svg',
+    projection: 'elevation',
+    paletteDefaults: { primary: '#7C8588', secondary: '#AEB6B7', accent: '#D8D1BC' },
+  },
+  {
+    id: 'walk-in-front',
+    file: 'walk-in-front.svg',
+    projection: 'elevation',
+    paletteDefaults: { primary: '#D0D5D5', secondary: '#747C7F', accent: '#AAB8C0' },
+  },
+  {
+    id: 'dining-carrel',
+    file: 'dining-carrel.svg',
+    projection: 'plan',
+    paletteDefaults: { primary: '#AAB0B2', secondary: '#5C6367', accent: '#D9D6CB' },
+  },
+  {
+    id: 'cafeteria-table',
+    file: 'cafeteria-table.svg',
+    projection: 'plan',
+    paletteDefaults: { primary: '#8B6040', secondary: '#57402F', accent: '#C08A58' },
+  },
+  {
+    id: 'tray-stack',
+    file: 'tray-stack.svg',
+    projection: 'plan',
+    paletteDefaults: { primary: '#AAB2B4', secondary: '#717A7E', accent: '#D0D6D7' },
   },
   {
     id: 'car',
@@ -1705,6 +1768,16 @@ function buildVariants(
     case 'fish-tank': return fishTankVariants(elements);
     case 'string-lights': return stringLightsVariants(elements);
     case 'rug': return rugVariants(elements);
+    case 'serving-line':
+    case 'service-scanner':
+    case 'commercial-range':
+    case 'prep-table':
+    case 'dish-return':
+    case 'walk-in-front':
+    case 'dining-carrel':
+    case 'cafeteria-table':
+    case 'tray-stack':
+      return staticVariants(elements);
     case 'car': return carVariants(elements);
     case 'sign-lot': return signLotVariants(elements);
     case 'tree-canopy': return treeCanopyVariants(elements);

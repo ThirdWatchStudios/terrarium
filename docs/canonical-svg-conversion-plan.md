@@ -272,6 +272,15 @@ registration, and export contract.
 The family should receive one shared context sheet at literal employee and room
 scale before source extraction, followed by per-asset source/import fidelity.
 
+Terrarium production registration completed on 2026-08-03 after approval of
+both review gates. The nine files now live in the canonical workhorse bank, the
+strict importer generates their live `ShapeSpec` receiver, and the existing
+templates retain only IDs, projection, footprints, placement, and behavior.
+The normal browser export and fresh Unity import completed on 2026-08-03. The
+facilities do not yet have a viable in-game path, so gameplay-scale visual
+acceptance remains explicitly deferred until the sim can surface them; it is not
+inferred from successful import.
+
 ### P3 — authored UI iconography
 
 Move deliberately authored UI/chrome icons and cursors from code-owned

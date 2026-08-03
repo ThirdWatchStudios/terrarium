@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="dining-carrel" data-projection="plan">
+  <title>QuotaCo cafeteria solitary dining carrel</title>
+  <desc>Single-cell plan-projected meal carrel with privacy wings and one separated seat.</desc>
+  <metadata>Owner-approved canonical production source for the Terrarium workhorse prop importer.</metadata>
+  <g id="outline" data-silhouette="false">
+    <path id="outline-privacy-back" d="M 28 20 h 72 a 4 4 0 0 1 4 4 v 2 a 4 4 0 0 1 -4 4 h -72 a 4 4 0 0 1 -4 -4 v -2 a 4 4 0 0 1 4 -4 Z" fill="#3A342E" stroke="#3A342E" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path id="outline-privacy-left" d="M 24 20 h 2 a 4 4 0 0 1 4 4 v 64 a 4 4 0 0 1 -4 4 h -2 a 4 4 0 0 1 -4 -4 v -64 a 4 4 0 0 1 4 -4 Z" fill="#3A342E" stroke="#3A342E" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path id="outline-privacy-right" d="M 102 20 h 2 a 4 4 0 0 1 4 4 v 64 a 4 4 0 0 1 -4 4 h -2 a 4 4 0 0 1 -4 -4 v -64 a 4 4 0 0 1 4 -4 Z" fill="#3A342E" stroke="#3A342E" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path id="outline-table" d="M 35 29 h 58 a 5 5 0 0 1 5 5 v 35 a 5 5 0 0 1 -5 5 h -58 a 5 5 0 0 1 -5 -5 v -35 a 5 5 0 0 1 5 -5 Z" fill="#3A342E" stroke="#3A342E" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path id="outline-seat" d="M 53 84 h 22 a 10 10 0 0 1 10 10 v 4 a 10 10 0 0 1 -10 10 h -22 a 10 10 0 0 1 -10 -10 v -4 a 10 10 0 0 1 10 -10 Z" fill="#3A342E" stroke="#3A342E" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+  <g id="privacy">
+    <path id="privacy-back" data-fill-token="secondary" d="M 28 20 h 72 a 4 4 0 0 1 4 4 v 2 a 4 4 0 0 1 -4 4 h -72 a 4 4 0 0 1 -4 -4 v -2 a 4 4 0 0 1 4 -4 Z" fill="#5C6367"/>
+    <path id="privacy-left" data-fill-token="secondary" d="M 24 20 h 2 a 4 4 0 0 1 4 4 v 64 a 4 4 0 0 1 -4 4 h -2 a 4 4 0 0 1 -4 -4 v -64 a 4 4 0 0 1 4 -4 Z" fill="#5C6367"/>
+    <path id="privacy-right" data-fill-token="secondary" d="M 102 20 h 2 a 4 4 0 0 1 4 4 v 64 a 4 4 0 0 1 -4 4 h -2 a 4 4 0 0 1 -4 -4 v -64 a 4 4 0 0 1 4 -4 Z" fill="#5C6367"/>
+  </g>
+  <g id="table">
+    <path id="table-shell" data-fill-token="primary" d="M 35 29 h 58 a 5 5 0 0 1 5 5 v 35 a 5 5 0 0 1 -5 5 h -58 a 5 5 0 0 1 -5 -5 v -35 a 5 5 0 0 1 5 -5 Z" fill="#AAB0B2"/>
+    <path id="table-meal-surface" data-fill-token="accent" data-silhouette="false" d="M 42 36 h 44 a 4 4 0 0 1 4 4 v 23 a 4 4 0 0 1 -4 4 h -44 a 4 4 0 0 1 -4 -4 v -23 a 4 4 0 0 1 4 -4 Z" fill="#D9D6CB"/>
+  </g>
+  <g id="seat">
+    <path id="seat-shell" data-fill-token="primary" d="M 53 84 h 22 a 10 10 0 0 1 10 10 v 4 a 10 10 0 0 1 -10 10 h -22 a 10 10 0 0 1 -10 -10 v -4 a 10 10 0 0 1 10 -10 Z" fill="#AAB0B2"/>
+    <path id="seat-inset" data-fill-token="secondary" data-silhouette="false" d="M 56 89 h 16 a 7 7 0 0 1 7 7 v 0 a 7 7 0 0 1 -7 7 h -16 a 7 7 0 0 1 -7 -7 v 0 a 7 7 0 0 1 7 -7 Z" fill="#5C6367"/>
+  </g>
+</svg>

@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "guide": "Terrarium canonical SVG library",
   "counts": {
-    "exactSourceFiles": 371,
-    "production": 293,
+    "exactSourceFiles": 380,
+    "production": 302,
     "productionDependencies": 74,
     "deferred": 4,
     "derivedWallFrames": 47,
@@ -17,7 +17,7 @@
       "props/department-machines": 67,
       "props/iris-hardware": 3,
       "props/outdoor": 8,
-      "props/workhorse": 45,
+      "props/workhorse": 54,
       "surfaces/floors": 12,
       "surfaces/grass": 3,
       "walls/bevel": 12,
@@ -1707,6 +1707,13 @@
       "sha256": "dc7b35aa9506e07aff24591bd6784a86205185d504952823476b9b5d3ce630cb"
     },
     {
+      "assetId": "cafeteria-table",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/cafeteria-table.svg",
+      "sha256": "808a19ed54d8580675f46b4bbbcc4f91af596cb159395f032c2a62b0cf25dc02"
+    },
+    {
       "assetId": "coat-rack",
       "category": "props/workhorse",
       "status": "production",
@@ -1733,6 +1740,13 @@
       "status": "production",
       "sourceFile": "assets/props/quota-co-workhorse-v1/coffee-table.svg",
       "sha256": "805fcff630d96b4e5fe7afa04fe988174fdbee546876f28f8fea341cd92b2d60"
+    },
+    {
+      "assetId": "commercial-range",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/commercial-range.svg",
+      "sha256": "389c9c4d42286cb2608d49cf56ecfd7abf2606007103015fe38e4ad50746e56f"
     },
     {
       "assetId": "conference-table",
@@ -1782,6 +1796,20 @@
       "status": "production",
       "sourceFile": "assets/props/quota-co-workhorse-v1/desk.svg",
       "sha256": "3563e9bb626735923b2d970e7f256384cb314b1a8751f923a3baa732d71530d7"
+    },
+    {
+      "assetId": "dining-carrel",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/dining-carrel.svg",
+      "sha256": "673e098c82f9c2e36d55ed51b6f3b939762b613509929247192fb27ae6990460"
+    },
+    {
+      "assetId": "dish-return",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/dish-return.svg",
+      "sha256": "a85652ea2a572f236bb4b3a42135c441b6e54e7623c566dc2401f0806b1bb181"
     },
     {
       "assetId": "filing-cabinet",
@@ -1903,6 +1931,13 @@
       "sha256": "e73fe8670a258486aa4f53672ede1b7fe48fa56c45854013cc03e241df9c27a3"
     },
     {
+      "assetId": "prep-table",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/prep-table.svg",
+      "sha256": "9d1f1dc39ca88fc2ace992ff9224fc86deefde4c9d94ac353a9db82cc8ac5f2e"
+    },
+    {
       "assetId": "printer-jammed",
       "category": "props/workhorse",
       "status": "production",
@@ -1938,6 +1973,20 @@
       "sha256": "61648316da984d4753faa5e688d410b211870987e16a6107cf2ede74dc466d13"
     },
     {
+      "assetId": "service-scanner",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/service-scanner.svg",
+      "sha256": "440c5c0758ba3c632b0b565603fe95ae82ea38abd6540fa8ab0dd18a31e09b6c"
+    },
+    {
+      "assetId": "serving-line",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/serving-line.svg",
+      "sha256": "378cdf6a06c7014a5b0a31eb151ffe74d1a9bf486d595f76b9a962517252090c"
+    },
+    {
       "assetId": "shredder",
       "category": "props/workhorse",
       "status": "production",
@@ -1966,6 +2015,13 @@
       "sha256": "c4edb6ff3150f1947f21347e06e6da73635710047d56beab76bf8b71e12fb546"
     },
     {
+      "assetId": "tray-stack",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/tray-stack.svg",
+      "sha256": "73cf956bb699f21327e9d737e61748ed6318ee67c97e5102fea9e0decd464077"
+    },
+    {
       "assetId": "vending-machine",
       "category": "props/workhorse",
       "status": "production",
@@ -1978,6 +2034,13 @@
       "status": "production",
       "sourceFile": "assets/props/quota-co-workhorse-v1/waiting-bench.svg",
       "sha256": "ef78461acb3d5e2655e7c9c8534c2baffd875397731d0b13af7648c1ed5d4da1"
+    },
+    {
+      "assetId": "walk-in-front",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/walk-in-front.svg",
+      "sha256": "48282617302d2f693e37da302df4dcd6c52a3c429fefc71853fa4cb449be43e6"
     },
     {
       "assetId": "wall-clock",

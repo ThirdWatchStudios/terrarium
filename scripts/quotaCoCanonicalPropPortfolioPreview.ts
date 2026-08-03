@@ -3,10 +3,10 @@
  * workhorse SVG bank.
  *
  * This sheet renders the genuine source SVG beside Terrarium's default
- * compositor output for all 45 authored props, then exercises representative
+ * compositor output for every interior authored prop, then exercises representative
  * nouns in literal gameplay-scale rooms. Handheld remains character-relative;
  * the later eight-source exterior family remains visible as separately gated
- * context and is not counted in this legacy 45-source interior proof.
+ * context and is not counted in the interior proof.
  */
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
@@ -55,6 +55,7 @@ const CHARACTER_FRAME_CELLS =
   LEGACY_CHARACTER_FRAME_CELLS * CHARACTER_VISUAL_SCALE;
 const NORMAL_CELL = 68;
 const FAR_CELL = 40;
+const INTERIOR_CANONICAL_COUNT = QUOTA_CO_INTERIOR_WORKHORSE_PROP_IDS.length;
 
 const PAGE = '#E7E1D2';
 const PANEL = '#F6F1E6';
@@ -482,7 +483,7 @@ function carryoverPanel(
   const columnWidth = (width - 430) / propIds.length;
   const parts = [
     panel(x, y, width, 220, PANEL_ALT),
-    text(x + 18, y + 28, 'SEPARATELY GATED CONTEXT · OUTSIDE THE INTERIOR 45-SVG PROOF', 13, 760, GREEN),
+    text(x + 18, y + 28, `SEPARATELY GATED CONTEXT · OUTSIDE THE INTERIOR ${INTERIOR_CANONICAL_COUNT}-SVG PROOF`, 13, 760, GREEN),
     text(
       x + 18,
       y + 49,
@@ -574,7 +575,7 @@ function portfolioSheet(
     text(
       MARGIN,
       67,
-      'All 45 interior artist-editable SVGs promoted as Terrarium production sources · automatic prop styling disabled',
+      `All ${INTERIOR_CANONICAL_COUNT} interior artist-editable SVGs promoted as Terrarium production sources · automatic prop styling disabled`,
       11,
       600,
       MUTED,
@@ -582,7 +583,7 @@ function portfolioSheet(
     text(
       WIDTH - MARGIN,
       42,
-      'TERRARIUM PRODUCTION SOURCE · PRE-EXPORT',
+      'TERRARIUM PRODUCTION SOURCE · UNITY IMPORTED',
       10,
       760,
       CORAL,
@@ -696,7 +697,7 @@ function portfolioSheet(
     text(
       MARGIN + 18,
       2513,
-      '45 canonical SVG sources · source paint order · 128u canvas · 112u walls · character ×0.65 · gameplay footprints · pivots · anchors · schema · Unity registration',
+      `${INTERIOR_CANONICAL_COUNT} canonical SVG sources · source paint order · 128u canvas · 112u walls · character ×0.65 · gameplay footprints · pivots · anchors · schema · Unity registration`,
       9.5,
       540,
       INK,
@@ -723,7 +724,7 @@ function portfolioSheet(
     text(
       MARGIN + 18,
       2693,
-      'Terrarium bundle export · The Water Cooler import · Unity catalog inspection · Play Mode approval · commit',
+      'In-game facility visibility · gameplay-scale visual acceptance · commit',
       9.5,
       560,
       MUTED,
@@ -740,7 +741,7 @@ function portfolioSheet(
     text(
       WIDTH - MARGIN - 18,
       2753,
-      'NO BUNDLE EXPORT · NO UNITY IMPORT · NO COMMIT',
+      'BROWSER EXPORT + UNITY IMPORT COMPLETE · RUNTIME VISUAL DEFERRED · NO COMMIT',
       9.5,
       760,
       CORAL,
@@ -785,12 +786,16 @@ async function portfolioMetrics(
     }),
   );
   return {
-    reviewStatus: 'canonical-portfolio-accepted-pre-export',
+    reviewStatus: 'canonical-portfolio-unity-imported-runtime-deferred',
     canonicalSvgCount: QUOTA_CO_INTERIOR_WORKHORSE_PROP_IDS.length,
     sourceSvgAuthoring: true,
     productionPromotion: true,
-    bundleExportPerformed: false,
-    unityImport: false,
+    bundleExportPerformed: true,
+    unityImport: true,
+    runtimeVisualAcceptance: false,
+    runtimeVisualAcceptanceDeferred: true,
+    runtimeVisualAcceptanceReason:
+      'The cafeteria facilities do not yet have a viable in-game path.',
     commitCreated: false,
     exportContractMutation: false,
     schemaMutation: false,

@@ -21,12 +21,12 @@ describe('QuotaCo canonical prop portfolio', () => {
     const grouped = CANONICAL_PROP_PORTFOLIO_GROUPS.flatMap(
       ({ authoredIds }) => authoredIds,
     );
-    expect(grouped).toHaveLength(45);
+    expect(grouped).toHaveLength(54);
     expect(new Set(grouped).size).toBe(grouped.length);
     expect([...grouped].sort()).toEqual(
       [...QUOTA_CO_INTERIOR_WORKHORSE_PROP_IDS].sort(),
     );
-    expect(QUOTA_CO_WORKHORSE_PROP_IDS).toHaveLength(53);
+    expect(QUOTA_CO_WORKHORSE_PROP_IDS).toHaveLength(62);
     expect(
       CANONICAL_PROP_PORTFOLIO_GROUPS.find(
         ({ id }) => id === 'handheld-character-relative',
@@ -39,7 +39,7 @@ describe('QuotaCo canonical prop portfolio', () => {
     ).toEqual(QUOTA_CO_EXTERIOR_WORKHORSE_PROP_IDS);
   });
 
-  it('writes the 45-source visual gate with canonical default styling and held boundaries', async () => {
+  it('writes the 54-source visual gate with canonical default styling and held boundaries', async () => {
     const output = await mkdtemp(
       path.join(os.tmpdir(), 'quota-canonical-prop-portfolio-'),
     );
@@ -52,6 +52,9 @@ describe('QuotaCo canonical prop portfolio', () => {
       productionPromotion: boolean;
       bundleExportPerformed: boolean;
       unityImport: boolean;
+      runtimeVisualAcceptance: boolean;
+      runtimeVisualAcceptanceDeferred: boolean;
+      runtimeVisualAcceptanceReason: string;
       commitCreated: boolean;
       exportContractMutation: boolean;
       schemaMutation: boolean;
@@ -99,11 +102,15 @@ describe('QuotaCo canonical prop portfolio', () => {
     };
 
     expect(metrics).toMatchObject({
-      reviewStatus: 'canonical-portfolio-accepted-pre-export',
-      canonicalSvgCount: 45,
+      reviewStatus: 'canonical-portfolio-unity-imported-runtime-deferred',
+      canonicalSvgCount: 54,
       productionPromotion: true,
-      bundleExportPerformed: false,
-      unityImport: false,
+      bundleExportPerformed: true,
+      unityImport: true,
+      runtimeVisualAcceptance: false,
+      runtimeVisualAcceptanceDeferred: true,
+      runtimeVisualAcceptanceReason:
+        'The cafeteria facilities do not yet have a viable in-game path.',
       commitCreated: false,
       exportContractMutation: false,
       schemaMutation: false,
@@ -160,12 +167,14 @@ describe('QuotaCo canonical prop portfolio', () => {
     ]));
 
     const svg = await readFile(result.svgPath, 'utf8');
-    expect(svg).toContain('All 45 interior artist-editable SVGs promoted');
-    expect(svg).toContain('TERRARIUM PRODUCTION SOURCE · PRE-EXPORT');
+    expect(svg).toContain('All 54 interior artist-editable SVGs promoted');
+    expect(svg).toContain('TERRARIUM PRODUCTION SOURCE · UNITY IMPORTED');
     expect(svg).toContain('HANDHELD AND CHARACTER-RELATIVE ITEMS');
     expect(svg).toContain('OUTDOOR AND CONSTRUCTION-SITE PROPS');
     expect(svg).toContain('props native 2-cell frames');
-    expect(svg).toContain('NO BUNDLE EXPORT · NO UNITY IMPORT · NO COMMIT');
+    expect(svg).toContain(
+      'BROWSER EXPORT + UNITY IMPORT COMPLETE · RUNTIME VISUAL DEFERRED · NO COMMIT',
+    );
     expect((await readFile(result.pngPath)).byteLength).toBeGreaterThan(50_000);
   }, 20_000);
 });

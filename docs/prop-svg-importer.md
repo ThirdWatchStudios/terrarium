@@ -1,8 +1,8 @@
 # Authored QuotaCo prop SVG importer
 
 The accepted QuotaCo workhorse, workstation, employee-service machine,
-social-furniture, storage/support, décor/personalization, and accepted exterior
-families are authored as fifty-three standalone SVG files under
+social-furniture, storage/support, décor/personalization, cafeteria, and
+accepted exterior families are authored as sixty-two standalone SVG files under
 `assets/props/quota-co-workhorse-v1`:
 
 - `printer.svg`
@@ -50,6 +50,15 @@ families are authored as fifty-three standalone SVG files under
 - `fish-tank.svg`
 - `string-lights.svg`
 - `rug.svg`
+- `serving-line.svg`
+- `service-scanner.svg`
+- `commercial-range.svg`
+- `prep-table.svg`
+- `dish-return.svg`
+- `walk-in-front.svg`
+- `dining-carrel.svg`
+- `cafeteria-table.svg`
+- `tray-stack.svg`
 - `car.svg`
 - `lot-marking-crosswalk.svg`
 - `lamp-post.svg`
@@ -164,9 +173,10 @@ shipping an SVG parser or procedural geometry to the browser:
 | Parking sign | panel |
 | Tree canopy | crown habit, lobes, shape seed |
 
-The crosswalk marking, offset-arm street light, low-staple bike rack, park
-bench, and picnic table have no editable parameters. Their existing template
-IDs, projections, and placement contracts remain unchanged.
+The nine cafeteria facilities, crosswalk marking, offset-arm street light,
+low-staple bike rack, park bench, and picnic table have no editable parameters.
+Their existing template IDs, projections, and placement contracts remain
+unchanged.
 
 Runtime lookup snaps malformed or off-step imported values to the nearest legal
 variant. No project schema or export-contract field is added.
@@ -177,13 +187,15 @@ both of which now compile from canonical SVG sources.
 
 ## Production status
 
-The forty-five-source interior bank passed consolidated close, normal,
+The original forty-five-source interior bank passed consolidated close, normal,
 crowded, wall-context, interaction, and far-gameplay review and was visually
 accepted on 2026-07-29. The eight-source exterior family subsequently passed
 accepted-reference, canonical-source, compiled-output, normal-context, and
-far-gameplay validation. All fifty-three SVGs are now the Terrarium production
-sources for their existing prop templates. The generated `ShapeSpec` module is
-a compiled derivative and must be regenerated after an artist edits a source.
+far-gameplay validation. The nine-source cafeteria family passed its context and
+source/import fidelity gates and was approved for production wiring on
+2026-08-03. All sixty-two SVGs are now the Terrarium production sources for
+their existing prop templates. The generated `ShapeSpec` module is a compiled
+derivative and must be regenerated after an artist edits a source.
 
 This promotion does not change template IDs, footprints, projections, pivots,
 interaction anchors, facility registration, export paths, manifest shape,
@@ -212,6 +224,11 @@ existing carriers, while the four gameplay-system concepts remain source-only.
 An in-world visual smoke test remains deferred because none of the eight
 existing carriers are surfaced in the current build or bare-lot presentation.
 No runtime-appearance conclusion is inferred from their present absence.
+
+The cafeteria extension completed the normal in-browser export and a fresh
+Unity import on 2026-08-03. The facilities do not yet have a viable in-game
+path, so gameplay-scale visual acceptance remains explicitly deferred until the
+sim can surface them; it is not inferred from successful import.
 
 Gameplay-contract and registration work for the four source-only infrastructure
 concepts was explicitly deferred on 2026-07-30. Their SVGs remain reference

@@ -299,6 +299,60 @@ const HELD_TEMPLATE_CONTRACTS = {
     footprint: undefined,
     params: ['width', 'pattern'],
   },
+  'serving-line': {
+    projection: 'elevation',
+    gridFootprint: { w: 4, h: 1 },
+    footprint: { cx: 64, cy: 117, rx: 52, ry: 5 },
+    params: [],
+  },
+  'service-scanner': {
+    projection: 'elevation',
+    gridFootprint: { w: 1, h: 1 },
+    footprint: { cx: 64, cy: 117, rx: 14, ry: 4 },
+    params: [],
+  },
+  'commercial-range': {
+    projection: 'elevation',
+    gridFootprint: { w: 2, h: 1 },
+    footprint: { cx: 64, cy: 117, rx: 41, ry: 5 },
+    params: [],
+  },
+  'prep-table': {
+    projection: 'plan',
+    gridFootprint: { w: 2, h: 1 },
+    footprint: undefined,
+    params: [],
+  },
+  'dish-return': {
+    projection: 'elevation',
+    gridFootprint: { w: 2, h: 1 },
+    footprint: { cx: 64, cy: 117, rx: 42, ry: 5 },
+    params: [],
+  },
+  'walk-in-front': {
+    projection: 'elevation',
+    gridFootprint: { w: 2, h: 1 },
+    footprint: { cx: 64, cy: 117, rx: 42, ry: 5 },
+    params: [],
+  },
+  'dining-carrel': {
+    projection: 'plan',
+    gridFootprint: { w: 1, h: 1 },
+    footprint: undefined,
+    params: [],
+  },
+  'cafeteria-table': {
+    projection: 'plan',
+    gridFootprint: { w: 4, h: 2 },
+    footprint: undefined,
+    params: [],
+  },
+  'tray-stack': {
+    projection: 'plan',
+    gridFootprint: { w: 1, h: 1 },
+    footprint: undefined,
+    params: [],
+  },
   car: {
     projection: 'plan',
     gridFootprint: { w: 4, h: 2 },
@@ -352,6 +406,18 @@ const HELD_TEMPLATE_CONTRACTS = {
 const OUTDOOR_AUTHORED_PROP_IDS = new Set(
   QUOTA_CO_EXTERIOR_WORKHORSE_PROP_IDS,
 );
+const PARTIAL_PALETTE_AUTHORED_PROP_IDS = new Set(['service-scanner']);
+const CAFETERIA_AUTHORED_PROP_IDS = [
+  'serving-line',
+  'service-scanner',
+  'commercial-range',
+  'prep-table',
+  'dish-return',
+  'walk-in-front',
+  'dining-carrel',
+  'cafeteria-table',
+  'tray-stack',
+] as const;
 
 function template(id: string) {
   const found = PROP_TEMPLATES.find((candidate) => candidate.id === id);
@@ -431,7 +497,7 @@ describe('QuotaCo workhorse authored prop import', () => {
     });
   });
 
-  it('compiles all fifty-three sources deterministically with source provenance', async () => {
+  it('compiles all sixty-two sources deterministically with source provenance', async () => {
     const first = await compileQuotaCoWorkhorseProps(SOURCE_DIR, SOURCE_PREFIX);
     const second = await compileQuotaCoWorkhorseProps(SOURCE_DIR, SOURCE_PREFIX);
 
@@ -460,7 +526,18 @@ describe('QuotaCo workhorse authored prop import', () => {
     }
   });
 
-  it('keeps all three palette channels in authored art', () => {
+  it('routes every cafeteria facility builder directly through canonical authored art', () => {
+    for (const id of CAFETERIA_AUTHORED_PROP_IDS) {
+      const found = template(id);
+      const instance = DEFAULT_PROPS.find(({ templateId }) => templateId === id);
+      if (!instance) throw new Error(`Missing default prop ${id}`);
+      expect(found.build(defaultParams(id), instance.palette), id).toEqual(
+        authoredPropShapes(id, defaultParams(id)),
+      );
+    }
+  });
+
+  it('keeps every declared palette channel in authored art', () => {
     const tokens = new Set<PropPaletteToken>(['primary', 'secondary', 'accent']);
     for (const id of QUOTA_CO_WORKHORSE_PROP_IDS) {
       const shapes = authoredPropShapes(id, defaultParams(id));
@@ -473,6 +550,8 @@ describe('QuotaCo workhorse authored prop import', () => {
       if (OUTDOOR_AUTHORED_PROP_IDS.has(id)) {
         expect(present.size, id).toBeGreaterThan(0);
         for (const token of present) expect(tokens.has(token), id).toBe(true);
+      } else if (PARTIAL_PALETTE_AUTHORED_PROP_IDS.has(id)) {
+        expect(present, id).toEqual(new Set<PropPaletteToken>(['primary', 'secondary']));
       } else {
         expect(present, id).toEqual(tokens);
       }

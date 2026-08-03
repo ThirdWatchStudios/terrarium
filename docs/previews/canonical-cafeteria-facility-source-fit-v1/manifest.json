@@ -1,0 +1,19 @@
+{
+  "status": "unity-import-complete-runtime-visual-deferred",
+  "sourceProfile": "editor-safe-static-prop-svg-v1",
+  "canvas": [0, 0, 128, 128],
+  "facilities": [
+    { "id": "serving-line", "file": "assets/props/quota-co-workhorse-v1/serving-line.svg", "projection": "elevation", "gridFootprint": { "w": 4, "h": 1 }, "paletteDefaults": { "primary": "#AEB5B5", "secondary": "#5A6265", "accent": "#D8D1BC" } },
+    { "id": "service-scanner", "file": "assets/props/quota-co-workhorse-v1/service-scanner.svg", "projection": "elevation", "gridFootprint": { "w": 1, "h": 1 }, "paletteDefaults": { "primary": "#D7DBD8", "secondary": "#565E5B", "accent": "#B7BDBA" }, "literalColors": { "optic": "#5BE08A" } },
+    { "id": "commercial-range", "file": "assets/props/quota-co-workhorse-v1/commercial-range.svg", "projection": "elevation", "gridFootprint": { "w": 2, "h": 1 }, "paletteDefaults": { "primary": "#9EA5A7", "secondary": "#5B6366", "accent": "#C8CFD0" } },
+    { "id": "prep-table", "file": "assets/props/quota-co-workhorse-v1/prep-table.svg", "projection": "plan", "gridFootprint": { "w": 2, "h": 1 }, "paletteDefaults": { "primary": "#A8B0B2", "secondary": "#D3D8D8", "accent": "#697276" } },
+    { "id": "dish-return", "file": "assets/props/quota-co-workhorse-v1/dish-return.svg", "projection": "elevation", "gridFootprint": { "w": 2, "h": 1 }, "paletteDefaults": { "primary": "#7C8588", "secondary": "#AEB6B7", "accent": "#D8D1BC" } },
+    { "id": "walk-in-front", "file": "assets/props/quota-co-workhorse-v1/walk-in-front.svg", "projection": "elevation", "gridFootprint": { "w": 2, "h": 1 }, "paletteDefaults": { "primary": "#D0D5D5", "secondary": "#747C7F", "accent": "#AAB8C0" } },
+    { "id": "dining-carrel", "file": "assets/props/quota-co-workhorse-v1/dining-carrel.svg", "projection": "plan", "gridFootprint": { "w": 1, "h": 1 }, "paletteDefaults": { "primary": "#AAB0B2", "secondary": "#5C6367", "accent": "#D9D6CB" } },
+    { "id": "cafeteria-table", "file": "assets/props/quota-co-workhorse-v1/cafeteria-table.svg", "projection": "plan", "gridFootprint": { "w": 4, "h": 2 }, "paletteDefaults": { "primary": "#8B6040", "secondary": "#57402F", "accent": "#C08A58" } },
+    { "id": "tray-stack", "file": "assets/props/quota-co-workhorse-v1/tray-stack.svg", "projection": "plan", "gridFootprint": { "w": 1, "h": 1 }, "paletteDefaults": { "primary": "#AAB2B4", "secondary": "#717A7E", "accent": "#D0D6D7" } }
+  ],
+  "productionRegistration": true,
+  "productionReceiver": "src/props/generated/quotaCoWorkhorseArt.ts",
+  "nextGate": "gameplay-scale visual acceptance when a viable in-game facility path exists"
+}

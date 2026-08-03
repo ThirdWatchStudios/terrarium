@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="service-scanner" data-projection="elevation">
+  <title>QuotaCo cafeteria service attendance scanner</title>
+  <desc>Single-cell service scanner with a fixed literal IRIS-green optic.</desc>
+  <metadata>Owner-approved canonical production source for the Terrarium workhorse prop importer.</metadata>
+  <g id="contact-shadow" data-silhouette="false">
+    <path id="contact-shadow-template" d="M 50 117 a 14 4 0 1 0 28 0 a 14 4 0 1 0 -28 0 Z" fill="#000000" opacity="0.12"/>
+  </g>
+  <g id="outline" data-silhouette="false">
+    <path id="outline-scanner" d="M 56 36 h 16 a 6 6 0 0 1 6 6 v 19 a 6 6 0 0 1 -6 6 h -16 a 6 6 0 0 1 -6 -6 v -19 a 6 6 0 0 1 6 -6 Z" fill="#3A342E" stroke="#3A342E" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path id="outline-post" d="M 63 64 h 2 a 3 3 0 0 1 3 3 v 40 a 3 3 0 0 1 -3 3 h -2 a 3 3 0 0 1 -3 -3 v -40 a 3 3 0 0 1 3 -3 Z" fill="#3A342E" stroke="#3A342E" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path id="outline-base" d="M 55 108 h 18 a 3 3 0 0 1 3 3 v 2 a 3 3 0 0 1 -3 3 h -18 a 3 3 0 0 1 -3 -3 v -2 a 3 3 0 0 1 3 -3 Z" fill="#3A342E" stroke="#3A342E" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+  <g id="shell">
+    <path id="shell-ground-shadow" data-silhouette="false" d="M 49 117 a 15 4 0 1 0 30 0 a 15 4 0 1 0 -30 0 Z" fill="#00000020"/>
+    <path id="shell-scanner" data-fill-token="primary" d="M 56 36 h 16 a 6 6 0 0 1 6 6 v 19 a 6 6 0 0 1 -6 6 h -16 a 6 6 0 0 1 -6 -6 v -19 a 6 6 0 0 1 6 -6 Z" fill="#D7DBD8"/>
+    <path id="shell-screen" data-fill-token="secondary" data-silhouette="false" d="M 58 42 h 12 a 3 3 0 0 1 3 3 v 10 a 3 3 0 0 1 -3 3 h -12 a 3 3 0 0 1 -3 -3 v -10 a 3 3 0 0 1 3 -3 Z" fill="#565E5B"/>
+    <path id="shell-post" data-fill-token="primary" d="M 63 64 h 2 a 3 3 0 0 1 3 3 v 40 a 3 3 0 0 1 -3 3 h -2 a 3 3 0 0 1 -3 -3 v -40 a 3 3 0 0 1 3 -3 Z" fill="#D7DBD8"/>
+    <path id="shell-base" data-fill-token="secondary" d="M 55 108 h 18 a 3 3 0 0 1 3 3 v 2 a 3 3 0 0 1 -3 3 h -18 a 3 3 0 0 1 -3 -3 v -2 a 3 3 0 0 1 3 -3 Z" fill="#565E5B"/>
+  </g>
+  <g id="literal-optic" data-silhouette="false">
+    <path id="optic-halo" d="M 57 50 a 7 7 0 1 0 14 0 a 7 7 0 1 0 -14 0 Z" fill="#5BE08A28"/>
+    <path id="optic-core" d="M 60.5 50 a 3.5 3.5 0 1 0 7 0 a 3.5 3.5 0 1 0 -7 0 Z" fill="#5BE08A"/>
+    <path id="optic-status-line" d="M 58 59 h 12 a 1 1 0 0 1 1 1 v 0.5 a 1 1 0 0 1 -1 1 h -12 a 1 1 0 0 1 -1 -1 v -0.5 a 1 1 0 0 1 1 -1 Z" fill="#5BE08A" opacity="0.72"/>
+  </g>
+</svg>
