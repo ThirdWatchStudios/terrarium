@@ -15,7 +15,6 @@ import { DEPARTMENT_MACHINE_TEMPLATES } from './departmentMachineTemplates';
 
 const GROUND = 116;
 const CX = 64;
-const SIZE = 128;
 
 const waterCooler: PropTemplate = {
   id: 'water-cooler',
@@ -1018,60 +1017,22 @@ const badgeReader: PropTemplate = {
 
 const door: PropTemplate = {
   id: 'door',
-  label: 'Door',
+  label: 'Sliding auto-door',
   gridFootprint: { w: 1, h: 1 },
   projection: 'plan',
   placement: 'wall-slot',
   params: [
-    { key: 'thickness', label: 'Thickness', min: 24, max: 36, step: 2, default: 30 },
     { key: 'open', label: 'Open', min: 0, max: 1, step: 1, default: 0 },
+    { key: 'facing', label: 'Wall axis', min: 0, max: 1, step: 1, default: 0 },
   ],
   /**
-   * Top-down door filling a doorway gap. The art is authored for a HORIZONTAL
-   * wall (band across the tile); the layout rotates it 90° for vertical runs.
-   * It spans the full tile width and sits in the wall band (y centered on 64),
-   * with gray frame caps ($secondary) at the ends that overlap the neighbor
-   * wall arms — so the door reads as a segment OF the wall, not an object
-   * dropped on the floor. Closed = a wood slab ($primary) filling the gap with
-   * a centre seam + handles; open = the gap is clear (floor shows through the
-   * threshold split) with the leaf swung perpendicular into the room.
+   * Four explicit fixed-view source states: horizontal/vertical × closed/open.
+   * `facing=0` is the horizontal front-facing wall register; `facing=1` is the
+   * separately authored vertical top-oblique register. Scene composition selects
+   * the axis from placement rotation and never rotates the horizontal elevation.
    */
   build(params) {
-    const t = params.thickness ?? 30;
-    const y0 = CX - t / 2;
-    const isOpen = (params.open ?? 0) >= 1;
-    const OV = 3; // overlap neighbor wall arms so the frame joins the wall run
-    const jamb = 13; // length of the gray frame cap at each end
-    const seam = '#00000026';
-    const shapes: ShapeSpec[] = [
-      // gray frame caps that tie the doorway into the wall run on both ends
-      { d: rr(-OV, y0, jamb + OV, t, 2), fill: '$secondary' },
-      { d: rr(SIZE - jamb, y0, jamb + OV, t, 2), fill: '$secondary' },
-    ];
-    if (isOpen) {
-      // leaf swung 90° flush to the left jamb, opening into the lower room
-      shapes.push(
-        { d: rr(jamb - 2, y0 + t - 3, 7, 40, 2), fill: '$primary' },
-        { d: circle(jamb + 1.5, y0 + t + 33, 2.2), fill: '$accent', silhouette: false },
-        // faint swing arc hinting the travel of the leaf
-        { d: `M ${jamb + 5} ${y0 + t} A 40 40 0 0 1 ${jamb + 42} ${y0 + t + 2}`, stroke: '#00000018', strokeWidth: 2, silhouette: false },
-      );
-    } else {
-      // closed leaf spanning the opening between the two frame caps
-      const x = jamb - 1;
-      const w = SIZE - 2 * (jamb - 1);
-      shapes.push(
-        { d: rr(x, y0 + 1, w, t - 2, 2), fill: '$primary' },
-        // centre meeting seam + two leaf panels
-        { d: `M ${CX} ${y0 + 3} L ${CX} ${y0 + t - 3}`, stroke: seam, strokeWidth: 2, silhouette: false },
-        { d: `M ${x + w * 0.33} ${y0 + 4} L ${x + w * 0.33} ${y0 + t - 4}`, stroke: '#00000014', strokeWidth: 1.5, silhouette: false },
-        { d: `M ${x + w * 0.67} ${y0 + 4} L ${x + w * 0.67} ${y0 + t - 4}`, stroke: '#00000014', strokeWidth: 1.5, silhouette: false },
-        // paired handles at the centre seam
-        { d: circle(CX - 6, CX, 2.2), fill: '$accent', silhouette: false },
-        { d: circle(CX + 6, CX, 2.2), fill: '$accent', silhouette: false },
-      );
-    }
-    return shapes;
+    return authoredPropShapes('door', params);
   },
 };
 

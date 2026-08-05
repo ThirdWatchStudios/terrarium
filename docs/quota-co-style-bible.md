@@ -542,17 +542,23 @@ Corner radii in use, by frequency: **4, 7, 3, 1.5, 9, 5, 2, 6.** Two rules fall 
 
 ## 6. Anatomy of a master (read one, then copy it)
 
-`door_open-upper.svg` is the teaching file. Its layer order is the house recipe:
+`assets/walls/quota-co-building-openings-v2/door-horizontal-closed.svg` is the
+opening-family teaching file. Its layer order is the house recipe:
 
-1. `*-outline` — charcoal contour shape (the silhouette);
-2. `*-material` — cream fill inset 2 units, radius stepped down per the concentric rule;
-3. `*-cap-light` — white overlay strip on the top plane;
-4. `*-side-shade` — black overlay on the south/east face zone;
-5. `*-seam` — charcoal strokes (2 / 1.5, round caps) for panel joints;
-6. recess insets in deep green; hardware in coral, last and smallest.
+1. `*-wall-break` — charcoal envelope plus cream/rust/green wall registers;
+2. `*-header-threshold` — header track, pressure threshold, and metal wear strip;
+3. `*-leaf-outer` — charcoal contour holding the sliding-leaf silhouette;
+4. `*-leaf-field` — deep green machinery field with office-scale teal glazing;
+5. `*-seam` / `*-glazing-frame` — restrained joints and panel structure;
+6. `*-mode-lens` — one static coral status lens, last and smallest.
 
-First exercise of tool onboarding: rebuild this file from scratch by eye, then diff. It contains every rule
-in §§1–5.
+The four production door files place that construction under `*-runtime-slot-envelope` with
+`translate(32 32) scale(.5)`. This is not optional visual whitespace: the live person-scale grid scales
+wall tiles to `0.5×` but leaves wall-slot props at normal prop scale. The centered 64-unit result replaces
+one live wall cell without becoming a two-cell façade. Keep the 128-unit canvas and centered pivot.
+
+First exercise of tool onboarding: rebuild this file from scratch by eye, then diff. Compare it with the
+separately authored vertical closed state; a rotated front elevation is explicitly not equivalent.
 
 ## 7. Structure and naming
 
@@ -566,6 +572,10 @@ in §§1–5.
 - One stem = `<stem>-base.svg` + its declared `<stem>-upper.svg`, same pivot, base drawn first. On full/profile
   stems the pair must be complementary: no independently finished cap, outline, or shelf may survive their
   internal handoff.
+- The production opening family is the explicit exception: four complete fixed-view SVGs encode
+  horizontal/vertical × closed/open. They are selected by `open` and `facing`; no file is rotated to invent
+  another wall axis, no floor color is baked into an open passage, and the source-owned `0.5` slot-envelope
+  calibration must remain identical across all four states.
 
 ## 8. Hard prohibitions (most are machine-enforced)
 

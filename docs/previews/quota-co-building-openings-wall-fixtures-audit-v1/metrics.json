@@ -1,0 +1,65 @@
+{
+  "status": "terrarium-production-promoted-sliding-door",
+  "scope": "review-only-building-openings-wall-fixtures-audit-v1",
+  "wallSlotReceiverCount": 12,
+  "classifications": {
+    "canonical-source-redesign": [
+      "door",
+      "window",
+      "neighbor-glass"
+    ],
+    "authored-source-fit": [
+      "wall-screen",
+      "kanban-board",
+      "water-fountain",
+      "badge-reader"
+    ],
+    "procedural-elevation-fit": [
+      "nameplate",
+      "hvac-vent",
+      "wall-calendar",
+      "directory-placard",
+      "fire-extinguisher"
+    ]
+  },
+  "recommendedDoorDirection": "refitted-pressure-mat-sliding-auto-door",
+  "slidingDoorIdentity": {
+    "identity": "pressure-mat sliding auto-door",
+    "sourceDecisionCommit": "175f1223",
+    "sourceReseatCommit": "20302144",
+    "preserved": [
+      "double retracting leaves",
+      "transparent open passage",
+      "pressure threshold mat",
+      "static coral mode lens",
+      "no handles"
+    ],
+    "updated": [
+      "112-unit equal-height envelope",
+      "0.5 runtime wall-slot compensation",
+      "current horizontal wall registers",
+      "top-oblique vertical fixed-view facing",
+      "stronger office glazing and quieter leaf panels"
+    ]
+  },
+  "canonicalSlidingDoorSources": {
+    "horizontal-closed": "door-horizontal-closed.svg",
+    "horizontal-open": "door-horizontal-open.svg",
+    "vertical-closed": "door-vertical-closed.svg",
+    "vertical-open": "door-vertical-open.svg"
+  },
+  "normalGameplayPixelsPerCell": 90,
+  "farGameplayPixelsPerCell": 40,
+  "currentProductionReadOnly": true,
+  "doorProposalGeometryLocalToPreview": false,
+  "remainingAuditProposalGeometryLocalToPreview": true,
+  "canonicalSvgAuthoring": true,
+  "productionRegistration": true,
+  "sourceOwnedRuntimeGridScale": 0.5,
+  "exporterMutation": false,
+  "browserExportByThisPass": false,
+  "unityImportByThisPass": false,
+  "postCorrectionRuntimeVerification": false,
+  "staging": false,
+  "commit": false
+}

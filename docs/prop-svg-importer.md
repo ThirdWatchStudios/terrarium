@@ -85,6 +85,28 @@ npm run props:import:check  # validate sources and fail when output is stale
 `npm run assets:check`, `npm run build`, and `npm run export` include the check.
 Builds never rewrite SVG source files.
 
+### Architectural sliding-door family
+
+The stable `door` prop template is supplied by four separately authored fixed-view sources under
+`assets/walls/quota-co-building-openings-v2`: horizontal/vertical × closed/open. They use the same strict
+SVG dialect and source-exact compositor path as the canonical prop families, but a dedicated importer keeps
+the four-file architectural state bank explicit:
+
+```bash
+npm run doors:import        # regenerate the four compiled door variants
+npm run doors:import:check  # validate source and fail when generated art is stale
+```
+
+The template parameters are `open=0|1` and `facing=0|1` (`0` horizontal, `1` vertical). Vertical placement
+uses the separately authored top-oblique source; Terrarium never rotates the horizontal front elevation.
+Open passages remain transparent so the receiving floor shows through. `assets:check` includes the door
+freshness gate.
+
+The door files also own their live grid compensation: the 112-unit wall construction is centered under a
+`translate(32 32) scale(.5)` group, producing an approximately 64-unit visible wall-slot inside the normal
+128-unit prop canvas. This matches the Unity person-scale grid, where wall tiles receive `tileSize = 0.5`
+and props do not. Consumers use the ordinary prop scale; a door-only runtime scale is forbidden.
+
 ## Source contract
 
 - Canvas and root metadata are fixed:

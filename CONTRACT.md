@@ -53,6 +53,7 @@ must name the browser-produced ZIP, never substitute a headless render.
 |---|---|---|---|
 | `<name>-recipe.json` | recipe (verbatim) | character | Visual recipe (§3.1). |
 | `<name>-atlas@Nx.json` + sheet/layer PNGs | `characterAtlas` / `characterLayerManifest` | character | Sprite frames + anchors for the renderer. |
+| `props/<instance>/sprite@Nx.png` + `atlas@Nx.json` + `layers@Nx.png` + `layers-manifest@Nx.json` + `prop.json` | `propDesc` / `propAtlas` / `propLayerManifest` | prop | One baked prop instance. The stable `door` template has explicit `open=0|1` and `facing=0|1` source states; default inventory includes horizontal and separately authored vertical closed/open instances so a consumer never rotates the horizontal elevation to fabricate a wall axis. Door art is source-compensated to a centered ~64-unit wall-slot inside the ordinary 128-unit prop frame. Consumers apply normal prop scale, not a door-only runtime transform. |
 | `moods@Nx.png` + `moods-atlas@Nx.json` | `moodAtlas` | character | 6 moods × 4 facings; per-character **face overlays** only (the overhead emote is no longer baked here — see mood-emotes). Sim selects by behavioral state (§3.9). |
 | `<agentId>-profile.json` | `serializeProfile` | character | Persona (§3.2). `meta.schema = character_model.md`. |
 | `scenario.json` | `serializeScenario` | scenario | Scenario verbatim + `meta.schema = scenario_model.md` (§3.3). |

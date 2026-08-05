@@ -412,7 +412,17 @@ export function composeSceneSvg(
   for (const entity of props) {
     const prop = findProp(project, entity.refId);
     if (prop && propProjection(prop) === 'plan') {
-      body += svgAt(composeProp(prop, project.style, CANVAS), entity.x, entity.y, entity.rotation);
+      const isDoor = prop.templateId === 'door';
+      const axisFacing = entity.rotation === 90 || entity.rotation === 270 ? 1 : 0;
+      const rendered = isDoor
+        ? { ...prop, params: { ...prop.params, facing: axisFacing } }
+        : prop;
+      body += svgAt(
+        composeProp(rendered, project.style, CANVAS),
+        entity.x,
+        entity.y,
+        isDoor ? 0 : entity.rotation,
+      );
     }
   }
 

@@ -6,11 +6,13 @@ import type {
 import { QUOTA_CO_WORKHORSE_PROP_ART } from './generated/quotaCoWorkhorseArt';
 import { QUOTA_CO_DEPARTMENT_MACHINE_ART } from './generated/quotaCoDepartmentMachineArt';
 import { IRIS_HARDWARE_ART } from './generated/irisHardwareArt';
+import { QUOTA_CO_DOOR_ART } from './generated/quotaCoDoorArt';
 
 export interface ImportedPropArt {
   id: string;
   projection: Projection;
   sourceFile: string;
+  sourceFiles?: readonly string[];
   sourceSha256: string;
   paletteDefaults: PropPalette;
   variants: Readonly<Record<string, readonly ShapeSpec[]>>;
@@ -23,6 +25,7 @@ const ART_BY_ID = new Map<string, ImportedPropArt>(
     ...QUOTA_CO_WORKHORSE_PROP_ART,
     ...IRIS_HARDWARE_ART,
     ...QUOTA_CO_DEPARTMENT_MACHINE_ART,
+    ...QUOTA_CO_DOOR_ART,
   ]
     .map((entry) => [entry.id, entry]),
 );
@@ -54,6 +57,8 @@ function discreteWithCanonical(
 
 function variantKey(id: string, params: Readonly<Record<string, number>>): string {
   switch (id) {
+    case 'door':
+      return `open=${discrete(params, 'open', 0, 1, 1, 0)};facing=${discrete(params, 'facing', 0, 1, 1, 0)}`;
     case 'iris-installation-unit':
     case 'iris-installation-unit-dormant':
       return `height=${discrete(params, 'height', 78, 98, 2, 90)}`;

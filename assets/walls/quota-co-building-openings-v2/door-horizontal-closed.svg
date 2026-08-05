@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-prop-id="door" data-projection="plan" data-runtime-grid-scale="0.5">
+  <title>QuotaCo horizontal sliding auto-door, closed</title>
+  <desc>Canonical production source compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+  <g id="horizontal-door-wall-break">
+    <path id="horizontal-wall-outer" d="M0 11.5H26V123.5H0ZM102 11.5H128V123.5H102Z" fill="#252A28"/>
+    <path id="horizontal-wall-cream" d="M0 14.8H23V112.7H0ZM105 14.8H128V112.7H105Z" fill="#D9D0B9"/>
+    <path id="horizontal-wall-rust" d="M0 64.6H23V74.6H0ZM105 64.6H128V74.6H105Z" fill="#B65F4D"/>
+    <path id="horizontal-wall-green" d="M0 74.6H23V117.7H0ZM105 74.6H128V117.7H105Z" fill="#294B3C"/>
+    <path id="horizontal-wall-highlight" d="M0 14.8H23V23.1H0ZM105 14.8H128V23.1H105Z" fill="#FFFFFF" opacity=".28"/>
+  </g>
+  <g id="horizontal-door-header-threshold">
+    <path id="horizontal-header-outer" d="M23 11.5H105V39H23Z" fill="#252A28"/>
+    <path id="horizontal-header-cream" d="M26 14.8H102V34H26Z" fill="#D9D0B9"/>
+    <path id="horizontal-header-highlight" d="M26 14.8H102V20H26Z" fill="#FFFFFF" opacity=".28"/>
+    <path id="horizontal-header-track" d="M27 34H101V39H27Z" fill="#252A28"/>
+    <path id="horizontal-threshold-outer" d="M24 113H104V122H24Z" fill="#252A28"/>
+    <path id="horizontal-threshold-teal" d="M27 115H101V119H27Z" fill="#547B78"/>
+    <path id="horizontal-threshold-metal" d="M31 119H97V121H31Z" fill="#979A91" opacity=".82"/>
+    <circle id="horizontal-mode-lens" cx="64" cy="36.5" r="2" fill="#B65F4D"/>
+  </g>
+  <g id="horizontal-door-closed-leaves">
+    <path id="horizontal-closed-leaf-outer" d="M28 39H100V114H28Z" fill="#252A28"/>
+    <path id="horizontal-closed-leaf-field" d="M31 42H97V112H31Z" fill="#294B3C"/>
+    <path id="horizontal-closed-glazing" d="M35 49H59V84H35ZM69 49H93V84H69Z" fill="#83A9A6" opacity=".88"/>
+    <path id="horizontal-closed-glazing-frame" d="M35 49H59V84H35ZM69 49H93V84H69Z" fill="none" stroke="#BEB49F" stroke-width="2"/>
+    <path id="horizontal-closed-lower-panels" d="M35 90H59V106H35ZM69 90H93V106H69Z" fill="none" stroke="#BEB49F" stroke-width="1.5" opacity=".55"/>
+    <path id="horizontal-closed-seam" d="M64 42V112" stroke="#252A28" stroke-width="2"/>
+    <path id="horizontal-closed-glazing-highlight" d="M39 55L48 51M73 55L82 51" stroke="#FFFFFF" stroke-width="2" opacity=".28"/>
+  </g>
+  </g>
+</svg>
