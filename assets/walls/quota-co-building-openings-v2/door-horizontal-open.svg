@@ -1,28 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-prop-id="door" data-projection="plan" data-runtime-grid-scale="0.5">
-  <title>QuotaCo horizontal sliding auto-door, open</title>
-  <desc>Canonical production source with a transparent passage in the 64-unit Unity wall-slot envelope.</desc>
-  <g id="horizontal-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
-  <g id="horizontal-door-wall-break">
-    <path id="horizontal-wall-outer" d="M0 11.5H26V123.5H0ZM102 11.5H128V123.5H102Z" fill="#252A28"/>
-    <path id="horizontal-wall-cream" d="M0 14.8H23V112.7H0ZM105 14.8H128V112.7H105Z" fill="#D9D0B9"/>
-    <path id="horizontal-wall-rust" d="M0 64.6H23V74.6H0ZM105 64.6H128V74.6H105Z" fill="#B65F4D"/>
-    <path id="horizontal-wall-green" d="M0 74.6H23V117.7H0ZM105 74.6H128V117.7H105Z" fill="#294B3C"/>
-    <path id="horizontal-wall-highlight" d="M0 14.8H23V23.1H0ZM105 14.8H128V23.1H105Z" fill="#FFFFFF" opacity=".28"/>
-  </g>
-  <g id="horizontal-door-header-threshold">
-    <path id="horizontal-header-outer" d="M23 11.5H105V39H23Z" fill="#252A28"/>
-    <path id="horizontal-header-cream" d="M26 14.8H102V34H26Z" fill="#D9D0B9"/>
-    <path id="horizontal-header-highlight" d="M26 14.8H102V20H26Z" fill="#FFFFFF" opacity=".28"/>
-    <path id="horizontal-header-track" d="M27 34H101V39H27Z" fill="#252A28"/>
-    <path id="horizontal-threshold-outer" d="M24 113H104V122H24Z" fill="#252A28"/>
-    <path id="horizontal-threshold-teal" d="M27 115H101V119H27Z" fill="#547B78"/>
-    <path id="horizontal-threshold-metal" d="M31 119H97V121H31Z" fill="#979A91" opacity=".82"/>
-    <circle id="horizontal-mode-lens" cx="64" cy="36.5" r="2" fill="#B65F4D"/>
-  </g>
-  <g id="horizontal-door-open-leaves">
-    <path id="horizontal-open-pocket-outer" d="M28 39H37V114H28ZM91 39H100V114H91Z" fill="#252A28"/>
-    <path id="horizontal-open-pocket-leaves" d="M31 42H37V111H31ZM91 42H97V111H91Z" fill="#294B3C"/>
-    <path id="horizontal-open-pocket-glazing" d="M32 49H37V84H32ZM91 49H96V84H91Z" fill="#83A9A6" opacity=".82"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-prop-id="door" data-projection="plan" data-runtime-grid-scale="0.5" data-wall-material-id="office-wall" data-axis="horizontal" data-state="open">
+  <title>QuotaCo office horizontal sliding auto-door, open</title>
+  <desc>Office wall-owned full-cell opening with palette-inheriting structure, compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-door-open-office" transform="translate(32 32) scale(.5)">
+    <path id="horizontal-door-open-office-part-01" d="M0 2H12V126H0ZM116 2H128V126H116Z" fill="#323431"/>
+    <path id="horizontal-door-open-office-part-02" d="M0 8H12V120H0ZM116 8H128V120H116Z" fill="#85867F"/>
+    <path id="horizontal-door-open-office-part-03" d="M0 8H12V16H0ZM116 8H128V16H116Z" fill="#999A92"/>
+    <path id="horizontal-door-open-office-part-04" d="M0 76H12V120H0ZM116 76H128V120H116Z" fill="#B0AEA5"/>
+    <path id="horizontal-door-open-office-part-05" d="M4 2H124V40H4Z" fill="#323431"/>
+    <path id="horizontal-door-open-office-part-06" d="M8 8H120V35H8Z" fill="#85867F"/>
+    <path id="horizontal-door-open-office-part-07" d="M8 8H120V16H8Z" fill="#999A92"/>
+    <path id="horizontal-door-open-office-part-08" d="M8 25H120V35H8Z" fill="#B0AEA5"/>
+    <path id="horizontal-door-open-office-part-09" d="M4 34H16V120H4ZM112 34H124V120H112Z" fill="#323431"/>
+    <path id="horizontal-door-open-office-part-10" d="M8 38H16V76H8ZM112 38H120V76H112Z" fill="#85867F"/>
+    <path id="horizontal-door-open-office-part-11" d="M8 76H16V116H8ZM112 76H120V116H112Z" fill="#B0AEA5"/>
+    <path id="horizontal-door-open-office-part-12" d="M14 38H16V116H14ZM112 38H114V116H112Z" fill="#999A92"/>
+    <path id="horizontal-door-open-office-part-13" d="M14 116H114V122H14Z" fill="#323431" opacity=".82"/>
+    <circle id="horizontal-door-open-office-part-14" cx="64" cy="31.5" r="1.8" fill="#B96D52"/>
+    <path id="horizontal-door-open-office-part-15" d="M14 37H24V117H14ZM104 37H114V117H104Z" fill="#323431"/>
+    <path id="horizontal-door-open-office-part-16" d="M18 40H23V114H18ZM105 40H110V114H105Z" fill="#6E7C78"/>
+    <path id="horizontal-door-open-office-part-17" d="M20 50H23V84H20ZM105 50H108V84H105Z" fill="#8CA4A1" opacity=".72"/>
   </g>
 </svg>

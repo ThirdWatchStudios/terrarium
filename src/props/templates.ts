@@ -1024,9 +1024,13 @@ const door: PropTemplate = {
   params: [
     { key: 'open', label: 'Open', min: 0, max: 1, step: 1, default: 0 },
     { key: 'facing', label: 'Wall axis', min: 0, max: 1, step: 1, default: 0 },
+    // Internal receiver variant. Players still place one Door catalog item; Unity
+    // derives this material from the wall cell the door replaces.
+    { key: 'material', label: 'Wall material', min: 0, max: 4, step: 1, default: 0 },
   ],
   /**
-   * Four explicit fixed-view source states: horizontal/vertical × closed/open.
+   * Twenty explicit fixed-view source states: five retained wall materials ×
+   * horizontal/vertical × closed/open.
    * `facing=0` is the horizontal front-facing wall register; `facing=1` is the
    * separately authored vertical top-oblique register. Scene composition selects
    * the axis from placement rotation and never rotates the horizontal elevation.
@@ -1038,31 +1042,18 @@ const door: PropTemplate = {
 
 const window: PropTemplate = {
   id: 'window',
-  label: 'Window',
+  label: 'Office window',
   gridFootprint: { w: 1, h: 1 },
   projection: 'plan',
   placement: 'wall-slot',
   params: [
-    { key: 'width', label: 'Width', min: 48, max: 88, step: 4, default: 72 },
-    { key: 'blinds', label: 'Blinds', min: 0, max: 3, step: 1, default: 1 },
+    { key: 'facing', label: 'Wall axis', min: 0, max: 1, step: 1, default: 0 },
+    // Internal receiver variant. Players still place one Window catalog item;
+    // Unity derives this material from the wall cell the window replaces.
+    { key: 'material', label: 'Wall material', min: 0, max: 4, step: 1, default: 0 },
   ],
   build(params) {
-    const w = params.width ?? 72;
-    const x = CX - w / 2;
-    const y = 52;
-    const h = 24;
-    const shapes: ShapeSpec[] = [
-      { d: rr(x - 5, y - 4, w + 10, h + 8, 3), fill: '$primary' },
-      { d: rr(x, y, w, h, 2), fill: '$secondary', opacity: 0.86 },
-      { d: `M ${CX} ${y + 3} L ${CX} ${y + h - 3} M ${x + 4} ${y + h / 2} L ${x + w - 4} ${y + h / 2}`, stroke: '$primary', strokeWidth: 2.5, silhouette: false },
-      { d: `M ${x + 8} ${y + 6} L ${x + 20} ${y + 6}`, stroke: '#FFFFFF80', strokeWidth: 2, silhouette: false },
-    ];
-    const blinds = params.blinds ?? 1;
-    for (let i = 0; i < blinds; i++) {
-      const by = y + 7 + i * 5;
-      shapes.push({ d: `M ${x + 7} ${by} L ${x + w - 7} ${by}`, stroke: '$accent', strokeWidth: 1.5, opacity: 0.55, silhouette: false });
-    }
-    return shapes;
+    return authoredPropShapes('window', params);
   },
 };
 

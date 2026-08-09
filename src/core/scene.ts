@@ -99,7 +99,7 @@ export function createDefaultScene(project: ProjectState): SceneState {
 
   const officeWall = firstId(project.walls, 'wall-office');
   const cubicleWall = firstId(project.walls, 'wall-cubicle') ?? officeWall;
-  const glassWall = firstId(project.walls, 'wall-glass') ?? officeWall;
+  const panelWall = firstId(project.walls, 'wall-panel') ?? officeWall;
   const wallIds = grid<string | null>(cols, rows, null);
   if (officeWall) {
     for (let x = 0; x < cols; x++) {
@@ -123,13 +123,13 @@ export function createDefaultScene(project: ProjectState): SceneState {
       wallIds[y][x] = cubicleWall;
     }
   }
-  if (glassWall) {
+  if (panelWall) {
     for (const [x, y] of [
       [7, 1],
       [7, 2],
       [7, 3],
     ]) {
-      wallIds[y][x] = glassWall;
+      wallIds[y][x] = panelWall;
     }
   }
 
@@ -412,16 +412,16 @@ export function composeSceneSvg(
   for (const entity of props) {
     const prop = findProp(project, entity.refId);
     if (prop && propProjection(prop) === 'plan') {
-      const isDoor = prop.templateId === 'door';
+      const isFixedViewOpening = prop.templateId === 'door' || prop.templateId === 'window';
       const axisFacing = entity.rotation === 90 || entity.rotation === 270 ? 1 : 0;
-      const rendered = isDoor
+      const rendered = isFixedViewOpening
         ? { ...prop, params: { ...prop.params, facing: axisFacing } }
         : prop;
       body += svgAt(
         composeProp(rendered, project.style, CANVAS),
         entity.x,
         entity.y,
-        isDoor ? 0 : entity.rotation,
+        isFixedViewOpening ? 0 : entity.rotation,
       );
     }
   }

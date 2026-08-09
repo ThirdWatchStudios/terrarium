@@ -87,25 +87,49 @@ Builds never rewrite SVG source files.
 
 ### Architectural sliding-door family
 
-The stable `door` prop template is supplied by four separately authored fixed-view sources under
-`assets/walls/quota-co-building-openings-v2`: horizontal/vertical × closed/open. They use the same strict
-SVG dialect and source-exact compositor path as the canonical prop families, but a dedicated importer keeps
-the four-file architectural state bank explicit:
+The stable `door` prop template is supplied by twenty separately authored sources under
+`assets/walls/quota-co-building-openings-v2`: five retained wall materials × horizontal/vertical ×
+closed/open. They use the same strict SVG dialect and source-exact compositor path as the canonical prop
+families, but a dedicated importer keeps the architectural state bank explicit:
 
 ```bash
-npm run doors:import        # regenerate the four compiled door variants
+npm run doors:import        # regenerate the twenty compiled door variants
 npm run doors:import:check  # validate source and fail when generated art is stale
 ```
 
-The template parameters are `open=0|1` and `facing=0|1` (`0` horizontal, `1` vertical). Vertical placement
-uses the separately authored top-oblique source; Terrarium never rotates the horizontal front elevation.
-Open passages remain transparent so the receiving floor shows through. `assets:check` includes the door
-freshness gate.
+The template parameters are `open=0|1`, `facing=0|1` (`0` horizontal, `1` vertical), and internal
+`material=0..4` (Office, Brick, Panel, Cubicle, Wood Slat). The material parameter does not create player
+catalog entries: all variants share template id `door`, and `facility-catalog.json` contains one Door item.
+The receiver selects the material from the replaced wall. Vertical placement uses the separately authored
+fixed-view source; Terrarium never rotates the horizontal front elevation. Open passages remain transparent
+so the receiving floor shows through. `assets:check` includes the door freshness gate.
 
 The door files also own their live grid compensation: the 112-unit wall construction is centered under a
 `translate(32 32) scale(.5)` group, producing an approximately 64-unit visible wall-slot inside the normal
 128-unit prop canvas. This matches the Unity person-scale grid, where wall tiles receive `tileSize = 0.5`
 and props do not. Consumers use the ordinary prop scale; a door-only runtime scale is forbidden.
+
+### Architectural office-window family
+
+The stable `window` prop template is supplied by ten canonical sources under
+`assets/walls/quota-co-building-openings-v2`: five retained wall materials across separately authored
+horizontal front-facing and vertical raised top-oblique views. They follow the same strict SVG dialect,
+source-exact compositor path, wall-palette inheritance, and source-owned live-grid compensation as the
+sliding doors:
+
+```bash
+npm run windows:import        # regenerate the ten compiled window variants
+npm run windows:import:check  # validate source and fail when generated art is stale
+```
+
+The template parameters are `facing=0|1` (`0` horizontal, `1` vertical) and internal `material=0..4`.
+`prop-window` and `prop-window-vertical` remain the unsuffixed Office compatibility ids; the other eight
+internal render SKUs append `-brick`, `-panel`, `-cubicle`, or `-slat`. The player still sees one Window
+catalog item. The receiver derives material from the replaced wall and selects the fixed view from wall
+axis; it never rotates horizontal pixels. During export, wall-owned window structure resolves from the
+matching looked wall instance while frame, glazing, blinds, and mullion remain shared equipment. Floor
+remains transparent and independently rendered. Neighbor-suite glass is not part of this source bank and
+stays deferred until a concrete building-surround use returns.
 
 ## Source contract
 

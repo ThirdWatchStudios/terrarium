@@ -2,7 +2,7 @@ import type { Mood, ProjectState, PropInstance, PropPlacement } from './types';
 import type { SceneFacing, SceneRoom, SceneRotation, SceneState } from './scene';
 import { WALL_BITS } from './types';
 import { PROP_TEMPLATES } from '../props/templates';
-import { WALL_TEMPLATES } from '../tiles/templates';
+import { CORE_WALL_TEMPLATES } from '../tiles/templates';
 
 /** Row-major [rows][cols] grid filled with a value (used by sceneToLayoutJson). */
 function grid<T>(cols: number, rows: number, value: T): T[][] {
@@ -384,7 +384,7 @@ function facilityId(templateId: string): string {
 
 /**
  * Build the placeable-facility catalog (`facility-catalog.json`). Walls come from
- * WALL_TEMPLATES (kind `Wall`); the curated prop subset becomes `AnchoredFacility`
+ * the five CORE_WALL_TEMPLATES (kind `Wall`); the curated prop subset becomes `AnchoredFacility`
  * when it registers an interaction anchor (INTERACTION_PROP_TYPES), else `Object`.
  * Deterministic order: walls first, then props in PROP_TEMPLATES order.
  */
@@ -393,7 +393,7 @@ export function facilityCatalogJson(): FacilityCatalogJson {
 
   // Walls — each authored wall style is a placeable Wall facility (autotiled, so
   // never rotatable; a wall blocks walking and occupies its grid cell).
-  for (const wall of WALL_TEMPLATES) {
+  for (const wall of CORE_WALL_TEMPLATES) {
     facilities.push({
       id: facilityId(wall.id),
       displayName: wall.label,

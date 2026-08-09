@@ -1,0 +1,84 @@
+{
+  "status": "review-only-candidate-awaiting-composed-visual-approval",
+  "stableTemplateId": "door",
+  "stableStates": [
+    "horizontal-closed",
+    "horizontal-open",
+    "vertical-closed",
+    "vertical-open"
+  ],
+  "retainedMechanic": "double-retracting-sliding-auto-door",
+  "wallInheritance": [
+    "cap-primary",
+    "front-secondary",
+    "return-accent",
+    "material-face-detail"
+  ],
+  "removedFromCandidate": [
+    "oversized-pressure-mats",
+    "coral-wall-band",
+    "cream-green-wall-kit",
+    "outlined-lower-door-panels",
+    "decorative-threshold-hardware"
+  ],
+  "retainedDoorCues": [
+    "paired-sliding-leaves",
+    "narrow-safety-glazing",
+    "subtle-pressure-threshold",
+    "single-status-point"
+  ],
+  "proofWallSource": "production-composeWallTile",
+  "proofCellComposition": "flattened-clipped-wall-cells",
+  "candidateArtLocalToPreview": true,
+  "canonicalSvgMutation": false,
+  "generatedRegistryMutation": false,
+  "productionTemplateMutation": false,
+  "exporterMutation": false,
+  "unityMutation": false,
+  "browserExport": false,
+  "unityImport": false,
+  "staging": false,
+  "commit": false,
+  "materials": [
+    {
+      "id": "office-wall",
+      "label": "Office wall",
+      "primary": "#85867F",
+      "secondary": "#B0AEA5",
+      "accent": "#999A92",
+      "detail": "#777872"
+    },
+    {
+      "id": "brick-wall",
+      "label": "Brick wall",
+      "primary": "#745146",
+      "secondary": "#A86D5A",
+      "accent": "#8D5E50",
+      "detail": "#D2AA97"
+    },
+    {
+      "id": "panel-wall",
+      "label": "Panel wall",
+      "primary": "#66655F",
+      "secondary": "#94928A",
+      "accent": "#7D7C75",
+      "detail": "#B5B0A5"
+    },
+    {
+      "id": "cubicle-partition",
+      "label": "Cubicle partition",
+      "primary": "#6D777D",
+      "secondary": "#99A3A8",
+      "accent": "#808A90",
+      "detail": "#5D676C"
+    },
+    {
+      "id": "slat-wall",
+      "label": "Wood slat wall",
+      "primary": "#705643",
+      "secondary": "#9C7658",
+      "accent": "#83654E",
+      "detail": "#503E33"
+    }
+  ]
+}

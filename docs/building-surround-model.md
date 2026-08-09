@@ -2,8 +2,15 @@
 
 Status: **draft for sign-off.** Owner question answered: the office is **one leased
 floor inside a larger office tower** — so the border is *building interior
-continuation* (elevator lobby, neighbor suites, service spine), with a curtain-wall
-peek to the skyline on exterior-facing edges. Not a parking lot, not a flat backdrop.
+continuation* (elevator lobby, neighbor suites, service spine), with an
+exterior-facing edge available for ordinary wall-mounted windows. Not a parking
+lot, not a flat backdrop.
+
+**2026-08-07 wall-family amendment:** the surround no longer owns Demising or
+Curtain wall families. Every tenant perimeter edge now uses `wall-office`;
+floors, elevator/service objects, and later wall-mounted window fixtures carry
+the lobby/exterior distinction. The older family-specific passages below are
+superseded where they disagree with this amendment.
 
 This is an **environment-art + layout** feature. It reuses the existing tile/prop
 render path end to end; the only new *mechanism* is one additive contract field
@@ -40,9 +47,8 @@ The renderer loops **every** grid cell and draws floors → walls → props from
 1. **A bigger grid renders for free.** Extra ring cells flow through the same
    floor/wall/prop code — no new render subsystem.
 2. **Walls autotile by neighbor mask with a 16px `OVERHANG`** ([templates.ts:18](../src/tiles/templates.ts)),
-   so runs stay seamless across seams. A *demising wall* is just `officeWall` on the
-   same 28-unit band with a structural core seam — the autotiler handles its corners
-   and joins, and junctions against tenant walls align mid-run.
+   so ordinary `officeWall` runs stay seamless across every tenant perimeter
+   corner and junction without a second shell-wall family.
 3. **Quadrant floor-clipping has an `'out'` sentinel** ([scene.ts:330](../src/core/scene.ts))
    for out-of-bounds neighbors. Today the office's outer wall faces `'out'` (void);
    add a ring beyond it and those quadrants face building floor instead, so the office
@@ -63,7 +69,7 @@ sub-region. Everything in the grid is rendered identically; everything **outside
 │   │   rooms, wings, desks, anchors,        │ │     (today's grid, unchanged)
 │   │   spawns — exactly as today            │ │
 │   └───────────────────────────────────────┘ │
-│  curtain wall + skyline on exterior edge ▓▓▓ │  ← only "true outside" peek
+│  office wall + future window fixtures      ▓▓▓ │  ← exterior-facing edge
 └─────────────────────────────────────────────┘
         ▒▒▒ outermost ring fades to #181614 ▒▒▒
 ```
@@ -85,22 +91,19 @@ ring cells are walkable by default. `tenantRect` is therefore load-bearing for e
 two things that need an explicit bounds answer: **pathfinding** (clamp walkability) and
 the **camera** (frame the tenant, not the grown grid). See seams below.
 
-## The kit (~11 assets) — **BUILT**
+## The retained surround kit — **BUILT**
 
 All authored on the existing 128u tile canvas, palette-token driven (`$primary` /
 `$secondary` / `$accent`). The spec's "`$building` / `$sky` token groups" are realized
 through the existing per-instance `PropPalette` — every tile/prop carries its own
 three-color palette, so the building shell is art-directed independently of tenant
 style by seeding dedicated **tile/prop instances** (in `src/data/defaults.ts`) with
-cooler, heavier greys. No new token type was needed. `$sky` = the curtain wall
-instance's `$accent` slot.
+cooler, heavier greys. No new token type is needed.
 
 ### Tile templates → `src/tiles/templates.ts` (BUILT)
 
 | Template (id) | Based on | Role |
 |---|---|---|
-| `demising-wall` | `officeWall` | Same 28-unit band as `officeWall` (shell↔tenant junctions align mid-run) + a darker `$secondary` structural core seam; the hard suite/building edge. |
-| `curtain-wall` | `glassPartition` | Sky-tinted glazing (`$accent` = `$sky`, flat v1) + bold mullions + frame post, on the shared 28-unit band. The one exterior peek. |
 | `lobby-stone` | new (terrazzo-adjacent) | Large polished stone slabs + grout + diagonal sheen; the shared-corridor / elevator-lobby floor. |
 
 ### Prop templates → `src/props/templates.ts` (BUILT, elevation/wall-slot, existing path)
@@ -132,11 +135,12 @@ tower-floor border for free.
    - **Entrance edge** = the edge nearest the `reception` room → **elevator bank** +
      `lobbyFloor` + directory placard. Arrival fiction stays coherent (you come up the
      elevators into reception).
-   - **Exterior edge** = the longest edge *not* the entrance edge → **curtain wall +
-     skyline**. The "we're up high" view; at most one or two edges.
+   - **Exterior edge** = the longest edge *not* the entrance edge → ordinary
+     `wall-office` with the outer ring left floorless. A later fixture pass may
+     place approved office windows here without creating a glass wall family.
    - **Remaining edges** → alternating **neighbor-glass** + **service-spine** props
      (fountain / plant / EXIT), `lobbyFloor` underneath.
-3. **Corners** → `demisingWall` corners + EXIT/stairwell at one corner.
+3. **Corners** → ordinary `wall-office` corners + EXIT/stairwell at one corner.
 4. **Recede (vignette).** Content, not shader: the **outermost** ring row/col uses
    darker tile variants (tints toward `#181614`) so the border fades before the void.
    Keep the ring **thin** — 2 cells — so the eye never reads it as usable space; a
@@ -164,8 +168,8 @@ All three confirmed in C#. Two need a code change; one is tool-side only.
 1. **Pathfinding must clamp to `tenantRect` — REQUIRED code change.** Walkability is
    `hasOpenFloor && !hasWall` (`Assets/WaterCooler/Runtime/Phase2/SpriteToolkitOfficeBinder.cs:3593`,
    `BuildObstacleAwareWalkableGrid` ~:3518), **not** room membership. Because the ring
-   carries `lobbyFloor`, ring cells are walkable by default — and a broken demising
-   wall (the suite entry door) would let NPCs path straight into the lobby. Fix is a
+   carries `lobbyFloor`, ring cells are walkable by default — and a broken perimeter
+   wall would let NPCs path straight into the lobby. Fix is a
    one-line guard: `isWalkable = hasOpenFloor && !hasWall && insideTenantRect`. More
    robust than relying on an unbroken wall. Spawns are placed at raw layout coords
    without validation (`SpriteToolkitSceneAssembler.cs:230-251`), but `characterSpawns`
@@ -206,9 +210,9 @@ grid when absent** — same backward-compat contract as the JSON side.
 
 ## Resolved decisions (signed off)
 
-1. **Curtain-wall fill = flat sky-gradient for v1.** No parallax/day-night layer yet,
-   but author the fill as a single `$sky` token (not a baked color) so a future
-   day/night tint has a seam to hook. Parallax skyline stays deferred.
+1. **Perimeter wall = ordinary Office.** Exterior/lobby identity belongs to
+   floors and fixtures. Parallax/day-night skyline remains deferred and, if
+   pursued, attaches to an approved window fixture rather than a wall family.
 2. **Ring width = fixed 2 cells.** Does not scale with office size in v1; revisit only
    if it reads cramped on wide generated offices.
 3. **`$building` is its own palette token group**, not a fixed darken of `$primary` —
@@ -217,18 +221,18 @@ grid when absent** — same backward-compat contract as the JSON side.
 
 ## Scope
 
-**In v1:** the 11-asset kit, the ring generation pass, `tenantRect` (v4), SVG-preview
+**In v1:** the retained surround tile/prop kit, the ring generation pass, `tenantRect` (v4), SVG-preview
 parity, golden + default-bundle updates, the three Unity seams.
 
 **Build status:**
-- ✅ **Kit (BUILT)** — 3 tile templates + 5 prop templates in
+- ✅ **Kit (BUILT)** — the lobby-stone tile + 5 surround prop templates in
   `src/tiles/templates.ts` / `src/props/templates.ts`, registered, with default
   instances seeded in `src/data/defaults.ts`. Typecheck clean; compositor snapshots
   cover all 8 (one each); all render correctly in the tool's Assets panel.
 - ✅ **Ring generation pass (BUILT)** — `src/core/buildingSurround.ts`:
   `addBuildingSurround(scene, project, opts?)` is a pure transform that grows the grid
-  by a 2-cell ring, records `tenantRect` on `SceneState`, restyles the tenant perimeter
-  (exterior edge → curtain wall, others → demising), fills the interior ring with lobby
+  by a 2-cell ring, records `tenantRect` on `SceneState`, normalizes the tenant perimeter
+  to `wall-office`, fills the interior ring with lobby
   stone (exterior side left void), and places the kit per edge (elevator+directory on
   the reception-nearest edge; neighbor-glass/exit/fountain/plant/extinguisher along the
   others). `classifyEdges` + `removeBuildingSurround` round-trip. Wired as an "Add
@@ -284,11 +288,11 @@ in the golden baseline** (tool) and layout parse → walkability clamp → camer
 (sim). A plain export now ships a v4 `office-layout.json` the sim consumes, rendering the
 ring as inert decor, keeping NPCs in the tenant, and framing the playable office.
 
-> Note on perimeter: the pass overwrites the tenant's outer wall with the building
-> shell (suite wall *is* the demising wall — the single-wall reading). `composeSceneSvg`
+> Note on perimeter: the pass normalizes the tenant's outer wall to `wall-office`
+> (the wall remains one straightforward construction). `composeSceneSvg`
 > already renders the grown grid, so **SVG-preview parity is automatic** — no separate
 > work item. The recede/vignette is currently "void beyond the outer ring"; per-cell
 > darker outer-ring tiles remain a polish follow-up.
 
-**Deferred:** parallax/day-night skyline; animated elevator doors; per-tenant neighbor
+**Deferred:** window-fixture/parallax/day-night skyline treatment; animated elevator doors; per-tenant neighbor
 branding variety beyond a name swap; a real vignette shader.

@@ -11,10 +11,8 @@ import {
   DEPARTMENT_MACHINE_DEFAULT_PROPS,
   DEPARTMENT_MACHINE_TEMPLATE_IDS,
 } from '../src/props/departmentMachineManifest';
-import {
-  QUOTA_CO_EQUAL_HEIGHT_AUTHORED_FACING,
-  QUOTA_CO_EQUAL_HEIGHT_MIRROR_X_MASKS,
-} from '../src/tiles/quotaCoEqualHeightWallContract';
+import { quotaCoDoorMaterialForParams } from '../src/props/doorManifest';
+import { quotaCoWindowMaterialForParams } from '../src/props/windowManifest';
 
 /**
  * Default-bundle coverage guard.
@@ -107,18 +105,20 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     }
   });
 
-  it('ships the accepted contextual-facing office wall through the ordinary bundle', async () => {
-    const { json } = await exportPaths();
-    const expected = {
-      authoredFacing: QUOTA_CO_EQUAL_HEIGHT_AUTHORED_FACING,
-      mirrorXForEastPresentation:
-        QUOTA_CO_EQUAL_HEIGHT_MIRROR_X_MASKS.map((mask) => `mask_${mask}`),
-    };
+  it('ships topology-only core walls without retired wall families', async () => {
+    const { paths, json } = await exportPaths();
     for (const scale of [1, 2, 4]) {
       const atlas = JSON.parse(
         json.get(`walls/office-wall/atlas@${scale}x.json`)!,
       );
-      expect(atlas.meta.contextualFacing).toEqual(expected);
+      expect(atlas.meta.orientation).toBe('topology-only');
+      expect(atlas.meta).not.toHaveProperty('contextualFacing');
+    }
+    for (const slug of ['office-wall', 'cubicle-partition', 'brick-wall', 'panel-wall', 'wood-slat-wall']) {
+      expect([...paths].some((path) => path.startsWith(`walls/${slug}/`)), slug).toBe(true);
+    }
+    for (const slug of ['glass-partition', 'demising-wall', 'curtain-wall', 'living-wall', 'branded-wall']) {
+      expect([...paths].some((path) => path.startsWith(`walls/${slug}/`)), slug).toBe(false);
     }
   });
 
@@ -679,6 +679,54 @@ describe('default bundle is a complete, sim-importable baseline', () => {
     expect(fm.kind).toBe('floor-layers');
     expect(fm.tileable).toBe(true);
     expect(fm.layers.some((l: { tint: unknown }) => l.tint === 'primary'), 'floor has no recolorable primary base').toBe(true);
+  });
+
+  it('exports every door with the matching wall palette in prop and layer metadata', async () => {
+    const { paths, json } = await exportPaths();
+    const walls = [...paths]
+      .filter((candidate) => /^walls\/.+\/wall\.json$/.test(candidate))
+      .map((candidate) => JSON.parse(json.get(candidate)!));
+    const doorPaths = [...paths].filter((candidate) => {
+      if (!/^props\/.+\/prop\.json$/.test(candidate)) return false;
+      return JSON.parse(json.get(candidate)!).templateId === 'door';
+    });
+    expect(doorPaths).toHaveLength(20);
+    for (const propPath of doorPaths) {
+      const prop = JSON.parse(json.get(propPath)!);
+      const material = quotaCoDoorMaterialForParams(prop.params);
+      const wall = walls.find((candidate) =>
+        material.wallIds.includes(candidate.id) || material.wallIds.includes(candidate.templateId));
+      expect(wall, `${prop.id} matching wall`).toBeDefined();
+      expect(prop.palette, `${prop.id} prop palette`).toEqual(wall.palette);
+      const manifest = JSON.parse(
+        json.get(propPath.replace(/prop\.json$/, 'layers-manifest@1x.json'))!,
+      );
+      expect(manifest.palette, `${prop.id} layer palette`).toEqual(wall.palette);
+    }
+  });
+
+  it('exports every window with the matching wall palette in prop and layer metadata', async () => {
+    const { paths, json } = await exportPaths();
+    const walls = [...paths]
+      .filter((candidate) => /^walls\/.+\/wall\.json$/.test(candidate))
+      .map((candidate) => JSON.parse(json.get(candidate)!));
+    const windowPaths = [...paths].filter((candidate) => {
+      if (!/^props\/.+\/prop\.json$/.test(candidate)) return false;
+      return JSON.parse(json.get(candidate)!).templateId === 'window';
+    });
+    expect(windowPaths).toHaveLength(10);
+    for (const propPath of windowPaths) {
+      const prop = JSON.parse(json.get(propPath)!);
+      const material = quotaCoWindowMaterialForParams(prop.params);
+      const wall = walls.find((candidate) =>
+        material.wallIds.includes(candidate.id) || material.wallIds.includes(candidate.templateId));
+      expect(wall, `${prop.id} matching wall`).toBeDefined();
+      expect(prop.palette, `${prop.id} prop palette`).toEqual(wall.palette);
+      const manifest = JSON.parse(
+        json.get(propPath.replace(/prop\.json$/, 'layers-manifest@1x.json'))!,
+      );
+      expect(manifest.palette, `${prop.id} layer palette`).toEqual(wall.palette);
+    }
   });
 
   it('normalizes stale authored palettes across project, prop, and layer metadata', async () => {

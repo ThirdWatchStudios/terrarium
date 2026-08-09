@@ -5,6 +5,7 @@ import {
   compileQuotaCoDoorArt,
   emitQuotaCoDoorArt,
 } from './props/doorImporter';
+import { QUOTA_CO_DOOR_SOURCE_DEFINITIONS } from '../src/props/doorManifest';
 
 interface Options {
   readonly check: boolean;
@@ -43,18 +44,25 @@ async function main(): Promise<void> {
     if (current !== expected) {
       throw new Error(`${path.relative(process.cwd(), options.output)} is stale; run npm run doors:import`);
     }
-    process.stdout.write('QuotaCo door import is current (4 canonical fixed-view states).\n');
+    process.stdout.write(
+      `QuotaCo door import is current (${QUOTA_CO_DOOR_SOURCE_DEFINITIONS.length} canonical material/fixed-view states).\n`,
+    );
     return;
   }
   if (current === expected) {
-    process.stdout.write('QuotaCo door import unchanged (4 canonical fixed-view states).\n');
+    process.stdout.write(
+      `QuotaCo door import unchanged (${QUOTA_CO_DOOR_SOURCE_DEFINITIONS.length} canonical material/fixed-view states).\n`,
+    );
     return;
   }
   await mkdir(path.dirname(options.output), { recursive: true });
   const temporary = `${options.output}.tmp-${process.pid}`;
   await writeFile(temporary, expected, 'utf8');
   await rename(temporary, options.output);
-  process.stdout.write(`Imported 4 QuotaCo door states into ${path.relative(process.cwd(), options.output)}.\n`);
+  process.stdout.write(
+    `Imported ${QUOTA_CO_DOOR_SOURCE_DEFINITIONS.length} QuotaCo door states into ` +
+    `${path.relative(process.cwd(), options.output)}.\n`,
+  );
 }
 
 main().catch((error: unknown) => {

@@ -1,36 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-prop-id="door" data-projection="plan" data-runtime-grid-scale="0.5">
-  <title>QuotaCo vertical sliding auto-door, closed</title>
-  <desc>Canonical top-oblique production source compensated to the 64-unit Unity wall-slot envelope.</desc>
-  <g id="vertical-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
-  <g id="vertical-door-wall-break">
-    <path id="vertical-wall-outer" d="M11.5 0H123.5V25H11.5ZM11.5 103H123.5V128H11.5Z" fill="#252A28"/>
-    <path id="vertical-wall-cream" d="M14.8 0H117.7V22H14.8ZM14.8 106H117.7V128H14.8Z" fill="#D9D0B9"/>
-    <path id="vertical-wall-rust" d="M79.5 0H87.8V22H79.5ZM79.5 106H87.8V128H79.5Z" fill="#B65F4D"/>
-    <path id="vertical-wall-green" d="M87.8 0H117.7V22H87.8ZM87.8 106H117.7V128H87.8Z" fill="#294B3C"/>
-    <path id="vertical-jamb-outer" d="M58 20H98V35H58ZM58 93H98V108H58Z" fill="#252A28"/>
-    <path id="vertical-jamb-cream" d="M62 22H94V33H62ZM62 95H94V106H62Z" fill="#D9D0B9"/>
-    <path id="vertical-jamb-green" d="M85 22H94V33H85ZM85 95H94V106H85Z" fill="#294B3C"/>
-  </g>
-  <g id="vertical-door-pressure-mats">
-    <path id="vertical-pressure-mat-left-outer" d="M25 36H59V92H25Z" fill="#252A28" opacity=".34"/>
-    <path id="vertical-pressure-mat-left-field" d="M28 39H57V89H28Z" fill="#547B78" opacity=".38"/>
-    <path id="vertical-pressure-mat-right-outer" d="M96 36H121V92H96Z" fill="#252A28" opacity=".34"/>
-    <path id="vertical-pressure-mat-right-field" d="M99 39H118V89H99Z" fill="#547B78" opacity=".38"/>
-    <path id="vertical-pressure-mat-lines" d="M32 48H53M32 58H53M32 68H53M32 78H53M103 48H114M103 58H114M103 68H114M103 78H114" stroke="#F3EEDA" stroke-width="1" opacity=".2"/>
-  </g>
-  <g id="vertical-door-overhead-track">
-    <path id="vertical-track-outer" d="M65 31H73V97H65Z" fill="#252A28"/>
-    <path id="vertical-track-metal" d="M67 33H71V95H67Z" fill="#979A91"/>
-    <circle id="vertical-mode-lens" cx="69" cy="35" r="2" fill="#B65F4D"/>
-  </g>
-  <g id="vertical-door-top-oblique-closed-leaves">
-    <path id="vertical-closed-leaf-outer" d="M72 32L79 29H93V99H79L72 96Z" fill="#252A28"/>
-    <path id="vertical-closed-leaf-cream" d="M75 34L80 32H83V96L75 94Z" fill="#D9D0B9"/>
-    <path id="vertical-closed-leaf-green" d="M83 32H90V96H83Z" fill="#294B3C"/>
-    <path id="vertical-closed-glazing" d="M84 37H89V57H84ZM84 70H89V90H84Z" fill="#83A9A6"/>
-    <path id="vertical-closed-seam" d="M75 64H90" stroke="#252A28" stroke-width="2"/>
-    <path id="vertical-closed-highlight" d="M80 32V96" stroke="#FFFFFF" stroke-width="1" opacity=".22"/>
-    <path id="vertical-closed-shadow" d="M91 34H94V98H91Z" fill="#000000" opacity=".18"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-prop-id="door" data-projection="plan" data-runtime-grid-scale="0.5" data-wall-material-id="office-wall" data-axis="vertical" data-state="closed">
+  <title>QuotaCo office vertical sliding auto-door, closed</title>
+  <desc>Office wall-owned full-cell opening with palette-inheriting structure, compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="vertical-door-closed-office" transform="translate(32 32) scale(.5)">
+    <path id="vertical-door-closed-office-part-01" d="M2 0H126V12H2ZM2 116H126V128H2Z" fill="#323431"/>
+    <path id="vertical-door-closed-office-part-02" d="M8 0H120V12H8ZM8 116H120V128H8Z" fill="#85867F"/>
+    <path id="vertical-door-closed-office-part-03" d="M8 0H38V12H8ZM90 0H120V12H90ZM8 116H38V128H8ZM90 116H120V128H90Z" fill="#999A92"/>
+    <path id="vertical-door-closed-office-part-04" d="M38 4H90V16H38Z" fill="#323431"/>
+    <path id="vertical-door-closed-office-part-05" d="M42 4H86V12H42Z" fill="#B0AEA5"/>
+    <path id="vertical-door-closed-office-part-06" d="M38 112H90V124H38Z" fill="#323431"/>
+    <path id="vertical-door-closed-office-part-07" d="M42 116H86V124H42Z" fill="#999A92"/>
+    <path id="vertical-door-closed-office-part-08" d="M46 4H82V16H46ZM46 112H82V124H46Z" fill="#323431"/>
+    <path id="vertical-door-closed-office-part-09" d="M50 8H78V15H50Z" fill="#B0AEA5"/>
+    <path id="vertical-door-closed-office-part-10" d="M50 113H78V120H50Z" fill="#999A92"/>
+    <path id="vertical-door-closed-office-part-11" d="M46 14H51V114H46ZM77 14H82V114H77Z" fill="#323431"/>
+    <path id="vertical-door-closed-office-part-12" d="M48 18H51V110H48ZM77 18H80V110H77Z" fill="#999A92"/>
+    <circle id="vertical-door-closed-office-part-13" cx="48.5" cy="64" r="1.8" fill="#B96D52"/>
+    <path id="vertical-door-closed-office-part-14" d="M49 14H79V114H49Z" fill="#323431"/>
+    <path id="vertical-door-closed-office-part-15" d="M52 18H76V62H52ZM52 66H76V110H52Z" fill="#53615E"/>
+    <path id="vertical-door-closed-office-part-16" d="M58 49H70V58H58ZM58 70H70V79H58Z" fill="#8CA4A1" opacity=".82"/>
+    <path id="vertical-door-closed-office-part-17" d="M59 50H62V57H59ZM59 71H62V78H59Z" fill="#FFFFFF" opacity=".16"/>
+    <path id="vertical-door-closed-office-part-18" d="M52 64H76" stroke="#323431" stroke-width="2"/>
   </g>
 </svg>

@@ -26,8 +26,8 @@ function usage(): string {
   return [
     'Usage: tsx scripts/importQuotaCoEqualHeightWall.ts [--check] [--out <file>]',
     '',
-    'Compiles the accepted QuotaCo all-47 SVG and ledger bank into browser-safe',
-    'production data used by every normal Terrarium export.',
+    'Compiles the accepted QuotaCo all-47 SVG and ledger bank into a browser-safe',
+    'archive registry for legacy proofs and previously exported packs.',
   ].join('\n');
 }
 
@@ -73,7 +73,7 @@ async function main(): Promise<void> {
   const state = equalHeightAllMaskSourceFootprintState(frames);
   if (state !== 'accepted-112') {
     throw new Error(
-      `QuotaCo production wall source bank is ${state}; expected accepted-112`,
+      `QuotaCo archived wall source bank is ${state}; expected accepted-112`,
     );
   }
 
@@ -86,14 +86,14 @@ async function main(): Promise<void> {
       );
     }
     process.stdout.write(
-      `QuotaCo equal-height wall production import is current (${frames.length} frames).\n`,
+      `QuotaCo equal-height wall archive import is current (${frames.length} frames).\n`,
     );
     return;
   }
 
   if (current === expected) {
     process.stdout.write(
-      `QuotaCo equal-height wall production import unchanged (${frames.length} frames).\n`,
+      `QuotaCo equal-height wall archive import unchanged (${frames.length} frames).\n`,
     );
     return;
   }

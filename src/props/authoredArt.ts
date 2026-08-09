@@ -7,6 +7,7 @@ import { QUOTA_CO_WORKHORSE_PROP_ART } from './generated/quotaCoWorkhorseArt';
 import { QUOTA_CO_DEPARTMENT_MACHINE_ART } from './generated/quotaCoDepartmentMachineArt';
 import { IRIS_HARDWARE_ART } from './generated/irisHardwareArt';
 import { QUOTA_CO_DOOR_ART } from './generated/quotaCoDoorArt';
+import { QUOTA_CO_WINDOW_ART } from './generated/quotaCoWindowArt';
 
 export interface ImportedPropArt {
   id: string;
@@ -26,6 +27,7 @@ const ART_BY_ID = new Map<string, ImportedPropArt>(
     ...IRIS_HARDWARE_ART,
     ...QUOTA_CO_DEPARTMENT_MACHINE_ART,
     ...QUOTA_CO_DOOR_ART,
+    ...QUOTA_CO_WINDOW_ART,
   ]
     .map((entry) => [entry.id, entry]),
 );
@@ -58,7 +60,16 @@ function discreteWithCanonical(
 function variantKey(id: string, params: Readonly<Record<string, number>>): string {
   switch (id) {
     case 'door':
-      return `open=${discrete(params, 'open', 0, 1, 1, 0)};facing=${discrete(params, 'facing', 0, 1, 1, 0)}`;
+      return (
+        `open=${discrete(params, 'open', 0, 1, 1, 0)};` +
+        `facing=${discrete(params, 'facing', 0, 1, 1, 0)};` +
+        `material=${discrete(params, 'material', 0, 4, 1, 0)}`
+      );
+    case 'window':
+      return (
+        `facing=${discrete(params, 'facing', 0, 1, 1, 0)};` +
+        `material=${discrete(params, 'material', 0, 4, 1, 0)}`
+      );
     case 'iris-installation-unit':
     case 'iris-installation-unit-dormant':
       return `height=${discrete(params, 'height', 78, 98, 2, 90)}`;

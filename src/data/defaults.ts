@@ -19,6 +19,14 @@ import { generatePopulation, employeeRecipe, getProfile } from '../core/employee
 import { generateEmployeePersona } from '../core/populationPersona';
 import { generateRelationshipGraph } from '../core/relationshipGraph';
 import { DEPARTMENT_MACHINE_DEFAULT_PROPS } from '../props/departmentMachineManifest';
+import {
+  QUOTA_CO_DOOR_MATERIALS,
+  QUOTA_CO_DOOR_SOURCE_DEFINITIONS,
+} from '../props/doorManifest';
+import {
+  QUOTA_CO_WINDOW_MATERIALS,
+  QUOTA_CO_WINDOW_SOURCE_DEFINITIONS,
+} from '../props/windowManifest';
 
 export const DEFAULT_STYLE: StyleSheet = {
   outline: {
@@ -187,6 +195,63 @@ export const DEFAULT_CAST: CharacterRecipe[] = [
     },
   },
 ];
+
+/**
+ * Receiver-only door sprite inventory. All twenty instances share the one stable
+ * `door` template, so facility-catalog.json still exposes a single player-facing
+ * build item while Unity can resolve the wall-matched render SKU by exact prop id.
+ */
+export const QUOTA_CO_DOOR_DEFAULT_PROPS: PropInstance[] =
+  QUOTA_CO_DOOR_SOURCE_DEFINITIONS.map((definition) => {
+    const wallMaterial = QUOTA_CO_DOOR_MATERIALS.find(({ id }) => id === definition.materialId);
+    if (!wallMaterial) throw new Error(`Missing door wall material ${definition.materialId}`);
+    return {
+      id: definition.propId,
+      name: `${definition.materialId === 'office' ? '' : `${definition.materialId} `}` +
+        `${definition.state === 'open' ? 'open ' : ''}sliding door` +
+        `${definition.axis === 'vertical' ? ' (vertical)' : ''}`,
+      templateId: 'door',
+      params: {
+        open: definition.open,
+        facing: definition.facing,
+        material: definition.material,
+      },
+      // Wall-owned structure follows this instance palette. Export replaces it
+      // with the matching wall instance's looked palette before rasterization;
+      // leaf, glass, outline, and status colors remain canonical SVG literals.
+      palette: {
+        primary: wallMaterial.palette.primary,
+        secondary: wallMaterial.palette.secondary,
+        accent: wallMaterial.palette.accent,
+      },
+    };
+  });
+
+/**
+ * Receiver-only window sprite inventory. The ten render SKUs share one stable
+ * `window` template; Unity selects material and fixed view from the replaced wall.
+ */
+export const QUOTA_CO_WINDOW_DEFAULT_PROPS: PropInstance[] =
+  QUOTA_CO_WINDOW_SOURCE_DEFINITIONS.map((definition) => {
+    const wallMaterial = QUOTA_CO_WINDOW_MATERIALS.find(({ id }) => id === definition.materialId);
+    if (!wallMaterial) throw new Error(`Missing window wall material ${definition.materialId}`);
+    return {
+      id: definition.propId,
+      name: `${definition.materialId === 'office' ? '' : `${definition.materialId} `}` +
+        'office window' +
+        `${definition.axis === 'vertical' ? ' (vertical)' : ''}`,
+      templateId: 'window',
+      params: {
+        facing: definition.facing,
+        material: definition.material,
+      },
+      palette: {
+        primary: wallMaterial.palette.primary,
+        secondary: wallMaterial.palette.secondary,
+        accent: wallMaterial.palette.accent,
+      },
+    };
+  });
 
 export const DEFAULT_PROPS: PropInstance[] = [
   {
@@ -541,41 +606,8 @@ export const DEFAULT_PROPS: PropInstance[] = [
     params: { granted: 1 },
     palette: { primary: '#444441', secondary: '#D3D1C7', accent: '#97C459' },
   },
-  {
-    id: 'prop-door',
-    name: 'Sliding door',
-    templateId: 'door',
-    params: { open: 0, facing: 0 },
-    palette: { primary: '#D9D0B9', secondary: '#294B3C', accent: '#B65F4D' },
-  },
-  {
-    id: 'prop-open-door',
-    name: 'Open sliding door',
-    templateId: 'door',
-    params: { open: 1, facing: 0 },
-    palette: { primary: '#D9D0B9', secondary: '#294B3C', accent: '#B65F4D' },
-  },
-  {
-    id: 'prop-door-vertical',
-    name: 'Sliding door (vertical)',
-    templateId: 'door',
-    params: { open: 0, facing: 1 },
-    palette: { primary: '#D9D0B9', secondary: '#294B3C', accent: '#B65F4D' },
-  },
-  {
-    id: 'prop-open-door-vertical',
-    name: 'Open sliding door (vertical)',
-    templateId: 'door',
-    params: { open: 1, facing: 1 },
-    palette: { primary: '#D9D0B9', secondary: '#294B3C', accent: '#B65F4D' },
-  },
-  {
-    id: 'prop-window',
-    name: 'Office window',
-    templateId: 'window',
-    params: { width: 72, blinds: 2 },
-    palette: { primary: '#5F5E5A', secondary: '#B5D4F4', accent: '#EEF3F4' },
-  },
+  ...QUOTA_CO_DOOR_DEFAULT_PROPS,
+  ...QUOTA_CO_WINDOW_DEFAULT_PROPS,
   {
     id: 'prop-nameplate',
     name: 'Nameplate',
@@ -1169,7 +1201,7 @@ export const DEFAULT_WALLS: TileInstance[] = [
     name: 'Office wall',
     templateId: 'office-wall',
     params: { thickness: 28 },
-    palette: { primary: '#B4B2A9', secondary: '#888780', accent: '#5F5E5A' },
+    palette: { primary: '#85867F', secondary: '#B0AEA5', accent: '#999A92' },
   },
   {
     id: 'wall-glass',
@@ -1183,24 +1215,24 @@ export const DEFAULT_WALLS: TileInstance[] = [
     name: 'Cubicle partition',
     templateId: 'cubicle-partition',
     params: { thickness: 14 },
-    palette: { primary: '#8A9199', secondary: '#5F5E5A', accent: '#D85A30' },
+    palette: { primary: '#6D777D', secondary: '#99A3A8', accent: '#808A90' },
   },
   {
     id: 'wall-brick',
     name: 'Brick wall',
     templateId: 'brick-wall',
     params: { thickness: 24 },
-    palette: { primary: '#9C5A45', secondary: '#D8C9B8', accent: '#7A4334' },
+    palette: { primary: '#745146', secondary: '#A86D5A', accent: '#8D5E50' },
   },
   {
     id: 'wall-panel',
     name: 'Panel wall',
     templateId: 'panel-wall',
     params: { thickness: 20 },
-    palette: { primary: '#6E6A63', secondary: '#9AA0A6', accent: '#185FA5' },
+    palette: { primary: '#66655F', secondary: '#94928A', accent: '#7D7C75' },
   },
-  // Building surround (floor-in-a-tower border). Cooler, heavier greys than the
-  // tenant partitions so the shell reads as "the building, not yours."
+  // Retired building-surround instances. Preserved only so saved projects that
+  // already reference them remain readable; new surrounds use wall-office.
   {
     id: 'wall-demising',
     name: 'Demising wall',
@@ -1236,9 +1268,28 @@ export const DEFAULT_WALLS: TileInstance[] = [
     name: 'Wood slat wall',
     templateId: 'slat-wall',
     params: { thickness: 22 },
-    palette: { primary: '#A9714B', secondary: '#5F3E22', accent: '#C68B59' },
+    palette: { primary: '#705643', secondary: '#9C7658', accent: '#83654E' },
   },
 ];
+
+/**
+ * The five wall instances shipped by new projects and new exports. The full
+ * DEFAULT_WALLS registry above intentionally retains retired instances so old
+ * projects can still load, edit, and re-export their existing wall ids.
+ */
+const CORE_WALL_INSTANCE_IDS = new Set([
+  'wall-office',
+  'wall-brick',
+  'wall-panel',
+  'wall-cubicle',
+  'wall-slat',
+]);
+
+export const CORE_WALLS: TileInstance[] = DEFAULT_WALLS.filter(({ id }) =>
+  CORE_WALL_INSTANCE_IDS.has(id));
+
+export const RETIRED_WALLS: TileInstance[] = DEFAULT_WALLS.filter(({ id }) =>
+  !CORE_WALL_INSTANCE_IDS.has(id));
 
 export const DEFAULT_FLOORS: TileInstance[] = [
   {
@@ -2331,7 +2382,7 @@ function baseDefaultProject(): ProjectState {
     stylePresets: structuredClone(DEFAULT_STYLE_PRESETS),
     characters: structuredClone(DEFAULT_CAST),
     props: structuredClone(DEFAULT_PROPS),
-    walls: structuredClone(DEFAULT_WALLS),
+    walls: structuredClone(CORE_WALLS),
     floors: structuredClone(DEFAULT_FLOORS),
     ground: structuredClone(DEFAULT_GROUND),
     profiles: structuredClone(DEFAULT_PROFILES),

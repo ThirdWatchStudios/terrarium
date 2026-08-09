@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-prop-id="door" data-projection="plan" data-runtime-grid-scale="0.5" data-wall-material-id="brick-wall" data-axis="vertical" data-state="open">
+  <title>QuotaCo brick vertical sliding auto-door, open</title>
+  <desc>Brick wall-owned full-cell opening with palette-inheriting structure, compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="vertical-door-open-brick" transform="translate(32 32) scale(.5)">
+    <path id="vertical-door-open-brick-part-01" d="M2 0H126V12H2ZM2 116H126V128H2Z" fill="#323431"/>
+    <path id="vertical-door-open-brick-part-02" d="M8 0H120V12H8ZM8 116H120V128H8Z" fill="#745146"/>
+    <path id="vertical-door-open-brick-part-03" d="M8 0H38V12H8ZM90 0H120V12H90ZM8 116H38V128H8ZM90 116H120V128H90Z" fill="#8D5E50"/>
+    <path id="vertical-door-open-brick-part-04" d="M8 6H120M8 122H120" stroke="#D2AA97" stroke-width="1.3" opacity=".62"/>
+    <path id="vertical-door-open-brick-part-05" d="M38 4H90V16H38Z" fill="#323431"/>
+    <path id="vertical-door-open-brick-part-06" d="M42 4H86V12H42Z" fill="#A86D5A"/>
+    <path id="vertical-door-open-brick-part-07" d="M38 112H90V124H38Z" fill="#323431"/>
+    <path id="vertical-door-open-brick-part-08" d="M42 116H86V124H42Z" fill="#8D5E50"/>
+    <path id="vertical-door-open-brick-part-09" d="M46 4H82V16H46ZM46 112H82V124H46Z" fill="#323431"/>
+    <path id="vertical-door-open-brick-part-10" d="M50 8H78V15H50Z" fill="#A86D5A"/>
+    <path id="vertical-door-open-brick-part-11" d="M50 113H78V120H50Z" fill="#8D5E50"/>
+    <path id="vertical-door-open-brick-part-12" d="M46 14H51V114H46ZM77 14H82V114H77Z" fill="#323431"/>
+    <path id="vertical-door-open-brick-part-13" d="M48 18H51V110H48ZM77 18H80V110H77Z" fill="#8D5E50"/>
+    <circle id="vertical-door-open-brick-part-14" cx="48.5" cy="64" r="1.8" fill="#B96D52"/>
+    <path id="vertical-door-open-brick-part-15" d="M49 14H79V24H49ZM49 104H79V114H49Z" fill="#323431"/>
+    <path id="vertical-door-open-brick-part-16" d="M52 18H76V23H52ZM52 105H76V110H52Z" fill="#6E7C78"/>
+    <path id="vertical-door-open-brick-part-17" d="M58 20H70V23H58ZM58 105H70V108H58Z" fill="#8CA4A1" opacity=".72"/>
+  </g>
+</svg>

@@ -2,8 +2,9 @@
 
 Status: **visual direction and source fit approved; Terrarium production promotion complete**
 
-The current live `window` and the other ten wall-slot receivers remain unchanged.
 The four door states have hand-editable canonical SVGs registered with the production `door` template.
+The live `window` receiver now has separately authored horizontal and vertical canonical SVGs registered
+with the production `window` template. Neighbor glass and the other nine wall-slot receivers remain unchanged.
 A user-run export/import exposed a two-times scale mismatch between the wall and prop render paths.
 
 The opening direction preserves the owner-directed **pressure-mat sliding auto-door** captured in
@@ -18,7 +19,7 @@ All four candidates leave their surrounding floor transparent; the review sheets
 
 The audit proposes three ownership classes:
 
-- Canonical source/refit: door, window, neighbor glass.
+- Canonical source/refit: door and window. Neighbor glass was subsequently deferred until a concrete need arises.
 - Authored source fit: wall screen, kanban board, water fountain, badge reader.
 - Procedural elevation fit: nameplate, HVAC vent, wall calendar, directory placard, extinguisher cabinet.
 

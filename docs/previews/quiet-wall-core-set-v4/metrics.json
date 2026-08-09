@@ -1,0 +1,100 @@
+{
+  "status": "production-promoted-awaiting-browser-export-and-unity-review",
+  "topology": "existing-authored-12-piece-47-blob-wall-grammar",
+  "familyCount": 5,
+  "familyIds": [
+    "office-wall",
+    "brick-wall",
+    "panel-wall",
+    "cubicle-partition",
+    "slat-wall"
+  ],
+  "retiredFromNewBuildVocabulary": [
+    "glass-partition",
+    "curtain-wall",
+    "demising-wall",
+    "living-wall",
+    "branded-wall"
+  ],
+  "sharedChanges": [
+    "narrower-common-outline",
+    "material-owned-cap-front-return-and-corner-faces",
+    "plain-unmasked-cap-surface",
+    "no-interior-crease-strokes",
+    "no-room-side-or-inside-semantics",
+    "low-frequency-material-cues"
+  ],
+  "candidateArtLocalToPreview": false,
+  "canonicalSvgMutation": false,
+  "productionTemplateMutation": true,
+  "compositorMutation": true,
+  "exporterMutation": true,
+  "schemaMutation": false,
+  "unityMutation": false,
+  "browserExport": false,
+  "unityImport": false,
+  "staging": false,
+  "commit": false,
+  "families": [
+    {
+      "id": "office-wall",
+      "label": "Office wall",
+      "role": "default shell and ordinary partitions",
+      "refinement": "plain cap and material-colored front/return faces",
+      "palette": {
+        "primary": "#85867F",
+        "secondary": "#B0AEA5",
+        "accent": "#999A92"
+      },
+      "detail": "#777872"
+    },
+    {
+      "id": "brick-wall",
+      "label": "Brick wall",
+      "role": "older retained structure and service areas",
+      "refinement": "masonry belongs to the front and returns, not the cap",
+      "palette": {
+        "primary": "#745146",
+        "secondary": "#A86D5A",
+        "accent": "#8D5E50"
+      },
+      "detail": "#D2AA97"
+    },
+    {
+      "id": "panel-wall",
+      "label": "Panel wall",
+      "role": "manufactured interior wall system",
+      "refinement": "panel joints are constructed into the visible faces",
+      "palette": {
+        "primary": "#66655F",
+        "secondary": "#94928A",
+        "accent": "#7D7C75"
+      },
+      "detail": "#B5B0A5"
+    },
+    {
+      "id": "cubicle-partition",
+      "label": "Cubicle partition",
+      "role": "fabric workplace dividers",
+      "refinement": "fabric color steps with a face-owned lower reveal",
+      "palette": {
+        "primary": "#6D777D",
+        "secondary": "#99A3A8",
+        "accent": "#808A90"
+      },
+      "detail": "#5D676C"
+    },
+    {
+      "id": "slat-wall",
+      "label": "Wood slat wall",
+      "role": "warm acoustic feature surface",
+      "refinement": "slat reveals are cut into the front and return faces",
+      "palette": {
+        "primary": "#705643",
+        "secondary": "#9C7658",
+        "accent": "#83654E"
+      },
+      "detail": "#503E33"
+    }
+  ]
+}

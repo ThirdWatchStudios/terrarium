@@ -31,6 +31,11 @@
     "props:import:check": "tsx scripts/importQuotaCoWorkhorseProps.ts --check",
     "doors:import": "tsx scripts/importQuotaCoDoors.ts --write",
     "doors:import:check": "tsx scripts/importQuotaCoDoors.ts --check",
+    "windows:import": "tsx scripts/importQuotaCoWindows.ts --write",
+    "windows:import:check": "tsx scripts/importQuotaCoWindows.ts --check",
+    "windows:quiet-wall-fit:preview": "tsx scripts/quietWallWindowRuntimeFitPreview.ts",
+    "windows:quiet-wall-fit:sources:check": "tsx scripts/promoteQuietWallWindowRuntimeFit.ts --check",
+    "windows:quiet-wall-fit:sources:write": "tsx scripts/promoteQuietWallWindowRuntimeFit.ts --write",
     "iris-hardware:import": "tsx scripts/importIrisHardware.ts --write",
     "iris-hardware:import:check": "tsx scripts/importIrisHardware.ts --check",
     "iris-hardware:production:preview": "tsx scripts/canonicalIrisHardwareSourceFitProof.ts",
@@ -74,6 +79,8 @@
     "walls:import:check": "tsx scripts/importWallBevel.ts --check && tsx scripts/importQuotaCoEqualHeightWall.ts --check",
     "walls:preview": "tsx scripts/wallBevelPreview.ts",
     "walls:materials:preview": "tsx scripts/wallTilesetPreview.ts",
+    "walls:quiet-family:preview": "tsx scripts/quietWallFamilyRefinementPreview.ts",
+    "doors:quiet-wall-fit:preview": "tsx scripts/quietWallDoorRefinementPreview.ts",
     "high-oblique:a1a:preview": "tsx scripts/quotaCoHighObliqueA1aPreview.ts",
     "high-oblique:a1b:preview": "tsx scripts/quotaCoHighObliqueA1bPreview.ts",
     "high-oblique:a1b:topology:preview": "tsx scripts/quotaCoHighObliqueA1bTopologyPreview.ts",
@@ -90,7 +97,7 @@
     "style:serve": "tsx scripts/styleLoop.ts --serve-only",
     "iris:preview": "tsx scripts/irisFamilyPreview.ts",
     "flora:preview": "tsx scripts/floraFieldPreview.ts",
-    "assets:check": "npm run parts:check && npm run props:import:check && npm run doors:import:check && npm run iris-hardware:import:check && npm run department-machines:import:check && npm run surfaces:import:check && npm run walls:import:check && npm run ui-shared:import:check"
+    "assets:check": "npm run parts:check && npm run props:import:check && npm run doors:import:check && npm run windows:import:check && npm run iris-hardware:import:check && npm run department-machines:import:check && npm run surfaces:import:check && npm run walls:import:check && npm run ui-shared:import:check"
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",

@@ -469,10 +469,10 @@ export const DEFAULT_LOOK: LookId = 'raw';
  * rendering), `portrait@Nx.png` (corporate-identity badge photo), and a
  * derived `renderings.unit` palette in exported recipe.json + layer manifests.
  * All derived from the identity at export; version bump only.
- * v19 added wall-atlas `meta.contextualFacing` for the accepted QuotaCo
- * equal-height production wall. It declares the west-authored frames Unity may
- * mirror for east presentation; runtime room context still selects the facing.
- * The metadata is derived at export, so no project data migration is required.
+ * v19 added optional wall-atlas `meta.contextualFacing` for the former QuotaCo
+ * equal-height wall. Current core walls are topology-only and omit it under the
+ * extension's already-defined no-mirroring fallback; no project migration or
+ * schema bump is required for that art-family switch.
  * v20 added the Priority 1 department production assets, versioned
  * `department-assets.json`, and work-canister stamp overlays. The catalog and
  * overlays are derived at export, so no stored project migration is required.

@@ -53,7 +53,7 @@ must name the browser-produced ZIP, never substitute a headless render.
 |---|---|---|---|
 | `<name>-recipe.json` | recipe (verbatim) | character | Visual recipe (§3.1). |
 | `<name>-atlas@Nx.json` + sheet/layer PNGs | `characterAtlas` / `characterLayerManifest` | character | Sprite frames + anchors for the renderer. |
-| `props/<instance>/sprite@Nx.png` + `atlas@Nx.json` + `layers@Nx.png` + `layers-manifest@Nx.json` + `prop.json` | `propDesc` / `propAtlas` / `propLayerManifest` | prop | One baked prop instance. The stable `door` template has explicit `open=0|1` and `facing=0|1` source states; default inventory includes horizontal and separately authored vertical closed/open instances so a consumer never rotates the horizontal elevation to fabricate a wall axis. Door art is source-compensated to a centered ~64-unit wall-slot inside the ordinary 128-unit prop frame. Consumers apply normal prop scale, not a door-only runtime transform. |
+| `props/<instance>/sprite@Nx.png` + `atlas@Nx.json` + `layers@Nx.png` + `layers-manifest@Nx.json` + `prop.json` | `propDesc` / `propAtlas` / `propLayerManifest` | prop | One baked prop instance. The stable `door` template has explicit `open=0|1`, `facing=0|1`, and internal `material=0..4` source states: five retained wall materials × horizontal/vertical × closed/open. The stable `window` template likewise has `facing=0|1` and internal `material=0..4`: five materials × two fixed views. All twenty door SKUs and ten window SKUs retain their respective stable template ids, so `facility-catalog.json` exposes one player-facing Door and one Window. The receiver derives material from the replaced wall and resolves an exact internal prop id; unsuffixed Office ids remain compatibility fallbacks. Both families are source-compensated to a centered ~64-unit wall-slot inside the ordinary 128-unit prop frame. Consumers apply normal prop scale, not an opening-specific runtime transform. |
 | `moods@Nx.png` + `moods-atlas@Nx.json` | `moodAtlas` | character | 6 moods × 4 facings; per-character **face overlays** only (the overhead emote is no longer baked here — see mood-emotes). Sim selects by behavioral state (§3.9). |
 | `<agentId>-profile.json` | `serializeProfile` | character | Persona (§3.2). `meta.schema = character_model.md`. |
 | `scenario.json` | `serializeScenario` | scenario | Scenario verbatim + `meta.schema = scenario_model.md` (§3.3). |
@@ -84,7 +84,7 @@ must name the browser-produced ZIP, never substitute a headless render.
 | `interaction-anchors.json` | `computeInteractionAnchors` | scene | Interaction points derived from placed props. |
 | `ground/<id>/tile@Nx.png` + `atlas@Nx.json` (+ `layers@Nx.png` + `layers-manifest@Nx.json` + `ground.json`) | `groundAtlas` / `groundLayerManifest` | project | **Outdoor ground surfaces** — the DISTINCT *ground kind* (B1.5 "the build site", decision D2): grass ×3 / meadow ×2 / dirt (natural) + asphalt / sidewalk / gravel (paved) + pond-water (water). Same flat-tile machinery as floors, but its own folder + `kind:"ground"` atlas + the −20000 sort band, so the sim's `ImportGround` pulls it in as a separate layer under the interior floor and never treats it as paintable floor (§3.18). Natural and water families are clinical-exempt; paved surfaces drain (§3.18). |
 | `ground-overlays/<id>/tileset@Nx.png` + `atlas@Nx.json` + `overlay.json` | `groundOverlayAtlas` / `deriveGroundOverlays` | project (derived) | **Ground-edge transition overlays** — `grass-fringe` softens natural seams, `curb-edge` draws a poured lip on paved receivers, and `pond-shore` draws a soft earth bank inside water receivers. All use the same 8×6 / 47-frame `mask_<i>` tileset shape and blob contract as walls; sort band −19000 (above ground, below floors). Code-owned and palette-derived from their source ground families (§3.18). |
-| `walls/<id>/tileset@Nx.png` + `atlas@Nx.json` + `wall.json` | `wallTilesetDesc` / `wallAtlas` | project | **Wall autotiles** — 8×6 sheets carrying the canonical 47 `mask_<i>` blob frames. Normal `wall-office` exports use the accepted QuotaCo equal-height production bank and add atlas `meta.contextualFacing`, declaring which west-authored frames the sim may mirror for an east presentation (§3.19). |
+| `walls/<id>/tileset@Nx.png` + `atlas@Nx.json` + `wall.json` | `wallTilesetDesc` / `wallAtlas` | project | **Wall autotiles** — 8×6 sheets carrying the canonical 47 `mask_<i>` blob frames. New projects ship the five topology-only core families (Office, Brick, Panel, Cubicle, Wood Slat); their atlases declare `meta.orientation: "topology-only"` and require no room-side mirroring (§3.19). Retired wall ids remain loadable for legacy projects. |
 | `construction-crew/<id>/sheet@Nx.png` + `atlas@Nx.json` + `moods(-atlas)@Nx` + `layers@Nx.png` + `manifest@Nx.json` + `unit-layers@Nx.png` + `unit-manifest@Nx.json` + `recipe.json` + `profile.json` | character-export functions | project | **Construction persona** — an authored IRIS fabrication robot the sim spawns the build crew from (B1.5, decision D4). Its `construction-worker` recipe uses the production large-frame rig plus special machine-only head/chassis parts; those part ids remain resolvable for composition but are not ordinary authoring choices. The recipe is a code-owned ingredient in its own folder, decoupled from the editable office cast — NOT one of the four lockstep hero agents, so crew size stays dynamic (§3.18). |
 
 `buildScenarioPackage` is the assembled bundle — it runs `resolveScenarioRun` (persona baseline + scenario seeds/overrides) and emits the scenario-scoped files above.
@@ -197,7 +197,7 @@ The default golden export and `export company:<archetype>:<seed>` both ship a **
 - **Room ids are suffixed / multiplied — bind by `kind`, not `id`.** Bullpens are `cubicle-farm@<dept>` (one per populated department), and there are up to three corridor rooms: `hallway`, `hallway-east`, `hallway-cross`. Every room still carries its archetype in **`kind`** (`cubicle-farm`, `hallway`, `manager-office`, `break-room`, `conference-room`, `reception`, `focus-room`, `copy-room`). **The sim's location map must resolve by `kind`** (and per-agent `desk:<agentId>` / `interactionType` anchors), since the bare ids `cubicle-farm`/`hallway` no longer uniquely exist. Anchors remain the precise bind: `desk:<agentId>` for workstations, `interactionType` for amenities.
 - **Layout = reception entrance + a bending spine.** Reception is the full-height left entrance. With ≥4 rooms the spine **bends**: a left block and a right block sit at *different* corridor heights, joined by a full-height **cross corridor** (`hallway-cross`) — an S/Z hallway, not a straight band. Rooms bud off **both** sides at **varied widths/depths** with **staggered doorways**; small `focus-room`/`copy-room` rooms are sprinkled in. The sim-bound common rooms (`manager-office`, `break-room`, `conference-room`, `hallway`) are always present (in `wing-common`); `management` is the manager office, never a bullpen.
 - **`cols`/`rows` are not a fixed formula.** `rows` stays 14; `cols` grows roughly with department count but varies with seeded room widths + sprinkled rooms. Do not assume `8 + N*8`. Invariants still hold: every interior cell belongs to a room (no gaps), room interiors are disjoint, single shared walls (inclusive overlap-by-1, no double walls), single-tile doorways, every room reachable from reception.
-- **Per-department theming.** Each `cubicle-farm@<dept>` paints its department's `theme.floor` / `theme.wall` (see §3.10) — the sim needs tile sprites for every floor/wall id the catalog can emit (`floor-wood|terrazzo|rubber-mat|utility-vinyl|quiet-carpet|carpet|carpet-tiles|linoleum`, `wall-office|glass|panel|brick|cubicle`); the building shell stays `wall-office`. **Outdoor ground is a separate kind, not in this floor set** — the outdoor surfaces (`grass|meadow|dirt|asphalt|sidewalk|gravel|pond-water`, shipped as ground ids `ground-grass|ground-grass-b|ground-grass-c|ground-meadow|ground-meadow-b|ground-dirt|ground-asphalt|ground-sidewalk|ground-gravel|ground-pond-water`) ride the `ground/` folder and the ground layer, never the interior floor grid (§3.18).
+- **Per-department theming.** Each `cubicle-farm@<dept>` paints its department's `theme.floor` / `theme.wall` (see §3.10) — the sim needs tile sprites for every floor/wall id the catalog can emit (`floor-wood|terrazzo|rubber-mat|utility-vinyl|quiet-carpet|carpet|carpet-tiles|linoleum`, `wall-office|panel|brick|cubicle`); the building shell stays `wall-office`. Wood Slat remains player-buildable but is not a generated department default. **Outdoor ground is a separate kind, not in this floor set** — the outdoor surfaces (`grass|meadow|dirt|asphalt|sidewalk|gravel|pond-water`, shipped as ground ids `ground-grass|ground-grass-b|ground-grass-c|ground-meadow|ground-meadow-b|ground-dirt|ground-asphalt|ground-sidewalk|ground-gravel|ground-pond-water`) ride the `ground/` folder and the ground layer, never the interior floor grid (§3.18).
 - **Per-wing amenities.** Every bullpen carries its own `water_cooler` + `printer` (+ plant) interaction anchors, plus a `desk:<agentId>` anchor per seated agent (incl. the generated `golden-<dept>-N` cast).
 - **Cast is dynamic.** The default bundle ships the 4 hero agents **plus a generated supporting population** (`golden-<dept>-N`), each with a recipe + `profile.json` + relationships. Enumerate all `characters/*` folders; do not hardcode the 4. `agentId == recipe id == layer-atlas family` still holds.
 - **Parity:** the `tests/golden/office-layout/*.json` fixtures changed substantially; the sim-side C# parity fixtures (S1.5.1) must be re-synced from these.
@@ -488,7 +488,7 @@ The single org model — structured department units the office-scale work refer
 ```jsonc
 [
   { "id": "engineering", "label": "Engineering", "category": "technical",
-    "capabilities": ["email","im","logs"], "theme": { "floor": "floor-utility-vinyl", "wall": "wall-glass", "accent": "#1FB6C9" } }
+    "capabilities": ["email","im","logs"], "theme": { "floor": "floor-utility-vinyl", "wall": "wall-office", "accent": "#1FB6C9" } }
 ]
 ```
 
@@ -660,44 +660,33 @@ The wild set uses asymmetrical crowns, broken contours, irregular negative space
 
 **Construction persona (decision D4).** The `construction-worker` recipe is an IRIS-operated **fabrication robot**, not a human tradesperson: production rig `body-large-frame`, machine head `head-fab`, no hair, and `outfit-fab-chassis`, on the shared sterile-grey/IRIS-green palette. The three canonical `assets/parts/head/fab.*.svg` sources own the visible head art and the three canonical `assets/parts/outfit/fab-chassis.*.svg` sources own the visible chassis overlay; the chassis receiver is explicitly fixed to `body-large-frame`, while the shared pose/arm rig remains procedural. This source-authority change does not add runtime SVG parsing or alter the payload: Terrarium still bakes the final sheets and layers consumed by Unity. `head-fab` and `outfit-fab-chassis` remain resolvable by id for this recipe and compositor coverage but are excluded from ordinary part pickers and random/seeded employee generation. The crew is an **authored persona**, deliberately **NOT** a fifth fixed default-cast agent id — that would trip the four-hero agent-id lockstep (`contract.test.ts`) and freeze crew size. It therefore ships as a code-owned ingredient in its own `construction-crew/<id>/` folder, decoupled from the editable office cast (never seated at a desk, never in the org chart). It carries the binder essentials — baked `sheet`+`atlas`, the mood-overlay atlas, the re-tintable layer atlas (`manifest`, the NPC composer's input) + IRIS's `unit-layers` rendering — plus `recipe.json` and `profile.json`, so `SpriteToolkitOfficeBinder.SyncAgentNpcs` binds a crew agent (`characterConfigId: "construction-worker"`) exactly as it binds any NPC. The sim sizes the crew dynamically (2–4) from this one template. Its current art is mechanically complete and serviceable, with silhouette/detail polish intentionally iterative.
 
-### 3.19 Contextual east/west wall presentation
+### 3.19 Topology-only wall presentation
 
-The accepted QuotaCo equal-height production tileset keeps the canonical
-8×6 / 47-frame wall atlas. The authored SVG and ledger bank is deterministically
-compiled into browser-safe production data by `npm run walls:import`; the
-freshness check runs before development, builds, and exports. Therefore the
-browser `Export all (zip)`, the normal headless `npm run export`, and individual
-wall downloads all use the same accepted frame registry.
-The registry's literal authored colors remain unchanged under the raw look and
-pass through the ordinary `clinicalSurfaceColor` lens for clinical exports, so
-the fixed QuotaCo bank still drains with the rest of the building.
+The production wall system keeps the canonical 8×6 / 47-frame atlas and shared
+256→47 blob mapping. Connectivity alone selects each frame. The five new-project
+families — Office, Brick, Panel, Cubicle, and Wood Slat — construct their cap,
+front, side-return, and corner planes from their material palette on the shared
+authored 12-piece topology. Material cues appear only on visible face planes;
+there is no room-side or semantic “inside” input.
 
-Connectivity selects the blob frame, but the
-vertical-only rows `mask_1`, `mask_4`, and `mask_5` cannot encode whether the
-wall is the west or east side of a room. Terrarium therefore bakes their
-west-authored pixels once and declares the permitted runtime mirror in every
-normal `office-wall` family atlas, including browser-created duplicates:
+Every current core-wall atlas therefore declares:
 
 ```jsonc
 {
   "meta": {
-    "contextualFacing": {
-      "authoredFacing": "west",
-      "mirrorXForEastPresentation": ["mask_1", "mask_4", "mask_5"]
-    }
+    "orientation": "topology-only"
   }
 }
 ```
 
-This block is wall-family-specific and remains absent from wall atlases that do
-not declare contextual mirroring. When present, the sim may set
-`SpriteRenderer.flipX = true` only
-for a listed frame when room or placement context selects the east
-presentation; the direct west presentation uses `flipX = false`. Terrarium
-owns the authored-facing and permitted-frame declaration. The sim owns the
-contextual east/west decision and must not infer new blob indices or duplicate
-the atlas. Contextual presentation adds no duplicate PNG frames and does not
-alter frame names, frame order, pivots, or the shared 256→47 blob mapping.
+The former optional `meta.contextualFacing` block remains a recognized legacy
+atlas extension for already-exported asymmetric equal-height wall packs, but no
+current Terrarium wall emits it. Its documented absence behavior is unchanged:
+the Unity importer records an empty authored facing and mirror-mask set, and the
+runtime does not flip any frame. This retires room-context mirroring without
+changing frame names, frame order, pivots, atlas layout, or stored project data.
+The accepted equal-height SVG/ledger bank remains reproducible archive source;
+it is no longer the ordinary compositor or export dispatch for `wall-office`.
 
 ### 3.20 Department production assets and pneumatic transport
 
@@ -918,6 +907,6 @@ Things the sim will likely need that the tool does **not** capture yet — decid
 ## 7. Compatibility rules
 
 - **Adding** a suggestion to a free-text vocabulary (drive, trait tag, KPI, location, activity) is **non-breaking** — it only affects authoring autocomplete, never validation or export shape. **Adding an activity badge** is likewise non-breaking: a new shared-atlas cell the sim shows for that `activity` or ignores (§3.9).
-- **Version gating:** `profile.json`, `scenario.json`, and `scenario-template.json` carry `meta.schemaVersion` (currently **21**, the project schema version; migrations remain centralized in `src/core/migrations.ts`). `office-layout.json` carries its **own** payload version (currently **4** — v2 added `rooms[].departmentId` + `wings[]`, v3 added `connectivity[]`, and v4 added optional `tenantRect`, §3.4). v19 added the `wall-office` atlas `meta.contextualFacing` declaration (§3.19); v20 added `department-assets.json` plus work-canister overlay files; v21 introduced that manifest's v2 `handCarriedItems[]`; the later farm-form addendum advances the self-versioned manifest to v3 without changing stored project data (§3.20). These are derived at export and need no stored-project migration. The earlier campus art inventory changes ride existing ground, ground-overlay, prop, part, and facility-catalog paths. The sim version-gates on these — `scenario.json` gates a whole scenario package (the bundled `drives.json`/`traits.json`/`departments.json`/`org-structure.json` are resolved within that already-versioned context); `profile.json` gates the per-character visual-import path; `department-assets.json` carries its own manifest version plus the project `schemaVersion`. Bare-array catalogs (and the derived `org-structure.json`) are intentionally unversioned — they never travel without a versioned `scenario.json` or `project.json`.
+- **Version gating:** `profile.json`, `scenario.json`, and `scenario-template.json` carry `meta.schemaVersion` (currently **21**, the project schema version; migrations remain centralized in `src/core/migrations.ts`). `office-layout.json` carries its **own** payload version (currently **4** — v2 added `rooms[].departmentId` + `wings[]`, v3 added `connectivity[]`, and v4 added optional `tenantRect`, §3.4). v19 added the optional asymmetric-wall `meta.contextualFacing` extension (§3.19); current topology-only wall atlases omit it under its already-defined no-mirroring fallback and add only `meta.orientation`, so this art-family switch does not change the schema. v20 added `department-assets.json` plus work-canister overlay files; v21 introduced that manifest's v2 `handCarriedItems[]`; the later farm-form addendum advances the self-versioned manifest to v3 without changing stored project data (§3.20). These are derived at export and need no stored-project migration. The earlier campus art inventory changes ride existing ground, ground-overlay, prop, part, and facility-catalog paths. The sim version-gates on these — `scenario.json` gates a whole scenario package (the bundled `drives.json`/`traits.json`/`departments.json`/`org-structure.json` are resolved within that already-versioned context); `profile.json` gates the per-character visual-import path; `department-assets.json` carries its own manifest version plus the project `schemaVersion`. Bare-array catalogs (and the derived `org-structure.json`) are intentionally unversioned — they never travel without a versioned `scenario.json` or `project.json`.
 - **Renaming/removing a field** in §3 **is** breaking — bump `CURRENT_SCHEMA_VERSION` (which flows into `meta.schemaVersion`), add a migration step, and update the sim loader.
 - The sim should **fallback + log**, never hard-fail, on an unrecognized free-text id (drive, KPI, activity). That tolerance is what lets the tool ship a richer vocabulary without lockstep sim releases.

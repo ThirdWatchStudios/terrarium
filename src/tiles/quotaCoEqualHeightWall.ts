@@ -8,22 +8,24 @@ import {
 } from './quotaCoEqualHeightWallContract';
 import type { TileInstance } from '../core/types';
 
-const productionArt: QuotaCoEqualHeightWallRegistry =
+// Reproducible archive bank for legacy proofs and previously exported packs.
+// Current wall composition enters through WALL_TEMPLATES instead.
+const archivedArt: QuotaCoEqualHeightWallRegistry =
   QUOTA_CO_EQUAL_HEIGHT_WALL_ART;
 
 let validated = false;
 
-function validatedProductionArt(): QuotaCoEqualHeightWallRegistry {
-  if (validated) return productionArt;
-  if (productionArt.length !== BLOB_TILE_COUNT) {
+function validatedArchivedArt(): QuotaCoEqualHeightWallRegistry {
+  if (validated) return archivedArt;
+  if (archivedArt.length !== BLOB_TILE_COUNT) {
     throw new Error(
-      `QuotaCo production wall has ${productionArt.length} frames; ` +
+      `QuotaCo archived wall has ${archivedArt.length} frames; ` +
       `expected ${BLOB_TILE_COUNT}`,
     );
   }
   for (let index = 0; index < BLOB_TILE_COUNT; index += 1) {
     const frame: QuotaCoEqualHeightWallFrame | undefined =
-      productionArt[index];
+      archivedArt[index];
     if (
       !frame ||
       frame.id !== `mask_${index}` ||
@@ -35,7 +37,7 @@ function validatedProductionArt(): QuotaCoEqualHeightWallRegistry {
       throw new Error(`QuotaCo production wall drift at mask_${index}`);
     }
   }
-  const mirrorMasks = productionArt
+  const mirrorMasks = archivedArt
     .filter(({ flipXForEastPresentation }) => flipXForEastPresentation)
     .map(({ index }) => index);
   if (
@@ -47,14 +49,14 @@ function validatedProductionArt(): QuotaCoEqualHeightWallRegistry {
     throw new Error('QuotaCo production wall contextual-facing mask drift');
   }
   validated = true;
-  return productionArt;
+  return archivedArt;
 }
 
 export function quotaCoEqualHeightWallFramesFor(
   wall: Pick<TileInstance, 'templateId'>,
 ): QuotaCoEqualHeightWallRegistry | undefined {
   return wall.templateId === QUOTA_CO_EQUAL_HEIGHT_WALL_TEMPLATE_ID
-    ? validatedProductionArt()
+    ? validatedArchivedArt()
     : undefined;
 }
 

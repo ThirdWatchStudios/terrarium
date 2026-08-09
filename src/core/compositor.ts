@@ -29,14 +29,22 @@ import { getIcon } from '../parts/icons';
 import { getPose, poseVariantFor, type Pose, type PoseTransforms, type PoseVariant } from '../parts/poses';
 import { normalizedRiggedAccessories } from './recipe';
 import { authoredPropArt, authoredPropSvg } from '../props/authoredArt';
+import {
+  remapQuotaCoDoorWallShapes,
+  remapQuotaCoDoorWallSvg,
+} from '../props/doorManifest';
+import {
+  remapQuotaCoWindowWallShapes,
+  remapQuotaCoWindowWallSvg,
+} from '../props/windowManifest';
 import { PROP_TEMPLATES } from '../props/templates';
 import {
   FLOOR_TEMPLATES,
   WALL_TEMPLATES,
   buildProceduralOfficeWall,
+  isCoreWallTemplateId,
 } from '../tiles/templates';
 import { GROUND_OVERLAY_BUILDERS } from '../tiles/groundOverlays';
-import { quotaCoEqualHeightWallFrameFor } from '../tiles/quotaCoEqualHeightWall';
 import { clinicalSurfaceColor, isClinicalStyle } from './look';
 
 /**
@@ -1000,30 +1008,31 @@ export function composeWallTile(
   neighbors: number,
   pixelSize?: number,
 ): string {
-  const productionFrame = quotaCoEqualHeightWallFrameFor(wall, neighbors);
-  if (productionFrame) {
-    const productionShapes = isClinicalStyle(style)
-      ? productionFrame.shapes.map((shape) => ({
-          ...shape,
-          fill: shape.fill
-            ? clinicalSurfaceColor(shape.fill)
-            : undefined,
-          stroke: shape.stroke
-            ? clinicalSurfaceColor(shape.stroke)
-            : undefined,
-        }))
-      : productionFrame.shapes;
-    return composeWallShapes(
-      productionShapes,
-      wall,
-      style,
-      pixelSize,
-    );
-  }
   const template = WALL_TEMPLATES.find((t) => t.id === wall.templateId);
   if (!template) return svgWrap('', pixelSize ?? style.render.baseSize);
-  const shapes = template.build(neighbors, wall.params, wall.palette);
-  return composeWallShapes(shapes, wall, style, pixelSize);
+  const coreWall = isCoreWallTemplateId(wall.templateId);
+  const built = template.build(neighbors, wall.params, wall.palette);
+  const shapes = coreWall && isClinicalStyle(style)
+    ? built.map((shape) => ({
+        ...shape,
+        fill: shape.fill?.startsWith('#')
+          ? clinicalSurfaceColor(shape.fill)
+          : shape.fill,
+        stroke: shape.stroke?.startsWith('#')
+          ? clinicalSurfaceColor(shape.stroke)
+          : shape.stroke,
+      }))
+    : built;
+  // The accepted quiet-wall proof used a 30% lighter outline than the rest of
+  // the art. Scale instead of hard-coding 1.75 so clinical/high-contrast style
+  // presets keep their relative outline intent.
+  const wallStyle = coreWall && style.outline.width > 0
+    ? {
+        ...style,
+        outline: { ...style.outline, width: style.outline.width * 0.7 },
+      }
+    : style;
+  return composeWallShapes(shapes, wall, wallStyle, pixelSize);
 }
 
 export function composeWallShapes(
@@ -1219,6 +1228,9 @@ export function propPaletteForRender(
   style: StyleSheet,
   options?: PropStyleOptions,
 ): PropPalette {
+  // Door instance palettes are deliberately wall-owned. Export aligns them to
+  // the matching looked wall before flat and layer rendering.
+  if (prop.templateId === 'door' || prop.templateId === 'window') return prop.palette;
   const art = authoredPropArt(prop.templateId);
   if (
     art &&
@@ -1255,7 +1267,12 @@ export function propLayers(
   const template = PROP_TEMPLATES.find((t) => t.id === prop.templateId);
   if (!template) return [];
   const palette = propPaletteForRender(prop, style, options);
-  const shapes = template.build(prop.params, palette);
+  const builtShapes = template.build(prop.params, palette);
+  const shapes = prop.templateId === 'door'
+    ? remapQuotaCoDoorWallShapes(builtShapes, prop.params, prop.palette)
+    : prop.templateId === 'window'
+      ? remapQuotaCoWindowWallShapes(builtShapes, prop.params, prop.palette)
+      : builtShapes;
   if (!globalPropStyleEnabled(prop.templateId, options)) {
     const resolve = makePropResolver(palette);
     return [{
@@ -1364,7 +1381,12 @@ export function composeProp(
 ): string {
   const template = PROP_TEMPLATES.find((t) => t.id === prop.templateId);
   if (!template) return svgWrap('', pixelSize ?? style.render.baseSize);
-  const canonicalSvg = authoredPropSvg(prop.templateId, prop.params);
+  const canonicalSource = authoredPropSvg(prop.templateId, prop.params);
+  const canonicalSvg = canonicalSource && prop.templateId === 'door'
+    ? remapQuotaCoDoorWallSvg(canonicalSource, prop.params, prop.palette)
+    : canonicalSource && prop.templateId === 'window'
+      ? remapQuotaCoWindowWallSvg(canonicalSource, prop.params, prop.palette)
+      : canonicalSource;
   if (canonicalSvg && options?.restyleAuthoredSvg !== true && !isClinicalStyle(style)) {
     const size = pixelSize ?? style.render.baseSize;
     return canonicalSvg.replace(
@@ -1375,7 +1397,12 @@ export function composeProp(
     );
   }
   const palette = propPaletteForRender(prop, style, options);
-  const shapes = template.build(prop.params, palette);
+  const builtShapes = template.build(prop.params, palette);
+  const shapes = prop.templateId === 'door'
+    ? remapQuotaCoDoorWallShapes(builtShapes, prop.params, prop.palette)
+    : prop.templateId === 'window'
+      ? remapQuotaCoWindowWallShapes(builtShapes, prop.params, prop.palette)
+      : builtShapes;
   const resolve = makePropResolver(palette);
   const globalStyle = globalPropStyleEnabled(prop.templateId, options);
   const outline =

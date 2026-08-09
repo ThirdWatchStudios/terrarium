@@ -55,11 +55,6 @@ import { serializeScenarioTemplateLibrary, type ScenarioTemplate } from './scena
 import { PROP_TEMPLATES } from '../props/templates';
 import { BLOB_CONFIGS, BLOB_TILE_COUNT } from '../tiles/blob';
 import { deriveGroundOverlays } from '../tiles/groundOverlays';
-import {
-  QUOTA_CO_EQUAL_HEIGHT_AUTHORED_FACING,
-  QUOTA_CO_EQUAL_HEIGHT_MIRROR_X_MASKS,
-} from '../tiles/quotaCoEqualHeightWallContract';
-import { quotaCoEqualHeightWallFramesFor } from '../tiles/quotaCoEqualHeightWall';
 import { themeUss, themeJson } from '../data/uiPalette';
 import { ICONS, CURSORS } from '../parts/icons';
 import { overlayStyleJson } from './overlayStyle';
@@ -70,6 +65,8 @@ import { projectWithLook } from './look';
 import { normalizeCharacterRecipe } from './recipe';
 import { CONSTRUCTION_CREW, CONSTRUCTION_PROFILES } from '../data/defaults';
 import { authoredPropArt } from '../props/authoredArt';
+import { quotaCoDoorMaterialForParams } from '../props/doorManifest';
+import { quotaCoWindowMaterialForParams } from '../props/windowManifest';
 import { departmentAssetCatalogJson } from '../props/departmentAssetCatalog';
 import { DEPARTMENT_MACHINE_DEFAULT_PROPS } from '../props/departmentMachineManifest';
 import { QUOTA_CO_DEPARTMENT_STAMP_OVERLAYS } from '../props/generated/quotaCoDepartmentMachineArt';
@@ -1007,7 +1004,6 @@ export function wallAtlas(
   scale: number,
 ) {
   const size = style.render.baseSize * scale;
-  const productionFrames = quotaCoEqualHeightWallFramesFor(wall);
   const frames: Record<string, { x: number; y: number; w: number; h: number; name: string }> = {};
   // Frame naming stays `mask_<i>` (D3) — "mask" now means "blob index 0..46",
   // so the sim's MaskFromFrameName parse is unchanged.
@@ -1035,17 +1031,7 @@ export function wallAtlas(
       autotile: '8-neighbor blob (47)',
       blobTable: 'blob-index-table.json (shared 256→47 contract; frame mask_<i> = blob index)',
       sorting: 'wall-layer',
-      ...(productionFrames
-        ? {
-          contextualFacing: {
-            authoredFacing: QUOTA_CO_EQUAL_HEIGHT_AUTHORED_FACING,
-            mirrorXForEastPresentation:
-              QUOTA_CO_EQUAL_HEIGHT_MIRROR_X_MASKS.map(
-                (mask) => `mask_${mask}` as const,
-              ),
-          },
-        }
-        : {}),
+      orientation: 'topology-only',
     },
   };
 }
@@ -1489,6 +1475,49 @@ function withDepartmentMachineInventory(
 }
 
 /**
+ * Door leaves are shared equipment, but their socket, lintel, jamb, and return
+ * are wall-owned. Resolve each internal door SKU against the matching wall
+ * instance after the project look has been applied so flat PNGs, layer PNGs,
+ * and prop metadata cannot drift from the wall atlas exported beside them.
+ */
+export function projectWithDoorWallPalettes(project: ProjectState): ProjectState {
+  const walls = project.walls ?? [];
+  let changed = false;
+  const props = project.props.map((prop) => {
+    if (prop.templateId !== 'door') return prop;
+    const material = quotaCoDoorMaterialForParams(prop.params);
+    const wall = walls.find((candidate) =>
+      material.wallIds.includes(candidate.id) || material.wallIds.includes(candidate.templateId));
+    if (!wall) return prop;
+    changed = true;
+    return {
+      ...prop,
+      palette: { ...wall.palette },
+    };
+  });
+  return changed ? { ...project, props } : project;
+}
+
+/** Window structure follows its matching looked wall; glazing equipment does not. */
+export function projectWithWindowWallPalettes(project: ProjectState): ProjectState {
+  const walls = project.walls ?? [];
+  let changed = false;
+  const props = project.props.map((prop) => {
+    if (prop.templateId !== 'window') return prop;
+    const material = quotaCoWindowMaterialForParams(prop.params);
+    const wall = walls.find((candidate) =>
+      material.wallIds.includes(candidate.id) || material.wallIds.includes(candidate.templateId));
+    if (!wall) return prop;
+    changed = true;
+    return {
+      ...prop,
+      palette: { ...wall.palette },
+    };
+  });
+  return changed ? { ...project, props } : project;
+}
+
+/**
  * Regenerate the entire asset set — every character sheet/moods/layers, prop,
  * wall, and floor at 1x/2x/4x with atlas JSON, the project file, and (when a
  * scene exists) office-layout.json — into a sink, rasterizing PNGs through the
@@ -1513,7 +1542,9 @@ export async function exportAll(
     characters: rawProject.characters.map(normalizeCharacterRecipe),
     props: withDepartmentMachineInventory(rawProject.props).map(normalizeAuthoredPropPalette),
   };
-  const project = projectWithLook(exportSource);
+  const project = projectWithWindowWallPalettes(
+    projectWithDoorWallPalettes(projectWithLook(exportSource)),
+  );
   const { style } = project;
   const scales = EXPORT_SCALES.length;
 

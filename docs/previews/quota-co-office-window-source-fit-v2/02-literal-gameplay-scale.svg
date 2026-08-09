@@ -1,0 +1,291 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720"><rect width="1280" height="720" fill="#E7E1D2"/><text x="24" y="34" font-family="Inter,Arial,sans-serif" font-size="21" font-weight="860" fill="#292C2A" text-anchor="start">OFFICE WINDOW V2 · LITERAL GAMEPLAY-SCALE STUDY</text><text x="24" y="58" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="640" fill="#626861" text-anchor="start">1280 × 720 review frame · exact 90 px normal and 40 px far cells · accepted slider included as facing control</text><text x="1256" y="34" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="840" fill="#B65F4D" text-anchor="end">REVIEW ONLY</text><rect x="18" y="78" width="846" height="616" rx="12" fill="#F6F1E6" stroke="#A39B8B" stroke-width="1.5"/><text x="38" y="110" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="840" fill="#292C2A" text-anchor="start">ACTIVE OFFICE · 90 PX / CELL</text><rect x="38" y="130" width="720" height="540" fill="#748088"/><path d="M128 130V670" stroke="#D9D4C7" opacity=".18"/><path d="M218 130V670" stroke="#D9D4C7" opacity=".18"/><path d="M308 130V670" stroke="#D9D4C7" opacity=".18"/><path d="M398 130V670" stroke="#D9D4C7" opacity=".18"/><path d="M488 130V670" stroke="#D9D4C7" opacity=".18"/><path d="M578 130V670" stroke="#D9D4C7" opacity=".18"/><path d="M668 130V670" stroke="#D9D4C7" opacity=".18"/><path d="M38 220H758" stroke="#D9D4C7" opacity=".18"/><path d="M38 310H758" stroke="#D9D4C7" opacity=".18"/><path d="M38 400H758" stroke="#D9D4C7" opacity=".18"/><path d="M38 490H758" stroke="#D9D4C7" opacity=".18"/><path d="M38 580H758" stroke="#D9D4C7" opacity=".18"/><svg x="38" y="130" width="90" height="90" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M0 76.211L128 76.211 128 117.693 0 117.693Z" fill="#252A28"/><path d="M0 79.53L128 79.53 128 112.715 0 112.715Z" fill="#294B3C"/><path d="M0 117.693L128 117.693 128 123.5 0 123.5Z" fill="#000000" opacity="0.12"/><path d="M126 81.189L126 111.056" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/><path d="M0 11.5L128 11.5 128 79.53 0 79.53Z" fill="#252A28"/><path d="M0 14.819L128 14.819 128 79.53 0 79.53Z" fill="#D9D0B9"/><path d="M0 14.819L128 14.819 128 23.115 0 23.115Z" fill="#FFFFFF" opacity="0.3"/><path d="M0 64.596L128 64.596 128 74.552 0 74.552Z" fill="#B65F4D"/><path d="M0 64.596L128 64.596 128 67.085 0 67.085Z" fill="#FFFFFF" opacity="0.1"/><path d="M0 74.552L128 74.552 128 79.53 0 79.53Z" fill="#294B3C"/><path d="M1 23.115L127 23.115" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/><path d="M1 74.552L127 74.552" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/><path d="M126 24.774L126 77.87" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/></svg><svg x="128" y="130" width="90" height="90" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M0 76.211L128 76.211 128 117.693 0 117.693Z" fill="#252A28"/><path d="M0 79.53L128 79.53 128 112.715 0 112.715Z" fill="#294B3C"/><path d="M0 117.693L128 117.693 128 123.5 0 123.5Z" fill="#000000" opacity="0.12"/><path d="M126 81.189L126 111.056" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/><path d="M0 11.5L128 11.5 128 79.53 0 79.53Z" fill="#252A28"/><path d="M0 14.819L128 14.819 128 79.53 0 79.53Z" fill="#D9D0B9"/><path d="M0 14.819L128 14.819 128 23.115 0 23.115Z" fill="#FFFFFF" opacity="0.3"/><path d="M0 64.596L128 64.596 128 74.552 0 74.552Z" fill="#B65F4D"/><path d="M0 64.596L128 64.596 128 67.085 0 67.085Z" fill="#FFFFFF" opacity="0.1"/><path d="M0 74.552L128 74.552 128 79.53 0 79.53Z" fill="#294B3C"/><path d="M1 23.115L127 23.115" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/><path d="M1 74.552L127 74.552" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/><path d="M126 24.774L126 77.87" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/></svg><svg x="173" y="85" width="180" height="180" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo horizontal office window</title>
+  <desc>Canonical front-facing office window compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-window-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+    <g id="horizontal-window-wall-shell">
+      <path id="horizontal-window-wall-outer" d="M0 11.5H128V123.5H0Z" fill="#252A28"/>
+      <path id="horizontal-window-wall-cream" d="M0 14.8H128V117.7H0Z" fill="#D9D0B9"/>
+      <path id="horizontal-window-wall-highlight" d="M0 14.8H128V23H0Z" fill="#FFFFFF" opacity=".24"/>
+      <path id="horizontal-window-wall-rust" d="M0 64H13V74H0ZM115 64H128V74H115Z" fill="#B65F4D"/>
+      <path id="horizontal-window-wall-green" d="M0 74H13V117.7H0ZM115 74H128V117.7H115Z" fill="#294B3C"/>
+    </g>
+    <g id="horizontal-window-opening">
+      <path id="horizontal-window-frame" d="M13 31H115V101H13Z" fill="#252A28"/>
+      <path id="horizontal-window-glazing" d="M18 36H110V95H18Z" fill="#83A9A6"/>
+      <path id="horizontal-window-blind-field" d="M18 36H110V56H18Z" fill="#294B3C"/>
+      <path id="horizontal-window-blind-slats" d="M20 40H108M20 45H108M20 50H108M20 55H108" stroke="#BEB49F" stroke-width="1.4" opacity=".72"/>
+      <path id="horizontal-window-mullion" d="M62 56H66V95H62Z" fill="#252A28"/>
+      <path id="horizontal-window-glazing-highlights" d="M26 87L42 70M74 87L90 70" stroke="#FFFFFF" stroke-width="2.5" opacity=".28"/>
+      <path id="horizontal-window-sill-outer" d="M11 95H117V104H11Z" fill="#252A28"/>
+      <path id="horizontal-window-sill-face" d="M15 96H113V101H15Z" fill="#BEB49F"/>
+      <path id="horizontal-window-lower-wall" d="M0 104H128V117.7H0Z" fill="#294B3C"/>
+    </g>
+  </g>
+</svg><svg x="308" y="130" width="90" height="90" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M0 76.211L128 76.211 128 117.693 0 117.693Z" fill="#252A28"/><path d="M0 79.53L128 79.53 128 112.715 0 112.715Z" fill="#294B3C"/><path d="M0 117.693L128 117.693 128 123.5 0 123.5Z" fill="#000000" opacity="0.12"/><path d="M126 81.189L126 111.056" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/><path d="M0 11.5L128 11.5 128 79.53 0 79.53Z" fill="#252A28"/><path d="M0 14.819L128 14.819 128 79.53 0 79.53Z" fill="#D9D0B9"/><path d="M0 14.819L128 14.819 128 23.115 0 23.115Z" fill="#FFFFFF" opacity="0.3"/><path d="M0 64.596L128 64.596 128 74.552 0 74.552Z" fill="#B65F4D"/><path d="M0 64.596L128 64.596 128 67.085 0 67.085Z" fill="#FFFFFF" opacity="0.1"/><path d="M0 74.552L128 74.552 128 79.53 0 79.53Z" fill="#294B3C"/><path d="M1 23.115L127 23.115" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/><path d="M1 74.552L127 74.552" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/><path d="M126 24.774L126 77.87" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/></svg><svg x="398" y="130" width="90" height="90" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M0 76.211L128 76.211 128 117.693 0 117.693Z" fill="#252A28"/><path d="M0 79.53L128 79.53 128 112.715 0 112.715Z" fill="#294B3C"/><path d="M0 117.693L128 117.693 128 123.5 0 123.5Z" fill="#000000" opacity="0.12"/><path d="M126 81.189L126 111.056" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/><path d="M0 11.5L128 11.5 128 79.53 0 79.53Z" fill="#252A28"/><path d="M0 14.819L128 14.819 128 79.53 0 79.53Z" fill="#D9D0B9"/><path d="M0 14.819L128 14.819 128 23.115 0 23.115Z" fill="#FFFFFF" opacity="0.3"/><path d="M0 64.596L128 64.596 128 74.552 0 74.552Z" fill="#B65F4D"/><path d="M0 64.596L128 64.596 128 67.085 0 67.085Z" fill="#FFFFFF" opacity="0.1"/><path d="M0 74.552L128 74.552 128 79.53 0 79.53Z" fill="#294B3C"/><path d="M1 23.115L127 23.115" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/><path d="M1 74.552L127 74.552" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/><path d="M126 24.774L126 77.87" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/></svg><svg x="443" y="85" width="180" height="180" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo horizontal sliding auto-door, closed</title>
+  <desc>Canonical production source compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+  <g id="horizontal-door-wall-break">
+    <path id="horizontal-wall-outer" d="M0 11.5H26V123.5H0ZM102 11.5H128V123.5H102Z" fill="#252A28"/>
+    <path id="horizontal-wall-cream" d="M0 14.8H23V112.7H0ZM105 14.8H128V112.7H105Z" fill="#D9D0B9"/>
+    <path id="horizontal-wall-rust" d="M0 64.6H23V74.6H0ZM105 64.6H128V74.6H105Z" fill="#B65F4D"/>
+    <path id="horizontal-wall-green" d="M0 74.6H23V117.7H0ZM105 74.6H128V117.7H105Z" fill="#294B3C"/>
+    <path id="horizontal-wall-highlight" d="M0 14.8H23V23.1H0ZM105 14.8H128V23.1H105Z" fill="#FFFFFF" opacity=".28"/>
+  </g>
+  <g id="horizontal-door-header-threshold">
+    <path id="horizontal-header-outer" d="M23 11.5H105V39H23Z" fill="#252A28"/>
+    <path id="horizontal-header-cream" d="M26 14.8H102V34H26Z" fill="#D9D0B9"/>
+    <path id="horizontal-header-highlight" d="M26 14.8H102V20H26Z" fill="#FFFFFF" opacity=".28"/>
+    <path id="horizontal-header-track" d="M27 34H101V39H27Z" fill="#252A28"/>
+    <path id="horizontal-threshold-outer" d="M24 113H104V122H24Z" fill="#252A28"/>
+    <path id="horizontal-threshold-teal" d="M27 115H101V119H27Z" fill="#547B78"/>
+    <path id="horizontal-threshold-metal" d="M31 119H97V121H31Z" fill="#979A91" opacity=".82"/>
+    <circle id="horizontal-mode-lens" cx="64" cy="36.5" r="2" fill="#B65F4D"/>
+  </g>
+  <g id="horizontal-door-closed-leaves">
+    <path id="horizontal-closed-leaf-outer" d="M28 39H100V114H28Z" fill="#252A28"/>
+    <path id="horizontal-closed-leaf-field" d="M31 42H97V112H31Z" fill="#294B3C"/>
+    <path id="horizontal-closed-glazing" d="M35 49H59V84H35ZM69 49H93V84H69Z" fill="#83A9A6" opacity=".88"/>
+    <path id="horizontal-closed-glazing-frame" d="M35 49H59V84H35ZM69 49H93V84H69Z" fill="none" stroke="#BEB49F" stroke-width="2"/>
+    <path id="horizontal-closed-lower-panels" d="M35 90H59V106H35ZM69 90H93V106H69Z" fill="none" stroke="#BEB49F" stroke-width="1.5" opacity=".55"/>
+    <path id="horizontal-closed-seam" d="M64 42V112" stroke="#252A28" stroke-width="2"/>
+    <path id="horizontal-closed-glazing-highlight" d="M39 55L48 51M73 55L82 51" stroke="#FFFFFF" stroke-width="2" opacity=".28"/>
+  </g>
+  </g>
+</svg><svg x="578" y="130" width="90" height="90" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M0 76.211L128 76.211 128 117.693 0 117.693Z" fill="#252A28"/><path d="M0 79.53L128 79.53 128 112.715 0 112.715Z" fill="#294B3C"/><path d="M0 117.693L128 117.693 128 123.5 0 123.5Z" fill="#000000" opacity="0.12"/><path d="M126 81.189L126 111.056" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/><path d="M0 11.5L128 11.5 128 79.53 0 79.53Z" fill="#252A28"/><path d="M0 14.819L128 14.819 128 79.53 0 79.53Z" fill="#D9D0B9"/><path d="M0 14.819L128 14.819 128 23.115 0 23.115Z" fill="#FFFFFF" opacity="0.3"/><path d="M0 64.596L128 64.596 128 74.552 0 74.552Z" fill="#B65F4D"/><path d="M0 64.596L128 64.596 128 67.085 0 67.085Z" fill="#FFFFFF" opacity="0.1"/><path d="M0 74.552L128 74.552 128 79.53 0 79.53Z" fill="#294B3C"/><path d="M1 23.115L127 23.115" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/><path d="M1 74.552L127 74.552" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/><path d="M126 24.774L126 77.87" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/></svg><svg x="668" y="130" width="90" height="90" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M0 76.211L128 76.211 128 117.693 0 117.693Z" fill="#252A28"/><path d="M0 79.53L128 79.53 128 112.715 0 112.715Z" fill="#294B3C"/><path d="M0 117.693L128 117.693 128 123.5 0 123.5Z" fill="#000000" opacity="0.12"/><path d="M126 81.189L126 111.056" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/><path d="M0 11.5L128 11.5 128 79.53 0 79.53Z" fill="#252A28"/><path d="M0 14.819L128 14.819 128 79.53 0 79.53Z" fill="#D9D0B9"/><path d="M0 14.819L128 14.819 128 23.115 0 23.115Z" fill="#FFFFFF" opacity="0.3"/><path d="M0 64.596L128 64.596 128 74.552 0 74.552Z" fill="#B65F4D"/><path d="M0 64.596L128 64.596 128 67.085 0 67.085Z" fill="#FFFFFF" opacity="0.1"/><path d="M0 74.552L128 74.552 128 79.53 0 79.53Z" fill="#294B3C"/><path d="M1 23.115L127 23.115" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/><path d="M1 74.552L127 74.552" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/><path d="M126 24.774L126 77.87" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/></svg><svg x="38" y="130" width="90" height="90" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M89.485 0L117.693 0 117.693 128 89.485 128Z" fill="#252A28"/><path d="M92.804 0L112.715 0 112.715 128 92.804 128Z" fill="#294B3C"/><path d="M92.804 0L112.715 0 112.715 128 92.804 128Z" fill="#000000" opacity="0.12"/><path d="M117.693 0L123.5 0 123.5 128 117.693 128Z" fill="#000000" opacity="0.12"/><path d="M94.463 126L111.056 126" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/><path d="M11.5 0L92.804 0 92.804 128 11.5 128Z" fill="#252A28"/><path d="M14.819 0L92.804 0 92.804 128 14.819 128Z" fill="#D9D0B9"/><path d="M14.819 0L68.744 0 68.744 128 14.819 128Z" fill="#FFFFFF" opacity="0.18"/><path d="M68.744 0L71.233 0 71.233 128 68.744 128Z" fill="#FFFFFF" opacity="0.3"/><path d="M79.53 0L87.826 0 87.826 128 79.53 128Z" fill="#B65F4D"/><path d="M87.826 0L92.804 0 92.804 128 87.826 128Z" fill="#294B3C"/><path d="M71.233 0L92.804 0 92.804 128 71.233 128Z" fill="#000000" opacity="0.12"/><path d="M71.233 1L71.233 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/><path d="M87.826 1L87.826 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/><path d="M14.819 126L91.144 126" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/></svg><svg x="38" y="220" width="90" height="90" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M89.485 0L117.693 0 117.693 128 89.485 128Z" fill="#252A28"/><path d="M92.804 0L112.715 0 112.715 128 92.804 128Z" fill="#294B3C"/><path d="M92.804 0L112.715 0 112.715 128 92.804 128Z" fill="#000000" opacity="0.12"/><path d="M117.693 0L123.5 0 123.5 128 117.693 128Z" fill="#000000" opacity="0.12"/><path d="M94.463 126L111.056 126" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/><path d="M11.5 0L92.804 0 92.804 128 11.5 128Z" fill="#252A28"/><path d="M14.819 0L92.804 0 92.804 128 14.819 128Z" fill="#D9D0B9"/><path d="M14.819 0L68.744 0 68.744 128 14.819 128Z" fill="#FFFFFF" opacity="0.18"/><path d="M68.744 0L71.233 0 71.233 128 68.744 128Z" fill="#FFFFFF" opacity="0.3"/><path d="M79.53 0L87.826 0 87.826 128 79.53 128Z" fill="#B65F4D"/><path d="M87.826 0L92.804 0 92.804 128 87.826 128Z" fill="#294B3C"/><path d="M71.233 0L92.804 0 92.804 128 71.233 128Z" fill="#000000" opacity="0.12"/><path d="M71.233 1L71.233 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/><path d="M87.826 1L87.826 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/><path d="M14.819 126L91.144 126" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/></svg><svg x="-7" y="265" width="180" height="180" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo vertical office window</title>
+  <desc>Canonical raised top-oblique office window compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="vertical-window-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+    <g id="vertical-window-wall-stubs">
+      <path id="vertical-window-wall-outer" d="M11.5 0H123.5V25H11.5ZM11.5 103H123.5V128H11.5Z" fill="#252A28"/>
+      <path id="vertical-window-wall-cream" d="M14.8 0H117.7V22H14.8ZM14.8 106H117.7V128H14.8Z" fill="#D9D0B9"/>
+      <path id="vertical-window-wall-highlight" d="M14.8 0H67V22H14.8ZM14.8 106H67V128H14.8Z" fill="#FFFFFF" opacity=".18"/>
+      <path id="vertical-window-wall-rust" d="M79.5 0H87.8V22H79.5ZM79.5 106H87.8V128H79.5Z" fill="#B65F4D"/>
+      <path id="vertical-window-wall-green" d="M87.8 0H117.7V22H87.8ZM87.8 106H117.7V128H87.8Z" fill="#294B3C"/>
+    </g>
+    <g id="vertical-window-frame">
+      <path id="vertical-window-jamb-outer" d="M60 20H98V35H60ZM60 93H98V108H60Z" fill="#252A28"/>
+      <path id="vertical-window-jamb-cream" d="M64 22H94V33H64ZM64 95H94V106H64Z" fill="#D9D0B9"/>
+      <path id="vertical-window-jamb-green" d="M84 22H94V33H84ZM84 95H94V106H84Z" fill="#294B3C"/>
+      <path id="vertical-window-pane-outer" d="M69 31L78 28H95V100H78L69 97Z" fill="#252A28"/>
+      <path id="vertical-window-glazing" d="M73 34L80 31H91V96H80L73 94Z" fill="#83A9A6"/>
+      <path id="vertical-window-blind-field" d="M80 31H91V96H80L77 94V34Z" fill="#294B3C"/>
+      <path id="vertical-window-blind-slats" d="M80.5 35V92M83.5 34V93M86.5 33V94M89.5 32V95" stroke="#BEB49F" stroke-width="1.2" opacity=".72"/>
+      <path id="vertical-window-mullion" d="M72 64L80 61H92" stroke="#252A28" stroke-width="3"/>
+      <path id="vertical-window-glazing-highlight" d="M78 91L85 82" stroke="#FFFFFF" stroke-width="2" opacity=".3"/>
+      <path id="vertical-window-pane-shadow" d="M92 31H96V100H92Z" fill="#000000" opacity=".2"/>
+    </g>
+    <g id="vertical-window-sill-shadows">
+      <path id="vertical-window-left-sill-shadow" d="M61 36H68V92H61Z" fill="#252A28" opacity=".22"/>
+      <path id="vertical-window-right-sill-shadow" d="M98 36H104V92H98Z" fill="#252A28" opacity=".18"/>
+    </g>
+  </g>
+</svg><svg x="38" y="400" width="90" height="90" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M89.485 0L117.693 0 117.693 128 89.485 128Z" fill="#252A28"/><path d="M92.804 0L112.715 0 112.715 128 92.804 128Z" fill="#294B3C"/><path d="M92.804 0L112.715 0 112.715 128 92.804 128Z" fill="#000000" opacity="0.12"/><path d="M117.693 0L123.5 0 123.5 128 117.693 128Z" fill="#000000" opacity="0.12"/><path d="M94.463 126L111.056 126" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/><path d="M11.5 0L92.804 0 92.804 128 11.5 128Z" fill="#252A28"/><path d="M14.819 0L92.804 0 92.804 128 14.819 128Z" fill="#D9D0B9"/><path d="M14.819 0L68.744 0 68.744 128 14.819 128Z" fill="#FFFFFF" opacity="0.18"/><path d="M68.744 0L71.233 0 71.233 128 68.744 128Z" fill="#FFFFFF" opacity="0.3"/><path d="M79.53 0L87.826 0 87.826 128 79.53 128Z" fill="#B65F4D"/><path d="M87.826 0L92.804 0 92.804 128 87.826 128Z" fill="#294B3C"/><path d="M71.233 0L92.804 0 92.804 128 71.233 128Z" fill="#000000" opacity="0.12"/><path d="M71.233 1L71.233 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/><path d="M87.826 1L87.826 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/><path d="M14.819 126L91.144 126" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/></svg><svg x="-7" y="445" width="180" height="180" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo vertical sliding auto-door, closed</title>
+  <desc>Canonical top-oblique production source compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="vertical-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+  <g id="vertical-door-wall-break">
+    <path id="vertical-wall-outer" d="M11.5 0H123.5V25H11.5ZM11.5 103H123.5V128H11.5Z" fill="#252A28"/>
+    <path id="vertical-wall-cream" d="M14.8 0H117.7V22H14.8ZM14.8 106H117.7V128H14.8Z" fill="#D9D0B9"/>
+    <path id="vertical-wall-rust" d="M79.5 0H87.8V22H79.5ZM79.5 106H87.8V128H79.5Z" fill="#B65F4D"/>
+    <path id="vertical-wall-green" d="M87.8 0H117.7V22H87.8ZM87.8 106H117.7V128H87.8Z" fill="#294B3C"/>
+    <path id="vertical-jamb-outer" d="M58 20H98V35H58ZM58 93H98V108H58Z" fill="#252A28"/>
+    <path id="vertical-jamb-cream" d="M62 22H94V33H62ZM62 95H94V106H62Z" fill="#D9D0B9"/>
+    <path id="vertical-jamb-green" d="M85 22H94V33H85ZM85 95H94V106H85Z" fill="#294B3C"/>
+  </g>
+  <g id="vertical-door-pressure-mats">
+    <path id="vertical-pressure-mat-left-outer" d="M25 36H59V92H25Z" fill="#252A28" opacity=".34"/>
+    <path id="vertical-pressure-mat-left-field" d="M28 39H57V89H28Z" fill="#547B78" opacity=".38"/>
+    <path id="vertical-pressure-mat-right-outer" d="M96 36H121V92H96Z" fill="#252A28" opacity=".34"/>
+    <path id="vertical-pressure-mat-right-field" d="M99 39H118V89H99Z" fill="#547B78" opacity=".38"/>
+    <path id="vertical-pressure-mat-lines" d="M32 48H53M32 58H53M32 68H53M32 78H53M103 48H114M103 58H114M103 68H114M103 78H114" stroke="#F3EEDA" stroke-width="1" opacity=".2"/>
+  </g>
+  <g id="vertical-door-overhead-track">
+    <path id="vertical-track-outer" d="M65 31H73V97H65Z" fill="#252A28"/>
+    <path id="vertical-track-metal" d="M67 33H71V95H67Z" fill="#979A91"/>
+    <circle id="vertical-mode-lens" cx="69" cy="35" r="2" fill="#B65F4D"/>
+  </g>
+  <g id="vertical-door-top-oblique-closed-leaves">
+    <path id="vertical-closed-leaf-outer" d="M72 32L79 29H93V99H79L72 96Z" fill="#252A28"/>
+    <path id="vertical-closed-leaf-cream" d="M75 34L80 32H83V96L75 94Z" fill="#D9D0B9"/>
+    <path id="vertical-closed-leaf-green" d="M83 32H90V96H83Z" fill="#294B3C"/>
+    <path id="vertical-closed-glazing" d="M84 37H89V57H84ZM84 70H89V90H84Z" fill="#83A9A6"/>
+    <path id="vertical-closed-seam" d="M75 64H90" stroke="#252A28" stroke-width="2"/>
+    <path id="vertical-closed-highlight" d="M80 32V96" stroke="#FFFFFF" stroke-width="1" opacity=".22"/>
+    <path id="vertical-closed-shadow" d="M91 34H94V98H91Z" fill="#000000" opacity=".18"/>
+  </g>
+  </g>
+</svg><svg x="38" y="580" width="90" height="90" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M89.485 0L117.693 0 117.693 128 89.485 128Z" fill="#252A28"/><path d="M92.804 0L112.715 0 112.715 128 92.804 128Z" fill="#294B3C"/><path d="M92.804 0L112.715 0 112.715 128 92.804 128Z" fill="#000000" opacity="0.12"/><path d="M117.693 0L123.5 0 123.5 128 117.693 128Z" fill="#000000" opacity="0.12"/><path d="M94.463 126L111.056 126" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/><path d="M11.5 0L92.804 0 92.804 128 11.5 128Z" fill="#252A28"/><path d="M14.819 0L92.804 0 92.804 128 14.819 128Z" fill="#D9D0B9"/><path d="M14.819 0L68.744 0 68.744 128 14.819 128Z" fill="#FFFFFF" opacity="0.18"/><path d="M68.744 0L71.233 0 71.233 128 68.744 128Z" fill="#FFFFFF" opacity="0.3"/><path d="M79.53 0L87.826 0 87.826 128 79.53 128Z" fill="#B65F4D"/><path d="M87.826 0L92.804 0 92.804 128 87.826 128Z" fill="#294B3C"/><path d="M71.233 0L92.804 0 92.804 128 71.233 128Z" fill="#000000" opacity="0.12"/><path d="M71.233 1L71.233 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/><path d="M87.826 1L87.826 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/><path d="M14.819 126L91.144 126" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/></svg><rect x="227" y="373" width="315" height="112.5" rx="5.3999999999999995" fill="#D9D0B9" stroke="#252A28" stroke-width="1.8"/><rect x="249.5" y="394.6" width="99.00000000000001" height="58.5" fill="#294B3C"/><rect x="411.50000000000006" y="394.6" width="99.00000000000001" height="58.5" fill="#547B78"/><text x="38" y="682" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#626861" text-anchor="start">Both windows replace one wall tile. Floor remains independently visible around the vertical barrier.</text><rect x="882" y="78" width="380" height="292" rx="12" fill="#ECE5D7" stroke="#A39B8B" stroke-width="1.5"/><text x="902" y="110" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="840" fill="#292C2A" text-anchor="start">FAR OFFICE · 40 PX / CELL</text><rect x="902" y="130" width="320" height="200" fill="#748088"/><path d="M942 130V330" stroke="#D9D4C7" opacity=".18"/><path d="M982 130V330" stroke="#D9D4C7" opacity=".18"/><path d="M1022 130V330" stroke="#D9D4C7" opacity=".18"/><path d="M1062 130V330" stroke="#D9D4C7" opacity=".18"/><path d="M1102 130V330" stroke="#D9D4C7" opacity=".18"/><path d="M1142 130V330" stroke="#D9D4C7" opacity=".18"/><path d="M1182 130V330" stroke="#D9D4C7" opacity=".18"/><path d="M902 170H1222" stroke="#D9D4C7" opacity=".18"/><path d="M902 210H1222" stroke="#D9D4C7" opacity=".18"/><path d="M902 250H1222" stroke="#D9D4C7" opacity=".18"/><path d="M902 290H1222" stroke="#D9D4C7" opacity=".18"/><svg x="902" y="130" width="40" height="40" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M0 76.211L128 76.211 128 117.693 0 117.693Z" fill="#252A28"/><path d="M0 79.53L128 79.53 128 112.715 0 112.715Z" fill="#294B3C"/><path d="M0 117.693L128 117.693 128 123.5 0 123.5Z" fill="#000000" opacity="0.12"/><path d="M126 81.189L126 111.056" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/><path d="M0 11.5L128 11.5 128 79.53 0 79.53Z" fill="#252A28"/><path d="M0 14.819L128 14.819 128 79.53 0 79.53Z" fill="#D9D0B9"/><path d="M0 14.819L128 14.819 128 23.115 0 23.115Z" fill="#FFFFFF" opacity="0.3"/><path d="M0 64.596L128 64.596 128 74.552 0 74.552Z" fill="#B65F4D"/><path d="M0 64.596L128 64.596 128 67.085 0 67.085Z" fill="#FFFFFF" opacity="0.1"/><path d="M0 74.552L128 74.552 128 79.53 0 79.53Z" fill="#294B3C"/><path d="M1 23.115L127 23.115" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/><path d="M1 74.552L127 74.552" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/><path d="M126 24.774L126 77.87" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/></svg><svg x="942" y="130" width="40" height="40" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M0 76.211L128 76.211 128 117.693 0 117.693Z" fill="#252A28"/><path d="M0 79.53L128 79.53 128 112.715 0 112.715Z" fill="#294B3C"/><path d="M0 117.693L128 117.693 128 123.5 0 123.5Z" fill="#000000" opacity="0.12"/><path d="M126 81.189L126 111.056" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/><path d="M0 11.5L128 11.5 128 79.53 0 79.53Z" fill="#252A28"/><path d="M0 14.819L128 14.819 128 79.53 0 79.53Z" fill="#D9D0B9"/><path d="M0 14.819L128 14.819 128 23.115 0 23.115Z" fill="#FFFFFF" opacity="0.3"/><path d="M0 64.596L128 64.596 128 74.552 0 74.552Z" fill="#B65F4D"/><path d="M0 64.596L128 64.596 128 67.085 0 67.085Z" fill="#FFFFFF" opacity="0.1"/><path d="M0 74.552L128 74.552 128 79.53 0 79.53Z" fill="#294B3C"/><path d="M1 23.115L127 23.115" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/><path d="M1 74.552L127 74.552" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/><path d="M126 24.774L126 77.87" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/></svg><svg x="962" y="110" width="80" height="80" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo horizontal office window</title>
+  <desc>Canonical front-facing office window compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-window-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+    <g id="horizontal-window-wall-shell">
+      <path id="horizontal-window-wall-outer" d="M0 11.5H128V123.5H0Z" fill="#252A28"/>
+      <path id="horizontal-window-wall-cream" d="M0 14.8H128V117.7H0Z" fill="#D9D0B9"/>
+      <path id="horizontal-window-wall-highlight" d="M0 14.8H128V23H0Z" fill="#FFFFFF" opacity=".24"/>
+      <path id="horizontal-window-wall-rust" d="M0 64H13V74H0ZM115 64H128V74H115Z" fill="#B65F4D"/>
+      <path id="horizontal-window-wall-green" d="M0 74H13V117.7H0ZM115 74H128V117.7H115Z" fill="#294B3C"/>
+    </g>
+    <g id="horizontal-window-opening">
+      <path id="horizontal-window-frame" d="M13 31H115V101H13Z" fill="#252A28"/>
+      <path id="horizontal-window-glazing" d="M18 36H110V95H18Z" fill="#83A9A6"/>
+      <path id="horizontal-window-blind-field" d="M18 36H110V56H18Z" fill="#294B3C"/>
+      <path id="horizontal-window-blind-slats" d="M20 40H108M20 45H108M20 50H108M20 55H108" stroke="#BEB49F" stroke-width="1.4" opacity=".72"/>
+      <path id="horizontal-window-mullion" d="M62 56H66V95H62Z" fill="#252A28"/>
+      <path id="horizontal-window-glazing-highlights" d="M26 87L42 70M74 87L90 70" stroke="#FFFFFF" stroke-width="2.5" opacity=".28"/>
+      <path id="horizontal-window-sill-outer" d="M11 95H117V104H11Z" fill="#252A28"/>
+      <path id="horizontal-window-sill-face" d="M15 96H113V101H15Z" fill="#BEB49F"/>
+      <path id="horizontal-window-lower-wall" d="M0 104H128V117.7H0Z" fill="#294B3C"/>
+    </g>
+  </g>
+</svg><svg x="1022" y="130" width="40" height="40" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M0 76.211L128 76.211 128 117.693 0 117.693Z" fill="#252A28"/><path d="M0 79.53L128 79.53 128 112.715 0 112.715Z" fill="#294B3C"/><path d="M0 117.693L128 117.693 128 123.5 0 123.5Z" fill="#000000" opacity="0.12"/><path d="M126 81.189L126 111.056" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/><path d="M0 11.5L128 11.5 128 79.53 0 79.53Z" fill="#252A28"/><path d="M0 14.819L128 14.819 128 79.53 0 79.53Z" fill="#D9D0B9"/><path d="M0 14.819L128 14.819 128 23.115 0 23.115Z" fill="#FFFFFF" opacity="0.3"/><path d="M0 64.596L128 64.596 128 74.552 0 74.552Z" fill="#B65F4D"/><path d="M0 64.596L128 64.596 128 67.085 0 67.085Z" fill="#FFFFFF" opacity="0.1"/><path d="M0 74.552L128 74.552 128 79.53 0 79.53Z" fill="#294B3C"/><path d="M1 23.115L127 23.115" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/><path d="M1 74.552L127 74.552" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/><path d="M126 24.774L126 77.87" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/></svg><svg x="1062" y="130" width="40" height="40" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M0 76.211L128 76.211 128 117.693 0 117.693Z" fill="#252A28"/><path d="M0 79.53L128 79.53 128 112.715 0 112.715Z" fill="#294B3C"/><path d="M0 117.693L128 117.693 128 123.5 0 123.5Z" fill="#000000" opacity="0.12"/><path d="M126 81.189L126 111.056" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/><path d="M0 11.5L128 11.5 128 79.53 0 79.53Z" fill="#252A28"/><path d="M0 14.819L128 14.819 128 79.53 0 79.53Z" fill="#D9D0B9"/><path d="M0 14.819L128 14.819 128 23.115 0 23.115Z" fill="#FFFFFF" opacity="0.3"/><path d="M0 64.596L128 64.596 128 74.552 0 74.552Z" fill="#B65F4D"/><path d="M0 64.596L128 64.596 128 67.085 0 67.085Z" fill="#FFFFFF" opacity="0.1"/><path d="M0 74.552L128 74.552 128 79.53 0 79.53Z" fill="#294B3C"/><path d="M1 23.115L127 23.115" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/><path d="M1 74.552L127 74.552" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/><path d="M126 24.774L126 77.87" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/></svg><svg x="1082" y="110" width="80" height="80" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo horizontal sliding auto-door, closed</title>
+  <desc>Canonical production source compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+  <g id="horizontal-door-wall-break">
+    <path id="horizontal-wall-outer" d="M0 11.5H26V123.5H0ZM102 11.5H128V123.5H102Z" fill="#252A28"/>
+    <path id="horizontal-wall-cream" d="M0 14.8H23V112.7H0ZM105 14.8H128V112.7H105Z" fill="#D9D0B9"/>
+    <path id="horizontal-wall-rust" d="M0 64.6H23V74.6H0ZM105 64.6H128V74.6H105Z" fill="#B65F4D"/>
+    <path id="horizontal-wall-green" d="M0 74.6H23V117.7H0ZM105 74.6H128V117.7H105Z" fill="#294B3C"/>
+    <path id="horizontal-wall-highlight" d="M0 14.8H23V23.1H0ZM105 14.8H128V23.1H105Z" fill="#FFFFFF" opacity=".28"/>
+  </g>
+  <g id="horizontal-door-header-threshold">
+    <path id="horizontal-header-outer" d="M23 11.5H105V39H23Z" fill="#252A28"/>
+    <path id="horizontal-header-cream" d="M26 14.8H102V34H26Z" fill="#D9D0B9"/>
+    <path id="horizontal-header-highlight" d="M26 14.8H102V20H26Z" fill="#FFFFFF" opacity=".28"/>
+    <path id="horizontal-header-track" d="M27 34H101V39H27Z" fill="#252A28"/>
+    <path id="horizontal-threshold-outer" d="M24 113H104V122H24Z" fill="#252A28"/>
+    <path id="horizontal-threshold-teal" d="M27 115H101V119H27Z" fill="#547B78"/>
+    <path id="horizontal-threshold-metal" d="M31 119H97V121H31Z" fill="#979A91" opacity=".82"/>
+    <circle id="horizontal-mode-lens" cx="64" cy="36.5" r="2" fill="#B65F4D"/>
+  </g>
+  <g id="horizontal-door-closed-leaves">
+    <path id="horizontal-closed-leaf-outer" d="M28 39H100V114H28Z" fill="#252A28"/>
+    <path id="horizontal-closed-leaf-field" d="M31 42H97V112H31Z" fill="#294B3C"/>
+    <path id="horizontal-closed-glazing" d="M35 49H59V84H35ZM69 49H93V84H69Z" fill="#83A9A6" opacity=".88"/>
+    <path id="horizontal-closed-glazing-frame" d="M35 49H59V84H35ZM69 49H93V84H69Z" fill="none" stroke="#BEB49F" stroke-width="2"/>
+    <path id="horizontal-closed-lower-panels" d="M35 90H59V106H35ZM69 90H93V106H69Z" fill="none" stroke="#BEB49F" stroke-width="1.5" opacity=".55"/>
+    <path id="horizontal-closed-seam" d="M64 42V112" stroke="#252A28" stroke-width="2"/>
+    <path id="horizontal-closed-glazing-highlight" d="M39 55L48 51M73 55L82 51" stroke="#FFFFFF" stroke-width="2" opacity=".28"/>
+  </g>
+  </g>
+</svg><svg x="1142" y="130" width="40" height="40" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M0 76.211L128 76.211 128 117.693 0 117.693Z" fill="#252A28"/><path d="M0 79.53L128 79.53 128 112.715 0 112.715Z" fill="#294B3C"/><path d="M0 117.693L128 117.693 128 123.5 0 123.5Z" fill="#000000" opacity="0.12"/><path d="M126 81.189L126 111.056" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/><path d="M0 11.5L128 11.5 128 79.53 0 79.53Z" fill="#252A28"/><path d="M0 14.819L128 14.819 128 79.53 0 79.53Z" fill="#D9D0B9"/><path d="M0 14.819L128 14.819 128 23.115 0 23.115Z" fill="#FFFFFF" opacity="0.3"/><path d="M0 64.596L128 64.596 128 74.552 0 74.552Z" fill="#B65F4D"/><path d="M0 64.596L128 64.596 128 67.085 0 67.085Z" fill="#FFFFFF" opacity="0.1"/><path d="M0 74.552L128 74.552 128 79.53 0 79.53Z" fill="#294B3C"/><path d="M1 23.115L127 23.115" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/><path d="M1 74.552L127 74.552" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/><path d="M126 24.774L126 77.87" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/></svg><svg x="1182" y="130" width="40" height="40" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M0 76.211L128 76.211 128 117.693 0 117.693Z" fill="#252A28"/><path d="M0 79.53L128 79.53 128 112.715 0 112.715Z" fill="#294B3C"/><path d="M0 117.693L128 117.693 128 123.5 0 123.5Z" fill="#000000" opacity="0.12"/><path d="M126 81.189L126 111.056" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/><path d="M0 11.5L128 11.5 128 79.53 0 79.53Z" fill="#252A28"/><path d="M0 14.819L128 14.819 128 79.53 0 79.53Z" fill="#D9D0B9"/><path d="M0 14.819L128 14.819 128 23.115 0 23.115Z" fill="#FFFFFF" opacity="0.3"/><path d="M0 64.596L128 64.596 128 74.552 0 74.552Z" fill="#B65F4D"/><path d="M0 64.596L128 64.596 128 67.085 0 67.085Z" fill="#FFFFFF" opacity="0.1"/><path d="M0 74.552L128 74.552 128 79.53 0 79.53Z" fill="#294B3C"/><path d="M1 23.115L127 23.115" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/><path d="M1 74.552L127 74.552" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/><path d="M126 24.774L126 77.87" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/></svg><svg x="902" y="130" width="40" height="40" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M89.485 0L117.693 0 117.693 128 89.485 128Z" fill="#252A28"/><path d="M92.804 0L112.715 0 112.715 128 92.804 128Z" fill="#294B3C"/><path d="M92.804 0L112.715 0 112.715 128 92.804 128Z" fill="#000000" opacity="0.12"/><path d="M117.693 0L123.5 0 123.5 128 117.693 128Z" fill="#000000" opacity="0.12"/><path d="M94.463 126L111.056 126" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/><path d="M11.5 0L92.804 0 92.804 128 11.5 128Z" fill="#252A28"/><path d="M14.819 0L92.804 0 92.804 128 14.819 128Z" fill="#D9D0B9"/><path d="M14.819 0L68.744 0 68.744 128 14.819 128Z" fill="#FFFFFF" opacity="0.18"/><path d="M68.744 0L71.233 0 71.233 128 68.744 128Z" fill="#FFFFFF" opacity="0.3"/><path d="M79.53 0L87.826 0 87.826 128 79.53 128Z" fill="#B65F4D"/><path d="M87.826 0L92.804 0 92.804 128 87.826 128Z" fill="#294B3C"/><path d="M71.233 0L92.804 0 92.804 128 71.233 128Z" fill="#000000" opacity="0.12"/><path d="M71.233 1L71.233 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/><path d="M87.826 1L87.826 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/><path d="M14.819 126L91.144 126" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/></svg><svg x="902" y="170" width="40" height="40" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M89.485 0L117.693 0 117.693 128 89.485 128Z" fill="#252A28"/><path d="M92.804 0L112.715 0 112.715 128 92.804 128Z" fill="#294B3C"/><path d="M92.804 0L112.715 0 112.715 128 92.804 128Z" fill="#000000" opacity="0.12"/><path d="M117.693 0L123.5 0 123.5 128 117.693 128Z" fill="#000000" opacity="0.12"/><path d="M94.463 126L111.056 126" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/><path d="M11.5 0L92.804 0 92.804 128 11.5 128Z" fill="#252A28"/><path d="M14.819 0L92.804 0 92.804 128 14.819 128Z" fill="#D9D0B9"/><path d="M14.819 0L68.744 0 68.744 128 14.819 128Z" fill="#FFFFFF" opacity="0.18"/><path d="M68.744 0L71.233 0 71.233 128 68.744 128Z" fill="#FFFFFF" opacity="0.3"/><path d="M79.53 0L87.826 0 87.826 128 79.53 128Z" fill="#B65F4D"/><path d="M87.826 0L92.804 0 92.804 128 87.826 128Z" fill="#294B3C"/><path d="M71.233 0L92.804 0 92.804 128 71.233 128Z" fill="#000000" opacity="0.12"/><path d="M71.233 1L71.233 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/><path d="M87.826 1L87.826 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/><path d="M14.819 126L91.144 126" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/></svg><svg x="882" y="190" width="80" height="80" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo vertical office window</title>
+  <desc>Canonical raised top-oblique office window compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="vertical-window-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+    <g id="vertical-window-wall-stubs">
+      <path id="vertical-window-wall-outer" d="M11.5 0H123.5V25H11.5ZM11.5 103H123.5V128H11.5Z" fill="#252A28"/>
+      <path id="vertical-window-wall-cream" d="M14.8 0H117.7V22H14.8ZM14.8 106H117.7V128H14.8Z" fill="#D9D0B9"/>
+      <path id="vertical-window-wall-highlight" d="M14.8 0H67V22H14.8ZM14.8 106H67V128H14.8Z" fill="#FFFFFF" opacity=".18"/>
+      <path id="vertical-window-wall-rust" d="M79.5 0H87.8V22H79.5ZM79.5 106H87.8V128H79.5Z" fill="#B65F4D"/>
+      <path id="vertical-window-wall-green" d="M87.8 0H117.7V22H87.8ZM87.8 106H117.7V128H87.8Z" fill="#294B3C"/>
+    </g>
+    <g id="vertical-window-frame">
+      <path id="vertical-window-jamb-outer" d="M60 20H98V35H60ZM60 93H98V108H60Z" fill="#252A28"/>
+      <path id="vertical-window-jamb-cream" d="M64 22H94V33H64ZM64 95H94V106H64Z" fill="#D9D0B9"/>
+      <path id="vertical-window-jamb-green" d="M84 22H94V33H84ZM84 95H94V106H84Z" fill="#294B3C"/>
+      <path id="vertical-window-pane-outer" d="M69 31L78 28H95V100H78L69 97Z" fill="#252A28"/>
+      <path id="vertical-window-glazing" d="M73 34L80 31H91V96H80L73 94Z" fill="#83A9A6"/>
+      <path id="vertical-window-blind-field" d="M80 31H91V96H80L77 94V34Z" fill="#294B3C"/>
+      <path id="vertical-window-blind-slats" d="M80.5 35V92M83.5 34V93M86.5 33V94M89.5 32V95" stroke="#BEB49F" stroke-width="1.2" opacity=".72"/>
+      <path id="vertical-window-mullion" d="M72 64L80 61H92" stroke="#252A28" stroke-width="3"/>
+      <path id="vertical-window-glazing-highlight" d="M78 91L85 82" stroke="#FFFFFF" stroke-width="2" opacity=".3"/>
+      <path id="vertical-window-pane-shadow" d="M92 31H96V100H92Z" fill="#000000" opacity=".2"/>
+    </g>
+    <g id="vertical-window-sill-shadows">
+      <path id="vertical-window-left-sill-shadow" d="M61 36H68V92H61Z" fill="#252A28" opacity=".22"/>
+      <path id="vertical-window-right-sill-shadow" d="M98 36H104V92H98Z" fill="#252A28" opacity=".18"/>
+    </g>
+  </g>
+</svg><svg x="902" y="250" width="40" height="40" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M89.485 0L117.693 0 117.693 128 89.485 128Z" fill="#252A28"/><path d="M92.804 0L112.715 0 112.715 128 92.804 128Z" fill="#294B3C"/><path d="M92.804 0L112.715 0 112.715 128 92.804 128Z" fill="#000000" opacity="0.12"/><path d="M117.693 0L123.5 0 123.5 128 117.693 128Z" fill="#000000" opacity="0.12"/><path d="M94.463 126L111.056 126" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/><path d="M11.5 0L92.804 0 92.804 128 11.5 128Z" fill="#252A28"/><path d="M14.819 0L92.804 0 92.804 128 14.819 128Z" fill="#D9D0B9"/><path d="M14.819 0L68.744 0 68.744 128 14.819 128Z" fill="#FFFFFF" opacity="0.18"/><path d="M68.744 0L71.233 0 71.233 128 68.744 128Z" fill="#FFFFFF" opacity="0.3"/><path d="M79.53 0L87.826 0 87.826 128 79.53 128Z" fill="#B65F4D"/><path d="M87.826 0L92.804 0 92.804 128 87.826 128Z" fill="#294B3C"/><path d="M71.233 0L92.804 0 92.804 128 71.233 128Z" fill="#000000" opacity="0.12"/><path d="M71.233 1L71.233 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/><path d="M87.826 1L87.826 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/><path d="M14.819 126L91.144 126" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/></svg><svg x="882" y="270" width="80" height="80" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo vertical sliding auto-door, closed</title>
+  <desc>Canonical top-oblique production source compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="vertical-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+  <g id="vertical-door-wall-break">
+    <path id="vertical-wall-outer" d="M11.5 0H123.5V25H11.5ZM11.5 103H123.5V128H11.5Z" fill="#252A28"/>
+    <path id="vertical-wall-cream" d="M14.8 0H117.7V22H14.8ZM14.8 106H117.7V128H14.8Z" fill="#D9D0B9"/>
+    <path id="vertical-wall-rust" d="M79.5 0H87.8V22H79.5ZM79.5 106H87.8V128H79.5Z" fill="#B65F4D"/>
+    <path id="vertical-wall-green" d="M87.8 0H117.7V22H87.8ZM87.8 106H117.7V128H87.8Z" fill="#294B3C"/>
+    <path id="vertical-jamb-outer" d="M58 20H98V35H58ZM58 93H98V108H58Z" fill="#252A28"/>
+    <path id="vertical-jamb-cream" d="M62 22H94V33H62ZM62 95H94V106H62Z" fill="#D9D0B9"/>
+    <path id="vertical-jamb-green" d="M85 22H94V33H85ZM85 95H94V106H85Z" fill="#294B3C"/>
+  </g>
+  <g id="vertical-door-pressure-mats">
+    <path id="vertical-pressure-mat-left-outer" d="M25 36H59V92H25Z" fill="#252A28" opacity=".34"/>
+    <path id="vertical-pressure-mat-left-field" d="M28 39H57V89H28Z" fill="#547B78" opacity=".38"/>
+    <path id="vertical-pressure-mat-right-outer" d="M96 36H121V92H96Z" fill="#252A28" opacity=".34"/>
+    <path id="vertical-pressure-mat-right-field" d="M99 39H118V89H99Z" fill="#547B78" opacity=".38"/>
+    <path id="vertical-pressure-mat-lines" d="M32 48H53M32 58H53M32 68H53M32 78H53M103 48H114M103 58H114M103 68H114M103 78H114" stroke="#F3EEDA" stroke-width="1" opacity=".2"/>
+  </g>
+  <g id="vertical-door-overhead-track">
+    <path id="vertical-track-outer" d="M65 31H73V97H65Z" fill="#252A28"/>
+    <path id="vertical-track-metal" d="M67 33H71V95H67Z" fill="#979A91"/>
+    <circle id="vertical-mode-lens" cx="69" cy="35" r="2" fill="#B65F4D"/>
+  </g>
+  <g id="vertical-door-top-oblique-closed-leaves">
+    <path id="vertical-closed-leaf-outer" d="M72 32L79 29H93V99H79L72 96Z" fill="#252A28"/>
+    <path id="vertical-closed-leaf-cream" d="M75 34L80 32H83V96L75 94Z" fill="#D9D0B9"/>
+    <path id="vertical-closed-leaf-green" d="M83 32H90V96H83Z" fill="#294B3C"/>
+    <path id="vertical-closed-glazing" d="M84 37H89V57H84ZM84 70H89V90H84Z" fill="#83A9A6"/>
+    <path id="vertical-closed-seam" d="M75 64H90" stroke="#252A28" stroke-width="2"/>
+    <path id="vertical-closed-highlight" d="M80 32V96" stroke="#FFFFFF" stroke-width="1" opacity=".22"/>
+    <path id="vertical-closed-shadow" d="M91 34H94V98H91Z" fill="#000000" opacity=".18"/>
+  </g>
+  </g>
+</svg><rect x="986" y="238" width="140" height="50" rx="2.4" fill="#D9D0B9" stroke="#252A28" stroke-width="1"/><rect x="996" y="247.6" width="44" height="26" fill="#294B3C"/><rect x="1068" y="247.6" width="44" height="26" fill="#547B78"/><text x="902" y="352" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#626861" text-anchor="start">Glass and frame remain legible without reading as a floor decal.</text><rect x="882" y="388" width="380" height="306" rx="12" fill="#E3ECE8" stroke="#A39B8B" stroke-width="1.5"/><text x="902" y="420" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="840" fill="#292C2A" text-anchor="start">VERTICAL READ · ISOLATED</text><rect x="902" y="444" width="160" height="160" rx="8" fill="#748088"/><svg x="822" y="364" width="320" height="320" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo vertical office window</title>
+  <desc>Canonical raised top-oblique office window compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="vertical-window-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+    <g id="vertical-window-wall-stubs">
+      <path id="vertical-window-wall-outer" d="M11.5 0H123.5V25H11.5ZM11.5 103H123.5V128H11.5Z" fill="#252A28"/>
+      <path id="vertical-window-wall-cream" d="M14.8 0H117.7V22H14.8ZM14.8 106H117.7V128H14.8Z" fill="#D9D0B9"/>
+      <path id="vertical-window-wall-highlight" d="M14.8 0H67V22H14.8ZM14.8 106H67V128H14.8Z" fill="#FFFFFF" opacity=".18"/>
+      <path id="vertical-window-wall-rust" d="M79.5 0H87.8V22H79.5ZM79.5 106H87.8V128H79.5Z" fill="#B65F4D"/>
+      <path id="vertical-window-wall-green" d="M87.8 0H117.7V22H87.8ZM87.8 106H117.7V128H87.8Z" fill="#294B3C"/>
+    </g>
+    <g id="vertical-window-frame">
+      <path id="vertical-window-jamb-outer" d="M60 20H98V35H60ZM60 93H98V108H60Z" fill="#252A28"/>
+      <path id="vertical-window-jamb-cream" d="M64 22H94V33H64ZM64 95H94V106H64Z" fill="#D9D0B9"/>
+      <path id="vertical-window-jamb-green" d="M84 22H94V33H84ZM84 95H94V106H84Z" fill="#294B3C"/>
+      <path id="vertical-window-pane-outer" d="M69 31L78 28H95V100H78L69 97Z" fill="#252A28"/>
+      <path id="vertical-window-glazing" d="M73 34L80 31H91V96H80L73 94Z" fill="#83A9A6"/>
+      <path id="vertical-window-blind-field" d="M80 31H91V96H80L77 94V34Z" fill="#294B3C"/>
+      <path id="vertical-window-blind-slats" d="M80.5 35V92M83.5 34V93M86.5 33V94M89.5 32V95" stroke="#BEB49F" stroke-width="1.2" opacity=".72"/>
+      <path id="vertical-window-mullion" d="M72 64L80 61H92" stroke="#252A28" stroke-width="3"/>
+      <path id="vertical-window-glazing-highlight" d="M78 91L85 82" stroke="#FFFFFF" stroke-width="2" opacity=".3"/>
+      <path id="vertical-window-pane-shadow" d="M92 31H96V100H92Z" fill="#000000" opacity=".2"/>
+    </g>
+    <g id="vertical-window-sill-shadows">
+      <path id="vertical-window-left-sill-shadow" d="M61 36H68V92H61Z" fill="#252A28" opacity=".22"/>
+      <path id="vertical-window-right-sill-shadow" d="M98 36H104V92H98Z" fill="#252A28" opacity=".18"/>
+    </g>
+  </g>
+</svg><rect x="1092" y="494" width="70" height="70" rx="4" fill="#748088"/><svg x="1057" y="459" width="140" height="140" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo vertical office window</title>
+  <desc>Canonical raised top-oblique office window compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="vertical-window-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+    <g id="vertical-window-wall-stubs">
+      <path id="vertical-window-wall-outer" d="M11.5 0H123.5V25H11.5ZM11.5 103H123.5V128H11.5Z" fill="#252A28"/>
+      <path id="vertical-window-wall-cream" d="M14.8 0H117.7V22H14.8ZM14.8 106H117.7V128H14.8Z" fill="#D9D0B9"/>
+      <path id="vertical-window-wall-highlight" d="M14.8 0H67V22H14.8ZM14.8 106H67V128H14.8Z" fill="#FFFFFF" opacity=".18"/>
+      <path id="vertical-window-wall-rust" d="M79.5 0H87.8V22H79.5ZM79.5 106H87.8V128H79.5Z" fill="#B65F4D"/>
+      <path id="vertical-window-wall-green" d="M87.8 0H117.7V22H87.8ZM87.8 106H117.7V128H87.8Z" fill="#294B3C"/>
+    </g>
+    <g id="vertical-window-frame">
+      <path id="vertical-window-jamb-outer" d="M60 20H98V35H60ZM60 93H98V108H60Z" fill="#252A28"/>
+      <path id="vertical-window-jamb-cream" d="M64 22H94V33H64ZM64 95H94V106H64Z" fill="#D9D0B9"/>
+      <path id="vertical-window-jamb-green" d="M84 22H94V33H84ZM84 95H94V106H84Z" fill="#294B3C"/>
+      <path id="vertical-window-pane-outer" d="M69 31L78 28H95V100H78L69 97Z" fill="#252A28"/>
+      <path id="vertical-window-glazing" d="M73 34L80 31H91V96H80L73 94Z" fill="#83A9A6"/>
+      <path id="vertical-window-blind-field" d="M80 31H91V96H80L77 94V34Z" fill="#294B3C"/>
+      <path id="vertical-window-blind-slats" d="M80.5 35V92M83.5 34V93M86.5 33V94M89.5 32V95" stroke="#BEB49F" stroke-width="1.2" opacity=".72"/>
+      <path id="vertical-window-mullion" d="M72 64L80 61H92" stroke="#252A28" stroke-width="3"/>
+      <path id="vertical-window-glazing-highlight" d="M78 91L85 82" stroke="#FFFFFF" stroke-width="2" opacity=".3"/>
+      <path id="vertical-window-pane-shadow" d="M92 31H96V100H92Z" fill="#000000" opacity=".2"/>
+    </g>
+    <g id="vertical-window-sill-shadows">
+      <path id="vertical-window-left-sill-shadow" d="M61 36H68V92H61Z" fill="#252A28" opacity=".22"/>
+      <path id="vertical-window-right-sill-shadow" d="M98 36H104V92H98Z" fill="#252A28" opacity=".18"/>
+    </g>
+  </g>
+</svg><text x="982" y="626" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="720" fill="#626861" text-anchor="middle">160 detail</text><text x="1127" y="586" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="720" fill="#626861" text-anchor="middle">70 reduced</text><text x="902" y="656" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="620" fill="#292C2A" text-anchor="start">The pane is a raised barrier between wall</text><text x="902" y="673" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="620" fill="#292C2A" text-anchor="start">seams, not a rotated facade or a transparent</text><text x="902" y="690" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="620" fill="#292C2A" text-anchor="start">doorway.</text></svg>

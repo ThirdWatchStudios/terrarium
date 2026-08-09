@@ -598,21 +598,21 @@ gentlest introduction to hand-authoring, highest tweak-pain relief.
 Mechanical pilot implemented 2026-07-10: the exact twelve canonical fixed-light
 SVGs live under `assets/walls/bevel`, compile through
 `scripts/importWallBevel.ts`, and assemble from the existing 47-blob topology.
-The approved `office-wall` integration replaces its painted-on rim with a near-
-black silhouette boundary and an inset palette-material body on exposed sides.
-The follow-on promotion applies that shared contour and fixed-light face kit to
-all eight opaque wall templates. Their brick, panel, foliage, brand, slat, and
-structural details remain procedural, constrained to the material surface and
-painted below the authored faces. Connected-side overhang, cell coverage, blob
-topology, and export metadata remain unchanged. Glass and Curtain stay byte-
-identical on their procedural no-bevel paths.
+The 2026-08-07 refinement keeps those paths and topology but promotes them as
+actual material face planes for a five-wall core: Office, Brick, Panel, Cubicle,
+and Wood Slat. The cap is `$primary`, the tall front is `$secondary`, and the
+north lip/side returns/corners are `$accent`; imported crease paint is omitted.
+Brick mortar, panel joints, cubicle reveals, and slat cuts live only on visible
+faces. No wall needs room-side or semantic “inside” input. Glass, Curtain,
+Demising, Living, and Branded remain registered only so legacy projects can be
+read and re-exported; they are absent from new projects, new-build selection,
+department themes, starter scenes, and surround generation.
 
-`npm run walls:preview` produces the focused previous-versus-authored Office
-source/47-tile/room/palette/distance proof. `npm run walls:materials:preview`
-serially produces the shipped-palette 47-tile and complex-room proofs for all
-eight opaque materials plus `docs/previews/wall-preview-opaque-walls.html`.
-Promotion requires exactly seven additional wall snapshot updates; no export
-contract or schema change is involved.
+`npm run walls:quiet-family:preview` renders the five current production
+families at 48 px and 30 px plus their topology stress sheet. The older
+`walls:preview` / `walls:materials:preview` surfaces remain useful historical
+bevel/source diagnostics. The atlas and 47-blob payload shape are unchanged;
+current atlases declare topology-only orientation and no contextual mirroring.
 
 Fallback if the authored bevel doesn't beat procedural after ~2 days of
 drawing: extract `BEVEL` into a declarative spec + live tweak panel — fixes
