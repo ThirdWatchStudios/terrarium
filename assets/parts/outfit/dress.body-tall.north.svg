@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Canonical dress — body-tall north</title>
+  <desc>Production complete outfit-dress art for body-tall.</desc>
+  <metadata>{"status":"production","target":"outfit-dress","bodyId":"body-tall","facing":"north"}</metadata>
+  <g transform="translate(64 87)">
+    <path id="art/dress/skirt" d="M0-34Q-18-24-17 4C-16.68 12.96-25.2 23.84-25.2 35Q0 37 25.2 35C25.2 23.84 16.68 12.96 17 4Q18-24 0-34Z" fill="#FF0000" fill-rule="nonzero"/>
+    <path id="detail/dress/collar" d="M-5-34H5A2 2 0 0 1 7-32V-32A2 2 0 0 1 5-30H-5A2 2 0 0 1-7-32V-32A2 2 0 0 1-5-34Z" fill="#00FF00" fill-rule="nonzero"/>
+    <path id="detail/dress/waist" d="M-17 4L17 4" fill="none" stroke="#00FF00" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="detail/dress/seam" d="M0 9L0 32" fill="none" stroke="#00000018" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

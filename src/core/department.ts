@@ -92,8 +92,8 @@ export interface DepartmentTheme {
 export const CATEGORY_THEMES: Record<string, DepartmentTheme> = {
   leadership: { floor: 'floor-wood', wall: 'wall-panel', accent: '#C9A227' },
   finance: { floor: 'floor-terrazzo', wall: 'wall-office', accent: '#2E8B57' },
-  commercial: { floor: 'floor-carpet-tiles', wall: 'wall-glass', accent: '#3D7FD8' },
-  technical: { floor: 'floor-utility-vinyl', wall: 'wall-glass', accent: '#1FB6C9' },
+  commercial: { floor: 'floor-carpet-tiles', wall: 'wall-panel', accent: '#3D7FD8' },
+  technical: { floor: 'floor-utility-vinyl', wall: 'wall-office', accent: '#1FB6C9' },
   operations: { floor: 'floor-rubber-mat', wall: 'wall-brick', accent: '#D8732F' },
   administrative: { floor: 'floor-quiet-carpet', wall: 'wall-office', accent: '#8A5FB0' },
 };

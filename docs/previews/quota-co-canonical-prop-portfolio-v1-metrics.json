@@ -1,25 +1,17 @@
 {
-  "reviewStatus": "canonical-portfolio-unity-import-accepted",
-  "canonicalSvgCount": 45,
+  "reviewStatus": "canonical-portfolio-unity-imported-runtime-deferred",
+  "canonicalSvgCount": 54,
   "sourceSvgAuthoring": true,
   "productionPromotion": true,
   "bundleExportPerformed": true,
   "unityImport": true,
-  "commitCreated": true,
+  "runtimeVisualAcceptance": false,
+  "runtimeVisualAcceptanceDeferred": true,
+  "runtimeVisualAcceptanceReason": "The cafeteria facilities do not yet have a viable in-game path.",
+  "commitCreated": false,
   "exportContractMutation": false,
   "schemaMutation": false,
-  "schemaVersion": 19,
-  "closureEvidence": {
-    "headlessExportFileCount": 3523,
-    "unityRepository": "ThirdWatchStudios/the-water-cooler",
-    "unityImportFolder": "water-cooler-sprites-20260729-182010",
-    "unityImportCommit": "d345281b0d",
-    "visualAcceptance": [
-      "accepted prop geometry visible in Unity",
-      "canonical SVG palette visible after stale-palette reconciliation"
-    ],
-    "terrariumCommitScope": "canonical authored prop source bank, importer, proofs, palette policy, tests, and snapshots"
-  },
+  "schemaVersion": 21,
   "invariants": {
     "authoringCanvas": 128,
     "acceptedWallDatum": 112,
@@ -56,7 +48,11 @@
         "reception-desk",
         "desk-clutter",
         "cubicle-workstation",
-        "break-table"
+        "break-table",
+        "prep-table",
+        "dining-carrel",
+        "cafeteria-table",
+        "tray-stack"
       ],
       "carryoverIds": []
     },
@@ -96,7 +92,12 @@
         "microwave",
         "fridge",
         "vending-machine",
-        "mail-station"
+        "mail-station",
+        "serving-line",
+        "service-scanner",
+        "commercial-range",
+        "dish-return",
+        "walk-in-front"
       ],
       "carryoverIds": []
     },
@@ -123,8 +124,13 @@
       "authoredIds": [],
       "carryoverIds": [
         "car",
+        "lot-marking-crosswalk",
         "lamp-post",
-        "bike-rack"
+        "sign-lot",
+        "bike-rack",
+        "park-bench",
+        "picnic-table",
+        "tree-canopy"
       ]
     }
   ],
@@ -1433,6 +1439,267 @@
       "defaultLayerTints": [
         null
       ]
+    },
+    "serving-line": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/serving-line.svg",
+      "sourceSha256": "378cdf6a06c7014a5b0a31eb151ffe74d1a9bf486d595f76b9a962517252090c",
+      "importedSourceSha256": "378cdf6a06c7014a5b0a31eb151ffe74d1a9bf486d595f76b9a962517252090c",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0,
+      "close": {
+        "visiblePixels": 10274,
+        "bounds": {
+          "minX": 2,
+          "minY": 25,
+          "maxX": 125,
+          "maxY": 121
+        }
+      },
+      "far": {
+        "visiblePixels": 1022,
+        "bounds": {
+          "minX": 0,
+          "minY": 8,
+          "maxX": 39,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "service-scanner": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/service-scanner.svg",
+      "sourceSha256": "440c5c0758ba3c632b0b565603fe95ae82ea38abd6540fa8ab0dd18a31e09b6c",
+      "importedSourceSha256": "440c5c0758ba3c632b0b565603fe95ae82ea38abd6540fa8ab0dd18a31e09b6c",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0,
+      "close": {
+        "visiblePixels": 2113,
+        "bounds": {
+          "minX": 47,
+          "minY": 33,
+          "maxX": 80,
+          "maxY": 120
+        }
+      },
+      "far": {
+        "visiblePixels": 224,
+        "bounds": {
+          "minX": 14,
+          "minY": 10,
+          "maxX": 25,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "commercial-range": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/commercial-range.svg",
+      "sourceSha256": "389c9c4d42286cb2608d49cf56ecfd7abf2606007103015fe38e4ad50746e56f",
+      "importedSourceSha256": "389c9c4d42286cb2608d49cf56ecfd7abf2606007103015fe38e4ad50746e56f",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0,
+      "close": {
+        "visiblePixels": 8910,
+        "bounds": {
+          "minX": 17,
+          "minY": 17,
+          "maxX": 110,
+          "maxY": 121
+        }
+      },
+      "far": {
+        "visiblePixels": 914,
+        "bounds": {
+          "minX": 5,
+          "minY": 5,
+          "maxX": 34,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "prep-table": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/prep-table.svg",
+      "sourceSha256": "9d1f1dc39ca88fc2ace992ff9224fc86deefde4c9d94ac353a9db82cc8ac5f2e",
+      "importedSourceSha256": "9d1f1dc39ca88fc2ace992ff9224fc86deefde4c9d94ac353a9db82cc8ac5f2e",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0,
+      "close": {
+        "visiblePixels": 6940,
+        "bounds": {
+          "minX": 9,
+          "minY": 32,
+          "maxX": 118,
+          "maxY": 95
+        }
+      },
+      "far": {
+        "visiblePixels": 678,
+        "bounds": {
+          "minX": 3,
+          "minY": 10,
+          "maxX": 36,
+          "maxY": 29
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "dish-return": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/dish-return.svg",
+      "sourceSha256": "a85652ea2a572f236bb4b3a42135c441b6e54e7623c566dc2401f0806b1bb181",
+      "importedSourceSha256": "a85652ea2a572f236bb4b3a42135c441b6e54e7623c566dc2401f0806b1bb181",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0,
+      "close": {
+        "visiblePixels": 8428,
+        "bounds": {
+          "minX": 14,
+          "minY": 36,
+          "maxX": 113,
+          "maxY": 121
+        }
+      },
+      "far": {
+        "visiblePixels": 852,
+        "bounds": {
+          "minX": 4,
+          "minY": 11,
+          "maxX": 35,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "walk-in-front": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/walk-in-front.svg",
+      "sourceSha256": "48282617302d2f693e37da302df4dcd6c52a3c429fefc71853fa4cb449be43e6",
+      "importedSourceSha256": "48282617302d2f693e37da302df4dcd6c52a3c429fefc71853fa4cb449be43e6",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0,
+      "close": {
+        "visiblePixels": 10614,
+        "bounds": {
+          "minX": 15,
+          "minY": 12,
+          "maxX": 112,
+          "maxY": 121
+        }
+      },
+      "far": {
+        "visiblePixels": 1072,
+        "bounds": {
+          "minX": 4,
+          "minY": 4,
+          "maxX": 35,
+          "maxY": 37
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "dining-carrel": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/dining-carrel.svg",
+      "sourceSha256": "673e098c82f9c2e36d55ed51b6f3b939762b613509929247192fb27ae6990460",
+      "importedSourceSha256": "673e098c82f9c2e36d55ed51b6f3b939762b613509929247192fb27ae6990460",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0,
+      "close": {
+        "visiblePixels": 7440,
+        "bounds": {
+          "minX": 17,
+          "minY": 17,
+          "maxX": 110,
+          "maxY": 110
+        }
+      },
+      "far": {
+        "visiblePixels": 781,
+        "bounds": {
+          "minX": 5,
+          "minY": 5,
+          "maxX": 34,
+          "maxY": 34
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "cafeteria-table": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/cafeteria-table.svg",
+      "sourceSha256": "808a19ed54d8580675f46b4bbbcc4f91af596cb159395f032c2a62b0cf25dc02",
+      "importedSourceSha256": "808a19ed54d8580675f46b4bbbcc4f91af596cb159395f032c2a62b0cf25dc02",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0,
+      "close": {
+        "visiblePixels": 9380,
+        "bounds": {
+          "minX": 9,
+          "minY": 16,
+          "maxX": 118,
+          "maxY": 111
+        }
+      },
+      "far": {
+        "visiblePixels": 924,
+        "bounds": {
+          "minX": 3,
+          "minY": 5,
+          "maxX": 36,
+          "maxY": 34
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
+    },
+    "tray-stack": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/tray-stack.svg",
+      "sourceSha256": "73cf956bb699f21327e9d737e61748ed6318ee67c97e5102fea9e0decd464077",
+      "importedSourceSha256": "73cf956bb699f21327e9d737e61748ed6318ee67c97e5102fea9e0decd464077",
+      "sourceHashMatches": true,
+      "normalizedPixelDelta": 0,
+      "close": {
+        "visiblePixels": 5744,
+        "bounds": {
+          "minX": 26,
+          "minY": 24,
+          "maxX": 109,
+          "maxY": 95
+        }
+      },
+      "far": {
+        "visiblePixels": 595,
+        "bounds": {
+          "minX": 8,
+          "minY": 7,
+          "maxX": 34,
+          "maxY": 29
+        }
+      },
+      "defaultLayerCount": 1,
+      "defaultLayerTints": [
+        null
+      ]
     }
   },
   "evaluationContexts": [
@@ -1446,11 +1713,11 @@
     "wall-context",
     "desk-occlusion",
     "character-relative-handheld",
-    "procedural-outdoor-carryover"
+    "separately-gated-outdoor-carriers"
   ],
   "protectedCounts": {
     "defaultCharacters": 4,
-    "defaultProps": 132,
+    "defaultProps": 186,
     "defaultWalls": 10
   }
 }

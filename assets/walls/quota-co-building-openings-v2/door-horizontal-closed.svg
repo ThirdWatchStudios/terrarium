@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-prop-id="door" data-projection="plan" data-runtime-grid-scale="0.5" data-wall-material-id="office-wall" data-axis="horizontal" data-state="closed">
+  <title>QuotaCo office horizontal sliding auto-door, closed</title>
+  <desc>Office wall-owned full-cell opening with palette-inheriting structure, compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-door-closed-office" transform="translate(32 32) scale(.5)">
+    <path id="horizontal-door-closed-office-part-01" d="M0 2H12V126H0ZM116 2H128V126H116Z" fill="#323431"/>
+    <path id="horizontal-door-closed-office-part-02" d="M0 8H12V120H0ZM116 8H128V120H116Z" fill="#85867F"/>
+    <path id="horizontal-door-closed-office-part-03" d="M0 8H12V16H0ZM116 8H128V16H116Z" fill="#999A92"/>
+    <path id="horizontal-door-closed-office-part-04" d="M0 76H12V120H0ZM116 76H128V120H116Z" fill="#B0AEA5"/>
+    <path id="horizontal-door-closed-office-part-05" d="M4 2H124V40H4Z" fill="#323431"/>
+    <path id="horizontal-door-closed-office-part-06" d="M8 8H120V35H8Z" fill="#85867F"/>
+    <path id="horizontal-door-closed-office-part-07" d="M8 8H120V16H8Z" fill="#999A92"/>
+    <path id="horizontal-door-closed-office-part-08" d="M8 25H120V35H8Z" fill="#B0AEA5"/>
+    <path id="horizontal-door-closed-office-part-09" d="M4 34H16V120H4ZM112 34H124V120H112Z" fill="#323431"/>
+    <path id="horizontal-door-closed-office-part-10" d="M8 38H16V76H8ZM112 38H120V76H112Z" fill="#85867F"/>
+    <path id="horizontal-door-closed-office-part-11" d="M8 76H16V116H8ZM112 76H120V116H112Z" fill="#B0AEA5"/>
+    <path id="horizontal-door-closed-office-part-12" d="M14 38H16V116H14ZM112 38H114V116H112Z" fill="#999A92"/>
+    <path id="horizontal-door-closed-office-part-13" d="M14 116H114V122H14Z" fill="#323431" opacity=".82"/>
+    <circle id="horizontal-door-closed-office-part-14" cx="64" cy="31.5" r="1.8" fill="#B96D52"/>
+    <path id="horizontal-door-closed-office-part-15" d="M14 37H114V117H14Z" fill="#323431"/>
+    <path id="horizontal-door-closed-office-part-16" d="M18 40H62V114H18ZM66 40H110V114H66Z" fill="#53615E"/>
+    <path id="horizontal-door-closed-office-part-17" d="M49 50H58V84H49ZM70 50H79V84H70Z" fill="#8CA4A1" opacity=".82"/>
+    <path id="horizontal-door-closed-office-part-18" d="M50 51H53V83H50ZM71 51H74V83H71Z" fill="#FFFFFF" opacity=".16"/>
+    <path id="horizontal-door-closed-office-part-19" d="M64 40V114" stroke="#323431" stroke-width="2"/>
+  </g>
+</svg>

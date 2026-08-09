@@ -1,0 +1,44 @@
+{
+  "status": "review-only-awaiting-visual-approval",
+  "sourceFiles": [
+    "assets/parts/hair/short.south.svg",
+    "assets/parts/hair/short.east.svg",
+    "assets/parts/hair/short.north.svg"
+  ],
+  "productionWiringChanged": false,
+  "sourceSvgChanged": false,
+  "perHeadSvgVariantsAdded": 0,
+  "method": {
+    "geometryOwner": "three imported canonical Short SVG facings",
+    "fitData": "six shared declarative head envelopes plus Short offsets",
+    "transform": "bounded piecewise-linear x/y landmark warp",
+    "replacementPathBuilders": 0
+  },
+  "audit": {
+    "variantCount": 18,
+    "sourceShapeCount": 4,
+    "derivedShapeCount": 24,
+    "missingHairAtLiteralScale": [],
+    "productionDifferences": [
+      "head-round/south",
+      "head-round/east",
+      "head-round/north",
+      "head-oval/south",
+      "head-oval/east",
+      "head-oval/north",
+      "head-boxy/south",
+      "head-boxy/east",
+      "head-boxy/north",
+      "head-long/south",
+      "head-long/east",
+      "head-long/north",
+      "head-angular/south",
+      "head-angular/east",
+      "head-angular/north",
+      "head-soft-square/south",
+      "head-soft-square/east",
+      "head-soft-square/north"
+    ],
+    "deterministicDigest": "a939dba2d5996cab510daef9b6cf6682e21fdd1482bbaed56476369333cd2875"
+  }
+}

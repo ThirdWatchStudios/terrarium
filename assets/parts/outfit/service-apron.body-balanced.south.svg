@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Canonical service apron — body-balanced south</title>
+  <desc>Production complete outfit-service-apron overlay for body-balanced.</desc>
+  <metadata>{"status":"production","target":"outfit-service-apron","bodyId":"body-balanced","facing":"south","ownership":"complete-service-uniform-overlay"}</metadata>
+  <g transform="translate(64 87)">
+    <path id="detail/service-apron/shape-1" d="M -23.818182 -15 L 23.818182 -15 L 28 14 L -28 14 Z" fill="#00FF00" fill-rule="nonzero"/>
+    <path id="detail/service-apron/shape-2" d="M -10.48 -13 L 10.48 -13 L 17.952381 23 L -17.952381 23 Z" fill="#FF0000" fill-rule="nonzero"/>
+    <path id="detail/service-apron/shape-3" d="M -7 -26 L -8.48 -13 M 7 -26 L 8.48 -13" fill="none" stroke="#FF0000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="detail/service-apron/shape-4" d="M -6 13 h 12 a 3 3 0 0 1 3 3 v 5 a 3 3 0 0 1 -3 3 h -12 a 3 3 0 0 1 -3 -3 v -5 a 3 3 0 0 1 3 -3 Z" fill="#00FF00" fill-rule="nonzero"/>
+    <path id="detail/service-apron/shape-5" d="M -27 9 L 27 9" fill="none" stroke="#0000002E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
+

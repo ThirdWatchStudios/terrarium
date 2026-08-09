@@ -1,0 +1,26 @@
+{
+  "status": "approved-production-source-authority",
+  "sourceFiles": [
+    "assets/parts/hair/ponytail.south.svg",
+    "assets/parts/hair/ponytail.east.svg",
+    "assets/parts/hair/ponytail.north.svg"
+  ],
+  "productionWiringChanged": true,
+  "canonicalSourceSvgChanged": true,
+  "reviewSourceSvgAdded": false,
+  "perHeadSvgVariantsAdded": 0,
+  "method": {
+    "geometryOwner": "three imported canonical Ponytail SVG facings",
+    "capFit": "bounded piecewise-linear landmark warp",
+    "attachmentFit": "shared declarative translation for authored tie and tail",
+    "replacementPathBuilders": 0
+  },
+  "audit": {
+    "variantCount": 18,
+    "sourceShapeCount": 9,
+    "derivedShapeCount": 54,
+    "missingHairAtLiteralScale": [],
+    "productionDifferences": [],
+    "deterministicDigest": "ad8f76f06a76b675aeb78e29563447ef24920a66f9d0e60af57aac973381224d"
+  }
+}

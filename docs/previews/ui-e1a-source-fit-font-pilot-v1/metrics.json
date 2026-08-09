@@ -1,0 +1,334 @@
+{
+  "status": "review-only-stopped-for-explicit-visual-approval",
+  "gate": "UI-E1a source-fit and production-font pilot",
+  "sourceDecisions": [
+    {
+      "id": "ui-divider",
+      "mode": "tintable",
+      "decision": "exact-authority-inversion",
+      "currentUse": "Discrete seam ornament; no live runtime binding found.",
+      "recommendation": "Keep the lean rule and central registration diamond. It fits the approved administrative chassis at 16–32 px.",
+      "candidateSha256": "a93897baeed18b24db204d62952219419d3c494b93d2fd7f299d35ef68913974",
+      "currentComposedSha256": "a93897baeed18b24db204d62952219419d3c494b93d2fd7f299d35ef68913974",
+      "parity": [
+        {
+          "size": 16,
+          "mismatchedPixels": 0,
+          "totalPixels": 256
+        },
+        {
+          "size": 18,
+          "mismatchedPixels": 0,
+          "totalPixels": 324
+        },
+        {
+          "size": 20,
+          "mismatchedPixels": 0,
+          "totalPixels": 400
+        },
+        {
+          "size": 24,
+          "mismatchedPixels": 0,
+          "totalPixels": 576
+        },
+        {
+          "size": 32,
+          "mismatchedPixels": 0,
+          "totalPixels": 1024
+        },
+        {
+          "size": 42,
+          "mismatchedPixels": 0,
+          "totalPixels": 1764
+        },
+        {
+          "size": 48,
+          "mismatchedPixels": 0,
+          "totalPixels": 2304
+        },
+        {
+          "size": 64,
+          "mismatchedPixels": 0,
+          "totalPixels": 4096
+        },
+        {
+          "size": 128,
+          "mismatchedPixels": 0,
+          "totalPixels": 16384
+        }
+      ]
+    },
+    {
+      "id": "ui-corner",
+      "mode": "tintable",
+      "decision": "redesign-before-promotion",
+      "currentUse": "Catalog candidate for UI trim and logical-footprint ticks.",
+      "recommendation": "Replace the soft radius with a square open bracket so Utility trim and focus geometry share the approved drafting grammar.",
+      "candidateSha256": "a703a4da1c34b367f79378d792db8fba04f09c0be5a914a234cdc9127db810d5",
+      "currentComposedSha256": "302c9c1b45ac1cf1e1b86a8dd60400175af43213ad0e5e906c82753790883a21",
+      "parity": []
+    },
+    {
+      "id": "ui-focus",
+      "mode": "tintable",
+      "decision": "redesign-before-promotion",
+      "currentUse": "Catalog candidate; no direct stable-ID runtime binding found.",
+      "recommendation": "Use four open corner ticks. The current crosshair reads as surveillance and wrongly blends IRIS/Capture into Utility focus.",
+      "candidateSha256": "e1e651768dabad238d4c520d40ca910a8ea3e09b4dec0f353548d1b0fb1ba6e4",
+      "currentComposedSha256": "7c8be578059a0f74a57c6b499d56a9624e0883dae430d809c9ff851f1cd1c531",
+      "parity": []
+    },
+    {
+      "id": "iris-mark",
+      "mode": "tintable",
+      "decision": "exact-authority-inversion",
+      "currentUse": "Live stable-ID consumer at 18–20 px in Main Menu and Workstation.",
+      "recommendation": "Keep the eye mark exact. It remains legible at the live sizes when contained on navy and never used as global chrome.",
+      "candidateSha256": "f6db401047c745c4305c8c1ec6e0d9f97cb0d0b45d52b1fbc0c4a45d1d10b1fc",
+      "currentComposedSha256": "f6db401047c745c4305c8c1ec6e0d9f97cb0d0b45d52b1fbc0c4a45d1d10b1fc",
+      "parity": [
+        {
+          "size": 16,
+          "mismatchedPixels": 0,
+          "totalPixels": 256
+        },
+        {
+          "size": 18,
+          "mismatchedPixels": 0,
+          "totalPixels": 324
+        },
+        {
+          "size": 20,
+          "mismatchedPixels": 0,
+          "totalPixels": 400
+        },
+        {
+          "size": 24,
+          "mismatchedPixels": 0,
+          "totalPixels": 576
+        },
+        {
+          "size": 32,
+          "mismatchedPixels": 0,
+          "totalPixels": 1024
+        },
+        {
+          "size": 42,
+          "mismatchedPixels": 0,
+          "totalPixels": 1764
+        },
+        {
+          "size": 48,
+          "mismatchedPixels": 0,
+          "totalPixels": 2304
+        },
+        {
+          "size": 64,
+          "mismatchedPixels": 0,
+          "totalPixels": 4096
+        },
+        {
+          "size": 128,
+          "mismatchedPixels": 0,
+          "totalPixels": 16384
+        }
+      ]
+    },
+    {
+      "id": "quotaco-mark",
+      "mode": "literal",
+      "decision": "exact-authority-inversion",
+      "currentUse": "Live stable-ID consumer at 42 px in Main Menu branding.",
+      "recommendation": "Keep the literal halftone seal exact for its 42 px carrier. Do not assign it to 16–20 px control duty.",
+      "candidateSha256": "37267554ee98d3082f058f58ae70ea203551d63e19019f72eae6d5ae798c35df",
+      "currentComposedSha256": "37267554ee98d3082f058f58ae70ea203551d63e19019f72eae6d5ae798c35df",
+      "parity": [
+        {
+          "size": 16,
+          "mismatchedPixels": 0,
+          "totalPixels": 256
+        },
+        {
+          "size": 18,
+          "mismatchedPixels": 0,
+          "totalPixels": 324
+        },
+        {
+          "size": 20,
+          "mismatchedPixels": 0,
+          "totalPixels": 400
+        },
+        {
+          "size": 24,
+          "mismatchedPixels": 0,
+          "totalPixels": 576
+        },
+        {
+          "size": 32,
+          "mismatchedPixels": 0,
+          "totalPixels": 1024
+        },
+        {
+          "size": 42,
+          "mismatchedPixels": 0,
+          "totalPixels": 1764
+        },
+        {
+          "size": 48,
+          "mismatchedPixels": 0,
+          "totalPixels": 2304
+        },
+        {
+          "size": 64,
+          "mismatchedPixels": 0,
+          "totalPixels": 4096
+        },
+        {
+          "size": 128,
+          "mismatchedPixels": 0,
+          "totalPixels": 16384
+        }
+      ]
+    }
+  ],
+  "fontPilot": {
+    "recommended": {
+      "utilityHeading": "IBM Plex Sans Condensed Medium",
+      "utilityBody": "IBM Plex Sans Regular / Medium",
+      "quotaCoPrint": "Courier Prime Regular / Bold",
+      "iris": "IBM Plex Mono Regular",
+      "optionalIrisHeadingAccent": "VT323 Regular"
+    },
+    "fonts": [
+      {
+        "key": "ibm-plex-sans-regular",
+        "family": "IBM Plex Sans",
+        "weight": 400,
+        "source": "/Users/tombiagioni/git/The-Water-Cooler/Assets/WaterCooler/UI/Fonts/IBMPlexSans-Regular.ttf",
+        "sha256": "975dcda37d80f038dcd143c22e33ca2d97a0cc5a929aace1c749153b0fe1afa5",
+        "license": "SIL Open Font License 1.1; repository license-file packaging gap noted",
+        "disposition": "existing Unity TTF; embedded in review sheet only"
+      },
+      {
+        "key": "ibm-plex-sans-medium",
+        "family": "IBM Plex Sans",
+        "weight": 500,
+        "source": "/Users/tombiagioni/git/The-Water-Cooler/Assets/WaterCooler/UI/Fonts/IBMPlexSans-Medium.ttf",
+        "sha256": "331c8639d7598b2cde62a911a71db195e30cb655cd6bdf2e324a7e984955f907",
+        "license": "SIL Open Font License 1.1; repository license-file packaging gap noted",
+        "disposition": "existing Unity TTF; embedded in review sheet only"
+      },
+      {
+        "key": "ibm-plex-mono-regular",
+        "family": "IBM Plex Mono",
+        "weight": 400,
+        "source": "/Users/tombiagioni/git/The-Water-Cooler/Assets/WaterCooler/UI/Fonts/IBMPlexMono-Regular.ttf",
+        "sha256": "6a3412f058c7d8dfd9170c41e85ade48e5156ecb89356110ca57a0a27734af46",
+        "license": "SIL Open Font License 1.1; repository license-file packaging gap noted",
+        "disposition": "existing Unity TTF; embedded in review sheet only"
+      },
+      {
+        "key": "ibm-plex-sans-condensed-medium",
+        "family": "IBM Plex Sans Condensed",
+        "weight": 500,
+        "source": "https://raw.githubusercontent.com/google/fonts/2796410152d4f9524b68ed46e69c1b60f8e0f7c3/ofl/ibmplexsanscondensed/IBMPlexSansCondensed-Medium.ttf",
+        "sha256": "426350c298277f7f9d1a93956572799ca3d16e2d43e7f60eec8382bcd795ec30",
+        "license": "SIL Open Font License 1.1",
+        "disposition": "downloaded to memory for review render; not copied to Unity"
+      },
+      {
+        "key": "courier-prime-regular",
+        "family": "Courier Prime",
+        "weight": 400,
+        "source": "https://raw.githubusercontent.com/google/fonts/2796410152d4f9524b68ed46e69c1b60f8e0f7c3/ofl/courierprime/CourierPrime-Regular.ttf",
+        "sha256": "72f793376f8e2841656bf21d77a5de010f2929bd6956a22ee848ad0c7eb978af",
+        "license": "SIL Open Font License 1.1",
+        "disposition": "downloaded to memory for review render; not copied to Unity"
+      },
+      {
+        "key": "courier-prime-bold",
+        "family": "Courier Prime",
+        "weight": 700,
+        "source": "https://raw.githubusercontent.com/google/fonts/2796410152d4f9524b68ed46e69c1b60f8e0f7c3/ofl/courierprime/CourierPrime-Bold.ttf",
+        "sha256": "ff1f38786c849d1c41fa8e447960abdb2bd75fdfb0cfcdeb524fad65a5af3638",
+        "license": "SIL Open Font License 1.1",
+        "disposition": "downloaded to memory for review render; not copied to Unity"
+      },
+      {
+        "key": "vt323-regular",
+        "family": "VT323",
+        "weight": 400,
+        "source": "https://raw.githubusercontent.com/google/fonts/2796410152d4f9524b68ed46e69c1b60f8e0f7c3/ofl/vt323/VT323-Regular.ttf",
+        "sha256": "cf4de751ada78ceac033dbe16a687742939995b77bc2a052ae17a4957958594d",
+        "license": "SIL Open Font License 1.1",
+        "disposition": "downloaded to memory for review render; not copied to Unity"
+      }
+    ],
+    "googleFontsCommit": "2796410152d4f9524b68ed46e69c1b60f8e0f7c3",
+    "existingUnityLicenseFileFound": false,
+    "literalScale": [
+      {
+        "viewport": "1280x720",
+        "uiScale": 1,
+        "bodyPx": 16,
+        "supportPx": 14,
+        "actionHeightPx": 40
+      },
+      {
+        "viewport": "1280x720",
+        "uiScale": 1.4,
+        "bodyPx": 22.4,
+        "supportPx": 19.6,
+        "actionHeightPx": 56
+      }
+    ]
+  },
+  "liveInventory": {
+    "icons": 142,
+    "cursors": 4,
+    "directIcons": 79,
+    "emotionIcons": 17,
+    "stateIcons": 38,
+    "reactionIcons": 8,
+    "currentAuthority": "TypeScript ShapeSpec builders",
+    "canonicalUiOrCursorSvgSources": 0
+  },
+  "currentUnityStableIdConsumers": {
+    "ui-divider": "imported catalog only; no direct runtime binding found",
+    "ui-corner": "imported catalog only; no direct runtime binding found",
+    "ui-focus": "imported catalog only; no direct runtime binding found",
+    "iris-mark": "MainMenuController and WorkstationShellController; live carrier sizes 18–20 px",
+    "quotaco-mark": "MainMenuController; live carrier size 42 px"
+  },
+  "reservations": {
+    "amber": "dormant Capture only; absent from pilot sheets",
+    "rose": "emotion only; absent from pilot sheets",
+    "selection": "muted teal",
+    "invalid": "rust plus geometry and repair text"
+  },
+  "protectedSurfaceHashes": {
+    "CONTRACT.md": "c86c5dcfde03b36353ce0ac5e6725c7c10b9707a23ea28baa4e93f41526b7738",
+    "src/parts/icons.ts": "8bed1f660f2e908c5f83c90c320cee187e283ea756aaae1ed942c0d5a2045fbc",
+    "src/parts/emotions.ts": "b1d5e24308947a06497addba3c23d3fc6009fa001728f50e939338bb1065ceab",
+    "src/parts/stateIcons.ts": "3b736efc9059c8501325c44a0cc58df2fff0f367a5825fa1e451e929b72aef7e",
+    "src/parts/reactions.ts": "006fd262d3e6e27eaca012dccc49ca4f08ad32b271db69ba5ec17c2465aa45d4",
+    "src/core/compositor.ts": "50cf566a5de2fe02b35cae4ae25519af9295fbfe16ae9d8cdfcb0cf60d3a1d0a",
+    "src/core/exporter.ts": "6e1d2b0facf0973ea328b2a88c77d99ce9133e15fe46996cc2c10c0264b08751"
+  },
+  "worldReference": {
+    "file": "/Users/tombiagioni/.codex/generated_images/019fc31e-f42d-7f23-b0ee-6635d674450b/exec-1244ea64-482b-4484-b7c9-576da0a93593.png",
+    "sha256": "e2e660355ff79f7acdb4b501472b605650dbb7bed71b6d2e9345fd4e78752fe4",
+    "use": "review backdrop only; not a production master or source asset"
+  },
+  "productionChanges": [],
+  "deferred": [
+    "canonical SVG extraction or promotion",
+    "production builder changes",
+    "exporter/importer changes",
+    "browser export",
+    "Unity import",
+    "runtime UI implementation",
+    "staging",
+    "commit"
+  ]
+}

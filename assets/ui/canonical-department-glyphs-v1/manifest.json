@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 1,
+  "family": "canonical-ui-department-glyphs-v1",
+  "authority": "canonical-svg",
+  "sourcePolicy": {
+    "visualAuthority": "checked-in-svg",
+    "compiledOutput": "src/parts/generated/canonicalUiIconArt.ts",
+    "ordinaryCommandsWriteSources": false
+  },
+  "acceptedProof": "docs/previews/department-era-ui-production-design-v1",
+  "canvas": {
+    "width": 128,
+    "height": 128,
+    "origin": [64, 64]
+  },
+  "icons": [
+    {
+      "id": "work-intake",
+      "label": "Intake work",
+      "mode": "tintable",
+      "file": "work-intake.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32, 42]
+    },
+    {
+      "id": "work-data-processing",
+      "label": "Data processing work",
+      "mode": "tintable",
+      "file": "work-data-processing.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32, 42]
+    },
+    {
+      "id": "work-delivery",
+      "label": "Delivery work",
+      "mode": "tintable",
+      "file": "work-delivery.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32, 42]
+    },
+    {
+      "id": "ready-room",
+      "label": "Room ready",
+      "mode": "tintable",
+      "file": "ready-room.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32, 42]
+    },
+    {
+      "id": "ready-designated",
+      "label": "Designation ready",
+      "mode": "tintable",
+      "file": "ready-designated.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32, 42]
+    },
+    {
+      "id": "ready-equipped",
+      "label": "Equipment ready",
+      "mode": "tintable",
+      "file": "ready-equipped.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32, 42]
+    },
+    {
+      "id": "ready-io",
+      "label": "Input and output ready",
+      "mode": "tintable",
+      "file": "ready-io.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32, 42]
+    },
+    {
+      "id": "ready-connected",
+      "label": "Connection ready",
+      "mode": "tintable",
+      "file": "ready-connected.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32, 42]
+    },
+    {
+      "id": "ready-staffed",
+      "label": "Staffing ready",
+      "mode": "tintable",
+      "file": "ready-staffed.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32, 42]
+    },
+    {
+      "id": "ready-flowing",
+      "label": "Flow ready",
+      "mode": "tintable",
+      "file": "ready-flowing.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32, 42]
+    },
+    {
+      "id": "ready-all",
+      "label": "Department ready",
+      "mode": "tintable",
+      "file": "ready-all.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32, 42]
+    },
+    {
+      "id": "state-complete",
+      "label": "Complete state",
+      "mode": "tintable",
+      "file": "state-complete.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32, 42]
+    },
+    {
+      "id": "state-missing",
+      "label": "Missing state",
+      "mode": "tintable",
+      "file": "state-missing.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32, 42]
+    },
+    {
+      "id": "state-blocked",
+      "label": "Blocked state",
+      "mode": "tintable",
+      "file": "state-blocked.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32, 42]
+    },
+    {
+      "id": "state-unavailable",
+      "label": "Unavailable state",
+      "mode": "tintable",
+      "file": "state-unavailable.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32, 42]
+    },
+    {
+      "id": "route-input",
+      "label": "Route input",
+      "mode": "tintable",
+      "file": "route-input.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32, 42]
+    },
+    {
+      "id": "route-output",
+      "label": "Route output",
+      "mode": "tintable",
+      "file": "route-output.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32, 42]
+    },
+    {
+      "id": "route-wall-pass",
+      "label": "Route wall pass",
+      "mode": "tintable",
+      "file": "route-wall-pass.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32, 42]
+    },
+    {
+      "id": "route-repair",
+      "label": "Route repair",
+      "mode": "tintable",
+      "file": "route-repair.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32, 42]
+    }
+  ]
+}

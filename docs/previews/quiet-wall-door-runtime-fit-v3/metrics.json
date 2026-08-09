@@ -1,0 +1,72 @@
+{
+  "status": "review-only-full-cell-opening-awaiting-composed-visual-approval",
+  "runtimeFinding": "receiver-scale-and-centering-confirmed-correct",
+  "shadingFinding": "promoted-door-bank-and-exported-wall-use-different-palettes",
+  "shadingCorrection": "door-wall-structure-inherits-exported-wall-instance-palette",
+  "paletteEvidenceSource": "fresh-unity-import-wall-json",
+  "retainedRuntimeEnvelope": "one-0.5-world-unit-wall-cell",
+  "retainedSourceCompensation": 0.5,
+  "promotedV2OuterAperture": 88,
+  "proposedOuterAperture": 120,
+  "promotedV2OpenPassage": 52,
+  "proposedOpenPassage": 80,
+  "promotedV2OpenPassagePercent": 40.625,
+  "proposedOpenPassagePercent": 62.5,
+  "simplification": [
+    "continuous-wall-plane-lintel",
+    "single-quiet-jamb-return",
+    "leaves-retract-behind-jambs",
+    "no-nested-frame-banding"
+  ],
+  "candidateArtLocalToPreview": true,
+  "canonicalSvgMutation": false,
+  "generatedRegistryMutation": false,
+  "exporterMutation": false,
+  "unityMutation": false,
+  "browserExport": false,
+  "unityImport": false,
+  "staging": false,
+  "commit": false,
+  "materials": [
+    {
+      "id": "office-wall",
+      "label": "Office wall",
+      "primary": "#B4B2A9",
+      "secondary": "#888780",
+      "accent": "#5F5E5A",
+      "detail": "#777872"
+    },
+    {
+      "id": "brick-wall",
+      "label": "Brick wall",
+      "primary": "#9C5A45",
+      "secondary": "#D8C9B8",
+      "accent": "#7A4334",
+      "detail": "#D2AA97"
+    },
+    {
+      "id": "panel-wall",
+      "label": "Panel wall",
+      "primary": "#6E6A63",
+      "secondary": "#9AA0A6",
+      "accent": "#185FA5",
+      "detail": "#B5B0A5"
+    },
+    {
+      "id": "cubicle-partition",
+      "label": "Cubicle partition",
+      "primary": "#8A9199",
+      "secondary": "#5F5E5A",
+      "accent": "#D85A30",
+      "detail": "#5D676C"
+    },
+    {
+      "id": "slat-wall",
+      "label": "Wood slat wall",
+      "primary": "#A9714B",
+      "secondary": "#5F3E22",
+      "accent": "#C68B59",
+      "detail": "#503E33"
+    }
+  ]
+}

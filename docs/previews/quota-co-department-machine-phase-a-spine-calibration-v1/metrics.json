@@ -1,0 +1,109 @@
+{
+  "reviewStatus": "owner-accepted-priority-2-static-control",
+  "direction": "administrative-percussion",
+  "scope": "priority-2-phase-a-spine-plus-audit-accepted-static-control",
+  "productionPromotion": true,
+  "canonicalSvgAuthoring": true,
+  "templateRegistration": true,
+  "defaultsMutation": true,
+  "departmentManifestMutation": true,
+  "exportRun": true,
+  "schemaMutation": false,
+  "unityImport": false,
+  "parityClaim": "terrarium-source-compositor-browser-export-only",
+  "machineAnimationDeferred": true,
+  "assetIds": [
+    "calculating_engine",
+    "comparator",
+    "rotary_duplicator",
+    "binding_press",
+    "verification_comparator",
+    "manifest_press"
+  ],
+  "workTypeStamps": [
+    "findings",
+    "reports",
+    "requirements"
+  ],
+  "scaleSuggestions": [
+    {
+      "id": "calculating_engine",
+      "department": "Analysis",
+      "label": "Calculating Engine",
+      "suggestedFootprint": {
+        "w": 2,
+        "h": 2
+      },
+      "nounRead": "radiator crown + exposed arithmetic drum bank",
+      "pollution": "heat"
+    },
+    {
+      "id": "comparator",
+      "department": "Analysis",
+      "label": "Comparator",
+      "suggestedFootprint": {
+        "w": 2,
+        "h": 2
+      },
+      "nounRead": "two equal paper feeds meet one mechanical balance bridge",
+      "pollution": "quiet"
+    },
+    {
+      "id": "rotary_duplicator",
+      "department": "Documentation",
+      "label": "Rotary Duplicator",
+      "suggestedFootprint": {
+        "w": 2,
+        "h": 2
+      },
+      "nounRead": "dominant ink drum + wrapped paper path + drying fingers",
+      "pollution": "fumes"
+    },
+    {
+      "id": "binding_press",
+      "department": "Documentation",
+      "label": "Binding Press",
+      "suggestedFootprint": {
+        "w": 1,
+        "h": 2
+      },
+      "nounRead": "open-throat platen, hand wheel, and compressed report stack",
+      "pollution": "quiet"
+    },
+    {
+      "id": "verification_comparator",
+      "department": "Audit",
+      "label": "Verification Comparator",
+      "suggestedFootprint": {
+        "w": 2,
+        "h": 2
+      },
+      "nounRead": "dual audit towers feed one certification jaw",
+      "pollution": "quiet"
+    },
+    {
+      "id": "manifest_press",
+      "department": "Dispatch",
+      "label": "Manifest Press",
+      "suggestedFootprint": {
+        "w": 1,
+        "h": 2
+      },
+      "nounRead": "lever press + fanfold manifest + canister cradle",
+      "pollution": "quiet"
+    }
+  ],
+  "invariants": {
+    "authoringCanvas": 128,
+    "normalGameplayPixelsPerCell": 90,
+    "farGameplayPixelsPerCell": 40,
+    "propNativeFrameCells": 2,
+    "reviewTableReused": true,
+    "amberUsed": false,
+    "roseUsed": false,
+    "bakedUiUsed": false,
+    "cameraCueUsed": false,
+    "wearOrClutterBakedIntoSku": false,
+    "footprintsSuggestedOnly": true
+  }
+}

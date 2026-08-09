@@ -1,0 +1,44 @@
+{
+  "status": "review-only-awaiting-visual-approval",
+  "sourceFiles": [
+    "docs/previews/canonical-curly-source-fit-v1/sources/curly.south.svg",
+    "docs/previews/canonical-curly-source-fit-v1/sources/curly.east.svg",
+    "docs/previews/canonical-curly-source-fit-v1/sources/curly.north.svg"
+  ],
+  "productionWiringChanged": false,
+  "canonicalSourceSvgChanged": false,
+  "reviewSourceSvgAdded": true,
+  "perHeadSvgVariantsAdded": 0,
+  "method": {
+    "geometryOwner": "three editable review-source Curly SVG facings",
+    "lobeFit": "one declarative center/radius frame per source-owned curl lobe",
+    "replacementPathBuilders": 0
+  },
+  "audit": {
+    "variantCount": 18,
+    "sourceShapeCount": 14,
+    "derivedShapeCount": 84,
+    "missingHairAtLiteralScale": [],
+    "productionDifferences": [
+      "head-round/south",
+      "head-round/east",
+      "head-round/north",
+      "head-oval/south",
+      "head-oval/east",
+      "head-oval/north",
+      "head-boxy/south",
+      "head-boxy/east",
+      "head-boxy/north",
+      "head-long/south",
+      "head-long/east",
+      "head-long/north",
+      "head-angular/south",
+      "head-angular/east",
+      "head-angular/north",
+      "head-soft-square/south",
+      "head-soft-square/east",
+      "head-soft-square/north"
+    ],
+    "deterministicDigest": "50f00877cfa180302400994aac1c4f9d88aed7cf8859676bedba0b9247686440"
+  }
+}

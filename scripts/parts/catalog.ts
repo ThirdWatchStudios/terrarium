@@ -3,11 +3,26 @@ import type { BodyArchetypeId } from '../../src/parts/bodyArchetypes';
 
 export type PartImportMode =
   | 'static'
+  | 'head-fitted-art'
   | 'body-art'
+  | 'body-variant-art'
+  | 'body-variant-overlay-art'
+  | 'fixed-body-art'
   | 'anchored-detail'
   | 'component-detail';
 export type BodyDetailPointAnchor = 'neck';
 export type BodyDetailFrame = 'upper-torso' | 'lower-torso';
+export type HeadFitAdapter =
+  | 'canonical-bob-v1'
+  | 'canonical-short-v1'
+  | 'canonical-bun-v1'
+  | 'canonical-ponytail-v1'
+  | 'canonical-long-straight-v1'
+  | 'canonical-balding-v1'
+  | 'canonical-pixie-v1'
+  | 'canonical-side-part-v1'
+  | 'canonical-curly-v1'
+  | 'canonical-coils-v1';
 
 export interface PartImportComponent {
   readonly id: string;
@@ -24,22 +39,30 @@ export interface PartImportTarget {
   readonly buildVariant?: unknown;
   readonly bodyAnchors?: unknown;
   readonly preserveLocalPaths?: boolean;
+  readonly preservePaintRuns?: boolean;
   readonly importMode?: PartImportMode;
+  readonly headFitAdapter?: HeadFitAdapter;
+  readonly variantZ?: number;
   readonly referenceBodyId?: BodyArchetypeId;
+  readonly bodyVariantIds?: readonly BodyArchetypeId[];
   readonly placementAnchor?: BodyDetailPointAnchor;
   readonly components?: readonly PartImportComponent[];
 }
 
 const allFacings = { south: true, east: true, north: true } as const;
+const allBodyVariantIds = [
+  'body-compact',
+  'body-balanced',
+  'body-large-frame',
+  'body-tall',
+  'body-soft',
+  'body-pinch',
+] as const satisfies readonly BodyArchetypeId[];
 const target = (id: string, slot: 'head' | 'hair'): PartImportTarget => ({
   id,
   slot,
   anchor: 'headCenter',
   facings: allFacings,
-});
-const byteStableTarget = (id: string, slot: 'head' | 'hair'): PartImportTarget => ({
-  ...target(id, slot),
-  preserveLocalPaths: true,
 });
 const bodyTarget = (id: BodyArchetypeId): PartImportTarget => ({
   id,
@@ -67,17 +90,107 @@ export const PART_IMPORT_TARGETS: readonly PartImportTarget[] = [
   target('head-long', 'head'),
   target('head-angular', 'head'),
   target('head-soft-square', 'head'),
-  byteStableTarget('hair-short', 'hair'),
-  target('hair-bob', 'hair'),
-  byteStableTarget('hair-bun', 'hair'),
-  byteStableTarget('hair-curly', 'hair'),
-  byteStableTarget('hair-balding', 'hair'),
-  byteStableTarget('hair-side-part', 'hair'),
-  byteStableTarget('hair-pixie', 'hair'),
-  byteStableTarget('hair-ponytail', 'hair'),
-  byteStableTarget('hair-long-straight', 'hair'),
-  byteStableTarget('hair-coils', 'hair'),
+  {
+    ...target('hair-short', 'hair'),
+    importMode: 'head-fitted-art',
+    headFitAdapter: 'canonical-short-v1',
+    variantZ: 50,
+  },
+  {
+    ...target('hair-bob', 'hair'),
+    importMode: 'head-fitted-art',
+    headFitAdapter: 'canonical-bob-v1',
+    variantZ: 50,
+  },
+  {
+    ...target('hair-bun', 'hair'),
+    importMode: 'head-fitted-art',
+    headFitAdapter: 'canonical-bun-v1',
+    variantZ: 50,
+  },
+  {
+    ...target('hair-curly', 'hair'),
+    preserveLocalPaths: true,
+    importMode: 'head-fitted-art',
+    headFitAdapter: 'canonical-curly-v1',
+    variantZ: 50,
+  },
+  {
+    ...target('hair-balding', 'hair'),
+    importMode: 'head-fitted-art',
+    headFitAdapter: 'canonical-balding-v1',
+    variantZ: 50,
+  },
+  {
+    ...target('hair-side-part', 'hair'),
+    importMode: 'head-fitted-art',
+    headFitAdapter: 'canonical-side-part-v1',
+    variantZ: 50,
+  },
+  {
+    ...target('hair-pixie', 'hair'),
+    importMode: 'head-fitted-art',
+    headFitAdapter: 'canonical-pixie-v1',
+    variantZ: 50,
+  },
+  {
+    ...target('hair-ponytail', 'hair'),
+    importMode: 'head-fitted-art',
+    headFitAdapter: 'canonical-ponytail-v1',
+    variantZ: 50,
+  },
+  {
+    ...target('hair-long-straight', 'hair'),
+    importMode: 'head-fitted-art',
+    headFitAdapter: 'canonical-long-straight-v1',
+    variantZ: 50,
+  },
+  {
+    ...target('hair-coils', 'hair'),
+    preserveLocalPaths: true,
+    importMode: 'head-fitted-art',
+    headFitAdapter: 'canonical-coils-v1',
+    variantZ: 50,
+  },
   target('head-fab', 'head'),
+  {
+    id: 'outfit-dress',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: allFacings,
+    importMode: 'body-variant-art',
+    preserveLocalPaths: true,
+    bodyVariantIds: allBodyVariantIds,
+    variantZ: 20,
+  },
+  {
+    id: 'outfit-fab-chassis',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: allFacings,
+    importMode: 'fixed-body-art',
+    preserveLocalPaths: true,
+    referenceBodyId: 'body-large-frame',
+    variantZ: 20,
+  },
+  {
+    id: 'outfit-service-apron',
+    slot: 'outfit',
+    anchor: 'body',
+    facings: allFacings,
+    importMode: 'body-variant-overlay-art',
+    preserveLocalPaths: true,
+    preservePaintRuns: true,
+    bodyVariantIds: allBodyVariantIds,
+    variantZ: 20,
+  },
+  {
+    id: 'acc-hairnet',
+    slot: 'accessory',
+    anchor: 'headCenter',
+    facings: allFacings,
+    preserveLocalPaths: true,
+  },
   {
     id: 'outfit-tee',
     slot: 'outfit',

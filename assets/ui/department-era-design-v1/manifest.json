@@ -1,0 +1,204 @@
+{
+  "schemaVersion": 1,
+  "id": "department-era-design-v1",
+  "status": "terrarium-production-design-source-approved",
+  "approvalBasis": [
+    "docs/previews/ui-e0-construction-kit-v3",
+    "docs/previews/ui-e1a-source-fit-font-pilot-v1",
+    "/Users/tombiagioni/git/The-Water-Cooler/docs/design/department-era-build-ui.md",
+    "/Users/tombiagioni/git/The-Water-Cooler/docs/design/ui-element-family-catalog.md"
+  ],
+  "ownership": {
+    "terrarium": [
+      "visual design tokens",
+      "literal screen compositions",
+      "stateless canonical SVG shapes",
+      "review-only candidates for missing glyphs and ornaments"
+    ],
+    "deferredUnityPass": [
+      "TextCore font assets",
+      "UXML and USS implementation",
+      "responsive layout and accessibility",
+      "interaction and runtime state binding",
+      "world geometry",
+      "import and Play Mode validation"
+    ]
+  },
+  "palette": {
+    "page": "#202119",
+    "pageGrid": "#2B2C23",
+    "utilityChassis": "#5E5A45",
+    "utilitySleeve": "#666047",
+    "utilityWell": "#343429",
+    "utilityWellDeep": "#25261F",
+    "quotaCoPaper": "#A99C7F",
+    "quotaCoPaperLight": "#C8B995",
+    "quotaCoPaperRule": "#81765E",
+    "selection": "#405F52",
+    "selectionEdge": "#7FA99A",
+    "focus": "#A9D3C7",
+    "irisNavy": "#06141E",
+    "irisNavyRaised": "#0D2731",
+    "irisSignal": "#82B8BA",
+    "invalidRust": "#984820",
+    "ink": "#25251E",
+    "utilityText": "#D9CBA8",
+    "utilityTextMuted": "#B8AD90",
+    "disabled": "#77725F",
+    "darkRule": "#171811",
+    "captureAmberReserved": "#D08010",
+    "emotionRoseReserved": "#A45A6C"
+  },
+  "reservations": {
+    "amber": "dormant Capture only; absent from active department UI",
+    "rose": "emotion only; absent from active department UI",
+    "selection": "muted teal plus shape or material change",
+    "invalid": "rust plus warning geometry and one repair sentence"
+  },
+  "typography": {
+    "sourceRevision": "google/fonts@2796410152d4f9524b68ed46e69c1b60f8e0f7c3 plus three approved local IBM Plex references",
+    "roles": {
+      "utilityHeading": {
+        "family": "IBM Plex Sans Condensed",
+        "weight": 500,
+        "trackingEm": 0.045
+      },
+      "utilityBody": {
+        "family": "IBM Plex Sans",
+        "weight": 400,
+        "trackingEm": 0
+      },
+      "utilityEmphasis": {
+        "family": "IBM Plex Sans",
+        "weight": 500,
+        "trackingEm": 0
+      },
+      "quotaCoPrint": {
+        "family": "Courier Prime",
+        "weight": 400,
+        "trackingEm": 0
+      },
+      "quotaCoPrintHeading": {
+        "family": "Courier Prime",
+        "weight": 700,
+        "trackingEm": 0
+      },
+      "iris": {
+        "family": "IBM Plex Mono",
+        "weight": 400,
+        "trackingEm": 0.02
+      }
+    },
+    "literalScale": {
+      "100": {
+        "headingPx": 18,
+        "bodyPx": 16,
+        "supportPx": 14,
+        "microPx": 12,
+        "actionHeightPx": 40
+      },
+      "140": {
+        "headingPx": 25.2,
+        "bodyPx": 22.4,
+        "supportPx": 19.6,
+        "microPx": 16.8,
+        "actionHeightPx": 56
+      }
+    }
+  },
+  "layout": {
+    "referenceViewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "worldDominance": {
+      "topStrip100Px": 48,
+      "buildShelf100Px": 248,
+      "minimumVisibleWorld100Px": 424,
+      "topStrip140Px": 67,
+      "buildShelf140Px": 288,
+      "minimumVisibleWorld140Px": 365
+    },
+    "spacingPx": [4, 8, 12, 16, 24, 32],
+    "cornerRadiusPx": [0, 1, 2, 3],
+    "borderPx": [1, 2]
+  },
+  "voices": {
+    "world": "office, people, facilities, footprints, authored tube path",
+    "utility": "navigation, action controls, chain/readiness structure, shallow machinery",
+    "quotaCoPrint": "selected department record, requirement cards, receipts and official facts",
+    "iris": "contained observation, evidence and one precise repair"
+  },
+  "states": {
+    "default": "raised utility sleeve",
+    "hover": "lighter material face",
+    "focus": "pale-teal four-corner geometry plus material change",
+    "pressed": "recessed face with reduced lower shadow",
+    "selected": "muted-teal face and pale-teal edge",
+    "disabled": "lower contrast but readable label",
+    "invalid": "rust edge and warning geometry with one repair sentence"
+  },
+  "departmentSlice": {
+    "chain": [
+      "Intake",
+      "Data Processing",
+      "Delivery"
+    ],
+    "readinessFacts": [
+      "Room",
+      "Designated",
+      "Equipped",
+      "IO Ready",
+      "Connected",
+      "Staffed",
+      "Flowing",
+      "Ready"
+    ],
+    "requiredScreens": [
+      "chain browse",
+      "requirement selected without arming",
+      "placement armed with valid preview",
+      "tube route invalid with one repair reason",
+      "140 percent reflow"
+    ]
+  },
+  "shapeLedger": {
+    "canonicalNow": [
+      "ui-divider",
+      "ui-corner",
+      "ui-focus",
+      "iris-mark",
+      "quotaco-mark"
+    ],
+    "promotedDepartmentGlyphs": [
+      "work-intake",
+      "work-data-processing",
+      "work-delivery",
+      "ready-room",
+      "ready-designated",
+      "ready-equipped",
+      "ready-io",
+      "ready-connected",
+      "ready-staffed",
+      "ready-flowing",
+      "ready-all",
+      "state-complete",
+      "state-missing",
+      "state-blocked",
+      "state-unavailable",
+      "route-input",
+      "route-output",
+      "route-wall-pass",
+      "route-repair"
+    ],
+    "reviewCandidatesOnly": [],
+    "mustRemainLayoutOrRuntimeGeometry": [
+      "all panels and cards",
+      "all text and tables",
+      "button and field state surfaces",
+      "room and department highlights",
+      "placement footprints and cell validity",
+      "tube path segments and corners"
+    ]
+  }
+}

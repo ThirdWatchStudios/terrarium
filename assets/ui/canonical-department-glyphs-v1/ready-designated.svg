@@ -1,0 +1,6 @@
+<svg data-ui-icon-id="ready-designated" data-icon-mode="tintable" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Designation ready</title>
+  <desc>Approved department-era placard and designation stem mark.</desc>
+  <metadata>{"family":"canonical-ui-department-glyphs-v1","decision":"approved-redesign"}</metadata>
+  <g id="approved-mark" transform="translate(64 64)"><path id="designation-placard" d="M -33.6 -38.4 H 33.6 V -4.8 H -33.6 Z" fill="none" stroke="#FFFFFF" stroke-width="9.6" stroke-linecap="square" stroke-linejoin="miter"/><path id="designation-stem" d="M -19.2 -4.8 V 19.2 H 19.2 V 38.4 H -19.2" fill="none" stroke="#FFFFFF" stroke-width="9.6" stroke-linecap="square" stroke-linejoin="miter"/></g>
+</svg>

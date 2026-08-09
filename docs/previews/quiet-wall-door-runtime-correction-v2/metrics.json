@@ -1,0 +1,85 @@
+{
+  "status": "review-only-runtime-correction-awaiting-visual-approval",
+  "sourceOfFinding": "fresh-unity-import-game-view",
+  "stableTemplateId": "door",
+  "stableStates": [
+    "horizontal-closed",
+    "horizontal-open",
+    "vertical-closed",
+    "vertical-open"
+  ],
+  "retainedRuntimeEnvelope": "one-0.5-world-unit-wall-cell",
+  "retainedSourceCompensation": 0.5,
+  "horizontalOuterApertureBefore": 58,
+  "horizontalOuterApertureAfter": 88,
+  "horizontalOuterAperturePercentBefore": 45.3125,
+  "horizontalOuterAperturePercentAfter": 68.75,
+  "horizontalOpenPassageBefore": 28,
+  "horizontalOpenPassageAfter": 52,
+  "correctedHorizontalSocketPlanes": {
+    "contour": "y2..126",
+    "primary": "y8..120",
+    "northLipAccent": "y8..16",
+    "southFrontSecondary": "y76..120"
+  },
+  "correctedVerticalSocketPlanes": {
+    "contour": "x2..126",
+    "primary": "x8..120",
+    "sideReturnAccent": [
+      "x8..38",
+      "x90..120"
+    ],
+    "straightRunSecondaryPlane": false
+  },
+  "canonicalSvgMutation": false,
+  "generatedRegistryMutation": false,
+  "productionTemplateMutation": false,
+  "exporterMutation": false,
+  "unityMutation": false,
+  "browserExport": false,
+  "unityImport": false,
+  "staging": false,
+  "commit": false,
+  "materials": [
+    {
+      "id": "office-wall",
+      "label": "Office wall",
+      "primary": "#85867F",
+      "secondary": "#B0AEA5",
+      "accent": "#999A92",
+      "detail": "#777872"
+    },
+    {
+      "id": "brick-wall",
+      "label": "Brick wall",
+      "primary": "#745146",
+      "secondary": "#A86D5A",
+      "accent": "#8D5E50",
+      "detail": "#D2AA97"
+    },
+    {
+      "id": "panel-wall",
+      "label": "Panel wall",
+      "primary": "#66655F",
+      "secondary": "#94928A",
+      "accent": "#7D7C75",
+      "detail": "#B5B0A5"
+    },
+    {
+      "id": "cubicle-partition",
+      "label": "Cubicle partition",
+      "primary": "#6D777D",
+      "secondary": "#99A3A8",
+      "accent": "#808A90",
+      "detail": "#5D676C"
+    },
+    {
+      "id": "slat-wall",
+      "label": "Wood slat wall",
+      "primary": "#705643",
+      "secondary": "#9C7658",
+      "accent": "#83654E",
+      "detail": "#503E33"
+    }
+  ]
+}

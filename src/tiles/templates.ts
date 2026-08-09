@@ -159,6 +159,128 @@ function authoredWallArms(mask: number, fill: string, details: readonly ShapeSpe
   return [...authoredWallBase(mask, fill), ...details, ...authoredWallBevel(mask)];
 }
 
+/**
+ * The ordinary build vocabulary approved in the quiet wall-system review.
+ * The other registered templates remain readable for legacy projects, but new
+ * projects, generators, and authoring controls must select from this set only.
+ */
+export const CORE_WALL_TEMPLATE_IDS = [
+  'office-wall',
+  'brick-wall',
+  'panel-wall',
+  'cubicle-partition',
+  'slat-wall',
+] as const;
+
+export type CoreWallTemplateId = (typeof CORE_WALL_TEMPLATE_IDS)[number];
+
+export const RETIRED_WALL_TEMPLATE_IDS = [
+  'glass-partition',
+  'curtain-wall',
+  'demising-wall',
+  'living-wall',
+  'branded-wall',
+] as const;
+
+export function isCoreWallTemplateId(id: string): id is CoreWallTemplateId {
+  return (CORE_WALL_TEMPLATE_IDS as readonly string[]).includes(id);
+}
+
+const QUIET_WALL_CONTOUR = '#323431';
+
+/**
+ * Convert the authored fixed-light topology pieces into actual material
+ * planes. The cap is the instance's primary material; the tall south/front
+ * face is secondary; the north lip and side returns are accent. Imported
+ * crease paint is deliberately omitted: the value change between planes owns
+ * the edge, so no room-side or semantic "inside" input is required.
+ */
+function materialFacePlanes(mask: number): ShapeSpec[] {
+  return authoredWallBevel(mask).flatMap((shape): ShapeSpec[] => {
+    if (shape.fill !== '#FFFFFF') return [];
+    return [{
+      ...shape,
+      fill: (shape.opacity ?? 0) >= 0.2 ? '$secondary' : '$accent',
+      opacity: 1,
+      silhouette: false,
+    }];
+  });
+}
+
+function quietWallLine(
+  d: string,
+  stroke: string,
+  strokeWidth = 1.2,
+  opacity = 0.5,
+): ShapeSpec {
+  return { d, stroke, strokeWidth, opacity, silhouette: false };
+}
+
+/** Low-frequency construction cues that live only on visible wall faces. */
+function faceOwnedMaterialDetails(id: CoreWallTemplateId, mask: number): ShapeSpec[] {
+  const south = !(mask & WALL_BITS.S);
+  const west = !(mask & WALL_BITS.W);
+  const east = !(mask & WALL_BITS.E);
+  const x0 = west ? 18 : 0;
+  const x1 = east ? 110 : SIZE;
+  const shapes: ShapeSpec[] = [];
+
+  if (id === 'brick-wall') {
+    const mortar = '#D2AA97';
+    if (south) {
+      shapes.push(quietWallLine(`M ${x0} 98 L ${x1} 98`, mortar, 1.3, 0.7));
+      shapes.push(quietWallLine('M 64 77 L 64 98', mortar, 1.3, 0.62));
+      shapes.push(quietWallLine('M 36 98 L 36 119 M 92 98 L 92 119', mortar, 1.3, 0.62));
+    }
+    if (west) shapes.push(quietWallLine('M 10 40 L 36 40 M 10 60 L 36 60', mortar, 1.1, 0.62));
+    if (east) shapes.push(quietWallLine('M 92 40 L 118 40 M 92 60 L 118 60', mortar, 1.1, 0.62));
+  }
+
+  if (id === 'panel-wall') {
+    const joint = '#B5B0A5';
+    if (south) shapes.push(quietWallLine('M 64 78 L 64 118', joint, 1.2, 0.55));
+    if (west) shapes.push(quietWallLine('M 10 64 L 36 64', joint, 1.2, 0.55));
+    if (east) shapes.push(quietWallLine('M 92 64 L 118 64', joint, 1.2, 0.55));
+  }
+
+  if (id === 'cubicle-partition') {
+    const reveal = '#5D676C';
+    if (south) shapes.push(quietWallLine(`M ${x0 + 3} 105 L ${x1 - 3} 105`, reveal, 1.4, 0.42));
+    if (west) shapes.push(quietWallLine('M 15 58 L 34 58', reveal, 1.2, 0.4));
+    if (east) shapes.push(quietWallLine('M 94 58 L 113 58', reveal, 1.2, 0.4));
+  }
+
+  if (id === 'slat-wall') {
+    const reveal = '#503E33';
+    if (south) {
+      for (const x of [42, 64, 86]) {
+        shapes.push(quietWallLine(`M ${x} 80 L ${x} 118`, reveal, 1.6, 0.65));
+      }
+    }
+    if (west) {
+      for (const y of [36, 52, 68]) {
+        shapes.push(quietWallLine(`M 10 ${y} L 36 ${y}`, reveal, 1.35, 0.6));
+      }
+    }
+    if (east) {
+      for (const y of [36, 52, 68]) {
+        shapes.push(quietWallLine(`M 92 ${y} L 118 ${y}`, reveal, 1.35, 0.6));
+      }
+    }
+  }
+
+  return shapes;
+}
+
+function faceOwnedWall(id: CoreWallTemplateId, mask: number): ShapeSpec[] {
+  return [
+    { ...wallBody(mask, QUIET_WALL_CONTOUR, AUTHORED_OUTER_EDGE) },
+    { ...wallBody(mask, '$primary', AUTHORED_MATERIAL_EDGE), silhouette: false },
+    ...materialFacePlanes(mask),
+    ...faceOwnedMaterialDetails(id, mask),
+  ];
+}
+
 interface WallSurfaceBounds {
   x0: number;
   y0: number;
@@ -227,8 +349,7 @@ const officeWall: WallTemplate = {
   label: 'Office wall',
   params: [],
   build(mask) {
-    // The plain default / building-shell wall: a clean opaque full-cell body.
-    return authoredWallArms(mask, '$primary');
+    return faceOwnedWall('office-wall', mask);
   },
 };
 
@@ -252,10 +373,7 @@ const cubiclePartition: WallTemplate = {
   label: 'Cubicle partition',
   params: [],
   build(mask) {
-    // Low fabric partition: full-cell body with a soft fabric-tone inset on the
-    // exposed faces (light detail; rich weave deferred).
-    const details = faceEdgeTrim(mask, '$secondary', 10, 3, 0.85, mask === 0 ? 15.5 : 10);
-    return authoredWallArms(mask, '$primary', details);
+    return faceOwnedWall('cubicle-partition', mask);
   },
 };
 
@@ -265,23 +383,7 @@ const brickWall: WallTemplate = {
   label: 'Brick wall',
   params: [],
   build(mask) {
-    // Full-cell brick: horizontal mortar courses across the whole face, with a
-    // half-brick header offset per course. Lines run edge-to-edge so courses stay
-    // continuous across a run. (Light face texture; rich bond pattern deferred.)
-    const details: ShapeSpec[] = [];
-    const bounds = authoredSurfaceBounds(mask, 1);
-    const mortar = (d: string) =>
-      details.push({ d, stroke: '$secondary', strokeWidth: 1.5, opacity: 0.5, silhouette: false });
-    let row = 0;
-    for (let y = 22; y < bounds.y1; y += 22, row++) {
-      if (y >= bounds.y0) mortar(`M ${bounds.x0} ${y} L ${bounds.x1} ${y}`);
-      // vertical header joints, offset every other course
-      for (let x = row % 2 ? 0 : 22; x < SIZE; x += 44) {
-        if (x < bounds.x0 || x > bounds.x1) continue;
-        mortar(`M ${x} ${Math.max(y, bounds.y0)} L ${x} ${Math.min(y + 22, bounds.y1)}`);
-      }
-    }
-    return authoredWallArms(mask, '$primary', details);
+    return faceOwnedWall('brick-wall', mask);
   },
 };
 
@@ -291,12 +393,7 @@ const panelWall: WallTemplate = {
   label: 'Panel wall',
   params: [],
   build(mask) {
-    // Full-cell panelling: an inset reveal frame on the exposed faces plus a light
-    // accent mid-rail across the face. (Light detail; per-panel joinery deferred.)
-    const bounds = authoredSurfaceBounds(mask, 1);
-    const details = faceEdgeTrim(mask, '$secondary', 12, 2, 0.7, mask === 0 ? 15 : 9);
-    details.push({ d: `M ${bounds.x0} ${C} L ${bounds.x1} ${C}`, stroke: '$accent', strokeWidth: 1.5, opacity: 0.6, silhouette: false });
-    return authoredWallArms(mask, '$primary', details);
+    return faceOwnedWall('panel-wall', mask);
   },
 };
 
@@ -352,16 +449,7 @@ const slatWall: WallTemplate = {
   label: 'Wood slat wall',
   params: [],
   build(mask) {
-    // Full-cell wood slats: evenly pitched vertical shadow lines across the face.
-    const bounds = authoredSurfaceBounds(mask, 1);
-    const details: ShapeSpec[] = [];
-    const y0 = mask === 0 ? 14.6 : bounds.y0;
-    const y1 = mask === 0 ? 113.4 : bounds.y1;
-    for (let x = 10; x < SIZE; x += 10) {
-      if (x < bounds.x0 || x > bounds.x1) continue;
-      details.push({ d: `M ${x} ${y0} L ${x} ${y1}`, stroke: '$secondary', strokeWidth: 1.2, opacity: 0.55, silhouette: false });
-    }
-    return authoredWallArms(mask, '$primary', details);
+    return faceOwnedWall('slat-wall', mask);
   },
 };
 
@@ -443,6 +531,12 @@ export const WALL_TEMPLATES: WallTemplate[] = [
   demisingWall,
   curtainWall,
 ];
+
+export const CORE_WALL_TEMPLATES: readonly WallTemplate[] = CORE_WALL_TEMPLATE_IDS.map((id) => {
+  const template = WALL_TEMPLATES.find((candidate) => candidate.id === id);
+  if (!template) throw new Error(`Missing core wall template ${id}`);
+  return template;
+});
 
 // ---------------------------------------------------------------------------
 // Floors

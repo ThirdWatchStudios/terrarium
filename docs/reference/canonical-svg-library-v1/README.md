@@ -11,14 +11,15 @@ by the live import registries; it does not reconstruct the art from TypeScript.
 - [Complete one-sheet](./overview.svg) ([PNG](./overview.png))
 - [Character sources](./characters.svg) ([PNG](./characters.png))
 - [Props and surfaces](./props-surfaces.svg) ([PNG](./props-surfaces.png))
+- [UI marks, actions, and cursors](./ui.svg) ([PNG](./ui.png))
 - [Wall system](./walls.svg) ([PNG](./walls.png))
 - [Machine-readable manifest](./manifest.json)
 - [Browser index](./index.html)
 
 ## Current inventory
 
-- 259 exact SVG source files
-- 181 production sources
+- 414 exact SVG source files
+- 336 production sources
 - 74 live production dependencies
 - 4 accepted-but-deferred concepts
 - 47 composed equal-height wall frames shown for context

@@ -1,0 +1,48 @@
+{
+  "status": "production",
+  "approvedOn": "2026-08-02",
+  "target": "outfit-fab-chassis",
+  "bodyId": "body-large-frame",
+  "sourceFiles": {
+    "south": "assets/parts/outfit/fab-chassis.south.svg",
+    "east": "assets/parts/outfit/fab-chassis.east.svg",
+    "north": "assets/parts/outfit/fab-chassis.north.svg"
+  },
+  "sourceHashes": {
+    "south": "0d0e6a6c48fd8223feaafe56ff8034d8c1441d7fc92a3cce7bcf62153a78b32d",
+    "east": "200ab46ca22d709bd9eda38cde695a03b8dfa98c9c931cdef110dcf844fa5b80",
+    "north": "a1dbe5417cd9bf62e9400bf2f5149322730694f43e0907d958a3a82c575193ec"
+  },
+  "pixelParity512": {
+    "south": {
+      "sourceToDirectCompile": {
+        "mismatchedPixels": 0,
+        "maxChannelDelta": 0
+      },
+      "directCompileToLiveProduction": {
+        "mismatchedPixels": 0,
+        "maxChannelDelta": 0
+      }
+    },
+    "east": {
+      "sourceToDirectCompile": {
+        "mismatchedPixels": 0,
+        "maxChannelDelta": 0
+      },
+      "directCompileToLiveProduction": {
+        "mismatchedPixels": 0,
+        "maxChannelDelta": 0
+      }
+    },
+    "north": {
+      "sourceToDirectCompile": {
+        "mismatchedPixels": 0,
+        "maxChannelDelta": 0
+      },
+      "directCompileToLiveProduction": {
+        "mismatchedPixels": 0,
+        "maxChannelDelta": 0
+      }
+    }
+  }
+}

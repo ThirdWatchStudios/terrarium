@@ -1,0 +1,684 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2240" height="1460" viewBox="0 0 2240 1460"><rect width="2240" height="1460" fill="#E7E1D2"/><text x="36" y="48" font-family="Inter,Arial,sans-serif" font-size="27" font-weight="860" fill="#292C2A" text-anchor="start">SLIDING AUTO-DOOR · 112-UNIT CONTINUITY REFINEMENT</text><text x="36" y="79" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="650" fill="#626861" text-anchor="start">Review only · preserves the owner-directed 2026-07-20 door identity · refits it to the current equal-height building system</text><text x="2204" y="48" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="860" fill="#547B78" text-anchor="end">VISUAL DIRECTION APPROVED</text><rect x="36" y="108" width="430" height="608" rx="12" fill="#F2E3DC" stroke="#A39B8B" stroke-width="1.5"/><text x="58" y="142" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="840" fill="#B65F4D" text-anchor="start">CURRENT LIVE GAP</text><text x="58" y="166" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="620" fill="#626861" text-anchor="start">Old plan strip still owns production</text><rect x="78" y="194" width="346" height="222" rx="8" fill="#7B8890"/><svg x="168" y="220" width="166" height="166" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M0 76.211L128 76.211 128 117.693 0 117.693Z" fill="#252A28"/><path d="M0 79.53L128 79.53 128 112.715 0 112.715Z" fill="#294B3C"/><path d="M0 117.693L128 117.693 128 123.5 0 123.5Z" fill="#000000" opacity="0.12"/><path d="M126 81.189L126 111.056" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/><path d="M0 11.5L128 11.5 128 79.53 0 79.53Z" fill="#252A28"/><path d="M0 14.819L128 14.819 128 79.53 0 79.53Z" fill="#D9D0B9"/><path d="M0 14.819L128 14.819 128 23.115 0 23.115Z" fill="#FFFFFF" opacity="0.3"/><path d="M0 64.596L128 64.596 128 74.552 0 74.552Z" fill="#B65F4D"/><path d="M0 64.596L128 64.596 128 67.085 0 67.085Z" fill="#FFFFFF" opacity="0.1"/><path d="M0 74.552L128 74.552 128 79.53 0 79.53Z" fill="#294B3C"/><path d="M1 23.115L127 23.115" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/><path d="M1 74.552L127 74.552" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/><path d="M126 24.774L126 77.87" fill="none" stroke="#252A28" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/></svg><svg x="168" y="220" width="166" height="166" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo horizontal sliding auto-door, closed</title>
+  <desc>Canonical production source compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+  <g id="horizontal-door-wall-break">
+    <path id="horizontal-wall-outer" d="M0 11.5H26V123.5H0ZM102 11.5H128V123.5H102Z" fill="#252A28"/>
+    <path id="horizontal-wall-cream" d="M0 14.8H23V112.7H0ZM105 14.8H128V112.7H105Z" fill="#D9D0B9"/>
+    <path id="horizontal-wall-rust" d="M0 64.6H23V74.6H0ZM105 64.6H128V74.6H105Z" fill="#B65F4D"/>
+    <path id="horizontal-wall-green" d="M0 74.6H23V117.7H0ZM105 74.6H128V117.7H105Z" fill="#294B3C"/>
+    <path id="horizontal-wall-highlight" d="M0 14.8H23V23.1H0ZM105 14.8H128V23.1H105Z" fill="#FFFFFF" opacity=".28"/>
+  </g>
+  <g id="horizontal-door-header-threshold">
+    <path id="horizontal-header-outer" d="M23 11.5H105V39H23Z" fill="#252A28"/>
+    <path id="horizontal-header-cream" d="M26 14.8H102V34H26Z" fill="#D9D0B9"/>
+    <path id="horizontal-header-highlight" d="M26 14.8H102V20H26Z" fill="#FFFFFF" opacity=".28"/>
+    <path id="horizontal-header-track" d="M27 34H101V39H27Z" fill="#252A28"/>
+    <path id="horizontal-threshold-outer" d="M24 113H104V122H24Z" fill="#252A28"/>
+    <path id="horizontal-threshold-teal" d="M27 115H101V119H27Z" fill="#547B78"/>
+    <path id="horizontal-threshold-metal" d="M31 119H97V121H31Z" fill="#979A91" opacity=".82"/>
+    <circle id="horizontal-mode-lens" cx="64" cy="36.5" r="2" fill="#B65F4D"/>
+  </g>
+  <g id="horizontal-door-closed-leaves">
+    <path id="horizontal-closed-leaf-outer" d="M28 39H100V114H28Z" fill="#252A28"/>
+    <path id="horizontal-closed-leaf-field" d="M31 42H97V112H31Z" fill="#294B3C"/>
+    <path id="horizontal-closed-glazing" d="M35 49H59V84H35ZM69 49H93V84H69Z" fill="#83A9A6" opacity=".88"/>
+    <path id="horizontal-closed-glazing-frame" d="M35 49H59V84H35ZM69 49H93V84H69Z" fill="none" stroke="#BEB49F" stroke-width="2"/>
+    <path id="horizontal-closed-lower-panels" d="M35 90H59V106H35ZM69 90H93V106H69Z" fill="none" stroke="#BEB49F" stroke-width="1.5" opacity=".55"/>
+    <path id="horizontal-closed-seam" d="M64 42V112" stroke="#252A28" stroke-width="2"/>
+    <path id="horizontal-closed-glazing-highlight" d="M39 55L48 51M73 55L82 51" stroke="#FFFFFF" stroke-width="2" opacity=".28"/>
+  </g>
+  </g>
+</svg><text x="251" y="414" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="720" fill="#626861" text-anchor="middle">live plan door over 112-unit wall</text><text x="58" y="470" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="620" fill="#292C2A" text-anchor="start">The missing work is source fitting and</text><text x="58" y="491" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="620" fill="#292C2A" text-anchor="start">registration, not a missing door concept.</text><text x="58" y="512" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="620" fill="#292C2A" text-anchor="start">Fresh export currently preserves the</text><text x="58" y="533" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="620" fill="#292C2A" text-anchor="start">projection mismatch.</text><text x="58" y="604" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="840" fill="#B65F4D" text-anchor="start">DO NOT CARRY FORWARD</text><text x="58" y="636" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="620" fill="#292C2A" text-anchor="start">Flat plan slab · rotation-derived</text><text x="58" y="655" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="620" fill="#292C2A" text-anchor="start">presentation · detached jamb caps · no</text><text x="58" y="674" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="620" fill="#292C2A" text-anchor="start">equal-height envelope.</text><rect x="488" y="108" width="724" height="608" rx="12" fill="#ECE5D7" stroke="#A39B8B" stroke-width="1.5"/><text x="510" y="142" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="840" fill="#294B3C" text-anchor="start">CAPTURED SOURCE IDENTITY · 2026-07-20</text><text x="1190" y="142" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="840" fill="#547B78" text-anchor="end">PRESERVE</text><text x="510" y="166" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="620" fill="#626861" text-anchor="start">Owner-directed pressure-mat sliding auto-door</text><rect x="522" y="190" width="322" height="270" rx="8" fill="#7B8890"/><rect x="862" y="190" width="322" height="270" rx="8" fill="#7B8890"/><svg x="555" y="218" width="256" height="256" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo Building System directional door closed base</title>
+  <desc>Low structural stubs with rounded doorway ends flanking the metal threshold mat, deep green fields over the charcoal plinth.</desc>
+  <g id="detail/base">
+    <path id="left-contour" d="M 0 94 h 19 a 9 9 0 0 1 9 9 v 8 a 9 9 0 0 1 -9 9 H 0 Z" fill="#252A28"/>
+    <path id="left-field" d="M 0 96 h 19 a 7 7 0 0 1 7 7 v 7 a 7 7 0 0 1 -7 7 H 0 Z" fill="#294B3C"/>
+    <path id="right-contour" d="M 109 94 H 128 V 120 H 100 V 103 a 9 9 0 0 1 9 -9 Z" fill="#252A28"/>
+    <path id="right-field" d="M 109 96 H 128 V 117 H 102 V 103 a 7 7 0 0 1 7 -7 Z" fill="#294B3C"/>
+    <path id="mat-contour" d="M 31 104 H 97 a 3 3 0 0 1 3 3 V 119 H 28 V 107 a 3 3 0 0 1 3 -3 Z" fill="#252A28"/>
+    <path id="mat-top" d="M 32 106 H 96 a 1.5 1.5 0 0 1 1.5 1.5 V 112 H 30 V 107.5 a 1.5 1.5 0 0 1 1.5 -1.5 Z" fill="#979A91"/>
+    <path id="mat-top-light" d="M 32 106 H 96 V 108 H 32 Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="mat-front" d="M 30 112 H 97.5 V 117 H 30 Z" fill="#979A91"/>
+    <path id="mat-front-shade" d="M 30 112 H 97.5 V 117 H 30 Z" fill="#000000" opacity="0.10"/>
+    <path id="mat-lip-seam" d="M 31 112 H 96.5" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="base-contact-shade" d="M 0 120 H 28 V 123.5 H 0 Z M 100 120 H 128 V 123.5 H 100 Z" fill="#000000" opacity="0.12"/>
+    <path id="base-fastener-left" d="M 15 105 A 1.5 1.5 0 1 1 15 108 A 1.5 1.5 0 1 1 15 105 Z" fill="#979A91"/>
+    <path id="base-fastener-right" d="M 113 105 A 1.5 1.5 0 1 1 113 108 A 1.5 1.5 0 1 1 113 105 Z" fill="#979A91"/>
+  </g>
+
+  <title>QuotaCo Building System directional door closed upper</title>
+  <desc>Full-height doorway break: banded pylon wall ends with seamed reveal faces, slim slider track rail, deep green leaves closed, split-B family constants.</desc>
+  <g id="detail/upper">
+    <path id="door-leaf-field" d="M 27.5 62 H 100.5 V 108 H 27.5 Z" fill="#294B3C"/>
+    <path id="door-head-shade" d="M 27.5 62 H 100.5 V 64.5 H 27.5 Z" fill="#000000" opacity="0.10"/>
+    <path id="door-leaf-panels" d="M 34 70 H 56 a 2 2 0 0 1 2 2 V 98 a 2 2 0 0 1 -2 2 H 34 a 2 2 0 0 1 -2 -2 V 72 a 2 2 0 0 1 2 -2 Z M 72 70 H 94 a 2 2 0 0 1 2 2 V 98 a 2 2 0 0 1 -2 2 H 72 a 2 2 0 0 1 -2 -2 V 72 a 2 2 0 0 1 2 -2 Z" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="door-center-seam" d="M 64 62 V 108" fill="none" stroke="#252A28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="door-meeting-stiles" d="M 60.5 64.5 V 106 M 67.5 64.5 V 106" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="door-bottom-rail" d="M 28.5 106.5 H 99.5" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="door-track" d="M 26 58 H 102 V 62 H 26 Z" fill="#252A28"/>
+    <path id="door-mode-lens" d="M 62 59 H 66 a 1.25 1.25 0 0 1 0 2.5 H 62 a 1.25 1.25 0 0 1 0 -2.5 Z" fill="#B65F4D"/>
+    <path id="pylon-left-contour" d="M 0 56 H 20 a 8 8 0 0 1 8 8 V 120 H 0 Z" fill="#252A28"/>
+    <path id="pylon-left-face" d="M 0 58 H 20 a 6 6 0 0 1 6 6 V 117 H 0 Z" fill="#D9D0B9"/>
+    <path id="pylon-left-cap-light" d="M 0 58 H 20 V 63 H 0 Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="pylon-left-service-seam" d="M 1 63 H 18" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="pylon-left-band" d="M 0 85 H 20 V 97 H 0 Z" fill="#B65F4D"/>
+    <path id="pylon-left-band-light" d="M 0 85 H 20 V 86.5 H 0 Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="pylon-left-band-seam" d="M 1 97 H 18" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+    <path id="pylon-left-green" d="M 0 97 H 20 V 117 H 0 Z" fill="#294B3C"/>
+    <path id="pylon-left-reveal-light" d="M 21 62 H 21.5 a 4.5 4.5 0 0 1 4.5 4.5 V 117 H 21 Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="pylon-left-divider-seam" d="M 20.75 62 V 116" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="pylon-right-contour" d="M 108 56 H 128 V 120 H 100 V 64 a 8 8 0 0 1 8 -8 Z" fill="#252A28"/>
+    <path id="pylon-right-face" d="M 108 58 H 128 V 117 H 102 V 64 a 6 6 0 0 1 6 -6 Z" fill="#D9D0B9"/>
+    <path id="pylon-right-cap-light" d="M 107.5 58 H 128 V 63 H 107.5 Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="pylon-right-service-seam" d="M 110 63 H 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="pylon-right-band" d="M 107.5 85 H 128 V 97 H 107.5 Z" fill="#B65F4D"/>
+    <path id="pylon-right-band-light" d="M 107.5 85 H 128 V 86.5 H 107.5 Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="pylon-right-band-seam" d="M 110 97 H 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+    <path id="pylon-right-green" d="M 107.5 97 H 128 V 117 H 107.5 Z" fill="#294B3C"/>
+    <path id="pylon-right-reveal-light" d="M 102 66.5 a 4.5 4.5 0 0 1 4.5 -4.5 H 107 V 117 H 102 Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="pylon-right-divider-seam" d="M 107.25 62 V 116" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+  </g>
+</svg><svg x="895" y="218" width="256" height="256" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo Building System directional door open base</title>
+  <desc>Low structural stubs with rounded doorway ends flanking the metal threshold mat, deep green fields over the charcoal plinth.</desc>
+  <g id="detail/base">
+    <path id="left-contour" d="M 0 94 h 19 a 9 9 0 0 1 9 9 v 8 a 9 9 0 0 1 -9 9 H 0 Z" fill="#252A28"/>
+    <path id="left-field" d="M 0 96 h 19 a 7 7 0 0 1 7 7 v 7 a 7 7 0 0 1 -7 7 H 0 Z" fill="#294B3C"/>
+    <path id="right-contour" d="M 109 94 H 128 V 120 H 100 V 103 a 9 9 0 0 1 9 -9 Z" fill="#252A28"/>
+    <path id="right-field" d="M 109 96 H 128 V 117 H 102 V 103 a 7 7 0 0 1 7 -7 Z" fill="#294B3C"/>
+    <path id="mat-contour" d="M 31 104 H 97 a 3 3 0 0 1 3 3 V 119 H 28 V 107 a 3 3 0 0 1 3 -3 Z" fill="#252A28"/>
+    <path id="mat-top" d="M 32 106 H 96 a 1.5 1.5 0 0 1 1.5 1.5 V 112 H 30 V 107.5 a 1.5 1.5 0 0 1 1.5 -1.5 Z" fill="#979A91"/>
+    <path id="mat-top-light" d="M 32 106 H 96 V 108 H 32 Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="mat-front" d="M 30 112 H 97.5 V 117 H 30 Z" fill="#979A91"/>
+    <path id="mat-front-shade" d="M 30 112 H 97.5 V 117 H 30 Z" fill="#000000" opacity="0.10"/>
+    <path id="mat-lip-seam" d="M 31 112 H 96.5" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="base-contact-shade" d="M 0 120 H 28 V 123.5 H 0 Z M 100 120 H 128 V 123.5 H 100 Z" fill="#000000" opacity="0.12"/>
+    <path id="base-fastener-left" d="M 15 105 A 1.5 1.5 0 1 1 15 108 A 1.5 1.5 0 1 1 15 105 Z" fill="#979A91"/>
+    <path id="base-fastener-right" d="M 113 105 A 1.5 1.5 0 1 1 113 108 A 1.5 1.5 0 1 1 113 105 Z" fill="#979A91"/>
+  </g>
+
+  <title>QuotaCo Building System directional door open upper</title>
+  <desc>Full-height doorway break: banded pylon wall ends with seamed reveal faces, slim slider track rail, leaves retracted into the pylon pockets, transparent passage, split-B family constants.</desc>
+  <g id="detail/upper">
+    <path id="pocket-leaf-left-edge" d="M 27.5 62 H 32 V 108 H 27.5 Z" fill="#252A28"/>
+    <path id="pocket-leaf-left" d="M 27.5 62 H 30 V 108 H 27.5 Z" fill="#294B3C"/>
+    <path id="pocket-leaf-right-edge" d="M 96 62 H 100.5 V 108 H 96 Z" fill="#252A28"/>
+    <path id="pocket-leaf-right" d="M 98 62 H 100.5 V 108 H 98 Z" fill="#294B3C"/>
+    <path id="door-track" d="M 26 58 H 102 V 62 H 26 Z" fill="#252A28"/>
+    <path id="door-mode-lens" d="M 62 59 H 66 a 1.25 1.25 0 0 1 0 2.5 H 62 a 1.25 1.25 0 0 1 0 -2.5 Z" fill="#B65F4D"/>
+    <path id="pylon-left-contour" d="M 0 56 H 20 a 8 8 0 0 1 8 8 V 120 H 0 Z" fill="#252A28"/>
+    <path id="pylon-left-face" d="M 0 58 H 20 a 6 6 0 0 1 6 6 V 117 H 0 Z" fill="#D9D0B9"/>
+    <path id="pylon-left-cap-light" d="M 0 58 H 20 V 63 H 0 Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="pylon-left-service-seam" d="M 1 63 H 18" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="pylon-left-band" d="M 0 85 H 20 V 97 H 0 Z" fill="#B65F4D"/>
+    <path id="pylon-left-band-light" d="M 0 85 H 20 V 86.5 H 0 Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="pylon-left-band-seam" d="M 1 97 H 18" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+    <path id="pylon-left-green" d="M 0 97 H 20 V 117 H 0 Z" fill="#294B3C"/>
+    <path id="pylon-left-reveal-light" d="M 21 62 H 21.5 a 4.5 4.5 0 0 1 4.5 4.5 V 117 H 21 Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="pylon-left-divider-seam" d="M 20.75 62 V 116" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="pylon-right-contour" d="M 108 56 H 128 V 120 H 100 V 64 a 8 8 0 0 1 8 -8 Z" fill="#252A28"/>
+    <path id="pylon-right-face" d="M 108 58 H 128 V 117 H 102 V 64 a 6 6 0 0 1 6 -6 Z" fill="#D9D0B9"/>
+    <path id="pylon-right-cap-light" d="M 107.5 58 H 128 V 63 H 107.5 Z" fill="#FFFFFF" opacity="0.30"/>
+    <path id="pylon-right-service-seam" d="M 110 63 H 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+    <path id="pylon-right-band" d="M 107.5 85 H 128 V 97 H 107.5 Z" fill="#B65F4D"/>
+    <path id="pylon-right-band-light" d="M 107.5 85 H 128 V 86.5 H 107.5 Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="pylon-right-band-seam" d="M 110 97 H 127" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+    <path id="pylon-right-green" d="M 107.5 97 H 128 V 117 H 107.5 Z" fill="#294B3C"/>
+    <path id="pylon-right-reveal-light" d="M 102 66.5 a 4.5 4.5 0 0 1 4.5 -4.5 H 107 V 117 H 102 Z" fill="#FFFFFF" opacity="0.10"/>
+    <path id="pylon-right-divider-seam" d="M 107.25 62 V 116" fill="none" stroke="#252A28" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+  </g>
+</svg><text x="683" y="486" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="820" fill="#626861" text-anchor="middle">CAPTURED CLOSED</text><text x="1023" y="486" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="820" fill="#626861" text-anchor="middle">CAPTURED OPEN</text><text x="510" y="534" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="620" fill="#292C2A" text-anchor="start">Preserve retracting double leaves, pressure threshold, transparent</text><text x="510" y="555" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="620" fill="#292C2A" text-anchor="start">passage, static coral mode lens, banded pylons, and no handles.</text><text x="510" y="654" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="760" fill="#547B78" text-anchor="start">Source commits 175f1223 · 20302144</text><rect x="1234" y="108" width="970" height="608" rx="12" fill="#E3ECE8" stroke="#A39B8B" stroke-width="1.5"/><text x="1256" y="142" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="840" fill="#294B3C" text-anchor="start">REFITTED SLIDER · CURRENT WALL SYSTEM</text><text x="2182" y="142" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="840" fill="#547B78" text-anchor="end">RECOMMENDED CONTINUITY PASS</text><svg x="1280" y="192" width="128" height="128" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo horizontal sliding auto-door, closed</title>
+  <desc>Canonical production source compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+  <g id="horizontal-door-wall-break">
+    <path id="horizontal-wall-outer" d="M0 11.5H26V123.5H0ZM102 11.5H128V123.5H102Z" fill="#252A28"/>
+    <path id="horizontal-wall-cream" d="M0 14.8H23V112.7H0ZM105 14.8H128V112.7H105Z" fill="#D9D0B9"/>
+    <path id="horizontal-wall-rust" d="M0 64.6H23V74.6H0ZM105 64.6H128V74.6H105Z" fill="#B65F4D"/>
+    <path id="horizontal-wall-green" d="M0 74.6H23V117.7H0ZM105 74.6H128V117.7H105Z" fill="#294B3C"/>
+    <path id="horizontal-wall-highlight" d="M0 14.8H23V23.1H0ZM105 14.8H128V23.1H105Z" fill="#FFFFFF" opacity=".28"/>
+  </g>
+  <g id="horizontal-door-header-threshold">
+    <path id="horizontal-header-outer" d="M23 11.5H105V39H23Z" fill="#252A28"/>
+    <path id="horizontal-header-cream" d="M26 14.8H102V34H26Z" fill="#D9D0B9"/>
+    <path id="horizontal-header-highlight" d="M26 14.8H102V20H26Z" fill="#FFFFFF" opacity=".28"/>
+    <path id="horizontal-header-track" d="M27 34H101V39H27Z" fill="#252A28"/>
+    <path id="horizontal-threshold-outer" d="M24 113H104V122H24Z" fill="#252A28"/>
+    <path id="horizontal-threshold-teal" d="M27 115H101V119H27Z" fill="#547B78"/>
+    <path id="horizontal-threshold-metal" d="M31 119H97V121H31Z" fill="#979A91" opacity=".82"/>
+    <circle id="horizontal-mode-lens" cx="64" cy="36.5" r="2" fill="#B65F4D"/>
+  </g>
+  <g id="horizontal-door-closed-leaves">
+    <path id="horizontal-closed-leaf-outer" d="M28 39H100V114H28Z" fill="#252A28"/>
+    <path id="horizontal-closed-leaf-field" d="M31 42H97V112H31Z" fill="#294B3C"/>
+    <path id="horizontal-closed-glazing" d="M35 49H59V84H35ZM69 49H93V84H69Z" fill="#83A9A6" opacity=".88"/>
+    <path id="horizontal-closed-glazing-frame" d="M35 49H59V84H35ZM69 49H93V84H69Z" fill="none" stroke="#BEB49F" stroke-width="2"/>
+    <path id="horizontal-closed-lower-panels" d="M35 90H59V106H35ZM69 90H93V106H69Z" fill="none" stroke="#BEB49F" stroke-width="1.5" opacity=".55"/>
+    <path id="horizontal-closed-seam" d="M64 42V112" stroke="#252A28" stroke-width="2"/>
+    <path id="horizontal-closed-glazing-highlight" d="M39 55L48 51M73 55L82 51" stroke="#FFFFFF" stroke-width="2" opacity=".28"/>
+  </g>
+  </g>
+</svg><svg x="1389" y="166" width="180" height="180" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo horizontal sliding auto-door, closed</title>
+  <desc>Canonical production source compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+  <g id="horizontal-door-wall-break">
+    <path id="horizontal-wall-outer" d="M0 11.5H26V123.5H0ZM102 11.5H128V123.5H102Z" fill="#252A28"/>
+    <path id="horizontal-wall-cream" d="M0 14.8H23V112.7H0ZM105 14.8H128V112.7H105Z" fill="#D9D0B9"/>
+    <path id="horizontal-wall-rust" d="M0 64.6H23V74.6H0ZM105 64.6H128V74.6H105Z" fill="#B65F4D"/>
+    <path id="horizontal-wall-green" d="M0 74.6H23V117.7H0ZM105 74.6H128V117.7H105Z" fill="#294B3C"/>
+    <path id="horizontal-wall-highlight" d="M0 14.8H23V23.1H0ZM105 14.8H128V23.1H105Z" fill="#FFFFFF" opacity=".28"/>
+  </g>
+  <g id="horizontal-door-header-threshold">
+    <path id="horizontal-header-outer" d="M23 11.5H105V39H23Z" fill="#252A28"/>
+    <path id="horizontal-header-cream" d="M26 14.8H102V34H26Z" fill="#D9D0B9"/>
+    <path id="horizontal-header-highlight" d="M26 14.8H102V20H26Z" fill="#FFFFFF" opacity=".28"/>
+    <path id="horizontal-header-track" d="M27 34H101V39H27Z" fill="#252A28"/>
+    <path id="horizontal-threshold-outer" d="M24 113H104V122H24Z" fill="#252A28"/>
+    <path id="horizontal-threshold-teal" d="M27 115H101V119H27Z" fill="#547B78"/>
+    <path id="horizontal-threshold-metal" d="M31 119H97V121H31Z" fill="#979A91" opacity=".82"/>
+    <circle id="horizontal-mode-lens" cx="64" cy="36.5" r="2" fill="#B65F4D"/>
+  </g>
+  <g id="horizontal-door-closed-leaves">
+    <path id="horizontal-closed-leaf-outer" d="M28 39H100V114H28Z" fill="#252A28"/>
+    <path id="horizontal-closed-leaf-field" d="M31 42H97V112H31Z" fill="#294B3C"/>
+    <path id="horizontal-closed-glazing" d="M35 49H59V84H35ZM69 49H93V84H69Z" fill="#83A9A6" opacity=".88"/>
+    <path id="horizontal-closed-glazing-frame" d="M35 49H59V84H35ZM69 49H93V84H69Z" fill="none" stroke="#BEB49F" stroke-width="2"/>
+    <path id="horizontal-closed-lower-panels" d="M35 90H59V106H35ZM69 90H93V106H69Z" fill="none" stroke="#BEB49F" stroke-width="1.5" opacity=".55"/>
+    <path id="horizontal-closed-seam" d="M64 42V112" stroke="#252A28" stroke-width="2"/>
+    <path id="horizontal-closed-glazing-highlight" d="M39 55L48 51M73 55L82 51" stroke="#FFFFFF" stroke-width="2" opacity=".28"/>
+  </g>
+  </g>
+</svg><svg x="1532" y="216" width="80" height="80" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo horizontal sliding auto-door, closed</title>
+  <desc>Canonical production source compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+  <g id="horizontal-door-wall-break">
+    <path id="horizontal-wall-outer" d="M0 11.5H26V123.5H0ZM102 11.5H128V123.5H102Z" fill="#252A28"/>
+    <path id="horizontal-wall-cream" d="M0 14.8H23V112.7H0ZM105 14.8H128V112.7H105Z" fill="#D9D0B9"/>
+    <path id="horizontal-wall-rust" d="M0 64.6H23V74.6H0ZM105 64.6H128V74.6H105Z" fill="#B65F4D"/>
+    <path id="horizontal-wall-green" d="M0 74.6H23V117.7H0ZM105 74.6H128V117.7H105Z" fill="#294B3C"/>
+    <path id="horizontal-wall-highlight" d="M0 14.8H23V23.1H0ZM105 14.8H128V23.1H105Z" fill="#FFFFFF" opacity=".28"/>
+  </g>
+  <g id="horizontal-door-header-threshold">
+    <path id="horizontal-header-outer" d="M23 11.5H105V39H23Z" fill="#252A28"/>
+    <path id="horizontal-header-cream" d="M26 14.8H102V34H26Z" fill="#D9D0B9"/>
+    <path id="horizontal-header-highlight" d="M26 14.8H102V20H26Z" fill="#FFFFFF" opacity=".28"/>
+    <path id="horizontal-header-track" d="M27 34H101V39H27Z" fill="#252A28"/>
+    <path id="horizontal-threshold-outer" d="M24 113H104V122H24Z" fill="#252A28"/>
+    <path id="horizontal-threshold-teal" d="M27 115H101V119H27Z" fill="#547B78"/>
+    <path id="horizontal-threshold-metal" d="M31 119H97V121H31Z" fill="#979A91" opacity=".82"/>
+    <circle id="horizontal-mode-lens" cx="64" cy="36.5" r="2" fill="#B65F4D"/>
+  </g>
+  <g id="horizontal-door-closed-leaves">
+    <path id="horizontal-closed-leaf-outer" d="M28 39H100V114H28Z" fill="#252A28"/>
+    <path id="horizontal-closed-leaf-field" d="M31 42H97V112H31Z" fill="#294B3C"/>
+    <path id="horizontal-closed-glazing" d="M35 49H59V84H35ZM69 49H93V84H69Z" fill="#83A9A6" opacity=".88"/>
+    <path id="horizontal-closed-glazing-frame" d="M35 49H59V84H35ZM69 49H93V84H69Z" fill="none" stroke="#BEB49F" stroke-width="2"/>
+    <path id="horizontal-closed-lower-panels" d="M35 90H59V106H35ZM69 90H93V106H69Z" fill="none" stroke="#BEB49F" stroke-width="1.5" opacity=".55"/>
+    <path id="horizontal-closed-seam" d="M64 42V112" stroke="#252A28" stroke-width="2"/>
+    <path id="horizontal-closed-glazing-highlight" d="M39 55L48 51M73 55L82 51" stroke="#FFFFFF" stroke-width="2" opacity=".28"/>
+  </g>
+  </g>
+</svg><text x="1344" y="343" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="720" fill="#626861" text-anchor="middle">128 authoring</text><text x="1479" y="343" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="720" fill="#626861" text-anchor="middle">90 normal</text><text x="1572" y="343" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="720" fill="#626861" text-anchor="middle">40 far</text><svg x="1692" y="192" width="128" height="128" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo horizontal sliding auto-door, open</title>
+  <desc>Canonical production source with a transparent passage in the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+  <g id="horizontal-door-wall-break">
+    <path id="horizontal-wall-outer" d="M0 11.5H26V123.5H0ZM102 11.5H128V123.5H102Z" fill="#252A28"/>
+    <path id="horizontal-wall-cream" d="M0 14.8H23V112.7H0ZM105 14.8H128V112.7H105Z" fill="#D9D0B9"/>
+    <path id="horizontal-wall-rust" d="M0 64.6H23V74.6H0ZM105 64.6H128V74.6H105Z" fill="#B65F4D"/>
+    <path id="horizontal-wall-green" d="M0 74.6H23V117.7H0ZM105 74.6H128V117.7H105Z" fill="#294B3C"/>
+    <path id="horizontal-wall-highlight" d="M0 14.8H23V23.1H0ZM105 14.8H128V23.1H105Z" fill="#FFFFFF" opacity=".28"/>
+  </g>
+  <g id="horizontal-door-header-threshold">
+    <path id="horizontal-header-outer" d="M23 11.5H105V39H23Z" fill="#252A28"/>
+    <path id="horizontal-header-cream" d="M26 14.8H102V34H26Z" fill="#D9D0B9"/>
+    <path id="horizontal-header-highlight" d="M26 14.8H102V20H26Z" fill="#FFFFFF" opacity=".28"/>
+    <path id="horizontal-header-track" d="M27 34H101V39H27Z" fill="#252A28"/>
+    <path id="horizontal-threshold-outer" d="M24 113H104V122H24Z" fill="#252A28"/>
+    <path id="horizontal-threshold-teal" d="M27 115H101V119H27Z" fill="#547B78"/>
+    <path id="horizontal-threshold-metal" d="M31 119H97V121H31Z" fill="#979A91" opacity=".82"/>
+    <circle id="horizontal-mode-lens" cx="64" cy="36.5" r="2" fill="#B65F4D"/>
+  </g>
+  <g id="horizontal-door-open-leaves">
+    <path id="horizontal-open-pocket-outer" d="M28 39H37V114H28ZM91 39H100V114H91Z" fill="#252A28"/>
+    <path id="horizontal-open-pocket-leaves" d="M31 42H37V111H31ZM91 42H97V111H91Z" fill="#294B3C"/>
+    <path id="horizontal-open-pocket-glazing" d="M32 49H37V84H32ZM91 49H96V84H91Z" fill="#83A9A6" opacity=".82"/>
+  </g>
+  </g>
+</svg><svg x="1801" y="166" width="180" height="180" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo horizontal sliding auto-door, open</title>
+  <desc>Canonical production source with a transparent passage in the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+  <g id="horizontal-door-wall-break">
+    <path id="horizontal-wall-outer" d="M0 11.5H26V123.5H0ZM102 11.5H128V123.5H102Z" fill="#252A28"/>
+    <path id="horizontal-wall-cream" d="M0 14.8H23V112.7H0ZM105 14.8H128V112.7H105Z" fill="#D9D0B9"/>
+    <path id="horizontal-wall-rust" d="M0 64.6H23V74.6H0ZM105 64.6H128V74.6H105Z" fill="#B65F4D"/>
+    <path id="horizontal-wall-green" d="M0 74.6H23V117.7H0ZM105 74.6H128V117.7H105Z" fill="#294B3C"/>
+    <path id="horizontal-wall-highlight" d="M0 14.8H23V23.1H0ZM105 14.8H128V23.1H105Z" fill="#FFFFFF" opacity=".28"/>
+  </g>
+  <g id="horizontal-door-header-threshold">
+    <path id="horizontal-header-outer" d="M23 11.5H105V39H23Z" fill="#252A28"/>
+    <path id="horizontal-header-cream" d="M26 14.8H102V34H26Z" fill="#D9D0B9"/>
+    <path id="horizontal-header-highlight" d="M26 14.8H102V20H26Z" fill="#FFFFFF" opacity=".28"/>
+    <path id="horizontal-header-track" d="M27 34H101V39H27Z" fill="#252A28"/>
+    <path id="horizontal-threshold-outer" d="M24 113H104V122H24Z" fill="#252A28"/>
+    <path id="horizontal-threshold-teal" d="M27 115H101V119H27Z" fill="#547B78"/>
+    <path id="horizontal-threshold-metal" d="M31 119H97V121H31Z" fill="#979A91" opacity=".82"/>
+    <circle id="horizontal-mode-lens" cx="64" cy="36.5" r="2" fill="#B65F4D"/>
+  </g>
+  <g id="horizontal-door-open-leaves">
+    <path id="horizontal-open-pocket-outer" d="M28 39H37V114H28ZM91 39H100V114H91Z" fill="#252A28"/>
+    <path id="horizontal-open-pocket-leaves" d="M31 42H37V111H31ZM91 42H97V111H91Z" fill="#294B3C"/>
+    <path id="horizontal-open-pocket-glazing" d="M32 49H37V84H32ZM91 49H96V84H91Z" fill="#83A9A6" opacity=".82"/>
+  </g>
+  </g>
+</svg><svg x="1944" y="216" width="80" height="80" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo horizontal sliding auto-door, open</title>
+  <desc>Canonical production source with a transparent passage in the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+  <g id="horizontal-door-wall-break">
+    <path id="horizontal-wall-outer" d="M0 11.5H26V123.5H0ZM102 11.5H128V123.5H102Z" fill="#252A28"/>
+    <path id="horizontal-wall-cream" d="M0 14.8H23V112.7H0ZM105 14.8H128V112.7H105Z" fill="#D9D0B9"/>
+    <path id="horizontal-wall-rust" d="M0 64.6H23V74.6H0ZM105 64.6H128V74.6H105Z" fill="#B65F4D"/>
+    <path id="horizontal-wall-green" d="M0 74.6H23V117.7H0ZM105 74.6H128V117.7H105Z" fill="#294B3C"/>
+    <path id="horizontal-wall-highlight" d="M0 14.8H23V23.1H0ZM105 14.8H128V23.1H105Z" fill="#FFFFFF" opacity=".28"/>
+  </g>
+  <g id="horizontal-door-header-threshold">
+    <path id="horizontal-header-outer" d="M23 11.5H105V39H23Z" fill="#252A28"/>
+    <path id="horizontal-header-cream" d="M26 14.8H102V34H26Z" fill="#D9D0B9"/>
+    <path id="horizontal-header-highlight" d="M26 14.8H102V20H26Z" fill="#FFFFFF" opacity=".28"/>
+    <path id="horizontal-header-track" d="M27 34H101V39H27Z" fill="#252A28"/>
+    <path id="horizontal-threshold-outer" d="M24 113H104V122H24Z" fill="#252A28"/>
+    <path id="horizontal-threshold-teal" d="M27 115H101V119H27Z" fill="#547B78"/>
+    <path id="horizontal-threshold-metal" d="M31 119H97V121H31Z" fill="#979A91" opacity=".82"/>
+    <circle id="horizontal-mode-lens" cx="64" cy="36.5" r="2" fill="#B65F4D"/>
+  </g>
+  <g id="horizontal-door-open-leaves">
+    <path id="horizontal-open-pocket-outer" d="M28 39H37V114H28ZM91 39H100V114H91Z" fill="#252A28"/>
+    <path id="horizontal-open-pocket-leaves" d="M31 42H37V111H31ZM91 42H97V111H91Z" fill="#294B3C"/>
+    <path id="horizontal-open-pocket-glazing" d="M32 49H37V84H32ZM91 49H96V84H91Z" fill="#83A9A6" opacity=".82"/>
+  </g>
+  </g>
+</svg><text x="1756" y="343" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="720" fill="#626861" text-anchor="middle">128 authoring</text><text x="1891" y="343" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="720" fill="#626861" text-anchor="middle">90 normal</text><text x="1984" y="343" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="720" fill="#626861" text-anchor="middle">40 far</text><text x="1440" y="374" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="820" fill="#626861" text-anchor="middle">CLOSED</text><text x="1852" y="374" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="820" fill="#626861" text-anchor="middle">OPEN</text><text x="1256" y="430" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="620" fill="#292C2A" text-anchor="start">Same automatic slider identity, derived from the 11.5–123.5 wall source and centered in the</text><text x="1256" y="451" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="620" fill="#292C2A" text-anchor="start">64-unit live slot. Current cream, rust, green, teal, and charcoal registers continue through</text><text x="1256" y="472" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="620" fill="#292C2A" text-anchor="start">the jambs and header.</text><text x="1256" y="564" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="840" fill="#547B78" text-anchor="start">REFINED, NOT REPLACED</text><text x="1256" y="596" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="620" fill="#292C2A" text-anchor="start">Larger office glazing improves the ordinary-office read. Quieter lower panels and one mode</text><text x="1256" y="615" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="620" fill="#292C2A" text-anchor="start">lens retain QuotaCo machinery without turning the doorway into a security checkpoint.</text><rect x="36" y="744" width="2168" height="660" rx="12" fill="#F6F1E6" stroke="#A39B8B" stroke-width="1.5"/><text x="58" y="780" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="840" fill="#294B3C" text-anchor="start">REFITTED FIXED-VIEW AXES + WINDOW FAMILY</text><text x="58" y="805" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="620" fill="#626861" text-anchor="start">The horizontal slider is preserved. The vertical case exposes floor around a narrow top-oblique leaf barrier; it is not a rotated front elevation.</text><rect x="70" y="842" width="292" height="292" rx="8" fill="#7B8890"/><svg x="88" y="860" width="256" height="256" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo horizontal sliding auto-door, closed</title>
+  <desc>Canonical production source compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+  <g id="horizontal-door-wall-break">
+    <path id="horizontal-wall-outer" d="M0 11.5H26V123.5H0ZM102 11.5H128V123.5H102Z" fill="#252A28"/>
+    <path id="horizontal-wall-cream" d="M0 14.8H23V112.7H0ZM105 14.8H128V112.7H105Z" fill="#D9D0B9"/>
+    <path id="horizontal-wall-rust" d="M0 64.6H23V74.6H0ZM105 64.6H128V74.6H105Z" fill="#B65F4D"/>
+    <path id="horizontal-wall-green" d="M0 74.6H23V117.7H0ZM105 74.6H128V117.7H105Z" fill="#294B3C"/>
+    <path id="horizontal-wall-highlight" d="M0 14.8H23V23.1H0ZM105 14.8H128V23.1H105Z" fill="#FFFFFF" opacity=".28"/>
+  </g>
+  <g id="horizontal-door-header-threshold">
+    <path id="horizontal-header-outer" d="M23 11.5H105V39H23Z" fill="#252A28"/>
+    <path id="horizontal-header-cream" d="M26 14.8H102V34H26Z" fill="#D9D0B9"/>
+    <path id="horizontal-header-highlight" d="M26 14.8H102V20H26Z" fill="#FFFFFF" opacity=".28"/>
+    <path id="horizontal-header-track" d="M27 34H101V39H27Z" fill="#252A28"/>
+    <path id="horizontal-threshold-outer" d="M24 113H104V122H24Z" fill="#252A28"/>
+    <path id="horizontal-threshold-teal" d="M27 115H101V119H27Z" fill="#547B78"/>
+    <path id="horizontal-threshold-metal" d="M31 119H97V121H31Z" fill="#979A91" opacity=".82"/>
+    <circle id="horizontal-mode-lens" cx="64" cy="36.5" r="2" fill="#B65F4D"/>
+  </g>
+  <g id="horizontal-door-closed-leaves">
+    <path id="horizontal-closed-leaf-outer" d="M28 39H100V114H28Z" fill="#252A28"/>
+    <path id="horizontal-closed-leaf-field" d="M31 42H97V112H31Z" fill="#294B3C"/>
+    <path id="horizontal-closed-glazing" d="M35 49H59V84H35ZM69 49H93V84H69Z" fill="#83A9A6" opacity=".88"/>
+    <path id="horizontal-closed-glazing-frame" d="M35 49H59V84H35ZM69 49H93V84H69Z" fill="none" stroke="#BEB49F" stroke-width="2"/>
+    <path id="horizontal-closed-lower-panels" d="M35 90H59V106H35ZM69 90H93V106H69Z" fill="none" stroke="#BEB49F" stroke-width="1.5" opacity=".55"/>
+    <path id="horizontal-closed-seam" d="M64 42V112" stroke="#252A28" stroke-width="2"/>
+    <path id="horizontal-closed-glazing-highlight" d="M39 55L48 51M73 55L82 51" stroke="#FFFFFF" stroke-width="2" opacity=".28"/>
+  </g>
+  </g>
+</svg><text x="216" y="1162" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="800" fill="#626861" text-anchor="middle">HORIZONTAL · CLOSED</text><svg x="101" y="1157" width="180" height="180" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo horizontal sliding auto-door, closed</title>
+  <desc>Canonical production source compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+  <g id="horizontal-door-wall-break">
+    <path id="horizontal-wall-outer" d="M0 11.5H26V123.5H0ZM102 11.5H128V123.5H102Z" fill="#252A28"/>
+    <path id="horizontal-wall-cream" d="M0 14.8H23V112.7H0ZM105 14.8H128V112.7H105Z" fill="#D9D0B9"/>
+    <path id="horizontal-wall-rust" d="M0 64.6H23V74.6H0ZM105 64.6H128V74.6H105Z" fill="#B65F4D"/>
+    <path id="horizontal-wall-green" d="M0 74.6H23V117.7H0ZM105 74.6H128V117.7H105Z" fill="#294B3C"/>
+    <path id="horizontal-wall-highlight" d="M0 14.8H23V23.1H0ZM105 14.8H128V23.1H105Z" fill="#FFFFFF" opacity=".28"/>
+  </g>
+  <g id="horizontal-door-header-threshold">
+    <path id="horizontal-header-outer" d="M23 11.5H105V39H23Z" fill="#252A28"/>
+    <path id="horizontal-header-cream" d="M26 14.8H102V34H26Z" fill="#D9D0B9"/>
+    <path id="horizontal-header-highlight" d="M26 14.8H102V20H26Z" fill="#FFFFFF" opacity=".28"/>
+    <path id="horizontal-header-track" d="M27 34H101V39H27Z" fill="#252A28"/>
+    <path id="horizontal-threshold-outer" d="M24 113H104V122H24Z" fill="#252A28"/>
+    <path id="horizontal-threshold-teal" d="M27 115H101V119H27Z" fill="#547B78"/>
+    <path id="horizontal-threshold-metal" d="M31 119H97V121H31Z" fill="#979A91" opacity=".82"/>
+    <circle id="horizontal-mode-lens" cx="64" cy="36.5" r="2" fill="#B65F4D"/>
+  </g>
+  <g id="horizontal-door-closed-leaves">
+    <path id="horizontal-closed-leaf-outer" d="M28 39H100V114H28Z" fill="#252A28"/>
+    <path id="horizontal-closed-leaf-field" d="M31 42H97V112H31Z" fill="#294B3C"/>
+    <path id="horizontal-closed-glazing" d="M35 49H59V84H35ZM69 49H93V84H69Z" fill="#83A9A6" opacity=".88"/>
+    <path id="horizontal-closed-glazing-frame" d="M35 49H59V84H35ZM69 49H93V84H69Z" fill="none" stroke="#BEB49F" stroke-width="2"/>
+    <path id="horizontal-closed-lower-panels" d="M35 90H59V106H35ZM69 90H93V106H69Z" fill="none" stroke="#BEB49F" stroke-width="1.5" opacity=".55"/>
+    <path id="horizontal-closed-seam" d="M64 42V112" stroke="#252A28" stroke-width="2"/>
+    <path id="horizontal-closed-glazing-highlight" d="M39 55L48 51M73 55L82 51" stroke="#FFFFFF" stroke-width="2" opacity=".28"/>
+  </g>
+  </g>
+</svg><svg x="244" y="1207" width="80" height="80" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo horizontal sliding auto-door, closed</title>
+  <desc>Canonical production source compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+  <g id="horizontal-door-wall-break">
+    <path id="horizontal-wall-outer" d="M0 11.5H26V123.5H0ZM102 11.5H128V123.5H102Z" fill="#252A28"/>
+    <path id="horizontal-wall-cream" d="M0 14.8H23V112.7H0ZM105 14.8H128V112.7H105Z" fill="#D9D0B9"/>
+    <path id="horizontal-wall-rust" d="M0 64.6H23V74.6H0ZM105 64.6H128V74.6H105Z" fill="#B65F4D"/>
+    <path id="horizontal-wall-green" d="M0 74.6H23V117.7H0ZM105 74.6H128V117.7H105Z" fill="#294B3C"/>
+    <path id="horizontal-wall-highlight" d="M0 14.8H23V23.1H0ZM105 14.8H128V23.1H105Z" fill="#FFFFFF" opacity=".28"/>
+  </g>
+  <g id="horizontal-door-header-threshold">
+    <path id="horizontal-header-outer" d="M23 11.5H105V39H23Z" fill="#252A28"/>
+    <path id="horizontal-header-cream" d="M26 14.8H102V34H26Z" fill="#D9D0B9"/>
+    <path id="horizontal-header-highlight" d="M26 14.8H102V20H26Z" fill="#FFFFFF" opacity=".28"/>
+    <path id="horizontal-header-track" d="M27 34H101V39H27Z" fill="#252A28"/>
+    <path id="horizontal-threshold-outer" d="M24 113H104V122H24Z" fill="#252A28"/>
+    <path id="horizontal-threshold-teal" d="M27 115H101V119H27Z" fill="#547B78"/>
+    <path id="horizontal-threshold-metal" d="M31 119H97V121H31Z" fill="#979A91" opacity=".82"/>
+    <circle id="horizontal-mode-lens" cx="64" cy="36.5" r="2" fill="#B65F4D"/>
+  </g>
+  <g id="horizontal-door-closed-leaves">
+    <path id="horizontal-closed-leaf-outer" d="M28 39H100V114H28Z" fill="#252A28"/>
+    <path id="horizontal-closed-leaf-field" d="M31 42H97V112H31Z" fill="#294B3C"/>
+    <path id="horizontal-closed-glazing" d="M35 49H59V84H35ZM69 49H93V84H69Z" fill="#83A9A6" opacity=".88"/>
+    <path id="horizontal-closed-glazing-frame" d="M35 49H59V84H35ZM69 49H93V84H69Z" fill="none" stroke="#BEB49F" stroke-width="2"/>
+    <path id="horizontal-closed-lower-panels" d="M35 90H59V106H35ZM69 90H93V106H69Z" fill="none" stroke="#BEB49F" stroke-width="1.5" opacity=".55"/>
+    <path id="horizontal-closed-seam" d="M64 42V112" stroke="#252A28" stroke-width="2"/>
+    <path id="horizontal-closed-glazing-highlight" d="M39 55L48 51M73 55L82 51" stroke="#FFFFFF" stroke-width="2" opacity=".28"/>
+  </g>
+  </g>
+</svg><text x="191" y="1320" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="720" fill="#626861" text-anchor="middle">90</text><text x="284" y="1320" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="720" fill="#626861" text-anchor="middle">40</text><rect x="420" y="842" width="292" height="292" rx="8" fill="#7B8890"/><svg x="438" y="860" width="256" height="256" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo horizontal sliding auto-door, open</title>
+  <desc>Canonical production source with a transparent passage in the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+  <g id="horizontal-door-wall-break">
+    <path id="horizontal-wall-outer" d="M0 11.5H26V123.5H0ZM102 11.5H128V123.5H102Z" fill="#252A28"/>
+    <path id="horizontal-wall-cream" d="M0 14.8H23V112.7H0ZM105 14.8H128V112.7H105Z" fill="#D9D0B9"/>
+    <path id="horizontal-wall-rust" d="M0 64.6H23V74.6H0ZM105 64.6H128V74.6H105Z" fill="#B65F4D"/>
+    <path id="horizontal-wall-green" d="M0 74.6H23V117.7H0ZM105 74.6H128V117.7H105Z" fill="#294B3C"/>
+    <path id="horizontal-wall-highlight" d="M0 14.8H23V23.1H0ZM105 14.8H128V23.1H105Z" fill="#FFFFFF" opacity=".28"/>
+  </g>
+  <g id="horizontal-door-header-threshold">
+    <path id="horizontal-header-outer" d="M23 11.5H105V39H23Z" fill="#252A28"/>
+    <path id="horizontal-header-cream" d="M26 14.8H102V34H26Z" fill="#D9D0B9"/>
+    <path id="horizontal-header-highlight" d="M26 14.8H102V20H26Z" fill="#FFFFFF" opacity=".28"/>
+    <path id="horizontal-header-track" d="M27 34H101V39H27Z" fill="#252A28"/>
+    <path id="horizontal-threshold-outer" d="M24 113H104V122H24Z" fill="#252A28"/>
+    <path id="horizontal-threshold-teal" d="M27 115H101V119H27Z" fill="#547B78"/>
+    <path id="horizontal-threshold-metal" d="M31 119H97V121H31Z" fill="#979A91" opacity=".82"/>
+    <circle id="horizontal-mode-lens" cx="64" cy="36.5" r="2" fill="#B65F4D"/>
+  </g>
+  <g id="horizontal-door-open-leaves">
+    <path id="horizontal-open-pocket-outer" d="M28 39H37V114H28ZM91 39H100V114H91Z" fill="#252A28"/>
+    <path id="horizontal-open-pocket-leaves" d="M31 42H37V111H31ZM91 42H97V111H91Z" fill="#294B3C"/>
+    <path id="horizontal-open-pocket-glazing" d="M32 49H37V84H32ZM91 49H96V84H91Z" fill="#83A9A6" opacity=".82"/>
+  </g>
+  </g>
+</svg><text x="566" y="1162" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="800" fill="#626861" text-anchor="middle">HORIZONTAL · OPEN</text><svg x="451" y="1157" width="180" height="180" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo horizontal sliding auto-door, open</title>
+  <desc>Canonical production source with a transparent passage in the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+  <g id="horizontal-door-wall-break">
+    <path id="horizontal-wall-outer" d="M0 11.5H26V123.5H0ZM102 11.5H128V123.5H102Z" fill="#252A28"/>
+    <path id="horizontal-wall-cream" d="M0 14.8H23V112.7H0ZM105 14.8H128V112.7H105Z" fill="#D9D0B9"/>
+    <path id="horizontal-wall-rust" d="M0 64.6H23V74.6H0ZM105 64.6H128V74.6H105Z" fill="#B65F4D"/>
+    <path id="horizontal-wall-green" d="M0 74.6H23V117.7H0ZM105 74.6H128V117.7H105Z" fill="#294B3C"/>
+    <path id="horizontal-wall-highlight" d="M0 14.8H23V23.1H0ZM105 14.8H128V23.1H105Z" fill="#FFFFFF" opacity=".28"/>
+  </g>
+  <g id="horizontal-door-header-threshold">
+    <path id="horizontal-header-outer" d="M23 11.5H105V39H23Z" fill="#252A28"/>
+    <path id="horizontal-header-cream" d="M26 14.8H102V34H26Z" fill="#D9D0B9"/>
+    <path id="horizontal-header-highlight" d="M26 14.8H102V20H26Z" fill="#FFFFFF" opacity=".28"/>
+    <path id="horizontal-header-track" d="M27 34H101V39H27Z" fill="#252A28"/>
+    <path id="horizontal-threshold-outer" d="M24 113H104V122H24Z" fill="#252A28"/>
+    <path id="horizontal-threshold-teal" d="M27 115H101V119H27Z" fill="#547B78"/>
+    <path id="horizontal-threshold-metal" d="M31 119H97V121H31Z" fill="#979A91" opacity=".82"/>
+    <circle id="horizontal-mode-lens" cx="64" cy="36.5" r="2" fill="#B65F4D"/>
+  </g>
+  <g id="horizontal-door-open-leaves">
+    <path id="horizontal-open-pocket-outer" d="M28 39H37V114H28ZM91 39H100V114H91Z" fill="#252A28"/>
+    <path id="horizontal-open-pocket-leaves" d="M31 42H37V111H31ZM91 42H97V111H91Z" fill="#294B3C"/>
+    <path id="horizontal-open-pocket-glazing" d="M32 49H37V84H32ZM91 49H96V84H91Z" fill="#83A9A6" opacity=".82"/>
+  </g>
+  </g>
+</svg><svg x="594" y="1207" width="80" height="80" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo horizontal sliding auto-door, open</title>
+  <desc>Canonical production source with a transparent passage in the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+  <g id="horizontal-door-wall-break">
+    <path id="horizontal-wall-outer" d="M0 11.5H26V123.5H0ZM102 11.5H128V123.5H102Z" fill="#252A28"/>
+    <path id="horizontal-wall-cream" d="M0 14.8H23V112.7H0ZM105 14.8H128V112.7H105Z" fill="#D9D0B9"/>
+    <path id="horizontal-wall-rust" d="M0 64.6H23V74.6H0ZM105 64.6H128V74.6H105Z" fill="#B65F4D"/>
+    <path id="horizontal-wall-green" d="M0 74.6H23V117.7H0ZM105 74.6H128V117.7H105Z" fill="#294B3C"/>
+    <path id="horizontal-wall-highlight" d="M0 14.8H23V23.1H0ZM105 14.8H128V23.1H105Z" fill="#FFFFFF" opacity=".28"/>
+  </g>
+  <g id="horizontal-door-header-threshold">
+    <path id="horizontal-header-outer" d="M23 11.5H105V39H23Z" fill="#252A28"/>
+    <path id="horizontal-header-cream" d="M26 14.8H102V34H26Z" fill="#D9D0B9"/>
+    <path id="horizontal-header-highlight" d="M26 14.8H102V20H26Z" fill="#FFFFFF" opacity=".28"/>
+    <path id="horizontal-header-track" d="M27 34H101V39H27Z" fill="#252A28"/>
+    <path id="horizontal-threshold-outer" d="M24 113H104V122H24Z" fill="#252A28"/>
+    <path id="horizontal-threshold-teal" d="M27 115H101V119H27Z" fill="#547B78"/>
+    <path id="horizontal-threshold-metal" d="M31 119H97V121H31Z" fill="#979A91" opacity=".82"/>
+    <circle id="horizontal-mode-lens" cx="64" cy="36.5" r="2" fill="#B65F4D"/>
+  </g>
+  <g id="horizontal-door-open-leaves">
+    <path id="horizontal-open-pocket-outer" d="M28 39H37V114H28ZM91 39H100V114H91Z" fill="#252A28"/>
+    <path id="horizontal-open-pocket-leaves" d="M31 42H37V111H31ZM91 42H97V111H91Z" fill="#294B3C"/>
+    <path id="horizontal-open-pocket-glazing" d="M32 49H37V84H32ZM91 49H96V84H91Z" fill="#83A9A6" opacity=".82"/>
+  </g>
+  </g>
+</svg><text x="541" y="1320" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="720" fill="#626861" text-anchor="middle">90</text><text x="634" y="1320" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="720" fill="#626861" text-anchor="middle">40</text><rect x="770" y="842" width="292" height="292" rx="8" fill="#7B8890"/><svg x="788" y="860" width="256" height="256" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo vertical sliding auto-door, closed</title>
+  <desc>Canonical top-oblique production source compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="vertical-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+  <g id="vertical-door-wall-break">
+    <path id="vertical-wall-outer" d="M11.5 0H123.5V25H11.5ZM11.5 103H123.5V128H11.5Z" fill="#252A28"/>
+    <path id="vertical-wall-cream" d="M14.8 0H117.7V22H14.8ZM14.8 106H117.7V128H14.8Z" fill="#D9D0B9"/>
+    <path id="vertical-wall-rust" d="M79.5 0H87.8V22H79.5ZM79.5 106H87.8V128H79.5Z" fill="#B65F4D"/>
+    <path id="vertical-wall-green" d="M87.8 0H117.7V22H87.8ZM87.8 106H117.7V128H87.8Z" fill="#294B3C"/>
+    <path id="vertical-jamb-outer" d="M58 20H98V35H58ZM58 93H98V108H58Z" fill="#252A28"/>
+    <path id="vertical-jamb-cream" d="M62 22H94V33H62ZM62 95H94V106H62Z" fill="#D9D0B9"/>
+    <path id="vertical-jamb-green" d="M85 22H94V33H85ZM85 95H94V106H85Z" fill="#294B3C"/>
+  </g>
+  <g id="vertical-door-pressure-mats">
+    <path id="vertical-pressure-mat-left-outer" d="M25 36H59V92H25Z" fill="#252A28" opacity=".34"/>
+    <path id="vertical-pressure-mat-left-field" d="M28 39H57V89H28Z" fill="#547B78" opacity=".38"/>
+    <path id="vertical-pressure-mat-right-outer" d="M96 36H121V92H96Z" fill="#252A28" opacity=".34"/>
+    <path id="vertical-pressure-mat-right-field" d="M99 39H118V89H99Z" fill="#547B78" opacity=".38"/>
+    <path id="vertical-pressure-mat-lines" d="M32 48H53M32 58H53M32 68H53M32 78H53M103 48H114M103 58H114M103 68H114M103 78H114" stroke="#F3EEDA" stroke-width="1" opacity=".2"/>
+  </g>
+  <g id="vertical-door-overhead-track">
+    <path id="vertical-track-outer" d="M65 31H73V97H65Z" fill="#252A28"/>
+    <path id="vertical-track-metal" d="M67 33H71V95H67Z" fill="#979A91"/>
+    <circle id="vertical-mode-lens" cx="69" cy="35" r="2" fill="#B65F4D"/>
+  </g>
+  <g id="vertical-door-top-oblique-closed-leaves">
+    <path id="vertical-closed-leaf-outer" d="M72 32L79 29H93V99H79L72 96Z" fill="#252A28"/>
+    <path id="vertical-closed-leaf-cream" d="M75 34L80 32H83V96L75 94Z" fill="#D9D0B9"/>
+    <path id="vertical-closed-leaf-green" d="M83 32H90V96H83Z" fill="#294B3C"/>
+    <path id="vertical-closed-glazing" d="M84 37H89V57H84ZM84 70H89V90H84Z" fill="#83A9A6"/>
+    <path id="vertical-closed-seam" d="M75 64H90" stroke="#252A28" stroke-width="2"/>
+    <path id="vertical-closed-highlight" d="M80 32V96" stroke="#FFFFFF" stroke-width="1" opacity=".22"/>
+    <path id="vertical-closed-shadow" d="M91 34H94V98H91Z" fill="#000000" opacity=".18"/>
+  </g>
+  </g>
+</svg><text x="916" y="1162" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="800" fill="#626861" text-anchor="middle">VERTICAL · CLOSED</text><svg x="801" y="1157" width="180" height="180" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo vertical sliding auto-door, closed</title>
+  <desc>Canonical top-oblique production source compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="vertical-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+  <g id="vertical-door-wall-break">
+    <path id="vertical-wall-outer" d="M11.5 0H123.5V25H11.5ZM11.5 103H123.5V128H11.5Z" fill="#252A28"/>
+    <path id="vertical-wall-cream" d="M14.8 0H117.7V22H14.8ZM14.8 106H117.7V128H14.8Z" fill="#D9D0B9"/>
+    <path id="vertical-wall-rust" d="M79.5 0H87.8V22H79.5ZM79.5 106H87.8V128H79.5Z" fill="#B65F4D"/>
+    <path id="vertical-wall-green" d="M87.8 0H117.7V22H87.8ZM87.8 106H117.7V128H87.8Z" fill="#294B3C"/>
+    <path id="vertical-jamb-outer" d="M58 20H98V35H58ZM58 93H98V108H58Z" fill="#252A28"/>
+    <path id="vertical-jamb-cream" d="M62 22H94V33H62ZM62 95H94V106H62Z" fill="#D9D0B9"/>
+    <path id="vertical-jamb-green" d="M85 22H94V33H85ZM85 95H94V106H85Z" fill="#294B3C"/>
+  </g>
+  <g id="vertical-door-pressure-mats">
+    <path id="vertical-pressure-mat-left-outer" d="M25 36H59V92H25Z" fill="#252A28" opacity=".34"/>
+    <path id="vertical-pressure-mat-left-field" d="M28 39H57V89H28Z" fill="#547B78" opacity=".38"/>
+    <path id="vertical-pressure-mat-right-outer" d="M96 36H121V92H96Z" fill="#252A28" opacity=".34"/>
+    <path id="vertical-pressure-mat-right-field" d="M99 39H118V89H99Z" fill="#547B78" opacity=".38"/>
+    <path id="vertical-pressure-mat-lines" d="M32 48H53M32 58H53M32 68H53M32 78H53M103 48H114M103 58H114M103 68H114M103 78H114" stroke="#F3EEDA" stroke-width="1" opacity=".2"/>
+  </g>
+  <g id="vertical-door-overhead-track">
+    <path id="vertical-track-outer" d="M65 31H73V97H65Z" fill="#252A28"/>
+    <path id="vertical-track-metal" d="M67 33H71V95H67Z" fill="#979A91"/>
+    <circle id="vertical-mode-lens" cx="69" cy="35" r="2" fill="#B65F4D"/>
+  </g>
+  <g id="vertical-door-top-oblique-closed-leaves">
+    <path id="vertical-closed-leaf-outer" d="M72 32L79 29H93V99H79L72 96Z" fill="#252A28"/>
+    <path id="vertical-closed-leaf-cream" d="M75 34L80 32H83V96L75 94Z" fill="#D9D0B9"/>
+    <path id="vertical-closed-leaf-green" d="M83 32H90V96H83Z" fill="#294B3C"/>
+    <path id="vertical-closed-glazing" d="M84 37H89V57H84ZM84 70H89V90H84Z" fill="#83A9A6"/>
+    <path id="vertical-closed-seam" d="M75 64H90" stroke="#252A28" stroke-width="2"/>
+    <path id="vertical-closed-highlight" d="M80 32V96" stroke="#FFFFFF" stroke-width="1" opacity=".22"/>
+    <path id="vertical-closed-shadow" d="M91 34H94V98H91Z" fill="#000000" opacity=".18"/>
+  </g>
+  </g>
+</svg><svg x="944" y="1207" width="80" height="80" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo vertical sliding auto-door, closed</title>
+  <desc>Canonical top-oblique production source compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="vertical-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+  <g id="vertical-door-wall-break">
+    <path id="vertical-wall-outer" d="M11.5 0H123.5V25H11.5ZM11.5 103H123.5V128H11.5Z" fill="#252A28"/>
+    <path id="vertical-wall-cream" d="M14.8 0H117.7V22H14.8ZM14.8 106H117.7V128H14.8Z" fill="#D9D0B9"/>
+    <path id="vertical-wall-rust" d="M79.5 0H87.8V22H79.5ZM79.5 106H87.8V128H79.5Z" fill="#B65F4D"/>
+    <path id="vertical-wall-green" d="M87.8 0H117.7V22H87.8ZM87.8 106H117.7V128H87.8Z" fill="#294B3C"/>
+    <path id="vertical-jamb-outer" d="M58 20H98V35H58ZM58 93H98V108H58Z" fill="#252A28"/>
+    <path id="vertical-jamb-cream" d="M62 22H94V33H62ZM62 95H94V106H62Z" fill="#D9D0B9"/>
+    <path id="vertical-jamb-green" d="M85 22H94V33H85ZM85 95H94V106H85Z" fill="#294B3C"/>
+  </g>
+  <g id="vertical-door-pressure-mats">
+    <path id="vertical-pressure-mat-left-outer" d="M25 36H59V92H25Z" fill="#252A28" opacity=".34"/>
+    <path id="vertical-pressure-mat-left-field" d="M28 39H57V89H28Z" fill="#547B78" opacity=".38"/>
+    <path id="vertical-pressure-mat-right-outer" d="M96 36H121V92H96Z" fill="#252A28" opacity=".34"/>
+    <path id="vertical-pressure-mat-right-field" d="M99 39H118V89H99Z" fill="#547B78" opacity=".38"/>
+    <path id="vertical-pressure-mat-lines" d="M32 48H53M32 58H53M32 68H53M32 78H53M103 48H114M103 58H114M103 68H114M103 78H114" stroke="#F3EEDA" stroke-width="1" opacity=".2"/>
+  </g>
+  <g id="vertical-door-overhead-track">
+    <path id="vertical-track-outer" d="M65 31H73V97H65Z" fill="#252A28"/>
+    <path id="vertical-track-metal" d="M67 33H71V95H67Z" fill="#979A91"/>
+    <circle id="vertical-mode-lens" cx="69" cy="35" r="2" fill="#B65F4D"/>
+  </g>
+  <g id="vertical-door-top-oblique-closed-leaves">
+    <path id="vertical-closed-leaf-outer" d="M72 32L79 29H93V99H79L72 96Z" fill="#252A28"/>
+    <path id="vertical-closed-leaf-cream" d="M75 34L80 32H83V96L75 94Z" fill="#D9D0B9"/>
+    <path id="vertical-closed-leaf-green" d="M83 32H90V96H83Z" fill="#294B3C"/>
+    <path id="vertical-closed-glazing" d="M84 37H89V57H84ZM84 70H89V90H84Z" fill="#83A9A6"/>
+    <path id="vertical-closed-seam" d="M75 64H90" stroke="#252A28" stroke-width="2"/>
+    <path id="vertical-closed-highlight" d="M80 32V96" stroke="#FFFFFF" stroke-width="1" opacity=".22"/>
+    <path id="vertical-closed-shadow" d="M91 34H94V98H91Z" fill="#000000" opacity=".18"/>
+  </g>
+  </g>
+</svg><text x="891" y="1320" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="720" fill="#626861" text-anchor="middle">90</text><text x="984" y="1320" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="720" fill="#626861" text-anchor="middle">40</text><rect x="1120" y="842" width="292" height="292" rx="8" fill="#7B8890"/><svg x="1138" y="860" width="256" height="256" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo vertical sliding auto-door, open</title>
+  <desc>Canonical top-oblique production source with a transparent passage in the 64-unit Unity wall-slot envelope.</desc>
+  <g id="vertical-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+  <g id="vertical-door-wall-break">
+    <path id="vertical-wall-outer" d="M11.5 0H123.5V25H11.5ZM11.5 103H123.5V128H11.5Z" fill="#252A28"/>
+    <path id="vertical-wall-cream" d="M14.8 0H117.7V22H14.8ZM14.8 106H117.7V128H14.8Z" fill="#D9D0B9"/>
+    <path id="vertical-wall-rust" d="M79.5 0H87.8V22H79.5ZM79.5 106H87.8V128H79.5Z" fill="#B65F4D"/>
+    <path id="vertical-wall-green" d="M87.8 0H117.7V22H87.8ZM87.8 106H117.7V128H87.8Z" fill="#294B3C"/>
+    <path id="vertical-jamb-outer" d="M58 20H98V35H58ZM58 93H98V108H58Z" fill="#252A28"/>
+    <path id="vertical-jamb-cream" d="M62 22H94V33H62ZM62 95H94V106H62Z" fill="#D9D0B9"/>
+    <path id="vertical-jamb-green" d="M85 22H94V33H85ZM85 95H94V106H85Z" fill="#294B3C"/>
+  </g>
+  <g id="vertical-door-pressure-mats">
+    <path id="vertical-pressure-mat-left-outer" d="M25 36H59V92H25Z" fill="#252A28" opacity=".34"/>
+    <path id="vertical-pressure-mat-left-field" d="M28 39H57V89H28Z" fill="#547B78" opacity=".38"/>
+    <path id="vertical-pressure-mat-right-outer" d="M96 36H121V92H96Z" fill="#252A28" opacity=".34"/>
+    <path id="vertical-pressure-mat-right-field" d="M99 39H118V89H99Z" fill="#547B78" opacity=".38"/>
+    <path id="vertical-pressure-mat-lines" d="M32 48H53M32 58H53M32 68H53M32 78H53M103 48H114M103 58H114M103 68H114M103 78H114" stroke="#F3EEDA" stroke-width="1" opacity=".2"/>
+  </g>
+  <g id="vertical-door-overhead-track">
+    <path id="vertical-track-outer" d="M65 31H73V97H65Z" fill="#252A28"/>
+    <path id="vertical-track-metal" d="M67 33H71V95H67Z" fill="#979A91"/>
+    <circle id="vertical-mode-lens" cx="69" cy="35" r="2" fill="#B65F4D"/>
+  </g>
+  <g id="vertical-door-top-oblique-open-leaves">
+    <path id="vertical-open-leaf-outer" d="M72 32L79 29H93V42H79L72 40ZM72 88L79 86H93V99H79L72 96Z" fill="#252A28"/>
+    <path id="vertical-open-leaf-cream" d="M75 34L80 32H83V39L75 38ZM75 90L80 89H83V96L75 94Z" fill="#D9D0B9"/>
+    <path id="vertical-open-leaf-green" d="M83 32H90V40H83ZM83 89H90V96H83Z" fill="#294B3C"/>
+    <path id="vertical-open-glazing" d="M84 34H89V39H84ZM84 90H89V95H84Z" fill="#83A9A6"/>
+    <path id="vertical-open-shadow" d="M91 33H94V42H91ZM91 88H94V98H91Z" fill="#000000" opacity=".18"/>
+  </g>
+  </g>
+</svg><text x="1266" y="1162" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="800" fill="#626861" text-anchor="middle">VERTICAL · OPEN</text><svg x="1151" y="1157" width="180" height="180" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo vertical sliding auto-door, open</title>
+  <desc>Canonical top-oblique production source with a transparent passage in the 64-unit Unity wall-slot envelope.</desc>
+  <g id="vertical-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+  <g id="vertical-door-wall-break">
+    <path id="vertical-wall-outer" d="M11.5 0H123.5V25H11.5ZM11.5 103H123.5V128H11.5Z" fill="#252A28"/>
+    <path id="vertical-wall-cream" d="M14.8 0H117.7V22H14.8ZM14.8 106H117.7V128H14.8Z" fill="#D9D0B9"/>
+    <path id="vertical-wall-rust" d="M79.5 0H87.8V22H79.5ZM79.5 106H87.8V128H79.5Z" fill="#B65F4D"/>
+    <path id="vertical-wall-green" d="M87.8 0H117.7V22H87.8ZM87.8 106H117.7V128H87.8Z" fill="#294B3C"/>
+    <path id="vertical-jamb-outer" d="M58 20H98V35H58ZM58 93H98V108H58Z" fill="#252A28"/>
+    <path id="vertical-jamb-cream" d="M62 22H94V33H62ZM62 95H94V106H62Z" fill="#D9D0B9"/>
+    <path id="vertical-jamb-green" d="M85 22H94V33H85ZM85 95H94V106H85Z" fill="#294B3C"/>
+  </g>
+  <g id="vertical-door-pressure-mats">
+    <path id="vertical-pressure-mat-left-outer" d="M25 36H59V92H25Z" fill="#252A28" opacity=".34"/>
+    <path id="vertical-pressure-mat-left-field" d="M28 39H57V89H28Z" fill="#547B78" opacity=".38"/>
+    <path id="vertical-pressure-mat-right-outer" d="M96 36H121V92H96Z" fill="#252A28" opacity=".34"/>
+    <path id="vertical-pressure-mat-right-field" d="M99 39H118V89H99Z" fill="#547B78" opacity=".38"/>
+    <path id="vertical-pressure-mat-lines" d="M32 48H53M32 58H53M32 68H53M32 78H53M103 48H114M103 58H114M103 68H114M103 78H114" stroke="#F3EEDA" stroke-width="1" opacity=".2"/>
+  </g>
+  <g id="vertical-door-overhead-track">
+    <path id="vertical-track-outer" d="M65 31H73V97H65Z" fill="#252A28"/>
+    <path id="vertical-track-metal" d="M67 33H71V95H67Z" fill="#979A91"/>
+    <circle id="vertical-mode-lens" cx="69" cy="35" r="2" fill="#B65F4D"/>
+  </g>
+  <g id="vertical-door-top-oblique-open-leaves">
+    <path id="vertical-open-leaf-outer" d="M72 32L79 29H93V42H79L72 40ZM72 88L79 86H93V99H79L72 96Z" fill="#252A28"/>
+    <path id="vertical-open-leaf-cream" d="M75 34L80 32H83V39L75 38ZM75 90L80 89H83V96L75 94Z" fill="#D9D0B9"/>
+    <path id="vertical-open-leaf-green" d="M83 32H90V40H83ZM83 89H90V96H83Z" fill="#294B3C"/>
+    <path id="vertical-open-glazing" d="M84 34H89V39H84ZM84 90H89V95H84Z" fill="#83A9A6"/>
+    <path id="vertical-open-shadow" d="M91 33H94V42H91ZM91 88H94V98H91Z" fill="#000000" opacity=".18"/>
+  </g>
+  </g>
+</svg><svg x="1294" y="1207" width="80" height="80" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo vertical sliding auto-door, open</title>
+  <desc>Canonical top-oblique production source with a transparent passage in the 64-unit Unity wall-slot envelope.</desc>
+  <g id="vertical-door-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+  <g id="vertical-door-wall-break">
+    <path id="vertical-wall-outer" d="M11.5 0H123.5V25H11.5ZM11.5 103H123.5V128H11.5Z" fill="#252A28"/>
+    <path id="vertical-wall-cream" d="M14.8 0H117.7V22H14.8ZM14.8 106H117.7V128H14.8Z" fill="#D9D0B9"/>
+    <path id="vertical-wall-rust" d="M79.5 0H87.8V22H79.5ZM79.5 106H87.8V128H79.5Z" fill="#B65F4D"/>
+    <path id="vertical-wall-green" d="M87.8 0H117.7V22H87.8ZM87.8 106H117.7V128H87.8Z" fill="#294B3C"/>
+    <path id="vertical-jamb-outer" d="M58 20H98V35H58ZM58 93H98V108H58Z" fill="#252A28"/>
+    <path id="vertical-jamb-cream" d="M62 22H94V33H62ZM62 95H94V106H62Z" fill="#D9D0B9"/>
+    <path id="vertical-jamb-green" d="M85 22H94V33H85ZM85 95H94V106H85Z" fill="#294B3C"/>
+  </g>
+  <g id="vertical-door-pressure-mats">
+    <path id="vertical-pressure-mat-left-outer" d="M25 36H59V92H25Z" fill="#252A28" opacity=".34"/>
+    <path id="vertical-pressure-mat-left-field" d="M28 39H57V89H28Z" fill="#547B78" opacity=".38"/>
+    <path id="vertical-pressure-mat-right-outer" d="M96 36H121V92H96Z" fill="#252A28" opacity=".34"/>
+    <path id="vertical-pressure-mat-right-field" d="M99 39H118V89H99Z" fill="#547B78" opacity=".38"/>
+    <path id="vertical-pressure-mat-lines" d="M32 48H53M32 58H53M32 68H53M32 78H53M103 48H114M103 58H114M103 68H114M103 78H114" stroke="#F3EEDA" stroke-width="1" opacity=".2"/>
+  </g>
+  <g id="vertical-door-overhead-track">
+    <path id="vertical-track-outer" d="M65 31H73V97H65Z" fill="#252A28"/>
+    <path id="vertical-track-metal" d="M67 33H71V95H67Z" fill="#979A91"/>
+    <circle id="vertical-mode-lens" cx="69" cy="35" r="2" fill="#B65F4D"/>
+  </g>
+  <g id="vertical-door-top-oblique-open-leaves">
+    <path id="vertical-open-leaf-outer" d="M72 32L79 29H93V42H79L72 40ZM72 88L79 86H93V99H79L72 96Z" fill="#252A28"/>
+    <path id="vertical-open-leaf-cream" d="M75 34L80 32H83V39L75 38ZM75 90L80 89H83V96L75 94Z" fill="#D9D0B9"/>
+    <path id="vertical-open-leaf-green" d="M83 32H90V40H83ZM83 89H90V96H83Z" fill="#294B3C"/>
+    <path id="vertical-open-glazing" d="M84 34H89V39H84ZM84 90H89V95H84Z" fill="#83A9A6"/>
+    <path id="vertical-open-shadow" d="M91 33H94V42H91ZM91 88H94V98H91Z" fill="#000000" opacity=".18"/>
+  </g>
+  </g>
+</svg><text x="1241" y="1320" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="720" fill="#626861" text-anchor="middle">90</text><text x="1334" y="1320" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="720" fill="#626861" text-anchor="middle">40</text><rect x="1470" y="842" width="292" height="292" rx="8" fill="#7B8890"/><svg x="1488" y="860" width="256" height="256" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M0 11.5H128V123.5H0Z" fill="#252A28"/><path d="M0 14.8H128V117.7H0Z" fill="#D9D0B9"/><path d="M0 14.8H128V23.1H0Z" fill="#FFFFFF" opacity=".28"/><path d="M0 64.6H14V74.6H0ZM114 64.6H128V74.6H114Z" fill="#B65F4D"/><path d="M0 74.6H14V117.7H0ZM114 74.6H128V117.7H114Z" fill="#294B3C"/><path d="M14 34H114V99H14Z" fill="#252A28"/><path d="M18 38H110V94H18Z" fill="#83A9A6"/><path d="M18 38H110V59H18Z" fill="#294B3C"/><path d="M18 42H110M18 47H110M18 52H110M18 57H110" stroke="#252A28" stroke-width="1.5" opacity=".55"/><path d="M62 59H66V94H62Z" fill="#D9D0B9"/><path d="M24 87L37 73M73 87L86 73" stroke="#FFFFFF" stroke-width="2.5" opacity=".3"/><path d="M12 94H116V103H12Z" fill="#252A28"/><path d="M15 94H113V99H15Z" fill="#BEB49F"/><path d="M0 103H128V117.7H0Z" fill="#294B3C"/></svg><text x="1616" y="1162" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="800" fill="#626861" text-anchor="middle">HORIZONTAL · WINDOW</text><svg x="1546" y="1202" width="90" height="90" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M0 11.5H128V123.5H0Z" fill="#252A28"/><path d="M0 14.8H128V117.7H0Z" fill="#D9D0B9"/><path d="M0 14.8H128V23.1H0Z" fill="#FFFFFF" opacity=".28"/><path d="M0 64.6H14V74.6H0ZM114 64.6H128V74.6H114Z" fill="#B65F4D"/><path d="M0 74.6H14V117.7H0ZM114 74.6H128V117.7H114Z" fill="#294B3C"/><path d="M14 34H114V99H14Z" fill="#252A28"/><path d="M18 38H110V94H18Z" fill="#83A9A6"/><path d="M18 38H110V59H18Z" fill="#294B3C"/><path d="M18 42H110M18 47H110M18 52H110M18 57H110" stroke="#252A28" stroke-width="1.5" opacity=".55"/><path d="M62 59H66V94H62Z" fill="#D9D0B9"/><path d="M24 87L37 73M73 87L86 73" stroke="#FFFFFF" stroke-width="2.5" opacity=".3"/><path d="M12 94H116V103H12Z" fill="#252A28"/><path d="M15 94H113V99H15Z" fill="#BEB49F"/><path d="M0 103H128V117.7H0Z" fill="#294B3C"/></svg><svg x="1664" y="1227" width="40" height="40" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M0 11.5H128V123.5H0Z" fill="#252A28"/><path d="M0 14.8H128V117.7H0Z" fill="#D9D0B9"/><path d="M0 14.8H128V23.1H0Z" fill="#FFFFFF" opacity=".28"/><path d="M0 64.6H14V74.6H0ZM114 64.6H128V74.6H114Z" fill="#B65F4D"/><path d="M0 74.6H14V117.7H0ZM114 74.6H128V117.7H114Z" fill="#294B3C"/><path d="M14 34H114V99H14Z" fill="#252A28"/><path d="M18 38H110V94H18Z" fill="#83A9A6"/><path d="M18 38H110V59H18Z" fill="#294B3C"/><path d="M18 42H110M18 47H110M18 52H110M18 57H110" stroke="#252A28" stroke-width="1.5" opacity=".55"/><path d="M62 59H66V94H62Z" fill="#D9D0B9"/><path d="M24 87L37 73M73 87L86 73" stroke="#FFFFFF" stroke-width="2.5" opacity=".3"/><path d="M12 94H116V103H12Z" fill="#252A28"/><path d="M15 94H113V99H15Z" fill="#BEB49F"/><path d="M0 103H128V117.7H0Z" fill="#294B3C"/></svg><text x="1591" y="1320" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="720" fill="#626861" text-anchor="middle">90</text><text x="1684" y="1320" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="720" fill="#626861" text-anchor="middle">40</text><rect x="1820" y="842" width="292" height="292" rx="8" fill="#7B8890"/><svg x="1838" y="860" width="256" height="256" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M11.5 0H123.5V128H11.5Z" fill="#252A28"/><path d="M14.8 0H92.8V128H14.8Z" fill="#D9D0B9"/><path d="M14.8 0H68.7V128H14.8Z" fill="#FFFFFF" opacity=".18"/><path d="M71 13H95V115H71Z" fill="#252A28"/><path d="M74 17H91V111H74Z" fill="#83A9A6"/><path d="M74 17H91V53H74Z" fill="#294B3C"/><path d="M74 25H91M74 34H91M74 43H91M74 52H91" stroke="#252A28" stroke-width="1.5" opacity=".55"/><path d="M74 63H91" stroke="#D9D0B9" stroke-width="3"/><path d="M80 104L88 94" stroke="#FFFFFF" stroke-width="2" opacity=".3"/><path d="M95 0H117.7V128H95Z" fill="#294B3C" opacity=".88"/></svg><text x="1966" y="1162" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="800" fill="#626861" text-anchor="middle">VERTICAL · WINDOW</text><svg x="1896" y="1202" width="90" height="90" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M11.5 0H123.5V128H11.5Z" fill="#252A28"/><path d="M14.8 0H92.8V128H14.8Z" fill="#D9D0B9"/><path d="M14.8 0H68.7V128H14.8Z" fill="#FFFFFF" opacity=".18"/><path d="M71 13H95V115H71Z" fill="#252A28"/><path d="M74 17H91V111H74Z" fill="#83A9A6"/><path d="M74 17H91V53H74Z" fill="#294B3C"/><path d="M74 25H91M74 34H91M74 43H91M74 52H91" stroke="#252A28" stroke-width="1.5" opacity=".55"/><path d="M74 63H91" stroke="#D9D0B9" stroke-width="3"/><path d="M80 104L88 94" stroke="#FFFFFF" stroke-width="2" opacity=".3"/><path d="M95 0H117.7V128H95Z" fill="#294B3C" opacity=".88"/></svg><svg x="2014" y="1227" width="40" height="40" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M11.5 0H123.5V128H11.5Z" fill="#252A28"/><path d="M14.8 0H92.8V128H14.8Z" fill="#D9D0B9"/><path d="M14.8 0H68.7V128H14.8Z" fill="#FFFFFF" opacity=".18"/><path d="M71 13H95V115H71Z" fill="#252A28"/><path d="M74 17H91V111H74Z" fill="#83A9A6"/><path d="M74 17H91V53H74Z" fill="#294B3C"/><path d="M74 25H91M74 34H91M74 43H91M74 52H91" stroke="#252A28" stroke-width="1.5" opacity=".55"/><path d="M74 63H91" stroke="#D9D0B9" stroke-width="3"/><path d="M80 104L88 94" stroke="#FFFFFF" stroke-width="2" opacity=".3"/><path d="M95 0H117.7V128H95Z" fill="#294B3C" opacity=".88"/></svg><text x="1941" y="1320" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="720" fill="#626861" text-anchor="middle">90</text><text x="2034" y="1320" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="720" fill="#626861" text-anchor="middle">40</text></svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-ui-icon-id="world-facing" data-icon-mode="tintable">
+  <title>World facing</title>
+  <desc>Approved room-and-world facing action mark.</desc>
+  <metadata>{"family":"canonical-ui-action-cursor-marks-v1","decision":"approved-redesign"}</metadata>
+  <g id="approved-mark" transform="translate(64 64)">
+    <path id="facing-house" d="M 0 -48 L 42.6666666667 5.3333333333 H 16 V 48 H -16 V 5.3333333333 H -42.6666666667 Z" fill="none" stroke="#FFFFFF" stroke-width="10.6666666667" stroke-linecap="square" stroke-linejoin="miter"/>
+  </g>
+</svg>

@@ -1,0 +1,25 @@
+{
+  "status": "approved-production-source-authority",
+  "sourceFiles": [
+    "assets/parts/hair/coils.south.svg",
+    "assets/parts/hair/coils.east.svg",
+    "assets/parts/hair/coils.north.svg"
+  ],
+  "productionWiringChanged": true,
+  "canonicalSourceSvgChanged": true,
+  "reviewSourceSvgAdded": false,
+  "perHeadSvgVariantsAdded": 0,
+  "method": {
+    "geometryOwner": "three editable canonical Coils SVG facings",
+    "lobeFit": "one declarative center/radius frame per source-owned coil lobe",
+    "replacementPathBuilders": 0
+  },
+  "audit": {
+    "variantCount": 18,
+    "sourceShapeCount": 22,
+    "derivedShapeCount": 132,
+    "missingHairAtLiteralScale": [],
+    "productionDifferences": [],
+    "deterministicDigest": "88b039548a9239a63727500a8b8c48f5251a2e9fdcf545b9ef8f50a2ce069321"
+  }
+}

@@ -8,8 +8,22 @@ every file succeeds.
 The generated data is an **appearance overlay** on an existing selectable
 production part. Static head/hair registration replaces matching facing
 geometry. The dedicated `body-art` mode updates the already-shared production
-body `PartDef` in place, while the explicit `outfit-tee` adapter replaces the
-detail shapes returned by its body-aware builder for known production bodies.
+body `PartDef` in place. The `fixed-body-art` mode installs the complete
+SVG-owned `outfit-fab-chassis` overlay only when the recipe uses
+`body-large-frame`; no handwritten geometry or cross-rig fallback remains.
+The `body-variant-art` mode installs the complete eighteen-file
+`outfit-dress` matrix and selects one exact SVG by production body id and
+facing; it performs no fit, scale, translation, or geometry reconstruction and
+does not fabricate an unknown-body source variant. Deprecated legacy-body
+recipes retain the static compatibility facings on the base `PartDef`; those
+records are outside the six-body production matrix.
+The `body-variant-overlay-art` mode installs the complete eighteen-file
+`outfit-service-apron` detail matrix. Every source shape is explicitly
+silhouette-free, and the receiver preserves authored tint runs so its secondary
+tee, primary apron, and secondary pocket retain their paint order. Static
+`accessory` intake supplies the three complete `acc-hairnet` facings.
+The explicit `outfit-tee` adapter replaces the detail shapes returned by its
+body-aware builder for known production bodies.
 The `outfit-blazer` component adapter does the same after deterministically
 aggregating separately authored lapels, buttons, and pocket pieces;
 `outfit-polo` reuses that contract for independent collar and placket pieces.
@@ -22,7 +36,7 @@ turn, `outfit-hoodie` uses a three-facing hood plus only the directional
 drawstring and pocket pieces that exist. `outfit-vest` follows with a
 south-only panel, V-neck inset, and buttons. In every mode labels, picker order,
 seeded-generation order, anchors, z-order, body rigs, and other runtime
-metadata remain owned by the handwritten `PartDef`.
+metadata remain code-owned; the SVGs own the imported visible art.
 
 ## Commands
 
@@ -69,6 +83,16 @@ or Cardigan/Suit Jacket component deliberately require south/east only; their
 north detail remains on the handwritten fallback. Turtleneck explicitly
 requires south/east/north. Hoodie declares its asymmetric component facings;
 Vest declares south-only detail.
+`fab-chassis.south.svg`, `fab-chassis.east.svg`, and
+`fab-chassis.north.svg` form one complete fixed-body source set and are accepted
+only for the `body-large-frame` receiver declared in the import catalog.
+`dress.<body-id>.<facing>.svg` forms one atomic `body-variant-art` set: all six
+production body ids and all three authored facings must be present before the
+generated receiver can change.
+`service-apron.<body-id>.<facing>.svg` forms the corresponding atomic
+`body-variant-overlay-art` set, with detail-only geometry for all six bodies and
+three facings. `accessory/hairnet.<facing>.svg` forms one complete static
+head-center accessory set.
 Putting a valid complete set in this canonical directory makes it compiler
 input; visual acceptance remains a separate Definition of Done gate. These
 static hair overlays remain the canonical authored source and fallback
@@ -80,6 +104,21 @@ The importer currently accepts:
 - `body`, authored around canvas point `(64, 87)`, through the explicit
   complete-facing `body-art` adapter.
 - `head` and `hair`, authored around canvas point `(64, 44)`.
+- static `accessory` overlays, authored around canvas point `(64, 44)`;
+  currently the three complete `acc-hairnet` facings.
+- `outfit-fab-chassis` as complete three-facing `fixed-body-art`, authored over
+  `body-large-frame` around `(64, 87)`. Its SVGs own every visible chassis
+  plane, panel, seam, and optic; the adapter owns only body-id gating, facing,
+  west mirroring, body anchor, and z-order.
+- `outfit-dress` as complete eighteen-file `body-variant-art`, with one
+  independently authored south/east/north source set for each of the six
+  production body ids around `(64, 87)`. Its SVGs own the complete skirt
+  silhouette, neckline/collar, waist treatment, and seams; the adapter owns
+  only exact body/facing selection and z-order.
+- `outfit-service-apron` as complete eighteen-file
+  `body-variant-overlay-art`, with independently authored detail-only facings
+  for all six production bodies around `(64, 87)`. The adapter owns exact
+  selection, z-order, and ordered tint-run retention only.
 - `outfit-tee` as an anchored-detail target, authored over `body-balanced`
   around the body origin `(64, 87)`. Its neck is canvas point `(64, 58)`, and
   the canonical source set is `tee.south.svg` plus `tee.east.svg`.
@@ -113,21 +152,22 @@ is validated after applying that canvas translation but deliberately preserves
 its established local `d` strings byte-for-byte; visible body paths must remain
 directly under the canonical translation group.
 
-Every current hair target except `hair-bob` also preserves its canonical local
-path strings after canvas validation. Their arc- and curve-heavy geometry
-measurably changes under generic flattening even at production sizes, so those
-explicit targets require visible paths directly under `translate(64 44)`.
-Bob retains the normal transform-baking path as the approved interoperability
-control.
+Curly and Coils preserve their authored local arc paths through
+`head-fitted-art`; generic arc flattening dropped Curly's 32 px separation from
+Short below the accepted family-distance floor. Both targets require visible
+paths directly under `translate(64 44)`. Bob, Short, Bun, Ponytail, Long
+straight, Balding, Pixie, and Side-part retain the normal transform-baking path
+as approved interoperability controls.
 
-For all ten mapped hair IDs, the compositor now resolves a fixed fitted variant
-from the selected production head ID after import. The importer and source
-contract remain static: no fit envelope is inferred from SVG, no
-`buildVariant` is added to imported definitions, and no recipe or export-schema
-field changes. Flat and reconstructable layer routes share this resolver.
-Editing one of these canonical hair SVGs alone therefore changes its
-fallback/source geometry, but does not replace the six promoted head-specific
-fits; update and review the deterministic fit table as part of that work.
+For all ten mapped hair IDs, the compositor resolves a fixed fitted variant
+from the selected production head ID. All ten mapped hairstyles are complete
+source-owned routes: `head-fitted-art` compiles each three-facing SVG set through six
+declarative head envelopes into ordinary generated `PartVariant` records.
+Editing any of these canonical source sets, then running `npm run parts:import`, changes
+that style's live all-head geometry; there is no second path builder or silent
+human-head fallback for any mapped hairstyle. No fit metadata,
+`buildVariant`, recipe field, or export-schema field is added. Flat and
+reconstructable routes share the resolver.
 
 ## Sentinel palette
 
@@ -149,10 +189,14 @@ not both, because the compositor's fill-outline branch cannot include a source
 stroke width. Character layers tint one shape as one bucket, so unsupported
 paint combinations cannot round-trip faithfully.
 
-Paint buckets must also remain contiguous in document order. For example,
+Paint buckets must normally remain contiguous in document order. For example,
 `$hair → literal → $hair` is rejected because the layer-atlas exporter would
 coalesce both hair shapes ahead of the literal run and change overlap order.
 Facing files must agree on relative bucket order for the same reason.
+The catalog may explicitly opt a complete source-owned garment into ordered
+paint runs. The current `outfit-service-apron` receiver uses that narrow path:
+character-layer output emits later occurrences as stable `__run2` layers,
+preserving `secondary → primary → secondary` without changing flat art.
 
 ## Accepted SVG dialect
 
@@ -163,8 +207,10 @@ Facing files must agree on relative bucket order for the same reason.
 - Flat fill/stroke paint via presentation attributes or inline style.
 - Nested `matrix`, `translate`, `scale`, `rotate`, `skewX`, and `skewY`
   transforms. The compiler bakes them into path data for normal static and
-  anchored-detail imports. Byte-stable body art instead requires the one
-  canonical `translate(64 87)` group and no additional visible-path transform.
+  anchored-detail imports. Byte-stable body, body-variant,
+  body-variant-overlay, and fixed-body art instead
+  require the one canonical `translate(64 87)` group and no additional
+  visible-path transform.
 - Stroke width is unitless. Strokes must explicitly use round linecaps and
   linejoins, matching the compositor.
 - Path opacity is supported from `(0, 1]`; group opacity is rejected because a

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Canonical dress — body-pinch east</title>
+  <desc>Production complete outfit-dress art for body-pinch.</desc>
+  <metadata>{"status":"production","target":"outfit-dress","bodyId":"body-pinch","facing":"east"}</metadata>
+  <g transform="translate(64 87)">
+    <path id="art/dress/skirt" d="M0-29Q-3-18-17 4C-21.48 11.04-17 23.2-17 34Q2 36 27.74 34C27.74 23.2 24.16 11.04 20 4Q7-18 0-29Z" fill="#FF0000" fill-rule="nonzero"/>
+    <path id="detail/dress/neckline" d="M-0.590909-25Q6.475-16.35 2.045455-25Z" fill="#FF00FF" fill-rule="nonzero"/>
+  </g>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Canonical Bun south source-fit v1 candidate</title>
+  <desc>Review-only cap and offset knot authored on the round-head fit frame.</desc>
+  <g id="art" transform="translate(64 44)">
+    <path id="art/cap" d="M -22 -2 C -20.2 -16 -10.6 -22 0 -22 C 11 -22 20.2 -16 22 -2 L 12.8 1 C 5.5 -4 -4.8 -4 -13.2 1 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/knot" d="M -20.4 -18 a 6.7 5.5 0 1 0 13.4 0 a 6.7 5.5 0 1 0 -13.4 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
+  </g>
+</svg>

@@ -1,0 +1,26 @@
+{
+  "status": "approved-production-source-authority",
+  "sourceFiles": [
+    "assets/parts/hair/pixie.south.svg",
+    "assets/parts/hair/pixie.east.svg",
+    "assets/parts/hair/pixie.north.svg"
+  ],
+  "productionWiringChanged": true,
+  "canonicalSourceSvgChanged": true,
+  "reviewSourceSvgAdded": false,
+  "perHeadSvgVariantsAdded": 0,
+  "method": {
+    "geometryOwner": "three editable review-source Pixie SVG facings",
+    "capFit": "bounded piecewise-linear crown, fringe, width, and profile landmarks",
+    "tuftFit": "separate declarative component placement",
+    "replacementPathBuilders": 0
+  },
+  "audit": {
+    "variantCount": 18,
+    "sourceShapeCount": 8,
+    "derivedShapeCount": 48,
+    "missingHairAtLiteralScale": [],
+    "productionDifferences": [],
+    "deterministicDigest": "913231c341315b7ec63a80aac33755ef4f13c6acd3a7fd3b50f7aabccb8cf21d"
+  }
+}

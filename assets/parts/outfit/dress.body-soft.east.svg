@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Canonical dress — body-soft east</title>
+  <desc>Production complete outfit-dress art for body-soft.</desc>
+  <metadata>{"status":"production","target":"outfit-dress","bodyId":"body-soft","facing":"east"}</metadata>
+  <g transform="translate(64 87)">
+    <path id="art/dress/skirt" d="M0-28Q-3-17-20 7C-25.44 14.68-20 23.64-20 33Q2.5 35 28.24 33C28.24 23.64 33.72 14.68 27 7Q6-17 0-28Z" fill="#FF0000" fill-rule="nonzero"/>
+    <path id="detail/dress/neckline" d="M-0.590909-24Q6.425-14.8 1.681818-24Z" fill="#FF00FF" fill-rule="nonzero"/>
+  </g>
+</svg>

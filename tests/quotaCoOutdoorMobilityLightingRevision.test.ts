@@ -56,6 +56,6 @@ describe('review-only bike-rack and street-light revision', () => {
   });
 
   it('holds the current export schema', () => {
-    expect(CURRENT_SCHEMA_VERSION).toBe(19);
+    expect(CURRENT_SCHEMA_VERSION).toBe(21);
   });
 });

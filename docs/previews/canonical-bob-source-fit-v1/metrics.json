@@ -1,0 +1,26 @@
+{
+  "status": "review-only-source-authority-proof",
+  "sourceFiles": [
+    "assets/parts/hair/bob.south.svg",
+    "assets/parts/hair/bob.east.svg",
+    "assets/parts/hair/bob.north.svg"
+  ],
+  "productionWiringChanged": false,
+  "sourceSvgChanged": false,
+  "perHeadSvgVariantsAdded": 0,
+  "method": {
+    "geometryOwner": "three imported canonical Bob SVG facings",
+    "fitData": "six declarative head envelopes",
+    "transform": "bounded piecewise-linear x/y landmark warp",
+    "replacementPathBuilders": 0
+  },
+  "audit": {
+    "variantCount": 18,
+    "sourceShapeCount": 6,
+    "derivedShapeCount": 36,
+    "retainedDetailCount": 18,
+    "missingHairAtLiteralScale": [],
+    "deterministicDigest": "6f66aa81c5ce4cf52695e27848c4d80a835556d5dad4d5c56352b90071816285",
+    "currentVsProposalDigest": "35384c1b360910c30cc5f009376f296b0ff7fd260a3216829031de07bda105cb"
+  }
+}

@@ -1,0 +1,6 @@
+<svg data-ui-icon-id="state-unavailable" data-icon-mode="tintable" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Unavailable state</title>
+  <desc>Approved department-era unavailable-state circle and rule.</desc>
+  <metadata>{"family":"canonical-ui-department-glyphs-v1","decision":"approved-redesign"}</metadata>
+  <g id="approved-mark" transform="translate(64 64)"><path id="unavailable-ring" d="M -38.4 0 A 38.4 38.4 0 1 0 38.4 0 A 38.4 38.4 0 0 0 -38.4 0 Z" fill="none" stroke="#FFFFFF" stroke-width="9.6" stroke-linecap="square" stroke-linejoin="miter"/><path id="unavailable-rule" d="M -28.8 28.8 L 28.8 -28.8" fill="none" stroke="#FFFFFF" stroke-width="9.6" stroke-linecap="square" stroke-linejoin="miter"/></g>
+</svg>

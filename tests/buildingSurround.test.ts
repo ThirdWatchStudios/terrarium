@@ -44,7 +44,7 @@ describe('building surround — ring generation', () => {
     if (exterior === 'south') expect(out.floorIds[out.rows - 1][out.cols >> 1]).toBeNull();
   });
 
-  it('sets a curtain wall on the exterior edge and demising walls elsewhere', () => {
+  it('uses the ordinary office wall on every tenant perimeter edge', () => {
     const { project, scene } = baseScene();
     const out = addBuildingSurround(scene, project, { ring: 2 });
     const { exterior } = classifyEdges(scene);
@@ -58,10 +58,9 @@ describe('building surround — ring generation', () => {
       if (edge === 'west') return out.wallIds[midY][off];
       return out.wallIds[midY][off + tr.cols - 1];
     };
-    expect(perimeterCell(exterior)).toBe('wall-curtain');
-    // a non-exterior, non-corner perimeter cell is demising
+    expect(perimeterCell(exterior)).toBe('wall-office');
     const others = ['north', 'east', 'south', 'west'].filter((e) => e !== exterior);
-    expect(others.some((e) => perimeterCell(e) === 'wall-demising')).toBe(true);
+    expect(others.every((e) => perimeterCell(e) === 'wall-office')).toBe(true);
   });
 
   it('adds surround props (incl. an elevator bank) outside the tenant rect', () => {
@@ -97,8 +96,8 @@ describe('building surround — ring generation', () => {
     // floors round-trip exactly (the pass never overwrites tenant floors)
     expect(back.floorIds).toEqual(scene.floorIds);
     expect(back.entities.length).toBe(scene.entities.length);
-    // walls: the pass intentionally restyles the tenant PERIMETER (officeWall →
-    // demising/curtain, the building shell), so only the interior round-trips.
+    // Walls: the pass normalizes the tenant perimeter to the ordinary office
+    // wall, so only the interior is required to round-trip exactly.
     for (let y = 1; y < scene.rows - 1; y++) {
       for (let x = 1; x < scene.cols - 1; x++) {
         expect(back.wallIds[y][x]).toBe(scene.wallIds[y][x]);

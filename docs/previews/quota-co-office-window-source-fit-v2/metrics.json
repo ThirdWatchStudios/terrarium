@@ -1,0 +1,21 @@
+{
+  "status": "terrarium-production-promoted-awaiting-browser-export",
+  "stableIds": [
+    "prop-window",
+    "prop-window-vertical"
+  ],
+  "footprint": "1x1",
+  "candidateAxes": [
+    "horizontal-front-face",
+    "vertical-raised-top-oblique"
+  ],
+  "neighborGlass": "deferred-until-demonstrated-need",
+  "candidateGeometryLocalToPreview": false,
+  "canonicalSvgPromotion": true,
+  "productionTemplateMutation": true,
+  "exporterMutation": false,
+  "browserExport": false,
+  "unityImport": false,
+  "staging": false,
+  "commit": false
+}

@@ -8,7 +8,7 @@ import {
   wallAtlas,
   wallTilesetPng,
 } from '../core/exporter';
-import { FLOOR_TEMPLATES, WALL_TEMPLATES, blobTileLabel } from '../tiles/templates';
+import { CORE_WALL_TEMPLATES, FLOOR_TEMPLATES, WALL_TEMPLATES, blobTileLabel } from '../tiles/templates';
 import { BLOB_CONFIGS, BLOB_TILE_COUNT } from '../tiles/blob';
 import { store } from '../state';
 import { button, clear, el, labeled, select, slider } from './dom';
@@ -60,7 +60,7 @@ export function renderTileList(container: HTMLElement): void {
   for (const floor of store.state.floors) item(floor, 'floor');
 
   const options = [
-    ...WALL_TEMPLATES.map((t) => ({ value: `wall:${t.id}`, label: `Wall — ${t.label}` })),
+    ...CORE_WALL_TEMPLATES.map((t) => ({ value: `wall:${t.id}`, label: `Wall — ${t.label}` })),
     ...FLOOR_TEMPLATES.map((t) => ({ value: `floor:${t.id}`, label: `Floor — ${t.label}` })),
   ];
   const templateSelect = select(options, options[0].value, () => {});

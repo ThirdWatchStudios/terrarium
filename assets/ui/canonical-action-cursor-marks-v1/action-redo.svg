@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-ui-icon-id="action-redo" data-icon-mode="tintable">
+  <title>Redo</title>
+  <desc>Approved right-return recovery action mark.</desc>
+  <metadata>{"family":"canonical-ui-action-cursor-marks-v1","decision":"approved-redesign"}</metadata>
+  <g id="approved-mark" transform="translate(64 64)">
+    <path id="redo-return" d="M 16 -37.3333333333 L 42.6666666667 -10.6666666667 L 16 16 M 42.6666666667 -10.6666666667 H -16 A 26.6666666667 26.6666666667 0 0 0 -42.6666666667 16 A 26.6666666667 26.6666666667 0 0 0 -16 42.6666666667 H 5.3333333333" fill="none" stroke="#FFFFFF" stroke-width="10.6666666667" stroke-linecap="square" stroke-linejoin="miter"/>
+  </g>
+</svg>

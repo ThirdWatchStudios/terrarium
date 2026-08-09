@@ -222,25 +222,33 @@ sheet under `docs/previews/head-silhouettes-*`.
 - [x] `head-fab`: complete south/east/north canonical SVG sources under
       `assets/parts/head/fab.*.svg`, with a machine silhouette, no human face,
       and the IRIS optic as the only green focal point.
-- [x] `outfit-fab-chassis`: body-anchor-driven chassis art on the approved
-      `body-large-frame` production rig.
+- [x] `outfit-fab-chassis`: complete canonical south/east/north SVG sources
+      under `assets/parts/outfit/fab-chassis.*.svg`, received only on the
+      approved `body-large-frame` production rig. The former handwritten
+      `anchoredFabChassis()` geometry has been removed.
 
 These two ids are intentionally **resolvable but non-selectable**: the
 `construction-worker` recipe and compositor snapshots resolve them through
 `getPart()`, while `partsForSlot()` filters them out of character pickers and
 random/seeded employee generation. They belong to IRIS's fabrication robot,
 not the human part alphabet. The set is mechanically complete and received a
-shared visual refinement pass on 2026-07-10; its current silhouette/detail
-language remains intentionally iterative rather than frozen final art.
+shared visual refinement pass on 2026-07-10. The chassis SVG source-fit
+received explicit visual approval and production promotion on 2026-08-02; its
+appearance remains visually iterative through those canonical files rather
+than frozen final art.
 
 ### 2c. Cafeteria service staff — special recipe-only parts
 
-- [x] `outfit-service-apron`: body-anchor-driven bib apron over a tee; the
-      apron uses `$outfitPrimary` and the tee/sleeve field uses
-      `$outfitSecondary` across every production body and facing.
-- [x] `acc-hairnet`: translucent head-center overlay above the hair layer; its
-      outline/net mesh opts out of silhouette generation so every underlying
-      hairstyle remains readable.
+- [x] `outfit-service-apron`: eighteen canonical SVG overlays under
+      `assets/parts/outfit/service-apron.<body-id>.<facing>.svg`; the apron uses
+      `$outfitPrimary` and the tee/sleeve field and pocket use
+      `$outfitSecondary`. Exact body/facing selection replaces the former
+      handwritten builder, while ordered tint runs keep the pocket above the
+      apron in reconstructable layer exports.
+- [x] `acc-hairnet`: three canonical SVG overlays under
+      `assets/parts/accessory/hairnet.<facing>.svg`; its translucent cap and
+      mesh opt out of silhouette generation so every underlying hairstyle
+      remains readable. No static handwritten geometry remains.
 
 Both ids are resolvable by the code-owned `kitchen-worker` recipe in
 `KITCHEN_STAFF`, but are filtered by `NON_SELECTABLE_PART_IDS` from ordinary
@@ -249,6 +257,13 @@ pickers and random/seeded employee generation. The recipe remains outside
 poses or animation frames and does not introduce a new staff export folder;
 the sim-owned campus population lane binds staff when its stable config id is
 ratified.
+
+Direction A received visual approval and production promotion on 2026-08-02:
+warm chef white `#E7E1D5` owns the coat/apron field and muted steel `#657A82`
+owns the undershirt/pocket. The normal Terrarium browser export and fresh Unity
+import completed on 2026-08-02. The sim cannot yet surface cafeteria workers
+in action, so the downstream gameplay-scale visual check is explicitly
+deferred; import success is not treated as that visual acceptance.
 
 ### 3. Hair — organized as families (design system)
 
@@ -276,12 +291,11 @@ detail, committed in `240ee03`. Its inventory boxes record the approved
 drawings; broader M1 scene/crowd gates remain open.
 
 `hair-short` and `hair-long-straight` now have six canonical south/east/north
-sources, with Bob as the Medium-family control. The explicit byte-stable
-targets prevent generic arc normalization from changing pixels while still
-enforcing the full SVG intake contract. Short and the Long straight south/north
-facings preserve their prior silhouettes exactly; Long straight east is the
-one authored refinement, using a single rear fall and short temple edge so the
-profile turn reads distinctly. Run
+sources, with Bob as the Medium-family control. Short's approved textured
+front/rear edge and sculpted profile compile through the shared head-fit adapter;
+Long straight remains an explicit byte-stable target. Long straight east uses
+a single rear fall and short temple edge so the profile turn reads distinctly.
+Run
 `npx tsx scripts/hairFamilyPreview.ts` to regenerate the all-head/facing
 compatibility and 128/64/48/32 px distance proofs under
 `docs/previews/hair-families-*`. Their inventory cells record visual approval
@@ -307,9 +321,17 @@ All ten redesigned head-aware hairstyles are now live in production. Each
 stable hair ID resolves a fixed south/east/north variant for all six production
 head IDs. Resolution happens inside the compositor, so flat sprites, portraits,
 operational units, and reconstructable hair layers agree while recipes keep the
-same IDs. The canonical imported SVGs remain source/fallback geometry. The
-first Short/Bob/Ponytail slice is byte-locked; the completion slice adds Pixie,
-Side-part, Bun, Curly, Coils, Long straight, and Balding. Every fitted pair
+same IDs. All ten mapped hairstyles now own their live geometry through approved
+`head-fitted-art` adapters and six declarative envelopes; all ten former code
+path builders are removed. Bun's cap and disconnected knot retain separate
+declarative fit frames; Ponytail's tie and tail share one attachment transform
+while its cap fits independently. Long straight retains a tall curtain with an
+open south face and a two-piece east profile under one bounded frame. Balding
+retains independently editable tapered temples, rear piece, and low horseshoe.
+Pixie retains an independently fitted broken cap/fringe and directional side
+tufts. Side-part retains its swept cap and source-owned crease independently
+from its side/rear mass. Curly and Coils retain one independent center/radius
+frame per editable lobe, with Coils preserving the denser 8/6/8 cloud. Every fitted pair
 remains distinct at 32 px across the authored facings. The 4,320-cell
 top-overflow audit improves from the pre-fitting 766 to 467 high-contrast-only
 cells without non-top overflow; this promotion adds no animation or
@@ -494,7 +516,7 @@ The only place the body-count multiplier is paid; kept small on purpose.
 
 | Garment | Matrix | Status |
 |---|---|---|
-| dress | bodies × 3 facings | mechanically and visually approved |
+| dress | 6 bodies × 3 facings | canonical SVG authority promoted |
 | (long coat — only if added) | bodies × 3 | deferred |
 
 > **Dress refinement v1 (visually approved):** the per-body implementation now
@@ -504,6 +526,15 @@ The only place the body-count multiplier is paid; kept small on purpose.
 > new rig or animation surface. `character-dress-silhouette-fit-v1.png` at
 > 40/48 px and `body-archetypes-dress-styles.png` in high contrast received
 > visual approval on 2026-07-28.
+
+> **Dress source authority (promoted 2026-08-02):** eighteen complete canonical
+> SVGs under `assets/parts/outfit/dress.<body-id>.<facing>.svg` now own every
+> visible dress shape. The production adapter only selects the exact body and
+> facing, while the compositor owns west mirroring, palette resolution, shared
+> poses, and baking. The former `anchoredDress()` production builder has been
+> removed. Deprecated legacy body ids retain their existing static detail-only
+> compatibility facings so old saved recipes remain byte-stable; those records
+> never supply geometry to the six production-body routes.
 
 ### 7. Conditional — only if the readability lints flag them
 
@@ -521,9 +552,11 @@ templates (Tier 1/2 below); escalate to authored only where signature:
 - [ ] Surveillance sensor/monitor — Tier 1/2
 - [x] IRIS installation unit (weighted apparatus + centered console,
       live/dormant) — mechanically shipped and visually promoted as the
-      approved R1+D3 Tier-2 signature prop
+      approved R1+D3 Tier-2 signature prop; live geometry is now owned by the
+      canonical SVGs in `assets/props/iris-hardware-v1/`
 - [x] IRIS charging dock — mechanically shipped as non-placeable plan hardware;
-      visual polish remains iterative
+      its canonical SVG now owns production geometry while visual polish
+      remains iterative
 - [x] IRIS fabrication crew — special `head-fab` + `outfit-fab-chassis` recipe
       on `body-large-frame`; resolvable-only parts, never general picker options
 - [ ] QuotaCo-standard facility variants — per sim Q5: explicit paired

@@ -2,27 +2,54 @@
   "schemaVersion": 1,
   "guide": "Terrarium canonical SVG library",
   "counts": {
-    "exactSourceFiles": 259,
-    "production": 181,
+    "exactSourceFiles": 414,
+    "production": 336,
     "productionDependencies": 74,
     "deferred": 4,
     "derivedWallFrames": 47,
     "byCategory": {
+      "characters/accessory": 3,
       "characters/body": 18,
       "characters/hair": 30,
       "characters/head": 21,
-      "characters/outfit": 44,
+      "characters/outfit": 83,
       "props/deferred-gameplay": 4,
+      "props/department-machines": 67,
+      "props/iris-hardware": 3,
       "props/outdoor": 8,
-      "props/workhorse": 45,
+      "props/workhorse": 54,
       "surfaces/floors": 12,
       "surfaces/grass": 3,
+      "ui/action-cursor-marks": 10,
+      "ui/department-glyphs": 19,
+      "ui/shared-primitives": 5,
       "walls/bevel": 12,
       "walls/equal-height-direct": 10,
       "walls/equal-height-promoted-proof": 52
     }
   },
   "entries": [
+    {
+      "assetId": "acc-hairnet",
+      "category": "characters/accessory",
+      "status": "production",
+      "sourceFile": "assets/parts/accessory/hairnet.east.svg",
+      "sha256": "346dd9d396ab1a15d74eb18fa7e8dd61457f965422d2aee6808013e9d97c1a61"
+    },
+    {
+      "assetId": "acc-hairnet",
+      "category": "characters/accessory",
+      "status": "production",
+      "sourceFile": "assets/parts/accessory/hairnet.north.svg",
+      "sha256": "2b43c2e02d4b13c946b6b1b80ed659cec2a78fe2e6d39225e0242937dfeff4fc"
+    },
+    {
+      "assetId": "acc-hairnet",
+      "category": "characters/accessory",
+      "status": "production",
+      "sourceFile": "assets/parts/accessory/hairnet.south.svg",
+      "sha256": "85b8732ccc71b0e78cdcd4f55b34ef864cb746c25d77ae868e123da7625ad2fe"
+    },
     {
       "assetId": "body-balanced",
       "category": "characters/body",
@@ -154,21 +181,21 @@
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/balding.east.svg",
-      "sha256": "1421062d7f9d5183c14eefdf014b995b394e4e9875286db5913f442c748048a3"
+      "sha256": "4f826ccbeed80c391abe13eefb7171f3f3d65d66e0433f858b5236832d0963dd"
     },
     {
       "assetId": "hair-balding",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/balding.north.svg",
-      "sha256": "79ce48594730253e5a90eb3fdbece05171d92030ac84b766176d29a1e96bcf2b"
+      "sha256": "01c3dcc4184e6146d63b011c372e8051724ec974cfd5b9ae76aa5b9e41a5c09f"
     },
     {
       "assetId": "hair-balding",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/balding.south.svg",
-      "sha256": "c352e315b8b978c3e1656da616b4dfc762a53e550126765150832d795e7618f8"
+      "sha256": "f484756c87a2a6f1e8f6eb50fe5ea3c0a17986b7c5827745f89846eca7d437c3"
     },
     {
       "assetId": "hair-bob",
@@ -196,168 +223,168 @@
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/bun.east.svg",
-      "sha256": "962a42e5c7e1268fbe752fc738e6f452a932b9325b3ae07d9d2d00da82e7c313"
+      "sha256": "bfa31113a12fb6573eed07d5554fbccfb9fec05b60fc98414db5f2399ebec849"
     },
     {
       "assetId": "hair-bun",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/bun.north.svg",
-      "sha256": "573f93b38eb279900b3e87961ca59896b58028f24ce945859c1f2e88997d1a30"
+      "sha256": "d08e742a3d16b42b13abe8b6917fcc183bda6b891a6782fa0fa32d16373f18be"
     },
     {
       "assetId": "hair-bun",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/bun.south.svg",
-      "sha256": "ce6e7f1231f8884f8e7c43c0a96708b8a58ae896cb3ecc854b265f8af30ed6b5"
+      "sha256": "b3be7ffbf3d36557738a65ce20799cdb6f4303878587b9a29031d24eb60499c5"
     },
     {
       "assetId": "hair-coils",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/coils.east.svg",
-      "sha256": "c3bc04e3964a40d5a0368d9b70fbf2315b93088b326e7c12b62e442f97077c92"
+      "sha256": "2d1566cc2a7a5d9fe181ea85e9d19d953f7712f564bd9db85c00eda76fd515c1"
     },
     {
       "assetId": "hair-coils",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/coils.north.svg",
-      "sha256": "ad14aa5b87ab417ccda45fb337b5a0966809e835d1c7412fd2ee668182e1932a"
+      "sha256": "7c9c3ef6ae180e4de1c440457278f2f9c854feb60bfcfecea8ee6ca5175c9b49"
     },
     {
       "assetId": "hair-coils",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/coils.south.svg",
-      "sha256": "9313bdf6daa58227bb5f0320800d0d42f9c983aa27919b1f703c9c828d1c34e5"
+      "sha256": "c837fe6b57ea363cf38b35f76138895439703ad812c7fb3dcb0490fa8070ede0"
     },
     {
       "assetId": "hair-curly",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/curly.east.svg",
-      "sha256": "92b8a991fa4fb27f0d0eaa72cb02744bcf468ad91d3b9c4b57922f9b5e01c57b"
+      "sha256": "6dc78ae4aecb45b5ce78f62ac77f0e73d709d769bf21f06e0f243d76a648db18"
     },
     {
       "assetId": "hair-curly",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/curly.north.svg",
-      "sha256": "05fa3741b1f4bddc6bcccd67bc93c3934d9b6fa206339aa9da10c7305a32e049"
+      "sha256": "5ec515d1e60c8b7d94172ee1ccf360def005fece4396a0412273b903f89658f9"
     },
     {
       "assetId": "hair-curly",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/curly.south.svg",
-      "sha256": "f14cc6b1b17eace84cf87d0b7749050b34284f6d60778617948eb8f857402090"
+      "sha256": "995ad05ad3770c52eb6abef9c9730b71b56ebc52b643905736ab64a9e1d7b61d"
     },
     {
       "assetId": "hair-long-straight",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/long-straight.east.svg",
-      "sha256": "98d370eb902ab3ffed3d82c99adf8dcc1f225b73148e28d82b9284ce90169bcd"
+      "sha256": "db3c48fb6eb20a969af7a3a7e0757de732a866b50ae77e04d80973ced5e3e259"
     },
     {
       "assetId": "hair-long-straight",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/long-straight.north.svg",
-      "sha256": "86010331f0f2af924f1105e8d765b101c756d52f6a7ae03f613819c3165a1dc7"
+      "sha256": "a88f59a3430a310b80bea5c0980b5adb2de167ce4ed663fa4c012d93a9bc42fa"
     },
     {
       "assetId": "hair-long-straight",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/long-straight.south.svg",
-      "sha256": "5ac587335ad21a9ae8775b7471b6bc404e877babf6bd60bf8a498ea2b4b8b4f4"
+      "sha256": "e4dd82a6ca27d87864e9ae13cf4856e069bee20e53223f62337492454b5d7f39"
     },
     {
       "assetId": "hair-pixie",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/pixie.east.svg",
-      "sha256": "15eec4ba4ab053ca6a5ebf51e11be51797b2f157acd86058fc5f836d11bc8ee1"
+      "sha256": "a50f7a18398891dc7f7ec7777dfdc7ad49d2b45449d74c499aa97fde78d659f8"
     },
     {
       "assetId": "hair-pixie",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/pixie.north.svg",
-      "sha256": "89690638d775459ca6ce8bd0363b37d148c2a6a3768f296a5e56415a7b549576"
+      "sha256": "ff6f9dab6faeaf8fcfca4d5df00644c39b450556cddb1e80d1d71298c262e5c0"
     },
     {
       "assetId": "hair-pixie",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/pixie.south.svg",
-      "sha256": "64962477178cda8e1eab4b2f9f8232c01040a182ed17027fc2f0e88020cc2856"
+      "sha256": "cb1ccdede75d613c83d437d06bf153f2cbdc8f8973fa52c896521889cca73d4d"
     },
     {
       "assetId": "hair-ponytail",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/ponytail.east.svg",
-      "sha256": "f53bad0df3651203975d4d6e8aea630a864bee58e0a1c41be0419d3e9ca6dfd2"
+      "sha256": "943243f84863eab7878665954680b8312d47623a4c80d08c0db375553e423326"
     },
     {
       "assetId": "hair-ponytail",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/ponytail.north.svg",
-      "sha256": "8aefaa71806cc2a2a76c57c125cd8f8e6801cde99fdbcbebf5363ad70a00eb24"
+      "sha256": "31763372d2c332d3cb17e1766be6d391f8f0501c1cc17cd4d1a12d7126c3c284"
     },
     {
       "assetId": "hair-ponytail",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/ponytail.south.svg",
-      "sha256": "3c29a0a00b84438c3a59546b25b4d14234b60d808ac61242ff8eb28f399dda29"
+      "sha256": "a96dfa1dc393ef570b200f632a8e08fe381aa6ff73047b617565f47c01c98d36"
     },
     {
       "assetId": "hair-short",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/short.east.svg",
-      "sha256": "34d82f2a28610a3b8e24ff3c5957402481fcfefbfd2d13050b4c79a11c742c04"
+      "sha256": "b726d7cba53127855f3bb2e5dd1caed6abb521351ad95478a275d3a787703442"
     },
     {
       "assetId": "hair-short",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/short.north.svg",
-      "sha256": "dce6004e94812865ded3be0ace9f30d7c93e95992f43bba9f6fda77ff92c3e31"
+      "sha256": "5a5704211b0165b737fdc9975e738ea7698cf2acb3fe55ef17cf1ecfc1e05e55"
     },
     {
       "assetId": "hair-short",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/short.south.svg",
-      "sha256": "634487e7b3c6d273de15c8695272197f9593120492ba5b9af2ea2a9655463333"
+      "sha256": "e74e5356695233c52f495d31bbf808aa60115437d0bd5a05a961abb8607adb04"
     },
     {
       "assetId": "hair-side-part",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/side-part.east.svg",
-      "sha256": "fa8340ac8869325c39af41814d76cffd9ec771855ee8b92781b4f256306e1bac"
+      "sha256": "1ca98d4eb3779af0c4224cd88adecb9dc623a48ac5ecbf70bb9bdc1bec9e4d08"
     },
     {
       "assetId": "hair-side-part",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/side-part.north.svg",
-      "sha256": "111c5caa12924f6090a89d4b04146730f9d34400a7a7347dc1ca05312ab64ad9"
+      "sha256": "bb6d70b53af5213511faf1cc811d17decfb9cde75364d24982d1d070061bffa8"
     },
     {
       "assetId": "hair-side-part",
       "category": "characters/hair",
       "status": "production",
       "sourceFile": "assets/parts/hair/side-part.south.svg",
-      "sha256": "28b6f09ad80e5a6a05107178e1ff58f948321ff6a63e6d33ffb3b8d0bc410bec"
+      "sha256": "5d10f71ad35f82dab309b5f472407e9ed315208c8cd01355c76423fa5094bb55"
     },
     {
       "assetId": "head-angular",
@@ -577,6 +604,153 @@
       "sha256": "1816d66d2742cb3e62c7d3cb15ca6678962a8147c568996bdb8ced694ee2bb7d"
     },
     {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-balanced.east.svg",
+      "sha256": "46c67e3761cb32497cb516a2db65f30e6a0944caefdac88dc434f49d7c780b0e"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-balanced.north.svg",
+      "sha256": "b6274bcea05f016084adaffdfd16436d8b7df4e38f9c80ada13457df97eb1664"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-balanced.south.svg",
+      "sha256": "99afb5df57135a2c1f2e41db7398f40500b4a8b85b7d212c012f6dcf8173fd64"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-compact.east.svg",
+      "sha256": "5c445ce5906a4c5e7d20fd2b27bf2f7c94cfcfed24c117cd15a3dfe0de831687"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-compact.north.svg",
+      "sha256": "4a38322f0d62fa5656c509ee9e3b49840ab048e60c0a0e1bed2248ec8c9537a0"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-compact.south.svg",
+      "sha256": "3bf148dd0ee052b35fb880a00ccc917d3575fb19a05e25f9b06548e6bcf4dd0e"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-large-frame.east.svg",
+      "sha256": "9b4a96aef854a89bfb55c41461a12b80172ecb1ad4b5498c1e1f2e7eb37578a3"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-large-frame.north.svg",
+      "sha256": "63c8f43ae13a000ed3207dc3faf9d3967bdd9eeb787f520e5b77f5e48a1e9a71"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-large-frame.south.svg",
+      "sha256": "7caab8f9209ff6643f58380dc3533825a0841f34f1fdac2b2925ac93f2a0b84d"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-pinch.east.svg",
+      "sha256": "41efad3bad7bc721f0788cf7d6e47c77d76036500504163a8bd1d7c238b58e25"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-pinch.north.svg",
+      "sha256": "9885547c8245bb7ca65d5c577542f78527eab6621da332d69519d41e7c02f6fd"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-pinch.south.svg",
+      "sha256": "0d88da8b98c8d66bd394cb686f576e3950d920b42ac72612dd01e9fce99507c0"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-soft.east.svg",
+      "sha256": "989470edfc6b91420e0c2728b4c0a94b72188fb712ad7ff4f5d5042a59017686"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-soft.north.svg",
+      "sha256": "9ae42506ce1cc684cc44438864000ec916b66b7ca698ffe90b30906e81f1161e"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-soft.south.svg",
+      "sha256": "e374dbbfb4c3fb2fc86e1c689c3fd43142ba0f283b1cc99509369cef2d01755c"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-tall.east.svg",
+      "sha256": "9afa1cdce9706066a6dda3bd60bd5bd65cd24c6181064aa78a97af187e60ebbd"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-tall.north.svg",
+      "sha256": "f96758322427b48751dbff1c31bfa7edc01d304ae7aabdbb4ecd0ea7028def37"
+    },
+    {
+      "assetId": "outfit-dress",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/dress.body-tall.south.svg",
+      "sha256": "c874216a29e2afc59bac421bf08129af5b31e8326f6ab7610456262cf9fad1d4"
+    },
+    {
+      "assetId": "outfit-fab-chassis",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/fab-chassis.east.svg",
+      "sha256": "200ab46ca22d709bd9eda38cde695a03b8dfa98c9c931cdef110dcf844fa5b80"
+    },
+    {
+      "assetId": "outfit-fab-chassis",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/fab-chassis.north.svg",
+      "sha256": "a1dbe5417cd9bf62e9400bf2f5149322730694f43e0907d958a3a82c575193ec"
+    },
+    {
+      "assetId": "outfit-fab-chassis",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/fab-chassis.south.svg",
+      "sha256": "0d0e6a6c48fd8223feaafe56ff8034d8c1441d7fc92a3cce7bcf62153a78b32d"
+    },
+    {
       "assetId": "outfit-hoodie",
       "category": "characters/outfit",
       "status": "production",
@@ -645,6 +819,132 @@
       "status": "production",
       "sourceFile": "assets/parts/outfit/polo.placket.south.svg",
       "sha256": "1427e8ea04bee92a7cd76829b63f7b84e21365d03b444cdfd15a5743bb0395e6"
+    },
+    {
+      "assetId": "outfit-service-apron",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/service-apron.body-balanced.east.svg",
+      "sha256": "04053b8d86e3b5db8a9b8cb61de101533d0f535d16d83616536764dde4baafaa"
+    },
+    {
+      "assetId": "outfit-service-apron",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/service-apron.body-balanced.north.svg",
+      "sha256": "d52fa84bbb7696f4216a7512d29cc2fba8ec7ce5c98fd4df8975f906280b4aad"
+    },
+    {
+      "assetId": "outfit-service-apron",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/service-apron.body-balanced.south.svg",
+      "sha256": "8e64eb2a1e98d11a21d0cc5dc36992506f1797aee18a729140d7bb1dc9b1d3b0"
+    },
+    {
+      "assetId": "outfit-service-apron",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/service-apron.body-compact.east.svg",
+      "sha256": "3bf59006460b81407e13f0a6654dd89233c4a365706ec3ba8306bcbe8dd2f0d4"
+    },
+    {
+      "assetId": "outfit-service-apron",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/service-apron.body-compact.north.svg",
+      "sha256": "cf3fb77c6275a1067dfc24058ecf2bd8327baa6cf45c7592137201648311d303"
+    },
+    {
+      "assetId": "outfit-service-apron",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/service-apron.body-compact.south.svg",
+      "sha256": "ee0d996604ec7a5f099196afea9112f5b0e026b2b72136b6f190cd3dceb23761"
+    },
+    {
+      "assetId": "outfit-service-apron",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/service-apron.body-large-frame.east.svg",
+      "sha256": "294006c3795d15818d4e8b5e770b479e58025cae34aed4a981e574902e3dfe20"
+    },
+    {
+      "assetId": "outfit-service-apron",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/service-apron.body-large-frame.north.svg",
+      "sha256": "561c61a5fec8e029c7a21be29ecf34b373e9fd171318c00ba92bd8518f63e727"
+    },
+    {
+      "assetId": "outfit-service-apron",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/service-apron.body-large-frame.south.svg",
+      "sha256": "6fcfd71642d155b6efe46d2d3f69465425d27434b88708ad4f9eb0217cb6861b"
+    },
+    {
+      "assetId": "outfit-service-apron",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/service-apron.body-pinch.east.svg",
+      "sha256": "dd8bc8e834c071ae803d5101119dc011d6277ee85fca0c7d114a994395706b19"
+    },
+    {
+      "assetId": "outfit-service-apron",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/service-apron.body-pinch.north.svg",
+      "sha256": "d10e2aad73da60e54a916579b7d14fca055071bad097f40bdd296759e0e824fc"
+    },
+    {
+      "assetId": "outfit-service-apron",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/service-apron.body-pinch.south.svg",
+      "sha256": "2db73fd94376ee1794414058c1eac370f043b59497a61231303459e6901703da"
+    },
+    {
+      "assetId": "outfit-service-apron",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/service-apron.body-soft.east.svg",
+      "sha256": "0096b97c968c09bf4afdc321638eddc363e27cccf1d681daf9769903af7c4164"
+    },
+    {
+      "assetId": "outfit-service-apron",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/service-apron.body-soft.north.svg",
+      "sha256": "bfdc22588200120617cc36dbe5c37f8a95fad81e86c8dc0ba7cd47a869ba497f"
+    },
+    {
+      "assetId": "outfit-service-apron",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/service-apron.body-soft.south.svg",
+      "sha256": "2094d3efca2f28246797b7b771fa14d0ababf002a7a01b50629aa1d52a7afebe"
+    },
+    {
+      "assetId": "outfit-service-apron",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/service-apron.body-tall.east.svg",
+      "sha256": "eaf3a67f5f933aa7e35673b0854a04e0ade4f6c9d118f81c809f1dfd98ba2478"
+    },
+    {
+      "assetId": "outfit-service-apron",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/service-apron.body-tall.north.svg",
+      "sha256": "6e46bd47abbe396f9f1f361b1fb7143502a7705b1d17f51c353e1a78d7d7d450"
+    },
+    {
+      "assetId": "outfit-service-apron",
+      "category": "characters/outfit",
+      "status": "production",
+      "sourceFile": "assets/parts/outfit/service-apron.body-tall.south.svg",
+      "sha256": "3268fe6c6adca0c1ce199e4583e56ee7a57478f76eaad51ca4235da4086f586a"
     },
     {
       "assetId": "outfit-shirt-tie",
@@ -843,6 +1143,496 @@
       "sha256": "3c4c04c7363455fe0b12fd332e613440e1f56bcce588fa0d5e50f5e418602323"
     },
     {
+      "assetId": "adjudication_desk_set",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/adjudication_desk_set.svg",
+      "sha256": "65768e8a998ef688b768e5230349e71a570ca8aa09e086b0ff0df701e104dfa4"
+    },
+    {
+      "assetId": "badge_press",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/badge_press.svg",
+      "sha256": "1b640c08d7276bf8ff99c6828590c154fd95f3d7e75e38c24d3729af9ebc9635"
+    },
+    {
+      "assetId": "binding_press",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/binding_press.svg",
+      "sha256": "21d612892e0ff003c8eb550977b06f72ae6e62eac4dd6733c7ec22ce480266e8"
+    },
+    {
+      "assetId": "calculating_engine",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/calculating_engine.svg",
+      "sha256": "4293008f50a1451352864300015420b911015b718d82f73640d2fd0000ccd301"
+    },
+    {
+      "assetId": "canister_base",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_base.svg",
+      "sha256": "c3cbac6faecba3f4ea18e1cbd3cea5a152abf6eab0347a6fdfdad125b22e881d"
+    },
+    {
+      "assetId": "canister-stamp-applications",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_applications.svg",
+      "sha256": "03c6f42466e0fbe71dd014cdb55d86f2d63bdcd83ddf99966795ad0d61737eda"
+    },
+    {
+      "assetId": "canister-stamp-code",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_code.svg",
+      "sha256": "978dbfd5e82f6b041080202446f1434214486f3ab10d5ae9474fade56965c398"
+    },
+    {
+      "assetId": "canister-stamp-determinations",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_determinations.svg",
+      "sha256": "8d3323ff459a7eb0b3fe77cfa2298566d00400c8ff51bdcbedcfd89ff0c4832c"
+    },
+    {
+      "assetId": "canister-stamp-findings",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_findings.svg",
+      "sha256": "d73e0d570eb8f8b961a3e7846b5c35bbe9f5312b264ab757b9f0287b0d7da9f1"
+    },
+    {
+      "assetId": "canister-stamp-personnel_actions",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_personnel_actions.svg",
+      "sha256": "3254002fa1d0f38fe60c71397de3b4fdfa8788096996becb062ae56d41bc4f5b"
+    },
+    {
+      "assetId": "canister-stamp-raw_records",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_raw_records.svg",
+      "sha256": "5d535be51bdf0fe0e53791917779cd0c2e18d9c58ee7659cf5e8a67b2aede608"
+    },
+    {
+      "assetId": "canister-stamp-release",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_release.svg",
+      "sha256": "766dc6ed092447de9633f0b4f20fa780ba5a65767bada442205a59a3980d9078"
+    },
+    {
+      "assetId": "canister-stamp-repairs",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_repairs.svg",
+      "sha256": "5c27da0ac46aa0eaabe8a9fa288133e078ccdb8bb83f5ea518db4de0f0463a62"
+    },
+    {
+      "assetId": "canister-stamp-reports",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_reports.svg",
+      "sha256": "79197aeddf8a0bcad147f95b956097d73a6cecc7f1fe118594f80b3207a9b917"
+    },
+    {
+      "assetId": "canister-stamp-requirements",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_requirements.svg",
+      "sha256": "96c8bfdbaac67babb219a49ebee2412de4b46c7454da7b7f7dee7d52899280c6"
+    },
+    {
+      "assetId": "canister-stamp-specifications",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_specifications.svg",
+      "sha256": "d289f97611ffd547055ab7a8a514d08aea7b32acbc5c5a51b28b745a6f77e04a"
+    },
+    {
+      "assetId": "canister-stamp-structured_data",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_structured_data.svg",
+      "sha256": "6853c26ead0bbec7d79d2782ec0e2e635c51e6856e5b057df2af838dd88682cb"
+    },
+    {
+      "assetId": "canister-stamp-supplies",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/canister_stamp_supplies.svg",
+      "sha256": "e3d6ec7500001c2ed1e92949c23ddcf3b109bd3d2714fe40302ca73c718e306b"
+    },
+    {
+      "assetId": "comparator",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/comparator.svg",
+      "sha256": "28d24be2450dd4d32f504e291e1da4706cbdaf0b5b7ca8426525d87be2b87c43"
+    },
+    {
+      "assetId": "compiler_press",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/compiler_press.svg",
+      "sha256": "14811a55b922f95de7712bae8bd537c19c7dcb58e6011979ccd11defd46b4754"
+    },
+    {
+      "assetId": "cubicle_partition_corner",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/cubicle_partition_corner.svg",
+      "sha256": "cb81712784da4cfca6c6aeff2086764b42fc75c420cfe338e7e109a239314956"
+    },
+    {
+      "assetId": "cubicle_partition_endcap",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/cubicle_partition_endcap--horizontal.svg",
+      "sha256": "fdf0a6c24a32feb17030b98ed496110849a9fe5e8eb6eb2d414a9d3556b72842"
+    },
+    {
+      "assetId": "cubicle_partition_endcap",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/cubicle_partition_endcap--vertical.svg",
+      "sha256": "21abd0ca700ed2c2ca54cddb229eff60b42bd7b8a91962dd7c07ca3ee596ffc9"
+    },
+    {
+      "assetId": "cubicle_partition_straight",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/cubicle_partition_straight--horizontal.svg",
+      "sha256": "c2bc4bc8b88ee60efcfad84e8b12107797644b20cb9144ad357a98f6203ede17"
+    },
+    {
+      "assetId": "cubicle_partition_straight",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/cubicle_partition_straight--vertical.svg",
+      "sha256": "a5fc5a7b892d43034d57f832e5a2c34b99b7c88eacd79441bfcaf8301505e29b"
+    },
+    {
+      "assetId": "delivery_uplink",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/delivery_uplink.svg",
+      "sha256": "de8b6b74c5ec21ff2833aa32b50158c4871b3dd34390a838d9d93b73234d8f28"
+    },
+    {
+      "assetId": "dispatch_station",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/dispatch_station--empty.svg",
+      "sha256": "7b5dbf515c62882a7d6521d8cf4ec9ce60608812ee857ba18a0809b6c421d20c"
+    },
+    {
+      "assetId": "dispatch_station",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/dispatch_station--high.svg",
+      "sha256": "2d3ff29d158240192999fa6d97c1b178acfed91c48ffa900d2c464d4144c8404"
+    },
+    {
+      "assetId": "dispatch_station",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/dispatch_station--low.svg",
+      "sha256": "1f5ef517ebd214b49e6af70896c1bf9e59b3b36f7fc042d99437dc8792b70799"
+    },
+    {
+      "assetId": "dispatch_station",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/dispatch_station--overflowing.svg",
+      "sha256": "2fe96b5e35e97b83d499194805d9441b07c8873fe065fc969b2e50cbd1918a0c"
+    },
+    {
+      "assetId": "docket_rack",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/docket_rack--empty.svg",
+      "sha256": "1c8daa6281361a1f3a49dd3e7e1f6956dcf34068f984b62ceb8615e3081663f9"
+    },
+    {
+      "assetId": "docket_rack",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/docket_rack--high.svg",
+      "sha256": "54350caa6b5c964d66b4351d00be39dde90569cacbb3fd2f9eaea164290b7afa"
+    },
+    {
+      "assetId": "docket_rack",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/docket_rack--low.svg",
+      "sha256": "f36d6da55c4ce1d26b8e8339d3b20fc6766fa7128fb57f4dfb36b64eec0054dd"
+    },
+    {
+      "assetId": "docket_rack",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/docket_rack--overflowing.svg",
+      "sha256": "5b49cca81bcac8c1f020199edb7751d956cd6e8349347a670056d60d0ae0f9b0"
+    },
+    {
+      "assetId": "envelope_press",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/envelope_press.svg",
+      "sha256": "febfc0abeabf73f7d38433a8e4387f8730d863001c363f7d72ec9aef5aeaac2c"
+    },
+    {
+      "assetId": "franking_machine",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/franking_machine.svg",
+      "sha256": "63274aacc5f480b22c4d51a89dc28aada028c875e86724eb72c82d7b8eb40523"
+    },
+    {
+      "assetId": "intake_tray_large",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/intake_tray_large--empty.svg",
+      "sha256": "110be12cb6151f9d4bc5f696e8cb0012732f4f26d82665c14dcb8629bf234fac"
+    },
+    {
+      "assetId": "intake_tray_large",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/intake_tray_large--high.svg",
+      "sha256": "09f247084938d3b4567804ec012f0888467d5c78a1ace4f9032e929d2f8d66d3"
+    },
+    {
+      "assetId": "intake_tray_large",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/intake_tray_large--low.svg",
+      "sha256": "de550e1e0c9ae5ed49f5d191c8c793d8265ac0dd34c068c7bf7f5bcf58f44c56"
+    },
+    {
+      "assetId": "intake_tray_large",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/intake_tray_large--overflowing.svg",
+      "sha256": "ba37b0728b641d0074d31806798a6d90650bcb228d3fe695d002bbe5d0147d60"
+    },
+    {
+      "assetId": "intake_tray_small",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/intake_tray_small--empty.svg",
+      "sha256": "740b5d819e9c06a98199505cc4a4c656ade6067a75ba96a7d3f13218b85b5aec"
+    },
+    {
+      "assetId": "intake_tray_small",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/intake_tray_small--high.svg",
+      "sha256": "d8a640f1fe05d7aa1ff223c04e26f57880876193d2d070993ed8eb4b6933284d"
+    },
+    {
+      "assetId": "intake_tray_small",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/intake_tray_small--low.svg",
+      "sha256": "bc98e2b6dd67927b1144100f91cd9427cd16482113e967211a72ab70c503a873"
+    },
+    {
+      "assetId": "intake_tray_small",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/intake_tray_small--overflowing.svg",
+      "sha256": "21b14907a7723efd3a87275c18792eaacb881e49a5e9f2d420e5ef75e3e7d367"
+    },
+    {
+      "assetId": "keypunch_bank",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/keypunch_bank.svg",
+      "sha256": "e9619984b111cde4fd502ed8ac07e49b5cbd008c21db21c6733ddfecd77e46fa"
+    },
+    {
+      "assetId": "keypunch_console",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/keypunch_console.svg",
+      "sha256": "ebdc23f8ac03042223297f8149f24b9e5e62d9f7452962670d70ff8eee2a2488"
+    },
+    {
+      "assetId": "ledger_engine",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/ledger_engine.svg",
+      "sha256": "d5753a56f8c327f2978b26f606819cdc3cfacfd620c544cda84b60a080fb23e0"
+    },
+    {
+      "assetId": "loading_dock",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/loading_dock--empty.svg",
+      "sha256": "f5727ec94685232f75264dac33b08d2369491264b912d2e8d8601125649af3f2"
+    },
+    {
+      "assetId": "loading_dock",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/loading_dock--high.svg",
+      "sha256": "781ab7dd19a9bed1297bfc22ea96acb919bd83dcf7d4a6de141e44e326103c8a"
+    },
+    {
+      "assetId": "loading_dock",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/loading_dock--low.svg",
+      "sha256": "31f8847d09fe6fa5a19cca338d789af62ce98f09b4580080bab5c2be42efc3ed"
+    },
+    {
+      "assetId": "manifest_press",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/manifest_press.svg",
+      "sha256": "92f5031a35182f7306dff59174fd00f42c3232516306dd29e0d51e5618f09bb3"
+    },
+    {
+      "assetId": "parts_crib",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/parts_crib.svg",
+      "sha256": "4a13d307ef79f6fbee569398a0c7b40d606ee2fc496b7fe8d4aa9d670b00ede8"
+    },
+    {
+      "assetId": "pay_envelope",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/pay_envelope.svg",
+      "sha256": "84d92d09c76c24611fc1057373dd961e965ae4b65ed597751f1609fa2f4b4939"
+    },
+    {
+      "assetId": "pneumatic_dispatch_node",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/pneumatic_dispatch_node.svg",
+      "sha256": "f01522a7fb63a4af45343421b76fad5bcd2446159eeed6716c4e5c5fb04cab75"
+    },
+    {
+      "assetId": "records_cabinet",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/records_cabinet.svg",
+      "sha256": "8173aa3e6cdf634fb359831a38b8af5378926ea3bee74a91beaf08a93d60f0e7"
+    },
+    {
+      "assetId": "requisition_counter",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/requisition_counter.svg",
+      "sha256": "cccd539ea8f413793c78327899c97766112a9f47afdd7c9fbfc7900709de1dd8"
+    },
+    {
+      "assetId": "rotary_duplicator",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/rotary_duplicator.svg",
+      "sha256": "2ccd9ba2e495e361591274d39ee346a4c7d5de4da1db84067a2fe975e750af99"
+    },
+    {
+      "assetId": "sorting_frame",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/sorting_frame.svg",
+      "sha256": "0e534fd5bf81e33963a4746d70f64b924702cfe57f601ae07c30bffa1b1634f4"
+    },
+    {
+      "assetId": "stock_shelving",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/stock_shelving.svg",
+      "sha256": "1d987860b2ee6294d94f99fcce3bf62ab0cd44ee2b50690c2c8ffbb9bff68d48"
+    },
+    {
+      "assetId": "tabulating_machine",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/tabulating_machine.svg",
+      "sha256": "0c4035296058fb17b70852ae2ef49ea358cff3c8a93ac6a6c1ef8044bbca457b"
+    },
+    {
+      "assetId": "terminal_bank",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/terminal_bank.svg",
+      "sha256": "318c95d88fc8e5496ce58fb2e569b17583697de16512b5fd0b529cd03d198333"
+    },
+    {
+      "assetId": "tube_corner",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/tube_corner.svg",
+      "sha256": "e12d8fcbc722c8eeda5495adfed51679bccba04f659ed8030af4279adaf22de3"
+    },
+    {
+      "assetId": "tube_riser",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/tube_riser.svg",
+      "sha256": "8f159cc4f18ae2fa1885f8a92c0e626a98cde58f05653c03c5df84d646d942bd"
+    },
+    {
+      "assetId": "tube_straight",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/tube_straight.svg",
+      "sha256": "6c8df683df708a7cc12a4a8ad9a2ac3711ebc185c8e2b86f5605db060ad99de1"
+    },
+    {
+      "assetId": "tube_wallpass",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/tube_wallpass.svg",
+      "sha256": "cbef7de92ffa5879ad55e33b67a7b94ccf22d645c5fc1656294c15ab7d03bb84"
+    },
+    {
+      "assetId": "verification_comparator",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/verification_comparator.svg",
+      "sha256": "edc519e63cdb6f3450035015ed763ce42f8b40c33027965d66243a9cefa06b82"
+    },
+    {
+      "assetId": "workbench",
+      "category": "props/department-machines",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-department-machines-v1/workbench.svg",
+      "sha256": "2644584534de985c1af3ffee34deb8fe8a49a769d35dc2504a7dd8a20b25a48f"
+    },
+    {
+      "assetId": "iris-charging-dock",
+      "category": "props/iris-hardware",
+      "status": "production",
+      "sourceFile": "assets/props/iris-hardware-v1/iris-charging-dock.svg",
+      "sha256": "884b96bdb30f037698468863d0da56b327a6bef5a6952c07cdd056411800b7be"
+    },
+    {
+      "assetId": "iris-installation-unit-dormant",
+      "category": "props/iris-hardware",
+      "status": "production",
+      "sourceFile": "assets/props/iris-hardware-v1/iris-installation-unit-dormant.svg",
+      "sha256": "b40797f0895a327c0340bf3edad592ccb5a4ab74d0c7ea4fab766389069c5fff"
+    },
+    {
+      "assetId": "iris-installation-unit",
+      "category": "props/iris-hardware",
+      "status": "production",
+      "sourceFile": "assets/props/iris-hardware-v1/iris-installation-unit.svg",
+      "sha256": "6dbab24fcc2e9e9c2fce1c1f76f2b7964a1d3afb744c8e5a834704a2c18b829a"
+    },
+    {
       "assetId": "bike-rack",
       "category": "props/outdoor",
       "status": "production",
@@ -920,6 +1710,13 @@
       "sha256": "dc7b35aa9506e07aff24591bd6784a86205185d504952823476b9b5d3ce630cb"
     },
     {
+      "assetId": "cafeteria-table",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/cafeteria-table.svg",
+      "sha256": "808a19ed54d8580675f46b4bbbcc4f91af596cb159395f032c2a62b0cf25dc02"
+    },
+    {
       "assetId": "coat-rack",
       "category": "props/workhorse",
       "status": "production",
@@ -946,6 +1743,13 @@
       "status": "production",
       "sourceFile": "assets/props/quota-co-workhorse-v1/coffee-table.svg",
       "sha256": "805fcff630d96b4e5fe7afa04fe988174fdbee546876f28f8fea341cd92b2d60"
+    },
+    {
+      "assetId": "commercial-range",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/commercial-range.svg",
+      "sha256": "389c9c4d42286cb2608d49cf56ecfd7abf2606007103015fe38e4ad50746e56f"
     },
     {
       "assetId": "conference-table",
@@ -995,6 +1799,20 @@
       "status": "production",
       "sourceFile": "assets/props/quota-co-workhorse-v1/desk.svg",
       "sha256": "3563e9bb626735923b2d970e7f256384cb314b1a8751f923a3baa732d71530d7"
+    },
+    {
+      "assetId": "dining-carrel",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/dining-carrel.svg",
+      "sha256": "673e098c82f9c2e36d55ed51b6f3b939762b613509929247192fb27ae6990460"
+    },
+    {
+      "assetId": "dish-return",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/dish-return.svg",
+      "sha256": "a85652ea2a572f236bb4b3a42135c441b6e54e7623c566dc2401f0806b1bb181"
     },
     {
       "assetId": "filing-cabinet",
@@ -1116,6 +1934,13 @@
       "sha256": "e73fe8670a258486aa4f53672ede1b7fe48fa56c45854013cc03e241df9c27a3"
     },
     {
+      "assetId": "prep-table",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/prep-table.svg",
+      "sha256": "9d1f1dc39ca88fc2ace992ff9224fc86deefde4c9d94ac353a9db82cc8ac5f2e"
+    },
+    {
       "assetId": "printer-jammed",
       "category": "props/workhorse",
       "status": "production",
@@ -1151,6 +1976,20 @@
       "sha256": "61648316da984d4753faa5e688d410b211870987e16a6107cf2ede74dc466d13"
     },
     {
+      "assetId": "service-scanner",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/service-scanner.svg",
+      "sha256": "440c5c0758ba3c632b0b565603fe95ae82ea38abd6540fa8ab0dd18a31e09b6c"
+    },
+    {
+      "assetId": "serving-line",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/serving-line.svg",
+      "sha256": "378cdf6a06c7014a5b0a31eb151ffe74d1a9bf486d595f76b9a962517252090c"
+    },
+    {
       "assetId": "shredder",
       "category": "props/workhorse",
       "status": "production",
@@ -1179,6 +2018,13 @@
       "sha256": "c4edb6ff3150f1947f21347e06e6da73635710047d56beab76bf8b71e12fb546"
     },
     {
+      "assetId": "tray-stack",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/tray-stack.svg",
+      "sha256": "73cf956bb699f21327e9d737e61748ed6318ee67c97e5102fea9e0decd464077"
+    },
+    {
       "assetId": "vending-machine",
       "category": "props/workhorse",
       "status": "production",
@@ -1191,6 +2037,13 @@
       "status": "production",
       "sourceFile": "assets/props/quota-co-workhorse-v1/waiting-bench.svg",
       "sha256": "ef78461acb3d5e2655e7c9c8534c2baffd875397731d0b13af7648c1ed5d4da1"
+    },
+    {
+      "assetId": "walk-in-front",
+      "category": "props/workhorse",
+      "status": "production",
+      "sourceFile": "assets/props/quota-co-workhorse-v1/walk-in-front.svg",
+      "sha256": "48282617302d2f693e37da302df4dcd6c52a3c429fefc71853fa4cb449be43e6"
     },
     {
       "assetId": "wall-clock",
@@ -1317,6 +2170,244 @@
       "status": "production",
       "sourceFile": "assets/tiles/quota-co-maintained-hybrid-v1/ground/ground-grass.svg",
       "sha256": "cb4ba412d9a2a1382406f816a53e759cc51233dd3f83e4930dfadeab6391cda7"
+    },
+    {
+      "assetId": "action-delete",
+      "category": "ui/action-cursor-marks",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-action-cursor-marks-v1/action-delete.svg",
+      "sha256": "50d5fb147c7a387412e3dfdce47546592e2da02d3437e90135d171fcf8455aa8"
+    },
+    {
+      "assetId": "action-move",
+      "category": "ui/action-cursor-marks",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-action-cursor-marks-v1/action-move.svg",
+      "sha256": "bc8cff05fde7b1590efe28fc3947dfca4d950e45e12f0d4220a2f5edf7db2489"
+    },
+    {
+      "assetId": "action-redo",
+      "category": "ui/action-cursor-marks",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-action-cursor-marks-v1/action-redo.svg",
+      "sha256": "6c8e4314d0579bb3bea95d967601acbdd8eac9d42ca95d1e48677df0ff4f919c"
+    },
+    {
+      "assetId": "action-rotate",
+      "category": "ui/action-cursor-marks",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-action-cursor-marks-v1/action-rotate.svg",
+      "sha256": "49dce902485e5d4503989e3aa0229934d888de5a33cfd14438e39d0f6d81a6ce"
+    },
+    {
+      "assetId": "action-undo",
+      "category": "ui/action-cursor-marks",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-action-cursor-marks-v1/action-undo.svg",
+      "sha256": "e4c4313600a60115d9cf5e6c75682b41a95d964a38fd9cf15c8e1e9f47d670c7"
+    },
+    {
+      "assetId": "cursor-default",
+      "category": "ui/action-cursor-marks",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-action-cursor-marks-v1/cursor-default.svg",
+      "sha256": "8923e71eebeec78aba925260c6c525c0b980a13de747195473e665fb514fb3d6"
+    },
+    {
+      "assetId": "cursor-grab",
+      "category": "ui/action-cursor-marks",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-action-cursor-marks-v1/cursor-grab.svg",
+      "sha256": "edfb6bf2217650933945121227c012c2f78f171d8ecb0b6433f475087ef31681"
+    },
+    {
+      "assetId": "cursor-invalid",
+      "category": "ui/action-cursor-marks",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-action-cursor-marks-v1/cursor-invalid.svg",
+      "sha256": "eaa4358e1e50d55914dc55e9232973dfdeb19f6bc8c7782f32dbbf673abf5603"
+    },
+    {
+      "assetId": "cursor-place",
+      "category": "ui/action-cursor-marks",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-action-cursor-marks-v1/cursor-place.svg",
+      "sha256": "5037a11a3e6fda11c57dbbba049ba720efc8d02d32e5a79708526d416ddd5090"
+    },
+    {
+      "assetId": "world-facing",
+      "category": "ui/action-cursor-marks",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-action-cursor-marks-v1/world-facing.svg",
+      "sha256": "f42e88874a86ff6017cadc0d59769f48334adb300ce52498dedaec34e4e1c95f"
+    },
+    {
+      "assetId": "ready-all",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/ready-all.svg",
+      "sha256": "465778a430df38e3bc6039199555c49bc1512ccdf1321f9b0b8f3743e724efae"
+    },
+    {
+      "assetId": "ready-connected",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/ready-connected.svg",
+      "sha256": "30d1eeabd06ec10f58a6f853268c3a3bbe54d812c8deeb604d57b0b21f811c1c"
+    },
+    {
+      "assetId": "ready-designated",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/ready-designated.svg",
+      "sha256": "6481102da7e1ebc6cfde2774aabc9a65ebdb8a39ba70156c02776d6b012cc791"
+    },
+    {
+      "assetId": "ready-equipped",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/ready-equipped.svg",
+      "sha256": "3c5f44cfc89fc9aaf578a4a5e4fe6708070acef72b1cf6d607035c0d4a822ae7"
+    },
+    {
+      "assetId": "ready-flowing",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/ready-flowing.svg",
+      "sha256": "cd472f0db6e808489b1bae49f118ddb2ed4111daca9494f8f25ccbf85264345c"
+    },
+    {
+      "assetId": "ready-io",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/ready-io.svg",
+      "sha256": "634269572e4df0023bf0a4cbb951cbb5c44db5b5ae7b69861411f919b5cf928f"
+    },
+    {
+      "assetId": "ready-room",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/ready-room.svg",
+      "sha256": "e3022f864f440c2c609940e450b5edef172034de02cad0b5a02d141493884130"
+    },
+    {
+      "assetId": "ready-staffed",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/ready-staffed.svg",
+      "sha256": "7efbdc4d14a228b329d387adde58ea81c29194fb04a4f44ae0001b39401e95f3"
+    },
+    {
+      "assetId": "route-input",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/route-input.svg",
+      "sha256": "4d5340433913c1e58283ef3bd6733dc2c52a73cabc64b2ef46f0a4679e955fd1"
+    },
+    {
+      "assetId": "route-output",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/route-output.svg",
+      "sha256": "2ca528c402ffe22d5a41213c895961a5fa0a7a2d95dd59dd91a623996264c8e3"
+    },
+    {
+      "assetId": "route-repair",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/route-repair.svg",
+      "sha256": "50766ba1355052e8cbdf500d3cbae70f8808a08609d2bd028b0109bb9ac84c8a"
+    },
+    {
+      "assetId": "route-wall-pass",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/route-wall-pass.svg",
+      "sha256": "63e2993db68daf9161a97a9c0187632e311db79a669a6ca42b46c1d566c93531"
+    },
+    {
+      "assetId": "state-blocked",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/state-blocked.svg",
+      "sha256": "6c75d59c4233be316b908074b0a233458cfd516ac6b4958b447a9f6f8031960b"
+    },
+    {
+      "assetId": "state-complete",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/state-complete.svg",
+      "sha256": "25865ddc8bf7449938f2f04850e85241629d988415fb18ab8466ea339732f475"
+    },
+    {
+      "assetId": "state-missing",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/state-missing.svg",
+      "sha256": "589401a1fbf7e24cc102bda9b65335595d51468772a820491d9ac6653530a9f4"
+    },
+    {
+      "assetId": "state-unavailable",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/state-unavailable.svg",
+      "sha256": "4c2c8f9b6ffad325a0791a0419544bf8644cc9324c64649266eb7d6f8acf8c20"
+    },
+    {
+      "assetId": "work-data-processing",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/work-data-processing.svg",
+      "sha256": "ffd0ae8b7137dcf3094aeeb2d842bcca369c17ed805d54e160a2fca6ff1bb5ed"
+    },
+    {
+      "assetId": "work-delivery",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/work-delivery.svg",
+      "sha256": "0fd6b7fd9fc27c0c616375c4c9458ebbd890a75dd04c2e13ee8c9a855d708d44"
+    },
+    {
+      "assetId": "work-intake",
+      "category": "ui/department-glyphs",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-department-glyphs-v1/work-intake.svg",
+      "sha256": "ffee3617699131b198524ab321515e9387efc31933845e45a380728289311a32"
+    },
+    {
+      "assetId": "iris-mark",
+      "category": "ui/shared-primitives",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-shared-primitives-v1/iris-mark.svg",
+      "sha256": "eed540ae41dd7efd9ac01df168045ada2ca0eaeae0dc17140845617b7c8a4a59"
+    },
+    {
+      "assetId": "quotaco-mark",
+      "category": "ui/shared-primitives",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-shared-primitives-v1/quotaco-mark.svg",
+      "sha256": "201b50da955db49f032f87e9b8209050a1168973a935b2e5568a7d79e848ee79"
+    },
+    {
+      "assetId": "ui-corner",
+      "category": "ui/shared-primitives",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-shared-primitives-v1/ui-corner.svg",
+      "sha256": "56a5387574eb5dccf5518a2da7826bbda895cd23cbc477c8590c61fecd975ecb"
+    },
+    {
+      "assetId": "ui-divider",
+      "category": "ui/shared-primitives",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-shared-primitives-v1/ui-divider.svg",
+      "sha256": "d73915188546bf12addb0d0472be9e7d67f43b0b96cafa4b8422c32dec20db84"
+    },
+    {
+      "assetId": "ui-focus",
+      "category": "ui/shared-primitives",
+      "status": "production",
+      "sourceFile": "assets/ui/canonical-shared-primitives-v1/ui-focus.svg",
+      "sha256": "a4f9159914ca14786af2ff535e9015563be67295c180a035f7ef8cffa6f5052c"
     },
     {
       "assetId": "concave-ne",

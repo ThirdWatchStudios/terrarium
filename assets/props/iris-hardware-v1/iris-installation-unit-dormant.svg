@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="iris-installation-unit-dormant" data-projection="elevation">
+  <title>IRIS installation unit — dormant</title>
+  <desc>Canonical source for the approved R1+D3 dormant installation apparatus at the canonical 90-unit rack height.</desc>
+  <metadata>{"family":"iris-hardware-v1","state":"dormant","canonicalHeight":90,"fitAdapter":"declared-height-roles"}</metadata>
+  <g id="shadow" data-silhouette="false">
+    <path id="contact-shadow" d="M 18 117 a 46 5 0 1 0 92 0 a 46 5 0 1 0 -92 0 Z" fill="#000000" opacity="0.12"/>
+  </g>
+  <g id="outline" fill="#3A342E" stroke="#3A342E" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+    <path id="outline-right-housing" data-height-role="right-shell" d="M 74 108 V 23 L 84 13 H 116 V 108 Z"/>
+    <path id="outline-left-shoulder" data-height-role="left-shell" d="M 13 108 V 39 L 21 31 H 44 V 108 Z"/>
+    <path id="outline-machine-spine" data-height-role="spine-shell" d="M 44 29 H 74 V 108 H 44 Z"/>
+    <path id="outline-console" d="M 42 67 H 86 L 93 76 L 82 89 H 46 L 35 78 Z"/>
+    <path id="outline-console-support" d="M 58 88 H 72 V 106 H 58 Z"/>
+    <path id="outline-foundation" d="M 7 108 H 121 V 116 H 7 Z"/>
+  </g>
+  <g id="housing" data-silhouette="false">
+    <path id="right-housing" data-height-role="right-shell" data-fill-token="primary" d="M 74 108 V 23 L 84 13 H 116 V 108 Z" fill="#DDE2DE"/>
+    <path id="left-structural-shoulder" data-height-role="left-shell" d="M 13 108 V 39 L 21 31 H 44 V 108 Z" fill="#4C5551"/>
+    <path id="machine-spine" data-height-role="spine-shell" d="M 44 29 H 74 V 108 H 44 Z" fill="#18201D"/>
+  </g>
+  <g id="housing-articulation" data-silhouette="false" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path id="shoulder-top-register" data-height-role="left-crown" d="M 15 39 L 22 33 H 43" stroke="#76807B" stroke-width="2.2"/>
+    <path id="shoulder-vertical-register" d="M 21 50 H 37 V 98" stroke="#77817C" stroke-width="2.2"/>
+    <path id="recessed-spine-plane-fill" data-height-role="spine-plane" d="M 50 33 H 68 V 106 H 50 Z" fill="#27302D" stroke="none"/>
+    <path id="recessed-spine-plane-stroke" data-height-role="spine-plane" d="M 50 33 H 68 V 106 H 50 Z" stroke="#111714" stroke-width="2.2"/>
+    <path id="spine-return-fill" data-height-role="spine-crown" d="M 50 33 L 55 28 H 73 L 68 33 Z" fill="#46504B" stroke="none"/>
+    <path id="spine-return-stroke" data-height-role="spine-crown" d="M 50 33 L 55 28 H 73 L 68 33 Z" stroke="#18201D" stroke-width="2"/>
+    <path id="spine-rail" data-height-role="spine-rail" d="M 56 41 H 63 V 99" stroke="#5B6560" stroke-width="2.4"/>
+    <path id="keyed-service-seam" d="M 80 64 H 101 L 108 57 H 113" stroke="#ABB3AF" stroke-width="1.8"/>
+    <path id="optic-housing-fill" data-height-role="optic" d="M 100 34 h 1 a 2 2 0 0 1 2 2 v 11 a 2 2 0 0 1 -2 2 h -1 a 2 2 0 0 1 -2 -2 v -11 a 2 2 0 0 1 2 -2 Z" fill="#5C6662" stroke="none"/>
+    <path id="optic-housing-stroke" data-height-role="optic" d="M 100 34 h 1 a 2 2 0 0 1 2 2 v 11 a 2 2 0 0 1 -2 2 h -1 a 2 2 0 0 1 -2 -2 v -11 a 2 2 0 0 1 2 -2 Z" stroke="#18201D" stroke-width="1.4"/>
+    <path id="dormant-optic" data-height-role="optic" d="M 100.5 37 h 0 a 1 1 0 0 1 1 1 v 6 a 1 1 0 0 1 -1 1 h 0 a 1 1 0 0 1 -1 -1 v -6 a 1 1 0 0 1 1 -1 Z" fill="#3C4440" stroke="none"/>
+  </g>
+  <g id="operator-console" data-silhouette="false">
+    <path id="console-shell" data-fill-token="secondary" d="M 42 67 H 86 L 93 76 L 82 89 H 46 L 35 78 Z" fill="#B8C0BC"/>
+    <path id="console-screen-fill" d="M 48 71 H 80 L 85 76 L 78 83 H 49 L 43 78 Z" fill="#1D2421"/>
+    <path id="console-screen-stroke" d="M 48 71 H 80 L 85 76 L 78 83 H 49 L 43 78 Z" fill="none" stroke="#53605A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="dormant-console-trace" d="M 56 77 H 73" fill="none" stroke="#59615D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="console-support" d="M 58 88 H 72 V 106 H 58 Z" fill="#18201D"/>
+    <path id="foundation" d="M 7 108 H 121 V 116 H 7 Z" fill="#18201D"/>
+  </g>
+</svg>

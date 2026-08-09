@@ -1,0 +1,269 @@
+{
+  "status": "production",
+  "approvedOn": "2026-08-02",
+  "downstreamHandoff": "normal browser export and fresh Unity import completed 2026-08-02",
+  "downstreamVisualGate": "deferred until the sim can surface cafeteria workers in action",
+  "targets": [
+    "outfit-service-apron",
+    "acc-hairnet"
+  ],
+  "sourceStrategy": "complete-apron-overlay-per-body-facing-plus-complete-hairnet-per-facing",
+  "sourceCount": 21,
+  "orderedTintRuns": "secondary tee, primary apron, then secondary pocket",
+  "apron": {
+    "body-compact": {
+      "south": {
+        "sourceFile": "assets/parts/outfit/service-apron.body-compact.south.svg",
+        "sourceSha256": "ee0d996604ec7a5f099196afea9112f5b0e026b2b72136b6f190cd3dceb23761",
+        "sourceToDirectCompile": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "fullKitToCurrentProduction": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      },
+      "east": {
+        "sourceFile": "assets/parts/outfit/service-apron.body-compact.east.svg",
+        "sourceSha256": "3bf59006460b81407e13f0a6654dd89233c4a365706ec3ba8306bcbe8dd2f0d4",
+        "sourceToDirectCompile": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "fullKitToCurrentProduction": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      },
+      "north": {
+        "sourceFile": "assets/parts/outfit/service-apron.body-compact.north.svg",
+        "sourceSha256": "cf3fb77c6275a1067dfc24058ecf2bd8327baa6cf45c7592137201648311d303",
+        "sourceToDirectCompile": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "fullKitToCurrentProduction": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      }
+    },
+    "body-balanced": {
+      "south": {
+        "sourceFile": "assets/parts/outfit/service-apron.body-balanced.south.svg",
+        "sourceSha256": "8e64eb2a1e98d11a21d0cc5dc36992506f1797aee18a729140d7bb1dc9b1d3b0",
+        "sourceToDirectCompile": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "fullKitToCurrentProduction": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      },
+      "east": {
+        "sourceFile": "assets/parts/outfit/service-apron.body-balanced.east.svg",
+        "sourceSha256": "04053b8d86e3b5db8a9b8cb61de101533d0f535d16d83616536764dde4baafaa",
+        "sourceToDirectCompile": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "fullKitToCurrentProduction": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      },
+      "north": {
+        "sourceFile": "assets/parts/outfit/service-apron.body-balanced.north.svg",
+        "sourceSha256": "d52fa84bbb7696f4216a7512d29cc2fba8ec7ce5c98fd4df8975f906280b4aad",
+        "sourceToDirectCompile": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "fullKitToCurrentProduction": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      }
+    },
+    "body-large-frame": {
+      "south": {
+        "sourceFile": "assets/parts/outfit/service-apron.body-large-frame.south.svg",
+        "sourceSha256": "6fcfd71642d155b6efe46d2d3f69465425d27434b88708ad4f9eb0217cb6861b",
+        "sourceToDirectCompile": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "fullKitToCurrentProduction": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      },
+      "east": {
+        "sourceFile": "assets/parts/outfit/service-apron.body-large-frame.east.svg",
+        "sourceSha256": "294006c3795d15818d4e8b5e770b479e58025cae34aed4a981e574902e3dfe20",
+        "sourceToDirectCompile": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "fullKitToCurrentProduction": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      },
+      "north": {
+        "sourceFile": "assets/parts/outfit/service-apron.body-large-frame.north.svg",
+        "sourceSha256": "561c61a5fec8e029c7a21be29ecf34b373e9fd171318c00ba92bd8518f63e727",
+        "sourceToDirectCompile": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "fullKitToCurrentProduction": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      }
+    },
+    "body-tall": {
+      "south": {
+        "sourceFile": "assets/parts/outfit/service-apron.body-tall.south.svg",
+        "sourceSha256": "3268fe6c6adca0c1ce199e4583e56ee7a57478f76eaad51ca4235da4086f586a",
+        "sourceToDirectCompile": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "fullKitToCurrentProduction": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      },
+      "east": {
+        "sourceFile": "assets/parts/outfit/service-apron.body-tall.east.svg",
+        "sourceSha256": "eaf3a67f5f933aa7e35673b0854a04e0ade4f6c9d118f81c809f1dfd98ba2478",
+        "sourceToDirectCompile": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "fullKitToCurrentProduction": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      },
+      "north": {
+        "sourceFile": "assets/parts/outfit/service-apron.body-tall.north.svg",
+        "sourceSha256": "6e46bd47abbe396f9f1f361b1fb7143502a7705b1d17f51c353e1a78d7d7d450",
+        "sourceToDirectCompile": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "fullKitToCurrentProduction": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      }
+    },
+    "body-soft": {
+      "south": {
+        "sourceFile": "assets/parts/outfit/service-apron.body-soft.south.svg",
+        "sourceSha256": "2094d3efca2f28246797b7b771fa14d0ababf002a7a01b50629aa1d52a7afebe",
+        "sourceToDirectCompile": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "fullKitToCurrentProduction": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      },
+      "east": {
+        "sourceFile": "assets/parts/outfit/service-apron.body-soft.east.svg",
+        "sourceSha256": "0096b97c968c09bf4afdc321638eddc363e27cccf1d681daf9769903af7c4164",
+        "sourceToDirectCompile": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "fullKitToCurrentProduction": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      },
+      "north": {
+        "sourceFile": "assets/parts/outfit/service-apron.body-soft.north.svg",
+        "sourceSha256": "bfdc22588200120617cc36dbe5c37f8a95fad81e86c8dc0ba7cd47a869ba497f",
+        "sourceToDirectCompile": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "fullKitToCurrentProduction": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      }
+    },
+    "body-pinch": {
+      "south": {
+        "sourceFile": "assets/parts/outfit/service-apron.body-pinch.south.svg",
+        "sourceSha256": "2db73fd94376ee1794414058c1eac370f043b59497a61231303459e6901703da",
+        "sourceToDirectCompile": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "fullKitToCurrentProduction": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      },
+      "east": {
+        "sourceFile": "assets/parts/outfit/service-apron.body-pinch.east.svg",
+        "sourceSha256": "dd8bc8e834c071ae803d5101119dc011d6277ee85fca0c7d114a994395706b19",
+        "sourceToDirectCompile": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "fullKitToCurrentProduction": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      },
+      "north": {
+        "sourceFile": "assets/parts/outfit/service-apron.body-pinch.north.svg",
+        "sourceSha256": "d10e2aad73da60e54a916579b7d14fca055071bad097f40bdd296759e0e824fc",
+        "sourceToDirectCompile": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "fullKitToCurrentProduction": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      }
+    }
+  },
+  "hairnet": {
+    "south": {
+      "sourceFile": "assets/parts/accessory/hairnet.south.svg",
+      "sourceSha256": "85b8732ccc71b0e78cdcd4f55b34ef864cb746c25d77ae868e123da7625ad2fe",
+      "sourceToDirectCompile": {
+        "mismatchedPixels": 0,
+        "maxChannelDelta": 0
+      }
+    },
+    "east": {
+      "sourceFile": "assets/parts/accessory/hairnet.east.svg",
+      "sourceSha256": "346dd9d396ab1a15d74eb18fa7e8dd61457f965422d2aee6808013e9d97c1a61",
+      "sourceToDirectCompile": {
+        "mismatchedPixels": 0,
+        "maxChannelDelta": 0
+      }
+    },
+    "north": {
+      "sourceFile": "assets/parts/accessory/hairnet.north.svg",
+      "sourceSha256": "2b43c2e02d4b13c946b6b1b80ed659cec2a78fe2e6d39225e0242937dfeff4fc",
+      "sourceToDirectCompile": {
+        "mismatchedPixels": 0,
+        "maxChannelDelta": 0
+      }
+    }
+  }
+}

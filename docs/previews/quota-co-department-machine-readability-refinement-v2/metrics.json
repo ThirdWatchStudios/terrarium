@@ -1,0 +1,63 @@
+{
+  "reviewStatus": "awaiting-owner-focused-readability-approval",
+  "acceptedDirection": "percussion-line",
+  "acceptedContractDecisionsHeld": true,
+  "productionPromotion": false,
+  "canonicalSvgAuthoring": false,
+  "templateRegistration": false,
+  "defaultsMutation": false,
+  "exportRun": false,
+  "schemaMutation": false,
+  "unityImport": false,
+  "parityClaim": false,
+  "scope": "priority-1-focused-refinement-only",
+  "tubeGeometry": {
+    "sourceCanvas": 128,
+    "logicalCellSourceMin": 32,
+    "logicalCellSourceMax": 96,
+    "westSocket": {
+      "x": 32,
+      "y": 64
+    },
+    "eastSocket": {
+      "x": 96,
+      "y": 64
+    },
+    "southSocket": {
+      "x": 64,
+      "y": 96
+    },
+    "outerDiameter": 28,
+    "linerDiameter": 22,
+    "lumenDiameter": 16,
+    "canisterDiameter": 10,
+    "radialClearance": 3
+  },
+  "assetIds": [
+    "loading_dock",
+    "sorting_frame",
+    "franking_machine",
+    "keypunch_bank",
+    "tabulating_machine",
+    "intake_tray_small",
+    "intake_tray_large",
+    "dispatch_station",
+    "pneumatic_dispatch_node",
+    "tube_straight",
+    "tube_corner",
+    "tube_wallpass",
+    "tube_riser",
+    "canister_base",
+    "delivery_uplink"
+  ],
+  "invariants": {
+    "authoringCanvas": 128,
+    "propNativeFrameCells": 2,
+    "farGameplayPixelsPerCell": 40,
+    "amberUsed": false,
+    "roseUsed": false,
+    "bakedUiUsed": false,
+    "cameraCueUsed": false,
+    "standardizedSku": true
+  }
+}

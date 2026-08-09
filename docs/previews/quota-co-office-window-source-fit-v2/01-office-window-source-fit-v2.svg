@@ -1,0 +1,223 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1240" viewBox="0 0 1920 1240"><rect width="1920" height="1240" fill="#E7E1D2"/><text x="36" y="48" font-family="Inter,Arial,sans-serif" font-size="27" font-weight="860" fill="#292C2A" text-anchor="start">OFFICE WINDOW · SOURCE-FIT REVIEW V2</text><text x="36" y="79" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="650" fill="#626861" text-anchor="start">Canonical source validation · active prop-window receiver only · neighbor glass deferred until a real surround need exists</text><text x="1884" y="48" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="860" fill="#547B78" text-anchor="end">TERRARIUM SOURCE PROMOTED</text><rect x="36" y="108" width="1848" height="176" rx="12" fill="#F2E3DC" stroke="#A39B8B" stroke-width="1.5"/><text x="58" y="142" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="840" fill="#294B3C" text-anchor="start">PRODUCTION TRACE</text><text x="58" y="172" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="620" fill="#626861" text-anchor="start">prop-window + prop-window-vertical · active interior wall-slot · 1 × 1 logical footprint · two canonical fixed-view SVGs</text><text x="58" y="210" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="840" fill="#294B3C" text-anchor="start">APPROVED V2 DIRECTION</text><text x="58" y="238" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="620" fill="#292C2A" text-anchor="start">The vertical state now follows the accepted door construction: wall stubs meet the neighboring cells,</text><text x="58" y="257" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="620" fill="#292C2A" text-anchor="start">while a narrow raised glazed barrier spans the opening. Transparent floor surrounds it; no facade is</text><text x="58" y="276" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="620" fill="#292C2A" text-anchor="start">rotated onto the ground.</text><rect x="36" y="310" width="430" height="650" rx="12" fill="#ECE5D7" stroke="#A39B8B" stroke-width="1.5"/><text x="58" y="346" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="840" fill="#294B3C" text-anchor="start">PRODUCTION TEMPLATE OUTPUT</text><text x="58" y="374" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="620" fill="#626861" text-anchor="start">Stable prop-window resolves the checked-in</text><text x="58" y="392" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="620" fill="#626861" text-anchor="start">horizontal source exactly.</text><rect x="58" y="426" width="386" height="360" rx="8" fill="#748088"/><svg x="-69" y="286" width="640" height="640" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo horizontal office window</title>
+  <desc>Canonical front-facing office window compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-window-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+    <g id="horizontal-window-wall-shell">
+      <path id="horizontal-window-wall-outer" d="M0 11.5H128V123.5H0Z" fill="#252A28"/>
+      <path id="horizontal-window-wall-cream" d="M0 14.8H128V117.7H0Z" fill="#D9D0B9"/>
+      <path id="horizontal-window-wall-highlight" d="M0 14.8H128V23H0Z" fill="#FFFFFF" opacity=".24"/>
+      <path id="horizontal-window-wall-rust" d="M0 64H13V74H0ZM115 64H128V74H115Z" fill="#B65F4D"/>
+      <path id="horizontal-window-wall-green" d="M0 74H13V117.7H0ZM115 74H128V117.7H115Z" fill="#294B3C"/>
+    </g>
+    <g id="horizontal-window-opening">
+      <path id="horizontal-window-frame" d="M13 31H115V101H13Z" fill="#252A28"/>
+      <path id="horizontal-window-glazing" d="M18 36H110V95H18Z" fill="#83A9A6"/>
+      <path id="horizontal-window-blind-field" d="M18 36H110V56H18Z" fill="#294B3C"/>
+      <path id="horizontal-window-blind-slats" d="M20 40H108M20 45H108M20 50H108M20 55H108" stroke="#BEB49F" stroke-width="1.4" opacity=".72"/>
+      <path id="horizontal-window-mullion" d="M62 56H66V95H62Z" fill="#252A28"/>
+      <path id="horizontal-window-glazing-highlights" d="M26 87L42 70M74 87L90 70" stroke="#FFFFFF" stroke-width="2.5" opacity=".28"/>
+      <path id="horizontal-window-sill-outer" d="M11 95H117V104H11Z" fill="#252A28"/>
+      <path id="horizontal-window-sill-face" d="M15 96H113V101H15Z" fill="#BEB49F"/>
+      <path id="horizontal-window-lower-wall" d="M0 104H128V117.7H0Z" fill="#294B3C"/>
+    </g>
+  </g>
+</svg><text x="251" y="816" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="820" fill="#626861" text-anchor="middle">ONE-CELL COMPOSED READ</text><rect x="78" y="842" width="90" height="90" rx="4" fill="#748088"/><rect x="202" y="867" width="40" height="40" rx="2" fill="#748088"/><svg x="33" y="797" width="180" height="180" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo horizontal office window</title>
+  <desc>Canonical front-facing office window compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-window-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+    <g id="horizontal-window-wall-shell">
+      <path id="horizontal-window-wall-outer" d="M0 11.5H128V123.5H0Z" fill="#252A28"/>
+      <path id="horizontal-window-wall-cream" d="M0 14.8H128V117.7H0Z" fill="#D9D0B9"/>
+      <path id="horizontal-window-wall-highlight" d="M0 14.8H128V23H0Z" fill="#FFFFFF" opacity=".24"/>
+      <path id="horizontal-window-wall-rust" d="M0 64H13V74H0ZM115 64H128V74H115Z" fill="#B65F4D"/>
+      <path id="horizontal-window-wall-green" d="M0 74H13V117.7H0ZM115 74H128V117.7H115Z" fill="#294B3C"/>
+    </g>
+    <g id="horizontal-window-opening">
+      <path id="horizontal-window-frame" d="M13 31H115V101H13Z" fill="#252A28"/>
+      <path id="horizontal-window-glazing" d="M18 36H110V95H18Z" fill="#83A9A6"/>
+      <path id="horizontal-window-blind-field" d="M18 36H110V56H18Z" fill="#294B3C"/>
+      <path id="horizontal-window-blind-slats" d="M20 40H108M20 45H108M20 50H108M20 55H108" stroke="#BEB49F" stroke-width="1.4" opacity=".72"/>
+      <path id="horizontal-window-mullion" d="M62 56H66V95H62Z" fill="#252A28"/>
+      <path id="horizontal-window-glazing-highlights" d="M26 87L42 70M74 87L90 70" stroke="#FFFFFF" stroke-width="2.5" opacity=".28"/>
+      <path id="horizontal-window-sill-outer" d="M11 95H117V104H11Z" fill="#252A28"/>
+      <path id="horizontal-window-sill-face" d="M15 96H113V101H15Z" fill="#BEB49F"/>
+      <path id="horizontal-window-lower-wall" d="M0 104H128V117.7H0Z" fill="#294B3C"/>
+    </g>
+  </g>
+</svg><svg x="182" y="847" width="80" height="80" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo horizontal office window</title>
+  <desc>Canonical front-facing office window compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-window-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+    <g id="horizontal-window-wall-shell">
+      <path id="horizontal-window-wall-outer" d="M0 11.5H128V123.5H0Z" fill="#252A28"/>
+      <path id="horizontal-window-wall-cream" d="M0 14.8H128V117.7H0Z" fill="#D9D0B9"/>
+      <path id="horizontal-window-wall-highlight" d="M0 14.8H128V23H0Z" fill="#FFFFFF" opacity=".24"/>
+      <path id="horizontal-window-wall-rust" d="M0 64H13V74H0ZM115 64H128V74H115Z" fill="#B65F4D"/>
+      <path id="horizontal-window-wall-green" d="M0 74H13V117.7H0ZM115 74H128V117.7H115Z" fill="#294B3C"/>
+    </g>
+    <g id="horizontal-window-opening">
+      <path id="horizontal-window-frame" d="M13 31H115V101H13Z" fill="#252A28"/>
+      <path id="horizontal-window-glazing" d="M18 36H110V95H18Z" fill="#83A9A6"/>
+      <path id="horizontal-window-blind-field" d="M18 36H110V56H18Z" fill="#294B3C"/>
+      <path id="horizontal-window-blind-slats" d="M20 40H108M20 45H108M20 50H108M20 55H108" stroke="#BEB49F" stroke-width="1.4" opacity=".72"/>
+      <path id="horizontal-window-mullion" d="M62 56H66V95H62Z" fill="#252A28"/>
+      <path id="horizontal-window-glazing-highlights" d="M26 87L42 70M74 87L90 70" stroke="#FFFFFF" stroke-width="2.5" opacity=".28"/>
+      <path id="horizontal-window-sill-outer" d="M11 95H117V104H11Z" fill="#252A28"/>
+      <path id="horizontal-window-sill-face" d="M15 96H113V101H15Z" fill="#BEB49F"/>
+      <path id="horizontal-window-lower-wall" d="M0 104H128V117.7H0Z" fill="#294B3C"/>
+    </g>
+  </g>
+</svg><text x="123" y="948" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="720" fill="#626861" text-anchor="middle">90 normal</text><text x="222" y="948" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="720" fill="#626861" text-anchor="middle">40 far</text><rect x="492" y="310" width="670" height="650" rx="12" fill="#F6F1E6" stroke="#A39B8B" stroke-width="1.5"/><text x="514" y="346" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="840" fill="#294B3C" text-anchor="start">HORIZONTAL · FRONT FACE</text><text x="514" y="374" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="620" fill="#626861" text-anchor="start">Integrated lintel, partial blinds, mullion, sill, and lower wall register.</text><rect x="514" y="426" width="626" height="360" rx="8" fill="#748088"/><svg x="507" y="286" width="640" height="640" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo horizontal office window</title>
+  <desc>Canonical front-facing office window compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-window-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+    <g id="horizontal-window-wall-shell">
+      <path id="horizontal-window-wall-outer" d="M0 11.5H128V123.5H0Z" fill="#252A28"/>
+      <path id="horizontal-window-wall-cream" d="M0 14.8H128V117.7H0Z" fill="#D9D0B9"/>
+      <path id="horizontal-window-wall-highlight" d="M0 14.8H128V23H0Z" fill="#FFFFFF" opacity=".24"/>
+      <path id="horizontal-window-wall-rust" d="M0 64H13V74H0ZM115 64H128V74H115Z" fill="#B65F4D"/>
+      <path id="horizontal-window-wall-green" d="M0 74H13V117.7H0ZM115 74H128V117.7H115Z" fill="#294B3C"/>
+    </g>
+    <g id="horizontal-window-opening">
+      <path id="horizontal-window-frame" d="M13 31H115V101H13Z" fill="#252A28"/>
+      <path id="horizontal-window-glazing" d="M18 36H110V95H18Z" fill="#83A9A6"/>
+      <path id="horizontal-window-blind-field" d="M18 36H110V56H18Z" fill="#294B3C"/>
+      <path id="horizontal-window-blind-slats" d="M20 40H108M20 45H108M20 50H108M20 55H108" stroke="#BEB49F" stroke-width="1.4" opacity=".72"/>
+      <path id="horizontal-window-mullion" d="M62 56H66V95H62Z" fill="#252A28"/>
+      <path id="horizontal-window-glazing-highlights" d="M26 87L42 70M74 87L90 70" stroke="#FFFFFF" stroke-width="2.5" opacity=".28"/>
+      <path id="horizontal-window-sill-outer" d="M11 95H117V104H11Z" fill="#252A28"/>
+      <path id="horizontal-window-sill-face" d="M15 96H113V101H15Z" fill="#BEB49F"/>
+      <path id="horizontal-window-lower-wall" d="M0 104H128V117.7H0Z" fill="#294B3C"/>
+    </g>
+  </g>
+</svg><text x="827" y="816" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="820" fill="#626861" text-anchor="middle">ONE-CELL COMPOSED READ</text><rect x="534" y="842" width="90" height="90" rx="4" fill="#748088"/><rect x="658" y="867" width="40" height="40" rx="2" fill="#748088"/><svg x="489" y="797" width="180" height="180" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo horizontal office window</title>
+  <desc>Canonical front-facing office window compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-window-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+    <g id="horizontal-window-wall-shell">
+      <path id="horizontal-window-wall-outer" d="M0 11.5H128V123.5H0Z" fill="#252A28"/>
+      <path id="horizontal-window-wall-cream" d="M0 14.8H128V117.7H0Z" fill="#D9D0B9"/>
+      <path id="horizontal-window-wall-highlight" d="M0 14.8H128V23H0Z" fill="#FFFFFF" opacity=".24"/>
+      <path id="horizontal-window-wall-rust" d="M0 64H13V74H0ZM115 64H128V74H115Z" fill="#B65F4D"/>
+      <path id="horizontal-window-wall-green" d="M0 74H13V117.7H0ZM115 74H128V117.7H115Z" fill="#294B3C"/>
+    </g>
+    <g id="horizontal-window-opening">
+      <path id="horizontal-window-frame" d="M13 31H115V101H13Z" fill="#252A28"/>
+      <path id="horizontal-window-glazing" d="M18 36H110V95H18Z" fill="#83A9A6"/>
+      <path id="horizontal-window-blind-field" d="M18 36H110V56H18Z" fill="#294B3C"/>
+      <path id="horizontal-window-blind-slats" d="M20 40H108M20 45H108M20 50H108M20 55H108" stroke="#BEB49F" stroke-width="1.4" opacity=".72"/>
+      <path id="horizontal-window-mullion" d="M62 56H66V95H62Z" fill="#252A28"/>
+      <path id="horizontal-window-glazing-highlights" d="M26 87L42 70M74 87L90 70" stroke="#FFFFFF" stroke-width="2.5" opacity=".28"/>
+      <path id="horizontal-window-sill-outer" d="M11 95H117V104H11Z" fill="#252A28"/>
+      <path id="horizontal-window-sill-face" d="M15 96H113V101H15Z" fill="#BEB49F"/>
+      <path id="horizontal-window-lower-wall" d="M0 104H128V117.7H0Z" fill="#294B3C"/>
+    </g>
+  </g>
+</svg><svg x="638" y="847" width="80" height="80" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo horizontal office window</title>
+  <desc>Canonical front-facing office window compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-window-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+    <g id="horizontal-window-wall-shell">
+      <path id="horizontal-window-wall-outer" d="M0 11.5H128V123.5H0Z" fill="#252A28"/>
+      <path id="horizontal-window-wall-cream" d="M0 14.8H128V117.7H0Z" fill="#D9D0B9"/>
+      <path id="horizontal-window-wall-highlight" d="M0 14.8H128V23H0Z" fill="#FFFFFF" opacity=".24"/>
+      <path id="horizontal-window-wall-rust" d="M0 64H13V74H0ZM115 64H128V74H115Z" fill="#B65F4D"/>
+      <path id="horizontal-window-wall-green" d="M0 74H13V117.7H0ZM115 74H128V117.7H115Z" fill="#294B3C"/>
+    </g>
+    <g id="horizontal-window-opening">
+      <path id="horizontal-window-frame" d="M13 31H115V101H13Z" fill="#252A28"/>
+      <path id="horizontal-window-glazing" d="M18 36H110V95H18Z" fill="#83A9A6"/>
+      <path id="horizontal-window-blind-field" d="M18 36H110V56H18Z" fill="#294B3C"/>
+      <path id="horizontal-window-blind-slats" d="M20 40H108M20 45H108M20 50H108M20 55H108" stroke="#BEB49F" stroke-width="1.4" opacity=".72"/>
+      <path id="horizontal-window-mullion" d="M62 56H66V95H62Z" fill="#252A28"/>
+      <path id="horizontal-window-glazing-highlights" d="M26 87L42 70M74 87L90 70" stroke="#FFFFFF" stroke-width="2.5" opacity=".28"/>
+      <path id="horizontal-window-sill-outer" d="M11 95H117V104H11Z" fill="#252A28"/>
+      <path id="horizontal-window-sill-face" d="M15 96H113V101H15Z" fill="#BEB49F"/>
+      <path id="horizontal-window-lower-wall" d="M0 104H128V117.7H0Z" fill="#294B3C"/>
+    </g>
+  </g>
+</svg><text x="579" y="948" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="720" fill="#626861" text-anchor="middle">90 normal</text><text x="678" y="948" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="720" fill="#626861" text-anchor="middle">40 far</text><rect x="1188" y="310" width="696" height="650" rx="12" fill="#E3ECE8" stroke="#A39B8B" stroke-width="1.5"/><text x="1210" y="346" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="840" fill="#294B3C" text-anchor="start">VERTICAL · RAISED TOP-OBLIQUE</text><text x="1210" y="374" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="620" fill="#626861" text-anchor="start">End stubs plus a narrow glass barrier; floor remains visible on both sides.</text><rect x="1210" y="426" width="652" height="360" rx="8" fill="#748088"/><svg x="1216" y="286" width="640" height="640" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo vertical office window</title>
+  <desc>Canonical raised top-oblique office window compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="vertical-window-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+    <g id="vertical-window-wall-stubs">
+      <path id="vertical-window-wall-outer" d="M11.5 0H123.5V25H11.5ZM11.5 103H123.5V128H11.5Z" fill="#252A28"/>
+      <path id="vertical-window-wall-cream" d="M14.8 0H117.7V22H14.8ZM14.8 106H117.7V128H14.8Z" fill="#D9D0B9"/>
+      <path id="vertical-window-wall-highlight" d="M14.8 0H67V22H14.8ZM14.8 106H67V128H14.8Z" fill="#FFFFFF" opacity=".18"/>
+      <path id="vertical-window-wall-rust" d="M79.5 0H87.8V22H79.5ZM79.5 106H87.8V128H79.5Z" fill="#B65F4D"/>
+      <path id="vertical-window-wall-green" d="M87.8 0H117.7V22H87.8ZM87.8 106H117.7V128H87.8Z" fill="#294B3C"/>
+    </g>
+    <g id="vertical-window-frame">
+      <path id="vertical-window-jamb-outer" d="M60 20H98V35H60ZM60 93H98V108H60Z" fill="#252A28"/>
+      <path id="vertical-window-jamb-cream" d="M64 22H94V33H64ZM64 95H94V106H64Z" fill="#D9D0B9"/>
+      <path id="vertical-window-jamb-green" d="M84 22H94V33H84ZM84 95H94V106H84Z" fill="#294B3C"/>
+      <path id="vertical-window-pane-outer" d="M69 31L78 28H95V100H78L69 97Z" fill="#252A28"/>
+      <path id="vertical-window-glazing" d="M73 34L80 31H91V96H80L73 94Z" fill="#83A9A6"/>
+      <path id="vertical-window-blind-field" d="M80 31H91V96H80L77 94V34Z" fill="#294B3C"/>
+      <path id="vertical-window-blind-slats" d="M80.5 35V92M83.5 34V93M86.5 33V94M89.5 32V95" stroke="#BEB49F" stroke-width="1.2" opacity=".72"/>
+      <path id="vertical-window-mullion" d="M72 64L80 61H92" stroke="#252A28" stroke-width="3"/>
+      <path id="vertical-window-glazing-highlight" d="M78 91L85 82" stroke="#FFFFFF" stroke-width="2" opacity=".3"/>
+      <path id="vertical-window-pane-shadow" d="M92 31H96V100H92Z" fill="#000000" opacity=".2"/>
+    </g>
+    <g id="vertical-window-sill-shadows">
+      <path id="vertical-window-left-sill-shadow" d="M61 36H68V92H61Z" fill="#252A28" opacity=".22"/>
+      <path id="vertical-window-right-sill-shadow" d="M98 36H104V92H98Z" fill="#252A28" opacity=".18"/>
+    </g>
+  </g>
+</svg><text x="1536" y="816" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="820" fill="#626861" text-anchor="middle">ONE-CELL COMPOSED READ</text><rect x="1230" y="842" width="90" height="90" rx="4" fill="#748088"/><rect x="1354" y="867" width="40" height="40" rx="2" fill="#748088"/><svg x="1185" y="797" width="180" height="180" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo vertical office window</title>
+  <desc>Canonical raised top-oblique office window compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="vertical-window-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+    <g id="vertical-window-wall-stubs">
+      <path id="vertical-window-wall-outer" d="M11.5 0H123.5V25H11.5ZM11.5 103H123.5V128H11.5Z" fill="#252A28"/>
+      <path id="vertical-window-wall-cream" d="M14.8 0H117.7V22H14.8ZM14.8 106H117.7V128H14.8Z" fill="#D9D0B9"/>
+      <path id="vertical-window-wall-highlight" d="M14.8 0H67V22H14.8ZM14.8 106H67V128H14.8Z" fill="#FFFFFF" opacity=".18"/>
+      <path id="vertical-window-wall-rust" d="M79.5 0H87.8V22H79.5ZM79.5 106H87.8V128H79.5Z" fill="#B65F4D"/>
+      <path id="vertical-window-wall-green" d="M87.8 0H117.7V22H87.8ZM87.8 106H117.7V128H87.8Z" fill="#294B3C"/>
+    </g>
+    <g id="vertical-window-frame">
+      <path id="vertical-window-jamb-outer" d="M60 20H98V35H60ZM60 93H98V108H60Z" fill="#252A28"/>
+      <path id="vertical-window-jamb-cream" d="M64 22H94V33H64ZM64 95H94V106H64Z" fill="#D9D0B9"/>
+      <path id="vertical-window-jamb-green" d="M84 22H94V33H84ZM84 95H94V106H84Z" fill="#294B3C"/>
+      <path id="vertical-window-pane-outer" d="M69 31L78 28H95V100H78L69 97Z" fill="#252A28"/>
+      <path id="vertical-window-glazing" d="M73 34L80 31H91V96H80L73 94Z" fill="#83A9A6"/>
+      <path id="vertical-window-blind-field" d="M80 31H91V96H80L77 94V34Z" fill="#294B3C"/>
+      <path id="vertical-window-blind-slats" d="M80.5 35V92M83.5 34V93M86.5 33V94M89.5 32V95" stroke="#BEB49F" stroke-width="1.2" opacity=".72"/>
+      <path id="vertical-window-mullion" d="M72 64L80 61H92" stroke="#252A28" stroke-width="3"/>
+      <path id="vertical-window-glazing-highlight" d="M78 91L85 82" stroke="#FFFFFF" stroke-width="2" opacity=".3"/>
+      <path id="vertical-window-pane-shadow" d="M92 31H96V100H92Z" fill="#000000" opacity=".2"/>
+    </g>
+    <g id="vertical-window-sill-shadows">
+      <path id="vertical-window-left-sill-shadow" d="M61 36H68V92H61Z" fill="#252A28" opacity=".22"/>
+      <path id="vertical-window-right-sill-shadow" d="M98 36H104V92H98Z" fill="#252A28" opacity=".18"/>
+    </g>
+  </g>
+</svg><svg x="1334" y="847" width="80" height="80" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo vertical office window</title>
+  <desc>Canonical raised top-oblique office window compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="vertical-window-runtime-slot-envelope" transform="translate(32 32) scale(.5)">
+    <g id="vertical-window-wall-stubs">
+      <path id="vertical-window-wall-outer" d="M11.5 0H123.5V25H11.5ZM11.5 103H123.5V128H11.5Z" fill="#252A28"/>
+      <path id="vertical-window-wall-cream" d="M14.8 0H117.7V22H14.8ZM14.8 106H117.7V128H14.8Z" fill="#D9D0B9"/>
+      <path id="vertical-window-wall-highlight" d="M14.8 0H67V22H14.8ZM14.8 106H67V128H14.8Z" fill="#FFFFFF" opacity=".18"/>
+      <path id="vertical-window-wall-rust" d="M79.5 0H87.8V22H79.5ZM79.5 106H87.8V128H79.5Z" fill="#B65F4D"/>
+      <path id="vertical-window-wall-green" d="M87.8 0H117.7V22H87.8ZM87.8 106H117.7V128H87.8Z" fill="#294B3C"/>
+    </g>
+    <g id="vertical-window-frame">
+      <path id="vertical-window-jamb-outer" d="M60 20H98V35H60ZM60 93H98V108H60Z" fill="#252A28"/>
+      <path id="vertical-window-jamb-cream" d="M64 22H94V33H64ZM64 95H94V106H64Z" fill="#D9D0B9"/>
+      <path id="vertical-window-jamb-green" d="M84 22H94V33H84ZM84 95H94V106H84Z" fill="#294B3C"/>
+      <path id="vertical-window-pane-outer" d="M69 31L78 28H95V100H78L69 97Z" fill="#252A28"/>
+      <path id="vertical-window-glazing" d="M73 34L80 31H91V96H80L73 94Z" fill="#83A9A6"/>
+      <path id="vertical-window-blind-field" d="M80 31H91V96H80L77 94V34Z" fill="#294B3C"/>
+      <path id="vertical-window-blind-slats" d="M80.5 35V92M83.5 34V93M86.5 33V94M89.5 32V95" stroke="#BEB49F" stroke-width="1.2" opacity=".72"/>
+      <path id="vertical-window-mullion" d="M72 64L80 61H92" stroke="#252A28" stroke-width="3"/>
+      <path id="vertical-window-glazing-highlight" d="M78 91L85 82" stroke="#FFFFFF" stroke-width="2" opacity=".3"/>
+      <path id="vertical-window-pane-shadow" d="M92 31H96V100H92Z" fill="#000000" opacity=".2"/>
+    </g>
+    <g id="vertical-window-sill-shadows">
+      <path id="vertical-window-left-sill-shadow" d="M61 36H68V92H61Z" fill="#252A28" opacity=".22"/>
+      <path id="vertical-window-right-sill-shadow" d="M98 36H104V92H98Z" fill="#252A28" opacity=".18"/>
+    </g>
+  </g>
+</svg><text x="1275" y="948" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="720" fill="#626861" text-anchor="middle">90 normal</text><text x="1374" y="948" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="720" fill="#626861" text-anchor="middle">40 far</text><rect x="36" y="986" width="1848" height="218" rx="12" fill="#ECE5D7" stroke="#A39B8B" stroke-width="1.5"/><text x="58" y="1022" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="840" fill="#294B3C" text-anchor="start">SOURCE / RUNTIME SPLIT</text><text x="58" y="1054" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="760" fill="#292C2A" text-anchor="start">Canonical SVG sources</text><text x="258" y="1054" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700" fill="#626861" text-anchor="start">window-horizontal.svg · window-vertical.svg</text><text x="58" y="1090" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="760" fill="#292C2A" text-anchor="start">Unity remains responsible for</text><text x="258" y="1090" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700" fill="#626861" text-anchor="start">wall-axis selection · east/west mirroring · replacing exactly one wall cell · preserving the independent floor tile</text><text x="58" y="1126" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="760" fill="#B65F4D" text-anchor="start">Explicitly deferred</text><text x="258" y="1126" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700" fill="#626861" text-anchor="start">prop-neighbor-glass and every proposed storefront state, until gameplay or building-shell composition demonstrates a need</text><text x="58" y="1162" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="760" fill="#292C2A" text-anchor="start">Not part of either source</text><text x="258" y="1162" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700" fill="#626861" text-anchor="start">baked floor · rotated front elevation · UXML / USS · runtime wall geometry</text></svg>

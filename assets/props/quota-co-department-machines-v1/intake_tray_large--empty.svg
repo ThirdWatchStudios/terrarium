@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-prop-id="intake_tray_large:empty" data-projection="elevation">
+  <title>Intake Tray — Large (empty)</title>
+  <desc>QuotaCo Certified Intake Tray — Large, empty fill state. Administrative Percussion family; standardized SKU.</desc>
+  <metadata>{"family":"quota-co-administrative-percussion-v1","id":"intake_tray_large:empty","source":"owner-accepted-readability-refinement-v2"}</metadata>
+  <g id="approved-sku"><path id="shape-1" d="M 33 48 H 96 V 116 H 33 Z" fill="#252A28"/><path id="shape-2" d="M 38 53 H 91 V 109 H 38 Z" fill="#294B3C"/><rect id="shape-3" x="43" y="58" width="43" height="43" rx="5" fill="#000000" opacity=".42"/><path id="shape-4" d="M 33 58 H 20 Q 14 58 14 64 Q 14 70 20 70 H 38" fill="none" stroke="#252A28" stroke-width="28" stroke-linecap="butt"/><path id="shape-5" d="M 32 58 H 20 Q 14 58 14 64 Q 14 70 20 70 H 38" fill="none" stroke="#979A91" stroke-width="20" stroke-linecap="butt"/><path id="shape-6" d="M 32 58 H 20 Q 14 58 14 64 Q 14 70 20 70 H 38" fill="none" stroke="#4E7D79" stroke-width="14" stroke-linecap="butt"/><rect id="shape-7" x="33" y="105" width="63" height="13" rx="4" fill="#294B3C"/></g>
+</svg>

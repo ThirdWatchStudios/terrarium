@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1880" height="760" viewBox="0 0 1880 760"><rect width="1880" height="760" fill="#E8E5DC"/><text x="28" y="42" font-family="Inter,Arial,sans-serif" font-size="25" font-weight="860" fill="#2C302D" text-anchor="start">FULL-CELL OPENING · FOUR-STATE CONSTRUCTION</text><text x="28" y="69" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="620" fill="#666B67" text-anchor="start">Same wall-instance palette and shared leaves; less frame, more actual doorway</text><text x="1852" y="42" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="840" fill="#526E68" text-anchor="end">OUTER APERTURE 88 → 120</text><rect x="28" y="94" width="444" height="610" rx="10" fill="#F4F1E9" stroke="#A5A49D" stroke-width="1.4"/><text x="46" y="126" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="820" fill="#2C302D" text-anchor="start">HORIZONTAL · CLOSED</text><text x="46" y="154" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="800" fill="#A95546" text-anchor="start">CURRENT PROMOTED</text><rect x="154" y="172" width="192" height="192" rx="4" fill="#9B795E"/><svg x="90" y="108" width="320" height="320" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo office horizontal sliding auto-door, closed</title>
+  <desc>Office wall-owned opening with widened passage and corrected wall-plane shading, compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-door-closed-office" transform="translate(32 32) scale(.5)">
+    <path id="horizontal-door-closed-office-part-01" d="M0 2H24V126H0ZM104 2H128V126H104Z" fill="#323431"/>
+    <path id="horizontal-door-closed-office-part-02" d="M0 8H24V120H0ZM104 8H128V120H104Z" fill="#85867F"/>
+    <path id="horizontal-door-closed-office-part-03" d="M0 8H24V16H0ZM104 8H128V16H104Z" fill="#999A92"/>
+    <path id="horizontal-door-closed-office-part-04" d="M0 76H24V120H0ZM104 76H128V120H104Z" fill="#B0AEA5"/>
+    <path id="horizontal-door-closed-office-part-05" d="M20 2H108V40H20Z" fill="#323431"/>
+    <path id="horizontal-door-closed-office-part-06" d="M24 8H104V35H24Z" fill="#85867F"/>
+    <path id="horizontal-door-closed-office-part-07" d="M24 8H104V16H24Z" fill="#999A92"/>
+    <path id="horizontal-door-closed-office-part-08" d="M24 25H104V35H24Z" fill="#B0AEA5"/>
+    <path id="horizontal-door-closed-office-part-09" d="M20 34H29V120H20ZM99 34H108V120H99Z" fill="#323431"/>
+    <path id="horizontal-door-closed-office-part-10" d="M24 38H29V76H24ZM99 38H104V76H99Z" fill="#85867F"/>
+    <path id="horizontal-door-closed-office-part-11" d="M24 76H29V116H24ZM99 76H104V116H99Z" fill="#B0AEA5"/>
+    <path id="horizontal-door-closed-office-part-12" d="M27 38H29V116H27ZM99 38H101V116H99Z" fill="#999A92"/>
+    <path id="horizontal-door-closed-office-part-13" d="M28 116H100V122H28Z" fill="#323431" opacity=".82"/>
+    <path id="horizontal-door-closed-office-part-14" d="M31 119H97" stroke="#6E7C78" stroke-width="1" opacity=".55"/>
+    <circle id="horizontal-door-closed-office-part-15" cx="64" cy="31.5" r="1.8" fill="#B96D52"/>
+    <path id="horizontal-door-closed-office-part-16" d="M28 37H100V117H28Z" fill="#323431"/>
+    <path id="horizontal-door-closed-office-part-17" d="M31 40H62V114H31ZM66 40H97V114H66Z" fill="#53615E"/>
+    <path id="horizontal-door-closed-office-part-18" d="M51 50H59V83H51ZM69 50H77V83H69Z" fill="#8CA4A1" opacity=".82"/>
+    <path id="horizontal-door-closed-office-part-19" d="M52 51H54V82H52ZM70 51H72V82H70Z" fill="#FFFFFF" opacity=".16"/>
+    <path id="horizontal-door-closed-office-part-20" d="M64 40V114" stroke="#323431" stroke-width="2"/>
+  </g>
+</svg><text x="46" y="405" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="800" fill="#526E68" text-anchor="start">PROPOSED FULL-CELL</text><rect x="154" y="423" width="192" height="192" rx="4" fill="#9B795E"/><svg x="154" y="423" width="192" height="192" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M0 2H12V126H0ZM116 2H128V126H116Z" fill="#323431"/><path d="M0 8H12V120H0ZM116 8H128V120H116Z" fill="#B4B2A9"/><path d="M0 8H12V16H0ZM116 8H128V16H116Z" fill="#5F5E5A"/><path d="M0 76H12V120H0ZM116 76H128V120H116Z" fill="#888780"/><path d="M4 2H124V40H4Z" fill="#323431"/><path d="M8 8H120V35H8Z" fill="#B4B2A9"/><path d="M8 8H120V16H8Z" fill="#5F5E5A"/><path d="M8 25H120V35H8Z" fill="#888780"/><path d="M4 34H16V120H4ZM112 34H124V120H112Z" fill="#323431"/><path d="M8 38H16V76H8ZM112 38H120V76H112Z" fill="#B4B2A9"/><path d="M8 76H16V116H8ZM112 76H120V116H112Z" fill="#888780"/><path d="M14 38H16V116H14ZM112 38H114V116H112Z" fill="#5F5E5A"/><path d="M14 116H114V122H14Z" fill="#323431" opacity=".82"/><circle cx="64" cy="31.5" r="1.8" fill="#B96D52"/><path d="M14 37H114V117H14Z" fill="#323431"/><path d="M18 40H62V114H18ZM66 40H110V114H66Z" fill="#53615E"/><path d="M49 50H58V84H49ZM70 50H79V84H70Z" fill="#8CA4A1" opacity=".82"/><path d="M50 51H53V83H50ZM71 51H74V83H71Z" fill="#FFFFFF" opacity=".16"/><path d="M64 40V114" stroke="#323431" stroke-width="2"/></svg><text x="250" y="649" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="650" fill="#526E68" text-anchor="middle">quieter lintel · leaves hide behind jambs</text><rect x="490" y="94" width="444" height="610" rx="10" fill="#ECE9E0" stroke="#A5A49D" stroke-width="1.4"/><text x="508" y="126" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="820" fill="#2C302D" text-anchor="start">HORIZONTAL · OPEN</text><text x="508" y="154" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="800" fill="#A95546" text-anchor="start">CURRENT PROMOTED</text><rect x="616" y="172" width="192" height="192" rx="4" fill="#9B795E"/><svg x="552" y="108" width="320" height="320" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo office horizontal sliding auto-door, open</title>
+  <desc>Office wall-owned opening with widened passage and corrected wall-plane shading, compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-door-open-office" transform="translate(32 32) scale(.5)">
+    <path id="horizontal-door-open-office-part-01" d="M0 2H24V126H0ZM104 2H128V126H104Z" fill="#323431"/>
+    <path id="horizontal-door-open-office-part-02" d="M0 8H24V120H0ZM104 8H128V120H104Z" fill="#85867F"/>
+    <path id="horizontal-door-open-office-part-03" d="M0 8H24V16H0ZM104 8H128V16H104Z" fill="#999A92"/>
+    <path id="horizontal-door-open-office-part-04" d="M0 76H24V120H0ZM104 76H128V120H104Z" fill="#B0AEA5"/>
+    <path id="horizontal-door-open-office-part-05" d="M20 2H108V40H20Z" fill="#323431"/>
+    <path id="horizontal-door-open-office-part-06" d="M24 8H104V35H24Z" fill="#85867F"/>
+    <path id="horizontal-door-open-office-part-07" d="M24 8H104V16H24Z" fill="#999A92"/>
+    <path id="horizontal-door-open-office-part-08" d="M24 25H104V35H24Z" fill="#B0AEA5"/>
+    <path id="horizontal-door-open-office-part-09" d="M20 34H29V120H20ZM99 34H108V120H99Z" fill="#323431"/>
+    <path id="horizontal-door-open-office-part-10" d="M24 38H29V76H24ZM99 38H104V76H99Z" fill="#85867F"/>
+    <path id="horizontal-door-open-office-part-11" d="M24 76H29V116H24ZM99 76H104V116H99Z" fill="#B0AEA5"/>
+    <path id="horizontal-door-open-office-part-12" d="M27 38H29V116H27ZM99 38H101V116H99Z" fill="#999A92"/>
+    <path id="horizontal-door-open-office-part-13" d="M28 116H100V122H28Z" fill="#323431" opacity=".82"/>
+    <path id="horizontal-door-open-office-part-14" d="M31 119H97" stroke="#6E7C78" stroke-width="1" opacity=".55"/>
+    <circle id="horizontal-door-open-office-part-15" cx="64" cy="31.5" r="1.8" fill="#B96D52"/>
+    <path id="horizontal-door-open-office-part-16" d="M28 37H38V117H28ZM90 37H100V117H90Z" fill="#323431"/>
+    <path id="horizontal-door-open-office-part-17" d="M31 40H37V114H31ZM91 40H97V114H91Z" fill="#6E7C78"/>
+    <path id="horizontal-door-open-office-part-18" d="M33 50H37V83H33ZM91 50H95V83H91Z" fill="#8CA4A1" opacity=".72"/>
+  </g>
+</svg><text x="508" y="405" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="800" fill="#526E68" text-anchor="start">PROPOSED FULL-CELL</text><rect x="616" y="423" width="192" height="192" rx="4" fill="#9B795E"/><svg x="616" y="423" width="192" height="192" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M0 2H12V126H0ZM116 2H128V126H116Z" fill="#323431"/><path d="M0 8H12V120H0ZM116 8H128V120H116Z" fill="#B4B2A9"/><path d="M0 8H12V16H0ZM116 8H128V16H116Z" fill="#5F5E5A"/><path d="M0 76H12V120H0ZM116 76H128V120H116Z" fill="#888780"/><path d="M4 2H124V40H4Z" fill="#323431"/><path d="M8 8H120V35H8Z" fill="#B4B2A9"/><path d="M8 8H120V16H8Z" fill="#5F5E5A"/><path d="M8 25H120V35H8Z" fill="#888780"/><path d="M4 34H16V120H4ZM112 34H124V120H112Z" fill="#323431"/><path d="M8 38H16V76H8ZM112 38H120V76H112Z" fill="#B4B2A9"/><path d="M8 76H16V116H8ZM112 76H120V116H112Z" fill="#888780"/><path d="M14 38H16V116H14ZM112 38H114V116H112Z" fill="#5F5E5A"/><path d="M14 116H114V122H14Z" fill="#323431" opacity=".82"/><circle cx="64" cy="31.5" r="1.8" fill="#B96D52"/><path d="M14 37H24V117H14ZM104 37H114V117H104Z" fill="#323431"/><path d="M18 40H23V114H18ZM105 40H110V114H105Z" fill="#6E7C78"/><path d="M20 50H23V84H20ZM105 50H108V84H105Z" fill="#8CA4A1" opacity=".72"/></svg><text x="712" y="649" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="650" fill="#526E68" text-anchor="middle">quieter lintel · leaves hide behind jambs</text><rect x="952" y="94" width="444" height="610" rx="10" fill="#F4F1E9" stroke="#A5A49D" stroke-width="1.4"/><text x="970" y="126" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="820" fill="#2C302D" text-anchor="start">VERTICAL · CLOSED</text><text x="970" y="154" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="800" fill="#A95546" text-anchor="start">CURRENT PROMOTED</text><rect x="1078" y="172" width="192" height="192" rx="4" fill="#9B795E"/><svg x="1014" y="108" width="320" height="320" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo office vertical sliding auto-door, closed</title>
+  <desc>Office wall-owned opening with widened passage and corrected wall-plane shading, compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="vertical-door-closed-office" transform="translate(32 32) scale(.5)">
+    <path id="vertical-door-closed-office-part-01" d="M2 0H126V24H2ZM2 104H126V128H2Z" fill="#323431"/>
+    <path id="vertical-door-closed-office-part-02" d="M8 0H120V24H8ZM8 104H120V128H8Z" fill="#85867F"/>
+    <path id="vertical-door-closed-office-part-03" d="M8 0H38V24H8ZM90 0H120V24H90ZM8 104H38V128H8ZM90 104H120V128H90Z" fill="#999A92"/>
+    <path id="vertical-door-closed-office-part-04" d="M38 16H90V28H38Z" fill="#323431"/>
+    <path id="vertical-door-closed-office-part-05" d="M42 16H86V24H42Z" fill="#B0AEA5"/>
+    <path id="vertical-door-closed-office-part-06" d="M38 100H90V112H38Z" fill="#323431"/>
+    <path id="vertical-door-closed-office-part-07" d="M42 104H86V112H42Z" fill="#999A92"/>
+    <path id="vertical-door-closed-office-part-08" d="M46 20H82V29H46ZM46 99H82V108H46Z" fill="#323431"/>
+    <path id="vertical-door-closed-office-part-09" d="M50 23H78V28H50Z" fill="#B0AEA5"/>
+    <path id="vertical-door-closed-office-part-10" d="M50 100H78V105H50Z" fill="#999A92"/>
+    <path id="vertical-door-closed-office-part-11" d="M46 27H51V101H46ZM77 27H82V101H77Z" fill="#323431"/>
+    <path id="vertical-door-closed-office-part-12" d="M48 30H51V98H48ZM77 30H80V98H77Z" fill="#999A92"/>
+    <circle id="vertical-door-closed-office-part-13" cx="48.5" cy="64" r="1.8" fill="#B96D52"/>
+    <path id="vertical-door-closed-office-part-14" d="M49 27H79V101H49Z" fill="#323431"/>
+    <path id="vertical-door-closed-office-part-15" d="M52 30H76V62H52ZM52 66H76V98H52Z" fill="#53615E"/>
+    <path id="vertical-door-closed-office-part-16" d="M58 48H70V58H58ZM58 70H70V80H58Z" fill="#8CA4A1" opacity=".82"/>
+    <path id="vertical-door-closed-office-part-17" d="M59 49H62V57H59ZM59 71H62V79H59Z" fill="#FFFFFF" opacity=".16"/>
+    <path id="vertical-door-closed-office-part-18" d="M52 64H76" stroke="#323431" stroke-width="2"/>
+  </g>
+</svg><text x="970" y="405" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="800" fill="#526E68" text-anchor="start">PROPOSED FULL-CELL</text><rect x="1078" y="423" width="192" height="192" rx="4" fill="#9B795E"/><svg x="1078" y="423" width="192" height="192" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M2 0H126V12H2ZM2 116H126V128H2Z" fill="#323431"/><path d="M8 0H120V12H8ZM8 116H120V128H8Z" fill="#B4B2A9"/><path d="M8 0H38V12H8ZM90 0H120V12H90ZM8 116H38V128H8ZM90 116H120V128H90Z" fill="#5F5E5A"/><path d="M38 4H90V16H38Z" fill="#323431"/><path d="M42 4H86V12H42Z" fill="#888780"/><path d="M38 112H90V124H38Z" fill="#323431"/><path d="M42 116H86V124H42Z" fill="#5F5E5A"/><path d="M46 4H82V16H46ZM46 112H82V124H46Z" fill="#323431"/><path d="M50 8H78V15H50Z" fill="#888780"/><path d="M50 113H78V120H50Z" fill="#5F5E5A"/><path d="M46 14H51V114H46ZM77 14H82V114H77Z" fill="#323431"/><path d="M48 18H51V110H48ZM77 18H80V110H77Z" fill="#5F5E5A"/><circle cx="48.5" cy="64" r="1.8" fill="#B96D52"/><path d="M49 14H79V114H49Z" fill="#323431"/><path d="M52 18H76V62H52ZM52 66H76V110H52Z" fill="#53615E"/><path d="M58 49H70V58H58ZM58 70H70V79H58Z" fill="#8CA4A1" opacity=".82"/><path d="M59 50H62V57H59ZM59 71H62V78H59Z" fill="#FFFFFF" opacity=".16"/><path d="M52 64H76" stroke="#323431" stroke-width="2"/></svg><text x="1174" y="649" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="650" fill="#526E68" text-anchor="middle">quieter lintel · leaves hide behind jambs</text><rect x="1414" y="94" width="444" height="610" rx="10" fill="#ECE9E0" stroke="#A5A49D" stroke-width="1.4"/><text x="1432" y="126" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="820" fill="#2C302D" text-anchor="start">VERTICAL · OPEN</text><text x="1432" y="154" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="800" fill="#A95546" text-anchor="start">CURRENT PROMOTED</text><rect x="1540" y="172" width="192" height="192" rx="4" fill="#9B795E"/><svg x="1476" y="108" width="320" height="320" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible">
+  <title>QuotaCo office vertical sliding auto-door, open</title>
+  <desc>Office wall-owned opening with widened passage and corrected wall-plane shading, compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="vertical-door-open-office" transform="translate(32 32) scale(.5)">
+    <path id="vertical-door-open-office-part-01" d="M2 0H126V24H2ZM2 104H126V128H2Z" fill="#323431"/>
+    <path id="vertical-door-open-office-part-02" d="M8 0H120V24H8ZM8 104H120V128H8Z" fill="#85867F"/>
+    <path id="vertical-door-open-office-part-03" d="M8 0H38V24H8ZM90 0H120V24H90ZM8 104H38V128H8ZM90 104H120V128H90Z" fill="#999A92"/>
+    <path id="vertical-door-open-office-part-04" d="M38 16H90V28H38Z" fill="#323431"/>
+    <path id="vertical-door-open-office-part-05" d="M42 16H86V24H42Z" fill="#B0AEA5"/>
+    <path id="vertical-door-open-office-part-06" d="M38 100H90V112H38Z" fill="#323431"/>
+    <path id="vertical-door-open-office-part-07" d="M42 104H86V112H42Z" fill="#999A92"/>
+    <path id="vertical-door-open-office-part-08" d="M46 20H82V29H46ZM46 99H82V108H46Z" fill="#323431"/>
+    <path id="vertical-door-open-office-part-09" d="M50 23H78V28H50Z" fill="#B0AEA5"/>
+    <path id="vertical-door-open-office-part-10" d="M50 100H78V105H50Z" fill="#999A92"/>
+    <path id="vertical-door-open-office-part-11" d="M46 27H51V101H46ZM77 27H82V101H77Z" fill="#323431"/>
+    <path id="vertical-door-open-office-part-12" d="M48 30H51V98H48ZM77 30H80V98H77Z" fill="#999A92"/>
+    <circle id="vertical-door-open-office-part-13" cx="48.5" cy="64" r="1.8" fill="#B96D52"/>
+    <path id="vertical-door-open-office-part-14" d="M49 27H79V40H49ZM49 88H79V101H49Z" fill="#323431"/>
+    <path id="vertical-door-open-office-part-15" d="M52 30H76V39H52ZM52 89H76V98H52Z" fill="#6E7C78"/>
+    <path id="vertical-door-open-office-part-16" d="M58 34H70V39H58ZM58 89H70V94H58Z" fill="#8CA4A1" opacity=".72"/>
+  </g>
+</svg><text x="1432" y="405" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="800" fill="#526E68" text-anchor="start">PROPOSED FULL-CELL</text><rect x="1540" y="423" width="192" height="192" rx="4" fill="#9B795E"/><svg x="1540" y="423" width="192" height="192" viewBox="0 0 128 128" preserveAspectRatio="none" overflow="visible"><path d="M2 0H126V12H2ZM2 116H126V128H2Z" fill="#323431"/><path d="M8 0H120V12H8ZM8 116H120V128H8Z" fill="#B4B2A9"/><path d="M8 0H38V12H8ZM90 0H120V12H90ZM8 116H38V128H8ZM90 116H120V128H90Z" fill="#5F5E5A"/><path d="M38 4H90V16H38Z" fill="#323431"/><path d="M42 4H86V12H42Z" fill="#888780"/><path d="M38 112H90V124H38Z" fill="#323431"/><path d="M42 116H86V124H42Z" fill="#5F5E5A"/><path d="M46 4H82V16H46ZM46 112H82V124H46Z" fill="#323431"/><path d="M50 8H78V15H50Z" fill="#888780"/><path d="M50 113H78V120H50Z" fill="#5F5E5A"/><path d="M46 14H51V114H46ZM77 14H82V114H77Z" fill="#323431"/><path d="M48 18H51V110H48ZM77 18H80V110H77Z" fill="#5F5E5A"/><circle cx="48.5" cy="64" r="1.8" fill="#B96D52"/><path d="M49 14H79V24H49ZM49 104H79V114H49Z" fill="#323431"/><path d="M52 18H76V23H52ZM52 105H76V110H52Z" fill="#6E7C78"/><path d="M58 20H70V23H58ZM58 105H70V108H58Z" fill="#8CA4A1" opacity=".72"/></svg><text x="1636" y="649" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="650" fill="#526E68" text-anchor="middle">quieter lintel · leaves hide behind jambs</text><text x="28" y="738" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="800" fill="#666B67" text-anchor="start">PLACEMENT CONTRACT UNCHANGED · the source still receives the same centered .5 wrapper only after approval</text></svg>

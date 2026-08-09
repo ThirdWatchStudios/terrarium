@@ -3,11 +3,16 @@
  *
  *   npm run export -- <project.json|default> <outDir>
  *
- * Regenerates the full asset set — the same tree the in-app "Export all" zip
+ * Verification/CI helper. The in-app "Export all (zip)" action is the sole
+ * canonical game handoff; do not import this headless output into Unity or use
+ * it as visual-acceptance evidence.
+ *
+ * Regenerates the full asset set — the same logical tree the in-app export
  * produces (characters / character-layers / props / walls / floors + atlas
  * JSON + project.json + office-layout.json) — without a browser, rendering
  * SVG→PNG with resvg-js. Reuses src/core/exporter.ts's exportAll(); only the
- * rasterizer backend and the output sink differ from the browser path.
+ * rasterizer backend and the output sink differ from the browser path. Browser
+ * Canvas and Resvg PNG bytes may differ even when both are current.
  *
  *   default  — the built-in project plus a deterministic generated office
  *              (seed 1), so office-layout.json + generated coworkers are

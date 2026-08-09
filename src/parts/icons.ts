@@ -2,6 +2,7 @@ import type { ShapeSpec } from '../core/types';
 import { circle, rr } from '../core/geometry';
 import { UI_PALETTE } from '../data/uiPalette';
 import { EMOTION_ICONS } from './emotions';
+import { CANONICAL_UI_ICON_ART } from './generated/canonicalUiIconArt';
 import { STATE_ICONS } from './stateIcons';
 import { REACTION_ICONS } from './reactions';
 
@@ -50,6 +51,28 @@ export interface CursorDef extends IconDef {
   hotspot: { x: number; y: number };
 }
 
+const CANONICAL_UI_ICON_ART_BY_ID = new Map(
+  CANONICAL_UI_ICON_ART.map((entry) => [entry.id, entry] as const),
+);
+
+function canonicalUiIconShapes(id: string, mode: IconMode): ShapeSpec[] {
+  const entry = CANONICAL_UI_ICON_ART_BY_ID.get(id as (typeof CANONICAL_UI_ICON_ART)[number]['id']);
+  if (!entry) throw new Error(`Missing generated canonical UI icon art for ${id}`);
+  if (entry.mode !== mode) throw new Error(`Canonical UI icon mode mismatch for ${id}: expected ${mode}, got ${entry.mode}`);
+  return entry.shapes.map((shape) => ({ ...shape })) as ShapeSpec[];
+}
+
+function canonicalUiCursor(id: string): Pick<CursorDef, 'shapes' | 'hotspot'> {
+  const entry = CANONICAL_UI_ICON_ART_BY_ID.get(id as (typeof CANONICAL_UI_ICON_ART)[number]['id']);
+  if (!entry) throw new Error(`Missing generated canonical UI cursor art for ${id}`);
+  if (entry.mode !== 'literal') throw new Error(`Canonical UI cursor mode mismatch for ${id}`);
+  if (!('hotspot' in entry)) throw new Error(`Canonical UI cursor hotspot missing for ${id}`);
+  return {
+    shapes: entry.shapes.map((shape) => ({ ...shape })) as ShapeSpec[],
+    hotspot: { ...entry.hotspot },
+  };
+}
+
 // --- tintable helpers (color ignored — emitted as a white mask) -------------
 const ACC = '$accent'; // marker only; recolored by the framework
 const stroke = (d: string, strokeWidth = 9): ShapeSpec => ({ d, stroke: ACC, strokeWidth, silhouette: false });
@@ -83,31 +106,6 @@ const CAPTURE_BRACKETS: ShapeSpec[] = [
   stroke('M -14 26 L -26 26 L -26 14', 7),
 ];
 
-// QuotaCo mark — a centered-hexagonal dot lattice with a halftone radius falloff
-// (large core dots → fine rim dots). 37 dots; axial hex coords scaled to fit the
-// canvas. Desaturated cool slate, shipped literal so the chrome never tints it.
-const QUOTACO_INK = '#727A80';
-const QUOTACO_DOTS: ShapeSpec[] = (() => {
-  const N = 3,
-    FIT = 44,
-    S3 = Math.sqrt(3);
-  const raw: { x: number; y: number; dist: number }[] = [];
-  for (let q = -N; q <= N; q++) {
-    for (let r = -N; r <= N; r++) {
-      if (Math.max(Math.abs(q), Math.abs(r), Math.abs(q + r)) > N) continue;
-      raw.push({
-        x: S3 * (q + r / 2),
-        y: 1.5 * r,
-        dist: (Math.abs(q) + Math.abs(r) + Math.abs(q + r)) / 2,
-      });
-    }
-  }
-  const k = FIT / Math.max(...raw.flatMap((p) => [Math.abs(p.x), Math.abs(p.y)]));
-  return raw.map((p) =>
-    lit(circle(+(p.x * k).toFixed(1), +(p.y * k).toFixed(1), +(6.2 - 1.1 * p.dist).toFixed(1)), QUOTACO_INK),
-  );
-})();
-
 export const ICONS: IconDef[] = [
   // --- Control glyphs (tintable) --------------------------------------------
   {
@@ -130,19 +128,25 @@ export const ICONS: IconDef[] = [
     mode: 'tintable',
     shapes: [stroke(rr(-30, -30, 60, 60, 8), 8), fill(rr(-14, 8, 28, 22, 3)), fill(rr(-8, -30, 22, 16, 2))],
   },
+  { id: 'action-rotate', label: 'Rotate', mode: 'tintable', shapes: canonicalUiIconShapes('action-rotate', 'tintable') },
+  { id: 'action-undo', label: 'Undo', mode: 'tintable', shapes: canonicalUiIconShapes('action-undo', 'tintable') },
+  { id: 'action-redo', label: 'Redo', mode: 'tintable', shapes: canonicalUiIconShapes('action-redo', 'tintable') },
+  { id: 'action-move', label: 'Move', mode: 'tintable', shapes: canonicalUiIconShapes('action-move', 'tintable') },
+  { id: 'action-delete', label: 'Delete', mode: 'tintable', shapes: canonicalUiIconShapes('action-delete', 'tintable') },
+  { id: 'world-facing', label: 'World facing', mode: 'tintable', shapes: canonicalUiIconShapes('world-facing', 'tintable') },
 
   // --- Decorative trim (tintable; animation is the framework's) --------------
   {
     id: 'ui-divider',
     label: 'Divider',
     mode: 'tintable',
-    shapes: [stroke('M -36 0 L -10 0', 6), stroke('M 10 0 L 36 0', 6), fill('M 0 -9 L 9 0 L 0 9 L -9 0 Z')],
+    shapes: canonicalUiIconShapes('ui-divider', 'tintable'),
   },
   {
     id: 'ui-corner',
     label: 'Corner ornament',
     mode: 'tintable',
-    shapes: [stroke('M -28 28 L -28 -20 Q -28 -28 -20 -28 L 28 -28', 8)],
+    shapes: canonicalUiIconShapes('ui-corner', 'tintable'),
   },
   {
     id: 'ui-spinner',
@@ -185,6 +189,27 @@ export const ICONS: IconDef[] = [
     mode: 'tintable',
     shapes: [stroke('M -26 -14 L -6 -14 L 0 -8 L 26 -8 L 26 20 L -26 20 Z', 8)],
   },
+
+  // --- Department-era Build work, readiness, state, and route glyphs -------
+  { id: 'work-intake', label: 'Intake work', mode: 'tintable', shapes: canonicalUiIconShapes('work-intake', 'tintable') },
+  { id: 'work-data-processing', label: 'Data processing work', mode: 'tintable', shapes: canonicalUiIconShapes('work-data-processing', 'tintable') },
+  { id: 'work-delivery', label: 'Delivery work', mode: 'tintable', shapes: canonicalUiIconShapes('work-delivery', 'tintable') },
+  { id: 'ready-room', label: 'Room ready', mode: 'tintable', shapes: canonicalUiIconShapes('ready-room', 'tintable') },
+  { id: 'ready-designated', label: 'Designation ready', mode: 'tintable', shapes: canonicalUiIconShapes('ready-designated', 'tintable') },
+  { id: 'ready-equipped', label: 'Equipment ready', mode: 'tintable', shapes: canonicalUiIconShapes('ready-equipped', 'tintable') },
+  { id: 'ready-io', label: 'Input and output ready', mode: 'tintable', shapes: canonicalUiIconShapes('ready-io', 'tintable') },
+  { id: 'ready-connected', label: 'Connection ready', mode: 'tintable', shapes: canonicalUiIconShapes('ready-connected', 'tintable') },
+  { id: 'ready-staffed', label: 'Staffing ready', mode: 'tintable', shapes: canonicalUiIconShapes('ready-staffed', 'tintable') },
+  { id: 'ready-flowing', label: 'Flow ready', mode: 'tintable', shapes: canonicalUiIconShapes('ready-flowing', 'tintable') },
+  { id: 'ready-all', label: 'Department ready', mode: 'tintable', shapes: canonicalUiIconShapes('ready-all', 'tintable') },
+  { id: 'state-complete', label: 'Complete state', mode: 'tintable', shapes: canonicalUiIconShapes('state-complete', 'tintable') },
+  { id: 'state-missing', label: 'Missing state', mode: 'tintable', shapes: canonicalUiIconShapes('state-missing', 'tintable') },
+  { id: 'state-blocked', label: 'Blocked state', mode: 'tintable', shapes: canonicalUiIconShapes('state-blocked', 'tintable') },
+  { id: 'state-unavailable', label: 'Unavailable state', mode: 'tintable', shapes: canonicalUiIconShapes('state-unavailable', 'tintable') },
+  { id: 'route-input', label: 'Route input', mode: 'tintable', shapes: canonicalUiIconShapes('route-input', 'tintable') },
+  { id: 'route-output', label: 'Route output', mode: 'tintable', shapes: canonicalUiIconShapes('route-output', 'tintable') },
+  { id: 'route-wall-pass', label: 'Route wall pass', mode: 'tintable', shapes: canonicalUiIconShapes('route-wall-pass', 'tintable') },
+  { id: 'route-repair', label: 'Route repair', mode: 'tintable', shapes: canonicalUiIconShapes('route-repair', 'tintable') },
 
   // --- Need glyphs (tintable) — the six canonical needs ----------------------
   { id: 'need-recognition', label: 'Recognition', mode: 'tintable', shapes: [fill('M 0 -28 L 8 -8 L 30 -8 L 12 6 L 18 28 L 0 14 L -18 28 L -12 6 L -30 -8 L -8 -8 Z')] },
@@ -246,14 +271,7 @@ export const ICONS: IconDef[] = [
     id: 'ui-focus',
     label: 'Focus',
     mode: 'tintable',
-    shapes: [
-      stroke(circle(0, 0, 20), 7),
-      stroke('M 0 -30 L 0 -24'),
-      stroke('M 0 24 L 0 30'),
-      stroke('M -30 0 L -24 0'),
-      stroke('M 24 0 L 30 0'),
-      fill(circle(0, 0, 4)),
-    ],
+    shapes: canonicalUiIconShapes('ui-focus', 'tintable'),
   },
 
   // --- Layer toggles (Tier 2: names / relationships / information / beliefs / environment)
@@ -432,8 +450,7 @@ export const ICONS: IconDef[] = [
     id: 'iris-mark',
     label: 'IRIS',
     mode: 'tintable',
-    // An eye — IRIS, the surveillance chrome voice.
-    shapes: [stroke('M -28 0 Q 0 -18 28 0 Q 0 18 -28 0 Z', 7), stroke(circle(0, 0, 9), 6), fill(circle(0, 0, 4))],
+    shapes: canonicalUiIconShapes('iris-mark', 'tintable'),
   },
 
   // --- QuotaOS shell — first wave (docs/design/quotaos-shell-build-plan.md §2) -
@@ -444,9 +461,7 @@ export const ICONS: IconDef[] = [
     id: 'quotaco-mark',
     label: 'QuotaCo',
     mode: 'literal',
-    // Desaturated halftone hexagon — a centered-hex dot lattice (big core → fine
-    // rim) that reads as an etched corporate seal, not a friendly logo.
-    shapes: QUOTACO_DOTS,
+    shapes: canonicalUiIconShapes('quotaco-mark', 'literal'),
   },
   {
     id: 'app-behavioral-optimization',
@@ -691,64 +706,34 @@ export const ICONS: IconDef[] = [
   ...REACTION_ICONS,
 ];
 
-// --- Cursors (PNG-only; literal so the ink fill + light halo render) ---------
-// USS `cursor` and uGUI both need a texture, not a vector — so cursors export
-// PNG only. Dark fill under a light halo so the pointer reads on any background.
-const INK = UI_PALETTE.ink;
-const HALO = UI_PALETTE.onColor;
-/** Filled glyph: light halo underneath, ink fill on top. */
-const curFill = (d: string): ShapeSpec[] => [
-  { d, fill: HALO, stroke: HALO, strokeWidth: 7, silhouette: false },
-  { d, fill: INK, silhouette: false },
-];
-/** Stroked glyph: wide light halo underneath, narrower ink stroke on top. */
-const curStroke = (d: string, strokeWidth = 7): ShapeSpec[] => [
-  { d, stroke: HALO, strokeWidth: strokeWidth + 6, silhouette: false },
-  { d, stroke: INK, strokeWidth, silhouette: false },
-];
-
+// --- Cursors (canonical SVG geometry; downstream PNG handoff remains later) --
+// The literal ink + light halo and normalized hotspot are compiled together
+// from the approved source manifest. No texture export or Unity import happens
+// at this source-authority boundary.
 export const CURSORS: CursorDef[] = [
   {
     id: 'cursor-default',
     label: 'Pointer',
     mode: 'literal',
-    // Tip at local (-22,-26) → canvas (42,38) → hotspot below.
-    shapes: curFill('M -22 -26 L -22 14 L -12 4 L -4 22 L 2 19 L -6 2 L 8 2 Z'),
-    hotspot: { x: 42 / 128, y: 38 / 128 },
+    ...canonicalUiCursor('cursor-default'),
   },
   {
     id: 'cursor-grab',
     label: 'Move',
     mode: 'literal',
-    shapes: [
-      ...curStroke('M 0 -28 L 0 28', 6),
-      ...curStroke('M -28 0 L 28 0', 6),
-      ...curFill('M 0 -30 L 8 -20 L -8 -20 Z'),
-      ...curFill('M 0 30 L 8 20 L -8 20 Z'),
-      ...curFill('M -30 0 L -20 -8 L -20 8 Z'),
-      ...curFill('M 30 0 L 20 -8 L 20 8 Z'),
-    ],
-    hotspot: { x: 0.5, y: 0.5 },
+    ...canonicalUiCursor('cursor-grab'),
   },
   {
     id: 'cursor-place',
     label: 'Place',
     mode: 'literal',
-    shapes: [
-      ...curStroke('M 0 -26 L 0 -8'),
-      ...curStroke('M 0 8 L 0 26'),
-      ...curStroke('M -26 0 L -8 0'),
-      ...curStroke('M 8 0 L 26 0'),
-      ...curFill(circle(0, 0, 4)),
-    ],
-    hotspot: { x: 0.5, y: 0.5 },
+    ...canonicalUiCursor('cursor-place'),
   },
   {
     id: 'cursor-invalid',
     label: 'Invalid',
     mode: 'literal',
-    shapes: [...curStroke(circle(0, 0, 24)), ...curStroke('M -17 -17 L 17 17')],
-    hotspot: { x: 0.5, y: 0.5 },
+    ...canonicalUiCursor('cursor-invalid'),
   },
 ];
 

@@ -23,7 +23,6 @@ import {
 import {
   composeWallShapes,
   composeWallTile,
-  composeProceduralOfficeWallTile,
 } from '../src/core/compositor';
 import {
   exportAll,
@@ -39,13 +38,8 @@ import { defaultProject } from '../src/data/defaults';
 import {
   BLOB_CONFIGS,
   BLOB_TILE_COUNT,
-  blobIndex,
 } from '../src/tiles/blob';
 import { QUOTA_CO_EQUAL_HEIGHT_WALL_ART } from '../src/tiles/generated/importedQuotaCoEqualHeightWallArt';
-import {
-  QUOTA_CO_EQUAL_HEIGHT_AUTHORED_FACING,
-  QUOTA_CO_EQUAL_HEIGHT_MIRROR_X_MASKS,
-} from '../src/tiles/quotaCoEqualHeightWallContract';
 
 const SOURCE_ROOTS = [
   {
@@ -104,7 +98,7 @@ function acceptedSourcePixels(frame: CompiledEqualHeightFrame): Uint8Array {
   ).render().pixels;
 }
 
-describe('QuotaCo equal-height production wall export', () => {
+describe('retired QuotaCo equal-height source bank and quiet-wall production handoff', () => {
   it('compiles exactly 47 canonical frames in unchanged blob order', async () => {
     const result = await frames();
     expect(equalHeightAllMaskSourceFootprintState(result)).toBe('accepted-112');
@@ -215,7 +209,7 @@ describe('QuotaCo equal-height production wall export', () => {
     expect(result[12].shapes.map(mirrorShapeX)).toEqual(result[6].shapes);
   });
 
-  it('keeps the browser-safe production registry byte-current and deterministic', async () => {
+  it('keeps the archived browser-safe registry byte-current and deterministic', async () => {
     const first = await compileEqualHeightEvaluationFrames({
       sourceRoots: SOURCE_ROOTS,
     });
@@ -244,54 +238,35 @@ describe('QuotaCo equal-height production wall export', () => {
     ).toBe(emitted);
   });
 
-  it('matches accepted composed pixels for direct, mirror, filtered, and filled representatives', async () => {
+  it('retains the accepted equal-height source bank as reproducible archive art, not production dispatch', async () => {
     const result = await frames();
     const project = defaultProject();
-    const officeWall = project.walls.find(({ id }) => id === 'wall-office');
-    expect(officeWall).toBeDefined();
+    const officeWall = project.walls.find(({ id }) => id === 'wall-office')!;
     for (const index of [3, 12, 9, 46]) {
       const sourceFrame = result[index];
-      const productionFrame = QUOTA_CO_EQUAL_HEIGHT_WALL_ART[index];
-      const compiledPixels = new Resvg(
-        composeWallShapes(
-          productionFrame.shapes,
-          officeWall!,
-          project.style,
-          128,
-        ),
+      const archivedFrame = QUOTA_CO_EQUAL_HEIGHT_WALL_ART[index];
+      const archivedPixels = new Resvg(
+        composeWallShapes(archivedFrame.shapes, officeWall, project.style, 128),
         { font: { loadSystemFonts: false } },
       ).render().pixels;
       expect(
-        Buffer.from(compiledPixels).equals(
-          Buffer.from(acceptedSourcePixels(sourceFrame)),
-        ),
-        productionFrame.id,
+        Buffer.from(archivedPixels).equals(Buffer.from(acceptedSourcePixels(sourceFrame))),
+        archivedFrame.id,
       ).toBe(true);
     }
+
+    expect(composeWallTile(officeWall, project.style, BLOB_CONFIGS[0], 128))
+      .not.toContain('#B65F4D');
+    expect(wallAtlas(officeWall, project.style, 1).meta).toMatchObject({
+      orientation: 'topology-only',
+    });
+    expect(wallAtlas(officeWall, project.style, 1).meta)
+      .not.toHaveProperty('contextualFacing');
   });
 
-  it('routes every raw office-wall mask through the accepted production registry', () => {
+  it('uses only the five retained wall families through the ordinary full export path', async () => {
     const project = defaultProject();
-    const officeWall = project.walls.find(({ id }) => id === 'wall-office');
-    expect(officeWall).toBeDefined();
-    for (let raw = 0; raw < 256; raw += 1) {
-      const frame = QUOTA_CO_EQUAL_HEIGHT_WALL_ART[blobIndex(raw)];
-      expect(composeWallTile(officeWall!, project.style, raw, 128), raw)
-        .toBe(
-          composeWallShapes(
-            frame.shapes,
-            officeWall!,
-            project.style,
-            128,
-          ),
-        );
-    }
-  });
-
-  it('uses accepted wall-office art through the ordinary full export path', async () => {
-    const project = defaultProject();
-    const renderedSheets = new Map<string, SheetDesc>();
-    const exportedWallAtlases = new Map<string, unknown>();
+    const wallPaths = new Set<string>();
     let latestSheet: SheetDesc | undefined;
 
     await exportAll(project, {
@@ -302,124 +277,24 @@ describe('QuotaCo equal-height production wall export', () => {
         },
       },
       sink: {
-        file(file, data) {
-          if (/\/tileset@[124]x\.png$/.test(file)) {
-            expect(latestSheet, file).toBeDefined();
-            renderedSheets.set(file, latestSheet!);
-          }
-          if (
-            file.startsWith('walls/') &&
-            /\/atlas@[124]x\.json$/.test(file)
-          ) {
-            expect(typeof data, file).toBe('string');
-            if (typeof data === 'string') {
-              exportedWallAtlases.set(file, JSON.parse(data));
-            }
+        file(file) {
+          if (file.startsWith('walls/')) wallPaths.add(file);
+          if (/walls\/office-wall\/tileset@[124]x\.png$/.test(file)) {
+            expect(latestSheet?.cells).toHaveLength(BLOB_TILE_COUNT);
           }
         },
       },
     });
 
-    const officeWall = project.walls.find(({ id }) => id === 'wall-office');
-    expect(officeWall).toBeDefined();
-    const contextualFrames = QUOTA_CO_EQUAL_HEIGHT_MIRROR_X_MASKS.map(
-      (mask) => `mask_${mask}`,
-    );
-    for (const scale of [1, 2, 4]) {
-      const officeSheet = renderedSheets.get(
-        `walls/office-wall/tileset@${scale}x.png`,
-      );
-      expect(
-        exportedWallAtlases.get(
-          `walls/office-wall/atlas@${scale}x.json`,
-        ),
-      ).toMatchObject({
-          meta: {
-            contextualFacing: {
-              authoredFacing: QUOTA_CO_EQUAL_HEIGHT_AUTHORED_FACING,
-              mirrorXForEastPresentation: contextualFrames,
-            },
-          },
-        });
-      expect(officeSheet?.cells).toHaveLength(BLOB_TILE_COUNT);
-      const size = project.style.render.baseSize * scale;
-      for (let index = 0; index < BLOB_TILE_COUNT; index += 1) {
-        expect(
-          officeSheet!.cells[index].svg,
-          `wall-office@${scale}x/mask_${index}`,
-        ).toBe(
-          composeWallShapes(
-            QUOTA_CO_EQUAL_HEIGHT_WALL_ART[index].shapes,
-            officeWall!,
-            project.style,
-            size,
-          ),
-        );
-      }
-      expect(officeSheet!.cells[0].svg).not.toBe(
-        composeProceduralOfficeWallTile(
-          officeWall!,
-          project.style,
-          BLOB_CONFIGS[0],
-          size,
-        ),
-      );
+    for (const slug of ['office-wall', 'cubicle-partition', 'brick-wall', 'panel-wall', 'wood-slat-wall']) {
+      expect([...wallPaths].some((file) => file.startsWith(`walls/${slug}/`)), slug).toBe(true);
     }
-    expect(contextualFrames).toEqual(['mask_1', 'mask_4', 'mask_5']);
-
-    for (const wall of project.walls.filter(({ id }) => id !== 'wall-office')) {
-      const slug = wall.name
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-|-$/g, '');
-      const sheet = renderedSheets.get(`walls/${slug}/tileset@1x.png`);
-      for (const scale of [1, 2, 4]) {
-        expect(exportedWallAtlases.get(`walls/${slug}/atlas@${scale}x.json`))
-          .not.toHaveProperty('meta.contextualFacing');
-      }
-      expect(sheet?.cells, wall.id).toHaveLength(BLOB_TILE_COUNT);
-      for (let index = 0; index < BLOB_TILE_COUNT; index += 1) {
-        expect(sheet!.cells[index].svg, `${wall.id}/mask_${index}`).toBe(
-          composeWallTile(
-            wall,
-            project.style,
-            BLOB_CONFIGS[index],
-            project.style.render.baseSize,
-          ),
-        );
-      }
+    for (const slug of ['glass-partition', 'demising-wall', 'curtain-wall', 'living-wall', 'branded-wall']) {
+      expect([...wallPaths].some((file) => file.startsWith(`walls/${slug}/`)), slug).toBe(false);
     }
-
-    expect(wallAtlas(officeWall!, project.style, 1))
-      .toHaveProperty('meta.contextualFacing', {
-        authoredFacing: QUOTA_CO_EQUAL_HEIGHT_AUTHORED_FACING,
-        mirrorXForEastPresentation: contextualFrames,
-      });
   });
 
-  it('keeps browser-created office-wall duplicates on the production family', () => {
-    const project = defaultProject();
-    const officeWall = project.walls.find(({ id }) => id === 'wall-office');
-    expect(officeWall).toBeDefined();
-    const copy = structuredClone(officeWall!);
-    copy.id = 'wall-office-copy';
-    copy.name = 'Office wall copy';
-
-    expect(composeWallTile(copy, project.style, BLOB_CONFIGS[5])).toBe(
-      composeWallShapes(
-        QUOTA_CO_EQUAL_HEIGHT_WALL_ART[5].shapes,
-        copy,
-        project.style,
-      ),
-    );
-    expect(wallAtlas(copy, project.style, 1))
-      .toHaveProperty('meta.contextualFacing', {
-        authoredFacing: QUOTA_CO_EQUAL_HEIGHT_AUTHORED_FACING,
-        mirrorXForEastPresentation: ['mask_1', 'mask_4', 'mask_5'],
-      });
-  });
-
-  it('drains literal production colors under the clinical project look', () => {
+  it('drains fixed production detail colors under the clinical project look', () => {
     const raw = defaultProject();
     raw.look = 'clinical';
     const clinical = projectWithLook(raw);
@@ -442,20 +317,8 @@ describe('QuotaCo equal-height production wall export', () => {
     );
     expect(clinicalSvg).not.toBe(rawSvg);
 
-    const authoredColors = [
-      '#000000',
-      '#252A28',
-      '#294B3C',
-      '#B65F4D',
-      '#D9D0B9',
-      '#FFFFFF',
-    ];
-    for (const color of authoredColors) {
-      expect(rawSvg, color).toContain(color);
-      expect(clinicalSvg, color).toContain(
-        clinicalSurfaceColor(color),
-      );
-    }
+    expect(rawSvg).toContain('#323431');
+    expect(clinicalSvg).toContain(clinicalSurfaceColor('#323431'));
   });
 
   it('ignores duplicate unrelated SVGs but rejects a duplicate required source', async () => {

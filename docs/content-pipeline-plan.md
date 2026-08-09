@@ -8,6 +8,12 @@ deliberately authored primitives are tracked by milestone in
 may be written directly, generated and curated, or edited in a compatible
 vector editor. No particular editor is a production dependency. Nothing here
 changes the export contract except where explicitly flagged (floor variants).
+The deferred laptop/iPad editing, deterministic compilation, revision-stamped
+bundle, and Unity candidate/promotion workflow is recorded in
+[`hand-editable-svg-pipeline-plan.md`](hand-editable-svg-pipeline-plan.md).
+The audited backlog for remaining code-owned visual families and the
+family-by-family source-authority migration law is recorded in
+[`canonical-svg-conversion-plan.md`](canonical-svg-conversion-plan.md).
 
 > **Current Water Cooler art-direction amendment (owner-locked 2026-07-19):** the next environment proof is
 > [QuotaCo high-oblique geometry](quota-co-high-oblique-geometry-ask.md): a transparent production-scale
@@ -447,6 +453,18 @@ icons), not by upfront design.
    4,320-cell hair/body/head/facing/style matrix, full head-accessory matrices,
    and distance proof pass. These final four received visual approval on
    2026-07-10.
+   All ten mapped hairstyles completed their production source-authority
+   follow-ups on 2026-08-02. Each three-source set compiles through a bounded
+   declarative head-fit adapter into all 18 production head/facing variants.
+   Bun retains separately fitted authored cap/knot components; Ponytail fits its
+   cap independently while its tie and tail share one attachment transform; Long
+   straight retains its open-face curtain and two-piece east profile under one
+   bounded frame; Balding retains independent tapered temple, rear, and
+   horseshoe components; Pixie fits its broken cap/fringe independently from
+   directional side tufts; Side-part fits its swept cap and source-owned crease
+   independently from its side/rear mass; Curly fits every source-owned lobe
+   through an independent center/radius frame; Coils uses the same component
+   contract for its denser 8/6/8-lobe cloud. All ten old path builders are removed.
 8. **Anchored outfit-detail adapter**: `outfit-tee` is the first body-aware
    intake target. Its south/east SVGs are authored once over `body-balanced`,
    with the body origin at `(64, 87)` and neck at `(64, 58)`. Every visible
@@ -532,16 +550,30 @@ icons), not by upfront design.
    weight without adding a new rig or animation surface. The literal 40/48 px
    `character-dress-silhouette-fit-v1.png` sheet and high-contrast
    `body-archetypes-dress-styles.png` stress sheet received visual approval on
-   2026-07-28.
-18. **Provenance**: each imported asset records source
+   2026-07-28. On 2026-08-02, the approved pixels were promoted to eighteen
+   complete canonical SVGs (six production bodies × three authored facings).
+   The imported receiver performs exact body/facing selection only; the former
+   anchor-driven geometry builder has been removed.
+18. **Cafeteria uniform source authority**: Direction A received visual
+   approval on 2026-08-02: chef white (`#E7E1D5`) for the coat/apron and muted
+   steel (`#657A82`) for the undershirt/pocket. The former apron builder is now
+   eighteen complete detail-only canonical SVGs selected by exact body/facing;
+   three complete head-center SVGs replace the static hairnet geometry.
+   Ordered tint-run layers preserve the secondary pocket above the primary
+   apron. The normal browser export and fresh Unity import completed on
+   2026-08-02. In-action Unity inspection is deferred until the sim can surface
+   cafeteria workers; the successful import is recorded separately from that
+   future visual gate.
+19. **Provenance**: each imported asset records source
    (`authored | generated | curated`) in its generated module, so lints and
    future audits know what's re-generatable. `authored` means deliberate
    canonical repo SVG regardless of authoring tool; `generated` means
    generator-owned and reproducible; `curated` means selected and frozen
    generator output.
 
-The approved body and six-head sets plus all ten approved mapped hair source
-sets now form the canonical silhouette foundation. The remaining outfit
+The approved body and six-head sets, all ten approved mapped hair source sets,
+the complete per-body Dress matrix, FAB chassis, and cafeteria apron/hairnet
+pair now form the canonical character-identity foundation. The remaining outfit
 manifests and the separate runtime-scale integration can follow the
 componentized Blazer/Polo/Shirt + Tie/Turtleneck/Cardigan/Suit Jacket/Hoodie/Vest
 slices.
@@ -566,21 +598,21 @@ gentlest introduction to hand-authoring, highest tweak-pain relief.
 Mechanical pilot implemented 2026-07-10: the exact twelve canonical fixed-light
 SVGs live under `assets/walls/bevel`, compile through
 `scripts/importWallBevel.ts`, and assemble from the existing 47-blob topology.
-The approved `office-wall` integration replaces its painted-on rim with a near-
-black silhouette boundary and an inset palette-material body on exposed sides.
-The follow-on promotion applies that shared contour and fixed-light face kit to
-all eight opaque wall templates. Their brick, panel, foliage, brand, slat, and
-structural details remain procedural, constrained to the material surface and
-painted below the authored faces. Connected-side overhang, cell coverage, blob
-topology, and export metadata remain unchanged. Glass and Curtain stay byte-
-identical on their procedural no-bevel paths.
+The 2026-08-07 refinement keeps those paths and topology but promotes them as
+actual material face planes for a five-wall core: Office, Brick, Panel, Cubicle,
+and Wood Slat. The cap is `$primary`, the tall front is `$secondary`, and the
+north lip/side returns/corners are `$accent`; imported crease paint is omitted.
+Brick mortar, panel joints, cubicle reveals, and slat cuts live only on visible
+faces. No wall needs room-side or semantic “inside” input. Glass, Curtain,
+Demising, Living, and Branded remain registered only so legacy projects can be
+read and re-exported; they are absent from new projects, new-build selection,
+department themes, starter scenes, and surround generation.
 
-`npm run walls:preview` produces the focused previous-versus-authored Office
-source/47-tile/room/palette/distance proof. `npm run walls:materials:preview`
-serially produces the shipped-palette 47-tile and complex-room proofs for all
-eight opaque materials plus `docs/previews/wall-preview-opaque-walls.html`.
-Promotion requires exactly seven additional wall snapshot updates; no export
-contract or schema change is involved.
+`npm run walls:quiet-family:preview` renders the five current production
+families at 48 px and 30 px plus their topology stress sheet. The older
+`walls:preview` / `walls:materials:preview` surfaces remain useful historical
+bevel/source diagnostics. The atlas and 47-blob payload shape are unchanged;
+current atlases declare topology-only orientation and no contextual mirroring.
 
 Fallback if the authored bevel doesn't beat procedural after ~2 days of
 drawing: extract `BEVEL` into a declarative spec + live tweak panel — fixes
@@ -681,8 +713,13 @@ present under stable ids and received a shared sterile-chassis refinement pass
 on 2026-07-10. The installation unit received its approved R1+D3 visual
 promotion on 2026-07-31: weighted cool-white/charcoal architecture, recessed
 spine, centered console, keyed service joint, and sparse live-state register.
-The dock and fabrication crew remain visually iterative; none of this art work
-changes the contract or schema shape.
+On 2026-08-02 the live installation, dormant installation, and dock geometry
+moved from handwritten prop builders to the three canonical SVGs under
+`assets/props/iris-hardware-v1/`; a read-only importer derives the declared
+height variants without replacing source geometry. The dock and fabrication
+crew remain visually iterative. This source-authority change preserves ids,
+footprints, anchors, registration, export paths, contract, and schema shape;
+bundle and Unity visual checks remain separate promotion evidence.
 The locked 2026-07-08 IRIS apparatus command chain supersedes the earlier B1.5
 human construction-worker art proposal: IRIS's construction crew are robots.
 

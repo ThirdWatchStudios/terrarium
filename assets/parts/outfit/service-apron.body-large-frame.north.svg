@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Canonical service apron — body-large-frame north</title>
+  <desc>Production complete outfit-service-apron overlay for body-large-frame.</desc>
+  <metadata>{"status":"production","target":"outfit-service-apron","bodyId":"body-large-frame","facing":"north","ownership":"complete-service-uniform-overlay"}</metadata>
+  <g transform="translate(64 87)">
+    <path id="detail/service-apron/shape-1" d="M -29.875 -18 L 29.875 -18 L 21 13 L -21 13 Z" fill="#00FF00" fill-rule="nonzero"/>
+    <path id="detail/service-apron/shape-2" d="M -12 -28 Q 0 -11 12 -28" fill="none" stroke="#FF0000" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="detail/service-apron/shape-3" d="M -19 9 L 19 9" fill="none" stroke="#FF0000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
+

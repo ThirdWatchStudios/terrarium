@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" data-prop-id="walk-in-front" data-projection="elevation">
+  <title>QuotaCo cafeteria walk-in cooler front</title>
+  <desc>Two-cell walk-in cooler door and frame with fixed handle hardware.</desc>
+  <metadata>Owner-approved canonical production source for the Terrarium workhorse prop importer.</metadata>
+  <g id="contact-shadow" data-silhouette="false">
+    <path id="contact-shadow-template" d="M 22 117 a 42 5 0 1 0 84 0 a 42 5 0 1 0 -84 0 Z" fill="#000000" opacity="0.12"/>
+  </g>
+  <g id="outline" data-silhouette="false">
+    <path id="outline-frame" d="M 23 15 h 82 a 5 5 0 0 1 5 5 v 91 a 5 5 0 0 1 -5 5 h -82 a 5 5 0 0 1 -5 -5 v -91 a 5 5 0 0 1 5 -5 Z" fill="#3A342E" stroke="#3A342E" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path id="outline-door" d="M 29 22 h 70 a 3 3 0 0 1 3 3 v 88 a 3 3 0 0 1 -3 3 h -70 a 3 3 0 0 1 -3 -3 v -88 a 3 3 0 0 1 3 -3 Z" fill="#3A342E" stroke="#3A342E" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+  <g id="shell">
+    <path id="shell-ground-shadow" data-silhouette="false" d="M 20 117 a 44 5 0 1 0 88 0 a 44 5 0 1 0 -88 0 Z" fill="#00000020"/>
+    <path id="shell-frame" data-fill-token="secondary" d="M 23 15 h 82 a 5 5 0 0 1 5 5 v 91 a 5 5 0 0 1 -5 5 h -82 a 5 5 0 0 1 -5 -5 v -91 a 5 5 0 0 1 5 -5 Z" fill="#747C7F"/>
+    <path id="shell-door" data-fill-token="primary" d="M 29 22 h 70 a 3 3 0 0 1 3 3 v 88 a 3 3 0 0 1 -3 3 h -70 a 3 3 0 0 1 -3 -3 v -88 a 3 3 0 0 1 3 -3 Z" fill="#D0D5D5"/>
+  </g>
+  <g id="function" data-silhouette="false">
+    <path id="function-header-panel" data-fill-token="accent" d="M 35 28 h 58 a 3 3 0 0 1 3 3 v 14 a 3 3 0 0 1 -3 3 h -58 a 3 3 0 0 1 -3 -3 v -14 a 3 3 0 0 1 3 -3 Z" fill="#AAB8C0" opacity="0.65"/>
+    <path id="function-handle-back" d="M 83 57 h 1 a 3 3 0 0 1 3 3 v 25 a 3 3 0 0 1 -3 3 h -1 a 3 3 0 0 1 -3 -3 v -25 a 3 3 0 0 1 3 -3 Z" fill="#343A3D"/>
+    <path id="function-handle" d="M 86 60 h 2 a 3 3 0 0 1 3 3 v 19 a 3 3 0 0 1 -3 3 h -2 a 3 3 0 0 1 -3 -3 v -19 a 3 3 0 0 1 3 -3 Z" fill="#BFC6C6"/>
+    <path id="function-status-dot" d="M 88 95 a 3 3 0 1 0 6 0 a 3 3 0 1 0 -6 0 Z" fill="#5C6970"/>
+    <path id="function-door-seam" d="M 30 107 L 98 107" fill="none" stroke="#00000024" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

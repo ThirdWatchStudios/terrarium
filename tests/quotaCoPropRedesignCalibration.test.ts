@@ -51,7 +51,7 @@ describe('review-only QuotaCo prop redesign calibration', () => {
   });
 
   it('records the current schema as a held review boundary', () => {
-    expect(CURRENT_SCHEMA_VERSION).toBe(19);
+    expect(CURRENT_SCHEMA_VERSION).toBe(21);
   });
 
   it('consolidates the selected hybrid once across every representative prop', () => {

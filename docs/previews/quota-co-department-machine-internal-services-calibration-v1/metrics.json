@@ -1,0 +1,125 @@
+{
+  "reviewStatus": "owner-accepted-priority-3b-internal-services-static-control",
+  "direction": "administrative-percussion",
+  "scope": "priority-3b-personnel-payroll-supply-accepted-static-control",
+  "productionPromotion": true,
+  "canonicalSvgAuthoring": true,
+  "templateRegistration": true,
+  "defaultsMutation": true,
+  "departmentManifestMutation": true,
+  "exportRun": true,
+  "schemaMutation": true,
+  "unityImport": false,
+  "parityClaim": "terrarium-source-compositor-browser-export-only",
+  "machineAnimationDeferred": true,
+  "schemaVersion": 21,
+  "departmentAssetManifestVersion": 2,
+  "assetIds": [
+    "records_cabinet",
+    "badge_press",
+    "ledger_engine",
+    "envelope_press",
+    "requisition_counter",
+    "stock_shelving"
+  ],
+  "workTypeStamps": [
+    "personnel_actions",
+    "supplies"
+  ],
+  "handCarriedItems": [
+    "pay_envelope"
+  ],
+  "scaleSuggestions": [
+    {
+      "id": "records_cabinet",
+      "department": "Personnel",
+      "label": "Records Cabinet",
+      "suggestedFootprint": {
+        "w": 2,
+        "h": 2
+      },
+      "nounRead": "sealed lateral drawers + index rails + one archive lock spindle",
+      "pollution": "quiet"
+    },
+    {
+      "id": "badge_press",
+      "department": "Personnel",
+      "label": "Badge Press",
+      "suggestedFootprint": {
+        "w": 1,
+        "h": 2
+      },
+      "nounRead": "upright punch yoke + card guide + descending badge die",
+      "pollution": "unassigned"
+    },
+    {
+      "id": "ledger_engine",
+      "department": "Payroll",
+      "label": "Ledger Engine",
+      "suggestedFootprint": {
+        "w": 2,
+        "h": 2
+      },
+      "nounRead": "twin posting drums + travelling carriage + open folio bed",
+      "pollution": "unassigned"
+    },
+    {
+      "id": "envelope_press",
+      "department": "Payroll",
+      "label": "Envelope Press",
+      "suggestedFootprint": {
+        "w": 1,
+        "h": 2
+      },
+      "nounRead": "folding wings + twin seal rollers + unmistakable envelope chute",
+      "pollution": "unassigned"
+    },
+    {
+      "id": "requisition_counter",
+      "department": "Supply",
+      "label": "Requisition Counter",
+      "suggestedFootprint": {
+        "w": 2,
+        "h": 2
+      },
+      "nounRead": "staffed service ledge + pass-through drawer + queue-facing counter mass",
+      "pollution": "unassigned"
+    },
+    {
+      "id": "stock_shelving",
+      "department": "Supply",
+      "label": "Stock Shelving",
+      "suggestedFootprint": {
+        "w": 2,
+        "h": 2
+      },
+      "nounRead": "open warehouse bays + deep shelf decks + exposed structural uprights",
+      "pollution": "unassigned"
+    }
+  ],
+  "routingLaw": {
+    "personnelActions": "canister-and-tube",
+    "supplies": "canister-and-tube",
+    "payEnvelope": "hand-carried-not-tubed"
+  },
+  "collisionGates": [
+    "records-cabinet-vs-parts-crib-vs-stock-shelving",
+    "badge-press-vs-envelope-press",
+    "ledger-engine-vs-calculating-engine",
+    "pay-envelope-vs-canister"
+  ],
+  "invariants": {
+    "authoringCanvas": 128,
+    "normalGameplayPixelsPerCell": 90,
+    "farGameplayPixelsPerCell": 40,
+    "propNativeFrameCells": 2,
+    "recordsCabinetQuietByCatalog": true,
+    "otherPollutionAssignmentsInvented": false,
+    "amberUsed": false,
+    "roseUsed": false,
+    "bakedUiUsed": false,
+    "cameraCueUsed": false,
+    "wearOrClutterBakedIntoSku": false,
+    "footprintsSuggestedOnly": true
+  }
+}

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-prop-id="canister_stamp:determinations" data-projection="plan">
+  <title>Determinations canister stamp</title>
+  <desc>Transparent per-work-type stamp overlay for canister_base: Determinations.</desc>
+  <metadata>{"family":"quota-co-administrative-percussion-v1","id":"canister_stamp:determinations","source":"owner-accepted-farm-form-priority2-calibration-v1"}</metadata>
+  <g id="approved-sku"><g id="determinations-stamp"><circle id="shape-1" cx="64" cy="64" r="13" fill="#D9D0B9" stroke="#294B3C" stroke-width="3"/><path id="shape-2" d="M 57 64 L 62 69 L 72 57" fill="none" stroke="#4E7D79" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path id="shape-3" d="M 52 78 H 76" stroke="#294B3C" stroke-width="3" stroke-linecap="round"/></g></g>
+</svg>

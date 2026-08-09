@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-prop-id="tube_straight" data-projection="plan">
+  <title>Pneumatic Tube — Straight</title>
+  <desc>QuotaCo Certified Pneumatic Tube — Straight. Administrative Percussion family; standardized SKU.</desc>
+  <metadata>{"family":"quota-co-administrative-percussion-v1","id":"tube_straight","source":"owner-accepted-readability-refinement-v2"}</metadata>
+  <g id="approved-sku"><path id="shape-1" d="M 32 64 H 96" fill="none" stroke="#252A28" stroke-width="28" stroke-linecap="butt" stroke-linejoin="round"/><path id="shape-2" d="M 32 64 H 96" fill="none" stroke="#979A91" stroke-width="22" stroke-linecap="butt" stroke-linejoin="round"/><path id="shape-3" d="M 32 64 H 96" fill="none" stroke="#4E7D79" opacity=".82" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"/><path id="shape-4" d="M 32 64 H 96" fill="none" stroke="#FFFFFF" opacity=".24" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round"/><rect id="shape-5" x="47" y="49" width="6" height="30" rx="2" fill="#294B3C" stroke="#252A28" stroke-width="1.5"/><rect id="shape-6" x="75" y="49" width="6" height="30" rx="2" fill="#294B3C" stroke="#252A28" stroke-width="1.5"/></g>
+</svg>

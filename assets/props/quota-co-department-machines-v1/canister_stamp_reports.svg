@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-prop-id="canister_stamp:reports" data-projection="plan">
+  <title>Reports canister stamp</title>
+  <desc>Transparent per-work-type stamp overlay for canister_base: Reports.</desc>
+  <metadata>{"family":"quota-co-administrative-percussion-v1","id":"canister_stamp:reports","source":"owner-accepted-phase-a-spine-calibration-v1"}</metadata>
+  <g id="approved-sku"><g id="reports-stamp" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"><path id="shape-1" d="M 57 57 H 70 V 72 H 57 Z M 61 53 H 74 V 68"/><path id="shape-2" d="M 60 62 H 67 M 60 66 H 67"/></g></g>
+</svg>

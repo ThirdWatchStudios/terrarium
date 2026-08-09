@@ -214,7 +214,7 @@ describe('production body archetypes', () => {
       ['manager', 'body-large-frame'],
     ]);
     expect(DEFAULT_CAST.every(({ parts }) => !LEGACY_IDS.includes(parts.body))).toBe(true);
-    expect(CURRENT_SCHEMA_VERSION).toBe(19);
+    expect(CURRENT_SCHEMA_VERSION).toBe(21);
   });
 
   it('keeps seeded random and employee generation deterministic and production-only', () => {
@@ -672,7 +672,7 @@ describe('production body archetypes', () => {
     }
 
     expect(count).toBe(1980);
-    expect(digest.digest('hex')).toBe('a234ab7a760bc5bf42b9cee2642a073450fcc725338837483412b5d45e14da66');
+    expect(digest.digest('hex')).toBe('58f8d1eaca4a12691d4367b5a61f61d762e616a1b5cfbab9be5f9e714cbef173');
   });
 
   it('keeps the original garment vertical slice deterministic and unclipped', () => {

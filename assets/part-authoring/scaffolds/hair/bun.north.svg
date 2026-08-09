@@ -22,12 +22,12 @@
     <path id="reference/context-head-round/shape-001" d="M0-21C13-21 21-13 21 0 21 12 12 21 0 21-12 21-21 12-21 0-21-13-13-21 0-21Z" fill="#66747A" fill-rule="nonzero"/>
   </g>
   <g id="reference/hair-bun" opacity="0.22" transform="translate(64 44)">
-    <path id="reference/hair-bun/shape-001" d="M -20.615528128088304 4 A 21 21 0 1 1 20.615528128088304 4 Z" fill="#66747A" fill-rule="nonzero"/>
-    <path id="reference/hair-bun/shape-002" d="M -9 -22 a 9 7 0 1 0 18 0 a 9 7 0 1 0 -18 0 Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/hair-bun/shape-001" d="M-22 6C-20.2-16-10.6-22 0-22 11-22 20.2-16 22 6L12.8 9C5.5 4-4.8 4-13.2 9Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/hair-bun/shape-002" d="M7-18C7-14.962 10-12.5 13.7-12.5 17.4-12.5 20.4-14.962 20.4-18 20.4-21.038 17.4-23.5 13.7-23.5 10-23.5 7-21.038 7-18Z" fill="#66747A" fill-rule="nonzero"/>
   </g>
   <g id="art" transform="translate(64 44)">
-    <path id="art/shape-001" d="M -20.615528128088304 4 A 21 21 0 1 1 20.615528128088304 4 Z" fill="#00FFFF" fill-rule="nonzero"/>
-    <path id="art/shape-002" d="M -9 -22 a 9 7 0 1 0 18 0 a 9 7 0 1 0 -18 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/shape-001" d="M-22 6C-20.2-16-10.6-22 0-22 11-22 20.2-16 22 6L12.8 9C5.5 4-4.8 4-13.2 9Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/shape-002" d="M7-18C7-14.962 10-12.5 13.7-12.5 17.4-12.5 20.4-14.962 20.4-18 20.4-21.038 17.4-23.5 13.7-23.5 10-23.5 7-21.038 7-18Z" fill="#00FFFF" fill-rule="nonzero"/>
   </g>
   <g id="swatches">
     <path id="swatches/skin" d="M 4 4 H 12 V 12 H 4 Z" fill="#FF00FF" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>

@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "family": "canonical-ui-shared-primitives-v1",
+  "authority": "canonical-svg",
+  "sourcePolicy": {
+    "visualAuthority": "checked-in-svg",
+    "compiledOutput": "src/parts/generated/canonicalUiIconArt.ts",
+    "ordinaryCommandsWriteSources": false
+  },
+  "acceptedProof": "docs/previews/ui-e1a-source-fit-font-pilot-v1",
+  "canvas": {
+    "width": 128,
+    "height": 128,
+    "origin": [64, 64]
+  },
+  "icons": [
+    {
+      "id": "ui-divider",
+      "label": "Divider",
+      "mode": "tintable",
+      "file": "ui-divider.svg",
+      "decision": "exact-authority-inversion",
+      "literalReviewSizes": [16, 20, 24, 32]
+    },
+    {
+      "id": "ui-corner",
+      "label": "Corner ornament",
+      "mode": "tintable",
+      "file": "ui-corner.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32]
+    },
+    {
+      "id": "ui-focus",
+      "label": "Focus",
+      "mode": "tintable",
+      "file": "ui-focus.svg",
+      "decision": "approved-redesign",
+      "literalReviewSizes": [16, 20, 24, 32]
+    },
+    {
+      "id": "iris-mark",
+      "label": "IRIS",
+      "mode": "tintable",
+      "file": "iris-mark.svg",
+      "decision": "exact-authority-inversion",
+      "literalReviewSizes": [18, 20, 24, 32]
+    },
+    {
+      "id": "quotaco-mark",
+      "label": "QuotaCo",
+      "mode": "literal",
+      "file": "quotaco-mark.svg",
+      "decision": "exact-authority-inversion",
+      "literalReviewSizes": [24, 32, 42, 48]
+    }
+  ]
+}

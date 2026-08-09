@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-prop-id="window" data-projection="plan" data-runtime-grid-scale="0.5" data-wall-material-id="slat-wall" data-axis="vertical">
+  <title>QuotaCo wood slat vertical office window</title>
+  <desc>Wood slat wall-owned window opening with shared frame, glazing, blinds, and mullion, compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="vertical-window-slat" transform="translate(32 32) scale(.5)">
+    <path id="vertical-window-slat-part-01" d="M2 0H126V12H2ZM2 116H126V128H2Z" fill="#323431"/>
+    <path id="vertical-window-slat-part-02" d="M8 0H120V12H8ZM8 116H120V128H8Z" fill="#705643"/>
+    <path id="vertical-window-slat-part-03" d="M8 0H38V12H8ZM90 0H120V12H90ZM8 116H38V128H8ZM90 116H120V128H90Z" fill="#83654E"/>
+    <path id="vertical-window-slat-part-04" d="M16 0V12M30 0V12M98 116V128M112 116V128" stroke="#503E33" stroke-width="1.2" opacity=".5"/>
+    <path id="vertical-window-slat-part-05" d="M40 4H88V18H40ZM40 110H88V124H40Z" fill="#323431"/>
+    <path id="vertical-window-slat-part-06" d="M45 8H83V14H45Z" fill="#9C7658"/>
+    <path id="vertical-window-slat-part-07" d="M45 114H83V120H45Z" fill="#83654E"/>
+    <path id="vertical-window-slat-part-08" d="M44 14H84V114H44Z" fill="#323431"/>
+    <path id="vertical-window-slat-part-09" d="M50 20H78V108H50Z" fill="#83A9A6"/>
+    <path id="vertical-window-slat-part-10" d="M68 20H78V108H68Z" fill="#C3C0B6" opacity=".94"/>
+    <path id="vertical-window-slat-part-11" d="M71 21V107M74 21V107M77 21V107" stroke="#858A84" stroke-width="1.2" opacity=".72"/>
+    <path id="vertical-window-slat-part-12" d="M50 66L78 55V108H50Z" fill="#648B89" opacity=".24"/>
+    <path id="vertical-window-slat-part-13" d="M50 63H78V67H50Z" fill="#535A56"/>
+    <path id="vertical-window-slat-part-14" d="M52 22H55V106H52Z" fill="#FFFFFF" opacity=".13"/>
+    <path id="vertical-window-slat-part-15" d="M42 108H86V115H42Z" fill="#323431"/>
+    <path id="vertical-window-slat-part-16" d="M48 108H80V112H48Z" fill="#9C7658"/>
+  </g>
+</svg>

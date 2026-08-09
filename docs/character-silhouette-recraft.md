@@ -530,9 +530,9 @@ Short/Crop, Bob, and Ponytail/Tail. Their stable `hair-short`, `hair-bob`, and
 heads and south/east/north during Terrarium composition/export. Flat and
 reconstructable layer output share the resolver; Unity receives ordinary baked
 art with no fit metadata, schema change, bones, new poses, or secondary motion.
-The canonical imported SVGs remain source/fallback geometry. The remaining
-seven mapped hairstyles retain their prior static facings until they pass the
-same fitted proof. See
+At that promotion point, the canonical imported SVGs remained source/fallback
+geometry. The remaining seven mapped hairstyles retained their prior static
+facings until they passed the same fitted proof. See
 `docs/previews/character-hair-fitting-pilot-v1.png` and its metrics JSON for
 the promoted matrix, literal 40/48 px audit, desk check, and crowd check.
 
@@ -545,3 +545,18 @@ distinct at 32 px across south/east/north. The recut reduces the 4,320-cell
 top-overflow debt from the pre-fitting 766 cases to 467 high-contrast-only
 cases, with no non-top overflow. See
 `docs/previews/character-hair-fitting-completion-v2.png` and its metrics JSON.
+
+Canonical-source follow-up (2026-08-02): all ten fitted styles now have three
+SVG facings that own live production geometry. The importer
+applies their visually approved bounded landmark warps and emits all 18
+head/facing variants per style; the resolver consumes those generated records
+and all ten former path builders are removed. Bun retains separate declarative
+cap and knot frames; Ponytail retains an independently fitted cap plus a shared
+tie/tail attachment transform; Long straight retains its open-face curtain and
+two-piece east profile through one frame; Balding retains independently fitted
+tapered temples, rear piece, and low horseshoe; Pixie retains a separately fitted
+broken cap/fringe and directional tufts; Side-part retains its swept cap,
+separate side/rear mass, and source-owned parting crease; Curly retains separate
+center/radius frames for every editable lobe; Coils retains the same component
+contract for its denser 8/6/8-lobe cloud. No completion style retains a
+code-owned production fit.

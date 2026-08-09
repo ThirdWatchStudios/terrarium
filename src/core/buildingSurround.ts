@@ -21,8 +21,7 @@ import type { SceneEntity, SceneRoom, SceneState, SceneRotation } from './scene'
 export type Edge = 'north' | 'east' | 'south' | 'west';
 
 export interface SurroundInstances {
-  demisingWallId: string;
-  curtainWallId: string;
+  perimeterWallId: string;
   lobbyFloorId: string;
   elevatorPropId: string;
   exitPropId: string;
@@ -44,8 +43,7 @@ export interface SurroundOptions {
 const DEFAULT_RING = 2;
 
 const DEFAULT_INSTANCES: SurroundInstances = {
-  demisingWallId: 'wall-demising',
-  curtainWallId: 'wall-curtain',
+  perimeterWallId: 'wall-office',
   lobbyFloorId: 'floor-lobby-stone',
   elevatorPropId: 'prop-elevator-bank',
   exitPropId: 'prop-exit-sign',
@@ -85,7 +83,7 @@ function nearestEdge(room: SceneRoom, cols: number, rows: number): Edge {
 
 /**
  * Pick the entrance edge (where the elevator lobby goes) and the exterior edge
- * (where the curtain wall / skyline peek goes). Entrance = the edge nearest the
+ * (where an exterior-facing fixture pass may later place windows). Entrance = the edge nearest the
  * reception room (defaults to south); exterior = the longest edge that isn't the
  * entrance, so window offices line the building perimeter.
  */
@@ -110,8 +108,7 @@ export function addBuildingSurround(scene: SceneState, project: ProjectState, op
   const ring = Math.max(1, Math.floor(opts.ring ?? DEFAULT_RING));
   const ids = { ...DEFAULT_INSTANCES, ...opts.instances };
 
-  const demising = resolveTile(project, 'walls', ids.demisingWallId, 'demising-wall');
-  const curtain = resolveTile(project, 'walls', ids.curtainWallId, 'curtain-wall') ?? demising;
+  const perimeterWall = resolveTile(project, 'walls', ids.perimeterWallId, 'office-wall');
   const lobby = resolveTile(project, 'floors', ids.lobbyFloorId, 'lobby-stone');
 
   const { cols: tCols, rows: tRows } = scene;
@@ -141,10 +138,11 @@ export function addBuildingSurround(scene: SceneState, project: ProjectState, op
   const tenantRect = { x: off, y: off, cols: tCols, rows: tRows };
   const { entrance, exterior } = classifyEdges(scene);
 
-  // 3) tenant perimeter walls: exterior edge → curtain wall (the skyline peek);
-  //    every other perimeter edge → demising wall. Kept solid (no functional
-  //    suite door) so NPCs can't path into the ring even before the sim's
-  //    tenantRect walkability clamp lands.
+  // 3) Tenant perimeter walls use the same straightforward office construction
+  //    on every edge. Floors and fixtures carry the surround's lobby/exterior
+  //    distinction; wall-family ids no longer encode it. Kept solid (no
+  //    functional suite door) so NPCs cannot path into the ring even before the
+  //    sim's tenantRect walkability clamp lands.
   const setPerimeter = (edge: Edge, wall: string | null) => {
     if (!wall) return;
     if (edge === 'north') for (let x = 0; x < tCols; x++) wallIds[off][x + off] = wall;
@@ -153,12 +151,12 @@ export function addBuildingSurround(scene: SceneState, project: ProjectState, op
     if (edge === 'east') for (let y = 0; y < tRows; y++) wallIds[y + off][off + tCols - 1] = wall;
   };
   for (const edge of ['north', 'east', 'south', 'west'] as Edge[]) {
-    setPerimeter(edge, edge === exterior ? curtain : demising);
+    setPerimeter(edge, perimeterWall);
   }
 
   // 4) ring floors. Interior edges (lobby/neighbors) get lobby stone; the
-  //    exterior edge is left floorless — beyond a curtain wall is outside the
-  //    building (the dark void reads as "we're up high"). Corners follow their
+  //    exterior edge is left floorless — beyond the exterior wall is outside
+  //    the building (the dark void reads as "we're up high"). Corners follow their
   //    interior neighbours.
   const inRing = (x: number, y: number) => x < off || y < off || x >= off + tCols || y >= off + tRows;
   if (lobby) {

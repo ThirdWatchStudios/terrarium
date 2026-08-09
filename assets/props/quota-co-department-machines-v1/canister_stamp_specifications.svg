@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-prop-id="canister_stamp:specifications" data-projection="plan">
+  <title>Specifications canister stamp</title>
+  <desc>Transparent per-work-type stamp overlay for canister_base: Specifications.</desc>
+  <metadata>{"family":"quota-co-administrative-percussion-v1","id":"canister_stamp:specifications","source":"owner-accepted-engineering-maintenance-refinement-v2"}</metadata>
+  <g id="approved-sku"><g id="specifications-stamp" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"><path id="shape-1" d="M 55 56 H 73 V 73 H 55 Z M 59 60 H 69 M 59 65 H 69 M 59 70 H 66"/><circle id="shape-2" cx="72" cy="57" r="3"/></g></g>
+</svg>

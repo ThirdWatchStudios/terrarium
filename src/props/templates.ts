@@ -3,6 +3,7 @@ import { rr, circle, ellipse } from '../core/geometry';
 import { mulberry32 } from '../core/random';
 import { FLOWER_HUES } from '../tiles/templates';
 import { authoredPropShapes } from './authoredArt';
+import { DEPARTMENT_MACHINE_TEMPLATES } from './departmentMachineTemplates';
 
 /**
  * Parametric prop templates. Conventions:
@@ -14,7 +15,6 @@ import { authoredPropShapes } from './authoredArt';
 
 const GROUND = 116;
 const CX = 64;
-const SIZE = 128;
 
 const waterCooler: PropTemplate = {
   id: 'water-cooler',
@@ -537,111 +537,6 @@ const serverRack: PropTemplate = {
 // the boot sequence completes. The live optic and subordinate console trace use
 // literal IRIS green so they survive both the clinical drain and runtime re-tint.
 
-const IRIS_GREEN = '#5BE08A';
-const IRIS_DARK = '#202523';
-const IRIS_SPINE = '#18201D';
-const IRIS_SHOULDER = '#4C5551';
-const IRIS_SPINE_PLANE = '#27302D';
-const IRIS_SPINE_RETURN = '#46504B';
-const IRIS_SERVICE_SEAM = '#ABB3AF';
-
-function buildIrisUnit(params: Record<string, number>, live: boolean): ShapeSpec[] {
-  const h = params.height ?? 90;
-  const rightTop = GROUND - h - 13;
-  const leftTop = rightTop + 18;
-  const spineTop = rightTop + 16;
-  const opticTop = rightTop + 21;
-
-  // R1+D3 production direction: unequal load-bearing masses break the old
-  // paired-rack / game-console alias. The six silhouette shapes are identical
-  // for live and dormant; only the optic and console trace change state.
-  const housing: ShapeSpec[] = [
-    {
-      d: `M 74 108 V ${rightTop + 10} L 84 ${rightTop} H 116 V 108 Z`,
-      fill: '$primary',
-    },
-    {
-      d: `M 13 108 V ${leftTop + 8} L 21 ${leftTop} H 44 V 108 Z`,
-      fill: IRIS_SHOULDER,
-    },
-    { d: `M 44 ${spineTop} H 74 V 108 H 44 Z`, fill: IRIS_SPINE },
-  ];
-  const housingArticulation: ShapeSpec[] = [
-    {
-      d: `M 15 ${leftTop + 8} L 22 ${leftTop + 2} H 43`,
-      stroke: '#76807B',
-      strokeWidth: 2.2,
-      silhouette: false,
-    },
-    {
-      d: 'M 21 50 H 37 V 98',
-      stroke: '#77817C',
-      strokeWidth: 2.2,
-      silhouette: false,
-    },
-    {
-      d: `M 50 ${spineTop + 4} H 68 V 106 H 50 Z`,
-      fill: IRIS_SPINE_PLANE,
-      stroke: '#111714',
-      strokeWidth: 2.2,
-      silhouette: false,
-    },
-    {
-      d: `M 50 ${spineTop + 4} L 55 ${spineTop - 1} H 73 L 68 ${spineTop + 4} Z`,
-      fill: IRIS_SPINE_RETURN,
-      stroke: IRIS_SPINE,
-      strokeWidth: 2,
-      silhouette: false,
-    },
-    {
-      d: `M 56 ${spineTop + 12} H 63 V 99`,
-      stroke: '#5B6560',
-      strokeWidth: 2.4,
-      silhouette: false,
-    },
-    {
-      d: 'M 80 64 H 101 L 108 57 H 113',
-      stroke: IRIS_SERVICE_SEAM,
-      strokeWidth: 1.8,
-      silhouette: false,
-    },
-    {
-      d: rr(98, opticTop, 5, 15, 2),
-      fill: '#5C6662',
-      stroke: IRIS_SPINE,
-      strokeWidth: 1.4,
-      silhouette: false,
-    },
-    {
-      d: rr(99.5, opticTop + 3, 2, 8, 1),
-      fill: live ? IRIS_GREEN : '#3C4440',
-      silhouette: false,
-    },
-  ];
-  const console: ShapeSpec[] = [
-    {
-      d: 'M 42 67 H 86 L 93 76 L 82 89 H 46 L 35 78 Z',
-      fill: '$secondary',
-    },
-    {
-      d: 'M 48 71 H 80 L 85 76 L 78 83 H 49 L 43 78 Z',
-      fill: live ? '#18211E' : '#1D2421',
-      stroke: '#53605A',
-      strokeWidth: 1.4,
-      silhouette: false,
-    },
-    {
-      d: 'M 56 77 H 73',
-      stroke: live ? IRIS_GREEN : '#59615D',
-      strokeWidth: 1.5,
-      silhouette: false,
-    },
-    { d: 'M 58 88 H 72 V 106 H 58 Z', fill: IRIS_SPINE },
-    { d: 'M 7 108 H 121 V 116 H 7 Z', fill: IRIS_SPINE },
-  ];
-  return [...housing, ...housingArticulation, ...console];
-}
-
 const irisInstallationUnit: PropTemplate = {
   id: 'iris-installation-unit',
   label: 'IRIS installation unit',
@@ -650,7 +545,7 @@ const irisInstallationUnit: PropTemplate = {
   gridFootprint: { w: 2, h: 1 },
   params: [{ key: 'height', label: 'Rack height', min: 78, max: 98, step: 2, default: 90 }],
   build(params) {
-    return buildIrisUnit(params, true);
+    return authoredPropShapes('iris-installation-unit', params);
   },
 };
 
@@ -662,7 +557,7 @@ const irisInstallationUnitDormant: PropTemplate = {
   gridFootprint: { w: 2, h: 1 },
   params: [{ key: 'height', label: 'Rack height', min: 78, max: 98, step: 2, default: 90 }],
   build(params) {
-    return buildIrisUnit(params, false);
+    return authoredPropShapes('iris-installation-unit-dormant', params);
   },
 };
 
@@ -679,26 +574,7 @@ const irisChargingDock: PropTemplate = {
   gridFootprint: { w: 1, h: 1 },
   params: [],
   build() {
-    const c = CX;
-    return [
-      { d: rr(c - 28, c - 26, 56, 54, 7), fill: '$primary' },
-      { d: rr(c - 21, c - 19, 42, 38, 5), fill: '$secondary', silhouette: false },
-      // Four metal capture lugs make this floor hardware, not a HUD reticle.
-      { d: rr(c - 23, c - 23, 12, 7, 2), fill: '$secondary', silhouette: false },
-      { d: rr(c + 11, c - 23, 12, 7, 2), fill: '$secondary', silhouette: false },
-      { d: rr(c - 23, c + 14, 12, 7, 2), fill: '$secondary', silhouette: false },
-      { d: rr(c + 11, c + 14, 12, 7, 2), fill: '$secondary', silhouette: false },
-      // A front contact tongue stays readable below a docked unit.
-      { d: rr(c - 13, c + 18, 26, 9, 3), fill: '$secondary', silhouette: false },
-      { d: circle(c, c, 15), fill: `${IRIS_GREEN}12`, silhouette: false },
-      { d: circle(c, c, 15), stroke: IRIS_GREEN, strokeWidth: 1.8, opacity: 0.62, silhouette: false },
-      { d: circle(c, c, 5), fill: IRIS_DARK, silhouette: false },
-      { d: circle(c, c + 22, 2.4), fill: IRIS_GREEN, opacity: 0.82, silhouette: false },
-      { d: circle(c - 17, c - 17, 1.5), fill: '#D9DEDA', silhouette: false },
-      { d: circle(c + 17, c - 17, 1.5), fill: '#D9DEDA', silhouette: false },
-      { d: circle(c - 17, c + 17, 1.5), fill: '#D9DEDA', silhouette: false },
-      { d: circle(c + 17, c + 17, 1.5), fill: '#D9DEDA', silhouette: false },
-    ];
+    return authoredPropShapes('iris-charging-dock', {});
   },
 };
 
@@ -1141,90 +1017,43 @@ const badgeReader: PropTemplate = {
 
 const door: PropTemplate = {
   id: 'door',
-  label: 'Door',
+  label: 'Sliding auto-door',
   gridFootprint: { w: 1, h: 1 },
   projection: 'plan',
   placement: 'wall-slot',
   params: [
-    { key: 'thickness', label: 'Thickness', min: 24, max: 36, step: 2, default: 30 },
     { key: 'open', label: 'Open', min: 0, max: 1, step: 1, default: 0 },
+    { key: 'facing', label: 'Wall axis', min: 0, max: 1, step: 1, default: 0 },
+    // Internal receiver variant. Players still place one Door catalog item; Unity
+    // derives this material from the wall cell the door replaces.
+    { key: 'material', label: 'Wall material', min: 0, max: 4, step: 1, default: 0 },
   ],
   /**
-   * Top-down door filling a doorway gap. The art is authored for a HORIZONTAL
-   * wall (band across the tile); the layout rotates it 90° for vertical runs.
-   * It spans the full tile width and sits in the wall band (y centered on 64),
-   * with gray frame caps ($secondary) at the ends that overlap the neighbor
-   * wall arms — so the door reads as a segment OF the wall, not an object
-   * dropped on the floor. Closed = a wood slab ($primary) filling the gap with
-   * a centre seam + handles; open = the gap is clear (floor shows through the
-   * threshold split) with the leaf swung perpendicular into the room.
+   * Twenty explicit fixed-view source states: five retained wall materials ×
+   * horizontal/vertical × closed/open.
+   * `facing=0` is the horizontal front-facing wall register; `facing=1` is the
+   * separately authored vertical top-oblique register. Scene composition selects
+   * the axis from placement rotation and never rotates the horizontal elevation.
    */
   build(params) {
-    const t = params.thickness ?? 30;
-    const y0 = CX - t / 2;
-    const isOpen = (params.open ?? 0) >= 1;
-    const OV = 3; // overlap neighbor wall arms so the frame joins the wall run
-    const jamb = 13; // length of the gray frame cap at each end
-    const seam = '#00000026';
-    const shapes: ShapeSpec[] = [
-      // gray frame caps that tie the doorway into the wall run on both ends
-      { d: rr(-OV, y0, jamb + OV, t, 2), fill: '$secondary' },
-      { d: rr(SIZE - jamb, y0, jamb + OV, t, 2), fill: '$secondary' },
-    ];
-    if (isOpen) {
-      // leaf swung 90° flush to the left jamb, opening into the lower room
-      shapes.push(
-        { d: rr(jamb - 2, y0 + t - 3, 7, 40, 2), fill: '$primary' },
-        { d: circle(jamb + 1.5, y0 + t + 33, 2.2), fill: '$accent', silhouette: false },
-        // faint swing arc hinting the travel of the leaf
-        { d: `M ${jamb + 5} ${y0 + t} A 40 40 0 0 1 ${jamb + 42} ${y0 + t + 2}`, stroke: '#00000018', strokeWidth: 2, silhouette: false },
-      );
-    } else {
-      // closed leaf spanning the opening between the two frame caps
-      const x = jamb - 1;
-      const w = SIZE - 2 * (jamb - 1);
-      shapes.push(
-        { d: rr(x, y0 + 1, w, t - 2, 2), fill: '$primary' },
-        // centre meeting seam + two leaf panels
-        { d: `M ${CX} ${y0 + 3} L ${CX} ${y0 + t - 3}`, stroke: seam, strokeWidth: 2, silhouette: false },
-        { d: `M ${x + w * 0.33} ${y0 + 4} L ${x + w * 0.33} ${y0 + t - 4}`, stroke: '#00000014', strokeWidth: 1.5, silhouette: false },
-        { d: `M ${x + w * 0.67} ${y0 + 4} L ${x + w * 0.67} ${y0 + t - 4}`, stroke: '#00000014', strokeWidth: 1.5, silhouette: false },
-        // paired handles at the centre seam
-        { d: circle(CX - 6, CX, 2.2), fill: '$accent', silhouette: false },
-        { d: circle(CX + 6, CX, 2.2), fill: '$accent', silhouette: false },
-      );
-    }
-    return shapes;
+    return authoredPropShapes('door', params);
   },
 };
 
 const window: PropTemplate = {
   id: 'window',
-  label: 'Window',
+  label: 'Office window',
   gridFootprint: { w: 1, h: 1 },
   projection: 'plan',
   placement: 'wall-slot',
   params: [
-    { key: 'width', label: 'Width', min: 48, max: 88, step: 4, default: 72 },
-    { key: 'blinds', label: 'Blinds', min: 0, max: 3, step: 1, default: 1 },
+    { key: 'facing', label: 'Wall axis', min: 0, max: 1, step: 1, default: 0 },
+    // Internal receiver variant. Players still place one Window catalog item;
+    // Unity derives this material from the wall cell the window replaces.
+    { key: 'material', label: 'Wall material', min: 0, max: 4, step: 1, default: 0 },
   ],
   build(params) {
-    const w = params.width ?? 72;
-    const x = CX - w / 2;
-    const y = 52;
-    const h = 24;
-    const shapes: ShapeSpec[] = [
-      { d: rr(x - 5, y - 4, w + 10, h + 8, 3), fill: '$primary' },
-      { d: rr(x, y, w, h, 2), fill: '$secondary', opacity: 0.86 },
-      { d: `M ${CX} ${y + 3} L ${CX} ${y + h - 3} M ${x + 4} ${y + h / 2} L ${x + w - 4} ${y + h / 2}`, stroke: '$primary', strokeWidth: 2.5, silhouette: false },
-      { d: `M ${x + 8} ${y + 6} L ${x + 20} ${y + 6}`, stroke: '#FFFFFF80', strokeWidth: 2, silhouette: false },
-    ];
-    const blinds = params.blinds ?? 1;
-    for (let i = 0; i < blinds; i++) {
-      const by = y + 7 + i * 5;
-      shapes.push({ d: `M ${x + 7} ${by} L ${x + w - 7} ${by}`, stroke: '$accent', strokeWidth: 1.5, opacity: 0.55, silhouette: false });
-    }
-    return shapes;
+    return authoredPropShapes('window', params);
   },
 };
 
@@ -2075,29 +1904,7 @@ const servingLine: PropTemplate = {
   footprint: { cx: CX, cy: 117, rx: 52, ry: 5 },
   params: [],
   build() {
-    return [
-      { d: ellipse(CX, GROUND + 1, 54, 5), fill: '#00000020', silhouette: false },
-      // counter body and inset service doors
-      { d: rr(10, 70, 108, 46, 5), fill: '$primary' },
-      { d: rr(18, 82, 42, 27, 3), fill: '$secondary', silhouette: false },
-      { d: rr(68, 82, 42, 27, 3), fill: '$secondary', silhouette: false },
-      // tray rail and counter cap
-      { d: rr(5, 67, 118, 8, 3), fill: '$accent' },
-      { d: rr(3, 76, 122, 4, 2), fill: '$secondary', silhouette: false },
-      // hot wells, deliberately still
-      { d: rr(18, 61, 26, 8, 3), fill: '#34393C', silhouette: false },
-      { d: rr(51, 61, 26, 8, 3), fill: '#34393C', silhouette: false },
-      { d: rr(84, 61, 26, 8, 3), fill: '#34393C', silhouette: false },
-      { d: rr(21, 63, 20, 3, 1.5), fill: '#C78B4A', opacity: 0.78, silhouette: false },
-      { d: rr(54, 63, 20, 3, 1.5), fill: '#8FAF61', opacity: 0.78, silhouette: false },
-      { d: rr(87, 63, 20, 3, 1.5), fill: '#D5C08A', opacity: 0.78, silhouette: false },
-      // sneeze guard: glass first, then certified frame/posts
-      { d: rr(18, 31, 92, 29, 3), fill: '#D9EEF238', stroke: '#D9EEF27A', strokeWidth: 1.4, silhouette: false },
-      { d: rr(17, 28, 94, 5, 2), fill: '$secondary' },
-      { d: rr(20, 31, 4, 34, 2), fill: '$secondary' },
-      { d: rr(104, 31, 4, 34, 2), fill: '$secondary' },
-      { d: 'M 28 36 L 99 36', stroke: '#FFFFFF70', strokeWidth: 1.4, silhouette: false },
-    ];
+    return authoredPropShapes('serving-line', {});
   },
 };
 
@@ -2109,16 +1916,7 @@ const serviceScanner: PropTemplate = {
   footprint: { cx: CX, cy: 117, rx: 14, ry: 4 },
   params: [],
   build() {
-    return [
-      { d: ellipse(CX, GROUND + 1, 15, 4), fill: '#00000020', silhouette: false },
-      { d: rr(CX - 14, 36, 28, 31, 6), fill: '$primary' },
-      { d: rr(CX - 9, 42, 18, 16, 3), fill: '$secondary', silhouette: false },
-      { d: rr(CX - 4, 64, 8, 46, 3), fill: '$primary' },
-      { d: rr(CX - 12, 108, 24, 8, 3), fill: '$secondary' },
-      { d: circle(CX, 50, 7), fill: `${IRIS_GREEN}28`, silhouette: false },
-      { d: circle(CX, 50, 3.5), fill: IRIS_GREEN, silhouette: false },
-      { d: rr(CX - 7, 59, 14, 2.5, 1), fill: IRIS_GREEN, opacity: 0.72, silhouette: false },
-    ];
+    return authoredPropShapes('service-scanner', {});
   },
 };
 
@@ -2130,23 +1928,7 @@ const commercialRange: PropTemplate = {
   footprint: { cx: CX, cy: 117, rx: 41, ry: 5 },
   params: [],
   build() {
-    return [
-      { d: ellipse(CX, GROUND + 1, 43, 5), fill: '#00000020', silhouette: false },
-      // integrated extraction hood
-      { d: 'M 22 20 L 106 20 L 99 44 L 29 44 Z', fill: '$secondary' },
-      { d: rr(34, 29, 60, 5, 2), fill: '#00000030', silhouette: false },
-      { d: rr(41, 36, 46, 3, 1.5), fill: '#DDE3E3', opacity: 0.55, silhouette: false },
-      // range/oven block
-      { d: rr(20, 55, 88, 61, 5), fill: '$primary' },
-      { d: rr(25, 58, 78, 13, 3), fill: '$accent' },
-      { d: rr(30, 78, 68, 29, 4), fill: '$secondary', silhouette: false },
-      { d: rr(36, 84, 56, 17, 2), fill: '#242A2D', silhouette: false },
-      { d: rr(45, 76, 38, 3, 1.5), fill: '#111416', opacity: 0.72, silhouette: false },
-      { d: circle(38, 64, 3), fill: '#33383A', silhouette: false },
-      { d: circle(53, 64, 3), fill: '#33383A', silhouette: false },
-      { d: circle(75, 64, 3), fill: '#33383A', silhouette: false },
-      { d: circle(90, 64, 3), fill: '#33383A', silhouette: false },
-    ];
+    return authoredPropShapes('commercial-range', {});
   },
 };
 
@@ -2157,15 +1939,7 @@ const prepTable: PropTemplate = {
   gridFootprint: { w: 2, h: 1 },
   params: [],
   build() {
-    return [
-      { d: rr(12, 35, 104, 58, 7), fill: '$primary' },
-      { d: rr(17, 40, 94, 48, 5), fill: '$secondary', silhouette: false },
-      { d: rr(23, 48, 34, 26, 3), fill: '#B78854', silhouette: false },
-      { d: ellipse(87, 62, 15, 12), fill: '#485057', silhouette: false },
-      { d: ellipse(87, 62, 10, 7), fill: '#CBD1D2', silhouette: false },
-      { d: 'M 30 52 L 50 69 M 48 51 L 31 70', stroke: '#EEE9DB', strokeWidth: 2, opacity: 0.72, silhouette: false },
-      { d: rr(19, 83, 90, 5, 2), fill: '$accent', opacity: 0.7, silhouette: false },
-    ];
+    return authoredPropShapes('prep-table', {});
   },
 };
 
@@ -2177,18 +1951,7 @@ const dishReturn: PropTemplate = {
   footprint: { cx: CX, cy: 117, rx: 42, ry: 5 },
   params: [],
   build() {
-    return [
-      { d: ellipse(CX, GROUND + 1, 44, 5), fill: '#00000020', silhouette: false },
-      { d: rr(17, 39, 94, 77, 5), fill: '$primary' },
-      { d: rr(25, 48, 78, 31, 4), fill: '#22272A', silhouette: false },
-      { d: rr(29, 52, 70, 5, 2), fill: '$accent', opacity: 0.75, silhouette: false },
-      { d: rr(24, 85, 80, 24, 3), fill: '$secondary', silhouette: false },
-      { d: rr(32, 90, 64, 3, 1.5), fill: '#111416', opacity: 0.5, silhouette: false },
-      { d: rr(32, 98, 64, 3, 1.5), fill: '#111416', opacity: 0.5, silhouette: false },
-      { d: ellipse(43, 70, 12, 5), fill: '#E2DED3', silhouette: false },
-      { d: ellipse(66, 69, 12, 5), fill: '#D8D3C8', silhouette: false },
-      { d: ellipse(89, 70, 12, 5), fill: '#E2DED3', silhouette: false },
-    ];
+    return authoredPropShapes('dish-return', {});
   },
 };
 
@@ -2200,16 +1963,7 @@ const walkInFront: PropTemplate = {
   footprint: { cx: CX, cy: 117, rx: 42, ry: 5 },
   params: [],
   build() {
-    return [
-      { d: ellipse(CX, GROUND + 1, 44, 5), fill: '#00000020', silhouette: false },
-      { d: rr(18, 15, 92, 101, 5), fill: '$secondary' },
-      { d: rr(26, 22, 76, 94, 3), fill: '$primary' },
-      { d: rr(32, 28, 64, 20, 3), fill: '$accent', opacity: 0.65, silhouette: false },
-      { d: rr(80, 57, 7, 31, 3), fill: '#343A3D', silhouette: false },
-      { d: rr(83, 60, 8, 25, 3), fill: '#BFC6C6', silhouette: false },
-      { d: circle(91, 95, 3), fill: '#5C6970', silhouette: false },
-      { d: 'M 30 107 L 98 107', stroke: '#00000024', strokeWidth: 2, silhouette: false },
-    ];
+    return authoredPropShapes('walk-in-front', {});
   },
 };
 
@@ -2220,17 +1974,7 @@ const diningCarrel: PropTemplate = {
   gridFootprint: { w: 1, h: 1 },
   params: [],
   build() {
-    return [
-      // privacy wing and small meal surface
-      { d: rr(24, 20, 80, 10, 4), fill: '$secondary' },
-      { d: rr(20, 20, 10, 72, 4), fill: '$secondary' },
-      { d: rr(98, 20, 10, 72, 4), fill: '$secondary' },
-      { d: rr(30, 29, 68, 45, 5), fill: '$primary' },
-      { d: rr(38, 36, 52, 31, 4), fill: '$accent', silhouette: false },
-      // single seat, carefully separated from the table
-      { d: rr(43, 84, 42, 24, 10), fill: '$primary' },
-      { d: rr(49, 89, 30, 14, 7), fill: '$secondary', silhouette: false },
-    ];
+    return authoredPropShapes('dining-carrel', {});
   },
 };
 
@@ -2241,19 +1985,7 @@ const cafeteriaTable: PropTemplate = {
   gridFootprint: { w: 4, h: 2 },
   params: [],
   build() {
-    return [
-      // warm long table, attached benches on both sides
-      { d: rr(12, 44, 104, 40, 10), fill: '$primary' },
-      { d: rr(19, 49, 90, 30, 7), fill: '$accent', opacity: 0.55, silhouette: false },
-      { d: rr(17, 19, 94, 17, 7), fill: '$secondary' },
-      { d: rr(17, 92, 94, 17, 7), fill: '$secondary' },
-      { d: rr(27, 32, 8, 12, 3), fill: '$secondary', silhouette: false },
-      { d: rr(93, 32, 8, 12, 3), fill: '$secondary', silhouette: false },
-      { d: rr(27, 84, 8, 12, 3), fill: '$secondary', silhouette: false },
-      { d: rr(93, 84, 8, 12, 3), fill: '$secondary', silhouette: false },
-      { d: circle(43, 63, 5), fill: '#E5E0D5', silhouette: false },
-      { d: circle(84, 63, 5), fill: '#E5E0D5', silhouette: false },
-    ];
+    return authoredPropShapes('cafeteria-table', {});
   },
 };
 
@@ -2264,13 +1996,7 @@ const trayStack: PropTemplate = {
   gridFootprint: { w: 1, h: 1 },
   params: [],
   build() {
-    return [
-      { d: rr(29, 35, 70, 58, 9), fill: '$secondary' },
-      { d: rr(33, 31, 70, 58, 9), fill: '$primary' },
-      { d: rr(37, 27, 70, 58, 9), fill: '$accent' },
-      { d: rr(44, 34, 56, 44, 7), fill: '#00000018', silhouette: false },
-      { d: rr(49, 39, 46, 34, 6), stroke: '#FFFFFF66', strokeWidth: 2, silhouette: false },
-    ];
+    return authoredPropShapes('tray-stack', {});
   },
 };
 
@@ -3341,4 +3067,5 @@ export const PROP_TEMPLATES: PropTemplate[] = [
   groundDetailPebbleA,
   groundDetailPebbleB,
   groundDetailTwigA,
+  ...DEPARTMENT_MACHINE_TEMPLATES,
 ];

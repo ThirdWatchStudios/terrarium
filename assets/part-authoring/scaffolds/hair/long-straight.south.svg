@@ -24,10 +24,10 @@
     <path id="reference/context-head-round/shape-003" d="M5.4 0C5.4 0.929 5.896 1.787 6.7 2.252 7.504 2.716 8.496 2.716 9.3 2.252 10.104 1.787 10.6 0.929 10.6 0 10.6-0.929 10.104-1.787 9.3-2.252 8.496-2.716 7.504-2.716 6.7-2.252 5.896-1.787 5.4-0.929 5.4 0Z" fill="#66747A" fill-rule="nonzero"/>
   </g>
   <g id="reference/hair-long-straight" opacity="0.22" transform="translate(64 44)">
-    <path id="reference/hair-long-straight/shape-001" d="M -23 -5 A 23 23 0 0 1 23 -5 L 23 29 L 14 29 L 11 -2 A 12 12 0 0 0 -11 -2 L -14 29 L -23 29 Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/hair-long-straight/shape-001" d="M-24-4C-21.6-17-10.8-23 0-23 11.5-23 22.1-17 24-4L24 30 15.8 30 11.8-1C7.3-8-7.3-8-11.8-1L-15.8 30-24 30Z" fill="#66747A" fill-rule="nonzero"/>
   </g>
   <g id="art" transform="translate(64 44)">
-    <path id="art/shape-001" d="M -23 -5 A 23 23 0 0 1 23 -5 L 23 29 L 14 29 L 11 -2 A 12 12 0 0 0 -11 -2 L -14 29 L -23 29 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/shape-001" d="M-24-4C-21.6-17-10.8-23 0-23 11.5-23 22.1-17 24-4L24 30 15.8 30 11.8-1C7.3-8-7.3-8-11.8-1L-15.8 30-24 30Z" fill="#00FFFF" fill-rule="nonzero"/>
   </g>
   <g id="swatches">
     <path id="swatches/skin" d="M 4 4 H 12 V 12 H 4 Z" fill="#FF00FF" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>

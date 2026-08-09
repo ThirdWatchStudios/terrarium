@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-ui-icon-id="ui-focus" data-icon-mode="tintable">
+  <title>Focus</title>
+  <desc>Four open square focus ticks approved by the UI-E1a source-fit gate; contains no surveillance crosshair.</desc>
+  <metadata>{"family":"canonical-ui-shared-primitives-v1","decision":"approved-redesign"}</metadata>
+  <g id="approved-mark" transform="translate(64 64)">
+    <path id="northwest-tick" d="M -12 -30 H -30 V -12" fill="none" stroke="#FFFFFF" stroke-width="8" stroke-linecap="square" stroke-linejoin="miter"/>
+    <path id="northeast-tick" d="M 12 -30 H 30 V -12" fill="none" stroke="#FFFFFF" stroke-width="8" stroke-linecap="square" stroke-linejoin="miter"/>
+    <path id="southwest-tick" d="M -30 12 V 30 H -12" fill="none" stroke="#FFFFFF" stroke-width="8" stroke-linecap="square" stroke-linejoin="miter"/>
+    <path id="southeast-tick" d="M 30 12 V 30 H 12" fill="none" stroke="#FFFFFF" stroke-width="8" stroke-linecap="square" stroke-linejoin="miter"/>
+  </g>
+</svg>

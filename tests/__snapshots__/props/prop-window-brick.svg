@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-prop-id="window" data-projection="plan" data-runtime-grid-scale="0.5" data-wall-material-id="brick-wall" data-axis="horizontal">
+  <title>QuotaCo brick horizontal office window</title>
+  <desc>Brick wall-owned window opening with shared frame, glazing, blinds, and mullion, compensated to the 64-unit Unity wall-slot envelope.</desc>
+  <g id="horizontal-window-brick" transform="translate(32 32) scale(.5)">
+    <path id="horizontal-window-brick-part-01" d="M0 2H12V126H0ZM116 2H128V126H116Z" fill="#323431"/>
+    <path id="horizontal-window-brick-part-02" d="M0 8H12V120H0ZM116 8H128V120H116Z" fill="#745146"/>
+    <path id="horizontal-window-brick-part-03" d="M0 8H12V16H0ZM116 8H128V16H116Z" fill="#8D5E50"/>
+    <path id="horizontal-window-brick-part-04" d="M0 82H12V120H0ZM116 82H128V120H116Z" fill="#A86D5A"/>
+    <path id="horizontal-window-brick-part-05" d="M4 2H124V34H4Z" fill="#323431"/>
+    <path id="horizontal-window-brick-part-06" d="M8 8H120V30H8Z" fill="#745146"/>
+    <path id="horizontal-window-brick-part-07" d="M8 8H120V15H8Z" fill="#8D5E50"/>
+    <path id="horizontal-window-brick-part-08" d="M8 24H120V30H8Z" fill="#A86D5A"/>
+    <path id="horizontal-window-brick-part-09" d="M0 98H128V126H0Z" fill="#323431"/>
+    <path id="horizontal-window-brick-part-10" d="M0 102H128V120H0Z" fill="#745146"/>
+    <path id="horizontal-window-brick-part-11" d="M0 110H128V120H0Z" fill="#A86D5A"/>
+    <path id="horizontal-window-brick-part-12" d="M0 102H128V106H0Z" fill="#8D5E50"/>
+    <path id="horizontal-window-brick-part-13" d="M2 112H126M24 103V112M60 112V121M96 103V112" stroke="#D2AA97" stroke-width="1.2" opacity=".55"/>
+    <path id="horizontal-window-brick-part-14" d="M12 28H116V103H12Z" fill="#323431"/>
+    <path id="horizontal-window-brick-part-15" d="M18 34H110V96H18Z" fill="#83A9A6"/>
+    <path id="horizontal-window-brick-part-16" d="M18 70L110 51V96H18Z" fill="#648B89" opacity=".24"/>
+    <path id="horizontal-window-brick-part-17" d="M18 34H110V55H18Z" fill="#C3C0B6" opacity=".94"/>
+    <path id="horizontal-window-brick-part-18" d="M19 40H109M19 47H109M19 54H109" stroke="#858A84" stroke-width="1.4" opacity=".75"/>
+    <path id="horizontal-window-brick-part-19" d="M63 55H66V96H63Z" fill="#535A56"/>
+    <path id="horizontal-window-brick-part-20" d="M22 36H25V94H22Z" fill="#FFFFFF" opacity=".13"/>
+    <path id="horizontal-window-brick-part-21" d="M10 96H118V105H10Z" fill="#323431"/>
+    <path id="horizontal-window-brick-part-22" d="M16 96H112V101H16Z" fill="#A86D5A"/>
+  </g>
+</svg>

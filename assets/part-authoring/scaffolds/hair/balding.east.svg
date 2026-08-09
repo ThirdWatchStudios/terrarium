@@ -23,10 +23,10 @@
     <path id="reference/context-head-round/shape-002" d="M8.4 0C8.4 0.929 8.896 1.787 9.7 2.252 10.504 2.716 11.496 2.716 12.3 2.252 13.104 1.787 13.6 0.929 13.6 0 13.6-0.929 13.104-1.787 12.3-2.252 11.496-2.716 10.504-2.716 9.7-2.252 8.896-1.787 8.4-0.929 8.4 0Z" fill="#66747A" fill-rule="nonzero"/>
   </g>
   <g id="reference/hair-balding" opacity="0.22" transform="translate(64 44)">
-    <path id="reference/hair-balding/shape-001" d="M -21 -6 C -26 -2 -27 9 -21 13 C -15 12 -13 6 -15 1 C -16 -3 -18 -5 -21 -6 Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/hair-balding/shape-001" d="M-21-6C-26-2-27 9-21 13-15 12-13 6-15 1-16-3-18-5-21-6Z" fill="#66747A" fill-rule="nonzero"/>
   </g>
   <g id="art" transform="translate(64 44)">
-    <path id="art/shape-001" d="M -21 -6 C -26 -2 -27 9 -21 13 C -15 12 -13 6 -15 1 C -16 -3 -18 -5 -21 -6 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/shape-001" d="M-21-6C-26-2-27 9-21 13-15 12-13 6-15 1-16-3-18-5-21-6Z" fill="#00FFFF" fill-rule="nonzero"/>
   </g>
   <g id="swatches">
     <path id="swatches/skin" d="M 4 4 H 12 V 12 H 4 Z" fill="#FF00FF" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>

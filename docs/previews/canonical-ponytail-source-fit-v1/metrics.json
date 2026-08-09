@@ -1,0 +1,46 @@
+{
+  "status": "approved-for-production-promotion",
+  "approvedOn": "2026-08-02",
+  "sourceFiles": [
+    "docs/previews/canonical-ponytail-source-fit-v1/sources/ponytail.south.svg",
+    "docs/previews/canonical-ponytail-source-fit-v1/sources/ponytail.east.svg",
+    "docs/previews/canonical-ponytail-source-fit-v1/sources/ponytail.north.svg"
+  ],
+  "productionWiringChanged": false,
+  "canonicalSourceSvgChanged": false,
+  "reviewSourceSvgAdded": true,
+  "perHeadSvgVariantsAdded": 0,
+  "method": {
+    "geometryOwner": "three editable review-source Ponytail SVG facings",
+    "capFit": "bounded piecewise-linear landmark warp",
+    "attachmentFit": "shared declarative translation for authored tie and tail",
+    "replacementPathBuilders": 0
+  },
+  "audit": {
+    "variantCount": 18,
+    "sourceShapeCount": 9,
+    "derivedShapeCount": 54,
+    "missingHairAtLiteralScale": [],
+    "productionDifferences": [
+      "head-round/south",
+      "head-round/east",
+      "head-round/north",
+      "head-oval/south",
+      "head-oval/east",
+      "head-oval/north",
+      "head-boxy/south",
+      "head-boxy/east",
+      "head-boxy/north",
+      "head-long/south",
+      "head-long/east",
+      "head-long/north",
+      "head-angular/south",
+      "head-angular/east",
+      "head-angular/north",
+      "head-soft-square/south",
+      "head-soft-square/east",
+      "head-soft-square/north"
+    ],
+    "deterministicDigest": "630df358f5c199e136634c28f3c6f0f8565ee627fe49f46aaf2a60ceb02f6511"
+  }
+}

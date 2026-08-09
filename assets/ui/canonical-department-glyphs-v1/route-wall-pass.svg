@@ -1,0 +1,6 @@
+<svg data-ui-icon-id="route-wall-pass" data-icon-mode="tintable" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Route wall pass</title>
+  <desc>Approved department-era route wall-pass mark.</desc>
+  <metadata>{"family":"canonical-ui-department-glyphs-v1","decision":"approved-redesign"}</metadata>
+  <g id="approved-mark" transform="translate(64 64)"><path id="wall-pass" d="M -14.4 -48 V 48 M 14.4 -48 V 48 M -43.2 0 H 43.2" fill="none" stroke="#FFFFFF" stroke-width="9.6" stroke-linecap="square" stroke-linejoin="miter"/></g>
+</svg>

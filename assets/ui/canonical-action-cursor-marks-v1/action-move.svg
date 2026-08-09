@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-ui-icon-id="action-move" data-icon-mode="tintable">
+  <title>Move</title>
+  <desc>Approved four-axis move action mark.</desc>
+  <metadata>{"family":"canonical-ui-action-cursor-marks-v1","decision":"approved-redesign"}</metadata>
+  <g id="approved-mark" transform="translate(64 64)">
+    <path id="move-axes" d="M 0 -53.3333333333 V 53.3333333333 M -53.3333333333 0 H 53.3333333333 M 0 -53.3333333333 L -21.3333333333 -32 M 0 -53.3333333333 L 21.3333333333 -32 M 0 53.3333333333 L -21.3333333333 32 M 0 53.3333333333 L 21.3333333333 32 M -53.3333333333 0 L -32 -21.3333333333 M -53.3333333333 0 L -32 21.3333333333 M 53.3333333333 0 L 32 -21.3333333333 M 53.3333333333 0 L 32 21.3333333333" fill="none" stroke="#FFFFFF" stroke-width="10.6666666667" stroke-linecap="square" stroke-linejoin="miter"/>
+  </g>
+</svg>

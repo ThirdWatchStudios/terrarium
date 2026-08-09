@@ -1,0 +1,46 @@
+{
+  "status": "approved-for-production-promotion",
+  "approvedOn": "2026-08-02",
+  "sourceFiles": [
+    "docs/previews/canonical-bun-source-fit-v1/sources/bun.south.svg",
+    "docs/previews/canonical-bun-source-fit-v1/sources/bun.east.svg",
+    "docs/previews/canonical-bun-source-fit-v1/sources/bun.north.svg"
+  ],
+  "productionWiringChanged": false,
+  "canonicalSourceSvgChanged": false,
+  "reviewSourceSvgAdded": true,
+  "perHeadSvgVariantsAdded": 0,
+  "method": {
+    "geometryOwner": "three editable review-source Bun SVG facings",
+    "capFit": "bounded piecewise-linear landmark warp",
+    "knotFit": "separate declarative affine component frame",
+    "replacementPathBuilders": 0
+  },
+  "audit": {
+    "variantCount": 18,
+    "sourceShapeCount": 6,
+    "derivedShapeCount": 36,
+    "missingHairAtLiteralScale": [],
+    "productionDifferences": [
+      "head-round/south",
+      "head-round/east",
+      "head-round/north",
+      "head-oval/south",
+      "head-oval/east",
+      "head-oval/north",
+      "head-boxy/south",
+      "head-boxy/east",
+      "head-boxy/north",
+      "head-long/south",
+      "head-long/east",
+      "head-long/north",
+      "head-angular/south",
+      "head-angular/east",
+      "head-angular/north",
+      "head-soft-square/south",
+      "head-soft-square/east",
+      "head-soft-square/north"
+    ],
+    "deterministicDigest": "83f372eb93dce03e57dcaefedcc2b3c6091c450062258d05e068059c9560450e"
+  }
+}

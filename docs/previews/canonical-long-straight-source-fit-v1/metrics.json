@@ -1,0 +1,45 @@
+{
+  "status": "approved-for-production-promotion",
+  "approvedOn": "2026-08-02",
+  "sourceFiles": [
+    "docs/previews/canonical-long-straight-source-fit-v1/sources/long-straight.south.svg",
+    "docs/previews/canonical-long-straight-source-fit-v1/sources/long-straight.east.svg",
+    "docs/previews/canonical-long-straight-source-fit-v1/sources/long-straight.north.svg"
+  ],
+  "productionWiringChanged": false,
+  "canonicalSourceSvgChanged": false,
+  "reviewSourceSvgAdded": true,
+  "perHeadSvgVariantsAdded": 0,
+  "method": {
+    "geometryOwner": "three editable review-source Long straight SVG facings",
+    "fit": "bounded piecewise-linear crown, opening, width, and fall landmarks; both east pieces share the frame",
+    "replacementPathBuilders": 0
+  },
+  "audit": {
+    "variantCount": 18,
+    "sourceShapeCount": 4,
+    "derivedShapeCount": 24,
+    "missingHairAtLiteralScale": [],
+    "productionDifferences": [
+      "head-round/south",
+      "head-round/east",
+      "head-round/north",
+      "head-oval/south",
+      "head-oval/east",
+      "head-oval/north",
+      "head-boxy/south",
+      "head-boxy/east",
+      "head-boxy/north",
+      "head-long/south",
+      "head-long/east",
+      "head-long/north",
+      "head-angular/south",
+      "head-angular/east",
+      "head-angular/north",
+      "head-soft-square/south",
+      "head-soft-square/east",
+      "head-soft-square/north"
+    ],
+    "deterministicDigest": "93c687d5b0b729c615142cd8e7b44e5688cc4036549a8d7b924583db7dc111e3"
+  }
+}

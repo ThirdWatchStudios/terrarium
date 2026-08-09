@@ -1,0 +1,686 @@
+{
+  "status": "unity-import-complete-runtime-visual-deferred",
+  "sourceProfile": "editor-safe-static-prop-svg-v1",
+  "acceptedTarget": {
+    "exactAt": [
+      128
+    ],
+    "comparison": "canonical source versus current production compositor"
+  },
+  "importProof": {
+    "exactBakedCell": 128,
+    "vectorResampleScales": [
+      512,
+      90,
+      40
+    ],
+    "note": "Non-bake deltas are recorded rather than hidden; exported sprites bake at 128 px."
+  },
+  "productionReceiverProof": {
+    "exactAt": [
+      512,
+      128,
+      90,
+      40
+    ],
+    "comparison": "strict import versus generated production receiver"
+  },
+  "facilities": {
+    "serving-line": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/serving-line.svg",
+      "sourceSha256": "378cdf6a06c7014a5b0a31eb151ffe74d1a9bf486d595f76b9a962517252090c",
+      "projection": "elevation",
+      "gridFootprint": {
+        "w": 4,
+        "h": 1
+      },
+      "paletteDefaults": {
+        "primary": "#AEB5B5",
+        "secondary": "#5A6265",
+        "accent": "#D8D1BC"
+      },
+      "literalColors": {},
+      "importedShapeCount": 29,
+      "sourceVsCurrent": {
+        "40": {
+          "mismatchedPixels": 5,
+          "maxChannelDelta": 64
+        },
+        "90": {
+          "mismatchedPixels": 5,
+          "maxChannelDelta": 48
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 3,
+          "maxChannelDelta": 8
+        }
+      },
+      "sourceVsImported": {
+        "40": {
+          "mismatchedPixels": 5,
+          "maxChannelDelta": 64
+        },
+        "90": {
+          "mismatchedPixels": 5,
+          "maxChannelDelta": 48
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 3,
+          "maxChannelDelta": 8
+        }
+      },
+      "importedVsCurrent": {
+        "40": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "90": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      }
+    },
+    "service-scanner": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/service-scanner.svg",
+      "sourceSha256": "440c5c0758ba3c632b0b565603fe95ae82ea38abd6540fa8ab0dd18a31e09b6c",
+      "projection": "elevation",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "paletteDefaults": {
+        "primary": "#D7DBD8",
+        "secondary": "#565E5B",
+        "accent": "#B7BDBA"
+      },
+      "literalColors": {
+        "optic": "#5BE08A"
+      },
+      "importedShapeCount": 15,
+      "sourceVsCurrent": {
+        "40": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "90": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 1,
+          "maxChannelDelta": 1
+        }
+      },
+      "sourceVsImported": {
+        "40": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "90": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 1,
+          "maxChannelDelta": 1
+        }
+      },
+      "importedVsCurrent": {
+        "40": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "90": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      }
+    },
+    "commercial-range": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/commercial-range.svg",
+      "sourceSha256": "389c9c4d42286cb2608d49cf56ecfd7abf2606007103015fe38e4ad50746e56f",
+      "projection": "elevation",
+      "gridFootprint": {
+        "w": 2,
+        "h": 1
+      },
+      "paletteDefaults": {
+        "primary": "#9EA5A7",
+        "secondary": "#5B6366",
+        "accent": "#C8CFD0"
+      },
+      "literalColors": {},
+      "importedShapeCount": 20,
+      "sourceVsCurrent": {
+        "40": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "90": {
+          "mismatchedPixels": 4,
+          "maxChannelDelta": 7
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 4,
+          "maxChannelDelta": 64
+        }
+      },
+      "sourceVsImported": {
+        "40": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "90": {
+          "mismatchedPixels": 4,
+          "maxChannelDelta": 7
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 4,
+          "maxChannelDelta": 64
+        }
+      },
+      "importedVsCurrent": {
+        "40": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "90": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      }
+    },
+    "prep-table": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/prep-table.svg",
+      "sourceSha256": "9d1f1dc39ca88fc2ace992ff9224fc86deefde4c9d94ac353a9db82cc8ac5f2e",
+      "projection": "plan",
+      "gridFootprint": {
+        "w": 2,
+        "h": 1
+      },
+      "paletteDefaults": {
+        "primary": "#A8B0B2",
+        "secondary": "#D3D8D8",
+        "accent": "#697276"
+      },
+      "literalColors": {},
+      "importedShapeCount": 9,
+      "sourceVsCurrent": {
+        "40": {
+          "mismatchedPixels": 4,
+          "maxChannelDelta": 64
+        },
+        "90": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 6,
+          "maxChannelDelta": 16
+        }
+      },
+      "sourceVsImported": {
+        "40": {
+          "mismatchedPixels": 4,
+          "maxChannelDelta": 64
+        },
+        "90": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 6,
+          "maxChannelDelta": 16
+        }
+      },
+      "importedVsCurrent": {
+        "40": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "90": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      }
+    },
+    "dish-return": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/dish-return.svg",
+      "sourceSha256": "a85652ea2a572f236bb4b3a42135c441b6e54e7623c566dc2401f0806b1bb181",
+      "projection": "elevation",
+      "gridFootprint": {
+        "w": 2,
+        "h": 1
+      },
+      "paletteDefaults": {
+        "primary": "#7C8588",
+        "secondary": "#AEB6B7",
+        "accent": "#D8D1BC"
+      },
+      "literalColors": {},
+      "importedShapeCount": 13,
+      "sourceVsCurrent": {
+        "40": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "90": {
+          "mismatchedPixels": 3,
+          "maxChannelDelta": 12
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 5,
+          "maxChannelDelta": 64
+        }
+      },
+      "sourceVsImported": {
+        "40": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "90": {
+          "mismatchedPixels": 3,
+          "maxChannelDelta": 12
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 5,
+          "maxChannelDelta": 64
+        }
+      },
+      "importedVsCurrent": {
+        "40": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "90": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      }
+    },
+    "walk-in-front": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/walk-in-front.svg",
+      "sourceSha256": "48282617302d2f693e37da302df4dcd6c52a3c429fefc71853fa4cb449be43e6",
+      "projection": "elevation",
+      "gridFootprint": {
+        "w": 2,
+        "h": 1
+      },
+      "paletteDefaults": {
+        "primary": "#D0D5D5",
+        "secondary": "#747C7F",
+        "accent": "#AAB8C0"
+      },
+      "literalColors": {},
+      "importedShapeCount": 13,
+      "sourceVsCurrent": {
+        "40": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "90": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 2,
+          "maxChannelDelta": 16
+        }
+      },
+      "sourceVsImported": {
+        "40": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "90": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 2,
+          "maxChannelDelta": 16
+        }
+      },
+      "importedVsCurrent": {
+        "40": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "90": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      }
+    },
+    "dining-carrel": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/dining-carrel.svg",
+      "sourceSha256": "673e098c82f9c2e36d55ed51b6f3b939762b613509929247192fb27ae6990460",
+      "projection": "plan",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "paletteDefaults": {
+        "primary": "#AAB0B2",
+        "secondary": "#5C6367",
+        "accent": "#D9D6CB"
+      },
+      "literalColors": {},
+      "importedShapeCount": 17,
+      "sourceVsCurrent": {
+        "40": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "90": {
+          "mismatchedPixels": 5,
+          "maxChannelDelta": 16
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 12,
+          "maxChannelDelta": 16
+        }
+      },
+      "sourceVsImported": {
+        "40": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "90": {
+          "mismatchedPixels": 5,
+          "maxChannelDelta": 16
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 12,
+          "maxChannelDelta": 16
+        }
+      },
+      "importedVsCurrent": {
+        "40": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "90": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      }
+    },
+    "cafeteria-table": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/cafeteria-table.svg",
+      "sourceSha256": "808a19ed54d8580675f46b4bbbcc4f91af596cb159395f032c2a62b0cf25dc02",
+      "projection": "plan",
+      "gridFootprint": {
+        "w": 4,
+        "h": 2
+      },
+      "paletteDefaults": {
+        "primary": "#8B6040",
+        "secondary": "#57402F",
+        "accent": "#C08A58"
+      },
+      "literalColors": {},
+      "importedShapeCount": 16,
+      "sourceVsCurrent": {
+        "40": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "90": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 9,
+          "maxChannelDelta": 16
+        }
+      },
+      "sourceVsImported": {
+        "40": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "90": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 9,
+          "maxChannelDelta": 16
+        }
+      },
+      "importedVsCurrent": {
+        "40": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "90": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      }
+    },
+    "tray-stack": {
+      "sourceFile": "assets/props/quota-co-workhorse-v1/tray-stack.svg",
+      "sourceSha256": "73cf956bb699f21327e9d737e61748ed6318ee67c97e5102fea9e0decd464077",
+      "projection": "plan",
+      "gridFootprint": {
+        "w": 1,
+        "h": 1
+      },
+      "paletteDefaults": {
+        "primary": "#AAB2B4",
+        "secondary": "#717A7E",
+        "accent": "#D0D6D7"
+      },
+      "literalColors": {},
+      "importedShapeCount": 11,
+      "sourceVsCurrent": {
+        "40": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "90": {
+          "mismatchedPixels": 3,
+          "maxChannelDelta": 16
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 22,
+          "maxChannelDelta": 16
+        }
+      },
+      "sourceVsImported": {
+        "40": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "90": {
+          "mismatchedPixels": 3,
+          "maxChannelDelta": 16
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 22,
+          "maxChannelDelta": 16
+        }
+      },
+      "importedVsCurrent": {
+        "40": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "90": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "128": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        "512": {
+          "mismatchedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      }
+    }
+  },
+  "protectedSurfaceHashes": {
+    "CONTRACT.md": "c86c5dcfde03b36353ce0ac5e6725c7c10b9707a23ea28baa4e93f41526b7738",
+    "src/core/exporter.ts": "6e1d2b0facf0973ea328b2a88c77d99ce9133e15fe46996cc2c10c0264b08751",
+    "src/data/defaults.ts": "ebf54a31b97281ae9509b97c917f160023d635539e8fc03ac09a8216d17d9a10",
+    "src/props/templates.ts": "7e316c16351c73fb2af26d273f81aa28ef6d942c2194eb5f5555d840040c4cf8",
+    "src/props/generated/quotaCoWorkhorseArt.ts": "53f0d23c6ffe92d86612c391cb4c4c34edd3978e558cc578da4919c463cdae9d",
+    "scripts/props/importer.ts": "96aca5c6fd4f2f4f3afc3d5fe532929e4f7dc6b73efec3330022ef256b308ada"
+  },
+  "productionChanges": [
+    "canonical workhorse registration",
+    "generated production receiver update",
+    "handwritten builder removal",
+    "portfolio and reference-guide registration"
+  ],
+  "downstreamHandoff": {
+    "browserExport": "complete",
+    "unityImport": "complete",
+    "runtimeVisualAcceptance": "deferred",
+    "runtimeVisualAcceptanceReason": "The cafeteria facilities do not yet have a viable in-game path."
+  },
+  "deferred": [
+    "gameplay-scale visual acceptance once an in-game facility path exists",
+    "commit"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "status": "approved-production-source-authority",
+  "sourceFiles": [
+    "assets/parts/hair/balding.south.svg",
+    "assets/parts/hair/balding.east.svg",
+    "assets/parts/hair/balding.north.svg"
+  ],
+  "productionWiringChanged": true,
+  "canonicalSourceSvgChanged": true,
+  "reviewSourceSvgAdded": false,
+  "perHeadSvgVariantsAdded": 0,
+  "method": {
+    "geometryOwner": "three editable review-source Balding SVG facings",
+    "fit": "independent declarative component transforms for temples, rear piece, and horseshoe",
+    "replacementPathBuilders": 0
+  },
+  "audit": {
+    "variantCount": 18,
+    "sourceShapeCount": 4,
+    "derivedShapeCount": 24,
+    "missingHairAtLiteralScale": [],
+    "productionDifferences": [],
+    "deterministicDigest": "9b2e9dcf30e73e320b582e48a8da9498d79eea7d0d2ed4447a097c083846e16d"
+  }
+}

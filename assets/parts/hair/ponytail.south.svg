@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
-  <title>Terrarium hair-ponytail south authored art</title>
-  <desc>Current production high ponytail front silhouette with a side peek.</desc>
+  <title>Terrarium hair-ponytail south canonical art</title>
+  <desc>Cap, tie, and hanging tail authored on the shared round-head fit frame.</desc>
   <g id="art" transform="translate(64 44)">
-    <path id="art/cap" d="M -19.4164878389476 -8 A 21 21 0 0 1 19.4164878389476 -8 Z" fill="#00FFFF" fill-rule="nonzero"/>
-    <path id="art/tie" d="M 12 -13 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
-    <path id="art/tail" d="M 18 -16 C 29 -17 34 -8 29 0 C 34 8 29 20 21 25 C 15 21 17 12 21 6 C 16 1 15 -8 18 -16 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/cap" d="M -22 -2 C -20.2 -16 -10.6 -22 0 -22 C 11 -22 20.2 -16 22 -2 L 12.8 1 C 5.5 -4 -4.8 -4 -13.2 1 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/tie" d="M 16 -2 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/tail" d="M 21 -7 C 32 -10 37 -1 31 6 C 36 13 31 23 22 27 C 16 21 17 13 22 6 C 17 2 17 -3 21 -7 Z" fill="#00FFFF" fill-rule="nonzero"/>
   </g>
 </svg>

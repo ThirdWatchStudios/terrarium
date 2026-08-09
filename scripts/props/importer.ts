@@ -76,6 +76,15 @@ export const QUOTA_CO_INTERIOR_WORKHORSE_PROP_IDS = [
   'fish-tank',
   'string-lights',
   'rug',
+  'serving-line',
+  'service-scanner',
+  'commercial-range',
+  'prep-table',
+  'dish-return',
+  'walk-in-front',
+  'dining-carrel',
+  'cafeteria-table',
+  'tray-stack',
 ] as const;
 
 export const QUOTA_CO_EXTERIOR_WORKHORSE_PROP_IDS = [
@@ -111,23 +120,31 @@ interface SourceElement {
   id: string;
   groupId: string;
   fillToken?: PropPaletteToken;
+  silhouette?: boolean;
   shape: ShapeSpec;
 }
 
 interface SourceDocument {
-  id: QuotaCoWorkhorsePropId;
+  id: string;
   projection: Projection;
   normalizedSvg: string;
   elements: Array<{
     id: string;
     groupId: string;
     fillToken?: PropPaletteToken;
+    silhouette?: boolean;
   }>;
 }
 
 interface ManifestEntry {
-  id: QuotaCoWorkhorsePropId;
+  id: string;
   file: string;
+  projection: Projection;
+  paletteDefaults: PropPalette;
+}
+
+export interface StaticPropSourceDefinition {
+  id: string;
   projection: Projection;
   paletteDefaults: PropPalette;
 }
@@ -404,6 +421,60 @@ const MANIFEST: readonly ManifestEntry[] = [
     paletteDefaults: { primary: '#DED5BD', secondary: '#355247', accent: '#B65F4D' },
   },
   {
+    id: 'serving-line',
+    file: 'serving-line.svg',
+    projection: 'elevation',
+    paletteDefaults: { primary: '#AEB5B5', secondary: '#5A6265', accent: '#D8D1BC' },
+  },
+  {
+    id: 'service-scanner',
+    file: 'service-scanner.svg',
+    projection: 'elevation',
+    paletteDefaults: { primary: '#D7DBD8', secondary: '#565E5B', accent: '#B7BDBA' },
+  },
+  {
+    id: 'commercial-range',
+    file: 'commercial-range.svg',
+    projection: 'elevation',
+    paletteDefaults: { primary: '#9EA5A7', secondary: '#5B6366', accent: '#C8CFD0' },
+  },
+  {
+    id: 'prep-table',
+    file: 'prep-table.svg',
+    projection: 'plan',
+    paletteDefaults: { primary: '#A8B0B2', secondary: '#D3D8D8', accent: '#697276' },
+  },
+  {
+    id: 'dish-return',
+    file: 'dish-return.svg',
+    projection: 'elevation',
+    paletteDefaults: { primary: '#7C8588', secondary: '#AEB6B7', accent: '#D8D1BC' },
+  },
+  {
+    id: 'walk-in-front',
+    file: 'walk-in-front.svg',
+    projection: 'elevation',
+    paletteDefaults: { primary: '#D0D5D5', secondary: '#747C7F', accent: '#AAB8C0' },
+  },
+  {
+    id: 'dining-carrel',
+    file: 'dining-carrel.svg',
+    projection: 'plan',
+    paletteDefaults: { primary: '#AAB0B2', secondary: '#5C6367', accent: '#D9D6CB' },
+  },
+  {
+    id: 'cafeteria-table',
+    file: 'cafeteria-table.svg',
+    projection: 'plan',
+    paletteDefaults: { primary: '#8B6040', secondary: '#57402F', accent: '#C08A58' },
+  },
+  {
+    id: 'tray-stack',
+    file: 'tray-stack.svg',
+    projection: 'plan',
+    paletteDefaults: { primary: '#AAB2B4', secondary: '#717A7E', accent: '#D0D6D7' },
+  },
+  {
     id: 'car',
     file: 'car.svg',
     projection: 'plan',
@@ -548,7 +619,7 @@ function serializePresentationAttributes(node: INode): string {
 function parseSourceDocument(
   source: string,
   input: string,
-  expected: ManifestEntry,
+  expected: StaticPropSourceDefinition,
 ): SourceDocument {
   if (/<!DOCTYPE/i.test(input)) fail(source, 'DOCTYPE declarations are forbidden');
   let root: INode;
@@ -610,6 +681,7 @@ function parseSourceDocument(
     node: INode,
     groupId: string | undefined,
     ignored: boolean,
+    inheritedSilhouette: boolean | undefined,
   ): void => {
     if (node.type === 'text') {
       if (node.value.trim()) fail(source, 'rendered text outside title/desc is forbidden');
@@ -637,8 +709,15 @@ function parseSourceDocument(
       if (!id) fail(source, 'every editor group requires an id');
       const skip = ignored;
       if (skip) return;
+      const rawSilhouette = node.attributes['data-silhouette'];
+      if (rawSilhouette !== undefined && rawSilhouette !== 'true' && rawSilhouette !== 'false') {
+        fail(source, `data-silhouette on ${id} must be true or false`);
+      }
+      const silhouette = rawSilhouette === undefined
+        ? inheritedSilhouette
+        : rawSilhouette === 'true';
       normalized.push(`<g id="${escapeAttribute(id)}"${serializePresentationAttributes(node)}>`);
-      for (const child of node.children) visit(child, id, false);
+      for (const child of node.children) visit(child, id, false, silhouette);
       normalized.push('</g>');
       return;
     }
@@ -677,10 +756,17 @@ function parseSourceDocument(
     normalized.push(
       `<path id="${escapeAttribute(id)}" d="${escapeAttribute(d)}"${attributes}${strokeDefaults}/>`
     );
-    elements.push({ id, groupId, fillToken });
+    const rawSilhouette = node.attributes['data-silhouette'];
+    if (rawSilhouette !== undefined && rawSilhouette !== 'true' && rawSilhouette !== 'false') {
+      fail(source, `data-silhouette on ${id} must be true or false`);
+    }
+    const silhouette = rawSilhouette === undefined
+      ? inheritedSilhouette
+      : rawSilhouette === 'true';
+    elements.push({ id, groupId, fillToken, silhouette });
   };
 
-  for (const child of root.children) visit(child, undefined, false);
+  for (const child of root.children) visit(child, undefined, false, undefined);
   if (elements.length === 0) fail(source, 'source contains no production elements');
 
   return {
@@ -696,7 +782,7 @@ function parseSourceDocument(
 function compileElements(
   source: string,
   input: string,
-  manifest: ManifestEntry,
+  manifest: StaticPropSourceDefinition,
 ): SourceElement[] {
   const document = parseSourceDocument(source, input, manifest);
   const shapes = compileAuthoredSvg(document.normalizedSvg, {
@@ -722,20 +808,35 @@ function compileElements(
         d: shape.d,
         stroke: shape.stroke,
         strokeWidth: shape.strokeWidth,
+        strokeLinecap: shape.strokeLinecap,
+        strokeLinejoin: shape.strokeLinejoin,
         opacity: shape.opacity,
         silhouette: false,
       };
       delete shape.stroke;
       delete shape.strokeWidth;
-      shape.silhouette = true;
+      shape.silhouette = metadata.silhouette ?? true;
       return [
         { ...metadata, shape },
         { ...metadata, shape: stroke },
       ];
     }
-    shape.silhouette = Boolean(shape.fill);
+    shape.silhouette = metadata.silhouette ?? Boolean(shape.fill);
     return [{ ...metadata, shape }];
   });
+}
+
+/**
+ * Compile one source-faithful, non-parametric prop SVG through the same strict
+ * authored-art seam as the workhorse catalog. Department machines use this to
+ * keep each accepted fill/queue state as an explicit baked variant.
+ */
+export function compileStaticPropSource(
+  source: string,
+  input: string,
+  definition: StaticPropSourceDefinition,
+): ShapeSpec[] {
+  return compileElements(source, input, definition).map(({ shape }) => ({ ...shape }));
 }
 
 function transformed(
@@ -1667,6 +1768,16 @@ function buildVariants(
     case 'fish-tank': return fishTankVariants(elements);
     case 'string-lights': return stringLightsVariants(elements);
     case 'rug': return rugVariants(elements);
+    case 'serving-line':
+    case 'service-scanner':
+    case 'commercial-range':
+    case 'prep-table':
+    case 'dish-return':
+    case 'walk-in-front':
+    case 'dining-carrel':
+    case 'cafeteria-table':
+    case 'tray-stack':
+      return staticVariants(elements);
     case 'car': return carVariants(elements);
     case 'sign-lot': return signLotVariants(elements);
     case 'tree-canopy': return treeCanopyVariants(elements);
@@ -1694,12 +1805,12 @@ export async function compileQuotaCoWorkhorseProps(
     const input = await readFile(absolutePath, 'utf8');
     const elements = compileElements(sourceFile, input, manifest);
     imports.push({
-      id: manifest.id,
+      id: manifest.id as QuotaCoWorkhorsePropId,
       projection: manifest.projection,
       sourceFile,
       sourceSha256: createHash('sha256').update(input).digest('hex'),
       paletteDefaults: manifest.paletteDefaults,
-      variants: buildVariants(manifest.id, elements),
+      variants: buildVariants(manifest.id as QuotaCoWorkhorsePropId, elements),
     });
   }
   return imports.sort((left, right) => compareText(left.id, right.id));
@@ -1714,6 +1825,8 @@ function emitShape(shape: ShapeSpec): string {
   if (shape.fill !== undefined) fields.push(`fill: ${quote(shape.fill)}`);
   if (shape.stroke !== undefined) fields.push(`stroke: ${quote(shape.stroke)}`);
   if (shape.strokeWidth !== undefined) fields.push(`strokeWidth: ${shape.strokeWidth}`);
+  if (shape.strokeLinecap !== undefined) fields.push(`strokeLinecap: ${quote(shape.strokeLinecap)}`);
+  if (shape.strokeLinejoin !== undefined) fields.push(`strokeLinejoin: ${quote(shape.strokeLinejoin)}`);
   if (shape.opacity !== undefined) fields.push(`opacity: ${shape.opacity}`);
   if (shape.silhouette !== undefined) fields.push(`silhouette: ${shape.silhouette}`);
   return `{ ${fields.join(', ')} }`;

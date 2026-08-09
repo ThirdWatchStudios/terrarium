@@ -6,11 +6,12 @@ import svgpath from 'svgpath';
 import { parseSync, type INode } from 'svgson';
 import { optimize } from 'svgo';
 
-import type { BodyFacingAnchors, Facing, ShapeSpec } from '../../src/core/types';
+import type { BodyFacingAnchors, Facing, PartVariant, ShapeSpec } from '../../src/core/types';
 import { FACINGS } from '../../src/core/types';
 import { BODY_ARCHETYPES } from '../../src/parts/bodyArchetypes';
 import type {
   ImportedBodyDetailOverlay,
+  ImportedHeadFittedPartOverlay,
   ImportedPartArt,
   ImportedPartSourceKind,
 } from '../../src/parts/importedArt';
@@ -19,9 +20,25 @@ import type {
   PartImportComponent,
   PartImportTarget,
 } from './catalog';
+import {
+  fitCanonicalBobVariant,
+} from './canonicalBobFit';
+import { fitCanonicalBunVariant } from './canonicalBunFit';
+import {
+  CANONICAL_HAIR_HEAD_IDS,
+  type CanonicalHairHeadId,
+} from './canonicalHairFit';
+import { fitCanonicalShortVariant } from './canonicalShortFit';
+import { fitCanonicalPonytailVariant } from './canonicalPonytailFit';
+import { fitCanonicalLongStraightVariant } from './canonicalLongStraightFit';
+import { fitCanonicalBaldingVariant } from './canonicalBaldingFit';
+import { fitCanonicalPixieVariant } from './canonicalPixieFit';
+import { fitCanonicalSidePartVariant } from './canonicalSidePartFit';
+import { fitCanonicalCurlyVariant } from './canonicalCurlyFit';
+import { fitCanonicalCoilsVariant } from './canonicalCoilsFit';
 import { SENTINEL_TO_PALETTE_REF } from './sentinels';
 
-const SUPPORTED_SLOTS = ['body', 'head', 'hair', 'outfit'] as const;
+const SUPPORTED_SLOTS = ['body', 'head', 'hair', 'outfit', 'accessory'] as const;
 type SupportedSlot = (typeof SUPPORTED_SLOTS)[number];
 
 const SLOT_SET = new Set<string>(SUPPORTED_SLOTS);
@@ -38,6 +55,7 @@ export const PART_AUTHORING_ORIGINS: Readonly<Record<SupportedSlot, { x: number;
   head: { x: 64, y: 44 },
   hair: { x: 64, y: 44 },
   outfit: { x: 64, y: 87 },
+  accessory: { x: 64, y: 44 },
 };
 
 interface Matrix {
@@ -87,10 +105,12 @@ export interface CompilePartSvgContext {
   slot: SupportedSlot;
   /**
    * Keep canonical part-local path syntax after validating its canvas-space
-   * geometry. Body promotion and explicit byte-stable static migration targets
-   * use this to avoid normalization-only render and snapshot drift.
+   * geometry. Body promotion and explicit byte-stable static or head-fitted
+   * migration targets use this to avoid normalization-only render drift.
    */
   preserveLocalPaths?: boolean;
+  /** Preserve authored palette-run order instead of requiring one run per tint. */
+  preservePaintRuns?: boolean;
 }
 
 /**
@@ -102,6 +122,7 @@ export interface CompileAuthoredSvgContext {
   source: string;
   origin: { x: number; y: number };
   preserveLocalPaths?: boolean;
+  preservePaintRuns?: boolean;
   canonicalTransformLabel?: string;
 }
 
@@ -345,8 +366,11 @@ function validateAttributes(
       fail(source, 'group/root opacity cannot be represented by ShapeSpec');
     }
   }
-  if (!ignored && attrs['stroke-linecap'] !== undefined && attrs['stroke-linecap'].toLowerCase() !== 'round') {
-    fail(source, 'only round stroke linecaps are supported');
+  if (!ignored && attrs['stroke-linecap'] !== undefined && !['round', 'butt', 'square'].includes(attrs['stroke-linecap'].toLowerCase())) {
+    fail(source, 'stroke-linecap must be round, butt, or square');
+  }
+  if (!ignored && attrs['stroke-linejoin'] !== undefined && !['round', 'miter', 'bevel'].includes(attrs['stroke-linejoin'].toLowerCase())) {
+    fail(source, 'stroke-linejoin must be round, miter, or bevel');
   }
   if (!ignored && attrs['stroke-linejoin'] !== undefined && attrs['stroke-linejoin'].toLowerCase() !== 'round') {
     fail(source, 'only round stroke linejoins are supported');
@@ -600,8 +624,13 @@ function compilePath(
 
   let strokeWidth: number | undefined;
   if (stroke) {
-    if (paint.strokeLinecap?.toLowerCase() !== 'round' || paint.strokeLinejoin?.toLowerCase() !== 'round') {
-      fail(context.source, 'stroked paths must explicitly use round linecaps and linejoins');
+    const linecap = paint.strokeLinecap?.toLowerCase();
+    const linejoin = paint.strokeLinejoin?.toLowerCase();
+    if (!linecap || !['round', 'butt', 'square'].includes(linecap)) {
+      fail(context.source, 'stroked paths must explicitly use a supported linecap');
+    }
+    if (!linejoin || !['round', 'miter', 'bevel'].includes(linejoin)) {
+      fail(context.source, 'stroked paths must explicitly use a supported linejoin');
     }
     strokeWidth = parsePositiveNumber(context.source, 'stroke-width', paint.strokeWidth);
     strokeWidth = roundNumber(strokeWidth * strokeScale(context.source, matrix));
@@ -641,6 +670,8 @@ function compilePath(
   if (stroke) {
     shape.stroke = stroke;
     shape.strokeWidth = strokeWidth;
+    shape.strokeLinecap = paint.strokeLinecap?.toLowerCase() as ShapeSpec['strokeLinecap'];
+    shape.strokeLinejoin = paint.strokeLinejoin?.toLowerCase() as ShapeSpec['strokeLinejoin'];
   }
   if (opacity !== undefined) {
     const roundedOpacity = roundNumber(opacity);
@@ -691,7 +722,7 @@ export function compileAuthoredSvg(input: string, context: CompileAuthoredSvgCon
     ignored: false,
   });
   if (shapes.length === 0) fail(context.source, 'document contains no importable paths');
-  paintBucketSequence(context.source, shapes);
+  if (!context.preservePaintRuns) paintBucketSequence(context.source, shapes);
   return shapes;
 }
 
@@ -701,6 +732,7 @@ export function compilePartSvg(input: string, context: CompilePartSvgContext): S
     source: context.source,
     origin: PART_AUTHORING_ORIGINS[context.slot],
     preserveLocalPaths: context.preserveLocalPaths,
+    preservePaintRuns: context.preservePaintRuns,
     canonicalTransformLabel: context.slot,
   });
 }
@@ -801,14 +833,15 @@ function sourceDescriptor(
   const component = match[2];
   if (!FACING_SET.has(match[3])) fail(relativePath, 'west is runtime-mirrored and cannot be authored');
   const facing = match[3] as Facing;
-  if (slug.startsWith(`${slot}-`)) {
-    fail(relativePath, `slug must omit the ${slot}- id prefix`);
+  const idPrefix = slot === 'accessory' ? 'acc' : slot;
+  if (slug.startsWith(`${idPrefix}-`)) {
+    fail(relativePath, `slug must omit the ${idPrefix}- id prefix`);
   }
   return {
     absolutePath,
     relativePath,
     sourcePath: `${sourcePathPrefix}/${relativePath}`,
-    id: `${slot}-${slug}`,
+    id: `${idPrefix}-${slug}`,
     slot,
     facing,
     ...(component ? { component } : {}),
@@ -834,11 +867,32 @@ function validateTarget(group: MutableImportGroup, target: PartImportTarget | un
   const mode = target.importMode ?? 'static';
   if (
     target.preserveLocalPaths &&
-    (mode !== 'static' || (target.slot !== 'head' && target.slot !== 'hair'))
+    (
+      mode !== 'fixed-body-art'
+      && mode !== 'body-variant-art'
+      && mode !== 'body-variant-overlay-art'
+      && (
+        (mode !== 'static' && mode !== 'head-fitted-art')
+        || (target.slot !== 'head' && target.slot !== 'hair' && target.slot !== 'accessory')
+      )
+    )
   ) {
-    fail(group.id, 'preserveLocalPaths is supported only for static head/hair targets');
+    fail(group.id, 'preserveLocalPaths is supported only for body-variant art, fixed-body-art, or static/head-fitted head/hair/accessory targets');
   }
-  if (mode === 'body-art') {
+  if (target.preservePaintRuns && mode !== 'body-variant-overlay-art') {
+    fail(group.id, 'preservePaintRuns is supported only for body-variant-overlay-art targets');
+  }
+  if (mode === 'head-fitted-art') {
+    if (
+      target.slot !== 'hair' ||
+      target.anchor !== 'headCenter' ||
+      target.buildVariant ||
+      !target.headFitAdapter ||
+      !Number.isFinite(target.variantZ)
+    ) {
+      fail(group.id, 'head-fitted-art targets require static head-anchored hair, an adapter, and variant z-order');
+    }
+  } else if (mode === 'body-art') {
     if (
       target.slot !== 'body' ||
       target.anchor !== 'body' ||
@@ -846,6 +900,41 @@ function validateTarget(group: MutableImportGroup, target: PartImportTarget | un
       !target.bodyAnchors
     ) {
       fail(group.id, 'body-art targets must be body-anchored rigged static parts');
+    }
+  } else if (mode === 'body-variant-art') {
+    const productionBodyIds = BODY_ARCHETYPES.map(({ id }) => id);
+    if (
+      target.slot !== 'outfit' ||
+      target.anchor !== 'body' ||
+      target.buildVariant ||
+      target.preserveLocalPaths !== true ||
+      !Number.isFinite(target.variantZ) ||
+      target.bodyVariantIds?.join(',') !== productionBodyIds.join(',')
+    ) {
+      fail(group.id, 'body-variant-art targets require exact path-stable sources for every production body and finite z-order');
+    }
+  } else if (mode === 'body-variant-overlay-art') {
+    const productionBodyIds = BODY_ARCHETYPES.map(({ id }) => id);
+    if (
+      target.slot !== 'outfit' ||
+      target.anchor !== 'body' ||
+      target.buildVariant ||
+      target.preserveLocalPaths !== true ||
+      !Number.isFinite(target.variantZ) ||
+      target.bodyVariantIds?.join(',') !== productionBodyIds.join(',')
+    ) {
+      fail(group.id, 'body-variant-overlay-art targets require exact path-stable detail sources for every production body and finite z-order');
+    }
+  } else if (mode === 'fixed-body-art') {
+    if (
+      target.slot !== 'outfit' ||
+      target.anchor !== 'body' ||
+      target.buildVariant ||
+      !target.referenceBodyId ||
+      !Number.isFinite(target.variantZ) ||
+      target.preserveLocalPaths !== true
+    ) {
+      fail(group.id, 'fixed-body-art targets require a path-stable static body-anchored outfit, reference body, and z-order');
     }
   } else if (mode === 'anchored-detail') {
     if (target.slot !== 'outfit' || target.anchor !== 'body' || !target.buildVariant) {
@@ -899,11 +988,17 @@ function validateTarget(group: MutableImportGroup, target: PartImportTarget | un
     }
   }
 
-  if (mode === 'component-detail') {
+  if (
+    mode === 'component-detail' ||
+    mode === 'body-variant-art' ||
+    mode === 'body-variant-overlay-art'
+  ) {
     if (FACINGS.some((facing) => group.files[facing] !== undefined)) {
-      fail(group.id, 'component-detail targets cannot mix flat part files with component files');
+      fail(group.id, `${mode} targets cannot mix flat part files with component files`);
     }
-    const expectedIds = target.components?.map(({ id }) => id) ?? [];
+    const expectedIds = mode === 'body-variant-art' || mode === 'body-variant-overlay-art'
+      ? [...(target.bodyVariantIds ?? [])]
+      : target.components?.map(({ id }) => id) ?? [];
     const importedIds = [...group.componentFiles.keys()].sort(compareText);
     const sortedExpectedIds = [...expectedIds].sort(compareText);
     if (sortedExpectedIds.join(',') !== importedIds.join(',')) {
@@ -912,13 +1007,16 @@ function validateTarget(group: MutableImportGroup, target: PartImportTarget | un
         `must import component set (${expectedIds.join(', ')}); received ${importedIds.join(', ') || 'none'}`,
       );
     }
-    for (const component of target.components ?? []) {
-      const files = group.componentFiles.get(component.id);
-      const expectedFacings = FACINGS.filter((facing) => component.facings[facing] !== undefined);
+    for (const componentId of expectedIds) {
+      const files = group.componentFiles.get(componentId);
+      const component = target.components?.find(({ id }) => id === componentId);
+      const expectedFacings = mode === 'body-variant-art' || mode === 'body-variant-overlay-art'
+        ? [...FACINGS]
+        : FACINGS.filter((facing) => component?.facings[facing] !== undefined);
       const importedFacings = FACINGS.filter((facing) => files?.[facing] !== undefined);
       if (expectedFacings.join(',') !== importedFacings.join(',')) {
         fail(
-          `${group.id}.${component.id}`,
+          `${group.id}.${componentId}`,
           `must import the complete facing set (${expectedFacings.join(', ')}); received ${importedFacings.join(', ') || 'none'}`,
         );
       }
@@ -1104,6 +1202,98 @@ function expandComponentDetailVariants(
   return bodyVariants;
 }
 
+function expandHeadFittedVariants(
+  source: string,
+  target: PartImportTarget,
+  facings: Partial<Record<Facing, readonly ShapeSpec[]>>,
+): ImportedHeadFittedPartOverlay['headVariants'] {
+  type FitVariant = (
+    variant: Pick<PartVariant, 'z'> & { readonly shapes: readonly ShapeSpec[] },
+    headId: CanonicalHairHeadId,
+    facing: Facing,
+  ) => PartVariant;
+  let fitVariant: FitVariant;
+  if (target.headFitAdapter === 'canonical-bob-v1' && target.id === 'hair-bob') {
+    fitVariant = fitCanonicalBobVariant;
+  } else if (target.headFitAdapter === 'canonical-short-v1' && target.id === 'hair-short') {
+    fitVariant = fitCanonicalShortVariant;
+  } else if (target.headFitAdapter === 'canonical-bun-v1' && target.id === 'hair-bun') {
+    fitVariant = fitCanonicalBunVariant;
+  } else if (
+    target.headFitAdapter === 'canonical-ponytail-v1'
+    && target.id === 'hair-ponytail'
+  ) {
+    fitVariant = fitCanonicalPonytailVariant;
+  } else if (
+    target.headFitAdapter === 'canonical-long-straight-v1'
+    && target.id === 'hair-long-straight'
+  ) {
+    fitVariant = fitCanonicalLongStraightVariant;
+  } else if (
+    target.headFitAdapter === 'canonical-balding-v1'
+    && target.id === 'hair-balding'
+  ) {
+    fitVariant = fitCanonicalBaldingVariant;
+  } else if (
+    target.headFitAdapter === 'canonical-pixie-v1'
+    && target.id === 'hair-pixie'
+  ) {
+    fitVariant = fitCanonicalPixieVariant;
+  } else if (
+    target.headFitAdapter === 'canonical-side-part-v1'
+    && target.id === 'hair-side-part'
+  ) {
+    fitVariant = fitCanonicalSidePartVariant;
+  } else if (
+    target.headFitAdapter === 'canonical-curly-v1'
+    && target.id === 'hair-curly'
+  ) {
+    fitVariant = fitCanonicalCurlyVariant;
+  } else if (
+    target.headFitAdapter === 'canonical-coils-v1'
+    && target.id === 'hair-coils'
+  ) {
+    fitVariant = fitCanonicalCoilsVariant;
+  } else {
+    fail(source, `unsupported head-fit adapter ${target.headFitAdapter ?? 'none'} for ${target.id}`);
+  }
+  if (target.variantZ === undefined) {
+    fail(source, 'head-fitted-art target has no variant z-order');
+  }
+
+  const headVariants: Record<string, Partial<Record<Facing, PartVariant>>> = {};
+  for (const headId of CANONICAL_HAIR_HEAD_IDS) {
+    const variants: Partial<Record<Facing, PartVariant>> = {};
+    for (const facing of FACINGS) {
+      const sourceShapes = facings[facing]
+        ?? fail(source, `head-fitted-art is missing ${facing} source geometry`);
+      const fitted = fitVariant(
+        { z: target.variantZ, shapes: sourceShapes },
+        headId,
+        facing,
+      );
+      const origin = PART_AUTHORING_ORIGINS.hair;
+      fitted.shapes.forEach((shape, index) => {
+        const canvasPath = svgpath(shape.d)
+          .translate(origin.x, origin.y)
+          .round(PATH_PRECISION)
+          .toString();
+        validateBounds(
+          `${source}/${headId}/${facing}/shape-${index + 1}`,
+          canvasPath,
+          shape.fill,
+          shape.stroke,
+          shape.strokeWidth,
+          shape.silhouette !== false,
+        );
+      });
+      variants[facing] = fitted;
+    }
+    headVariants[headId] = variants;
+  }
+  return headVariants;
+}
+
 /** Compile a source tree atomically in memory. No output is written on failure. */
 export async function compilePartDirectory(
   options: CompilePartDirectoryOptions,
@@ -1142,8 +1332,32 @@ export async function compilePartDirectory(
     const target = validateTarget(group, targets.get(group.id));
     const facings: Partial<Record<Facing, ShapeSpec[]>> = {};
     const componentFacings = new Map<string, Partial<Record<Facing, ShapeSpec[]>>>();
+    const bodyVariantFacings: Record<string, Partial<Record<Facing, ShapeSpec[]>>> = {};
     const provenanceFiles: string[] = [];
-    if (target.importMode === 'component-detail') {
+    if (
+      target.importMode === 'body-variant-art' ||
+      target.importMode === 'body-variant-overlay-art'
+    ) {
+      for (const bodyId of target.bodyVariantIds ?? []) {
+        const files = group.componentFiles.get(bodyId)
+          ?? fail(group.id, `missing body-variant source ${bodyId}`);
+        const compiled: Partial<Record<Facing, ShapeSpec[]>> = {};
+        for (const facing of FACINGS) {
+          const descriptor = files[facing]
+            ?? fail(group.id, `missing body-variant source ${bodyId}/${facing}`);
+          const input = await readFile(descriptor.absolutePath, 'utf8');
+          compiled[facing] = compilePartSvg(input, {
+            source: descriptor.sourcePath,
+            slot: descriptor.slot,
+            preserveLocalPaths: true,
+            preservePaintRuns: target.preservePaintRuns,
+          });
+          provenanceFiles.push(descriptor.sourcePath);
+        }
+        if (!target.preservePaintRuns) validateFacingPaintOrder(`${group.id}/${bodyId}`, compiled);
+        bodyVariantFacings[bodyId] = compiled;
+      }
+    } else if (target.importMode === 'component-detail') {
       for (const component of target.components ?? []) {
         const files = group.componentFiles.get(component.id)
           ?? fail(group.id, `missing component source ${component.id}`);
@@ -1180,12 +1394,19 @@ export async function compilePartDirectory(
         facings[facing] = compilePartSvg(input, {
           source: descriptor.sourcePath,
           slot: descriptor.slot,
-          preserveLocalPaths: target.importMode === 'body-art' || target.preserveLocalPaths === true,
+          preserveLocalPaths:
+            target.importMode === 'body-art'
+            || target.importMode === 'fixed-body-art'
+            || target.preserveLocalPaths === true,
         });
         provenanceFiles.push(descriptor.sourcePath);
       }
     }
-    validateFacingPaintOrder(group.id, facings);
+    if (
+      target.importMode !== 'body-variant-art' &&
+      target.importMode !== 'body-variant-overlay-art' &&
+      !target.preservePaintRuns
+    ) validateFacingPaintOrder(group.id, facings);
     if (target.importMode === 'body-art') {
       for (const facing of FACINGS) {
         const shapes = facings[facing];
@@ -1194,15 +1415,90 @@ export async function compilePartDirectory(
         }
       }
     }
+    if (target.importMode === 'fixed-body-art') {
+      for (const facing of FACINGS) {
+        const shapes = facings[facing];
+        if (!shapes || shapes.length === 0) {
+          fail(group.id, `fixed-body-art ${facing} must contain visible geometry`);
+        }
+        if (shapes.some((shape) => shape.silhouette !== false)) {
+          fail(group.id, `fixed-body-art ${facing} must contain overlay detail shapes only`);
+        }
+      }
+    }
+    if (target.importMode === 'body-variant-art') {
+      for (const bodyId of target.bodyVariantIds ?? []) {
+        for (const facing of FACINGS) {
+          const shapes = bodyVariantFacings[bodyId]?.[facing];
+          if (!shapes || shapes.length === 0) {
+            fail(group.id, `body-variant-art ${bodyId}/${facing} must contain visible geometry`);
+          }
+          if (!shapes.some((shape) => shape.silhouette !== false)) {
+            fail(group.id, `body-variant-art ${bodyId}/${facing} must contain silhouette geometry`);
+          }
+        }
+      }
+    }
+    if (target.importMode === 'body-variant-overlay-art') {
+      for (const bodyId of target.bodyVariantIds ?? []) {
+        for (const facing of FACINGS) {
+          const shapes = bodyVariantFacings[bodyId]?.[facing];
+          if (!shapes || shapes.length === 0) {
+            fail(group.id, `body-variant-overlay-art ${bodyId}/${facing} must contain visible geometry`);
+          }
+          if (shapes.some((shape) => shape.silhouette !== false)) {
+            fail(group.id, `body-variant-overlay-art ${bodyId}/${facing} must contain overlay detail shapes only`);
+          }
+        }
+      }
+    }
     const provenance = {
       sourceKind: options.sourceKind ?? 'authored' as const,
       sourceFiles: provenanceFiles.sort(compareText),
     };
-    if (target.importMode === 'body-art') {
+    if (target.importMode === 'head-fitted-art') {
+      imports.push({
+        kind: 'head-fitted-art',
+        id: group.id,
+        slot: 'hair',
+        facings,
+        headVariants: expandHeadFittedVariants(group.id, target, facings),
+        ...provenance,
+      });
+    } else if (target.importMode === 'body-art') {
       imports.push({
         kind: 'body-art',
         id: group.id,
         slot: 'body',
+        facings,
+        ...provenance,
+      });
+    } else if (target.importMode === 'body-variant-art') {
+      imports.push({
+        kind: 'body-variant-art',
+        id: group.id,
+        slot: 'outfit',
+        z: target.variantZ!,
+        bodyVariants: bodyVariantFacings,
+        ...provenance,
+      });
+    } else if (target.importMode === 'body-variant-overlay-art') {
+      imports.push({
+        kind: 'body-variant-overlay-art',
+        id: group.id,
+        slot: 'outfit',
+        z: target.variantZ!,
+        preservePaintRuns: target.preservePaintRuns === true,
+        bodyVariants: bodyVariantFacings,
+        ...provenance,
+      });
+    } else if (target.importMode === 'fixed-body-art') {
+      imports.push({
+        kind: 'fixed-body-art',
+        id: group.id,
+        slot: 'outfit',
+        bodyId: target.referenceBodyId!,
+        z: target.variantZ!,
         facings,
         ...provenance,
       });
@@ -1243,6 +1539,8 @@ function emitShape(shape: ShapeSpec): string {
   if (shape.fill !== undefined) properties.push(`fill: ${quote(shape.fill)}`);
   if (shape.stroke !== undefined) properties.push(`stroke: ${quote(shape.stroke)}`);
   if (shape.strokeWidth !== undefined) properties.push(`strokeWidth: ${shape.strokeWidth}`);
+  if (shape.strokeLinecap !== undefined) properties.push(`strokeLinecap: ${quote(shape.strokeLinecap)}`);
+  if (shape.strokeLinejoin !== undefined) properties.push(`strokeLinejoin: ${quote(shape.strokeLinejoin)}`);
   if (shape.opacity !== undefined) properties.push(`opacity: ${shape.opacity}`);
   if (shape.silhouette !== undefined) properties.push(`silhouette: ${shape.silhouette}`);
   return `{ ${properties.join(', ')} }`;
@@ -1264,6 +1562,35 @@ export function emitImportedPartArt(imports: readonly ImportedPartArt[]): string
   lines.push('export const IMPORTED_PART_ART = [');
   for (const imported of imports) {
     lines.push('  {');
+    if (
+      imported.kind === 'body-variant-art' ||
+      imported.kind === 'body-variant-overlay-art'
+    ) {
+      lines.push(`    kind: ${quote(imported.kind)},`);
+      lines.push(`    id: ${quote(imported.id)},`);
+      lines.push(`    slot: ${quote(imported.slot)},`);
+      lines.push(`    z: ${imported.z},`);
+      if (imported.kind === 'body-variant-overlay-art' && imported.preservePaintRuns) {
+        lines.push('    preservePaintRuns: true,');
+      }
+      lines.push('    bodyVariants: {');
+      for (const archetype of BODY_ARCHETYPES) {
+        const variants = imported.bodyVariants[archetype.id];
+        if (!variants) continue;
+        lines.push(`      ${quote(archetype.id)}: {`);
+        for (const facing of FACINGS) {
+          const shapes = variants[facing];
+          if (!shapes) continue;
+          lines.push(`        ${facing}: [`);
+          for (const shape of shapes) lines.push(`          ${emitShape(shape)},`);
+          lines.push('        ],');
+        }
+        lines.push('      },');
+      }
+      lines.push('    },');
+      lines.push('  },');
+      continue;
+    }
     if (imported.kind === 'body-detail') {
       lines.push('    kind: "body-detail",');
       lines.push(`    id: ${quote(imported.id)},`);
@@ -1286,7 +1613,26 @@ export function emitImportedPartArt(imports: readonly ImportedPartArt[]): string
       lines.push('  },');
       continue;
     }
+    if (imported.kind === 'fixed-body-art') {
+      lines.push('    kind: "fixed-body-art",');
+      lines.push(`    id: ${quote(imported.id)},`);
+      lines.push(`    slot: ${quote(imported.slot)},`);
+      lines.push(`    bodyId: ${quote(imported.bodyId)},`);
+      lines.push(`    z: ${imported.z},`);
+      lines.push('    facings: {');
+      for (const facing of FACINGS) {
+        const shapes = imported.facings[facing];
+        if (!shapes) continue;
+        lines.push(`      ${facing}: [`);
+        for (const shape of shapes) lines.push(`        ${emitShape(shape)},`);
+        lines.push('      ],');
+      }
+      lines.push('    },');
+      lines.push('  },');
+      continue;
+    }
     if (imported.kind === 'body-art') lines.push('    kind: "body-art",');
+    if (imported.kind === 'head-fitted-art') lines.push('    kind: "head-fitted-art",');
     lines.push(`    id: ${quote(imported.id)},`);
     lines.push(`    slot: ${quote(imported.slot)},`);
     lines.push('    facings: {');
@@ -1298,6 +1644,25 @@ export function emitImportedPartArt(imports: readonly ImportedPartArt[]): string
       lines.push('      ],');
     }
     lines.push('    },');
+    if (imported.kind === 'head-fitted-art') {
+      lines.push('    headVariants: {');
+      for (const headId of Object.keys(imported.headVariants).sort(compareText)) {
+        const variants = imported.headVariants[headId];
+        lines.push(`      ${quote(headId)}: {`);
+        for (const facing of FACINGS) {
+          const variant = variants?.[facing];
+          if (!variant) continue;
+          lines.push(`        ${facing}: {`);
+          lines.push(`          z: ${variant.z},`);
+          lines.push('          shapes: [');
+          for (const shape of variant.shapes) lines.push(`            ${emitShape(shape)},`);
+          lines.push('          ],');
+          lines.push('        },');
+        }
+        lines.push('      },');
+      }
+      lines.push('    },');
+    }
     lines.push('  },');
   }
   lines.push('] as const satisfies readonly ImportedPartOverlay[];');

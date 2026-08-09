@@ -16,6 +16,10 @@ import {
   DEFAULT_STYLE_PRESETS,
 } from '../src/data/defaults';
 import { getPart, partsForSlot } from '../src/parts/library';
+import {
+  IMPORTED_PART_ART,
+  IMPORTED_PART_PROVENANCE,
+} from '../src/parts/generated/importedPartArt';
 import { POSES } from '../src/parts/poses';
 import { PROP_TEMPLATES } from '../src/props/templates';
 
@@ -87,6 +91,39 @@ describe('IRIS fabrication parts and construction crew', () => {
     expect(getPart('outfit-fab-chassis')).toMatchObject({ slot: 'outfit' });
     expect(partsForSlot('head').map(({ id }) => id)).not.toContain('head-fab');
     expect(partsForSlot('outfit').map(({ id }) => id)).not.toContain('outfit-fab-chassis');
+  });
+
+  it('resolves FAB chassis pixels only from the canonical fixed-body SVG receiver', () => {
+    const imported = IMPORTED_PART_ART.find(({ id }) => id === 'outfit-fab-chassis');
+    if (imported?.kind !== 'fixed-body-art') {
+      throw new Error('Missing fixed-body-art FAB chassis import');
+    }
+    expect(IMPORTED_PART_PROVENANCE.find(({ id }) => id === imported.id)).toEqual({
+      id: 'outfit-fab-chassis',
+      sourceKind: 'authored',
+      sourceFiles: [
+        'assets/parts/outfit/fab-chassis.east.svg',
+        'assets/parts/outfit/fab-chassis.north.svg',
+        'assets/parts/outfit/fab-chassis.south.svg',
+      ],
+    });
+    expect(imported).toMatchObject({
+      bodyId: 'body-large-frame',
+      z: 20,
+    });
+
+    const chassis = getPart(imported.id)!;
+    for (const facing of FACINGS) {
+      expect(chassis.facings[facing]?.shapes, `${facing} handwritten fallback`).toEqual([]);
+      const live = chassis.buildVariant?.(facing, { bodyId: 'body-large-frame' });
+      expect(live, `${facing} live receiver`).toEqual({
+        z: imported.z,
+        shapes: imported.facings[facing],
+      });
+      expect(live?.shapes, `${facing} receiver clone`).not.toBe(imported.facings[facing]);
+      expect(chassis.buildVariant?.(facing, { bodyId: 'body-balanced' }), `${facing} cross-rig`)
+        .toBeUndefined();
+    }
   });
 
   it('never leaks fabrication-only parts through random or seeded employee generation', () => {
@@ -260,13 +297,13 @@ describe('IRIS installation unit and charging dock contracts', () => {
     }
   });
 
-  it('keeps re-tint layer runs compact and every exported atlas below Unity limits', () => {
+  it('keeps canonical source layers compact and every exported atlas below Unity limits', () => {
     const cases = [
       ...[78, 90, 98].flatMap((height) => [
-        { prop: { ...live, params: { height } }, keys: ['shadow', 'outline', 'primary', 'literal-0', 'secondary', 'literal-1'] },
-        { prop: { ...dormant, params: { height } }, keys: ['shadow', 'outline', 'primary', 'literal-0', 'secondary', 'literal-1'] },
+        { prop: { ...live, params: { height } }, keys: ['literal-0'] },
+        { prop: { ...dormant, params: { height } }, keys: ['literal-0'] },
       ]),
-      { prop: dock, keys: ['outline', 'primary', 'secondary', 'literal-0'] },
+      { prop: dock, keys: ['literal-0'] },
     ];
 
     for (const { prop, keys } of cases) {

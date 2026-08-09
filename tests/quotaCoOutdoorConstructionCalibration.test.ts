@@ -48,6 +48,6 @@ describe('review-only QuotaCo outdoor/construction calibration', () => {
   });
 
   it('holds the current export schema during review', () => {
-    expect(CURRENT_SCHEMA_VERSION).toBe(19);
+    expect(CURRENT_SCHEMA_VERSION).toBe(21);
   });
 });

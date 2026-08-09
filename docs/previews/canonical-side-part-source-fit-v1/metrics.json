@@ -1,0 +1,46 @@
+{
+  "status": "review-only-awaiting-visual-approval",
+  "sourceFiles": [
+    "docs/previews/canonical-side-part-source-fit-v1/sources/side-part.south.svg",
+    "docs/previews/canonical-side-part-source-fit-v1/sources/side-part.east.svg",
+    "docs/previews/canonical-side-part-source-fit-v1/sources/side-part.north.svg"
+  ],
+  "productionWiringChanged": false,
+  "canonicalSourceSvgChanged": false,
+  "reviewSourceSvgAdded": true,
+  "perHeadSvgVariantsAdded": 0,
+  "method": {
+    "geometryOwner": "three editable review-source Side-part SVG facings",
+    "capFit": "bounded piecewise-linear crown, sweep, width, and profile landmarks",
+    "massFit": "separate declarative side/rear component placement",
+    "detailFit": "source-owned non-silhouette parting crease follows the cap frame",
+    "replacementPathBuilders": 0
+  },
+  "audit": {
+    "variantCount": 18,
+    "sourceShapeCount": 8,
+    "derivedShapeCount": 48,
+    "missingHairAtLiteralScale": [],
+    "productionDifferences": [
+      "head-round/south",
+      "head-round/east",
+      "head-round/north",
+      "head-oval/south",
+      "head-oval/east",
+      "head-oval/north",
+      "head-boxy/south",
+      "head-boxy/east",
+      "head-boxy/north",
+      "head-long/south",
+      "head-long/east",
+      "head-long/north",
+      "head-angular/south",
+      "head-angular/east",
+      "head-angular/north",
+      "head-soft-square/south",
+      "head-soft-square/east",
+      "head-soft-square/north"
+    ],
+    "deterministicDigest": "e4908ef3f26e3c30005f3679061516b2b979d582084e2d856430d2af19abd796"
+  }
+}

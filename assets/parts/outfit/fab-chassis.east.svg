@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Canonical fabrication chassis — east</title>
+  <desc>Production source for outfit-fab-chassis on the body-large-frame rig.</desc>
+  <metadata>{"status":"production","target":"outfit-fab-chassis","referenceBodyId":"body-large-frame","facing":"east"}</metadata>
+  <g id="detail/chassis" transform="translate(64 87)">
+    <path id="detail/chassis/shell" d="M -0.545 -29 L 3.091 -29 L 9.818 23 L -6.636 23 Z" fill="#FF00FF" fill-rule="nonzero"/>
+    <path id="detail/chassis/forward-shoulder" d="M 5.583 -24 h 5 a 2 2 0 0 1 2 2 v 10 a 2 2 0 0 1 -2 2 h -5 a 2 2 0 0 1 -2 -2 v -10 a 2 2 0 0 1 2 -2 Z" fill="#00FF00" fill-rule="nonzero"/>
+    <path id="detail/chassis/forward-vent" d="M 4.583 11 h 6 a 2 2 0 0 1 2 2 v 4 a 2 2 0 0 1 -2 2 h -6 a 2 2 0 0 1 -2 -2 v -4 a 2 2 0 0 1 2 -2 Z" fill="#00FF00" fill-rule="nonzero"/>
+    <path id="detail/chassis/service-seam" d="M 1.091 -26 L 7.818 21" fill="none" stroke="#00000030" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="detail/chassis/core-halo" d="M 5.083 -8 a 4.5 4.5 0 1 0 9 0 a 4.5 4.5 0 1 0 -9 0 Z" fill="#5BE08A28" fill-rule="nonzero"/>
+    <path id="detail/chassis/core" d="M 7.083 -8 a 2.5 2.5 0 1 0 5 0 a 2.5 2.5 0 1 0 -5 0 Z" fill="#5BE08A" fill-rule="nonzero"/>
+  </g>
+</svg>

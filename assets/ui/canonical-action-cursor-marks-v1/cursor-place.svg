@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-ui-icon-id="cursor-place" data-icon-mode="literal">
+  <title>Place cursor</title>
+  <desc>Exact authority inversion of the established centered placement reticle.</desc>
+  <metadata>{"family":"canonical-ui-action-cursor-marks-v1","decision":"exact-authority-inversion","hotspot":{"x":0.5,"y":0.5}}</metadata>
+  <g id="approved-mark" transform="translate(64 64)">
+    <path id="north-halo" d="M 0 -26 L 0 -8" fill="none" stroke="#FFFFFF" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="north-ink" d="M 0 -26 L 0 -8" fill="none" stroke="#2C2C2A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="south-halo" d="M 0 8 L 0 26" fill="none" stroke="#FFFFFF" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="south-ink" d="M 0 8 L 0 26" fill="none" stroke="#2C2C2A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="west-halo" d="M -26 0 L -8 0" fill="none" stroke="#FFFFFF" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="west-ink" d="M -26 0 L -8 0" fill="none" stroke="#2C2C2A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="east-halo" d="M 8 0 L 26 0" fill="none" stroke="#FFFFFF" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="east-ink" d="M 8 0 L 26 0" fill="none" stroke="#2C2C2A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="center-halo" d="M -4 0 a 4 4 0 1 0 8 0 a 4 4 0 1 0 -8 0 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="center-ink" d="M -4 0 a 4 4 0 1 0 8 0 a 4 4 0 1 0 -8 0 Z" fill="#2C2C2A"/>
+  </g>
+</svg>

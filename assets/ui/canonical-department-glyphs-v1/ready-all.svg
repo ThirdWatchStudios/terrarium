@@ -1,0 +1,6 @@
+<svg data-ui-icon-id="ready-all" data-icon-mode="tintable" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Department ready</title>
+  <desc>Approved department-era completed readiness diamond.</desc>
+  <metadata>{"family":"canonical-ui-department-glyphs-v1","decision":"approved-redesign"}</metadata>
+  <g id="approved-mark" transform="translate(64 64)"><path id="ready-diamond" d="M 0 -48 L 48 0 L 0 48 L -48 0 Z" fill="none" stroke="#FFFFFF" stroke-width="9.6" stroke-linecap="square" stroke-linejoin="miter"/><path id="ready-check" d="M -24 0 L -7.2 16.8 L 24 -16.8" fill="none" stroke="#FFFFFF" stroke-width="9.6" stroke-linecap="square" stroke-linejoin="miter"/></g>
+</svg>

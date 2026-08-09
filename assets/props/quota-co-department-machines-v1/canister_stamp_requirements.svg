@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-prop-id="canister_stamp:requirements" data-projection="plan">
+  <title>Requirements canister stamp</title>
+  <desc>Transparent per-work-type stamp overlay for canister_base: Requirements.</desc>
+  <metadata>{"family":"quota-co-administrative-percussion-v1","id":"canister_stamp:requirements","source":"owner-accepted-phase-a-spine-calibration-v1"}</metadata>
+  <g id="approved-sku"><g id="requirements-stamp" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path id="shape-1" d="M 55 57 H 62 L 65 54 H 75 V 73 H 55 Z"/><path id="shape-2" d="M 59 62 H 71 M 59 67 H 69"/></g></g>
+</svg>

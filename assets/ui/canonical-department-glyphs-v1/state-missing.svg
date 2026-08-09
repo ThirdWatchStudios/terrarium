@@ -1,0 +1,6 @@
+<svg data-ui-icon-id="state-missing" data-icon-mode="tintable" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Missing state</title>
+  <desc>Approved department-era empty requirement-state box.</desc>
+  <metadata>{"family":"canonical-ui-department-glyphs-v1","decision":"approved-redesign"}</metadata>
+  <g id="approved-mark" transform="translate(64 64)"><path id="missing-box" d="M -33.6 -33.6 H 33.6 V 33.6 H -33.6 Z" fill="none" stroke="#FFFFFF" stroke-width="9.6" stroke-linecap="square" stroke-linejoin="miter"/></g>
+</svg>

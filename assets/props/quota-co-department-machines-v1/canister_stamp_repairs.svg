@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" data-prop-id="canister_stamp:repairs" data-projection="plan">
+  <title>Repairs canister stamp</title>
+  <desc>Transparent per-work-type stamp overlay for canister_base: Repairs.</desc>
+  <metadata>{"family":"quota-co-administrative-percussion-v1","id":"canister_stamp:repairs","source":"owner-accepted-engineering-maintenance-refinement-v2"}</metadata>
+  <g id="approved-sku"><g id="repairs-stamp" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path id="shape-1" d="M 57 57 L 71 71 M 68 55 Q 74 57 72 63 L 66 57 Q 65 55 68 55 Z"/><circle id="shape-2" cx="57" cy="71" r="3"/></g></g>
+</svg>

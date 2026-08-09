@@ -1,0 +1,76 @@
+{
+  "status": "review-only-stopped-before-source-extraction",
+  "inventory": {
+    "liveIcons": 142,
+    "liveCursors": 4,
+    "directIcons": 79,
+    "emotionIcons": 17,
+    "stateIcons": 38,
+    "reactionIcons": 8,
+    "generatedSvgReceivers": 142,
+    "checkedInCanonicalUiSvgSources": 0,
+    "currentAuthority": "TypeScript ShapeSpec builders"
+  },
+  "selectedFamily": {
+    "ids": [
+      "ui-gear",
+      "ui-close",
+      "ui-play",
+      "ui-pause",
+      "ui-save",
+      "ui-divider",
+      "ui-corner",
+      "ui-spinner",
+      "cursor-default",
+      "cursor-grab",
+      "cursor-place",
+      "cursor-invalid"
+    ],
+    "controlsAndTrim": [
+      "ui-gear",
+      "ui-close",
+      "ui-play",
+      "ui-pause",
+      "ui-save",
+      "ui-divider",
+      "ui-corner",
+      "ui-spinner"
+    ],
+    "cursors": [
+      "cursor-default",
+      "cursor-grab",
+      "cursor-place",
+      "cursor-invalid"
+    ],
+    "heldContracts": [
+      "stable ids and labels",
+      "tintable versus literal mode",
+      "128-unit design canvas",
+      "tight crop and stroke weight",
+      "SVG plus PNG ladder for icons",
+      "PNG ladder plus normalized hotspot for cursors"
+    ]
+  },
+  "directions": {
+    "A": "exact authority inversion; recommended",
+    "B": "tight-crop normalization before extraction",
+    "C": "controls and trim now; cursors later"
+  },
+  "protectedSurfaceHashes": {
+    "CONTRACT.md": "c86c5dcfde03b36353ce0ac5e6725c7c10b9707a23ea28baa4e93f41526b7738",
+    "src/parts/icons.ts": "8bed1f660f2e908c5f83c90c320cee187e283ea756aaae1ed942c0d5a2045fbc",
+    "src/parts/emotions.ts": "b1d5e24308947a06497addba3c23d3fc6009fa001728f50e939338bb1065ceab",
+    "src/parts/stateIcons.ts": "3b736efc9059c8501325c44a0cc58df2fff0f367a5825fa1e451e929b72aef7e",
+    "src/parts/reactions.ts": "006fd262d3e6e27eaca012dccc49ca4f08ad32b271db69ba5ec17c2465aa45d4",
+    "src/core/compositor.ts": "50cf566a5de2fe02b35cae4ae25519af9295fbfe16ae9d8cdfcb0cf60d3a1d0a",
+    "src/core/exporter.ts": "6e1d2b0facf0973ea328b2a88c77d99ce9133e15fe46996cc2c10c0264b08751"
+  },
+  "productionChanges": [],
+  "deferred": [
+    "candidate SVG source extraction",
+    "importer and production receiver wiring",
+    "catalog and export validation",
+    "browser export and Unity import",
+    "commit"
+  ]
+}

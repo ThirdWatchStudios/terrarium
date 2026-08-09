@@ -4,18 +4,32 @@ import type {
   ShapeSpec,
 } from '../core/types';
 import { QUOTA_CO_WORKHORSE_PROP_ART } from './generated/quotaCoWorkhorseArt';
+import { QUOTA_CO_DEPARTMENT_MACHINE_ART } from './generated/quotaCoDepartmentMachineArt';
+import { IRIS_HARDWARE_ART } from './generated/irisHardwareArt';
+import { QUOTA_CO_DOOR_ART } from './generated/quotaCoDoorArt';
+import { QUOTA_CO_WINDOW_ART } from './generated/quotaCoWindowArt';
 
 export interface ImportedPropArt {
   id: string;
   projection: Projection;
   sourceFile: string;
+  sourceFiles?: readonly string[];
   sourceSha256: string;
   paletteDefaults: PropPalette;
   variants: Readonly<Record<string, readonly ShapeSpec[]>>;
+  /** Optional canonical flat SVGs for source-exact authored SKU export. */
+  sourceSvgVariants?: Readonly<Record<string, string>>;
 }
 
 const ART_BY_ID = new Map<string, ImportedPropArt>(
-  QUOTA_CO_WORKHORSE_PROP_ART.map((entry) => [entry.id, entry]),
+  [
+    ...QUOTA_CO_WORKHORSE_PROP_ART,
+    ...IRIS_HARDWARE_ART,
+    ...QUOTA_CO_DEPARTMENT_MACHINE_ART,
+    ...QUOTA_CO_DOOR_ART,
+    ...QUOTA_CO_WINDOW_ART,
+  ]
+    .map((entry) => [entry.id, entry]),
 );
 
 function discrete(
@@ -45,6 +59,30 @@ function discreteWithCanonical(
 
 function variantKey(id: string, params: Readonly<Record<string, number>>): string {
   switch (id) {
+    case 'door':
+      return (
+        `open=${discrete(params, 'open', 0, 1, 1, 0)};` +
+        `facing=${discrete(params, 'facing', 0, 1, 1, 0)};` +
+        `material=${discrete(params, 'material', 0, 4, 1, 0)}`
+      );
+    case 'window':
+      return (
+        `facing=${discrete(params, 'facing', 0, 1, 1, 0)};` +
+        `material=${discrete(params, 'material', 0, 4, 1, 0)}`
+      );
+    case 'iris-installation-unit':
+    case 'iris-installation-unit-dormant':
+      return `height=${discrete(params, 'height', 78, 98, 2, 90)}`;
+    case 'loading_dock':
+      return `fill=${discrete(params, 'fill', 0, 2, 1, 0)}`;
+    case 'intake_tray_small':
+    case 'intake_tray_large':
+    case 'dispatch_station':
+    case 'docket_rack':
+      return `fill=${discrete(params, 'fill', 0, 3, 1, 0)}`;
+    case 'cubicle_partition_straight':
+    case 'cubicle_partition_endcap':
+      return `facing=${discrete(params, 'facing', 0, 1, 1, 0)}`;
     case 'printer':
     case 'printer-jammed':
       return `width=${discrete(params, 'width', 44, 72, 2, 56)}`;
@@ -171,4 +209,17 @@ export function authoredPropShapes(
 
 export function authoredPropArt(id: string): ImportedPropArt | undefined {
   return ART_BY_ID.get(id);
+}
+
+/** Resolve a source-exact canonical SVG when an authored family supplies one. */
+export function authoredPropSvg(
+  id: string,
+  params: Readonly<Record<string, number>>,
+): string | undefined {
+  const art = ART_BY_ID.get(id);
+  if (!art?.sourceSvgVariants) return undefined;
+  const key = variantKey(id, params);
+  const svg = art.sourceSvgVariants[key];
+  if (!svg) throw new Error(`Missing authored prop SVG variant ${id}/${key}`);
+  return svg;
 }

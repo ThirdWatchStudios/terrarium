@@ -44,6 +44,20 @@ const OPAQUE_TEMPLATE_IDS = [
   'demising-wall',
 ] as const;
 
+const FACE_OWNED_TEMPLATE_IDS = [
+  'office-wall',
+  'cubicle-partition',
+  'brick-wall',
+  'panel-wall',
+  'slat-wall',
+] as const;
+
+const LEGACY_OPAQUE_TEMPLATE_IDS = [
+  'living-wall',
+  'branded-wall',
+  'demising-wall',
+] as const;
+
 const TRANSLUCENT_WALL_IDS = ['wall-glass', 'wall-curtain'] as const;
 
 const sourceDirectory = path.resolve(process.cwd(), 'assets/walls/bevel');
@@ -159,7 +173,11 @@ describe('wall bevel topology and production isolation', () => {
         const config = configForIndex(blobIndex(raw));
         const [boundary, material, ...details] = template!.build(raw, {}, DEFAULT_WALLS[0].palette);
         const hasExposedEdge = !config.n || !config.e || !config.s || !config.w;
-        expect(boundary.fill, `${templateId} raw ${raw} boundary`).toBe('#000000');
+        expect(boundary.fill, `${templateId} raw ${raw} boundary`).toBe(
+          FACE_OWNED_TEMPLATE_IDS.includes(templateId as typeof FACE_OWNED_TEMPLATE_IDS[number])
+            ? '#323431'
+            : '#000000',
+        );
         expect(boundary.silhouette, `${templateId} raw ${raw} boundary`).not.toBe(false);
         expect(material.fill, `${templateId} raw ${raw} material`).toBe('$primary');
         expect(material.silhouette, `${templateId} raw ${raw} material`).toBe(false);
@@ -169,16 +187,16 @@ describe('wall bevel topology and production isolation', () => {
           .toBe(true);
       }
       silhouetteHashes.add(hash(BLOB_CONFIGS.map((config) =>
-        silhouette(template!.build(config, {}, DEFAULT_WALLS[0].palette)))));
+        silhouette(template!.build(config, {}, DEFAULT_WALLS[0].palette)).map(({ d }) => d))));
     }
     expect([...silhouetteHashes]).toEqual([
-      'd05869d6bcba18787b5c8050caa5f33d7d7e89e95740487a0c384ddd62450a44',
+      '9159240011c47d89fadd617a141512855a159bbe5a9d204bdcca2c882e4b26b7',
     ]);
   });
 
   it('keeps isolated procedural material detail inside the rounded material body', () => {
     const bevelCount = authoredWallBevel(0).length;
-    for (const templateId of OPAQUE_TEMPLATE_IDS) {
+    for (const templateId of LEGACY_OPAQUE_TEMPLATE_IDS) {
       const template = WALL_TEMPLATES.find((candidate) => candidate.id === templateId)!;
       const shapes = template.build(0, {}, DEFAULT_WALLS[0].palette);
       const details = shapes.slice(2, shapes.length - bevelCount);
@@ -233,10 +251,21 @@ describe('wall bevel topology and production isolation', () => {
     expect(html).not.toMatch(/<img[^>]+\.svg/);
   });
 
-  it('promotes the shared kit to every opaque wall while freezing translucent walls', () => {
+  it('uses authored topology paths as material planes for core walls and fixed-light overlays for legacy walls', () => {
     const authoredPaths = WALL_BEVEL_PIECE_IDS.flatMap((id) =>
       WALL_BEVEL_ART[id].map((shape) => shape.d));
-    for (const templateId of OPAQUE_TEMPLATE_IDS) {
+    const facePaths = WALL_BEVEL_PIECE_IDS.flatMap((id) =>
+      WALL_BEVEL_ART[id].filter(({ fill }) => fill === '#FFFFFF').map((shape) => shape.d));
+    for (const templateId of FACE_OWNED_TEMPLATE_IDS) {
+      const template = WALL_TEMPLATES.find((candidate) => candidate.id === templateId)!;
+      const paths = new Set(BLOB_CONFIGS.flatMap((config) =>
+        template.build(config, {}, DEFAULT_WALLS[0].palette).map((shape) => shape.d)));
+      for (const path of facePaths) expect(paths.has(path), `${templateId}: ${path}`).toBe(true);
+      expect(BLOB_CONFIGS.flatMap((config) => template.build(config, {}, DEFAULT_WALLS[0].palette)))
+        .not.toContainEqual(expect.objectContaining({ fill: '#FFFFFF' }));
+    }
+
+    for (const templateId of LEGACY_OPAQUE_TEMPLATE_IDS) {
       const template = WALL_TEMPLATES.find((candidate) => candidate.id === templateId)!;
       const paths = new Set(BLOB_CONFIGS.flatMap((config) =>
         template.build(config, {}, DEFAULT_WALLS[0].palette).map((shape) => shape.d)));

@@ -10,7 +10,13 @@ import path from 'node:path';
 import { Resvg } from '@resvg/resvg-js';
 
 import type { ShapeSpec } from '../src/core/types';
+import { CANONICAL_UI_ICON_ART } from '../src/parts/generated/canonicalUiIconArt';
 import { IMPORTED_PART_PROVENANCE } from '../src/parts/generated/importedPartArt';
+import {
+  DEPARTMENT_MACHINE_TEMPLATE_DEFINITIONS,
+  DEPARTMENT_STAMP_DEFINITIONS,
+} from '../src/props/departmentMachineManifest';
+import { IRIS_HARDWARE_ART } from '../src/props/generated/irisHardwareArt';
 import { QUOTA_CO_WORKHORSE_PROP_ART } from '../src/props/generated/quotaCoWorkhorseArt';
 import { QUOTA_CO_MAINTAINED_HYBRID_SURFACE_ART } from '../src/tiles/generated/quotaCoMaintainedHybridSurfaceArt';
 import {
@@ -40,11 +46,17 @@ export type CanonicalSvgCategory =
   | 'characters/head'
   | 'characters/hair'
   | 'characters/outfit'
+  | 'characters/accessory'
   | 'props/workhorse'
   | 'props/outdoor'
+  | 'props/iris-hardware'
+  | 'props/department-machines'
   | 'props/deferred-gameplay'
   | 'surfaces/floors'
   | 'surfaces/grass'
+  | 'ui/shared-primitives'
+  | 'ui/department-glyphs'
+  | 'ui/action-cursor-marks'
   | 'walls/equal-height-direct'
   | 'walls/equal-height-promoted-proof'
   | 'walls/bevel';
@@ -247,7 +259,8 @@ function partCategory(sourceFile: string): CanonicalSvgCategory {
     slot !== 'body' &&
     slot !== 'head' &&
     slot !== 'hair' &&
-    slot !== 'outfit'
+    slot !== 'outfit' &&
+    slot !== 'accessory'
   ) {
     throw new Error(`Unknown canonical character slot for ${sourceFile}`);
   }
@@ -320,6 +333,135 @@ export async function collectCanonicalSvgReferenceInventory(
         prop.sourceFile,
         prop.id,
         propCategory(prop.id),
+        'production',
+      ),
+    );
+  }
+
+  const irisHardwareSourceFiles = IRIS_HARDWARE_ART
+    .map((prop) => prop.sourceFile)
+    .sort(compareText);
+  const actualIrisHardwareFiles = relativeFiles(
+    root,
+    await svgFilesUnder(
+      path.join(root, 'assets', 'props', 'iris-hardware-v1'),
+    ),
+  );
+  assertExactCoverage(
+    'IRIS hardware',
+    actualIrisHardwareFiles,
+    irisHardwareSourceFiles,
+  );
+  for (const prop of IRIS_HARDWARE_ART) {
+    entries.push(
+      await sourceEntry(
+        root,
+        prop.sourceFile,
+        prop.id,
+        'props/iris-hardware',
+        'production',
+      ),
+    );
+  }
+
+  const uiSharedSourceFiles = CANONICAL_UI_ICON_ART
+    .filter((icon) => icon.sourceFile.startsWith('assets/ui/canonical-shared-primitives-v1/'))
+    .map((icon) => icon.sourceFile)
+    .sort(compareText);
+  const actualUiSharedFiles = relativeFiles(
+    root,
+    await svgFilesUnder(
+      path.join(root, 'assets', 'ui', 'canonical-shared-primitives-v1'),
+    ),
+  );
+  assertExactCoverage('UI shared primitive', actualUiSharedFiles, uiSharedSourceFiles);
+
+  const uiDepartmentSourceFiles = CANONICAL_UI_ICON_ART
+    .filter((icon) => icon.sourceFile.startsWith('assets/ui/canonical-department-glyphs-v1/'))
+    .map((icon) => icon.sourceFile)
+    .sort(compareText);
+  const actualUiDepartmentFiles = relativeFiles(
+    root,
+    await svgFilesUnder(
+      path.join(root, 'assets', 'ui', 'canonical-department-glyphs-v1'),
+    ),
+  );
+  assertExactCoverage('UI department glyph', actualUiDepartmentFiles, uiDepartmentSourceFiles);
+
+  const uiActionCursorSourceFiles = CANONICAL_UI_ICON_ART
+    .filter((icon) => icon.sourceFile.startsWith('assets/ui/canonical-action-cursor-marks-v1/'))
+    .map((icon) => icon.sourceFile)
+    .sort(compareText);
+  const actualUiActionCursorFiles = relativeFiles(
+    root,
+    await svgFilesUnder(
+      path.join(root, 'assets', 'ui', 'canonical-action-cursor-marks-v1'),
+    ),
+  );
+  assertExactCoverage('UI action and cursor mark', actualUiActionCursorFiles, uiActionCursorSourceFiles);
+
+  for (const icon of CANONICAL_UI_ICON_ART) {
+    const category: CanonicalSvgCategory = icon.sourceFile.startsWith(
+      'assets/ui/canonical-shared-primitives-v1/',
+    )
+      ? 'ui/shared-primitives'
+      : icon.sourceFile.startsWith('assets/ui/canonical-department-glyphs-v1/')
+        ? 'ui/department-glyphs'
+        : 'ui/action-cursor-marks';
+    entries.push(
+      await sourceEntry(
+        root,
+        icon.sourceFile,
+        icon.id,
+        category,
+        'production',
+      ),
+    );
+  }
+
+  const departmentMachineSources: Array<{
+    readonly assetId: string;
+    readonly sourceFile: string;
+  }> = [
+    ...DEPARTMENT_MACHINE_TEMPLATE_DEFINITIONS
+      .flatMap((template) => template.variants.map((variant) => ({
+      assetId: template.id,
+      sourceFile: path.posix.join(
+        'assets/props/quota-co-department-machines-v1',
+        variant.sourceFile,
+      ),
+      }))),
+    ...DEPARTMENT_STAMP_DEFINITIONS.map((overlay) => ({
+      assetId: `canister-stamp-${overlay.id}`,
+      sourceFile: path.posix.join(
+        'assets/props/quota-co-department-machines-v1',
+        overlay.sourceFile,
+      ),
+    })),
+  ];
+  departmentMachineSources.sort(
+    (left, right) => compareText(left.sourceFile, right.sourceFile),
+  );
+  const departmentMachineSourceFiles = departmentMachineSources
+    .map(({ sourceFile }) => sourceFile);
+  const actualDepartmentMachineFiles = relativeFiles(
+    root,
+    await svgFilesUnder(
+      path.join(root, 'assets', 'props', 'quota-co-department-machines-v1'),
+    ),
+  );
+  assertExactCoverage(
+    'Department machine',
+    actualDepartmentMachineFiles,
+    departmentMachineSourceFiles,
+  );
+  for (const source of departmentMachineSources) {
+    entries.push(
+      await sourceEntry(
+        root,
+        source.sourceFile,
+        source.assetId,
+        'props/department-machines',
         'production',
       ),
     );
@@ -845,19 +987,25 @@ function overviewGroups(
     {
       id: 'characters',
       label: 'Character source library',
-      note: 'Bodies, heads, hair, and garment components — every authored facing/component file.',
+      note: 'Bodies, heads, hair, garments, and accessories — every authored facing/component file.',
       entries: entriesFor(inventory, [
         'characters/body',
         'characters/head',
         'characters/hair',
         'characters/outfit',
+        'characters/accessory',
       ]),
     },
     {
       id: 'props',
-      label: 'Workhorse and outdoor props',
-      note: 'Live canonical prop SVGs, including alternate operational states.',
-      entries: entriesFor(inventory, ['props/workhorse', 'props/outdoor']),
+      label: 'Workhorse, IRIS, outdoor, and department-machine props',
+      note: 'Live canonical prop SVGs, including IRIS hardware, machine states, and canister overlays.',
+      entries: entriesFor(inventory, [
+        'props/workhorse',
+        'props/outdoor',
+        'props/iris-hardware',
+        'props/department-machines',
+      ]),
     },
     {
       id: 'surfaces',
@@ -866,6 +1014,16 @@ function overviewGroups(
       entries: entriesFor(inventory, [
         'surfaces/floors',
         'surfaces/grass',
+      ]),
+    },
+    {
+      id: 'ui',
+      label: 'Shared, department, action, and cursor UI glyphs',
+      note: 'Approved shared marks plus department-era work, readiness, state, route, action, and cursor families.',
+      entries: entriesFor(inventory, [
+        'ui/shared-primitives',
+        'ui/department-glyphs',
+        'ui/action-cursor-marks',
       ]),
     },
     {
@@ -929,6 +1087,11 @@ function characterSheet(inventory: CanonicalSvgReferenceInventory): string {
       'Garment components',
       'Exact detail sources; conforming torso geometry remains rig-owned.',
     ],
+    [
+      'characters/accessory',
+      'Accessories',
+      'Complete head-center overlays; currently the cafeteria hairnet.',
+    ],
   ];
   return renderSourceSheet({
     title: 'Terrarium canonical SVG library · character sources',
@@ -963,6 +1126,18 @@ function propSurfaceSheet(
         label: 'Outdoor carriers',
         note: 'Canonical exterior props on existing live IDs and contracts.',
         entries: entriesFor(inventory, ['props/outdoor']),
+      },
+      {
+        id: 'props-iris-hardware',
+        label: 'IRIS installation hardware',
+        note: 'Canonical live, dormant, and dock sources; installation heights use declared source roles.',
+        entries: entriesFor(inventory, ['props/iris-hardware']),
+      },
+      {
+        id: 'props-department-machines',
+        label: 'Department machines and transport overlays',
+        note: 'Canonical live machine states, facings, canister SKU, and work-type stamps.',
+        entries: entriesFor(inventory, ['props/department-machines']),
       },
       {
         id: 'floors',
@@ -1021,6 +1196,36 @@ function wallSheet(inventory: CanonicalSvgReferenceInventory): string {
   });
 }
 
+function uiSheet(inventory: CanonicalSvgReferenceInventory): string {
+  return renderSourceSheet({
+    title: 'Terrarium canonical SVG library · UI marks and glyphs',
+    subtitle:
+      'Thirty-four source-owned marks · carriers, state surfaces, text, paths, and interaction remain Unity-owned',
+    groups: [
+      {
+        id: 'ui-shared-primitives',
+        label: 'Shared marks and ornaments',
+        note: 'Exact authority inversions plus the approved square-corner and four-tick-focus redesigns.',
+        entries: entriesFor(inventory, ['ui/shared-primitives']),
+      },
+      {
+        id: 'ui-department-glyphs',
+        label: 'Department-era work, readiness, state, and route marks',
+        note: 'Nineteen approved tintable silhouettes promoted from the literal department design source.',
+        entries: entriesFor(inventory, ['ui/department-glyphs']),
+      },
+      {
+        id: 'ui-action-cursor-marks',
+        label: 'Action, facing, and cursor marks',
+        note: 'Six approved tintable actions plus four exact-inversion literal cursors with preserved hotspots.',
+        entries: entriesFor(inventory, ['ui/action-cursor-marks']),
+      },
+    ],
+    columns: 6,
+    cellHeight: 280,
+  });
+}
+
 function markdownGuide(
   inventory: CanonicalSvgReferenceInventory,
 ): string {
@@ -1044,6 +1249,7 @@ by the live import registries; it does not reconstruct the art from TypeScript.
 - [Complete one-sheet](./overview.svg) ([PNG](./overview.png))
 - [Character sources](./characters.svg) ([PNG](./characters.png))
 - [Props and surfaces](./props-surfaces.svg) ([PNG](./props-surfaces.png))
+- [UI marks, actions, and cursors](./ui.svg) ([PNG](./ui.png))
 - [Wall system](./walls.svg) ([PNG](./walls.png))
 - [Machine-readable manifest](./manifest.json)
 - [Browser index](./index.html)
@@ -1109,6 +1315,7 @@ function indexHtml(inventory: CanonicalSvgReferenceInventory): string {
         'characters/head',
         'characters/hair',
         'characters/outfit',
+        'characters/accessory',
       ])} exact files`,
     ],
     [
@@ -1117,9 +1324,20 @@ function indexHtml(inventory: CanonicalSvgReferenceInventory): string {
       `${categoryCount(inventory, [
         'props/workhorse',
         'props/outdoor',
+        'props/iris-hardware',
+        'props/department-machines',
         'props/deferred-gameplay',
         'surfaces/floors',
         'surfaces/grass',
+      ])} exact files`,
+    ],
+    [
+      'ui',
+      'UI marks, actions, and cursors',
+      `${categoryCount(inventory, [
+        'ui/shared-primitives',
+        'ui/department-glyphs',
+        'ui/action-cursor-marks',
       ])} exact files`,
     ],
     [
@@ -1222,6 +1440,7 @@ export async function renderCanonicalSvgReferenceGuide(
     ['overview', overviewSheet(inventory)],
     ['characters', characterSheet(inventory)],
     ['props-surfaces', propSurfaceSheet(inventory)],
+    ['ui', uiSheet(inventory)],
     ['walls', wallSheet(inventory)],
   ] as const;
   if (!check) await mkdir(output, { recursive: true });

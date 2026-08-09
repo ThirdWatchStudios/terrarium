@@ -17,16 +17,16 @@ import {
 import { getPart, partsForSlot } from '../src/parts/library';
 
 const CANONICAL_HAIRS = [
-  ['hair-short', 'short', [1, 2, 1]],
+  ['hair-short', 'short', [1, 1, 1]],
   ['hair-bob', 'bob', [2, 2, 2]],
-  ['hair-bun', 'bun', [2, 3, 2]],
-  ['hair-curly', 'curly', [6, 5, 4]],
+  ['hair-bun', 'bun', [2, 2, 2]],
+  ['hair-curly', 'curly', [5, 4, 5]],
   ['hair-balding', 'balding', [2, 1, 1]],
-  ['hair-side-part', 'side-part', [3, 4, 2]],
-  ['hair-pixie', 'pixie', [2, 3, 1]],
-  ['hair-ponytail', 'ponytail', [3, 4, 3]],
-  ['hair-long-straight', 'long-straight', [1, 1, 1]],
-  ['hair-coils', 'coils', [1, 1, 1]],
+  ['hair-side-part', 'side-part', [3, 3, 2]],
+  ['hair-pixie', 'pixie', [3, 3, 2]],
+  ['hair-ponytail', 'ponytail', [3, 3, 3]],
+  ['hair-long-straight', 'long-straight', [1, 2, 1]],
+  ['hair-coils', 'coils', [8, 6, 8]],
 ] as const;
 
 const HUMAN_HEADS = [
@@ -115,8 +115,12 @@ describe('canonical production hair families', () => {
           expect(second, `${hair}/${head}/${facing}`).toBe(first);
           expect(first?.z, `${hair}/${head}/${facing}`).toBe(50);
           expect(first?.shapes.length, `${hair}/${head}/${facing}`).toBeGreaterThan(0);
-          expect(first?.shapes.every(({ fill }) => fill === '$hair'), `${hair}/${head}/${facing}`)
-            .toBe(true);
+          expect(
+            first?.shapes
+              .filter(({ silhouette }) => silhouette !== false)
+              .every(({ fill }) => fill === '$hair'),
+            `${hair}/${head}/${facing}`,
+          ).toBe(true);
         }
       }
       for (const facing of FACINGS) {
@@ -131,13 +135,13 @@ describe('canonical production hair families', () => {
     expect(fittedHairVariant('hair-short', 'head-fab', 'south')).toBeUndefined();
   });
 
-  it('preserves the first three approved carriers byte-for-byte', () => {
+  it('locks the approved source-fitted Short, Bob, and Ponytail carrier', () => {
     const approved = ['hair-short', 'hair-bob', 'hair-ponytail'];
     const payload = approved.flatMap((hair) =>
       FITTED_HAIR_HEAD_IDS.flatMap((head) =>
         FACINGS.map((facing) => fittedHairVariant(hair, head, facing))));
     expect(createHash('sha256').update(JSON.stringify(payload)).digest('hex'))
-      .toBe('83fff7ef11a2acbaa16e3453ff7a364782a334d43b4d36ea58cc15db13be7c9a');
+      .toBe('9d6348833312297aa0e1525c2d8bf4dd3531cb6fec474c3188eaac62f847e719');
   });
 
   it('uses the same fitted geometry in flat and reconstructable production output', () => {
@@ -146,6 +150,7 @@ describe('canonical production hair families', () => {
         const source = recipe('body-compact', head, hair);
         const layers = characterLayers(source, DEFAULT_STYLE);
         const hairLayer = layers.find(({ key }) => key === `${hair}__hair`);
+        const partLayers = layers.filter(({ partId }) => partId === hair);
         expect(hairLayer, `${hair}/${head} has no reconstructable hair layer`).toBeTruthy();
 
         for (const facing of FACINGS) {
@@ -153,7 +158,10 @@ describe('canonical production hair families', () => {
           const flat = composeCharacter(source, DEFAULT_STYLE, facing, 128, 'normal', { badge: false });
           for (const shape of fitted.shapes) {
             expect(flat, `${hair}/${head}/${facing} flat`).toContain(`d="${shape.d}"`);
-            expect(hairLayer?.markup[facing], `${hair}/${head}/${facing} layer`).toContain(`d="${shape.d}"`);
+            expect(
+              partLayers.some((layer) => layer.markup[facing].includes(`d="${shape.d}"`)),
+              `${hair}/${head}/${facing} layer`,
+            ).toBe(true);
           }
         }
       }

@@ -41,6 +41,7 @@ import {
 } from '../src/core/types';
 import { PART_LIBRARY } from '../src/parts/library';
 import type { Pose } from '../src/parts/poses';
+import { DEPARTMENT_MACHINE_TEMPLATE_IDS } from '../src/props/departmentMachineManifest';
 import { PROP_TEMPLATES } from '../src/props/templates';
 import { BLOB_CONFIGS } from '../src/tiles/blob';
 
@@ -98,6 +99,7 @@ export type PropInventoryGroupId =
   | 'desk-work-surface'
   | 'furniture'
   | 'facilities-machines'
+  | 'department-production'
   | 'wall-mounted-decorative'
   | 'outdoor-construction';
 
@@ -293,6 +295,14 @@ readonly PropInventoryGroup[] = [
     note:
       'Amenities, appliances, processing equipment, IRIS equipment, and service infrastructure.',
     propIds: FACILITY_MACHINE_IDS,
+  },
+  {
+    id: 'department-production',
+    label: 'Department production and pneumatic transport',
+    note:
+      'First-class production machines, queue furniture, loading/delivery edges, ' +
+      'and standardized tube/canister transport SKUs.',
+    propIds: DEPARTMENT_MACHINE_TEMPLATE_IDS,
   },
   {
     id: 'wall-mounted-decorative',

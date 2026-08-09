@@ -35,6 +35,10 @@ export interface ShapeSpec {
   fill?: string;
   stroke?: string;
   strokeWidth?: number;
+  /** Defaults to round; authored machine tubes use butt to meet cell sockets exactly. */
+  strokeLinecap?: 'round' | 'butt' | 'square';
+  /** Defaults to round. */
+  strokeLinejoin?: 'round' | 'miter' | 'bevel';
   opacity?: number;
   /**
    * Whether this shape contributes to the outline pass. Defaults to true for
@@ -95,7 +99,7 @@ export type BodyAnchors = Record<Facing, BodyFacingAnchors>;
 export interface PartBuildContext {
   /** Present when the active body owns a sub-rig; absent for legacy bodies. */
   bodyAnchors?: BodyFacingAnchors;
-  /** Stable resolved body part id for rare body-specific variants such as dresses. */
+  /** Stable resolved body part id for exact body-specific source selection. */
   bodyId?: string;
 }
 
@@ -113,6 +117,12 @@ export interface PartDef {
    * preserving existing parts and imported flat SVG geometry.
    */
   buildVariant?: (facing: Facing, context: PartBuildContext) => PartVariant | undefined;
+  /**
+   * Keep consecutive palette runs as distinct character-atlas layers. Most
+   * parts can coalesce equal tint tokens; layered garments may deliberately
+   * return to a tint after painting another one (tee -> apron -> pocket).
+   */
+  preservePaintRuns?: boolean;
   /**
    * Hand-attached accessories only: held props may be suppressed when a pose
    * occupies both hands; wrist wear always follows the anatomical right wrist.
@@ -165,13 +175,21 @@ export interface PropParamDef {
  * with characters, never rotates.
  */
 export type Projection = 'plan' | 'elevation';
-export type PropPlacement = 'floor' | 'wall-slot';
+export type PropPlacement =
+  | 'floor'
+  | 'wall-slot'
+  | 'cell-edge-furniture-slot'
+  | 'cell-corner-furniture-slot';
 
 export interface PropTemplate {
   id: string;
   label: string;
   projection: Projection;
-  /** Floor props occupy walkable cells; wall-slot props mount into or over wall runs. */
+  /**
+   * Floor props occupy whole cells; wall-slot props mount into or over wall runs.
+   * Cell-edge/corner furniture slots are low, non-architectural fixtures whose
+   * anchor spans a cell without claiming hidden whole-cell collision.
+   */
   placement?: PropPlacement;
   /**
    * Optional contact-shadow footprint in canvas coords (128 units). When set and
@@ -451,12 +469,18 @@ export const DEFAULT_LOOK: LookId = 'raw';
  * rendering), `portrait@Nx.png` (corporate-identity badge photo), and a
  * derived `renderings.unit` palette in exported recipe.json + layer manifests.
  * All derived from the identity at export; version bump only.
- * v19 added wall-atlas `meta.contextualFacing` for the accepted QuotaCo
- * equal-height production wall. It declares the west-authored frames Unity may
- * mirror for east presentation; runtime room context still selects the facing.
- * The metadata is derived at export, so no project data migration is required.
+ * v19 added optional wall-atlas `meta.contextualFacing` for the former QuotaCo
+ * equal-height wall. Current core walls are topology-only and omit it under the
+ * extension's already-defined no-mirroring fallback; no project migration or
+ * schema bump is required for that art-family switch.
+ * v20 added the Priority 1 department production assets, versioned
+ * `department-assets.json`, and work-canister stamp overlays. The catalog and
+ * overlays are derived at export, so no stored project migration is required.
+ * v21 adds the manifest-v2 `handCarriedItems` category for non-pneumatic
+ * department outputs, beginning with `pay_envelope`. Derived at export; no
+ * stored project migration is required.
  */
-export const CURRENT_SCHEMA_VERSION = 19;
+export const CURRENT_SCHEMA_VERSION = 21;
 
 /** Design-space canvas size. Parts are authored against this; never changes. */
 export const CANVAS = 128;

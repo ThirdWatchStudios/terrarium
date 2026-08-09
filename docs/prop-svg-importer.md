@@ -1,8 +1,8 @@
 # Authored QuotaCo prop SVG importer
 
 The accepted QuotaCo workhorse, workstation, employee-service machine,
-social-furniture, storage/support, décor/personalization, and accepted exterior
-families are authored as fifty-three standalone SVG files under
+social-furniture, storage/support, décor/personalization, cafeteria, and
+accepted exterior families are authored as sixty-two standalone SVG files under
 `assets/props/quota-co-workhorse-v1`:
 
 - `printer.svg`
@@ -50,6 +50,15 @@ families are authored as fifty-three standalone SVG files under
 - `fish-tank.svg`
 - `string-lights.svg`
 - `rug.svg`
+- `serving-line.svg`
+- `service-scanner.svg`
+- `commercial-range.svg`
+- `prep-table.svg`
+- `dish-return.svg`
+- `walk-in-front.svg`
+- `dining-carrel.svg`
+- `cafeteria-table.svg`
+- `tray-stack.svg`
 - `car.svg`
 - `lot-marking-crosswalk.svg`
 - `lamp-post.svg`
@@ -75,6 +84,52 @@ npm run props:import:check  # validate sources and fail when output is stale
 
 `npm run assets:check`, `npm run build`, and `npm run export` include the check.
 Builds never rewrite SVG source files.
+
+### Architectural sliding-door family
+
+The stable `door` prop template is supplied by twenty separately authored sources under
+`assets/walls/quota-co-building-openings-v2`: five retained wall materials × horizontal/vertical ×
+closed/open. They use the same strict SVG dialect and source-exact compositor path as the canonical prop
+families, but a dedicated importer keeps the architectural state bank explicit:
+
+```bash
+npm run doors:import        # regenerate the twenty compiled door variants
+npm run doors:import:check  # validate source and fail when generated art is stale
+```
+
+The template parameters are `open=0|1`, `facing=0|1` (`0` horizontal, `1` vertical), and internal
+`material=0..4` (Office, Brick, Panel, Cubicle, Wood Slat). The material parameter does not create player
+catalog entries: all variants share template id `door`, and `facility-catalog.json` contains one Door item.
+The receiver selects the material from the replaced wall. Vertical placement uses the separately authored
+fixed-view source; Terrarium never rotates the horizontal front elevation. Open passages remain transparent
+so the receiving floor shows through. `assets:check` includes the door freshness gate.
+
+The door files also own their live grid compensation: the 112-unit wall construction is centered under a
+`translate(32 32) scale(.5)` group, producing an approximately 64-unit visible wall-slot inside the normal
+128-unit prop canvas. This matches the Unity person-scale grid, where wall tiles receive `tileSize = 0.5`
+and props do not. Consumers use the ordinary prop scale; a door-only runtime scale is forbidden.
+
+### Architectural office-window family
+
+The stable `window` prop template is supplied by ten canonical sources under
+`assets/walls/quota-co-building-openings-v2`: five retained wall materials across separately authored
+horizontal front-facing and vertical raised top-oblique views. They follow the same strict SVG dialect,
+source-exact compositor path, wall-palette inheritance, and source-owned live-grid compensation as the
+sliding doors:
+
+```bash
+npm run windows:import        # regenerate the ten compiled window variants
+npm run windows:import:check  # validate source and fail when generated art is stale
+```
+
+The template parameters are `facing=0|1` (`0` horizontal, `1` vertical) and internal `material=0..4`.
+`prop-window` and `prop-window-vertical` remain the unsuffixed Office compatibility ids; the other eight
+internal render SKUs append `-brick`, `-panel`, `-cubicle`, or `-slat`. The player still sees one Window
+catalog item. The receiver derives material from the replaced wall and selects the fixed view from wall
+axis; it never rotates horizontal pixels. During export, wall-owned window structure resolves from the
+matching looked wall instance while frame, glazing, blinds, and mullion remain shared equipment. Floor
+remains transparent and independently rendered. Neighbor-suite glass is not part of this source bank and
+stays deferred until a concrete building-surround use returns.
 
 ## Source contract
 
@@ -164,9 +219,10 @@ shipping an SVG parser or procedural geometry to the browser:
 | Parking sign | panel |
 | Tree canopy | crown habit, lobes, shape seed |
 
-The crosswalk marking, offset-arm street light, low-staple bike rack, park
-bench, and picnic table have no editable parameters. Their existing template
-IDs, projections, and placement contracts remain unchanged.
+The nine cafeteria facilities, crosswalk marking, offset-arm street light,
+low-staple bike rack, park bench, and picnic table have no editable parameters.
+Their existing template IDs, projections, and placement contracts remain
+unchanged.
 
 Runtime lookup snaps malformed or off-step imported values to the nearest legal
 variant. No project schema or export-contract field is added.
@@ -177,13 +233,15 @@ both of which now compile from canonical SVG sources.
 
 ## Production status
 
-The forty-five-source interior bank passed consolidated close, normal,
+The original forty-five-source interior bank passed consolidated close, normal,
 crowded, wall-context, interaction, and far-gameplay review and was visually
 accepted on 2026-07-29. The eight-source exterior family subsequently passed
 accepted-reference, canonical-source, compiled-output, normal-context, and
-far-gameplay validation. All fifty-three SVGs are now the Terrarium production
-sources for their existing prop templates. The generated `ShapeSpec` module is
-a compiled derivative and must be regenerated after an artist edits a source.
+far-gameplay validation. The nine-source cafeteria family passed its context and
+source/import fidelity gates and was approved for production wiring on
+2026-08-03. All sixty-two SVGs are now the Terrarium production sources for
+their existing prop templates. The generated `ShapeSpec` module is a compiled
+derivative and must be regenerated after an artist edits a source.
 
 This promotion does not change template IDs, footprints, projections, pivots,
 interaction anchors, facility registration, export paths, manifest shape,
@@ -212,6 +270,11 @@ existing carriers, while the four gameplay-system concepts remain source-only.
 An in-world visual smoke test remains deferred because none of the eight
 existing carriers are surfaced in the current build or bare-lot presentation.
 No runtime-appearance conclusion is inferred from their present absence.
+
+The cafeteria extension completed the normal in-browser export and a fresh
+Unity import on 2026-08-03. The facilities do not yet have a viable in-game
+path, so gameplay-scale visual acceptance remains explicitly deferred until the
+sim can surface them; it is not inferred from successful import.
 
 Gameplay-contract and registration work for the four source-only infrastructure
 concepts was explicitly deferred on 2026-07-30. Their SVGs remain reference

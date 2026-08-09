@@ -22,10 +22,10 @@
     <path id="reference/context-head-round/shape-001" d="M0-21C13-21 21-13 21 0 21 12 12 21 0 21-12 21-21 12-21 0-21-13-13-21 0-21Z" fill="#66747A" fill-rule="nonzero"/>
   </g>
   <g id="reference/hair-short" opacity="0.22" transform="translate(64 44)">
-    <path id="reference/hair-short/shape-001" d="M -19.79898987322333 7 A 21 21 0 1 1 19.79898987322333 7 Z" fill="#66747A" fill-rule="nonzero"/>
+    <path id="reference/hair-short/shape-001" d="M-22 4C-20.2-14-10.6-20 0-20 11-20 20.2-14 22 4L15 7 8.4 3 1.8 7-5.5 3-13.6 7Z" fill="#66747A" fill-rule="nonzero"/>
   </g>
   <g id="art" transform="translate(64 44)">
-    <path id="art/shape-001" d="M -19.79898987322333 7 A 21 21 0 1 1 19.79898987322333 7 Z" fill="#00FFFF" fill-rule="nonzero"/>
+    <path id="art/shape-001" d="M-22 4C-20.2-14-10.6-20 0-20 11-20 20.2-14 22 4L15 7 8.4 3 1.8 7-5.5 3-13.6 7Z" fill="#00FFFF" fill-rule="nonzero"/>
   </g>
   <g id="swatches">
     <path id="swatches/skin" d="M 4 4 H 12 V 12 H 4 Z" fill="#FF00FF" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>

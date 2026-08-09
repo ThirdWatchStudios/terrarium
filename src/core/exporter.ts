@@ -55,11 +55,6 @@ import { serializeScenarioTemplateLibrary, type ScenarioTemplate } from './scena
 import { PROP_TEMPLATES } from '../props/templates';
 import { BLOB_CONFIGS, BLOB_TILE_COUNT } from '../tiles/blob';
 import { deriveGroundOverlays } from '../tiles/groundOverlays';
-import {
-  QUOTA_CO_EQUAL_HEIGHT_AUTHORED_FACING,
-  QUOTA_CO_EQUAL_HEIGHT_MIRROR_X_MASKS,
-} from '../tiles/quotaCoEqualHeightWallContract';
-import { quotaCoEqualHeightWallFramesFor } from '../tiles/quotaCoEqualHeightWall';
 import { themeUss, themeJson } from '../data/uiPalette';
 import { ICONS, CURSORS } from '../parts/icons';
 import { overlayStyleJson } from './overlayStyle';
@@ -70,6 +65,11 @@ import { projectWithLook } from './look';
 import { normalizeCharacterRecipe } from './recipe';
 import { CONSTRUCTION_CREW, CONSTRUCTION_PROFILES } from '../data/defaults';
 import { authoredPropArt } from '../props/authoredArt';
+import { quotaCoDoorMaterialForParams } from '../props/doorManifest';
+import { quotaCoWindowMaterialForParams } from '../props/windowManifest';
+import { departmentAssetCatalogJson } from '../props/departmentAssetCatalog';
+import { DEPARTMENT_MACHINE_DEFAULT_PROPS } from '../props/departmentMachineManifest';
+import { QUOTA_CO_DEPARTMENT_STAMP_OVERLAYS } from '../props/generated/quotaCoDepartmentMachineArt';
 
 /** Sheet frame order. West is baked as mirrored east for engine convenience. */
 const SHEET_FACINGS = ['south', 'east', 'north', 'west'] as const;
@@ -695,6 +695,16 @@ function propDesc(prop: PropInstance, style: StyleSheet, scale: number): SheetDe
   };
 }
 
+function departmentStampOverlayDesc(svg: string, style: StyleSheet, scale: number): SheetDesc {
+  const size = style.render.baseSize * scale;
+  return {
+    width: size,
+    height: size,
+    pixelScale: renderScale(style),
+    cells: [{ svg, dx: 0, dy: 0, dw: size, dh: size }],
+  };
+}
+
 /** Render a character sprite sheet (south, east, north, west) at the given scale. */
 export async function characterSheetPng(
   recipe: CharacterRecipe,
@@ -994,7 +1004,6 @@ export function wallAtlas(
   scale: number,
 ) {
   const size = style.render.baseSize * scale;
-  const productionFrames = quotaCoEqualHeightWallFramesFor(wall);
   const frames: Record<string, { x: number; y: number; w: number; h: number; name: string }> = {};
   // Frame naming stays `mask_<i>` (D3) — "mask" now means "blob index 0..46",
   // so the sim's MaskFromFrameName parse is unchanged.
@@ -1022,17 +1031,7 @@ export function wallAtlas(
       autotile: '8-neighbor blob (47)',
       blobTable: 'blob-index-table.json (shared 256→47 contract; frame mask_<i> = blob index)',
       sorting: 'wall-layer',
-      ...(productionFrames
-        ? {
-          contextualFacing: {
-            authoredFacing: QUOTA_CO_EQUAL_HEIGHT_AUTHORED_FACING,
-            mirrorXForEastPresentation:
-              QUOTA_CO_EQUAL_HEIGHT_MIRROR_X_MASKS.map(
-                (mask) => `mask_${mask}` as const,
-              ),
-          },
-        }
-        : {}),
+      orientation: 'topology-only',
     },
   };
 }
@@ -1454,6 +1453,71 @@ export interface ExportAllOptions {
 }
 
 /**
+ * Department production units are code-owned export inventory, not user scene
+ * decoration. Older browser-saved projects can therefore omit newer variants;
+ * merge those missing canonical instances into the export snapshot without
+ * mutating the live project or replacing an existing instance with the same id.
+ */
+function withDepartmentMachineInventory(
+  props: readonly PropInstance[],
+): PropInstance[] {
+  const ids = new Set(props.map(({ id }) => id));
+  return [
+    ...props,
+    ...DEPARTMENT_MACHINE_DEFAULT_PROPS
+      .filter(({ id }) => !ids.has(id))
+      .map((prop) => ({
+        ...prop,
+        params: { ...prop.params },
+        palette: { ...prop.palette },
+      })),
+  ];
+}
+
+/**
+ * Door leaves are shared equipment, but their socket, lintel, jamb, and return
+ * are wall-owned. Resolve each internal door SKU against the matching wall
+ * instance after the project look has been applied so flat PNGs, layer PNGs,
+ * and prop metadata cannot drift from the wall atlas exported beside them.
+ */
+export function projectWithDoorWallPalettes(project: ProjectState): ProjectState {
+  const walls = project.walls ?? [];
+  let changed = false;
+  const props = project.props.map((prop) => {
+    if (prop.templateId !== 'door') return prop;
+    const material = quotaCoDoorMaterialForParams(prop.params);
+    const wall = walls.find((candidate) =>
+      material.wallIds.includes(candidate.id) || material.wallIds.includes(candidate.templateId));
+    if (!wall) return prop;
+    changed = true;
+    return {
+      ...prop,
+      palette: { ...wall.palette },
+    };
+  });
+  return changed ? { ...project, props } : project;
+}
+
+/** Window structure follows its matching looked wall; glazing equipment does not. */
+export function projectWithWindowWallPalettes(project: ProjectState): ProjectState {
+  const walls = project.walls ?? [];
+  let changed = false;
+  const props = project.props.map((prop) => {
+    if (prop.templateId !== 'window') return prop;
+    const material = quotaCoWindowMaterialForParams(prop.params);
+    const wall = walls.find((candidate) =>
+      material.wallIds.includes(candidate.id) || material.wallIds.includes(candidate.templateId));
+    if (!wall) return prop;
+    changed = true;
+    return {
+      ...prop,
+      palette: { ...wall.palette },
+    };
+  });
+  return changed ? { ...project, props } : project;
+}
+
+/**
  * Regenerate the entire asset set — every character sheet/moods/layers, prop,
  * wall, and floor at 1x/2x/4x with atlas JSON, the project file, and (when a
  * scene exists) office-layout.json — into a sink, rasterizing PNGs through the
@@ -1476,9 +1540,11 @@ export async function exportAll(
   const exportSource = {
     ...rawProject,
     characters: rawProject.characters.map(normalizeCharacterRecipe),
-    props: rawProject.props.map(normalizeAuthoredPropPalette),
+    props: withDepartmentMachineInventory(rawProject.props).map(normalizeAuthoredPropPalette),
   };
-  const project = projectWithLook(exportSource);
+  const project = projectWithWindowWallPalettes(
+    projectWithDoorWallPalettes(projectWithLook(exportSource)),
+  );
   const { style } = project;
   const scales = EXPORT_SCALES.length;
 
@@ -1488,6 +1554,7 @@ export async function exportAll(
     project.characters.length * scales * 8 +
     CONSTRUCTION_CREW.length * scales * 2 + // construction crew: base+moods, layers per scale
     project.props.length * scales +
+    QUOTA_CO_DEPARTMENT_STAMP_OVERLAYS.length * scales +
     (project.walls?.length ?? 0) * scales +
     (project.floors?.length ?? 0) * scales +
     (project.ground?.length ?? 0) * scales + // distinct ground kind (B1.5 / D2)
@@ -1607,6 +1674,19 @@ export async function exportAll(
       tick(prop.name);
     }
     await write(`${dir}/prop.json`, JSON.stringify(prop, null, 2));
+  }
+
+  // Work-type identity stays an overlay over one standardized canister SKU.
+  // Exporting these separately avoids an N-work-type canister sprite explosion.
+  for (const overlay of QUOTA_CO_DEPARTMENT_STAMP_OVERLAYS) {
+    await write(`${overlay.exportDirectory}/overlay.svg`, overlay.svg);
+    for (const scale of EXPORT_SCALES) {
+      await write(
+        `${overlay.exportDirectory}/overlay@${scale}x.png`,
+        await png(departmentStampOverlayDesc(overlay.svg, style, scale)),
+      );
+      tick(`${overlay.displayName} canister stamp`);
+    }
   }
 
   for (const wall of project.walls ?? []) {
@@ -1781,6 +1861,9 @@ export async function exportAll(
   // manifest (no project data), so it ships in every bundle. Schema is provisional
   // (version 0) until B1 placement is proven.
   await write('facility-catalog.json', JSON.stringify(facilityCatalogJson(), null, 2));
+  // Department production-unit inventory + fill-state and tube/canister
+  // composition contract (QuotaCo pivot, CONTRACT §3.20).
+  await write('department-assets.json', JSON.stringify(departmentAssetCatalogJson(), null, 2));
   // The cast-agnostic scenario-template library (Epic 4 F4.1) — the sim's runtime
   // caster binds these onto the live cast/office by precondition match (§3.8/§5.7).
   // The library is passed in (the UI supplies ROLE_TEMPLATES) so core carries no

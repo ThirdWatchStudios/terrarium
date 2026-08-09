@@ -1,0 +1,25 @@
+{
+  "status": "approved-production-source-authority",
+  "sourceFiles": [
+    "assets/parts/hair/long-straight.south.svg",
+    "assets/parts/hair/long-straight.east.svg",
+    "assets/parts/hair/long-straight.north.svg"
+  ],
+  "productionWiringChanged": true,
+  "canonicalSourceSvgChanged": true,
+  "reviewSourceSvgAdded": false,
+  "perHeadSvgVariantsAdded": 0,
+  "method": {
+    "geometryOwner": "three editable review-source Long straight SVG facings",
+    "fit": "bounded piecewise-linear crown, opening, width, and fall landmarks; both east pieces share the frame",
+    "replacementPathBuilders": 0
+  },
+  "audit": {
+    "variantCount": 18,
+    "sourceShapeCount": 4,
+    "derivedShapeCount": 24,
+    "missingHairAtLiteralScale": [],
+    "productionDifferences": [],
+    "deterministicDigest": "93c687d5b0b729c615142cd8e7b44e5688cc4036549a8d7b924583db7dc111e3"
+  }
+}

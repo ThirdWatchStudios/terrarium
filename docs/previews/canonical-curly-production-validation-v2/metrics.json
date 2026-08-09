@@ -1,0 +1,25 @@
+{
+  "status": "approved-production-source-authority",
+  "sourceFiles": [
+    "assets/parts/hair/curly.south.svg",
+    "assets/parts/hair/curly.east.svg",
+    "assets/parts/hair/curly.north.svg"
+  ],
+  "productionWiringChanged": true,
+  "canonicalSourceSvgChanged": true,
+  "reviewSourceSvgAdded": false,
+  "perHeadSvgVariantsAdded": 0,
+  "method": {
+    "geometryOwner": "three editable canonical Curly SVG facings",
+    "lobeFit": "one declarative center/radius frame per source-owned curl lobe",
+    "replacementPathBuilders": 0
+  },
+  "audit": {
+    "variantCount": 18,
+    "sourceShapeCount": 14,
+    "derivedShapeCount": 84,
+    "missingHairAtLiteralScale": [],
+    "productionDifferences": [],
+    "deterministicDigest": "bdb5014ce13086a079d62d80843bf0a895b0246456a46b035987db570c4aa798"
+  }
+}

@@ -1,6 +1,6 @@
 import type { ProjectState } from './types';
 import { CURRENT_SCHEMA_VERSION } from './types';
-import { DEFAULT_BEHAVIORS, DEFAULT_DEPARTMENTS, DEFAULT_DRIVES, DEFAULT_FLOORS, DEFAULT_GROUND, DEFAULT_PROFILES, DEFAULT_PROPS, DEFAULT_RELATIONSHIP_TYPES, DEFAULT_SCENARIOS, DEFAULT_STYLE, DEFAULT_STYLE_PRESETS, DEFAULT_TRAITS, DEFAULT_WALLS } from '../data/defaults';
+import { CORE_WALLS, DEFAULT_BEHAVIORS, DEFAULT_DEPARTMENTS, DEFAULT_DRIVES, DEFAULT_FLOORS, DEFAULT_GROUND, DEFAULT_PROFILES, DEFAULT_PROPS, DEFAULT_RELATIONSHIP_TYPES, DEFAULT_SCENARIOS, DEFAULT_STYLE, DEFAULT_STYLE_PRESETS, DEFAULT_TRAITS } from '../data/defaults';
 import { mapDepartmentNameToId, slugifyDepartment } from './department';
 import { ensurePresence } from './profile';
 import { authoredPropArt } from '../props/authoredArt';
@@ -128,9 +128,17 @@ export function migrateProject(raw: unknown): ProjectState | null {
   // Derived from the identity at export — no project data changed; version
   // bump only.
 
-  // v18 → v19: wall-atlas contextual-facing metadata for the accepted QuotaCo
-  // equal-height production wall. Derived at export — no project data
-  // changed; version bump only.
+  // v18 → v19: optional wall-atlas contextual-facing metadata for the former
+  // asymmetric equal-height wall. Current core walls omit it under the
+  // documented no-mirroring fallback; no stored project data is involved.
+
+  // v19 → v20: Priority 1 department machines, the department-assets catalog,
+  // and work-canister stamp overlays. Derived/export inventory only; no stored
+  // project data changed, so the common version bump below is sufficient.
+
+  // v20 → v21: department-assets manifest v2 adds handCarriedItems for walked,
+  // non-pneumatic outputs such as pay_envelope. Derived/export inventory only;
+  // no stored project data changed.
 
   project.version = CURRENT_SCHEMA_VERSION;
   return project as ProjectState;
@@ -337,7 +345,7 @@ function syncAuthoredPropPalettes(project: ProjectState): void {
 /** v1 step: ensure later-added collections exist and pixel scales are sane. */
 function backfillV1(project: ProjectState): void {
   project.props ??= structuredClone(DEFAULT_PROPS);
-  project.walls ??= structuredClone(DEFAULT_WALLS);
+  project.walls ??= structuredClone(CORE_WALLS);
   project.floors ??= structuredClone(DEFAULT_FLOORS);
   project.ground ??= structuredClone(DEFAULT_GROUND);
   project.stylePresets ??= structuredClone(DEFAULT_STYLE_PRESETS);
@@ -359,7 +367,7 @@ function backfillV1(project: ProjectState): void {
       project.props.push(structuredClone(prop));
     }
   }
-  for (const wall of DEFAULT_WALLS) {
+  for (const wall of CORE_WALLS) {
     if (!project.walls.some((item) => item.id === wall.id || item.templateId === wall.templateId)) {
       project.walls.push(structuredClone(wall));
     }

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Canonical dress — body-balanced north</title>
+  <desc>Production complete outfit-dress art for body-balanced.</desc>
+  <metadata>{"status":"production","target":"outfit-dress","bodyId":"body-balanced","facing":"north"}</metadata>
+  <g transform="translate(64 87)">
+    <path id="art/dress/skirt" d="M0-29Q-25-18-31 4C-32.92 11.04-37.8 23.2-37.8 34Q0 36 37.8 34C37.8 23.2 32.92 11.04 31 4Q25-18 0-29Z" fill="#FF0000" fill-rule="nonzero"/>
+    <path id="detail/dress/collar" d="M-6.5-29H6.5A2 2 0 0 1 8.5-27V-27A2 2 0 0 1 6.5-25H-6.5A2 2 0 0 1-8.5-27V-27A2 2 0 0 1-6.5-29Z" fill="#00FF00" fill-rule="nonzero"/>
+    <path id="detail/dress/waist" d="M-31 4L31 4" fill="none" stroke="#00FF00" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="detail/dress/seam" d="M0 9L0 31" fill="none" stroke="#00000018" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

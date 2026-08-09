@@ -8,8 +8,8 @@ describe('canonical SVG reference guide', () => {
     const { counts, entries, exclusions } = inventory.manifest;
 
     expect(counts).toMatchObject({
-      exactSourceFiles: 259,
-      production: 181,
+      exactSourceFiles: 414,
+      production: 336,
       productionDependencies: 74,
       deferred: 4,
       derivedWallFrames: 47,
@@ -37,6 +37,76 @@ describe('canonical SVG reference guide', () => {
         entry.pattern.includes('part-authoring/scaffolds'),
       )?.count,
     ).toBe(113);
+    expect(counts.byCategory['props/department-machines']).toBe(67);
+    expect(counts.byCategory['props/workhorse']).toBe(54);
+    expect(counts.byCategory['characters/accessory']).toBe(3);
+    expect(counts.byCategory['characters/outfit']).toBe(83);
+    expect(counts.byCategory['props/iris-hardware']).toBe(3);
+    expect(counts.byCategory['ui/shared-primitives']).toBe(5);
+    expect(counts.byCategory['ui/department-glyphs']).toBe(19);
+    expect(counts.byCategory['ui/action-cursor-marks']).toBe(10);
+    expect(
+      entries
+        .filter((entry) => entry.category === 'props/iris-hardware')
+        .every((entry) => entry.status === 'production'),
+    ).toBe(true);
+    expect(
+      entries
+        .filter((entry) => entry.category === 'props/department-machines')
+        .every((entry) => entry.status === 'production'),
+    ).toBe(true);
+    expect(
+      entries
+        .filter((entry) => entry.category === 'ui/shared-primitives')
+        .map((entry) => entry.assetId),
+    ).toEqual([
+      'iris-mark',
+      'quotaco-mark',
+      'ui-corner',
+      'ui-divider',
+      'ui-focus',
+    ]);
+    expect(
+      entries
+        .filter((entry) => entry.category === 'ui/department-glyphs')
+        .map((entry) => entry.assetId),
+    ).toEqual([
+      'ready-all',
+      'ready-connected',
+      'ready-designated',
+      'ready-equipped',
+      'ready-flowing',
+      'ready-io',
+      'ready-room',
+      'ready-staffed',
+      'route-input',
+      'route-output',
+      'route-repair',
+      'route-wall-pass',
+      'state-blocked',
+      'state-complete',
+      'state-missing',
+      'state-unavailable',
+      'work-data-processing',
+      'work-delivery',
+      'work-intake',
+    ]);
+    expect(
+      entries
+        .filter((entry) => entry.category === 'ui/action-cursor-marks')
+        .map((entry) => entry.assetId),
+    ).toEqual([
+      'action-delete',
+      'action-move',
+      'action-redo',
+      'action-rotate',
+      'action-undo',
+      'cursor-default',
+      'cursor-grab',
+      'cursor-invalid',
+      'cursor-place',
+      'world-facing',
+    ]);
   });
 
   it('shows all 47 wall masks while listing only active SVG dependencies', async () => {

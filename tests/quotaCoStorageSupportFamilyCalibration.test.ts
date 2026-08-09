@@ -162,7 +162,7 @@ describe('QuotaCo storage and support family calibration', () => {
       unityIntegrationMutation: false,
       unityImport: false,
       commitCreated: false,
-      schemaVersion: 19,
+      schemaVersion: 21,
       contractValidation: { pass: true },
       invariants: {
         authoringCanvas: 128,
